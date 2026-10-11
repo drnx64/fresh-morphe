@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
   "created_at": "2026-10-11T15:49:14Z",
   "version": "1.9.0",
-  "description": "## [1.9.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.8.0...v1.9.0) (2026-10-11)\n\n### Bug Fixes\n\n* **twitter:** correct shifted icon resource IDs in drawer items patch ([25e844c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/25e844c01fd45264a43260f77ab5b61fd7099164))\n* **twitter:** render sharing domain option as dropdown without file picker ([6a4a6c8](https://github.com/kveld9/kveld-extra-morphe-patches/commit/6a4a6c851f16e826572c5acb2c98eb1788ba4d6a))\n* **twitter:** suppress discover more module in post detail replies ([eb4005a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/eb4005a2567726e54265b8b43ef60474db674d04))\n\n### New Features\n\n* **twitter:** add hide grok post action toggle ([0041ad0](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0041ad0ee6d2a91f4b8bc193354217bd78372a1e))\n* **twitter:** add hide profile get verified pill toggle ([b4739dc](https://github.com/kveld9/kveld-extra-morphe-patches/commit/b4739dc0552bad6a43926e66dbb1db50fcced96f))\n* **twitter:** add hide profile grok button toggle ([cb4ae05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/cb4ae052a03a7253f201bcff4043dbaf150aac06))\n* **twitter:** add timeline add tab toggle ([0d8e4d5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0d8e4d5d865e96f1fa731a16121d96843f3ce6bb))",
+  "description": "## [1.11.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.10.0...v1.11.0) (2026-10-11)\n\n### New Features\n\n* **twitter:** add hide live banner option in timeline UI ([cdce0c6](https://github.com/kveld9/kveld-extra-morphe-patches/commit/cdce0c631f9222d6bf033d9d014f477bbf839c92))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -38,8 +38,17 @@
           ]
         },
         {
+          "name": "Sideload Install Support",
+          "description": "Ensures compatibility for sideloaded lab installs by allowing local installer source checks to report success and completing Play Integrity token requests. Required for sideloaded lab installs: without it the app routes to the Play Store.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.6.01"
+          ]
+        },
+        {
           "name": "Unlock Premium Features",
-          "description": "Enables app features locked behind subscription paywalls by activating the internal Limited-Time Premium Unlock (LTPU) gate.",
+          "description": "Enables app features locked behind subscription paywalls by activating the internal Limited-Time Premium Unlock (LTPU) gate. Requires Sideload Install Support (applied automatically as dependency).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -426,7 +435,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -435,7 +444,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -444,69 +453,33 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
-          "name": "Customize UI",
-          "description": "Toggle navigation and timeline UI elements",
+          "name": "DM Debloat",
+          "description": "Hide call buttons and composer actions in direct message conversations",
           "use": false,
           "options": [
             {
-              "key": "inlineActionBar",
-              "description": "Toggle inline action buttons across notification timeline"
+              "key": "hideDmAudioCall",
+              "description": "Hide audio call button in direct message conversation header. WARNING: neutralizing the unified xchat calling flag disables DM outgoing-call entrypoints, not just the icons."
             },
             {
-              "key": "navigationBar",
-              "description": "Toggle persistent bottom navigation bar behavior"
+              "key": "hideDmVideoCall",
+              "description": "Hide video call button in direct message conversation header. WARNING: neutralizing the unified xchat calling flag disables DM outgoing-call entrypoints, not just the icons."
             },
             {
-              "key": "grokTab",
-              "description": "Hide Grok tab from bottom navigation bar"
+              "key": "hideDmAttachButton",
+              "description": "Hide media attachment (+) button in direct message composer"
             },
             {
-              "key": "replySorting",
-              "description": "Customize default reply sorting behavior in conversation threads"
-            },
-            {
-              "key": "exploreTabs",
-              "description": "Toggle rich explore tab surfaces"
-            },
-            {
-              "key": "notificationTabs",
-              "description": "Toggle notification timeline tab items"
-            },
-            {
-              "key": "profileTabs",
-              "description": "Toggle extra connect and media tabs on user profiles"
-            },
-            {
-              "key": "searchSuggestions",
-              "description": "Toggle search typeahead and local suggestion persistence"
-            },
-            {
-              "key": "searchTabItems",
-              "description": "Toggle rich search tab items and surfaces"
-            },
-            {
-              "key": "sideBarItems",
-              "description": "Toggle drawer sidebar items including Grok assistant entry"
-            },
-            {
-              "key": "timelineAddTab",
-              "description": "Hide add tab (+) button in home timeline tab header"
-            },
-            {
-              "key": "timelineTopBar",
-              "description": "Toggle top bar elements in home and custom timelines"
-            },
-            {
-              "key": "topBarExtra",
-              "description": "Toggle additional top bar and header action surfaces"
+              "key": "hideDmVoiceButton",
+              "description": "Hide voice note / microphone button in direct message composer"
             }
           ],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -552,47 +525,17 @@
             }
           ],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
-          "name": "Hide Banner",
-          "description": "Hides new post banner",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Discover More",
-          "description": "Hides Discover more recommendations in tweet reply threads",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Elements",
-          "description": "Hide badges, buttons, metrics and served UI elements",
+          "name": "Navigation UI",
+          "description": "Bottom navigation, FAB, tabs and bars",
           "use": false,
           "options": [
             {
               "key": "hideBadges",
               "description": "Hide badges and unread indicator counters from navigation bar icons"
-            },
-            {
-              "key": "hideBookmark",
-              "description": "Hide bookmark action button in post timeline"
-            },
-            {
-              "key": "hideCommunityBadges",
-              "description": "Hide community badge indicators across user and post labels"
-            },
-            {
-              "key": "hideCommunityNotes",
-              "description": "Hide community notes and birdwatch contributions on posts"
             },
             {
               "key": "hideFab",
@@ -603,81 +546,36 @@
               "description": "Hide secondary action expansion menu on floating action button"
             },
             {
-              "key": "hideFollowedBy",
-              "description": "Hide followed-by social context facepile on timeline posts"
+              "key": "navigationBar",
+              "description": "Toggle persistent bottom navigation bar behavior"
             },
             {
-              "key": "hideGrokPostAction",
-              "description": "Hide Grok analysis action button in post headers"
+              "key": "grokTab",
+              "description": "Hide Grok tab from bottom navigation bar"
             },
             {
-              "key": "hideHiddenReplies",
-              "description": "Hide hidden and moderated replies banner entrypoint in conversation threads"
+              "key": "exploreTabs",
+              "description": "Toggle rich explore tab surfaces"
             },
             {
-              "key": "hideImmersivePlayer",
-              "description": "Hide immersive swipe-up video player surfaces"
+              "key": "notificationTabs",
+              "description": "Toggle notification timeline tab items"
             },
             {
-              "key": "hidePostMetrics",
-              "description": "Hide like, repost, and reply count metrics on timeline posts"
+              "key": "searchSuggestions",
+              "description": "Toggle search typeahead and local suggestion persistence"
             },
             {
-              "key": "hideProfileGrokButton",
-              "description": "Hide Grok Imagine action button on profile header banner"
+              "key": "searchTabItems",
+              "description": "Toggle rich search tab items and surfaces"
             },
             {
-              "key": "hideViewCount",
-              "description": "Hide post view count metrics on timeline and post detail"
+              "key": "sideBarItems",
+              "description": "Toggle drawer sidebar items including Grok assistant entry"
             }
           ],
           "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Live Threads",
-          "description": "Hides live threads",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Nudge Button",
-          "description": "Hides follow/subscribe/follow back buttons on posts",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Promote Button",
-          "description": "Hides promote button under self posts",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Recommendation Items",
-          "description": "Hides recommendation items such as Who to follow and Today's news in timeline, search, and replies",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide Recommended Users",
-          "description": "Hides recommended users popup shown when following someone",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -686,7 +584,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -695,7 +593,33 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
+          ]
+        },
+        {
+          "name": "Post & Profile UI",
+          "description": "Post actions, profile header and Grok surfaces",
+          "use": false,
+          "options": [
+            {
+              "key": "hideCommunityBadges",
+              "description": "Hide community badge indicators across user and post labels"
+            },
+            {
+              "key": "hideGrokPostAction",
+              "description": "Hide Grok analysis action button in post headers"
+            },
+            {
+              "key": "hideProfileGrokButton",
+              "description": "Hide Grok Imagine action button on profile header banner"
+            },
+            {
+              "key": "profileTabs",
+              "description": "Toggle extra connect and media tabs on user profiles"
+            }
+          ],
+          "compatible_versions": [
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -704,7 +628,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -718,7 +642,7 @@
             }
           ],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -744,7 +668,7 @@
             }
           ],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -753,7 +677,97 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
+          ]
+        },
+        {
+          "name": "Timeline UI",
+          "description": "Timeline surfaces: posts, threads, banners, recommendations and video entry points",
+          "use": true,
+          "options": [
+            {
+              "key": "hideBanner",
+              "description": "Hides new post banner"
+            },
+            {
+              "key": "hidePromoteButton",
+              "description": "Hides promote button under self posts"
+            },
+            {
+              "key": "hideNudgeButton",
+              "description": "Hides follow/subscribe/follow back buttons on posts"
+            },
+            {
+              "key": "hideRecommendationItems",
+              "description": "Hides recommendation items such as Who to follow and Today's news in timeline, search, and replies"
+            },
+            {
+              "key": "hideDiscoverMore",
+              "description": "Hides Discover more recommendations in tweet reply threads"
+            },
+            {
+              "key": "hideRecommendedUsers",
+              "description": "Hides recommended users popup shown when following someone"
+            },
+            {
+              "key": "hideLiveThreads",
+              "description": "Hides live threads"
+            },
+            {
+              "key": "hideBookmark",
+              "description": "Hide bookmark action button in post timeline"
+            },
+            {
+              "key": "hideCommunityNotes",
+              "description": "Hide community notes and birdwatch contributions on posts"
+            },
+            {
+              "key": "hideFollowedBy",
+              "description": "Hide followed-by social context facepile on timeline posts"
+            },
+            {
+              "key": "hideHiddenReplies",
+              "description": "Hide hidden and moderated replies banner entrypoint in conversation threads"
+            },
+            {
+              "key": "hideImmersivePlayer",
+              "description": "Hide immersive swipe-up video player surfaces"
+            },
+            {
+              "key": "hidePostMetrics",
+              "description": "Hide like, repost, and reply count metrics on timeline posts"
+            },
+            {
+              "key": "hideViewCount",
+              "description": "Hide post view count metrics on timeline and post detail"
+            },
+            {
+              "key": "inlineActionBar",
+              "description": "Toggle inline action buttons across notification timeline"
+            },
+            {
+              "key": "replySorting",
+              "description": "Customize default reply sorting behavior in conversation threads"
+            },
+            {
+              "key": "timelineAddTab",
+              "description": "Hide add tab (+) button in home timeline tab header"
+            },
+            {
+              "key": "timelineTopBar",
+              "description": "Toggle top bar elements in home and custom timelines"
+            },
+            {
+              "key": "topBarExtra",
+              "description": "Toggle additional top bar and header action surfaces"
+            },
+            {
+              "key": "hideLiveBanner",
+              "description": "Hides live and broadcast pill at top of home timeline"
+            }
+          ],
+          "compatible_versions": [
+            "12.33.1-prod.01"
           ]
         },
         {
@@ -762,14 +776,14 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.0-prod.01"
+            "12.33.1-prod.01"
           ]
         }
       ]
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "67e4911835efde5551f6dc7e7abd297cc7920ce71fe7215cfb6295e148dc6bf5",
+  "fingerprint": "6f8435dfafb71c075743dd48f3721ef3819af8d3d8e9c32c921df09aee718b24",
   "release_notes": "## [1.9.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.8.0...v1.9.0) (2026-10-11)\n\n### Bug Fixes\n\n* **twitter:** correct shifted icon resource IDs in drawer items patch ([25e844c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/25e844c01fd45264a43260f77ab5b61fd7099164))\n* **twitter:** render sharing domain option as dropdown without file picker ([6a4a6c8](https://github.com/kveld9/kveld-extra-morphe-patches/commit/6a4a6c851f16e826572c5acb2c98eb1788ba4d6a))\n* **twitter:** suppress discover more module in post detail replies ([eb4005a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/eb4005a2567726e54265b8b43ef60474db674d04))\n\n### New Features\n\n* **twitter:** add hide grok post action toggle ([0041ad0](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0041ad0ee6d2a91f4b8bc193354217bd78372a1e))\n* **twitter:** add hide profile get verified pill toggle ([b4739dc](https://github.com/kveld9/kveld-extra-morphe-patches/commit/b4739dc0552bad6a43926e66dbb1db50fcced96f))\n* **twitter:** add hide profile grok button toggle ([cb4ae05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/cb4ae052a03a7253f201bcff4043dbaf150aac06))\n* **twitter:** add timeline add tab toggle ([0d8e4d5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0d8e4d5d865e96f1fa731a16121d96843f3ce6bb))\n",
   "release_tag": "v1.9.0",
   "release_date": "2026-10-11T15:49:14Z",
