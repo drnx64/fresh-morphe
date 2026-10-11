@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-11T06:02:55Z",
-  "version": "1.8.0",
-  "description": "## [1.8.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.7.0...v1.8.0) (2026-10-11)\n\n### Bug Fixes\n\n* **twitter:** correct ViewCount branch logic and derive register operands dynamically ([c673d2d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c673d2d7e94168dfa3df71736ccc581b64c44baf))\n* **twitter:** implement real bytecode gate for timeline top bar connect button ([fff9ee5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/fff9ee550859825599ea69a8560624745a4bfc45))\n* **twitter:** implement real bytecode gates for post view count and metrics ([bd56316](https://github.com/kveld9/kveld-extra-morphe-patches/commit/bd5631635ed26d38d2312b2c3f21fb839bc52549))\n* **twitter:** intercept postdetail dispatcher in Remove Ads ([228c25f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/228c25fa08ace3c875f467dc6b39aaa7358a41f2))\n\n### New Features\n\n* **twitter:** add Drawer Items patch for granular drawer toggles ([3ce0866](https://github.com/kveld9/kveld-extra-morphe-patches/commit/3ce0866213bd281c9844add4559902d8da30d593))\n* **twitter:** add toggle to hide Grok tab from bottom navigation bar ([a7b8ffc](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a7b8ffc65a4ab19bce3c79c3a7d9d992c6f5e570))",
+  "created_at": "2026-10-11T15:49:14Z",
+  "version": "1.9.0",
+  "description": "## [1.9.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.8.0...v1.9.0) (2026-10-11)\n\n### Bug Fixes\n\n* **twitter:** correct shifted icon resource IDs in drawer items patch ([25e844c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/25e844c01fd45264a43260f77ab5b61fd7099164))\n* **twitter:** render sharing domain option as dropdown without file picker ([6a4a6c8](https://github.com/kveld9/kveld-extra-morphe-patches/commit/6a4a6c851f16e826572c5acb2c98eb1788ba4d6a))\n* **twitter:** suppress discover more module in post detail replies ([eb4005a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/eb4005a2567726e54265b8b43ef60474db674d04))\n\n### New Features\n\n* **twitter:** add hide grok post action toggle ([0041ad0](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0041ad0ee6d2a91f4b8bc193354217bd78372a1e))\n* **twitter:** add hide profile get verified pill toggle ([b4739dc](https://github.com/kveld9/kveld-extra-morphe-patches/commit/b4739dc0552bad6a43926e66dbb1db50fcced96f))\n* **twitter:** add hide profile grok button toggle ([cb4ae05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/cb4ae052a03a7253f201bcff4043dbaf150aac06))\n* **twitter:** add timeline add tab toggle ([0d8e4d5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0d8e4d5d865e96f1fa731a16121d96843f3ce6bb))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -493,6 +493,10 @@
               "description": "Toggle drawer sidebar items including Grok assistant entry"
             },
             {
+              "key": "timelineAddTab",
+              "description": "Hide add tab (+) button in home timeline tab header"
+            },
+            {
               "key": "timelineTopBar",
               "description": "Toggle top bar elements in home and custom timelines"
             },
@@ -603,6 +607,10 @@
               "description": "Hide followed-by social context facepile on timeline posts"
             },
             {
+              "key": "hideGrokPostAction",
+              "description": "Hide Grok analysis action button in post headers"
+            },
+            {
               "key": "hideHiddenReplies",
               "description": "Hide hidden and moderated replies banner entrypoint in conversation threads"
             },
@@ -613,6 +621,10 @@
             {
               "key": "hidePostMetrics",
               "description": "Hide like, repost, and reply count metrics on timeline posts"
+            },
+            {
+              "key": "hideProfileGrokButton",
+              "description": "Hide Grok Imagine action button on profile header banner"
             },
             {
               "key": "hideViewCount",
@@ -699,7 +711,12 @@
           "name": "Remove Premium Upsell",
           "description": "Removes premium upsell surfaces",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "hideProfileGetVerified",
+              "description": "Hide Get Verified upsell pill on user profile"
+            }
+          ],
           "compatible_versions": [
             "12.33.0-prod.01"
           ]
@@ -714,7 +731,7 @@
               "description": "Substitutes twitter.com/x.com with custom domain when sharing post links"
             },
             {
-              "key": "customDomain",
+              "key": "sharingDomain",
               "description": "Domain replacing x.com when sharing post links, e.g. https://fxtwitter.com"
             },
             {
@@ -752,9 +769,9 @@
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "991e495de22dfb061def65ee6b24844f97dc9e87c66de76ab3862a0b9324bbc4",
-  "release_notes": "## [1.8.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.7.0...v1.8.0) (2026-10-11)\n\n### Bug Fixes\n\n* **twitter:** correct ViewCount branch logic and derive register operands dynamically ([c673d2d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c673d2d7e94168dfa3df71736ccc581b64c44baf))\n* **twitter:** implement real bytecode gate for timeline top bar connect button ([fff9ee5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/fff9ee550859825599ea69a8560624745a4bfc45))\n* **twitter:** implement real bytecode gates for post view count and metrics ([bd56316](https://github.com/kveld9/kveld-extra-morphe-patches/commit/bd5631635ed26d38d2312b2c3f21fb839bc52549))\n* **twitter:** intercept postdetail dispatcher in Remove Ads ([228c25f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/228c25fa08ace3c875f467dc6b39aaa7358a41f2))\n\n### New Features\n\n* **twitter:** add Drawer Items patch for granular drawer toggles ([3ce0866](https://github.com/kveld9/kveld-extra-morphe-patches/commit/3ce0866213bd281c9844add4559902d8da30d593))\n* **twitter:** add toggle to hide Grok tab from bottom navigation bar ([a7b8ffc](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a7b8ffc65a4ab19bce3c79c3a7d9d992c6f5e570))\n",
-  "release_tag": "v1.8.0",
-  "release_date": "2026-10-11T06:02:55Z",
+  "fingerprint": "67e4911835efde5551f6dc7e7abd297cc7920ce71fe7215cfb6295e148dc6bf5",
+  "release_notes": "## [1.9.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.8.0...v1.9.0) (2026-10-11)\n\n### Bug Fixes\n\n* **twitter:** correct shifted icon resource IDs in drawer items patch ([25e844c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/25e844c01fd45264a43260f77ab5b61fd7099164))\n* **twitter:** render sharing domain option as dropdown without file picker ([6a4a6c8](https://github.com/kveld9/kveld-extra-morphe-patches/commit/6a4a6c851f16e826572c5acb2c98eb1788ba4d6a))\n* **twitter:** suppress discover more module in post detail replies ([eb4005a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/eb4005a2567726e54265b8b43ef60474db674d04))\n\n### New Features\n\n* **twitter:** add hide grok post action toggle ([0041ad0](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0041ad0ee6d2a91f4b8bc193354217bd78372a1e))\n* **twitter:** add hide profile get verified pill toggle ([b4739dc](https://github.com/kveld9/kveld-extra-morphe-patches/commit/b4739dc0552bad6a43926e66dbb1db50fcced96f))\n* **twitter:** add hide profile grok button toggle ([cb4ae05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/cb4ae052a03a7253f201bcff4043dbaf150aac06))\n* **twitter:** add timeline add tab toggle ([0d8e4d5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0d8e4d5d865e96f1fa731a16121d96843f3ce6bb))\n",
+  "release_tag": "v1.9.0",
+  "release_date": "2026-10-11T15:49:14Z",
   "isPreRelease": false
 }

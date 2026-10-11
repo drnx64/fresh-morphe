@@ -2,10 +2,93 @@
   "bundle": "bearinmindcat",
   "channel": "stable",
   "repo_url": "https://github.com/bearinmindcat/morphe-patches",
-  "created_at": "2026-10-11T12:44:47Z",
-  "version": "2.0.0",
-  "description": "## [2.0.0](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.13...v2.0.0) (2026-10-11)\n\n### ⚠ BREAKING CHANGES\n\n* the Customization screen is reorganised into sections, each with its own page, and the account sheet gains a Waze Features row; together with the new Waze patches the bundle is no longer a Google Maps-only source.\n\n### ✨ New Features\n\n* add waze patches for waze apk ([0b091ad](https://github.com/bearinmindcat/morphe-patches/commit/0b091adbf5fb89659285b30b41599e97fd8f90e9))\n* added waze features to google maps ([880da80](https://github.com/bearinmindcat/morphe-patches/commit/880da80a2ebed18e01e6d229b66f14cc8b763e71))",
+  "created_at": "2026-10-11T13:44:54Z",
+  "version": "2.2.0",
+  "description": "## [2.2.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.1.0...v2.2.0) (2026-10-11)\n\n### ✨ New Features\n\n* adding alltrails patches ([8acb753](https://github.com/bearinmindcat/morphe-patches/commit/8acb75369f6d9bd5238609bcf58ea24d3c18240a))",
   "apps": [
+    {
+      "app_name": "AllTrails",
+      "package": "com.alltrails.alltrails",
+      "patches": [
+        {
+          "name": "2D / 3D compass",
+          "description": "Adds a 2D / 3D compass switch to the Experimental screen. With it on, tapping the compass in navigate mode switches the map between the tilted 3D view and a flat, north-up 2D map the way Google Maps' does, from any state (following you, panned away, paused), and brings the map back to you. The compass shows a single north arrow in 2D, and the next navigation starts in the mode you used last.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Better filters",
+          "description": "Adds a Better filters switch to the Experimental screen. With it on, the trail filter's sliders move in finer steps over the same ranges: Rating in 0.1 stars (instead of Any, 3.5, 4 and 4.5), Length in 0.1 mi, Elevation gain in 10 ft, Highest point in 100 ft and Distance away in 1 mi (metric: 0.1 km, 5 m, 50 m, 1 km).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Better tracking",
+          "description": "Adds a Better tracking switch to the Experimental screen. With it on, recordings work the way Gaia GPS records: the phone's GPS directly with every fix delivered live (no Play services batching), fixes worse than 65 m or physically impossible dropped, points kept 3 m apart, no trail-biased smoothing, and elevation converted to sea level and counted in 2 m steps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Black icon",
+          "description": "Uses a white AllTrails logo on black for the launcher icon and the splash screen, instead of green on dark green, so this build is easy to tell apart from the stock app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Installs alongside stock AllTrails under its own package name.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to install under. Must be a valid Android package name."
+            }
+          ],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Experimental screen",
+          "description": "Adds an Experimental row to your profile's menu, under Edit profile and Share profile, that opens an Experimental screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Remember filters",
+          "description": "Adds a Remember filter states switch to the Experimental screen. With it on, the trail filters you set (length, elevation, rating, difficulty, activities, features and the rest, but not Distance away) stay set when you go back to the home screen and after the app restarts, instead of resetting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Theme",
+          "description": "Adds a Theme choice to the Experimental screen: Follow phone, Light, Dark or AMOLED black (dark with pure black backgrounds). AllTrails itself only follows the phone.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Google Maps",
       "package": "com.google.android.apps.maps",
@@ -288,8 +371,25 @@
             {
               "key": "freeways",
               "description": "Waze: 2000 m."
+            },
+            {
+              "key": "blockedLane",
+              "description": "Waze: 400 m."
+            },
+            {
+              "key": "between",
+              "description": "Waze: 300 m."
             }
           ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "All moods",
+          "description": "Every mood can be chosen: the ones Waze keeps for higher ranks and the beta moods it hides.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "5.24.5.0"
           ]
@@ -395,6 +495,33 @@
           ]
         },
         {
+          "name": "No AI reporting",
+          "description": "Turns off conversational reporting, Waze's Gemini voice assistant for reports, together with its activation dialog, tips and onboarding.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "No Google Assistant",
+          "description": "Keeps Google Assistant out of Waze: no Assistant button, onboarding or settings entry, whatever Waze's server enables for your region.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Report speed limit",
+          "description": "Turns on Waze's own switch for correcting the speed limit from the speedometer, the old mods' \"Report speed limit\". Waze's server keeps it off; what it shows is not verified here.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
           "name": "Speed camera sound at any speed",
           "description": "Plays the speed camera sound for every camera, not only when you are over the speed limit.",
           "use": true,
@@ -430,9 +557,9 @@
     }
   ],
   "patches_name": "bearinmind patches",
-  "fingerprint": "14f413c21cd1f1f5900560a707d785bfac20861e2f736b8462a28a2c4000f142",
-  "release_notes": "## [2.0.0](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.13...v2.0.0) (2026-10-11)\n\n### ⚠ BREAKING CHANGES\n\n* the Customization screen is reorganised into sections, each with its own page, and the account sheet gains a Waze Features row; together with the new Waze patches the bundle is no longer a Google Maps-only source.\n\n### ✨ New Features\n\n* add waze patches for waze apk ([0b091ad](https://github.com/bearinmindcat/morphe-patches/commit/0b091adbf5fb89659285b30b41599e97fd8f90e9))\n* added waze features to google maps ([880da80](https://github.com/bearinmindcat/morphe-patches/commit/880da80a2ebed18e01e6d229b66f14cc8b763e71))\n",
-  "release_tag": "v2.0.0",
-  "release_date": "2026-10-11T12:44:47Z",
+  "fingerprint": "70d06320fe0bdc7d2929a019a46f96b1a54a2aa9e5855681b8e01bf256ee5b63",
+  "release_notes": "## [2.2.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.1.0...v2.2.0) (2026-10-11)\n\n### ✨ New Features\n\n* adding alltrails patches ([8acb753](https://github.com/bearinmindcat/morphe-patches/commit/8acb75369f6d9bd5238609bcf58ea24d3c18240a))\n",
+  "release_tag": "v2.2.0",
+  "release_date": "2026-10-11T13:44:54Z",
   "isPreRelease": false
 }
