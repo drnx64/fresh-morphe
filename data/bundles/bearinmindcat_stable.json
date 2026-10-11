@@ -2,9 +2,9 @@
   "bundle": "bearinmindcat",
   "channel": "stable",
   "repo_url": "https://github.com/bearinmindcat/morphe-patches",
-  "created_at": "2026-10-09T07:25:03Z",
-  "version": "1.7.9",
-  "description": "## [1.7.13](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.12...v1.7.13) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* directions to Home, Work and your own labels; issue [#36](https://github.com/bearinmindcat/morphe-patches/issues/36) ([9827770](https://github.com/bearinmindcat/morphe-patches/commit/98277703504fd6bccbc62f91555115407cad2528))\n* show local saved places on the map with a hide switch per list; issue [#36](https://github.com/bearinmindcat/morphe-patches/issues/36) ([7b82e80](https://github.com/bearinmindcat/morphe-patches/commit/7b82e807c3af4bf5aa6be636dd2118427a53efe7))",
+  "created_at": "2026-10-11T12:44:47Z",
+  "version": "2.0.0",
+  "description": "## [2.0.0](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.13...v2.0.0) (2026-10-11)\n\n### ⚠ BREAKING CHANGES\n\n* the Customization screen is reorganised into sections, each with its own page, and the account sheet gains a Waze Features row; together with the new Waze patches the bundle is no longer a Google Maps-only source.\n\n### ✨ New Features\n\n* add waze patches for waze apk ([0b091ad](https://github.com/bearinmindcat/morphe-patches/commit/0b091adbf5fb89659285b30b41599e97fd8f90e9))\n* added waze features to google maps ([880da80](https://github.com/bearinmindcat/morphe-patches/commit/880da80a2ebed18e01e6d229b66f14cc8b763e71))",
   "apps": [
     {
       "app_name": "Google Maps",
@@ -215,6 +215,24 @@
           ]
         },
         {
+          "name": "Speed cameras",
+          "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze Features, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
+          "name": "Speeding chime",
+          "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze Features, a row on the account sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
           "name": "Trim account menu",
           "description": "Removes Your Timeline, Location sharing, Your data in Maps and Help & feedback from the account sheet. Left out with Add microG support, whose account features need them.",
           "use": true,
@@ -233,12 +251,188 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "Waze",
+      "package": "com.waze",
+      "patches": [
+        {
+          "name": "Alert distances",
+          "description": "How far ahead, in metres, Waze warns of police, hazards, crashes, traffic jams and speed cameras. The defaults are the old Waze mods' (CGE); Waze's own are lower for most of them.",
+          "use": false,
+          "options": [
+            {
+              "key": "police",
+              "description": "Waze: 600 m."
+            },
+            {
+              "key": "hazard",
+              "description": "Waze: 600 to 900 m."
+            },
+            {
+              "key": "accident",
+              "description": "Waze: 600 m."
+            },
+            {
+              "key": "traffic",
+              "description": "Waze: 600 m."
+            },
+            {
+              "key": "streets",
+              "description": "Waze: 500 m."
+            },
+            {
+              "key": "highways",
+              "description": "Waze: 1000 m."
+            },
+            {
+              "key": "freeways",
+              "description": "Waze: 2000 m."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Bigger speedometer",
+          "description": "Bigger digits on the speedometer, and on the speed limit sign beside it, so they can be read at a glance.",
+          "use": true,
+          "options": [
+            {
+              "key": "speed",
+              "description": "Waze: 26."
+            },
+            {
+              "key": "units",
+              "description": "The \"mph\" or \"km/h\" under the speed. Waze: 12."
+            },
+            {
+              "key": "limit",
+              "description": "Limits under 100. Waze: 20."
+            },
+            {
+              "key": "limitThreeDigits",
+              "description": "Waze: 13."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Full black",
+          "description": "Waze's dark mode in true black for AMOLED screens: the night map's background and the app's dark backgrounds are black. Roads, labels, buttons and text keep their colours.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes the sponsored pins on the map and on Android Auto, the full-screen ads shown while you are stopped, and the ad statistics Waze sends.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Map skin",
+          "description": "The old Waze mods' map skin, as changes to Waze's own: bigger map labels, a wider navigation arrow head and a warm day background. The night background is Full black's.",
+          "use": true,
+          "options": [
+            {
+              "key": "fontHuge",
+              "description": "Waze: 14."
+            },
+            {
+              "key": "fontBig",
+              "description": "Waze: 12."
+            },
+            {
+              "key": "fontMedium",
+              "description": "Waze: 10."
+            },
+            {
+              "key": "fontSmall",
+              "description": "Waze: 8."
+            },
+            {
+              "key": "arrowHead",
+              "description": "As a multiple of the arrow's tail width. Waze: 3.0."
+            },
+            {
+              "key": "dayBackground",
+              "description": "Waze: fafcfa, near white."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Navigation distances",
+          "description": "How far ahead Android Auto gives its heads-up, and how long a jam must last before the traffic bar shows it. The defaults are the old Waze mods' (Chuppito).",
+          "use": false,
+          "options": [
+            {
+              "key": "headsUp",
+              "description": "Waze: 200 m."
+            },
+            {
+              "key": "headsUpFreeway",
+              "description": "Waze: 500 m."
+            },
+            {
+              "key": "trafficBar",
+              "description": "Waze: 360 s."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Speed camera sound at any speed",
+          "description": "Plays the speed camera sound for every camera, not only when you are over the speed limit.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Speed cameras everywhere",
+          "description": "Turns speed camera and police alerts back on in the countries where Waze's server switches them off. Warning of speed cameras is against the law in some of those countries.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Speed limit sign",
+          "description": "The style of the speed limit sign beside the speedometer, whatever the country.",
+          "use": false,
+          "options": [
+            {
+              "key": "style",
+              "description": "Waze picks one by country."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "bearinmind patches",
-  "fingerprint": "923a40addfa36b2409ef181314b01454805e8f44fb7f7ea7c5ca8a63cde23f8b",
-  "release_notes": "## [1.7.9](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.8...v1.7.9) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* Customization and the other added screens open on root mount installs; issue [#25](https://github.com/bearinmindcat/morphe-patches/issues/25) ([00ddf32](https://github.com/bearinmindcat/morphe-patches/commit/00ddf32177525aa99b1ac9bb4db0f492055c4404))\n",
-  "release_tag": "v1.7.9",
-  "release_date": "2026-10-09T07:25:03Z",
+  "fingerprint": "14f413c21cd1f1f5900560a707d785bfac20861e2f736b8462a28a2c4000f142",
+  "release_notes": "## [2.0.0](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.13...v2.0.0) (2026-10-11)\n\n### ⚠ BREAKING CHANGES\n\n* the Customization screen is reorganised into sections, each with its own page, and the account sheet gains a Waze Features row; together with the new Waze patches the bundle is no longer a Google Maps-only source.\n\n### ✨ New Features\n\n* add waze patches for waze apk ([0b091ad](https://github.com/bearinmindcat/morphe-patches/commit/0b091adbf5fb89659285b30b41599e97fd8f90e9))\n* added waze features to google maps ([880da80](https://github.com/bearinmindcat/morphe-patches/commit/880da80a2ebed18e01e6d229b66f14cc8b763e71))\n",
+  "release_tag": "v2.0.0",
+  "release_date": "2026-10-11T12:44:47Z",
   "isPreRelease": false
 }

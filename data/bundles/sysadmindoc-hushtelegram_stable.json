@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/SysAdminDoc/HushTelegram",
   "created_at": "2026-10-05T15:08:19Z",
   "version": "0.0.9",
-  "description": "HushTelegram v0.0.12 targets telegram.org's Telegram 12.10.6 (org.telegram.messenger.web) and the official beta 12.10.7 (org.telegram.messenger.beta) with 56 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. New this time: every patch description, settings row and message is rewritten in plain English, and Expert mode groups the patches the way you'd look for them. Keep deleted messages marks a message the moment it's deleted while the chat is open, and it can clear what it kept. On the beta, Disable analytics also stops Firebase's crash and session reports, and a new Turn off beta debug logs switch, off by default, stops the beta's always-on debug logs.\n\nIf Telegram won't send you a login code, register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 786 runtime tests passed locally. All 364 patch tests passed too, along with both Android lints. All 56 patches applied to Telegram 12.10.6 and the 12.10.7 beta without forcing, and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 12.10.6, version code 71129 (APKMirror lists it as Telegram (Web version), since telegram.org now serves 13.0.0), or the beta 12.10.7, version code 71239. The .mpp is a patch bundle, not a Telegram APK. Uninstall the stock Telegram first, and keep the manager's signing key for updates.",
+  "description": "HushTelegram v0.0.13 targets telegram.org's Telegram 13.0.1 (org.telegram.messenger.web) and the official beta 13.0.1 (org.telegram.messenger.beta) with 68 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. New this time: translate a whole chat, Folders by chat type, Save downloaded files, UnifiedPush notifications for phones without working Firebase, Faster downloads, a black launch screen with AMOLED black, HushTelegram's own icon and name, and switches that hide the Contacts tab, channel bar buttons, the Send as button or messages that match your keyword filters. HushTelegram settings is split into seven pages.\n\nIf Telegram won't send you a login code, register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 959 runtime tests passed locally. All 419 patch tests passed too, along with both Android lints. All 68 patches applied to Telegram 13.0.1 and the 13.0.1 beta without forcing, and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 13.0.1, version code 71679, or the beta 13.0.1, version code 71669. The .mpp is a patch bundle, not a Telegram APK. Coming from v0.0.12, patch 13.0.1 and install it over your current build with the same signing key. New installs uninstall the stock Telegram first and keep the manager's signing key for updates.",
   "apps": [
     {
       "app_name": "Beta",
@@ -41,6 +41,15 @@
           "name": "Ask before sending a sticker",
           "description": "Asks you to confirm before a sticker, GIF, voice or video message, or call goes out, so a stray tap doesn't send it. All four start off. Turn them on in HushTelegram settings > Conversations.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1"
+          ]
+        },
+        {
+          "name": "Black and white launch logo",
+          "description": "With AMOLED black on and your phone in dark mode, the launch screen shows Telegram's logo in white on black instead of the app icon, on Android 13 and up. It isn't selected by default, since it has Morphe rebuild Telegram's resources. Turn on Expert mode in Morphe Manager to pick it.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "13.0.1"
@@ -164,6 +173,15 @@
           ]
         },
         {
+          "name": "Hide Contacts tab",
+          "description": "Removes the Contacts tab from the bar at the bottom of the main screen, and swiping doesn't open its page either. The Calls or Settings tab stays as Telegram has it, and the chat list's new message button still opens your contacts. Starts off. Turn it on in HushTelegram settings > Chat list.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1"
+          ]
+        },
+        {
           "name": "Hide Premium, gifts and Stars",
           "description": "Removes Premium, Stars, My Grams, Wallet, Business and Send a Gift from Settings, Wallet and Send Gram from the chat, profile and link menus, Gifts tabs on profiles, the Gift button in channels, and Premium stickers, their effects and Premium emoji packs for an account without Premium, for a less cluttered app. On by default. Turn it off in HushTelegram settings > Ads.",
           "use": true,
@@ -210,7 +228,7 @@
         },
         {
           "name": "Hide blocked users in groups",
-          "description": "Leaves messages from people you've blocked out of groups and supergroups you open. Nothing is deleted. Starts off. Turn it on in HushTelegram settings > Conversations.",
+          "description": "Leaves messages from people you've blocked out of groups and supergroups you open, and keeps them from notifying you. Nothing is deleted. Starts off. Turn it on in HushTelegram settings > Conversations.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -666,6 +684,15 @@
           ]
         },
         {
+          "name": "Black and white launch logo",
+          "description": "With AMOLED black on and your phone in dark mode, the launch screen shows Telegram's logo in white on black instead of the app icon, on Android 13 and up. It isn't selected by default, since it has Morphe rebuild Telegram's resources. Turn on Expert mode in Morphe Manager to pick it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1"
+          ]
+        },
+        {
           "name": "Change sticker size",
           "description": "Shows stickers in chats smaller or larger than Telegram does, at a size you pick. Animated emoji and dice keep their size. Starts off. Turn it on in HushTelegram settings > Look and feel.",
           "use": true,
@@ -783,6 +810,15 @@
           ]
         },
         {
+          "name": "Hide Contacts tab",
+          "description": "Removes the Contacts tab from the bar at the bottom of the main screen, and swiping doesn't open its page either. The Calls or Settings tab stays as Telegram has it, and the chat list's new message button still opens your contacts. Starts off. Turn it on in HushTelegram settings > Chat list.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1"
+          ]
+        },
+        {
           "name": "Hide Premium, gifts and Stars",
           "description": "Removes Premium, Stars, My Grams, Wallet, Business and Send a Gift from Settings, Wallet and Send Gram from the chat, profile and link menus, Gifts tabs on profiles, the Gift button in channels, and Premium stickers, their effects and Premium emoji packs for an account without Premium, for a less cluttered app. On by default. Turn it off in HushTelegram settings > Ads.",
           "use": true,
@@ -829,7 +865,7 @@
         },
         {
           "name": "Hide blocked users in groups",
-          "description": "Leaves messages from people you've blocked out of groups and supergroups you open. Nothing is deleted. Starts off. Turn it on in HushTelegram settings > Conversations.",
+          "description": "Leaves messages from people you've blocked out of groups and supergroups you open, and keeps them from notifying you. Nothing is deleted. Starts off. Turn it on in HushTelegram settings > Conversations.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1246,7 +1282,7 @@
     }
   ],
   "patches_name": "HushTelegram",
-  "fingerprint": "f10f39ff9fdd3af06c807bc40f563e8933949b4ace6f4df57dc600b1787fcbb6",
+  "fingerprint": "3d2690ba020f102b14a884204adc2c30b7a63d54e47c5aa2464146b88453f122",
   "release_notes": "HushTelegram v0.0.9 has 25 patches for telegram.org's Telegram 12.10.6 (`org.telegram.messenger.web`) and the official Telegram beta 12.10.7 (`org.telegram.messenger.beta`), up from 22 in v0.0.8. Twenty-three are selected by default. The two credential patches take your own values, so they stay off until you pick them.\n\n## What's new\n\n* **Telegram:** Repair Firebase push registration now works on slower phones. Firebase starts its first Installations request while Telegram is still starting, and on a slow phone that request could get there before HushTelegram's settings were ready. It then went out with the re-signed certificate, Firebase refused it, and no push token was saved. The request now waits for the settings, up to 10 seconds, on Firebase's own background thread. The diagnostic report counts requests that waited and any that still went out early.\n* **Telegram:** The beta target is now telegram.org's current 12.10.7 build, version code 71179, which replaced build 71159. Every patch applies and passes its fixture tests on it.\n* **Telegram:** The README says every way into HushTelegram settings (Telegram's own Settings, a long-press on the Telegram icon, or App info), and walks through the my.telegram.org form for your own API ID, including what causes \"Incorrect app name!\".\n* **Telegram:** Three independent switches add plain-text paste, copyable local user and chat IDs, and a way to stop double-tap reactions. They start off. Pause restores the stock behavior, and the existing clipboard and explicit reaction actions stay available.\n* **Telegram:** Pause, Settings backup and Diagnostics now have separate pages with shorter headings. Search still reaches every control, and all five translations include the new page names.\n* **Telegram:** New Year look all year now puts Telegram's Santa hat over the chat list logo. It follows the logo's bounds and color so it stays visible in light and dark themes. Other titles keep their original drawing path. Changed title geometry getters refuse before patching. The switch remains off by default, and Pause restores Telegram's seasonal behavior.\n* **Telegram:** External links now recognize browser aliases that Android enables at runtime, even when their manifest default is disabled. Disabled or private components stay excluded, and the browser chooser keeps its existing order.\n* **Telegram:** HushTelegram settings now opens from a row in Telegram's own Settings. Repeated taps share one screen, and the launcher and Android App-info entries remain available. Partial patch selections show only their installed controls. Changed incoming item registers or callback casts refuse before any hook is edited.\n* **Telegram:** Changing the registered API ID now refreshes the native connection identity for every valid ID. IDs that differ by 128 no longer share a marker. Updates also stay distinct from the previous marker scheme, without changing saved account keys or the app version. Changed native argument shapes refuse before either credential is edited.\n\n### Tooling\n\n* **Tooling:** Builds use Morphe patcher 1.15.1, which brings faster fingerprint matching and signing, and stricter DEX path checks. Morphe Manager 1.34.0 is the first stable Manager that carries it, so the README now asks for 1.34.0 or newer. Fixture checks use the desktop CLI 1.18.1.\n* **Tooling:** The source-ledger paragraph now identifies v0.0.8 as the published bundle and distinguishes newer source changes.\n* **Tooling:** A bounded selection matrix checks both declared Telegram builds 41 ways each, from the defaults and the full catalog down to single patches and bad credential options. It checks each build's dependencies, minimum Android version, preserved resources, native libraries and settings switches. Configured credentials must change only their own values and the native connection version marker. Mutation controls reject missing, duplicated or altered markers.\n\n## Install\n\n1. Install [Morphe Manager](https://github.com/MorpheApp/morphe-manager) 1.34.0 or newer.\n2. Add HushTelegram as a patch source: https://morphe.software/add-source?github=SysAdminDoc%2FHushTelegram\n3. Get Telegram **12.10.6** from [telegram.org/android](https://telegram.org/android) by tapping Download Telegram (it saves as plain `Telegram.apk`), or the [official beta](https://telegram.org/dl/android/apk-public-beta) **12.10.7**, and patch it. The patched app needs Android 9 or newer.\n4. Coming from v0.0.8? Patch again and install over it with the same Morphe Manager signing key. New to HushTelegram? Uninstall the stock Telegram first, since Android won't put one over the other. Your chats come back when you sign in, but secret chats don't. Back up Morphe Manager's signing key after your first patch. You'll need it for every update.\n5. If Telegram won't send you a login code, register your own app at [my.telegram.org/apps](https://my.telegram.org/apps). Use only letters and numbers in the short name. Then select **Use registered Telegram API credentials**, fill in `apiId` and `apiHash`, and patch again. The result installs over your current HushTelegram build. Keep both values private.\n6. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n7. To change HushTelegram's switches, open Telegram's Settings and tap HushTelegram settings.\n\nThe `.mpp` download is a patch bundle, not a Telegram APK. [Installation instructions](https://github.com/SysAdminDoc/HushTelegram#install).\n\n## Validation\n\n579 runtime tests and 303 patch tests passed locally, along with both Android lints and the release script checks. All 25 patches applied without forcing to Telegram 12.10.6 and to the 12.10.7 beta, build 71179. The dependency advisory check passed. On an Android 9 emulator slowed down to match the push report, this build saved a push token in all seven runs. The patched beta started, opened HushTelegram settings and registered for push.\n",
   "release_tag": "v0.0.9",
   "release_date": "2026-10-05T15:08:19Z",
