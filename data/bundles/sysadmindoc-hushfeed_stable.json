@@ -256,7 +256,7 @@
         },
         {
           "name": "Device privacy guard",
-          "description": "Stops TikTok reading what you copied, hides that you're on a VPN, and gives it a blank advertising ID so apps can't match you by it. Each has its own switch. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "description": "Stops TikTok reading what you copied and gives it a blank advertising ID. Can also hide a VPN connection and root status with details about root tools. Each switch starts off in Hushfeed settings > Privacy. Changing Hide root needs a restart.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -454,7 +454,7 @@
         },
         {
           "name": "Hide CAPTCHA popups",
-          "description": "Notes in Hushfeed's diagnostic report when TikTok shows a verification puzzle. Its hide switch isn't available on this TikTok version, so every puzzle still shows. Works as soon as you patch it in.",
+          "description": "Skips the puzzle TikTok shows while you're just browsing. A puzzle right after you like, follow, comment or repost still shows, and so do sign-in, SMS and two-step checks. Starts off. Turn it on in Hushfeed settings > Feed screen, then restart TikTok.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -544,7 +544,7 @@
         },
         {
           "name": "Hide inbox items",
-          "description": "Lets you hide Inbox rows you don't use, like message requests, TikTok Shop and the stories row, plus call buttons and suggested replies in chats. Each has its own switch. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "description": "Lets you hide Inbox rows you don't use, like message requests, TikTok Shop and the stories row, plus call buttons and suggested replies in chats. Each has its own switch. Also offers search in loaded Activity notifications. Starts off. Turn it on in Hushfeed settings > Inbox.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -598,7 +598,7 @@
         },
         {
           "name": "Hide the risk control CAPTCHA",
-          "description": "Notes in the diagnostic report when TikTok's account safety check decides to show a verification puzzle. It doesn't hide anything, so it's only useful for research. It sits on TikTok's account checks, which is why it isn't picked for you.",
+          "description": "Lets Hide CAPTCHA popups also skip the puzzle TikTok's account safety check raises while you're just browsing. SMS and two-step checks always show. It sits on TikTok's account checks, which is why it isn't picked for you.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -845,6 +845,15 @@
           ]
         },
         {
+          "name": "Profile background",
+          "description": "Opens TikTok's own profile background editor in Edit profile on accounts TikTok hasn't offered it to yet, and shows the backgrounds other profiles have set. TikTok's servers may still refuse to save one for such an account. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
           "name": "Region spoof",
           "description": "Makes TikTok's region and time zone match the country you set for SIM spoof. It changes every region check, sign-in included, and its store region switch is experimental, so it isn't picked for you. Starts off. Turn it on in Hushfeed settings > Region.",
           "use": false,
@@ -1003,6 +1012,15 @@
           ]
         },
         {
+          "name": "Show commenter handle and region",
+          "description": "Shows a commenter's @username in place of their display name, and the country their account is set to after the comment's time. Both start off. Turn them on in Hushfeed settings > Comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
           "name": "Show engagement rate",
           "description": "Shows how many people liked, commented on, shared or saved a video compared with how many watched it, next to the creator's name. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
@@ -1022,7 +1040,7 @@
         },
         {
           "name": "Show follow status",
-          "description": "Shows on a profile whether that person follows you back, and marks accounts in your follow lists that don't. On by default. Turn it off in Hushfeed settings > App.",
+          "description": "Shows on a profile whether that person follows you back, and marks accounts in your follow lists that don't. On by default. Turn it off in Hushfeed settings > App. Optional local counts and appearance controls apply to your own profile.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1175,7 +1193,7 @@
         },
         {
           "name": "Translate comments",
-          "description": "Translates comments as they load, using TikTok's own translator, so you don't have to tap Translate on each one. Starts off. Turn it on in Hushfeed settings > Comments, where more rows list languages TikTok's automatic translation should leave alone, pick the language translations come out in, and add TikTok's translate button beside the comment count.",
+          "description": "Translates comments as they load, using TikTok's own translator, so you don't have to tap Translate on each one. Starts off. Turn it on in Hushfeed settings > Comments, where more rows list languages TikTok's automatic translation should leave alone, pick the language translations come out in, and add TikTok's translate button beside the comment count. Optional received-message and draft translation previews are under Inbox settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1220,7 +1238,7 @@
         },
         {
           "name": "Use system font",
-          "description": "Shows TikTok's text in your phone's own font instead of TikTok's, and can use your phone's emoji too. Starts off. Turn it on in Hushfeed settings > App, then restart TikTok.",
+          "description": "Shows TikTok's text in your phone's own font or in a .ttf or .otf font file you import, instead of TikTok's, and can use your phone's emoji too. Starts off. Turn it on in Hushfeed settings > App, then restart TikTok.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1231,7 +1249,7 @@
     }
   ],
   "patches_name": "Hushfeed",
-  "fingerprint": "c593af26677c50e257995eeab45b101d43871bedc37d32b9ef3731d1da429a8f",
+  "fingerprint": "5652be819584a11c5da873e64750f2a8e43e366e83cfdb91dffaf2414c078007",
   "release_notes": "Hushfeed v0.71.2 has 132 patches for global TikTok 47.1.4 (`com.zhiliaoapp.musically`). It needs Morphe Manager 1.34.0 or newer, since it's built on patcher 1.15.1.\n\nOne more for #137, reported right after 0.71.1 went out. A LIVE you open from the preview under a creator's card in search now gets Hide the status bar in LIVE rooms and Show a LIVE under the status bar too. TikTok opens that LIVE inside the page it uses for opened videos, and the switches never reached it there.\n\nHere's every report the last three releases changed something for, and what changed.\n\nFixed in 0.71.2\n\n* The status bar switches doing nothing on a LIVE opened from search (#137). They work there now, and swiping on to a video gives the bar back the way TikTok had it.\n\nFixed in 0.71.1\n\n* Captions dropping to the bottom in Clear display (#141). The kept caption now sits where TikTok drew it before the controls went away.\n* The strip under the clock not matching the LIVE (#137). With Show a LIVE under the status bar on, it's shaded like the rest of the top now.\n\nFixed in 0.71.0\n\n* Progress bar on videos not showing (#134). It's back on For You, short videos included.\n* Videos added to collections won't play (#135). Tapping a saved video plays that video again, and the feed filters leave lists you open alone.\n* Animated stickers stuck in comments (#130). They move again. The switch behind it is now called Don't decode animated frames ahead.\n* Creator name cut short next to the country (#127). The whole name shows when the row has room for both.\n* Double tap for comments sometimes opened the share panel too (#63). A second tap held a moment too long no longer brings up the long press menu.\n* Black status bar coming back in LIVE rooms (#137). It stays away for the whole LIVE. There's also a new Show a LIVE under the status bar switch.\n* The small share sheet losing Report and Download (#120). Hide the Send to row hides only that row now.\n* Puzzle pieces in LIVEs (#87). Protect external pages counts the CAPTCHA puzzle as one of TikTok's own pages, so it keeps its link back to TikTok.\n* Passkeys (#102). A new Skip passkey sign-in patch lets TikTok offer your password or a code instead.\n* TikTok's language resetting after a reboot (#61). The new Keep the app language patch keeps the language you picked in TikTok.\n* The music disc not spinning (#68). Spin the music disc is new under Feed screen, along with Keep the music disc still.\n* The button at the top left (#128). Hide feed LIVE button still patches on a build where that button can't be found.\n* Progress bar over the creator's name on opened videos (#50). It sits under the caption again.\n* Automatic Clear display (#84). Lots here. It clears videos opened from search or a link, the thin line and the loading bar go away with it, Fade the video controls works with it, and back or share no longer turn it off.\n\nAdded in 0.71.0 for requests\n\n* Double tap and long press (#136). Double tap can do anything Long press does, and Long press can like the video.\n* LIVE quality (#57). Offer LIVE quality in more rooms adds the picker to most rooms that didn't have one.\n* Downloading stories (#93). Turn on Save a story from its share sheet under Downloads.\n* A seek bar on stories (#72), and an always visible seek bar with a bigger handle and the time (#90). Both got new switches under Playback.\n* Keep playing in the background (#99). Replay in the background starts a video over when it ends.\n* A comment translate button (#85), and languages left untranslated (#121), where zh-TW and the other Traditional Chinese codes now keep Traditional Chinese.\n\nAdded to help track down\n\n* The seek bar preview picture (#140). With Log diagnostics on, the log says how many preview pictures each video came with.\n* TikTok's storage use (#70). The diagnostic report lists the biggest folders.\n* Joining a LIVE by voice (#132) and the create tab closing (#133). Remove LIVE extras and Remove creation tools now say what they take out, so you can leave them out if you use those.\n\n## What's changed\n\n* Hide the status bar in LIVE rooms and Show a LIVE under the status bar now work on a LIVE opened from the preview under a creator's card in search too. TikTok opens that LIVE inside the page it uses for opened videos, which the switches didn't reach (#137).\n\n## Update\n\nRefresh the Hushfeed source in Morphe Manager 1.34.0 or newer and patch TikTok again. Keep the manager's existing signing key so your login and settings carry over. The .mpp is a patch bundle, not a TikTok APK.\n\n## Checked\n\n* 3876 runtime tests and 765 patch tests passed. Both Android lint checks passed.\n* All 132 patches applied to TikTok 47.1.4 with desktop CLI 1.18.1. Resource checks passed, and the attached release receipt records the exact bundle and its result.\n* This bundle was patched onto TikTok 47.1.4 on a Galaxy S22, and a LIVE was opened from the preview under a creator's card in search (#137). With Show a LIVE under the status bar on, the LIVE reached the top with the creator row below the clock. With Hide the status bar in LIVE rooms on, the bar went away. Swiping on to the next video brought TikTok's own layout and the bar back both times.\n",
   "release_tag": "v0.71.2",
   "release_date": "2026-10-11T23:25:46Z",
