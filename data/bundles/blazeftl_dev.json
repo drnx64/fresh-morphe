@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/BlazeFTL/FTL-Patches",
   "created_at": "2026-10-11T13:50:13Z",
   "version": "1.43.3-dev.2",
-  "description": "## [1.43.2](https://github.com/BlazeFTL/FTL-Patches/compare/v1.43.1...v1.43.2) (2026-10-07)\n\n### 🐛 Bug Fixes\n\n* Add FireFox Pin Extension To Search Bar ([d81086f](https://github.com/BlazeFTL/FTL-Patches/commit/d81086fddd6f7969f59d50f3d1650a5ee05804b6))\n* up ([caa7706](https://github.com/BlazeFTL/FTL-Patches/commit/caa77068bbce8918733f0e8fe5379d6f409508ff))\n* up ([eeabc12](https://github.com/BlazeFTL/FTL-Patches/commit/eeabc125fa1d06ce55afa982b1ca8b8df79b2f0a))\n* Up ([6e897ed](https://github.com/BlazeFTL/FTL-Patches/commit/6e897eda8400a16bd14d754bdd9eaf8b0fdb8960))\n* Up ([8df0f16](https://github.com/BlazeFTL/FTL-Patches/commit/8df0f1643b1e9dec458cf21cf279ca75b590e0f9))\n* Up ([7cd0219](https://github.com/BlazeFTL/FTL-Patches/commit/7cd0219588f14bf5cf3d3e4ed5a50e923cb0fa51))\n* Update Remove Analytics Patch Breaking FCM Push ([131db7b](https://github.com/BlazeFTL/FTL-Patches/commit/131db7b176c03435c80e90e62b299b8cc4769d9c))",
+  "description": "## [1.43.3](https://github.com/BlazeFTL/FTL-Patches/compare/v1.43.2...v1.43.3) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* up ([218324d](https://github.com/BlazeFTL/FTL-Patches/commit/218324dd8911ff2555f4dcbfd77564773eeb3af6))\n* up ([75b0ea6](https://github.com/BlazeFTL/FTL-Patches/commit/75b0ea6e1e2e761b63fe22fae38d58ca54df7759))",
   "apps": [
     {
       "app_name": "WiFi Analyzer",
@@ -26,30 +26,66 @@
       "package": "calendar.agenda.schedule.event.advance.calendar.planner",
       "patches": [
         {
-          "name": "Skip/Boost splash screen",
-          "description": "By default, skips the splash screen entirely on launch. Turn on \"Boost splash\" to instead keep it briefly on screen (configurable delay) Useless To Boost Splash Screen If You Select Unlock Premium Patch Too Use If You Want To Skip Splash Screen Entirely",
+          "name": "Boost splash screen",
+          "description": "Skips splash ads and the consent request and opens the app immediately.",
           "use": true,
-          "options": [
-            {
-              "key": "boostSplash",
-              "description": "Off: splash is skipped entirely. On: splash briefly shows, then proceeds after the configured delay."
-            },
-            {
-              "key": "boostDelayMs",
-              "description": "Only used when \"Boost splash\" is on. How long to show the splash before proceeding."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
-            "1.0.34"
+            "1.0.35"
+          ]
+        },
+        {
+          "name": "Disable caller features",
+          "description": "Disables the after call screen and hides its entry in settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.35"
+          ]
+        },
+        {
+          "name": "Disable rate us prompts",
+          "description": "Disables the rate us feedback screen and the periodic rate us prompt.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.35"
+          ]
+        },
+        {
+          "name": "Remove battery optimization prompt",
+          "description": "Removes the battery optimization request on the dashboard.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.35"
+          ]
+        },
+        {
+          "name": "Skip initial setup pages",
+          "description": "Skips the permission and call setup pages shown after the language selection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.35"
+          ]
+        },
+        {
+          "name": "Stop hiding navigation keys",
+          "description": "Keeps the system navigation keys visible.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.35"
           ]
         },
         {
           "name": "Unlock premium",
-          "description": "Unlocks premium features and removes ads.",
+          "description": "Unlocks premium features and hides the premium entry in settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.0.34"
+            "1.0.35"
           ]
         }
       ]
@@ -84,6 +120,88 @@
           "compatible_versions": [
             "18.8.0.prime"
           ]
+        }
+      ]
+    },
+    {
+      "app_name": "Calendar 2026",
+      "package": "com.agendaplanner.taskmangereventmangercalendar",
+      "patches": [
+        {
+          "name": "Boost splash",
+          "description": "Removes the splash screen delay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1"
+          ]
+        },
+        {
+          "name": "Disable caller related features",
+          "description": "Disables caller ID features, the phone state receiver and the permission settings entry.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1"
+          ]
+        },
+        {
+          "name": "Skip consent form",
+          "description": "Skips the consent form request on launch and continues the splash flow directly.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1"
+          ]
+        },
+        {
+          "name": "Skip initial setup pages",
+          "description": "Skips the phone, overlay and notification permission pages in the initial setup.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1"
+          ]
+        },
+        {
+          "name": "Stop hiding navigation keys",
+          "description": "Stops the app from hiding the system navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1"
+          ]
+        },
+        {
+          "name": "Unlock purchased state",
+          "description": "Makes the app treat itself as purchased.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Video Player All Format",
+      "package": "com.allformatplayer.streamvideoplayer",
+      "patches": [
+        {
+          "name": "Hide bottom bar",
+          "description": "Hides the bottom navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4"
+          ]
+        },
+        {
+          "name": "Skip splash screen",
+          "description": "Launches the app directly into the main screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
         }
       ]
     },
@@ -208,8 +326,8 @@
           ]
         },
         {
-          "name": "Disable signature verification",
-          "description": "Patches libc++_shared.so (arm64-v8a and armeabi-v7a) to branch-to-self at the signature check call site, hanging that code path instead of letting it fail the app.",
+          "name": "Kill Signature Verification",
+          "description": "Patches libmx-bh.so to kill signature verification.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -503,16 +621,71 @@
       ]
     },
     {
+      "app_name": "Video To Photo",
+      "package": "kallossoft.videotophoto",
+      "patches": [
+        {
+          "name": "Skip splash delay",
+          "description": "Shortens the splash screen waits.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.0.2"
+          ]
+        },
+        {
+          "name": "Unlock Pro and skip onboarding",
+          "description": "Unlocks Pro features and skips the onboarding screens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.0.2"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Firefox Nightly",
       "package": "org.mozilla.fenix",
       "patches": [
         {
-          "name": "Old style 3 dot menu",
+          "name": "Close duplicate tabs",
+          "description": "Adds Close duplicate tabs to the tab tray 3 dot menu. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "159.0a1",
+            "160.0a1"
+          ]
+        },
+        {
+          "name": "Hide fullscreen toast",
+          "description": "Removes the toast shown when a video goes fullscreen. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "159.0a1",
+            "160.0a1"
+          ]
+        },
+        {
+          "name": "New tab next to current tab",
+          "description": "Opens new tabs right after the current tab and adds an add-to-end button (+ with a down arrow) beside + that opens a tab at the end. Both are toggles in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "159.0a1",
+            "160.0a1"
+          ]
+        },
+        {
+          "name": "Old style 3 dot menu And Extension Pinning",
           "description": "Adds \"Mod Settings\" to the 3 dot menu: switch between the stock bottom sheet menu and the old style popup menu, and pin extensions to the search bar.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "159.0a1"
+            "159.0a1",
+            "160.0a1"
           ]
         },
         {
@@ -522,6 +695,16 @@
           "options": [],
           "compatible_versions": [
             "159.0a1"
+          ]
+        },
+        {
+          "name": "Tab scroll button",
+          "description": "Adds up and down buttons beside + in the tab tray that jump to the first and last tab. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "159.0a1",
+            "160.0a1"
           ]
         }
       ]
@@ -560,7 +743,7 @@
         },
         {
           "name": "Unlock Pro",
-          "description": "Only Use In V2.7.2. Signature verification is spoofed automatically so the purchase check passes without manually applying Spoof app signature.",
+          "description": "Signature verification is spoofed automatically if this patch is selected the purchase check passes.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -578,6 +761,145 @@
             }
           ],
           "compatible_versions": []
+        }
+      ]
+    },
+    {
+      "app_name": "XPlayer - Video Player",
+      "package": "video.player.videoplayer",
+      "patches": [
+        {
+          "name": "Clean 3 Dot Menu",
+          "description": "Removes Lock and Add to playlist from the video and folder 3-dot bottom sheets and from the selection toolbar menus. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Disable Rate Dialog",
+          "description": "Disables the rate dialog counters so it never appears.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Extra File Info",
+          "description": "Shows resolution, date, size and last played on video rows, and video count, size and path on folder rows. Fixes the gap above Recent Added and adds a Mod Settings option to hide the Recent Added and Directory rows. Toggles in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Hide Bottom Bar",
+          "description": "Hides the bottom tab bar on the home screen. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Hide Cast Button",
+          "description": "Hides the cast button in the toolbar menus. Toggle it in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Hide Cast FF FB In Player",
+          "description": "Hides the cast, custom and 10 second forward/backward buttons in the player. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Hide Home Tiles",
+          "description": "Hides the tile row at the top of the home page (All Videos, Downloader, Privacy, Cleaner...) and the Move to Trash option in the delete dialog. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Hide Recent Videos",
+          "description": "Hides the recent videos row on the home page. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Hide Widgets Menu Item",
+          "description": "Removes Widgets from the home 3-dot menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Mod Settings",
+          "description": "Adds a Mod Settings entry below Settings in the home 3-dot menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Player Side Cleaned",
+          "description": "Cleans the player side menu: audio, subtitle, cast, bookmark, favorite, play mode, brightness and volume. Applied while the menu inflates so remaining items stay aligned. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Remove Tutorial",
+          "description": "Removes the player tutorial.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Skip Splash Screen",
+          "description": "Launches directly into the file explorer instead of the splash screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks all pro features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
+        },
+        {
+          "name": "Volume Booster",
+          "description": "Raises the volume boost limit in the player and background playback. Toggle in Mod Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.9.2"
+          ]
         }
       ]
     },
@@ -660,9 +982,9 @@
     }
   ],
   "patches_name": "BlazeFTL Patches",
-  "fingerprint": "7c3a8248d5155b19b46c56dd092a087100d3d72dc5de892059370df188417a72",
-  "release_notes": "### v1.43.2\r\n\r\n**Firefox Nightly**\r\n\r\n- Restore Old 3-Dot Menu\r\n- Extension Pinning\r\n- Remember Tab Scroll Position\r\n- Updated Mod Settings Icon and UI\r\n- Support for Newer Firefox Nightly Builds\r\n\r\n**MX Player**\r\n\r\n- Smart Enhance Control\r\n- Smart Enhance Always On\r\n- Replace Codec to Fix EAC3 Playback\r\n- Recycle Bin Fix\r\n- Configurable MX Player Mod Settings\r\n- Various patch updates and fixes\r\n\r\n**All Video Downloader**\r\n\r\n- Updated support for v1.9.8\r\n- Additional patches\r\n- Promo item removal updates\r\n\r\n**Video Downloader**\r\n\r\n- Custom Host Patch\r\n- Custom Popup Blocker\r\n- Updated existing patches and compatibility\r\n\r\n\r\n**General / Core**\r\n\r\n- Density Patch improvements\r\n- Fixed Analytics Removal breaking FCM push notifications",
-  "release_tag": "v1.43.2",
-  "release_date": "2026-10-07T02:36:22Z",
-  "isPreRelease": false
+  "fingerprint": "fe09e767a2bb41db6c657532aff0cf334f573d7f1572c843ed67500cf46593dc",
+  "release_notes": "## [1.43.3-dev.2](https://github.com/BlazeFTL/FTL-Patches/compare/v1.43.3-dev.1...v1.43.3-dev.2) (2026-10-11)\r\n\r\nChangelog Since v1.43.3-dev.1\r\n\r\nXPlayer\r\n\r\n- Fixed top spacing and added options to hide Recently Added and move Directory From the bottom.\r\n- Added options to hide Lock and Add to Playlist from the top menu.\r\n- Added option to hide Trash from the delete menu.\r\n\r\nVideo to Photo\r\n\r\n- Added Video to Photo Pro patch And Boost Splash Screen Patch.\r\n\r\nFirefox\r\n\r\n- Added option to open new tabs next to the current tab.\r\n- Added option to close duplicate tabs from the three-dot menu.\r\n- Added Remove Fullscreen Toast patch.\r\n- Added Support For V160.0a1",
+  "release_tag": "v1.43.3-dev.2",
+  "release_date": "2026-10-11T13:50:13Z",
+  "isPreRelease": true
 }

@@ -1,0 +1,392 @@
+{
+  "bundle": "sabopura",
+  "channel": "stable",
+  "repo_url": "https://github.com/sabopura/sabopura-morphe-patches",
+  "created_at": "2026-10-11T14:05:27Z",
+  "version": "1.14.0",
+  "description": "Sabopura Morphe Patches 1.14.0",
+  "apps": [
+    {
+      "app_name": "Google News",
+      "package": "com.google.android.apps.magazines",
+      "patches": [
+        {
+          "name": "Disable device account notification sync",
+          "description": "Stops the notification SDK from requesting a token for every Google account on the device, which under MicroG shows an \"Account ... requested by Google News\" notification per account. Account-bound push notifications are no longer registered.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.168.0.982359681",
+            "5.163.0.947799485"
+          ]
+        },
+        {
+          "name": "Enable CustomTabs",
+          "description": "Opens articles in your default browser through Custom Tabs instead of the in-app WebView, so browser ad blockers and extensions apply.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.168.0.982359681",
+            "5.163.0.947799485"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Renames the app and routes Google sign-in through MicroG (GmsCore) instead of Google Play Services, so the patched app installs next to the stock app.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name of the patched app. Keep the default to update an install patched with docbt/patched-up."
+            },
+            {
+              "key": "spoofedSignature",
+              "description": "Certificate SHA-1 that MicroG reports for this app. Try the Google News certificate if sign-in fails on a fresh install."
+            }
+          ],
+          "compatible_versions": [
+            "5.168.0.982359681",
+            "5.163.0.947799485"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "YouTube",
+      "package": "com.google.android.youtube",
+      "patches": [
+        {
+          "name": "Ambient light",
+          "description": "Fills the black bars around the video with a soft glow of the picture's colours, like Ambient light for YouTube. Configurable in Settings > Video and audio > Ambient light.",
+          "use": true,
+          "options": [
+            {
+              "key": "ambient_enabled_by_default",
+              "description": "Whether the ambient light is on before it is changed in the app."
+            },
+            {
+              "key": "ambient_blur",
+              "description": "Initial blur strength in percent (0-100)."
+            },
+            {
+              "key": "ambient_spread",
+              "description": "Initial spread of the picture into the bars in percent (0-100)."
+            },
+            {
+              "key": "ambient_brightness",
+              "description": "Initial glow brightness in percent (30-200)."
+            },
+            {
+              "key": "ambient_saturation",
+              "description": "Initial glow saturation in percent (0-250)."
+            },
+            {
+              "key": "ambient_frame_rate",
+              "description": "Initial glow updates per second (5-60)."
+            }
+          ],
+          "compatible_versions": [
+            "21.04.223",
+            "21.34.248",
+            "21.35.443",
+            "21.35.448",
+            "21.40.161",
+            "21.40.165"
+          ]
+        },
+        {
+          "name": "Danmaku comments",
+          "description": "Flows regular comments, live chat, and chat replays over videos like NicoNico/bilibili, with native in-app settings, NG words, and no API key.",
+          "use": true,
+          "options": [
+            {
+              "key": "danmaku_font_size",
+              "description": "Danmaku text size in sp (12-48)."
+            },
+            {
+              "key": "danmaku_opacity",
+              "description": "Danmaku opacity percentage (20-100)."
+            },
+            {
+              "key": "danmaku_duration",
+              "description": "Seconds for a comment to cross the player (3-20)."
+            },
+            {
+              "key": "danmaku_lane_coverage",
+              "description": "Percentage of player height available to comments (20-100)."
+            },
+            {
+              "key": "danmaku_max_comments",
+              "description": "Maximum comments retained in memory for the current video (20-500)."
+            },
+            {
+              "key": "danmaku_max_length",
+              "description": "First-run limit for excluding long comments (20-300)."
+            }
+          ],
+          "compatible_versions": [
+            "21.04.223",
+            "21.34.248",
+            "21.35.443",
+            "21.35.448",
+            "21.40.161",
+            "21.40.165"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Pinterest",
+      "package": "com.pinterest",
+      "patches": [
+        {
+          "name": "Disable Bugsnag Telemetry",
+          "description": "Makes the Bugsnag SDK discard every error and session report.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.11.0",
+            "14.38.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Disable General Telemetry",
+          "description": "Skips Pinterest's analytics, attribution, ads measurement and tracking startup tasks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.11.0",
+            "14.38.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Remove Promoted Pins",
+          "description": "Makes every pin report itself as not promoted and not an active ad, which disables Pinterest's ad handling for pins.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.11.0",
+            "14.38.0",
+            "14.39.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Reddit",
+      "package": "com.reddit.frontpage",
+      "patches": [
+        {
+          "name": "Auto-translate Reddit content",
+          "description": "Automatically invokes Reddit's existing post and comment translation path.",
+          "use": true,
+          "options": [
+            {
+              "key": "auto_translate",
+              "description": "Translate visible posts and comments without tapping the translate indicator."
+            },
+            {
+              "key": "target_language",
+              "description": "BCP-47 language tag sent through Reddit's translation request header."
+            }
+          ],
+          "compatible_versions": [
+            "2026.28.0",
+            "2026.30.0",
+            "2026.35.0",
+            "2026.37.0",
+            "2026.38.0",
+            "2026.39.0",
+            "2026.40.0",
+            "2026.41.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Sankaku App",
+      "package": "com.sankakucomplex.channel.black",
+      "patches": [
+        {
+          "name": "Disable Infinite Upgrade Popup",
+          "description": "Disables the \"Want unlimited access? Get Sankaku Infinite!\" upsell popup that periodically appears while browsing the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.27",
+            "4.26"
+          ]
+        },
+        {
+          "name": "Disable OTA bundle updates",
+          "description": "Always runs the JavaScript bundle shipped in the APK and stops HotUpdater from checking for updates, so over-the-air bundles cannot undo the other patches.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.27",
+            "4.26"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SmartNews",
+      "package": "jp.gocro.smartnews.android",
+      "patches": [
+        {
+          "name": "SmartNews cleanup",
+          "description": "Disables SmartNews ad config, native layouts, and reader ad nodes via stable anchors.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.6.50",
+            "26.7.10",
+            "26.8.50",
+            "26.9.11",
+            "26.9.20",
+            "26.10.10"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "pixiv",
+      "package": "jp.pxv.android",
+      "patches": [
+        {
+          "name": "Disable pixiv ad SDKs",
+          "description": "Skips initialization of AppLovin MAX, Google Mobile Ads and Amazon APS to reduce ad-related network traffic.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.199.0"
+          ]
+        },
+        {
+          "name": "Hide pixiv ads",
+          "description": "Removes the overlay, list, detail and interstitial ads. Does not unlock Premium features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.199.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Twitch",
+      "package": "tv.twitch.android.app",
+      "patches": [
+        {
+          "name": "Auto claim channel points",
+          "description": "Claim available bonus chests automatically after Twitch's eligibility checks. Coalesces updates and bounds retries for each claim.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Chat enhancements",
+          "description": "7TV, BTTV and FFZ emotes, local word/user filters, repeat filtering, highlights, timestamps and font size. Configure them from the player menu button.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Danmaku chat",
+          "description": "Flows live chat over the stream like NicoNico/bilibili, with emotes and NG words. Long-press the player menu button to switch it on or off.",
+          "use": true,
+          "options": [
+            {
+              "key": "danmaku_font_size",
+              "description": "Danmaku text size in sp at full player height (12-40)."
+            },
+            {
+              "key": "danmaku_opacity",
+              "description": "Danmaku opacity percentage (20-100)."
+            },
+            {
+              "key": "danmaku_duration",
+              "description": "Seconds for a message to cross the player (3-15)."
+            },
+            {
+              "key": "danmaku_coverage",
+              "description": "Percentage of the player height used from the top (20-100)."
+            },
+            {
+              "key": "danmaku_max_length",
+              "description": "Longer messages are not shown (10-200)."
+            }
+          ],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Fix login",
+          "description": "Optional workaround for the unsupported app/OS login error after re-signing. Skips Twitch's Play Integrity submission; leave off when login works.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Fix notifications",
+          "description": "Repair push registration after re-signing. Adjusts the certificate header only for HTTPS Firebase Installations requests.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Hide display ads",
+          "description": "Hide display banners and in-feed ad units.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Player enhancements",
+          "description": "Playback speed, seek steps, statistics, sleep timer, VOD chat offset and chapters. Optional public manifest proxy, gestures, layout and Following feed controls in the player menu settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        },
+        {
+          "name": "Show deleted messages",
+          "description": "Keeps deleted or moderated chat messages readable instead of replacing them with \"<message deleted>\". The message turns into a tappable spoiler: tap it to reveal the original text. Only text already received by this client can be revealed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2",
+            "30.7.2"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Sabopura Morphe Patches",
+  "fingerprint": "ad935943029fb6c15a752a385ca9cc118800be0815dda82590290c78994d5344",
+  "release_notes": "Sabopura Morphe Patches の初回公開版です。\r\n\r\n## 使い方\r\n\r\nMorphe Manager の **ソース → ＋ → リモート** に `https://github.com/sabopura/sabopura-morphe-patches` を入力すると、更新も自動で届きます。下の `.mpp` をダウンロードして **ローカル** として追加することもできます。パッチを当てる元の APK は、各アプリの公式版をご自身で用意してください。\r\n\r\n## 主な内容\r\n\r\n### Twitch\r\n\r\n- プレイヤーのボタンを 1 つにまとめました。タップでメニュー（弾幕のオン/オフ、再生速度、スリープタイマー、シーク、再読み込み、再生統計、VOD のチャプター・チャット同期、過去チャット・履歴検索・ユーザー検索）、長押しで弾幕をすぐオン/オフします。\r\n- 設定画面を 1 つにまとめ、カテゴリー分け、検索、タブレットでの 2 列表示、ライト/ダークテーマへの追従に対応しました。\r\n\r\n### 対応バージョンの追加\r\n\r\nYouTube 21.40.165、Reddit 2026.41.0、SmartNews 26.10.10、Pinterest 14.39.0。これまでの対応バージョンもすべて使えます。\r\n\r\n対応アプリ・バージョンの一覧と、確認した範囲は README を見てください。\r\n\r\n> ⚠️ 個人用に作ったものを公開しています。動作確認は限られた環境のみです。自己責任でお使いください。\r\n\r\n\r\n### SHA-256\r\n\r\n```\r\n07bbac85141da87b8f10074773f4df17a8798ca344e5043508cbe2c34bd3daea  sabopura-morphe-patches-1.14.0.mpp\r\n```\r\n",
+  "release_tag": "v1.14.0",
+  "release_date": "2026-10-11T14:05:27Z",
+  "isPreRelease": false
+}
