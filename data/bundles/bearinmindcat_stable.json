@@ -2,9 +2,9 @@
   "bundle": "bearinmindcat",
   "channel": "stable",
   "repo_url": "https://github.com/bearinmindcat/morphe-patches",
-  "created_at": "2026-10-12T15:25:45Z",
-  "version": "2.4.0",
-  "description": "## [2.4.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.3.1...v2.4.0) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* waze installs as De-Waze ([332cd66](https://github.com/bearinmindcat/morphe-patches/commit/332cd668e3b0c81cb1fe5a6f88fa6ff2399b0a3a))\n\n### ✨ New Features\n\n* flock cameras on the map, from openstreetmap (deflock) with a chime for one ahead ([9e5cd2d](https://github.com/bearinmindcat/morphe-patches/commit/9e5cd2d44a535e3939307eb0395a5b24fe8cc09d))",
+  "created_at": "2026-10-13T19:49:33Z",
+  "version": "2.5.2",
+  "description": "## [2.5.2](https://github.com/bearinmindcat/morphe-patches/compare/v2.5.1...v2.5.2) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* change the bigger speedometer sizes later in waze customization, with a switch for waze own sizes; issue [#50](https://github.com/bearinmindcat/morphe-patches/issues/50) ([778ef9c](https://github.com/bearinmindcat/morphe-patches/commit/778ef9c923d6f6a32997be87444f2e84ff8cf8b0))",
   "apps": [
     {
       "app_name": "AllTrails",
@@ -130,6 +130,15 @@
           ]
         },
         {
+          "name": "Avoid Flock cameras",
+          "description": "Steers driving directions around Flock cameras: when Google's route passes one, a camera-free way is worked out with BRouter, an OpenStreetMap router, and Maps asks Google again for a route through it, so Google still times and navigates the trip, and keeps it through reroutes. A detour longer than half again the distance is dropped. Off until turned on in Waze & external data source, with Flock cameras; your route's start and end go to brouter.de. Trips with stops are left as they are.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
           "name": "Better offline maps",
           "description": "Reworks the offline area picker: zooming out really selects more instead of being shrunk to Google's size cap, the box can be resized by dragging its edges and corners, a large area is split into several downloads whose true total size is shown, and areas already downloaded are drawn on the map. Can be turned off on the Customization screen.",
           "use": true,
@@ -204,7 +213,7 @@
         },
         {
           "name": "Flock cameras",
-          "description": "Puts Flock and other license plate reader cameras on the map, from OpenStreetMap -- the cameras DeFlock's volunteers map -- and chimes and shows a note when one is coming up ahead. Off until turned on in Waze Features, a row on the account sheet, because it downloads the ones near you from an OpenStreetMap server, over the same area as the speed cameras.",
+          "description": "Puts Flock and other license plate reader cameras on the map, from OpenStreetMap -- the cameras DeFlock's volunteers map -- and chimes and shows a note when one is coming up ahead. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the ones near you from an OpenStreetMap server, over the same area as the speed cameras.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -308,7 +317,7 @@
         },
         {
           "name": "Speed cameras",
-          "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze Features, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server -- an area you choose there, about 25 to 175 km across.",
+          "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server -- an area you choose there, about 25 to 175 km across.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -317,7 +326,7 @@
         },
         {
           "name": "Speeding chime",
-          "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze Features, a row on the account sheet.",
+          "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze & external data source, a row on the account sheet.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -335,7 +344,7 @@
         },
         {
           "name": "Waze alerts",
-          "description": "Shows the alerts a Waze on the same phone is tracking -- police to begin with, and any of crashes, hazards, traffic jams, closures and speed cameras -- as pins on the map, with a chime and a note as one comes up ahead. Off until turned on in Waze Features. Waze has to be patched with Share alerts with Maps, signed in and open; in the background is enough.",
+          "description": "Shows the alerts a Waze on the same phone is tracking -- police to begin with, and any of crashes, hazards, traffic jams, closures and speed cameras -- as pins on the map, with a chime and a note as one comes up ahead. Off until turned on in Waze & external data source. Waze has to be patched with Share alerts with Maps, signed in and open; in the background is enough.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -359,7 +368,7 @@
       "patches": [
         {
           "name": "Alert distances",
-          "description": "How far ahead, in metres, Waze warns of police, hazards, crashes, traffic jams and speed cameras. The defaults are the old Waze mods' (CGE); Waze's own are lower for most of them.",
+          "description": "How far ahead, in metres, Waze warns of police, hazards, crashes, traffic jams and speed cameras. The defaults are the old Waze mods' (CGE); Waze's own are lower for most of them. They can be changed later in Customization, at the bottom of Waze's side menu.",
           "use": false,
           "options": [
             {
@@ -414,7 +423,7 @@
         },
         {
           "name": "Bigger speedometer",
-          "description": "Bigger digits on the speedometer, and on the speed limit sign beside it, so they can be read at a glance.",
+          "description": "Bigger digits on the speedometer, and on the speed limit sign beside it, so they can be read at a glance. The sizes can be changed later in Customization, at the bottom of Waze's side menu, where a switch also gives Waze's own sizes back.",
           "use": true,
           "options": [
             {
@@ -511,7 +520,7 @@
         },
         {
           "name": "Navigation distances",
-          "description": "How far ahead Android Auto gives its heads-up, and how long a jam must last before the traffic bar shows it. The defaults are the old Waze mods' (Chuppito).",
+          "description": "How far ahead Android Auto gives its heads-up, and how long a jam must last before the traffic bar shows it. The defaults are the old Waze mods' (Chuppito). They can be changed later in Customization, at the bottom of Waze's side menu.",
           "use": false,
           "options": [
             {
@@ -560,7 +569,7 @@
         },
         {
           "name": "Share alerts with Maps",
-          "description": "Hands the alerts Waze is tracking -- police, crashes, hazards, traffic jams, closures and speed cameras -- to Ungoogled Maps on the same phone, where Waze alerts in Waze Features puts them on the map. Nothing leaves the phone. Waze has to be signed in and open; in the background is enough.",
+          "description": "Hands the alerts Waze is tracking -- police, crashes, hazards, traffic jams, closures and speed cameras -- to Ungoogled Maps on the same phone, where Waze alerts in Waze & external data source puts them on the map. Nothing leaves the phone. Waze has to be signed in and open; in the background is enough.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -587,7 +596,7 @@
         },
         {
           "name": "Speed limit sign",
-          "description": "The style of the speed limit sign beside the speedometer, whatever the country.",
+          "description": "The style of the speed limit sign beside the speedometer, whatever the country. It can be changed later in Customization, at the bottom of Waze's side menu.",
           "use": false,
           "options": [
             {
@@ -601,7 +610,7 @@
         },
         {
           "name": "Stay awake in the background",
-          "description": "Lets Waze keep running in the background without a route for the chosen time -- Waze's server allows 10 minutes -- so that its alerts keep reaching Maps while you navigate there. Costs battery; Waze still closes itself when you close it.",
+          "description": "Lets Waze keep running in the background without a route for the chosen time -- Waze's server allows 10 minutes -- so that its alerts keep reaching Maps while you navigate there. Costs battery; Waze still closes itself when you close it. The time can be changed later in Customization, at the bottom of Waze's side menu.",
           "use": false,
           "options": [
             {
@@ -617,9 +626,9 @@
     }
   ],
   "patches_name": "bearinmind patches",
-  "fingerprint": "22da8f33214aa2df13d8834cf8a8507f6aebbb8031359e1934e3fd4075564a2b",
-  "release_notes": "## [2.4.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.3.1...v2.4.0) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* waze installs as De-Waze ([332cd66](https://github.com/bearinmindcat/morphe-patches/commit/332cd668e3b0c81cb1fe5a6f88fa6ff2399b0a3a))\n\n### ✨ New Features\n\n* flock cameras on the map, from openstreetmap (deflock) with a chime for one ahead ([9e5cd2d](https://github.com/bearinmindcat/morphe-patches/commit/9e5cd2d44a535e3939307eb0395a5b24fe8cc09d))\n",
-  "release_tag": "v2.4.0",
-  "release_date": "2026-10-12T15:25:45Z",
+  "fingerprint": "2812b4f275efb7666af408fb513ecbc6b8475a3a2cf0b475494b8c633d5d175a",
+  "release_notes": "## [2.5.2](https://github.com/bearinmindcat/morphe-patches/compare/v2.5.1...v2.5.2) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* change the bigger speedometer sizes later in waze customization, with a switch for waze own sizes; issue [#50](https://github.com/bearinmindcat/morphe-patches/issues/50) ([778ef9c](https://github.com/bearinmindcat/morphe-patches/commit/778ef9c923d6f6a32997be87444f2e84ff8cf8b0))\n",
+  "release_tag": "v2.5.2",
+  "release_date": "2026-10-13T19:49:33Z",
   "isPreRelease": false
 }

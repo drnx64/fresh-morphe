@@ -13787,7 +13787,7 @@
           },
           {
             "name": "HushPinterest settings",
-            "description": "Adds a HushPinterest page to Pinterest where you turn features on or off, pause HushPinterest, back up your settings and read the licenses. Open it by long-pressing the Pinterest logo at the top of your home feed or Pinterest's app icon. Works as soon as you patch it in, with no switch.",
+            "description": "Adds a HushPinterest page to Pinterest where you turn features on or off, pause HushPinterest, back up your settings and read the licenses. Open it from Pinterest's settings, or by long-pressing the Pinterest logo at the top of your home feed or Pinterest's app icon. Works as soon as you patch it in, with no switch.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -13879,10 +13879,10 @@
       }
     ],
     "patches_name": "HushPinterest",
-    "fingerprint": "2a95df06b68f4d58974687fb43d841bd12ea65fcaa8108def2add65032dade6e",
-    "release_notes": "HushPinterest 0.0.7 has 27 patches for Pinterest 14.39.0. It's built on Morphe patcher 1.15.1, so it needs Morphe Manager 1.34.0 or newer. A patched Pinterest can now sign up for push notifications, which Google's Firebase used to refuse, and you can pick the folder your downloads go to. Hide ads also looks inside the rows of pins on Home and under a pin, and Hide shopping catches store product pins.\n\nThis release moves to Pinterest 14.39.0. Patch 14.39.0 and install it over your current HushPinterest with the same signing key, and your settings stay as they are.\n\n## What's new\n\n- Pinterest 14.39.0 is now the supported version. All 27 patches apply to it, and 14.38.0 is no longer a target.\n- New Fix push notifications patch, on by default. Google's Firebase service only signs Pinterest up for push notifications when the request names Pinterest's original signature, and a patched Pinterest is signed with a different one, so it never got a notification token. The patch gives Firebase the original signature's fingerprint when Pinterest signs up and changes nothing else in the request. Its switch is on the new Notifications page under More settings.\n- Download pins has a new Save in Pinterest's folder switch, and it starts off. With it on, downloads go to Pictures/100PINT/Pins, the folder Pinterest's own image saves use, instead of filling up Download. Board downloads, long-press downloads and retries from Download history follow it too, and the download messages and Download history point to that folder instead of Downloads. (#5)\n- Download pins can also save into a folder you pick. Tap Pick a download folder and choose any folder inside Pictures, DCIM, Download or Documents in Android's folder picker. Android's Downloads still does the saving, so nothing gets copied and no storage permission is needed. Each download in Download history remembers its folder, so its messages point there even after you pick another. Tap the row again to pick a different folder or go back to Download. Save in Pinterest's folder wins while it's on, and picking a folder turns it off. (#5)\n- Long-press download keeps Pinterest's own buttons again. Holding a pin in a grid showed only Download, because Pinterest's Pin, Share and More ideas buttons never sprang back in after the patch laid the menu out again. Now all three show with Download after them, and letting go on any of them does what it says.\n- System share sheet opens Android's share menu from a pin's Share button on 14.39.0. The pin's id is now read from the fields Pinterest's share sheet fills, found when you patch, instead of by a name that pointed somewhere else in 14.39.0, which left Pinterest's own sheet showing with the switch on.\n- Hide advertising ID now keeps Pinterest's browser ID out of Google's Block Store too. Pinterest kept it there so that, on a phone with Google backup on, it would outlast an uninstall and come back on a new phone, which let a fresh install send the old ID before you'd signed in. With the switch on, Pinterest finds no saved ID, and when it tries to save one it deletes the stored copy instead, so a reinstall starts fresh. The browser cookie for the install you're using keeps working the way it did.\n- The settings home ends with a Support HushPinterest row. Tapping it opens the Ko-fi page in your browser, and if no app can open it you get a message with the address instead. Its text is translated into German, Spanish, Indonesian, Brazilian Portuguese and Turkish.\n- Download board no longer saves a board's pins a second time once they've dropped off Download history. The history still shows the newest 32 entries, and it now remembers the 500 before those. Removing a pin from Download history forgets its older downloads too.\n- Morphe Manager and the patch index now show the HushPinterest icon next to the source instead of the owner's GitHub picture.\n- Hide ads now looks inside modules. A row of ideas on Home or a group of pins under the pin you opened carries its own pins, and an ad in one got through because Hide ads only checked the row itself. Now the ad comes out of the row, and a row left with nothing in it goes too, heading and all. Hide AI-labeled pins and Hide shopping reach inside rows the same way. A pin that carries Pinterest's promotion or campaign ID also counts as an ad now. (#6)\n- Hide shopping and product pins now hides a shop's product pins, the ones shown with a store name like Target or Nordstrom Rack and a tag icon under the picture. Pinterest doesn't mark them as paid, so Hide ads keeps leaving them alone, but they slipped past Hide shopping too. With Debug logging on, the diagnostic report also lists the shopping and ad fields of what stays, so a pin that still gets through can be tracked down. (#6)\n- Hide ads now catches shopping spotlight stories on the feed models that keep the story kind as Pinterest's own type rather than as text. Before, only the text form counted, so a spotlight on those models stayed unless Hide shopping was on too. Other stories stay put, and Hide shopping still works on its own.\n- If a Pinterest update leaves Hide ads only part of its hooks, the Feed page now names the feed lists and ad panels it couldn't reach instead of reading as if everything's covered. The diagnostic report lists every list and panel with how much of it went in, and names the two places no hook reaches yet (Shopping ideas groups in search results and shopping wrappers under related pins). A full build reads the same as before.\n- Strip link tracking has a new Plain pin links switch on the Privacy page, and it starts off. With it on, a pin.it link you copy or share becomes the pin's own pinterest.com link, so it doesn't tell Pinterest who shared it. Links Pinterest makes for Copy link or a share change right away, even when you send a pin straight to another app, because HushPinterest sees which pin Pinterest made the link for. Any other short link you copy is checked with Pinterest in the background and swapped on the clipboard a moment later, as long as you haven't copied something else by then. Shared text never waits for that check, and if it fails or takes longer than 4 seconds the short link stays. A pin link from one of Pinterest's country sites, like de.pinterest.com or www.pinterest.co.uk, becomes the same www.pinterest.com link with no lookup, and a pin's sent link drops the invite code that ties it to whoever sent it. Board links and account pages stay as they are, and so does a pin link that still carries a parameter after tracking tags come off.\n- HushPinterest settings has a new page under More settings, Pinterest's own settings. It shows where Pinterest keeps its own theme, privacy, notification, AI content and cellular autoplay settings, and names each step through Pinterest's menus in the language Pinterest is using. HushPinterest doesn't change any of them. The AI content row explains how it differs from Hide AI-labeled pins, and the autoplay row says Pinterest may still load part of a video ahead of time.\n- HushPinterest drops its Android 9 code now that Pinterest 14.39.0 needs Android 10. The file picker saves go, along with their Pending saves page, and so does the app folder Android 9 used for diagnostic reports. Every download is handed to Android's Downloads, and a selection's summary no longer has a Saved line, since only the picker ever filled it.\n- HushPinterest's short messages now show as Pinterest's own toasts. When a dialog is open, a message is long or has more than one line, or the Pinterest build's toast code isn't what the patch expects, they stay Android toasts.\n\n## Behind the scenes\n\n- The release receipt, the patch verifier and the device lease now hold the patched app to Android 10 (API 29), the same floor the settings patch sets since the Android 9 code went. They still expected API 28, so a target whose own floor was below 29 would have failed the receipt.\n- While a release hold keeps the published index behind source, the release check now wants the bug report form to name the published release with the Pinterest build it was made for. It used to pair the published version with source's newer build, a combination nobody filing a report would have.\n- The privacy doc now follows Pinterest's launch event, which carries the full URL the app was opened with, to both of its uploads: `v3/callback/event/` and `v3/callback/track_funnel/{event}/`. Disable analytics already stops both.\n- The privacy doc now lists every header Pinterest puts on its API requests, with where each value comes from and whether a patch covers it. The advertising ID header is the only one a patch changes today.\n- The header table now explains the last two. `X-Pinterest-AppState` only says whether the app is in front and online. `X-Pinterest-Platform-BID` is Pinterest's `_b` browser cookie, which the app keeps in Google Block Store (backed up to the cloud when Block Store offers end-to-end encryption), so it can survive a reinstall or a move to a new phone.\n- The privacy doc now follows the install ID to all of its uses. Besides its own header it's Pinterest's signed-out ID, AppsFlyer's `unauth_id`, and the ID on analytics, push and reCAPTCHA events. A signed-in emulator kept its session, feed and search after the ID was swapped for a fresh one, so no hook is planned for it.\n- System share sheet now checks, when you patch, that Pinterest gives a pin the share kind the patch makes pin links for. A build that numbers its kinds differently is refused instead of sharing a board's id as a pin link. The fixture tests cover that refusal and the two ways the sendable's constructor can stop naming its id and kind.\n- Long-press download now checks that a menu button's detach handler really cancels the spring driver the patch clears, by finding the cancel call on that driver, not just a call that reads it. The fixture tests pin 14.39.0's spring fields and refuse a handler without the cancel.\n- The patch verifier's System share and long-press checks now match the patch. The sendable's id and kind have to be its own fields written through itself, the springs reset needs a zero that isn't the button's register, and the spring driver has to be one the detach handler cancels.\n- `scripts/test-app-inventory.ps1` checks the inventory tool on two tiny real APKs in `scripts/checks/inventory-fixture`, every section and the diff between them, in PowerShell 7 and 5.1. The script contract suite runs it, and `scripts/checks/build-inventory-fixtures.ps1` rebuilds the APKs from their Java sources.\n- The Pinterest reference docs now describe 14.39.0. The APK facts, class and method names, endpoints and resource names were checked against the 14.39.0 build, with the old 14.38.0 name kept next to each one that moved. The patch reference covers all 27 patches. The signed-in screen survey and the runtime measurements are still the 14.38.0 runs, and the docs say so.\n- The patch reference records the push sign-up check from a fresh emulator install. Without Fix push notifications, Firebase refused the sign-up with a 403. With it, the same install registered with Firebase.\n- A fixture run that passes every check is now kept under a key made from the bundle, the APK, the patch selection and the hash of every verifier script, and a later run with the same key reuses it instead of patching Pinterest again. The release push gate patches each declared fixture once and the release receipt reads those runs. `scripts/patch-for-device.ps1` can sign the gate's patched APK for a phone when its key matches. A changed input means a full run, and a failed run is never kept.\n- The push gate now runs the unit tests and lint in a quick Gradle pass before the fixture suite, so a broken test stops the push in minutes instead of after the Pinterest APK runs. Each pass waits for its own slot in the build queue.\n- The script contract tests now parse every tracked PowerShell file, so a syntax slip in a script that only runs on a release or with a phone shows up on the next script push.\n- Releases now run in stages from `scripts/release/release.ps1`: prepare, preflight, gate, build and publish. Each stage checks that the one before it finished, and running one again after it's done changes nothing. The CHANGELOG cut refuses any bullet that isn't a one-line Pinterest or Tooling entry and names it. The GitHub notes carry every bullet of the section. `publish-release.ps1` pushes the index commit as soon as the release is up and ends with `verify-published-index.ps1`. The notes and index text come from `release_text.py`, which has its own unit tests. (#3)\n- `scripts/app-inventory.ps1` lists what a Pinterest build talks to and what it reads about the device. That covers its Retrofit endpoints with their verbs, the startup tasks, the hosts its code names, who opens connections, the SDK packages, and who reads the advertising ID, Android ID, install referrer or device identifiers. The lines come out sorted, with renamed packages written as `~`, so `-BaseApk` can diff two builds. The [privacy notes](docs/pinterest-14.39.0-privacy.md) now carry the 14.39.0 inventory and what changed from 14.38.0.\n\n## Reported issues\n\nWhere each report on the tracker stands with this release.\n\n- #6, ads getting through (@darenrue). Hide ads now checks inside the rows of pins on Home and under a pin you open, where an ad could slip past before. The store cards with a shop name and a tag icon, like the Target one in the report, aren't paid ads, so Hide ads leaves them. `Hide shopping and product pins` now hides them, and it starts off, so turn it on under Feed. The issue stays open until it's confirmed on your phone.\n- #5, save downloads to a folder you choose (@boox3). New here. `Pick a download folder` under Pin actions saves pins straight into any folder in Pictures, DCIM, Download or Documents. `Save in Pinterest's folder` puts them in Pictures/100PINT/Pins with Pinterest's own saves.\n- #4, one patch source for every Hush app (@Stark-0505). Still open. HushPinterest is still its own source in this release.\n- #3, matching the Morphe template's release setup (@Stark-0505). Partly in. The patch index now goes up in the same step as the release, so Morphe Manager offers the update as soon as it's out, and a check after every release confirms the index matches. Moving to the template's own release workflow is still open.\n- #2, Download pin said Pinterest had no original image (@Stark-0505). Fixed in 0.0.5. Download pin gets the original image behind the size Pinterest shows.\n\n## Install\n\n1. Install [Morphe Manager](https://github.com/MorpheApp/morphe-manager) 1.34.0 or newer.\n2. Add HushPinterest as a patch source: https://morphe.software/add-source?github=SysAdminDoc%2FHushPinterest\n3. Download Pinterest **14.39.0**, version code **14398020**, as the universal APK, and patch it. It needs Android 10 or newer.\n4. Uninstall the stock Pinterest first, since Android won't put one over the other. Save anything you keep only on the phone before you do. Your boards and pins come back when you sign in.\n5. Sign in with your email and a Pinterest password. If you joined through Google or Facebook, tap **Forgot your password?** on Pinterest's login page to set one first.\n6. Right after your first patch, export Morphe Manager's signing key (Settings, then System, then Import & export, then Signing key) and keep it somewhere private. Updates only install over a Pinterest signed with that same key.\n\nAlready on HushPinterest? Skip steps 4 and 5. Patch 14.39.0 with the same key and install it over the one you have.\n\nThe `.mpp` download is a patch bundle, not a Pinterest APK. [Installation instructions](https://github.com/SysAdminDoc/HushPinterest#install). `SHA256SUMS.txt` is signed with the HushPinterest release key, fingerprint `FCE5 ECE3 182A 647B 3AF2  C5ED 2DC3 5E8D 5C00 E8A6`. [How to check a download](https://github.com/SysAdminDoc/HushPinterest#verify-a-release-download).\n\n## Validation\n\nAll 204 patch tests and 702 extension tests passed on this commit, none skipped. The bundle attached here was patched onto a real Pinterest 14.39.0 APK with Morphe's desktop patcher, and all 27 patches applied without forcing. `release-receipt-0.0.7.json` records that result, the APK's hash and what patching changed in the app's manifest. Pick a download folder, the store pin filter and the module filter for Hide ads were also checked on a phone running this build's patches.\n",
-    "release_tag": "v0.0.7",
-    "release_date": "2026-10-11T00:18:19Z",
+    "fingerprint": "a0b491c28d974cb685e14f87a13d3349ad19207ab3a1b7da37e9ec0aca10f918",
+    "release_notes": "HushPinterest 0.0.8 has 29 patches for Pinterest 14.39.0. It's built on Morphe patcher 1.15.1, so it needs Morphe Manager 1.34.0 or newer. Long-press the Pinterest logo at the top of your home feed and HushPinterest settings open right over it. Two new patches came along too, AMOLED black and Hide closeup buttons, plus redesigned settings and a long list of download fixes.\n\nIt's the same Pinterest version as 0.0.7. Patch 14.39.0 again and install it over your current HushPinterest with the same signing key, and your settings stay as they are.\n\n## What's new\n\n- Long-press the Pinterest logo at the top of your home feed to open HushPinterest settings. It works even while HushPinterest is paused. The app icon shortcut and Android's App info page still open them too.\n- Share file in Download history shows a frame of a saved video in Android's share sheet on Android 11 and later, where it used to show a plain file icon. The app you share to still gets the video itself with its name. Images already had a preview and work as before.\n- Disable update nag checks that the spot it guards still comes before Pinterest's call to the Play Store update prompt. A future Pinterest build that asks Play Store first now stops patching with a clear message, rather than getting a guard that would run too late to stop the pop-up.\n- New patch, AMOLED black. Its Black bottom bar switch paints the bottom bar pure black in dark mode, so it no longer sits as a gray strip under Pinterest's black pages. It works whether Pinterest shows the bar as one rounded piece or each tab as its own rounded button, and the strip behind the gesture handle turns black with it. Menus and buttons that share the bar's gray keep it, and light mode stays as it is. It starts off and lives on the Interface page.\n- New patch, Hide closeup buttons. Two switches hide the back arrow and the visual search (lens) button that float over a pin you open, so they stop covering the picture. Your phone's back gesture still leaves the pin, and Search image in the pin menu still works. Other icon buttons in the app aren't touched. Both start off and live on the Interface page.\n- Media details has Check the file for image pins. One tap reads the first 64 KB of the file a download would save and shows its real width, height, type and file size, since Pinterest's numbers can describe a smaller display copy. Nothing is fetched until you tap it, and every value says whether Pinterest supplied it or the file showed it. When the media host is too busy or slow to say whether it has the original, the result isn't kept, so the next tap asks again. Reading the file gives up after 15 seconds, even when the host never answers.\n- Download visible pins has All, Images and Videos filters with counts above the list, so they and the buttons stay on screen however many pins you can pick from, and each row shows the picture its cell already has, so pins are easier to tell apart. Nothing extra is downloaded for those pictures. Download board now asks whether to queue all of a board's loaded pins, only the images or only the videos.\n- Save list, in Download visible pins and Download board, writes the pins you chose to a JSON file you pick. Each pin has its Pinterest link, its title and the source link Pinterest supplied. A source link with a query, a fragment, a sign-in part or a private or reserved host name is marked as omitted instead of being cut down. Your account and cookies never go in the file. Save list works on a board even when every loaded pin is already in Download history, and when a list can't be written, the empty file the picker made is removed again. A file you picked to write over is never removed.\n- Dialogs that only show something now close with Close, and ones that leave a choice untaken say Cancel. Save in Download again is now Use Download again, and the pin menu's Media details lines read Width, Height and Size. Card edges stand out more against the dark background, the overview card's color follows a right-to-left language, and a finished batch no longer repeats its whole summary in a toast while its dialog still shows it.\n- A review of all five translations fixed 87 lines. Turkish now talks to you the same informal way everywhere, puts the right ending on HushPinterest, and shows an import change as old → new where it used to say \"instead of\". German no longer runs the Download pins and Download board names together. Spanish and Brazilian Portuguese stick to one word for switches, Portuguese calls boards \"pastas\" everywhere like Pinterest does, and Indonesian points to the Downloads folder by its Indonesian name.\n- At large text sizes, when a dialog's buttons stack, all of them show now. Download visible pins used to show Queue selected and a sliver of Cancel, with Save list hidden until you scrolled the buttons. The list or message above scrolls instead, and the buttons never take more than half the screen.\n- Toasts from a pin batch and Save list fit in the two lines Android 12 and later show. A batch whose dialog has closed gives its counts in one short sentence, and a note about pins already in Download history or a file left behind comes up as its own toast.\n- Every other HushPinterest toast now fits in those two lines too, in English and in German, Spanish, Indonesian, Portuguese and Turkish. Over 40 of them used to stop partway with \"...\", mostly around settings import and export, download retries and the file and folder pickers. They say the same thing in fewer words. When no app can open a link, the toast now just names the address, so more of it shows.\n- The Notifications page shows whether Android lets Pinterest show notifications, and one tap opens Android's notification settings for the patched app. It never changes a permission for you.\n- The update check gives up after 20 seconds even when GitHub answers slowly or a connection stalls, and Check now can be tapped again right away.\n- With Debug logging on, a feed module's line now names each entry that isn't a pin by its type, never its content, so a report shows everything the module carried.\n- Download pins has two new switches, both off to start. One waits for an unmetered network and the other holds downloads while roaming. They cover single pins, visible pins, boards and retries, and changing them never cancels a download that's already queued. A download held back for its network shows as Queued in Download history, not as a failure, and starts by itself once an allowed network is back. Wi-Fi marked as metered doesn't count as unmetered.\n- A finished download can be opened or shared straight from its Download history row. History asks Android first, so a deleted file or a download removed from history won't open anything stale. Set as wallpaper makes the same check now. The other app gets the file under its own name, like `Pinterest_123_456.mp4`, where it used to see every download as \"Download pin\".\n- Download board keeps far less in memory while boards are loaded. Each pin is kept as its id and the media found for it instead of the whole pin. A Download history too long to read keeps its newest entries instead of starting over empty.\n- Strip link tracking and Plain pin links no longer swallow text that sits right after a link with no space, like a Japanese caption after `?utm_source=x`. A hashtag or date in that text stays text, and a second link glued on after it is cleaned on its own. A link written into another link's query, like a share text with `&utm_source=` after it, stays part of that link so its tags still come off. A link longer than 4,096 characters is left as it is, so a huge pasted text can't hold up a share. Links with non-ASCII paths or queries stay whole.\n- The quick checks Plain pin links makes against pin.it short links, and Download pins against Pinterest's image host, go out without any cookies the app holds for those hosts. A cookie Pinterest's short-link service sets on its answer is dropped again, so it can't stop the next lookup, and cookies Pinterest itself stores meanwhile are left alone.\n- Hide shopping and product pins also hides the Shop the look section under a pin, the row of products picked to match the photo. The pin's own Visit button and its Paid link label stay.\n- The setup guide's sign-in section now agrees with the rest of the settings. It says Google sign-in doesn't work with stock Google Play services (the Spoof signature patch is for phones with microG-RE or XSpoofSignatures), and that the Fix push notifications patch, on by default, signs the app up for push notifications, instead of calling push untested.\n- Settings search no longer lists every row without a summary when you type \"null\".\n- The diagnostic report counts a promoted pin as removed only once the whole feed list has gone through. When Pinterest's list couldn't be read all the way, the page shows as it was, but the report still said an ad had been removed.\n- Screen reader and keyboard fixes in settings. The search field is read by its hint and what you typed, Clear search hands focus back to the field, the result of a tapped Check now is spoken when it lands (the daily check settings runs on its own stays quiet), and the Back and Clear buttons show where keyboard focus is. Choices that act at once, like Copy quick report, Remove from history and Save in Download again, no longer carry the chevron that means a tap opens something.\n- The long-press shortcut's icon is drawn from the settings colors, so its blue matches the icon badges on the settings pages.\n- A download folder with # or % in its name, such as Pictures/Art #2, now gets the download. Android's download service reads the folder back from text, where # ended the path and % started an escape, so the file landed in the wrong place or nowhere.\n- Open links in your browser no longer keeps a link inside Pinterest just because its address starts with \"pinterest.\" A site named pinterest.example.com isn't Pinterest's, so it opens in your browser like any other link.\n- Selecting many pins to download no longer shows a \"Couldn't start the download\" pop-up for each one that fails. The batch counts them and says so once in its summary. A pin downloaded on its own still gets the message.\n- The diagnostic report also leaves out a Pinterest address whose slashes are written the JSON way (\\/, or \\\\\\/ when the string was written into JSON twice) or encoded (%2F, or %252F when a query value was encoded twice), path and all.\n- Clearer wording in settings. Hide AI-labeled pins names the places it filters instead of \"the same places\", Open links in your browser says it opens a pin's Visit link and profile websites, Strip link tracking mentions Plain pin links only when that switch exists, the Check now row names the switch it works around, download messages say \"the Download folder\" for the folder and \"Downloads\" for the app, the batch summary reads \"Couldn't save history for one result\" with a real singular, \"in parentheses\" replaces \"in brackets\", and Autoplay's note says cellular data like its title. The five translations follow.\n- The 14.39.0 audit page records 0.0.7 and drops two work items that were done. The README and the patch descriptions Morphe Manager shows now both say Download board stops at 500 pins, Hide advertising ID works like deleting your advertising ID, and Advertiser-sponsored polls stay hidden. The README also names the Search switch under Hide navigation buttons.\n- The diagnostic report's pin menu counts now say they were taken when the menu was built, before Pinterest decided what to show, so a row counted as visible isn't read as one that was on screen.\n- Redesigned HushPinterest settings with separate navy cards on black pages and blue icon badges. Pause sits below its status summary. Setup topics have their own cards, and dialog choices wrap. The existing Android controls and actions keep their behavior.\n- Pinterest's own Download image row is hidden when Download pin saves that pin's image, so the two don't sit side by side in a pin's menu. It stays for video pins, since Download pin saves the video there and not a still image, and for pins HushPinterest can't download. With Download pins off the menu is untouched. (#2)\n- When one item on a feed page can't be read, Hide ads, Hide AI-labeled pins and Hide shopping keep just that item and still filter everything else on the page. Before, that one item let the whole page through unfiltered.\n- Tapping Download pin twice while the menu closes saves the pin once.\n- A tap beside the progress dialog of Download visible pins or Download board doesn't stop the batch anymore. Back and Stop selection still do. A batch that runs into an unexpected error now ends, where it used to leave every later selection refused as still running until Pinterest restarted.\n- Copy media link doesn't keep the pin screen in memory while it looks for the original.\n- System share sheet reads its switch inside its own error handling, so a settings failure leaves Pinterest's share picker in place instead of reaching Pinterest's code.\n\n## Behind the scenes\n\n- The script tests stopped failing now and then under Windows PowerShell when two device builds run at once. Both builds logged to the same stand-in build queue file, which Windows PowerShell can't append to from two processes at the same moment. That test now also reports the exact line where a build failed.\n- Picking a release back up after something went wrong got easier. The build stage takes the signed files back from GitHub when the release is already up there and the local copies are gone, instead of stopping. The gate stage notices a gate that passed right before the network dropped. A failed publication puts the old GitHub description back, and a repair note under a fresh Unreleased heading no longer reads as an edit to released notes. Pushes also keep going in Windows PowerShell when a release's output goes to a log file.\n- The build moved to Kotlin 2.4.21, Commons Lang 3.21.0 and androidx.annotation 1.11.0, with their hashes added to the dependency verification file. The advisory check finds nothing in the 286 libraries the build resolves.\n- A feed filter test covers a module that also carries search filter chips, which Pinterest 14.39.0 keeps in a list next to the module's pins. The ads reference explains why only the pin list can leave a module empty.\n- The source census reads Jman's index at its new name and layout, and the Morphe Patch Tracker's list again now that two of its keys differ only in case. Its contract suite passes under Windows PowerShell 5.1 too.\n- A fixture test checks that every pin field Hide ads, Hide AI-labeled pins and Hide shopping read is still in Pinterest's build with a type the filters can use. A renamed or retyped field now fails the tests instead of quietly switching a filter off.\n- The fixture tests read Pinterest's manifests and resource tables with the same ARSCLib build the patcher uses, instead of a second copy whose classes could win or lose depending on classpath order. A check stops the tests if a patcher update moves it.\n- An interrupted release can resume after a commit repairs its publication checks. It keeps the prepared source, published tag, signed assets and index unchanged, including the original test counts when local results are missing or come from a focused run. It pushes only when needed and checks the index Morphe Manager receives. Changed release files or unrelated source commits stop recovery. Refs #3\n- The script contract tests keep the published bug report form as it is when they build a tree whose index lags the source, the way the release check expects, and now also check that a form moved to the catalog's newer Pinterest build is refused there. They used to move the form's build along with the catalog, which went unnoticed until the published form named the catalog's newest build and held up the 0.0.7 index push.\n- The published index check finds git when the pre-push hook's PATH lists more than one copy of it. Inside the hook it used to get all three paths as one name and stop the release gate.\n- The published index check also runs on a release's prepare commit. Its copy of the index, README's latest release sentence and the bug form now move to the version being prepared, the way publishing moves them, instead of failing on the old one.\n\n## Reported issues\n\nThe reports this release changes something for.\n\n- #2, Hush downloads not working (@Stark-0505). A pin's menu no longer shows two download rows. Pinterest's own Download image hides whenever Download pin saves that pin's image, and a video pin shows Download pin alone. The issue stays open until it's confirmed on your phone.\n- #5, save downloads to a folder you choose (@boox3). A folder with # or % in its name, like Pictures/Art #2, now gets the download too.\n- #6, not all adverts are hidden (@darenrue). `Hide shopping and product pins` also hides the Shop the look row under a pin you open, and when one item on a feed page can't be read, Hide ads still filters the rest of that page. Still open until it's confirmed on your phone.\n\n## Install\n\n1. Install [Morphe Manager](https://github.com/MorpheApp/morphe-manager) 1.34.0 or newer.\n2. Add HushPinterest as a patch source: https://morphe.software/add-source?github=SysAdminDoc%2FHushPinterest\n3. Download Pinterest **14.39.0**, version code **14398020**, as the universal APK, and patch it. It needs Android 10 or newer.\n4. Uninstall the stock Pinterest first, since Android won't put one over the other. Save anything you keep only on the phone before you do. Your boards and pins come back when you sign in.\n5. Sign in with your email and a Pinterest password. If you joined through Google or Facebook, tap **Forgot your password?** on Pinterest's login page to set one first.\n6. Right after your first patch, export Morphe Manager's signing key (Settings, then System, then Import & export, then Signing key) and keep it somewhere private. Updates only install over a Pinterest signed with that same key.\n\nAlready on HushPinterest? Skip steps 4 and 5. Patch 14.39.0 with the same key and install it over the one you have.\n\nThe `.mpp` download is a patch bundle, not a Pinterest APK. [Installation instructions](https://github.com/SysAdminDoc/HushPinterest#install). `SHA256SUMS.txt` is signed with the HushPinterest release key, fingerprint `FCE5 ECE3 182A 647B 3AF2  C5ED 2DC3 5E8D 5C00 E8A6`. [How to check a download](https://github.com/SysAdminDoc/HushPinterest#verify-a-release-download).\n\n## Validation\n\nAll 212 patch tests and 858 extension tests passed on this commit, none skipped. The bundle attached here was patched onto a real Pinterest 14.39.0 APK with Morphe's desktop patcher, and all 29 patches applied without forcing. `release-receipt-0.0.8.json` records that result, the APK's hash and what patching changed in the app's manifest. The logo long press, the single download row in a pin's menu and the video frame in Android's share sheet were also checked on a phone or an emulator running these patches.\n",
+    "release_tag": "v0.0.8",
+    "release_date": "2026-10-13T02:44:54Z",
     "isPreRelease": false
   },
   "kero309x:stable": {
@@ -14190,9 +14190,9 @@
     "bundle": "legendsciber",
     "channel": "stable",
     "repo_url": "https://github.com/legendsciber/morphe-patches",
-    "created_at": "2026-10-13T02:32:55Z",
-    "version": "1.46.0",
-    "description": "## [1.46.0](https://github.com/legendsciber/morphe-patches/compare/v1.45.0...v1.46.0) (2026-10-13)\n\n### ✨ New Features\n\n* **keymapper:** add premium unlock patch ([9133e98](https://github.com/legendsciber/morphe-patches/commit/9133e988c0e461b653b7767941cd325f10b30e16))",
+    "created_at": "2026-10-13T21:28:12Z",
+    "version": "1.47.0",
+    "description": "## [1.47.0](https://github.com/legendsciber/morphe-patches/compare/v1.46.0...v1.47.0) (2026-10-13)\n\n### ✨ New Features\n\n* **newstarsoccer:** add free IAP patch ([5fcc116](https://github.com/legendsciber/morphe-patches/commit/5fcc116f3731e87f37a5173cd85ac5fe517ec838))",
     "apps": [
       {
         "app_name": "Extreme Car Driving Simulator",
@@ -14384,6 +14384,21 @@
         ]
       },
       {
+        "app_name": "New Star Soccer",
+        "package": "com.newstargames.newstarsoccer",
+        "patches": [
+          {
+            "name": "New Star Soccer Free IAP",
+            "description": "Every shop item is granted instantly and free when bought, without launching Google Play billing.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.32"
+            ]
+          }
+        ]
+      },
+      {
         "app_name": "Solar Smash",
         "package": "com.paradyme.solarsmash",
         "patches": [
@@ -14538,10 +14553,10 @@
       }
     ],
     "patches_name": "legendsciber's Patches",
-    "fingerprint": "a63b0720c553c4c4fac97be9665d5d02de4c12065835397bb536c90e0532be3e",
-    "release_notes": "## [1.46.0](https://github.com/legendsciber/morphe-patches/compare/v1.45.0...v1.46.0) (2026-10-13)\n\n### ✨ New Features\n\n* **keymapper:** add premium unlock patch ([9133e98](https://github.com/legendsciber/morphe-patches/commit/9133e988c0e461b653b7767941cd325f10b30e16))\n",
-    "release_tag": "v1.46.0",
-    "release_date": "2026-10-13T02:32:55Z",
+    "fingerprint": "8803de321eb4b18de5fff6553304260cd59390ff368d0bd67afc5ddfc69131b9",
+    "release_notes": "## [1.47.0](https://github.com/legendsciber/morphe-patches/compare/v1.46.0...v1.47.0) (2026-10-13)\n\n### ✨ New Features\n\n* **newstarsoccer:** add free IAP patch ([5fcc116](https://github.com/legendsciber/morphe-patches/commit/5fcc116f3731e87f37a5173cd85ac5fe517ec838))\n",
+    "release_tag": "v1.47.0",
+    "release_date": "2026-10-13T21:28:12Z",
     "isPreRelease": false
   },
   "abhis1n:dev": {
@@ -15116,9 +15131,9 @@
     "bundle": "bearinmindcat",
     "channel": "stable",
     "repo_url": "https://github.com/bearinmindcat/morphe-patches",
-    "created_at": "2026-10-12T15:25:45Z",
-    "version": "2.4.0",
-    "description": "## [2.4.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.3.1...v2.4.0) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* waze installs as De-Waze ([332cd66](https://github.com/bearinmindcat/morphe-patches/commit/332cd668e3b0c81cb1fe5a6f88fa6ff2399b0a3a))\n\n### ✨ New Features\n\n* flock cameras on the map, from openstreetmap (deflock) with a chime for one ahead ([9e5cd2d](https://github.com/bearinmindcat/morphe-patches/commit/9e5cd2d44a535e3939307eb0395a5b24fe8cc09d))",
+    "created_at": "2026-10-13T19:49:33Z",
+    "version": "2.5.2",
+    "description": "## [2.5.2](https://github.com/bearinmindcat/morphe-patches/compare/v2.5.1...v2.5.2) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* change the bigger speedometer sizes later in waze customization, with a switch for waze own sizes; issue [#50](https://github.com/bearinmindcat/morphe-patches/issues/50) ([778ef9c](https://github.com/bearinmindcat/morphe-patches/commit/778ef9c923d6f6a32997be87444f2e84ff8cf8b0))",
     "apps": [
       {
         "app_name": "AllTrails",
@@ -15244,6 +15259,15 @@
             ]
           },
           {
+            "name": "Avoid Flock cameras",
+            "description": "Steers driving directions around Flock cameras: when Google's route passes one, a camera-free way is worked out with BRouter, an OpenStreetMap router, and Maps asks Google again for a route through it, so Google still times and navigates the trip, and keeps it through reroutes. A detour longer than half again the distance is dropped. Off until turned on in Waze & external data source, with Flock cameras; your route's start and end go to brouter.de. Trips with stops are left as they are.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "26.36.04.973607363"
+            ]
+          },
+          {
             "name": "Better offline maps",
             "description": "Reworks the offline area picker: zooming out really selects more instead of being shrunk to Google's size cap, the box can be resized by dragging its edges and corners, a large area is split into several downloads whose true total size is shown, and areas already downloaded are drawn on the map. Can be turned off on the Customization screen.",
             "use": true,
@@ -15318,7 +15342,7 @@
           },
           {
             "name": "Flock cameras",
-            "description": "Puts Flock and other license plate reader cameras on the map, from OpenStreetMap -- the cameras DeFlock's volunteers map -- and chimes and shows a note when one is coming up ahead. Off until turned on in Waze Features, a row on the account sheet, because it downloads the ones near you from an OpenStreetMap server, over the same area as the speed cameras.",
+            "description": "Puts Flock and other license plate reader cameras on the map, from OpenStreetMap -- the cameras DeFlock's volunteers map -- and chimes and shows a note when one is coming up ahead. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the ones near you from an OpenStreetMap server, over the same area as the speed cameras.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -15422,7 +15446,7 @@
           },
           {
             "name": "Speed cameras",
-            "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze Features, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server -- an area you choose there, about 25 to 175 km across.",
+            "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server -- an area you choose there, about 25 to 175 km across.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -15431,7 +15455,7 @@
           },
           {
             "name": "Speeding chime",
-            "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze Features, a row on the account sheet.",
+            "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze & external data source, a row on the account sheet.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -15449,7 +15473,7 @@
           },
           {
             "name": "Waze alerts",
-            "description": "Shows the alerts a Waze on the same phone is tracking -- police to begin with, and any of crashes, hazards, traffic jams, closures and speed cameras -- as pins on the map, with a chime and a note as one comes up ahead. Off until turned on in Waze Features. Waze has to be patched with Share alerts with Maps, signed in and open; in the background is enough.",
+            "description": "Shows the alerts a Waze on the same phone is tracking -- police to begin with, and any of crashes, hazards, traffic jams, closures and speed cameras -- as pins on the map, with a chime and a note as one comes up ahead. Off until turned on in Waze & external data source. Waze has to be patched with Share alerts with Maps, signed in and open; in the background is enough.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -15473,7 +15497,7 @@
         "patches": [
           {
             "name": "Alert distances",
-            "description": "How far ahead, in metres, Waze warns of police, hazards, crashes, traffic jams and speed cameras. The defaults are the old Waze mods' (CGE); Waze's own are lower for most of them.",
+            "description": "How far ahead, in metres, Waze warns of police, hazards, crashes, traffic jams and speed cameras. The defaults are the old Waze mods' (CGE); Waze's own are lower for most of them. They can be changed later in Customization, at the bottom of Waze's side menu.",
             "use": false,
             "options": [
               {
@@ -15528,7 +15552,7 @@
           },
           {
             "name": "Bigger speedometer",
-            "description": "Bigger digits on the speedometer, and on the speed limit sign beside it, so they can be read at a glance.",
+            "description": "Bigger digits on the speedometer, and on the speed limit sign beside it, so they can be read at a glance. The sizes can be changed later in Customization, at the bottom of Waze's side menu, where a switch also gives Waze's own sizes back.",
             "use": true,
             "options": [
               {
@@ -15625,7 +15649,7 @@
           },
           {
             "name": "Navigation distances",
-            "description": "How far ahead Android Auto gives its heads-up, and how long a jam must last before the traffic bar shows it. The defaults are the old Waze mods' (Chuppito).",
+            "description": "How far ahead Android Auto gives its heads-up, and how long a jam must last before the traffic bar shows it. The defaults are the old Waze mods' (Chuppito). They can be changed later in Customization, at the bottom of Waze's side menu.",
             "use": false,
             "options": [
               {
@@ -15674,7 +15698,7 @@
           },
           {
             "name": "Share alerts with Maps",
-            "description": "Hands the alerts Waze is tracking -- police, crashes, hazards, traffic jams, closures and speed cameras -- to Ungoogled Maps on the same phone, where Waze alerts in Waze Features puts them on the map. Nothing leaves the phone. Waze has to be signed in and open; in the background is enough.",
+            "description": "Hands the alerts Waze is tracking -- police, crashes, hazards, traffic jams, closures and speed cameras -- to Ungoogled Maps on the same phone, where Waze alerts in Waze & external data source puts them on the map. Nothing leaves the phone. Waze has to be signed in and open; in the background is enough.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -15701,7 +15725,7 @@
           },
           {
             "name": "Speed limit sign",
-            "description": "The style of the speed limit sign beside the speedometer, whatever the country.",
+            "description": "The style of the speed limit sign beside the speedometer, whatever the country. It can be changed later in Customization, at the bottom of Waze's side menu.",
             "use": false,
             "options": [
               {
@@ -15715,7 +15739,7 @@
           },
           {
             "name": "Stay awake in the background",
-            "description": "Lets Waze keep running in the background without a route for the chosen time -- Waze's server allows 10 minutes -- so that its alerts keep reaching Maps while you navigate there. Costs battery; Waze still closes itself when you close it.",
+            "description": "Lets Waze keep running in the background without a route for the chosen time -- Waze's server allows 10 minutes -- so that its alerts keep reaching Maps while you navigate there. Costs battery; Waze still closes itself when you close it. The time can be changed later in Customization, at the bottom of Waze's side menu.",
             "use": false,
             "options": [
               {
@@ -15731,10 +15755,10 @@
       }
     ],
     "patches_name": "bearinmind patches",
-    "fingerprint": "22da8f33214aa2df13d8834cf8a8507f6aebbb8031359e1934e3fd4075564a2b",
-    "release_notes": "## [2.4.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.3.1...v2.4.0) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* waze installs as De-Waze ([332cd66](https://github.com/bearinmindcat/morphe-patches/commit/332cd668e3b0c81cb1fe5a6f88fa6ff2399b0a3a))\n\n### ✨ New Features\n\n* flock cameras on the map, from openstreetmap (deflock) with a chime for one ahead ([9e5cd2d](https://github.com/bearinmindcat/morphe-patches/commit/9e5cd2d44a535e3939307eb0395a5b24fe8cc09d))\n",
-    "release_tag": "v2.4.0",
-    "release_date": "2026-10-12T15:25:45Z",
+    "fingerprint": "2812b4f275efb7666af408fb513ecbc6b8475a3a2cf0b475494b8c633d5d175a",
+    "release_notes": "## [2.5.2](https://github.com/bearinmindcat/morphe-patches/compare/v2.5.1...v2.5.2) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* change the bigger speedometer sizes later in waze customization, with a switch for waze own sizes; issue [#50](https://github.com/bearinmindcat/morphe-patches/issues/50) ([778ef9c](https://github.com/bearinmindcat/morphe-patches/commit/778ef9c923d6f6a32997be87444f2e84ff8cf8b0))\n",
+    "release_tag": "v2.5.2",
+    "release_date": "2026-10-13T19:49:33Z",
     "isPreRelease": false
   },
   "ritikthakur22:stable": {
@@ -44756,6 +44780,15 @@
             ]
           },
           {
+            "name": "Pin more chats",
+            "description": "Raises Messenger's limit of three pinned chats to 20, so you can keep more chats at the top of your chat list. Starts off. Turn it on in HushMessenger settings > Controls.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "582.0.0.61.92"
+            ]
+          },
+          {
             "name": "Restore old emoji drawer",
             "description": "Turns off Meta's redesigned emoji keyboard, so you keep the earlier layout. Restart Messenger after changing it. If Meta never gave you the redesign, nothing changes. Starts off. Turn it on in HushMessenger settings > Controls.",
             "use": true,
@@ -44860,6 +44893,15 @@
             ]
           },
           {
+            "name": "Stop nearby scans",
+            "description": "Stops Messenger from reading the list of Wi-Fi networks around you. Also stops the timer it can run while it's open to check your location and scan for Wi-Fi networks and Bluetooth devices. Starts off. Turn it on in HushMessenger settings > Controls.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "582.0.0.61.92"
+            ]
+          },
+          {
             "name": "Turn off the swipe up for disappearing messages",
             "description": "Swiping up at the bottom of a chat no longer turns on disappearing messages, so a scroll can't set the timer by accident. You can still change it in the chat's settings. Starts off. Turn it on in HushMessenger settings > Controls.",
             "use": true,
@@ -44917,7 +44959,7 @@
       }
     ],
     "patches_name": "HushMessenger",
-    "fingerprint": "9c1b7f654ad27a9a1f27b38a2089b08ba8a4500f741e98a4c64e93ee927a6ab4",
+    "fingerprint": "3e4acb78b6d0626b2d470f99265e5d58af7bc812298b74d212d4400a5e6c3fb9",
     "release_notes": "HushMessenger v0.8.0 is for Messenger 580.0.0.49.91 and works on all 21 arm64 builds. It has the same 31 patches as v0.7.0, and 28 of them are switches you turn on in settings.\n\nThe fix a lot of you were waiting for is in here. Patching with **Material You theme** selected no longer runs Morphe Manager out of memory (#18). Thanks to everyone who reported it and posted what they saw.\n\n**New patches**\n\nNone this time. The App tab does get one new feature:\n\n- **Save choices to a file** and **Restore choices from a file** go through Android's file picker, so HushMessenger doesn't need storage access. The file uses the same format as the clipboard backup. If you cancel, or pick a file that's damaged or isn't a backup, nothing changes.\n\n**Fixes and changes**\n\n- **Material You theme** checks every spot it changes before it edits anything. That keeps a full patch run within a 1 GB heap, the limit people ran into in #18, on every supported build.\n- Safe mode has a **Resume** button now. If you'd already turned on **Pause all changes**, the button reads **Clear safe mode** and leaves Pause alone. Your saved choices stay either way.\n- Crash recovery reads Android's own record of why Messenger stopped. When Android closes Messenger for low memory or an app update, that no longer counts toward safe mode, and the same crash can't be counted twice.\n- **Open** in settings takes you to Messenger instead of back into settings.\n- The status line under each switch refreshes when you come back to settings. Paused switches say **Changes paused**, and the text is easier to read in both themes.\n- **Keep unsent messages** now explains right beside the switch what it covers (#23). It works on Messenger's older unsend path. End-to-end encrypted chats aren't covered, and group chats haven't been checked. Its activity line only moves when it really catches an unsend, and two unsends arriving together can't overwrite each other anymore.\n- When **Hide app drawer icon** isn't offered, the App tab says why, for example on a Root Mount install. Searching settings for \"drawer icon\" takes you there (#6).\n- The update check shows that it's working and has a **Check now** button if it fails. Turning it off or closing settings stops a check that's still running. It only trusts a small, well formed reply that points at this repository.\n- Restoring a backup checks the whole thing first, so one bad line means nothing changes instead of half a restore. Older clipboard backups still work. Switches a backup doesn't mention keep their current setting.\n- Tapping a backup button twice quickly no longer opens two pickers.\n- The Menu tab's HushMessenger row checks every place it edits before it changes any of them.\n\n**Updating**\n\n1. Use Morphe Manager 1.33.0 or newer, since that's the version the memory fix was tried with, and refresh the HushMessenger source. It should show v0.8.0 with 31 patches. On a computer, Morphe Desktop needs 1.17.0 or newer.\n2. Patch an unmodified arm64 Messenger **580.0.0.49.91**. Any of the 21 version codes listed under Supported Messenger builds in the README works, for example 346013440 or 346013387. The 32-bit builds aren't supported.\n3. Sign with the same key you used last time and install over your current copy. A different key means uninstalling Messenger and losing its local data.\n4. Open HushMessenger settings and tap **Restart Messenger**.\n\nThe `.mpp` file is a patch bundle for Morphe. It isn't an APK you can install.\n\n**Known limitations**\n\n- Saving and restoring choices with a file has only been covered by the automated tests. It hasn't been tried on a phone yet.\n- The Android 17 crash records are covered by tests, but no phone running Android 17 has tried this build.\n- Morphe Manager was tried at its 1 GB limit with build 346013440 while this was being built. The release bundle itself was checked at that limit with Morphe Desktop on all 21 builds.\n- Keep unsent messages doesn't work in end-to-end encrypted chats, and group chats haven't been checked.\n- After you view a story anonymously, the ring around that person's picture in your chat list still shows the story as new until it expires.\n- Nobody has checked a fresh sign-in or recovering encrypted chat history on a phone yet, and live ad removal is still unconfirmed. Builds 346013354, 346013370, 346013394 and 346013423 patch cleanly but haven't been installed on a phone.\n\n**Validation**\n\n- 121 Kotlin tests, 352 Android unit tests and 47 Python checks pass. Android lint reports no errors.\n- Morphe Desktop 1.18.0 applied all 31 patches, Material You included, to every one of the 21 supported builds with a 1024 MB Java heap and without forcing compatibility. Each output had the settings code and the expected number of theme edits, and the stock files were unchanged afterwards.\n- One build from each of the five groups that share internal names (346013440, 346013372, 346013423, 346013357 and 346013374) was also patched and signed, and apksigner verified every v3 signature.\n- Two clean builds of the bundle, one of them from a fresh checkout of the release commit, came out byte for byte the same.\n- OSV-Scanner found no known advisories in anything the bundle ships or the patch build runs. Its only hits are old Netty and Apache HTTP libraries that the Android Gradle plugin keeps for its device test runner, which this build doesn't use.\n- `SHA256SUMS.txt.sig` is signed with the release key `SHA256:Z+UfHy7IUbtgNRO/wHkIr68+u4I+SIKPY9avfx/VAPU`. The README shows how to check it with `ssh-keygen`.\n\nThe full list is in the [changelog](https://github.com/SysAdminDoc/HushMessenger/blob/v0.8.0/CHANGELOG.md).\n\nSHA-256: 472ae92749e85c08b8de9de6154c863e415c876317c7dba91067a1ac0adbfc93  patches-0.8.0.mpp\n",
     "release_tag": "v0.8.0",
     "release_date": "2026-10-02T02:49:24Z",
@@ -47640,7 +47682,7 @@
     "repo_url": "https://github.com/SysAdminDoc/HushFacebook",
     "created_at": "2026-10-10T06:30:12Z",
     "version": "0.9.0",
-    "description": "Hushfacebook v0.11.0 targets Facebook 582.0.0.50.54 (com.facebook.katana), the newest release.\n\nThis release brings 88 patches, up from 87. The new one is Frame step, which moves a paused reel or video one frame at a time. New switches hide comments with shop links or with words from your News feed list, let Home show just Friends, Favorites, Groups or Pages, and save crashes to Downloads. The kept reel progress bar no longer jumps back on the first reel or sits under the caption, Material You reaches the Menu's top card and Log out strip, and the release notes map each reported issue this release touches.\n\nValidation: 2541 runtime tests passed locally. All 886 patch tests passed too, along with both Android lints. All 88 patches applied to Facebook 582.0.0.50.54, and the resource and injected-code checks passed.\n\nReview diagnostic reports for private data before sharing them.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch the arm64-v8a bundle of Facebook 582.0.0.50.54, build 475417104, or its 32-bit build 475417036. The .mpp is a patch bundle, not a Facebook APK. Keep the manager's existing signing key when updating.",
+    "description": "Hushfacebook v0.12.0 targets Facebook 582.0.0.50.54 (com.facebook.katana), the newest release.\n\nThis release brings 88 patches. New switches leave calls and chat notifications to Messenger, keep the top bar and the tab bar on screen while you scroll, let a tap on a reel's progress bar seek, and take Muse out of the share sheet. The settings home page gets Quick setups and Report a problem, and a change that needs a restart shows a row that restarts Facebook and returns to the same page. You can name the patched app when you patch and open Facebook's App icon page from Pick an app icon. The kept progress bar shows on every reel and stays where you drag it, and the release notes map each reported issue this release touches.\n\nValidation: 2757 runtime tests passed locally. All 932 patch tests passed too, along with both Android lints. All 88 patches applied to Facebook 582.0.0.50.54, and the resource and injected-code checks passed.\n\nReview diagnostic reports for private data before sharing them.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch the arm64-v8a bundle of Facebook 582.0.0.50.54, build 475417104, or its 32-bit build 475417036. The .mpp is a patch bundle, not a Facebook APK. Keep the manager's existing signing key when updating.",
     "apps": [
       {
         "app_name": "Facebook",
@@ -52005,9 +52047,9 @@
     "bundle": "uta-a",
     "channel": "stable",
     "repo_url": "https://github.com/uta-a/linimal",
-    "created_at": "2026-10-11T19:31:42Z",
-    "version": "0.5.0",
-    "description": "Linimal v0.5.0。\n\n追加:\n- 「通知から既読をつけずに開く」を追加しました。メッセージ通知をタップして開いた通常トークでは、閉じるまで既読の送信とローカル未読の解除を止めます。設定は「既読」にあり、既定は OFF です。メニュー追加の設定が OFF でも使えます。通知の返信・既読アクションや、OpenChat などの別経路は対象外です。\n\n修正・改善:\n- 「既読をつけずに読む」の抑制が、一時的なバックグラウンド移行や30分経過で解除される不具合を直しました。確認済みの閲覧セッションはトークを閉じるまで維持し、画面再生成時は同じセッションと確認できた場合だけ引き継ぎます。\n- トーク終了・通常再入室・設定 OFF で抑制を解除し、古い状態が復活しないようにしました。\n- MicroG-RE がないときの案内をトーストでも表示し、通知が許可されていない場合でも導入案内が見えるようにしました。\n\n対象: LINE 26.11.0 (versionCode 261100124) arm64-v8a の APKM のみ。\n\n注意: 通知の登録復旧とバックアップの機能は、Google に対してアプリの署名を公式版と偽って申告します。Google や LINE の利用規約に抵触する可能性があります。パッチ適用後の APK は公式アプリへ上書きインストールできません。公式 LINE から移行するときは、Google ドライブへバックアップしてから入れ替え、MicroG-RE 経由で復元してください。",
+    "created_at": "2026-10-13T19:16:04Z",
+    "version": "0.6.0",
+    "description": "Linimal v0.6.0。\n\n既定動作の変更:\n- 既読をつけずに開いた通常トークでも、メッセージを送信すると既読を反映するようにしました。メニュー・通知からの既読なし入室に共通で作用します。\n\n追加・改善:\n- 「送信しても既読を有効にしない」を既読設定に追加しました。既定は OFF です。ON にすると送信後も既読の抑制を維持します。通常の入室には作用しません。\n- 既読なし閲覧中は、トーク上部に既読が無効であることを常時表示します。送信後も無効にする設定に合わせて案内を切り替えます。\n- 設定更新時も既存の設定値を引き継ぎます。\n\n注意: 送信後も既読を無効にすると、閲覧・返信していても相手側は未読表示のままになり、誤解やトラブルにつながる可能性があります。未読バッジも残ります。必要な場合だけ有効にしてください。\n\n対象: LINE 26.11.0 (versionCode 261100124) arm64-v8a の APKM のみ。\n\n注意: 通知の登録復旧とバックアップの機能は、Google に対してアプリの署名を公式版と偽って申告します。Google や LINE の利用規約に抵触する可能性があります。パッチ適用後の APK は公式アプリへ上書きインストールできません。公式 LINE から移行するときは、Google ドライブへバックアップしてから入れ替え、MicroG-RE 経由で復元してください。",
     "apps": [
       {
         "app_name": "LINE",
@@ -52311,6 +52353,15 @@
             ]
           },
           {
+            "name": "既読なし閲覧中の送信で既読にする",
+            "description": "既読をつけずに開いた通常トークでも、送信操作で閲覧セッションを終了して既読を反映します。",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "26.11.0"
+            ]
+          },
+          {
             "name": "既読をつけずに読む",
             "description": "トーク一覧の長押しメニューへ「既読をつけずに読む」の行を追加します。",
             "use": true,
@@ -52404,10 +52455,10 @@
       }
     ],
     "patches_name": "Linimal",
-    "fingerprint": "cc84f518369c2e55364aa3fbd79cfe50e5d042bea479b096dc752b9fa2ff306d",
-    "release_notes": "## 追加\n\n- 「通知から既読をつけずに開く」を追加しました。メッセージ通知をタップして開いた通常トークでは、閉じるまで既読の送信とローカル未読の解除を止めます。設定は「既読」にあり、既定は OFF です。メニュー追加の設定が OFF でも使えます。通知の返信・既読アクションや、OpenChat などの別経路は対象外です。\n\n## 修正・改善\n\n- 「既読をつけずに読む」の抑制が、一時的なバックグラウンド移行や30分経過で解除される不具合を直しました。確認済みの閲覧セッションはトークを閉じるまで維持し、画面再生成時は同じセッションと確認できた場合だけ引き継ぎます。\n- トーク終了・通常再入室・設定 OFF で抑制を解除し、古い状態が復活しないようにしました。\n- MicroG-RE がないときの案内をトーストでも表示し、通知が許可されていない場合でも導入案内が見えるようにしました。\n\n対象: LINE 26.11.0 (versionCode 261100124) arm64-v8a の APKM のみ。\n\n注意: 通知の登録復旧とバックアップの機能は、Google に対してアプリの署名を公式版と偽って申告します。Google や LINE の利用規約に抵触する可能性があります。パッチ適用後の APK は公式アプリへ上書きインストールできません。公式 LINE から移行するときは、Google ドライブへバックアップしてから入れ替え、MicroG-RE 経由で復元してください。\n\n## 検証\n\n- 全テスト・パッチバンドルのビルド成功。\n- XIG07（Android 16）で、通知からの既読なし入室・未読維持・通常再入室での既読送信を確認。\n- 配布物はパッチバンドルのみです。LINE の APK や署名鍵は含みません。\n",
-    "release_tag": "v0.5.0",
-    "release_date": "2026-10-11T19:31:42Z",
+    "fingerprint": "73e24ea15c43ab3441dc2a60941df8f6da41861f1ea832dee538dcd285ec43ce",
+    "release_notes": "## 既定動作の変更\n\n- 既読をつけずに開いた通常トークでも、メッセージを送信すると既読を反映するようにしました。メニュー・通知からの既読なし入室に共通で作用します。\n\n## 追加・改善\n\n- 「送信しても既読を有効にしない」を既読設定に追加しました。既定は OFF です。ON にすると送信後も既読の抑制を維持します。通常の入室には作用しません。\n- 既読なし閲覧中は、トーク上部に既読が無効であることを常時表示します。送信後も無効にする設定に合わせて案内を切り替えます。\n- 設定更新時も既存の設定値を引き継ぎます。\n\n注意: 送信後も既読を無効にすると、閲覧・返信していても相手側は未読表示のままになり、誤解やトラブルにつながる可能性があります。未読バッジも残ります。必要な場合だけ有効にしてください。\n\n対象: LINE 26.11.0 (versionCode 261100124) arm64-v8a の APKM のみ。\n\n注意: 通知の登録復旧とバックアップの機能は、Google に対してアプリの署名を公式版と偽って申告します。Google や LINE の利用規約に抵触する可能性があります。パッチ適用後の APK は公式アプリへ上書きインストールできません。公式 LINE から移行するときは、Google ドライブへバックアップしてから入れ替え、MicroG-RE 経由で復元してください。\n\n## 検証\n\n- 全テスト・パッチバンドルのビルドと patches-list.json の再生成が成功しました。\n- Morphe Desktop 1.14.0 で対象 APKM にリリースバンドルを適用し、全59 patch-status が OK、expected / actual の一致を確認しました。\n- XIG07（Android 16）で同一実装の開発ビルドを上書き更新し、新設定の初期 OFF・注意書き・ON/OFF 保存と ART verify を確認しました。\n- 送信後も無効にする設定の ON/OFF 動作と常時表示は、JVM 回帰テストおよび Android の一時検証アプリで確認しました。新設定 ON の実際の LINE 送信と相手側既読は未確認です。\n- 配布物はパッチバンドルのみです。LINE の APK や署名鍵は含みません。\n",
+    "release_tag": "v0.6.0",
+    "release_date": "2026-10-13T19:16:04Z",
     "isPreRelease": false
   },
   "jl4ctuk:dev": {
@@ -53227,8 +53278,8 @@
     "bundle": "heval99",
     "channel": "dev",
     "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
-    "created_at": "2026-10-13T16:52:37Z",
-    "version": "1.14.0-dev.5",
+    "created_at": "2026-10-13T21:52:49Z",
+    "version": "1.14.0-dev.7",
     "description": "## [1.13.0](https://github.com/heval99/Heval-Morphe-Patches/compare/v1.12.0...v1.13.0) (2026-10-11)\n\n### 🐛 Bug Fixes\n\n* **iptv:** stop Disable ads crashing on launch (issue [#35](https://github.com/heval99/Heval-Morphe-Patches/issues/35)) ([404d909](https://github.com/heval99/Heval-Morphe-Patches/commit/404d909f4c8fb7d976c8182bb8592f62f537021c))\n* **wunderground:** stop ads returning after a few launches (issue [#45](https://github.com/heval99/Heval-Morphe-Patches/issues/45)) ([32c6094](https://github.com/heval99/Heval-Morphe-Patches/commit/32c60944c5083c23e31da3c153019b963a090a50))\n* **youcut:** drop patch — native integrity kill-gate is unpatchable (issue [#44](https://github.com/heval99/Heval-Morphe-Patches/issues/44)) ([f4dd4c9](https://github.com/heval99/Heval-Morphe-Patches/commit/f4dd4c9926253be605dcbab2fad2408e6e145a46))\n\n### ✨ New Features\n\n* **alarmclock:** add Disable ads patch for Alarm Clock Xtreme ([4bc592d](https://github.com/heval99/Heval-Morphe-Patches/commit/4bc592dbaf2807464ecbe671841b44cbb8c2462d))\n* **bizcal:** add Disable ads patch for Business Calendar 2 ([0609468](https://github.com/heval99/Heval-Morphe-Patches/commit/060946866387952240802930d89d80ea241d1063))\n* **librera:** add Disable ads patch ([f1c4655](https://github.com/heval99/Heval-Morphe-Patches/commit/f1c4655a6e130084fe46fb1eaaaae2e84d697eee))",
     "apps": [
       {
@@ -62989,7 +63040,7 @@
     "repo_url": "https://github.com/SysAdminDoc/HushTelegram",
     "created_at": "2026-10-05T15:08:19Z",
     "version": "0.0.9",
-    "description": "HushTelegram v0.0.13 targets telegram.org's Telegram 13.0.1 (org.telegram.messenger.web) and the official beta 13.0.1 (org.telegram.messenger.beta) with 68 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. New this time: translate a whole chat, Folders by chat type, Save downloaded files, UnifiedPush notifications for phones without working Firebase, Faster downloads, a black launch screen with AMOLED black, HushTelegram's own icon and name, and switches that hide the Contacts tab, channel bar buttons, the Send as button or messages that match your keyword filters. HushTelegram settings is split into seven pages.\n\nIf Telegram won't send you a login code, register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 959 runtime tests passed locally. All 419 patch tests passed too, along with both Android lints. All 68 patches applied to Telegram 13.0.1 and the 13.0.1 beta without forcing, and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 13.0.1, version code 71679, or the beta 13.0.1, version code 71669. The .mpp is a patch bundle, not a Telegram APK. Coming from v0.0.12, patch 13.0.1 and install it over your current build with the same signing key. New installs uninstall the stock Telegram first and keep the manager's signing key for updates.",
+    "description": "HushTelegram v0.0.17 targets telegram.org's Telegram 13.0.2 (org.telegram.messenger.web) and the official beta 13.0.2 (org.telegram.messenger.beta) with 68 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. New this time: patching on a phone no longer fails when HushTelegram icon and name, Black and white launch logo or Use registered Maps API key is picked. HushTelegram settings has a new look with a Restart Telegram row and Quick setups, and pressing and holding the Telegram title on your chat list opens it. There are four new privacy switches, including ones that keep your drafts and searches on your phone.\n\nIf Telegram won't send you a login code, register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 1129 runtime tests passed locally. All 447 patch tests passed too, along with both Android lints. All 68 patches applied to Telegram 13.0.2 and the 13.0.2 beta without forcing, and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 13.0.2, version code 71759, or the beta 13.0.2, version code 71809. The .mpp is a patch bundle, not a Telegram APK. Coming from v0.0.13, patch 13.0.2 and install it over your current build with the same signing key. New installs uninstall the stock Telegram first and keep the manager's signing key for updates.",
     "apps": [
       {
         "app_name": "Beta",
@@ -63001,7 +63052,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63010,7 +63061,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63019,7 +63070,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63028,7 +63079,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63037,7 +63088,7 @@
             "use": false,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63046,7 +63097,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63055,7 +63106,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63064,7 +63115,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63073,7 +63124,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63082,7 +63133,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63091,7 +63142,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63100,7 +63151,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63109,7 +63160,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63118,7 +63169,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63127,7 +63178,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63136,7 +63187,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63145,7 +63196,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63154,7 +63205,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63163,7 +63214,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63172,7 +63223,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63181,7 +63232,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63190,7 +63241,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63199,7 +63250,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63208,7 +63259,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63217,7 +63268,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63226,7 +63277,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63235,7 +63286,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63244,7 +63295,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63253,7 +63304,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63262,7 +63313,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63271,7 +63322,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63280,7 +63331,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63289,7 +63340,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63298,7 +63349,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63307,7 +63358,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63316,7 +63367,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63325,7 +63376,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63334,7 +63385,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63343,7 +63394,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63352,7 +63403,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63361,7 +63412,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63375,7 +63426,7 @@
               }
             ],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63384,7 +63435,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63393,7 +63444,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63402,7 +63453,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63411,7 +63462,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63420,7 +63471,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63429,7 +63480,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63438,7 +63489,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63447,7 +63498,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63456,7 +63507,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63465,7 +63516,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63474,7 +63525,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63483,7 +63534,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63492,7 +63543,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63501,7 +63552,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63510,7 +63561,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63519,7 +63570,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63528,7 +63579,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63537,7 +63588,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63546,7 +63597,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63555,7 +63606,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63564,7 +63615,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63573,7 +63624,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63587,7 +63638,7 @@
               }
             ],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63605,7 +63656,7 @@
               }
             ],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63614,7 +63665,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63623,7 +63674,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           }
         ]
@@ -63638,7 +63689,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63647,7 +63698,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63656,7 +63707,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63665,7 +63716,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63674,7 +63725,7 @@
             "use": false,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63683,7 +63734,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63692,7 +63743,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63701,7 +63752,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63710,7 +63761,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63719,7 +63770,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63728,7 +63779,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63737,7 +63788,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63746,7 +63797,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63755,7 +63806,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63764,7 +63815,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63773,7 +63824,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63782,7 +63833,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63791,7 +63842,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63800,7 +63851,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63809,7 +63860,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63818,7 +63869,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63827,7 +63878,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63836,7 +63887,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63845,7 +63896,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63854,7 +63905,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63863,7 +63914,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63872,7 +63923,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63881,7 +63932,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63890,7 +63941,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63899,7 +63950,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63908,7 +63959,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63917,7 +63968,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63926,7 +63977,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63935,7 +63986,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63944,7 +63995,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63953,7 +64004,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63962,7 +64013,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63971,7 +64022,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63980,7 +64031,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63989,7 +64040,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -63998,7 +64049,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64012,7 +64063,7 @@
               }
             ],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64021,7 +64072,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64030,7 +64081,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64039,7 +64090,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64048,7 +64099,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64057,7 +64108,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64066,7 +64117,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64075,7 +64126,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64084,7 +64135,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64093,7 +64144,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64102,7 +64153,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64111,7 +64162,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64120,7 +64171,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64129,7 +64180,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64138,7 +64189,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64147,7 +64198,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64156,7 +64207,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64165,7 +64216,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64174,7 +64225,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64183,7 +64234,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64192,7 +64243,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64201,7 +64252,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64210,7 +64261,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64224,7 +64275,7 @@
               }
             ],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64242,7 +64293,7 @@
               }
             ],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64251,7 +64302,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           },
           {
@@ -64260,14 +64311,14 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "13.0.1"
+              "13.0.2"
             ]
           }
         ]
       }
     ],
     "patches_name": "HushTelegram",
-    "fingerprint": "3d2690ba020f102b14a884204adc2c30b7a63d54e47c5aa2464146b88453f122",
+    "fingerprint": "6125e18139dbf1fe5f1dcded8d2649af181c97cd131f7e4c597e09c1882d3a1a",
     "release_notes": "HushTelegram v0.0.9 has 25 patches for telegram.org's Telegram 12.10.6 (`org.telegram.messenger.web`) and the official Telegram beta 12.10.7 (`org.telegram.messenger.beta`), up from 22 in v0.0.8. Twenty-three are selected by default. The two credential patches take your own values, so they stay off until you pick them.\n\n## What's new\n\n* **Telegram:** Repair Firebase push registration now works on slower phones. Firebase starts its first Installations request while Telegram is still starting, and on a slow phone that request could get there before HushTelegram's settings were ready. It then went out with the re-signed certificate, Firebase refused it, and no push token was saved. The request now waits for the settings, up to 10 seconds, on Firebase's own background thread. The diagnostic report counts requests that waited and any that still went out early.\n* **Telegram:** The beta target is now telegram.org's current 12.10.7 build, version code 71179, which replaced build 71159. Every patch applies and passes its fixture tests on it.\n* **Telegram:** The README says every way into HushTelegram settings (Telegram's own Settings, a long-press on the Telegram icon, or App info), and walks through the my.telegram.org form for your own API ID, including what causes \"Incorrect app name!\".\n* **Telegram:** Three independent switches add plain-text paste, copyable local user and chat IDs, and a way to stop double-tap reactions. They start off. Pause restores the stock behavior, and the existing clipboard and explicit reaction actions stay available.\n* **Telegram:** Pause, Settings backup and Diagnostics now have separate pages with shorter headings. Search still reaches every control, and all five translations include the new page names.\n* **Telegram:** New Year look all year now puts Telegram's Santa hat over the chat list logo. It follows the logo's bounds and color so it stays visible in light and dark themes. Other titles keep their original drawing path. Changed title geometry getters refuse before patching. The switch remains off by default, and Pause restores Telegram's seasonal behavior.\n* **Telegram:** External links now recognize browser aliases that Android enables at runtime, even when their manifest default is disabled. Disabled or private components stay excluded, and the browser chooser keeps its existing order.\n* **Telegram:** HushTelegram settings now opens from a row in Telegram's own Settings. Repeated taps share one screen, and the launcher and Android App-info entries remain available. Partial patch selections show only their installed controls. Changed incoming item registers or callback casts refuse before any hook is edited.\n* **Telegram:** Changing the registered API ID now refreshes the native connection identity for every valid ID. IDs that differ by 128 no longer share a marker. Updates also stay distinct from the previous marker scheme, without changing saved account keys or the app version. Changed native argument shapes refuse before either credential is edited.\n\n### Tooling\n\n* **Tooling:** Builds use Morphe patcher 1.15.1, which brings faster fingerprint matching and signing, and stricter DEX path checks. Morphe Manager 1.34.0 is the first stable Manager that carries it, so the README now asks for 1.34.0 or newer. Fixture checks use the desktop CLI 1.18.1.\n* **Tooling:** The source-ledger paragraph now identifies v0.0.8 as the published bundle and distinguishes newer source changes.\n* **Tooling:** A bounded selection matrix checks both declared Telegram builds 41 ways each, from the defaults and the full catalog down to single patches and bad credential options. It checks each build's dependencies, minimum Android version, preserved resources, native libraries and settings switches. Configured credentials must change only their own values and the native connection version marker. Mutation controls reject missing, duplicated or altered markers.\n\n## Install\n\n1. Install [Morphe Manager](https://github.com/MorpheApp/morphe-manager) 1.34.0 or newer.\n2. Add HushTelegram as a patch source: https://morphe.software/add-source?github=SysAdminDoc%2FHushTelegram\n3. Get Telegram **12.10.6** from [telegram.org/android](https://telegram.org/android) by tapping Download Telegram (it saves as plain `Telegram.apk`), or the [official beta](https://telegram.org/dl/android/apk-public-beta) **12.10.7**, and patch it. The patched app needs Android 9 or newer.\n4. Coming from v0.0.8? Patch again and install over it with the same Morphe Manager signing key. New to HushTelegram? Uninstall the stock Telegram first, since Android won't put one over the other. Your chats come back when you sign in, but secret chats don't. Back up Morphe Manager's signing key after your first patch. You'll need it for every update.\n5. If Telegram won't send you a login code, register your own app at [my.telegram.org/apps](https://my.telegram.org/apps). Use only letters and numbers in the short name. Then select **Use registered Telegram API credentials**, fill in `apiId` and `apiHash`, and patch again. The result installs over your current HushTelegram build. Keep both values private.\n6. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n7. To change HushTelegram's switches, open Telegram's Settings and tap HushTelegram settings.\n\nThe `.mpp` download is a patch bundle, not a Telegram APK. [Installation instructions](https://github.com/SysAdminDoc/HushTelegram#install).\n\n## Validation\n\n579 runtime tests and 303 patch tests passed locally, along with both Android lints and the release script checks. All 25 patches applied without forcing to Telegram 12.10.6 and to the 12.10.7 beta, build 71179. The dependency advisory check passed. On an Android 9 emulator slowed down to match the push report, this build saved a push token in all seven runs. The patched beta started, opened HushTelegram settings and registered for push.\n",
     "release_tag": "v0.0.9",
     "release_date": "2026-10-05T15:08:19Z",
@@ -65857,9 +65908,9 @@
     "bundle": "luckytoshine",
     "channel": "stable",
     "repo_url": "https://github.com/LuckyToShine/czyeru",
-    "created_at": "2026-10-13T17:17:21Z",
-    "version": "1.7.0",
-    "description": "## [1.7.0](https://github.com/LuckyToShine/czyeru/compare/v1.6.3...v1.7.0) (2026-10-13)\n\n### ✨ New Features\n\n* **uvm:** add AMOLED dark theme patch for Conexión Lince UVM 1.0.63 ([74c2c92](https://github.com/LuckyToShine/czyeru/commit/74c2c92bcc7f195cb46b5cfa674c89dfc02879a3))",
+    "created_at": "2026-10-13T18:21:25Z",
+    "version": "1.7.1",
+    "description": "## [1.7.1](https://github.com/LuckyToShine/czyeru/compare/v1.7.0...v1.7.1) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* **uvm:** fix dark text in the AMOLED theme and add Allow screenshots ([b1912c2](https://github.com/LuckyToShine/czyeru/commit/b1912c2a1cb3e47e3279287a35fa3e7ec08e88fd))",
     "apps": [
       {
         "app_name": "Iris Gallery",
@@ -66383,15 +66434,24 @@
             "compatible_versions": [
               "1.0.63"
             ]
+          },
+          {
+            "name": "Allow screenshots",
+            "description": "Lets you take screenshots and screen recordings in the app, for example of your student ID.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "1.0.63"
+            ]
           }
         ]
       }
     ],
     "patches_name": "Crazy Erudite Patches",
-    "fingerprint": "87b36050e1e3c7f1117343996f6055bb2898ac5b4189db5c58e61659830ae186",
-    "release_notes": "## [1.7.0](https://github.com/LuckyToShine/czyeru/compare/v1.6.3...v1.7.0) (2026-10-13)\n\n### ✨ New Features\n\n* **uvm:** add AMOLED dark theme patch for Conexión Lince UVM 1.0.63 ([74c2c92](https://github.com/LuckyToShine/czyeru/commit/74c2c92bcc7f195cb46b5cfa674c89dfc02879a3))\n",
-    "release_tag": "v1.7.0",
-    "release_date": "2026-10-13T17:17:21Z",
+    "fingerprint": "4f4b80ab033ba9e58ad4866c755eeecbc2b6105ce33d316c46bdb116e4b9aeed",
+    "release_notes": "## [1.7.1](https://github.com/LuckyToShine/czyeru/compare/v1.7.0...v1.7.1) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* **uvm:** fix dark text in the AMOLED theme and add Allow screenshots ([b1912c2](https://github.com/LuckyToShine/czyeru/commit/b1912c2a1cb3e47e3279287a35fa3e7ec08e88fd))\n",
+    "release_tag": "v1.7.1",
+    "release_date": "2026-10-13T18:21:25Z",
     "isPreRelease": false
   },
   "hoo-dles:dev": {
@@ -68828,7 +68888,7 @@
     "repo_url": "https://github.com/VenusIsJaded/Venus-Patches",
     "created_at": "2026-10-13T03:03:46Z",
     "version": "1.9.0",
-    "description": "### ✨ New Features\n\n* **Discord - Venus settings:** Every feature has its own Discord icon in the list\n* **Discord - Venus settings:** About shows how many features are on, plus What's new and help links\n* **Discord - Keep deleted messages:** Clear kept messages from its settings, with a count of what's kept\n* **Discord - Translate messages:** Clear saved translations from its settings\n\n### 🔧 Improvements\n\n* **Discord - Venus settings:** Settings is now Features, in six groups, from Messages to Quests\n* **Discord - Venus settings:** Shorter, clearer titles and descriptions for every feature and option\n* **Discord - Venus settings:** Option pages show a status card, Discord's radio lists and short notes\n* **Discord:** Patches are named by what they do, the same as in Venus\n* **Discord - Send Nitro stickers and emojis as links:** Removed Always send links, which only replaced emojis you could already use\n* **Discord - Skip delete confirmation:** One switch now covers both messages and link previews\n* **Discord - Pastel name colors:** Webhooks always get their color from their name\n* **Discord - User and server reviews:** The send button always uses the profile's colors\n",
+    "description": "### ✨ New Features\n\n* **Discord - Venus settings:** Venus settings in 30 languages, including Russian ([#50](https://github.com/VenusIsJaded/Venus-Patches/issues/50))\n* **Discord - Venus settings:** Pick the settings language in Language, or follow Discord's\n* **Discord - Translate messages:** Translate only the messages you pick, from the hold menu ([#50](https://github.com/VenusIsJaded/Venus-Patches/issues/50))\n* **Discord - Translate messages:** Hold a message to show its original, or translate your own\n\n### 🐛 Bug Fixes\n\n* **Discord - Translate messages:** A reply shows the message it quotes untranslated ([#51](https://github.com/VenusIsJaded/Venus-Patches/issues/51))\n\n### 🔧 Improvements\n\n* **Discord - Translate messages:** \"Translated from\" names the language in the settings language\n",
     "apps": [
       {
         "app_name": "Discord",
@@ -69115,7 +69175,7 @@
           },
           {
             "name": "Venus settings",
-            "description": "Adds Venus to Discord's settings, where you turn each feature on or off. Needed by every feature.",
+            "description": "Adds Venus to Discord's settings, where you turn each feature on or off, in your language. Needed by every feature.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -69126,7 +69186,7 @@
       }
     ],
     "patches_name": "VenusIsJaded",
-    "fingerprint": "83e34d9d21db89208e7ebb3863f8d1292e3a2e8eb48ed1071a2564dce978f986",
+    "fingerprint": "594787dbdf18247f90dc45dc510b94f4255dc1ba1aa4dab268b633bf1d3f4c8f",
     "release_notes": "## [1.9.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.8.0...v1.9.0) (2026-10-13)\n\n### ✨ New Features\n\n* **Discord:** Add `ValidUser` patch\n* **Discord - ValidUser:** Fix @unknown-user mentions automatically, with no extra taps\n* **Discord:** Add `Profile bar settings button` patch\n* **Discord - Profile bar settings button:** Open Venus settings from a button next to the notifications bell\n* **Discord:** Add `Split Large Messages` patch\n* **Discord - Split Large Messages:** Send messages over the limit as several, keeping code blocks closed\n* **Discord:** Add `Translate messages` patch\n* **Discord - Translate messages:** Show messages in other languages translated into your language, newest first\n* **Discord - Translate messages:** Keep translations on your phone, so reopened chats show them at once\n\n### 🐛 Bug Fixes\n\n* **Discord - Pastelize:** Color message text doesn't color the message a reply quotes ([#45](https://github.com/VenusIsJaded/Venus-Patches/issues/45))\n\n### 🔧 Improvements\n\n* **Discord - Venus settings:** Every feature starts off, so nothing changes until you turn it on\n",
     "release_tag": "v1.9.0",
     "release_date": "2026-10-13T03:03:46Z",
@@ -69138,7 +69198,7 @@
     "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
     "created_at": "2026-10-08T17:02:30Z",
     "version": "1.9.0",
-    "description": "## [1.10.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.9.0...v1.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* fixed camera opus error [skip ci] ([f042b75](https://github.com/mich111discord/MightyMichs-Patches/commit/f042b75059602159f1772ed76f3ce72ff365f658))\n\n### ✨ New Features\n\n* added suport for photex companion ([ff2fb5a](https://github.com/mich111discord/MightyMichs-Patches/commit/ff2fb5ad1a8df0413e00ce07382da7100063d0b1))",
+    "description": "## [1.11.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.10.0...v1.11.0) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* Added new options for nova launcher ([b36b511](https://github.com/mich111discord/MightyMichs-Patches/commit/b36b51198744277f529f66acdf52800455ceee70))\n* fixed nova launcher change name pachkage ([b45e5ee](https://github.com/mich111discord/MightyMichs-Patches/commit/b45e5ee7ef72e04e34f7b067a91d4ab062476bee))\n* fixed nova launcher internet patch (WARNING ⚠️ ITS NOT TESTED YET) ([188f22b](https://github.com/mich111discord/MightyMichs-Patches/commit/188f22bb4e92eabeadfffba58b6fc1562df9182e))\n\n### ✨ New Features\n\n* added suport for new arcplayer version ([6e7cc43](https://github.com/mich111discord/MightyMichs-Patches/commit/6e7cc435d92c60e30b407c7771eae3b2aca75d66))",
     "apps": [
       {
         "app_name": "Audio Editor",
@@ -69332,6 +69392,21 @@
         ]
       },
       {
+        "app_name": "Guitar Tuner",
+        "package": "com.ovelin.guitartuna",
+        "patches": [
+          {
+            "name": "Unlock Premium Features",
+            "description": "Unlocks Guitar Tuner premium.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "7.102.0"
+            ]
+          }
+        ]
+      },
+      {
         "app_name": "VivaCut",
         "package": "com.quvideo.vivacut",
         "patches": [
@@ -69421,21 +69496,25 @@
         "package": "com.teslacoilsw.launcher",
         "patches": [
           {
-            "name": "Enable Prime (Experimental)",
-            "description": "Enables Nova Launcher Prime WARNING: May cause crashes. ",
-            "use": true,
-            "options": [],
-            "compatible_versions": [
-              "8.8.9"
-            ]
-          },
-          {
             "name": "Remove Internet permission (Nova)",
             "description": "Removes INTERNET permission from Nova Launcher and disables network-only entry points so Nova does not crash.",
             "use": true,
             "options": [],
             "compatible_versions": [
-              "8.8.9"
+              "7.0.58",
+              "8.0.8",
+              "8.8.8"
+            ]
+          },
+          {
+            "name": "Unlock Prime",
+            "description": "Unlocks Nova Launcher Prime by bypassing the static (isPrime) gate. WARNING: May cause crashes.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "7.0.58",
+              "8.0.8",
+              "8.8.8"
             ]
           }
         ]
@@ -69450,7 +69529,7 @@
             "use": true,
             "options": [],
             "compatible_versions": [
-              "1.2.9.3"
+              "1.3.4"
             ]
           }
         ]
@@ -69466,21 +69545,6 @@
             "options": [],
             "compatible_versions": [
               "5.5.83"
-            ]
-          }
-        ]
-      },
-      {
-        "app_name": "Guitar Tuner",
-        "package": "com.yaunquan.guitartuna",
-        "patches": [
-          {
-            "name": "Unlock Premium Features",
-            "description": "Unlocks Guitar Tuner premium.",
-            "use": true,
-            "options": [],
-            "compatible_versions": [
-              "null"
             ]
           }
         ]
@@ -69708,7 +69772,7 @@
       }
     ],
     "patches_name": "MightyMich's Patches",
-    "fingerprint": "4c7be26af916ae372065af5954161efdf87a51825d3f65ebbe69e73c33a6a5b8",
+    "fingerprint": "e16a95c4cec8350494d667db70539a4256d3d3fae76d913e948463a34c37f628",
     "release_notes": "## [1.9.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.8.0...v1.9.0) (2026-10-08)\n\n### 🐛 Bug Fixes\n\n* correct ToDoList compatibility syntax and add two versions [skip ci] ([7e92213](https://github.com/mich111discord/MightyMichs-Patches/commit/7e9221334695cea2dae7360fd8325d621b5cb5ad))\n* fixed magovideo patch ([e839f5b](https://github.com/mich111discord/MightyMichs-Patches/commit/e839f5bd815d0e299da47faeee9db8a1223d0685))\n* fixed pou package error ([32b64b6](https://github.com/mich111discord/MightyMichs-Patches/commit/32b64b6cffbf55bc55319fb594d7534613a7ee38))\n* fixed some patches ([e7aa495](https://github.com/mich111discord/MightyMichs-Patches/commit/e7aa495372b4e75e1e1f49d846c86d3842efe3d9))\n\n### ✨ New Features\n\n* add Nova Launcher Enable Prime patch ([73f8710](https://github.com/mich111discord/MightyMichs-Patches/commit/73f8710f151797f75fd64793379487d9e58e0a56))\n",
     "release_tag": "v1.9.0",
     "release_date": "2026-10-08T17:02:30Z",
@@ -76445,8 +76509,8 @@
     "bundle": "wake-old-hyphen",
     "channel": "dev",
     "repo_url": "https://github.com/Wake-Old-Hyphen/hushfeed",
-    "created_at": "2026-10-13T16:53:15Z",
-    "version": "privacy-tiktok-multi-v0.71.3-20261013-165312",
+    "created_at": "2026-10-13T21:55:02Z",
+    "version": "privacy-tiktok-multi-v0.71.3-20261013-215501",
     "description": "Hushfeed v0.71.2 has 132 patches for global TikTok 47.1.4 (com.zhiliaoapp.musically).\n\n47.1.4 is still the only supported version, so patch that APK with your usual signing key.\n\nA quick follow-up to 0.71.1. Hide the status bar in LIVE rooms and Show a LIVE under the status bar now work on a LIVE opened from the preview under a creator's card in search, which TikTok opens inside the page it uses for opened videos. The release notes list every report 0.71.0 through 0.71.2 changed something for.\n\nValidation: 3876 runtime tests passed and 765 patch tests passed locally. Both Android lint checks passed. All 132 patches applied to the supported APK with resource and manifest checks. The attached release receipt identifies the exact source and bundle. Patched onto TikTok 47.1.4 on a Galaxy S22, a LIVE opened from a creator's card in search got both status bar switches.\n\nNeeds Morphe Manager 1.34.0 or newer. Refresh the Hushfeed source to update. The .mpp is a patch bundle, not a TikTok APK. Keep the manager's existing signing key when updating.",
     "apps": [
       {
@@ -77693,10 +77757,10 @@
     ],
     "patches_name": "Hushfeed",
     "fingerprint": "a3bea1db721313aaa7bd94fc93c1a5cd013b43db83b3e085ae6a1994eb2dc1a7",
-    "release_notes": "# TikTok Privacy Build (47.1.4)\n\nAutomated privacy-hardened builds.\n\n- Hushfeed v0.71.3 (includes AMOLED dark-theme fix)\n- Nai64 Extra Patches v1.1.0\n- Static manifest permission stripping\n- arm64-v8a only (32-bit libraries stripped)\n\nBase APKs: `stock-tiktok-apk` release, Wake-Old-Hyphen/PAB\n\n## Patches\n\n<details>\n<summary>Hushfeed patches (134/134 enabled)</summary>\n\nEnabled:\n- AMOLED dark theme\n- Advanced downloads\n- Allow Duet and Stitch\n- Allow screenshots and Circle to Search\n- Always show publish date\n- Always upload in HD\n- App lock\n- Automatic video advance\n- Block P2P video relay\n- Block author button\n- Block contact list access\n- Block installed app scanning\n- Block popups\n- Block suggested video notifications\n- Camera and microphone indicator\n- Change app name\n- Comment publish diagnostics\n- Comment send fix\n- Comment sort controls\n- Comment tools\n- Confirm feed interactions\n- Copy bio and IDs\n- Copy comments without username\n- Custom launcher icon\n- Custom offline videos limit\n- Device privacy guard\n- Diagnostic tools\n- Disable login requirement\n- Disable screen capture detection\n- Disable telemetry\n- Disable the long press quick share\n- Disable the long press repost\n- Double-tap controls\n- Downloads\n- Drop the animated image cache\n- Enable voice comments\n- Expand activity list\n- Feature Gate Lab\n- Feature Gate Recorder\n- Feed filter\n- Feed tab navigation\n- Feed text sizes\n- Fit the video to the screen\n- Fix Google login\n- Foldable split comment view\n- Follow diagnostics\n- Ghost mode\n- Hide CAPTCHA popups\n- Hide Play Store update offer\n- Hide already seen videos\n- Hide comment popup ads\n- Hide comment typing suggestions\n- Hide feed LIVE button\n- Hide feed follow button\n- Hide feed save button\n- Hide feed search button\n- Hide floating promotions\n- Hide inbox items\n- Hide inbox stories\n- Hide profile shortcuts\n- Hide search suggestions\n- Hide suggested accounts\n- Hide the launcher shortcuts\n- Hide the risk control CAPTCHA\n- Hide video overlays\n- Hold-and-slide 2x lock\n- In-app browser privacy guard\n- Keep a streak going\n- Keep playing in the background\n- Keep pulled sounds\n- Keep the Favorites tab\n- Keep the app language\n- Keep the screen's refresh rate\n- LIVE controls\n- Lift text length limits\n- Limit background traffic\n- Location access governor\n- Long-press controls\n- Look like the store app\n- Mute feed videos\n- Network proxy\n- Network request report\n- Not interested button\n- Notification controls\n- Open external links directly\n- Picture-in-picture\n- Play SDR instead of HDR\n- Playback quality\n- Playback speed\n- Prefer H.264 playback\n- Profile background\n- Region spoof\n- Remember clear display\n- Remove LIVE extras\n- Remove avatar rings\n- Remove content credential and card scanner assets\n- Remove creation tools\n- Remove unused language packs\n- Repost diagnostics\n- Resource and battery governor\n- Resume videos after scrolling\n- Run beside the store app\n- SIM spoof\n- Sanitize sharing links\n- Settings\n- Share sheet tools\n- Show LIVE search\n- Show author region\n- Show commenter handle and region\n- Show engagement rate\n- Show exact counts\n- Show follow status\n- Show the progress bar\n- Show the progress bar thumbnail\n- Skip content warnings\n- Skip first-launch setup\n- Skip passkey sign-in\n- Skip the splash ad\n- Skip update checks\n- Stay on the video in full screen\n- Stop on-device AI profiling\n- Stop recording watch history\n- Stop saving search history\n- Stop search autoplay\n- Stop video looping\n- Story controls\n- Subtitle tools\n- Swipe-left controls\n- Translate comments\n- Trust user certificates\n- Turn off haptics\n- Turn off screen transitions\n- Use non-personalized search\n- Use system font\n\n</details>\n\n<details>\n<summary>Nai64 Extra Patches (18/432 enabled)</summary>\n\nEnabled:\n- Bypass VPN Detection\n- Disable Crash Reporters\n- Disable Firebase Auto-Init\n- Disable Firebase Performance\n- Disable Remote Config Fetch\n- Disable Root Checks\n- Fake Auto Time Zone (autoTimeZone=True)\n- Hide Roaming Status\n- Limit Ad Tracking\n- Remove Ad Services Entries\n- Spoof Phone Number\n- Spoof Play Store Install Source\n- Spoof SIM Serial Number (simSerial=8931084206518391742)\n- Spoof Subscriber ID (subscriberId=204081234567890)\n- Spoof Time Zone (timeZoneId=Europe/Amsterdam)\n- Spoof Tracking IDs (spoofAppSetId=00000000-0000-0000-0000-000000000000, spoofFirebaseId=0000000000000000000000, spoofAppSetScope=True)\n- Spoof Voice Mail\n- Strip Exif Location (stripExifLocation=True)\n\nDisabled (yielded to Hushfeed):\n- AMOLED Theme\n- Allow Background Activity\n- Allow Clearing App Data\n- Allow Cleartext Traffic\n- Allow Mixed Content\n- Allow Mobile Downloads\n- Allow Screenshots\n- Allow Text Selection\n- Allow WebView Autoplay\n- Allow WebView File Access\n- Always Allow Biometrics\n- Always Show Scrollbars\n- Apk Junk Cleanup\n- Block APM Suites\n- Block Ad Network Extras\n- Block Analytics Long Tail\n- Block Attribution Extras\n- Block BLE Scan\n- Block Crash Extras\n- Block Data Pipelines\n- Block GMS Tracking\n- Block Huawei Analytics\n- Block Install Referrer\n- Block Legacy Analytics\n- Block Location Trackers\n- Block MoEngage\n- Block PostHog\n- Block Profile Tracking\n- Block Push Ads\n- Block Push Analytics\n- Block Screenshot Detection\n- Block Session Replay\n- Block Snowplow\n- Block TikTok Events\n- Block Yandex Metrica\n- Bypass DND Policy Access\n- Bypass Demo User\n- Bypass Emulator Detection\n- Bypass Forced Updates (Experimental)\n- Bypass Google Play Services Check\n- Bypass Guest User\n- Bypass Hostname Verification\n- Bypass Instant App\n- Bypass Keyguard Secure\n- Bypass License Verification\n- Bypass Linked User\n- Bypass Lock Task Mode\n- Bypass Low-End Device\n- Bypass Managed Profile\n- Bypass OkHttp Pinning\n- Bypass Overlay Detection\n- Bypass Package Suspended\n- Bypass Permission Check\n- Bypass Picture-in-Picture Mode\n- Bypass Play License Check\n- Bypass Safe Mode\n- Bypass System User\n- Bypass Test Environment\n- Bypass User Restricted\n- Bypass WebView SSL Errors\n- Bypass WebView Safe Browsing\n- Change Package Name\n- Change Version Code\n- Change Version Name\n- Classic Back Gesture\n- Clearing Split Metadata\n- Custom Accent Color\n- Custom App Icon\n- Custom App Resolution (Experimental)\n- Custom Navigation Bar Color\n- Custom Startup Dialog\n- Custom Startup Sound\n- Custom Startup Toast\n- Custom Status Bar Color\n- Custom Window Background\n- Deny Permission Checks\n- Disable Activity Transitions\n- Disable Ad SDK Init\n- Disable Analytics Events\n- Disable Animations\n- Disable App Backup\n- Disable App Links Verification\n- Disable Audio Effects\n- Disable Audio Recording\n- Disable Autofill\n- Disable Background Dim\n- Disable Background Sync\n- Disable Bandcamp Tracker\n- Disable Battery Optimization Prompt\n- Disable Bluetooth A2DP\n- Disable Bluetooth Discovering\n- Disable Bluetooth SCO\n- Disable Boot Auto-Start\n- Disable Camera Shutter Sound\n- Disable Clipboard Write\n- Disable Content Capture\n- Disable DTMF Tones\n- Disable Edge-To-Edge Enforcement\n- Disable Elevation Shadows\n- Disable Facebook SDK Auto-Init\n- Disable Fixed Volume\n- Disable Forced Online Checks (Experimental)\n- Disable Game Sounds\n- Disable Google Pay\n- Disable Google Update Check\n- Disable HDR Detection\n- Disable Haptic Feedback\n- Disable Haptic On Scroll\n- Disable Hardware Acceleration\n- Disable Heads-up Notifications\n- Disable Heap Pointer Tagging\n- Disable High Text Contrast\n- Disable Keyboard Sound\n- Disable Location Requests\n- Disable Logcat Logging\n- Disable Music Detection\n- Disable Notification Badges\n- Disable Notification Sound\n- Disable Notification Vibration\n- Disable Notifications\n- Disable Onboarding Overlays\n- Disable Orientation Lock\n- Disable Overscroll Effect\n- Disable Permission Auto-Revoke\n- Disable Popup Keyboard\n- Disable Quiet Mode\n- Disable RTT\n- Disable Ringtone Playback\n- Disable Scrollbars\n- Disable Secure Surfaces\n- Disable Sensors\n- Disable Snackbars\n- Disable Sound Effects\n- Disable StrictMode\n- Disable Support Banners\n- Disable Telemetry — Hushfeed Disable telemetry owns AppLog/AppsFlyer/Firebase screens\n- Disable Text-to-Speech\n- Disable Toasts\n- Disable Vibration\n- Disable Wake Locks\n- Disable WebView Safe Browsing\n- Disable Window Blur\n- Empty Clipboard Report — Hushfeed Device privacy guard owns clipboard\n- Enable Hidden Settings\n- Enable Large Heap\n- Enable Unrestricted Background Work\n- Enable Unrestricted Clipboard Access\n- Enable WebView App Cache\n- Enable WebView Cache\n- Enable WebView Content Access\n- Enable WebView DOM Storage\n- Enable WebView Debugging\n- Enable WebView Geolocation\n- Enable WebView Image Loading\n- Enable WebView Initial Focus\n- Enable WebView JavaScript\n- Enable WebView Offscreen Pre-Raster\n- Enable WebView Popups\n- Enable WebView Save Form Data\n- Enable WebView Save Password\n- Enable WebView Wide Viewport\n- Enable WebView Zoom\n- Enable WebView Zoom Support\n- Ensure Exact Alarm Availability\n- Ensure Internet Permission\n- Ensure Modern Media Permissions\n- Ensure Notification Permission\n- Ensure Storage Permissions\n- Exclude From Recents\n- Export All Activities\n- Fake ADB Enabled\n- Fake Animation Scales\n- Fake Auto Rotate On\n- Fake Auto Time\n- Fake Available Processors\n- Fake Battery Whitelist\n- Fake Bluetooth Bonded Devices Empty\n- Fake Bluetooth Enabled\n- Fake Brightness Auto Mode\n- Fake Cell Info Empty\n- Fake DTMF Tone Enabled\n- Fake Device Admin\n- Fake Device Idle Mode\n- Fake Doze Always On\n- Fake Fingerprint Hardware\n- Fake Font Scale\n- Fake Location Accuracy\n- Fake Memory Class\n- Fake NFC Enabled\n- Fake Notification Listener\n- Fake Notification Policy Access\n- Fake Online State\n- Fake Pointer Location\n- Fake Screen Timeout\n- Fake Show Touches\n- Fake Sound Effects Enabled\n- Fake Stay On While Plugged\n- Fake Storage Available\n- Fake Store Install Source\n- Fake Usage Access\n- Fake Vibrate When Ringing\n- Fake WiFi Scan Results Empty\n- Fake Write Settings Access\n- Fix Maps on MicroG\n- Force 32-Bit Color\n- Force 5GHz Band Supported\n- Force Android Beam\n- Force App Active\n- Force Battery Health Good\n- Force Battery Present\n- Force Battery Temperature\n- Force Can Install Packages\n- Force Charging Status\n- Force Dark Mode\n- Force Data Capable\n- Force Do Not Disturb Off\n- Force Emulated Storage\n- Force Extract Native Libs\n- Force Google Signed-Out\n- Force Haptics Available\n- Force Hardware Acceleration\n- Force Hardware Layers\n- Force Has System Feature\n- Force Idle Call State\n- Force Ignore Audio Focus\n- Force Landscape / Portrait\n- Force Left-to-Right Layout\n- Force Light Mode\n- Force Max Brightness\n- Force Microphone Unmuted\n- Force Multi-SIM\n- Force Normal Audio Mode\n- Force Overlay Permission\n- Force Picture-in-Picture\n- Force Resizable Activity\n- Force SIM Ready\n- Force SMS Capable\n- Force Screen Interactive\n- Force Single Phone\n- Force Single SIM\n- Force Speakerphone Off\n- Force Speakerphone On\n- Force Storage Non-Removable\n- Force User Unlocked\n- Force Voice Capable\n- Force WiFi P2P Supported\n- Force WiFi Scan Always Available\n- Force Wide Color Gamut\n- Force World Phone\n- Frame Rate Preference (Experimental)\n- GmsCore support (MicroG)\n- Grant All-Files Access\n- Grant WebView Geolocation\n- Graphics API Override (Experimental)\n- Hide Accessibility Services\n- Hide Accessibility Usage\n- Hide Accounts\n- Hide App Ops\n- Hide App Tasks\n- Hide Audio Devices\n- Hide Cell Location\n- Hide Cell Signal\n- Hide Clipboard — Hushfeed Device privacy guard owns clipboard\n- Hide Clipboard Description — Hushfeed Device privacy guard owns clipboard\n- Hide Current Location\n- Hide Data Usage\n- Hide Debugger Connection\n- Hide Default Sensor\n- Hide Device Admins\n- Hide Display Cutout\n- Hide Eavesdropping\n- Hide Hardware Address\n- Hide Input Devices\n- Hide Input Methods\n- Hide Installed Apps\n- Hide Mock Location\n- Hide Navigation Bar\n- Hide Neighboring Cells\n- Hide Network Identity\n- Hide Nfc Adapter\n- Hide Personal Data\n- Hide Query Intents\n- Hide Running Processes\n- Hide Running Services\n- Hide Service State\n- Hide Storage Volumes\n- Hide Stylus Handwriting\n- Hide Title Bar\n- Hide USB Devices\n- Hide Usage Events\n- Hide Usage Stats\n- Hide Wallpaper\n- Ignore Data Saver\n- Ignore GPS Disabled\n- Ignore Location Services Off\n- Ignore Low RAM Device\n- Ignore Power Save Mode\n- Ignore Screen Lock\n- Ignore Touch Exploration\n- Immersive Fullscreen\n- Keep Data on Uninstall\n- Keep Screen On\n- Legacy App Reviver\n- Legacy External Storage\n- Make App Debuggable\n- Nai64Patches Universal Overlay Patch v1.0 (Experimental)\n- Null Play Location\n- Optimize as Game\n- Prefer ANGLE Graphics Driver\n- Preserve App Data\n- Relax Hardware Features\n- Relax Required Libraries\n- Relax Shared Libraries\n- Remove App Icon\n- Remove Backup Restrictions\n- Remove Compatible Screens\n- Remove Hardware Requirements\n- Remove Internet Permission\n- Remove Network Security Config\n- Remove Permissions\n- Remove Play Count Limit\n- Rename App\n- Repair Missing Component Export Flags\n- Report Legacy Storage\n- Report No Cameras\n- Restore Package Visibility\n- Set Install Location\n- Set Profileable\n- Show Navigation Bar\n- Show Search Result Scores\n- Show Status Bar\n- Silence Notification Channels\n- Silence Play Services Errors\n- Skip Consent Popup\n- Skip Rate-Us Prompt\n- Skip Splash Screen (Experimental)\n- Spoof 24-Hour Format\n- Spoof Airplane Mode\n- Spoof Amazon Appstore Availability\n- Spoof Android ID\n- Spoof App Signature\n- Spoof BSSID\n- Spoof Battery Charging State\n- Spoof Battery Level\n- Spoof Bluetooth Audio On\n- Spoof Bluetooth Enabled\n- Spoof Bluetooth Identity\n- Spoof Bluetooth Name\n- Spoof Bluetooth Profile State\n- Spoof Board and Hardware\n- Spoof Build Fingerprint\n- Spoof Build Serial\n- Spoof Build Type and Tags\n- Spoof CPU Architecture\n- Spoof Data State\n- Spoof Developer Options\n- Spoof Device Model\n- Spoof Device Provisioned\n- Spoof Device Software Version\n- Spoof Fixed Location\n- Spoof GPU Info\n- Spoof Group ID Level 1\n- Spoof High Sample Rate\n- Spoof IMEI\n- Spoof ISIM IMPI\n- Spoof Last Known Location — Hushfeed Location access governor owns location\n- Spoof Locale — Hushfeed Region spoof owns locale/timezone\n- Spoof Location Provider\n- Spoof MAC Address\n- Spoof Media Playing\n- Spoof Multi-Window Mode\n- Spoof Network Access Identifier\n- Spoof Network Operator Name\n- Spoof Network Type LTE\n- Spoof Notifications as Enabled\n- Spoof OpenGL ES Version\n- Spoof Play Integrity\n- Spoof Play Services Version\n- Spoof Ringer Mode\n- Spoof SDK Level\n- Spoof SIM Country — Hushfeed SIM spoof owns telephony identity\n- Spoof SIM Operator — Hushfeed SIM spoof owns telephony identity\n- Spoof SIM Operator Name — Hushfeed SIM spoof owns telephony identity\n- Spoof Sensor List\n- Spoof Signature Match\n- Spoof Storage State\n- Spoof Stream Volume\n- Spoof Target SDK\n- Spoof UiMode Night State\n- Spoof WebView User Agent\n- Spoof WiFi Enabled\n- Spoof WiFi RSSI\n- Spoof WiFi SSID\n- Spoof Widevine L1\n- Spoof Wired Headset\n- Status Bar Icons\n- Strip BuildConfig DEBUG\n- Strip Package Verifier\n- Strip Translations\n- Support All Screens\n- Tablet Mode\n- Transparent System Bars\n- Treat Network as Unmetered\n- Treat Screen as On\n- Trust User CAs (Config)\n- Trust User Certificates\n- Unlock Max Aspect Ratio\n- Unlock Notification Channels\n- Unlock Playback Speed\n- Unlock Rotation\n- Unmark Test Only\n- Use Display Cutout Area\n- VM Safe Mode\n- WebView Private Mode\n\n</details>\n\n## Permissions\n\n### TikTok 47.1.4\n\n<details>\n<summary>Removed permissions (58)</summary>\n\n- android.permission.ACCESS_ADSERVICES_AD_ID\n- android.permission.ACCESS_ADSERVICES_ATTRIBUTION\n- android.permission.ACCESS_COARSE_LOCATION\n- android.permission.ACCESS_FINE_LOCATION\n- android.permission.ACCESS_LOCAL_NETWORK\n- android.permission.ACCESS_MEDIA_LOCATION\n- android.permission.BLUETOOTH\n- android.permission.BLUETOOTH_ADVERTISE\n- android.permission.BLUETOOTH_CONNECT\n- android.permission.BLUETOOTH_SCAN\n- android.permission.CAMERA\n- android.permission.CHANGE_NETWORK_STATE\n- android.permission.CHANGE_WIFI_STATE\n- android.permission.DETECT_SCREEN_CAPTURE\n- android.permission.DETECT_SCREEN_RECORDING\n- android.permission.FOREGROUND_SERVICE_CAMERA\n- android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION\n- android.permission.FOREGROUND_SERVICE_MICROPHONE\n- android.permission.FOREGROUND_SERVICE_PHONE_CALL\n- android.permission.MANAGE_OWN_CALLS\n- android.permission.NFC\n- android.permission.POST_NOTIFICATIONS\n- android.permission.READ_CONTACTS\n- android.permission.READ_MEDIA_AUDIO\n- android.permission.READ_MEDIA_IMAGES\n- android.permission.READ_MEDIA_VIDEO\n- android.permission.READ_MEDIA_VISUAL_USER_SELECTED\n- android.permission.RECEIVE_BOOT_COMPLETED\n- android.permission.RECORD_AUDIO\n- android.permission.REORDER_TASKS\n- android.permission.SCHEDULE_EXACT_ALARM\n- android.permission.SET_WALLPAPER\n- android.permission.SYSTEM_ALERT_WINDOW\n- android.permission.USE_BIOMETRIC\n- android.permission.USE_EXACT_ALARM\n- android.permission.USE_FINGERPRINT\n- android.permission.USE_FULL_SCREEN_INTENT\n- android.permission.VIBRATE\n- com.amazon.device.messaging.permission.RECEIVE\n- com.android.launcher.permission.READ_SETTINGS\n- com.android.vending.BILLING\n- com.google.android.apps.aicore.service.BIND_SERVICE\n- com.google.android.c2dm.permission.RECEIVE\n- com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE\n- com.google.android.gms.permission.AD_ID\n- com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA\n- com.oplus.ocs.permission.third\n- com.oplus.ocs.permission.third\n- com.orange.update.permission.READ_ATTRIBUTION\n- com.samsung.android.mapsagent.permission.READ_APP_INFO\n- com.sec.android.provider.badge.permission.READ\n- com.sec.android.provider.badge.permission.WRITE\n- com.tiktok.manager.SYS_START_PERMISSION\n- com.tiktok.preload.permission.IDENTIFY\n- com.zhiliao.musically.livewallpaper.permission.wallpaperplugin\n- com.zhiliaoapp.musically.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION\n- com.zhiliaoapp.musically.permission.PRF_INTERNAL\n- com.zhiliaoapp.musically.permission.RECEIVE_ADM_MESSAGE\n\n</details>\n\n<details>\n<summary>Kept permissions (10)</summary>\n\n1. android.permission.ACCESS_NETWORK_STATE\n2. android.permission.ACCESS_WIFI_STATE\n3. android.permission.FOREGROUND_SERVICE\n4. android.permission.FOREGROUND_SERVICE_DATA_SYNC\n5. android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK\n6. android.permission.INTERNET\n7. android.permission.MODIFY_AUDIO_SETTINGS\n8. android.permission.READ_EXTERNAL_STORAGE\n9. android.permission.WAKE_LOCK\n10. android.permission.WRITE_EXTERNAL_STORAGE\n\n</details>\n\n## Changelog since previous build\n\n- 38e8e615 chore(docs): keep working markdown out of new commits\n- b0637ba2 fix(translation): keep draft previews usable while typing\n- 996d9d0b docs(readme): list ko-fi.com among the addresses the code names\n- 72dce327 test(settings): take the editor draft test's range setting back out of the registry\n- 41d7d501 fix(branding): check launcher picture pixel data before writing it\n- 4c0786c0 fix(settings): keep an open editor's unsaved choices through a recreated screen\n- 3f7228e7 fix(seen): keep a watch with the account that watched it across a switch\n- 0606e28f fix(font): keep the font in use when Remove can't clear a set-aside copy\n- bde910e0 docs(notes): say what the -KeepIn check does without promising more\n- 219fa8ed fix(font): keep the earlier imported font until its replacement is in place\n- b377f84c feat(navigation): give TalkBack an Open Hushfeed settings action on For You\n- f1b75bc6 fix(scripts): refuse an unsafe -KeepIn folder before verify-all-patches empties it\n- ecb971c7 fix(settings): recover Forget saved videos and the share app list when the background queue is full\n- e5dca84e fix(privacy): say what Hide a VPN connection actually hides\n- 88f75d03 fix(settings): a page opened straight onto leaves settings by its Back arrow\n- 358f04e6 perf(downloads): trim stray dots and slashes in one pass\n- 2ab99524 fix(settings): Undo of a waiting Quick setups change asks for no restart\n- e997b553 fix(settings): keep home where it was after Back, once a restart returned it\n- 793c1a88 chore(scripts): bring gen-l10n.py into the Ruff baseline\n- 80d0f056 feat(settings): come back from a restart scrolled to where you were\n- 6de65141 fix(settings): count and undo Quick setups changes that wait a day\n- f9608eb4 refactor(settings): drop the menu rows' changed-setting badge\n- b19af11e feat(settings): list every page on the home page under headings\n- d9ab9b22 test(report): a list that just fits the link goes in whole\n- b5ca19f7 test(guard): review the sign-in prefix Report a problem measures\n- b1724a47 fix(settings): keep the problem report link under GitHub's limit\n- 3ce8d580 fix(settings): keep a wrapped Quick setups button whole\n- a7fa6298 test(guard): review the report form and Ko-fi addresses\n- 85deeaff docs(notes): summarize the Check your sources switch in every language\n- 9b3a1156 feat(warnings): hide the Check your sources banner and its share prompt\n- b11e81b2 docs(readme): mention search toggles, Quick setups and the two new home rows\n- a257720f docs(notes): summarize the new settings rows in every language\n- 05237742 feat(settings): flip plain switches right in the search results\n- 0f17335f feat(settings): add Quick setups under the search field\n- 13f1a994 feat(settings): add Report a problem and a Ko-fi row to the home page\n- ccf4dda1 test(settings): install a settings context in the restart return test\n- eda55bc5 feat(settings): land back on the settings page after a restart\n\n## Build information\n\n| Item | Value |\n|---|---|\n| TikTok versions | 47.1.4 |\n| Architecture | arm64-v8a |\n| Hushfeed | v0.71.3 |\n| Nai64 | v1.1.0 |\n\n## Installation note\n\nThese builds are signed with a custom keystore. Uninstall any existing TikTok (stock or previously patched) before first install; subsequent updates from this workflow install in place.\n",
-    "release_tag": "privacy-tiktok-multi-v0.71.3-20261013-165312",
-    "release_date": "2026-10-13T16:53:15Z",
-    "isPreRelease": true
+    "release_notes": "**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.71.1...v0.71.3\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.71.1...v0.71.3\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.71.1...v0.71.3\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.71.1...v0.71.3\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.71.1...v0.71.3\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.71.1...v0.71.3",
+    "release_tag": "v0.71.3",
+    "release_date": "2026-10-12T01:58:20Z",
+    "isPreRelease": false
   },
   "wake-old-hyphen:stable": {
     "bundle": "wake-old-hyphen",
@@ -88487,9 +88551,9 @@
     "bundle": "jacksonjones2003",
     "channel": "dev",
     "repo_url": "https://github.com/JacksonJones2003/immersive-keyboard-patches",
-    "created_at": "2026-10-09T15:52:31Z",
-    "version": "1.4.2-dev.2",
-    "description": "## [1.4.2](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.1...v1.4.2) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* Match the bottom bar to the row of the keyboard directly above it ([e4adc8d](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/e4adc8d492a6fbfec96b1c197aee98d7c8329699))\n* Stop the top edge treatment landing one row too low when the toolbar row is not detected ([41217c8](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/41217c83030904b1773b84996864357c33b64ce3))",
+    "created_at": "2026-10-13T18:46:21Z",
+    "version": "1.5.0-dev.1",
+    "description": "## [1.5.0](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.4...v1.5.0) (2026-10-13)\n\n### ✨ New Features\n\n* Use vivo's system glass material for the Glass Panel, as one sheet over keyboard and bottom bar ([9b93c07](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/9b93c07c5ab1014305d62643b76eca8de25f58c8))",
     "apps": [
       {
         "app_name": "Gboard",
@@ -88506,7 +88570,7 @@
           },
           {
             "name": "Glass Panel",
-            "description": "Gives the translucent keyboard panel a glass look with lit edges, a faint sheen and a bright top rim, leaving the keys as they are. Works on top of Translucent Bottom Bar and Frosted Glass.",
+            "description": "Turns the translucent keyboard panel into glass. On vivo OriginOS it uses the system's own glass material, with real refraction, rim light and dispersion; elsewhere it draws lit edges and a sheen. Keys are left as they are. Works on top of Translucent Bottom Bar and Frosted Glass.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -88535,19 +88599,19 @@
       }
     ],
     "patches_name": "Immersive Keyboard Patches",
-    "fingerprint": "6f44b0891773838881f280542cc13c1551da77f0ccae3f6781bc2fbe36972458",
-    "release_notes": "## [1.4.2-dev.2](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.2-dev.1...v1.4.2-dev.2) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* Stop the top edge treatment landing one row too low when the toolbar row is not detected ([41217c8](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/41217c83030904b1773b84996864357c33b64ce3))\n",
-    "release_tag": "v1.4.2-dev.2",
-    "release_date": "2026-10-09T15:52:31Z",
+    "fingerprint": "e700a7962b8196b8fce27cdc20aec88821351a290d690858d82d6c894cf03b41",
+    "release_notes": "## [1.5.0-dev.1](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.4...v1.5.0-dev.1) (2026-10-13)\n\n### ✨ New Features\n\n* Use vivo's system glass material for the Glass Panel, as one sheet over keyboard and bottom bar ([9b93c07](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/9b93c07c5ab1014305d62643b76eca8de25f58c8))\n",
+    "release_tag": "v1.5.0-dev.1",
+    "release_date": "2026-10-13T18:46:21Z",
     "isPreRelease": true
   },
   "jacksonjones2003:stable": {
     "bundle": "jacksonjones2003",
     "channel": "stable",
     "repo_url": "https://github.com/JacksonJones2003/immersive-keyboard-patches",
-    "created_at": "2026-10-09T15:55:26Z",
-    "version": "1.4.2",
-    "description": "## [1.4.2](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.1...v1.4.2) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* Match the bottom bar to the row of the keyboard directly above it ([e4adc8d](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/e4adc8d492a6fbfec96b1c197aee98d7c8329699))\n* Stop the top edge treatment landing one row too low when the toolbar row is not detected ([41217c8](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/41217c83030904b1773b84996864357c33b64ce3))",
+    "created_at": "2026-10-13T18:48:34Z",
+    "version": "1.5.0",
+    "description": "## [1.5.0](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.4...v1.5.0) (2026-10-13)\n\n### ✨ New Features\n\n* Use vivo's system glass material for the Glass Panel, as one sheet over keyboard and bottom bar ([9b93c07](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/9b93c07c5ab1014305d62643b76eca8de25f58c8))",
     "apps": [
       {
         "app_name": "Gboard",
@@ -88564,7 +88628,7 @@
           },
           {
             "name": "Glass Panel",
-            "description": "Gives the translucent keyboard panel a glass look with lit edges, a faint sheen and a bright top rim, leaving the keys as they are. Works on top of Translucent Bottom Bar and Frosted Glass.",
+            "description": "Turns the translucent keyboard panel into glass. On vivo OriginOS it uses the system's own glass material, with real refraction, rim light and dispersion; elsewhere it draws lit edges and a sheen. Keys are left as they are. Works on top of Translucent Bottom Bar and Frosted Glass.",
             "use": true,
             "options": [],
             "compatible_versions": [
@@ -88593,10 +88657,10 @@
       }
     ],
     "patches_name": "Immersive Keyboard Patches",
-    "fingerprint": "58e319ff6929b08f8ba5d355774bd526c8a420f8841aa5dc3c6f55d161c93310",
-    "release_notes": "## [1.4.2](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.1...v1.4.2) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* Match the bottom bar to the row of the keyboard directly above it ([e4adc8d](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/e4adc8d492a6fbfec96b1c197aee98d7c8329699))\n* Stop the top edge treatment landing one row too low when the toolbar row is not detected ([41217c8](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/41217c83030904b1773b84996864357c33b64ce3))\n",
-    "release_tag": "v1.4.2",
-    "release_date": "2026-10-09T15:55:26Z",
+    "fingerprint": "217eeed102e5fe7b073d189906e206420a48ec6fcda17b3e895a64c7d2e329ec",
+    "release_notes": "## [1.5.0](https://github.com/JacksonJones2003/immersive-keyboard-patches/compare/v1.4.4...v1.5.0) (2026-10-13)\n\n### ✨ New Features\n\n* Use vivo's system glass material for the Glass Panel, as one sheet over keyboard and bottom bar ([9b93c07](https://github.com/JacksonJones2003/immersive-keyboard-patches/commit/9b93c07c5ab1014305d62643b76eca8de25f58c8))\n",
+    "release_tag": "v1.5.0",
+    "release_date": "2026-10-13T18:48:34Z",
     "isPreRelease": false
   },
   "hammadhassan94:dev": {
@@ -104607,35 +104671,6 @@
     "release_date": "2026-10-10T12:28:03Z",
     "isPreRelease": false
   },
-  "blazko381:stable": {
-    "bundle": "blazko381",
-    "channel": "stable",
-    "repo_url": "https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag",
-    "created_at": "2026-10-03T23:51:15Z",
-    "version": "1.1.3",
-    "description": "## [1.1.3](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/compare/v1.1.2...v1.1.3) (2026-10-03)\n\n### 🐛 Bug Fixes\n\n* wymuszenie nowego wydania ([c4ca0e4](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/commit/c4ca0e4a444a726fc0273912486ed365b00a5d5a))",
-    "apps": [
-      {
-        "app_name": "Spiderpork",
-        "package": "com.amazon.spiderpork",
-        "patches": [
-          {
-            "name": "Luna Low Latency Codecs",
-            "description": "Forces Amazon Luna to avoid codecs not supporting low latency, reducing input lag (based on mocelet patch).",
-            "use": true,
-            "options": [],
-            "compatible_versions": []
-          }
-        ]
-      }
-    ],
-    "patches_name": "Luna TV Patches",
-    "fingerprint": "1aafa9031adb9e75c898a3cdc56855e64beabb68bb2c80c7efd884286d588954",
-    "release_notes": "## [1.1.3](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/compare/v1.1.2...v1.1.3) (2026-10-03)\n\n### 🐛 Bug Fixes\n\n* wymuszenie nowego wydania ([c4ca0e4](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/commit/c4ca0e4a444a726fc0273912486ed365b00a5d5a))\n",
-    "release_tag": "v1.1.3",
-    "release_date": "2026-10-03T23:51:15Z",
-    "isPreRelease": false
-  },
   "unkybadtouch:dev": {
     "bundle": "unkybadtouch",
     "channel": "dev",
@@ -109747,7 +109782,7 @@
     "repo_url": "https://github.com/SysAdminDoc/HushFacebook",
     "created_at": "2026-10-10T06:30:12Z",
     "version": "0.9.0",
-    "description": "Hushfacebook v0.11.0 targets Facebook 582.0.0.50.54 (com.facebook.katana), the newest release.\n\nThis release brings 88 patches, up from 87. The new one is Frame step, which moves a paused reel or video one frame at a time. New switches hide comments with shop links or with words from your News feed list, let Home show just Friends, Favorites, Groups or Pages, and save crashes to Downloads. The kept reel progress bar no longer jumps back on the first reel or sits under the caption, Material You reaches the Menu's top card and Log out strip, and the release notes map each reported issue this release touches.\n\nValidation: 2541 runtime tests passed locally. All 886 patch tests passed too, along with both Android lints. All 88 patches applied to Facebook 582.0.0.50.54, and the resource and injected-code checks passed.\n\nReview diagnostic reports for private data before sharing them.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch the arm64-v8a bundle of Facebook 582.0.0.50.54, build 475417104, or its 32-bit build 475417036. The .mpp is a patch bundle, not a Facebook APK. Keep the manager's existing signing key when updating.",
+    "description": "Hushfacebook v0.12.0 targets Facebook 582.0.0.50.54 (com.facebook.katana), the newest release.\n\nThis release brings 88 patches. New switches leave calls and chat notifications to Messenger, keep the top bar and the tab bar on screen while you scroll, let a tap on a reel's progress bar seek, and take Muse out of the share sheet. The settings home page gets Quick setups and Report a problem, and a change that needs a restart shows a row that restarts Facebook and returns to the same page. You can name the patched app when you patch and open Facebook's App icon page from Pick an app icon. The kept progress bar shows on every reel and stays where you drag it, and the release notes map each reported issue this release touches.\n\nValidation: 2757 runtime tests passed locally. All 932 patch tests passed too, along with both Android lints. All 88 patches applied to Facebook 582.0.0.50.54, and the resource and injected-code checks passed.\n\nReview diagnostic reports for private data before sharing them.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch the arm64-v8a bundle of Facebook 582.0.0.50.54, build 475417104, or its 32-bit build 475417036. The .mpp is a patch bundle, not a Facebook APK. Keep the manager's existing signing key when updating.",
     "apps": [
       {
         "app_name": "Facebook",
@@ -120349,14 +120384,23 @@
     "bundle": "jacksonjones2003-origin-island-patches",
     "channel": "stable",
     "repo_url": "https://github.com/JacksonJones2003/origin-island-patches",
-    "created_at": "2026-10-13T01:11:01Z",
-    "version": "1.3.0",
-    "description": "## [1.3.0](https://github.com/JacksonJones2003/origin-island-patches/compare/v1.2.0...v1.3.0) (2026-10-13)\n\n### ✨ New Features\n\n* Add Origin Island music card patch for YouTube ([dcfdacd](https://github.com/JacksonJones2003/origin-island-patches/commit/dcfdacdbee778b5826f9c440875e827d6c3b297e))",
+    "created_at": "2026-10-13T18:03:12Z",
+    "version": "1.4.0",
+    "description": "## [1.4.0](https://github.com/JacksonJones2003/origin-island-patches/compare/v1.3.0...v1.4.0) (2026-10-13)\n\n### ✨ New Features\n\n* Add Lyrics in player patch for YouTube Music ([36ea7c0](https://github.com/JacksonJones2003/origin-island-patches/commit/36ea7c025c6ab1de34927c12872b150b731d9ace))",
     "apps": [
       {
         "app_name": "YouTube Music",
         "package": "com.google.android.apps.youtube.music",
         "patches": [
+          {
+            "name": "Lyrics in player",
+            "description": "Shows the line of the lyrics that is sung below the title of the queue in the player. Requires the Third-party lyrics patch.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "9.40.51"
+            ]
+          },
           {
             "name": "Origin Island music card",
             "description": "Lets the OriginOS music card on the lock screen and Origin Island like songs, switch between repeat and shuffle, show the playlist, the playlists of the library and the downloads, and show the lyrics of the Third-party lyrics patch.",
@@ -120385,10 +120429,10 @@
       }
     ],
     "patches_name": "Origin Island Patches",
-    "fingerprint": "585e7020b4d1f616c3313484dfbe227a181a479b0d61c147572808970ae4e47b",
-    "release_notes": "## [1.3.0](https://github.com/JacksonJones2003/origin-island-patches/compare/v1.2.0...v1.3.0) (2026-10-13)\n\n### ✨ New Features\n\n* Add Origin Island music card patch for YouTube ([dcfdacd](https://github.com/JacksonJones2003/origin-island-patches/commit/dcfdacdbee778b5826f9c440875e827d6c3b297e))\n",
-    "release_tag": "v1.3.0",
-    "release_date": "2026-10-13T01:11:01Z",
+    "fingerprint": "c7b1e95ce89f11cb08275aec8770d48c6e066bb14524f03bba13610f1710d6c3",
+    "release_notes": "## [1.4.0](https://github.com/JacksonJones2003/origin-island-patches/compare/v1.3.0...v1.4.0) (2026-10-13)\n\n### ✨ New Features\n\n* Add Lyrics in player patch for YouTube Music ([36ea7c0](https://github.com/JacksonJones2003/origin-island-patches/commit/36ea7c025c6ab1de34927c12872b150b731d9ace))\n",
+    "release_tag": "v1.4.0",
+    "release_date": "2026-10-13T18:03:12Z",
     "isPreRelease": false
   },
   "therealcrazyfuy:dev": {
@@ -128574,8 +128618,8 @@
     "bundle": "ihatenodejs",
     "channel": "dev",
     "repo_url": "https://github.com/ihatenodejs/aidans-patches",
-    "created_at": "2026-10-13T05:21:52Z",
-    "version": "1.7.0-dev.3",
+    "created_at": "2026-10-13T18:20:10Z",
+    "version": "1.8.0-dev.1",
     "description": "## [1.7.0](https://github.com/ihatenodejs/aidans-patches/compare/v1.6.0...v1.7.0) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* **geocaching:** neutralized server sync for experimental features ([ab635cb](https://github.com/ihatenodejs/aidans-patches/commit/ab635cb6170d5ba5fb1e821f4f5e2c9c4e59c7b2))\n* **release:** update bun lockfile for semantic-release github plugin ([cea934f](https://github.com/ihatenodejs/aidans-patches/commit/cea934f8955192f773b46ea402fed80045e8c641))\n* **site:** prevented linking prior workflow run url on queued badges ([97c50a9](https://github.com/ihatenodejs/aidans-patches/commit/97c50a92aa8eb35ba0039d3487246db23893c3c1))\n\n### ✨ New Features\n\n* **geocaching:** added developer tools patch and experimental toggles ([e99ec24](https://github.com/ihatenodejs/aidans-patches/commit/e99ec24ffaf7b78e5b1adfc0e4e68d1fbbabd8c9))\n* **geocaching:** added experimental map sheet support for osm styles ([1f29c32](https://github.com/ihatenodejs/aidans-patches/commit/1f29c327d9c847bc34cad0dbb7970b331d0375e5))\n* **sidelineswap:** added remove invite friends patch ([04328a9](https://github.com/ihatenodejs/aidans-patches/commit/04328a924ddd04de690da61b7b3937adbb26d789))\n* **site:** added ViewMoreAppsCard and Crosshair components ([b66cb3d](https://github.com/ihatenodejs/aidans-patches/commit/b66cb3d1d7746bc24ad4f5964d4cbbfc0cc5a4e2))",
     "apps": [
       {
@@ -129483,10 +129527,10 @@
     ],
     "patches_name": "Aidan's Patches",
     "fingerprint": "a471693bf640d0e2ea47ea3e7c9a215c8d86f2658745c231b6cdde7f0ff348fd",
-    "release_notes": "## [1.7.0-dev.3](https://github.com/ihatenodejs/aidans-patches/compare/v1.7.0-dev.2...v1.7.0-dev.3) (2026-10-13)\n\n### ✨ New Features\n\n* **geocaching:** added developer tools patch and experimental toggles ([e99ec24](https://github.com/ihatenodejs/aidans-patches/commit/e99ec24ffaf7b78e5b1adfc0e4e68d1fbbabd8c9))\n",
-    "release_tag": "v1.7.0-dev.3",
-    "release_date": "2026-10-13T05:21:52Z",
-    "isPreRelease": true
+    "release_notes": "## [1.7.0](https://github.com/ihatenodejs/aidans-patches/compare/v1.6.0...v1.7.0) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* **geocaching:** neutralized server sync for experimental features ([ab635cb](https://github.com/ihatenodejs/aidans-patches/commit/ab635cb6170d5ba5fb1e821f4f5e2c9c4e59c7b2))\n* **release:** update bun lockfile for semantic-release github plugin ([cea934f](https://github.com/ihatenodejs/aidans-patches/commit/cea934f8955192f773b46ea402fed80045e8c641))\n* **site:** prevented linking prior workflow run url on queued badges ([97c50a9](https://github.com/ihatenodejs/aidans-patches/commit/97c50a92aa8eb35ba0039d3487246db23893c3c1))\n\n### ✨ New Features\n\n* **geocaching:** added developer tools patch and experimental toggles ([e99ec24](https://github.com/ihatenodejs/aidans-patches/commit/e99ec24ffaf7b78e5b1adfc0e4e68d1fbbabd8c9))\n* **geocaching:** added experimental map sheet support for osm styles ([1f29c32](https://github.com/ihatenodejs/aidans-patches/commit/1f29c327d9c847bc34cad0dbb7970b331d0375e5))\n* **sidelineswap:** added remove invite friends patch ([04328a9](https://github.com/ihatenodejs/aidans-patches/commit/04328a924ddd04de690da61b7b3937adbb26d789))\n* **site:** added ViewMoreAppsCard and Crosshair components ([b66cb3d](https://github.com/ihatenodejs/aidans-patches/commit/b66cb3d1d7746bc24ad4f5964d4cbbfc0cc5a4e2))\n",
+    "release_tag": "v1.7.0",
+    "release_date": "2026-10-13T05:35:41Z",
+    "isPreRelease": false
   },
   "ihatenodejs:stable": {
     "bundle": "ihatenodejs",
@@ -130410,8 +130454,8 @@
     "bundle": "heval99-morphe-patches",
     "channel": "dev",
     "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
-    "created_at": "2026-10-13T16:52:37Z",
-    "version": "1.14.0-dev.5",
+    "created_at": "2026-10-13T21:52:49Z",
+    "version": "1.14.0-dev.7",
     "description": "## [1.13.0](https://github.com/heval99/Heval-Morphe-Patches/compare/v1.12.0...v1.13.0) (2026-10-11)\n\n### 🐛 Bug Fixes\n\n* **iptv:** stop Disable ads crashing on launch (issue [#35](https://github.com/heval99/Heval-Morphe-Patches/issues/35)) ([404d909](https://github.com/heval99/Heval-Morphe-Patches/commit/404d909f4c8fb7d976c8182bb8592f62f537021c))\n* **wunderground:** stop ads returning after a few launches (issue [#45](https://github.com/heval99/Heval-Morphe-Patches/issues/45)) ([32c6094](https://github.com/heval99/Heval-Morphe-Patches/commit/32c60944c5083c23e31da3c153019b963a090a50))\n* **youcut:** drop patch — native integrity kill-gate is unpatchable (issue [#44](https://github.com/heval99/Heval-Morphe-Patches/issues/44)) ([f4dd4c9](https://github.com/heval99/Heval-Morphe-Patches/commit/f4dd4c9926253be605dcbab2fad2408e6e145a46))\n\n### ✨ New Features\n\n* **alarmclock:** add Disable ads patch for Alarm Clock Xtreme ([4bc592d](https://github.com/heval99/Heval-Morphe-Patches/commit/4bc592dbaf2807464ecbe671841b44cbb8c2462d))\n* **bizcal:** add Disable ads patch for Business Calendar 2 ([0609468](https://github.com/heval99/Heval-Morphe-Patches/commit/060946866387952240802930d89d80ea241d1063))\n* **librera:** add Disable ads patch ([f1c4655](https://github.com/heval99/Heval-Morphe-Patches/commit/f1c4655a6e130084fe46fb1eaaaae2e84d697eee))",
     "apps": [
       {
@@ -142774,9 +142818,9 @@
     "bundle": "serajr",
     "channel": "dev",
     "repo_url": "https://github.com/serajr/x-twitter-patches",
-    "created_at": "2026-10-12T20:34:04Z",
-    "version": "1.22.0-dev.1",
-    "description": "## [1.22.0](https://github.com/serajr/x-twitter-patches/compare/v1.21.0...v1.22.0) (2026-10-12)",
+    "created_at": "2026-10-13T21:10:54Z",
+    "version": "1.23.0-dev.1",
+    "description": "## [1.23.0](https://github.com/serajr/x-twitter-patches/compare/v1.22.0...v1.23.0) (2026-10-13)",
     "apps": [
       {
         "app_name": "X (Twitter)",
@@ -142795,7 +142839,7 @@
           },
           {
             "name": "Fix Navigation Bar Haze",
-            "description": "Diagnoses the bottom navigation container using a solid red background.",
+            "description": "Diagnoses the bottom navigation container using a solid salmon background.",
             "use": false,
             "options": [],
             "compatible_versions": [
@@ -142841,19 +142885,19 @@
       }
     ],
     "patches_name": "X (Twitter) Patches",
-    "fingerprint": "b9a80bb58d14c8e1e66ac6c1c20bd4e66fd7ae982b5a2bf94836e24522cd8090",
-    "release_notes": "## [1.22.0-dev.1](https://github.com/serajr/x-twitter-patches/compare/v1.21.0...v1.22.0-dev.1) (2026-10-12)\n",
-    "release_tag": "v1.22.0-dev.1",
-    "release_date": "2026-10-12T20:34:04Z",
+    "fingerprint": "da599964d275333bfbf8622a830d4c8b09ba670437bf40a657ac4a5cfd22f6df",
+    "release_notes": "## [1.23.0-dev.1](https://github.com/serajr/x-twitter-patches/compare/v1.22.0...v1.23.0-dev.1) (2026-10-13)\n",
+    "release_tag": "v1.23.0-dev.1",
+    "release_date": "2026-10-13T21:10:54Z",
     "isPreRelease": true
   },
   "serajr:stable": {
     "bundle": "serajr",
     "channel": "stable",
     "repo_url": "https://github.com/serajr/x-twitter-patches",
-    "created_at": "2026-10-12T20:36:36Z",
-    "version": "1.22.0",
-    "description": "## [1.22.0](https://github.com/serajr/x-twitter-patches/compare/v1.21.0...v1.22.0) (2026-10-12)",
+    "created_at": "2026-10-13T21:15:48Z",
+    "version": "1.23.0",
+    "description": "## [1.23.0](https://github.com/serajr/x-twitter-patches/compare/v1.22.0...v1.23.0) (2026-10-13)",
     "apps": [
       {
         "app_name": "X (Twitter)",
@@ -142872,7 +142916,7 @@
           },
           {
             "name": "Fix Navigation Bar Haze",
-            "description": "Diagnoses the bottom navigation container using a solid red background.",
+            "description": "Diagnoses the bottom navigation container using a solid salmon background.",
             "use": false,
             "options": [],
             "compatible_versions": [
@@ -142918,10 +142962,10 @@
       }
     ],
     "patches_name": "X (Twitter) Patches",
-    "fingerprint": "935013b1144b08f7f6e3e4085b1a9324c6f4b0ca92de24b7a5b31bfcf0baeeaf",
-    "release_notes": "## [1.22.0](https://github.com/serajr/x-twitter-patches/compare/v1.21.0...v1.22.0) (2026-10-12)\n",
-    "release_tag": "v1.22.0",
-    "release_date": "2026-10-12T20:36:36Z",
+    "fingerprint": "a7b11edff186282a03c30db1a505448bbf0ae76721d6e77aca27514aecf6e4e4",
+    "release_notes": "## [1.23.0](https://github.com/serajr/x-twitter-patches/compare/v1.22.0...v1.23.0) (2026-10-13)\n",
+    "release_tag": "v1.23.0",
+    "release_date": "2026-10-13T21:15:48Z",
     "isPreRelease": false
   },
   "hackingguy:dev": {
@@ -147026,23 +147070,12 @@
     "repo_url": "https://github.com/Forsigh/waze-patches",
     "created_at": "2026-10-13T07:57:14Z",
     "version": "0.27.0",
-    "description": "## [0.22.4](https://github.com/Forsigh/waze-patches/compare/v0.22.2...v0.22.4) (2026-10-13)\n\n### 🗑️ Removed\n\n* **Map theme** and **OLED dark mode** are removed. Both rewrote Waze's map skin inside the APK; on-device\n  testing showed the app breaking with them - the OLED black swallowed the map contents and the theme\n  selector broke the map - so the full skin-rewrite approach is retired with them. The skin files ship\n  stock again, and the versionCode refresh now waits for the mood artwork *and* the AMOLED row below -\n  a minimal, night-only rebuild of the same idea, informed by the first attempt's post-mortem\n\n### ✨ New patch\n\n* **Morphe YouTube Music as a Waze audio partner** replaces \"Add your own media apps as Waze audio\n  partners\": a direct port of Loupric/morphe-waze-music-patch (GPLv3, release v1.0.2, credited in the\n  README and the source). The package is declared in Waze's manifest `<queries>` - without it Android's\n  package visibility hides it from Waze entirely - and inserted into `SdkConfiguration.appConfigs` when\n  `updateAppList` rebuilds the roster: upstream's `containsKey`-guarded block right after the scope save,\n  built with the five-argument `au` constructor and feature bits `0x200001`\n* the custom machinery is retired rather than kept alongside: the `partners` / `alsoAllowPackage` /\n  `mediaBrowserAction` / `allowAllPackages` options, the `au.g` availability override and the audio-SDK\n  config forcing are all gone. On-device testing under the previous build did not produce a working\n  partner, and upstream's exact pair is what its own users run\n* the row is on by default, exactly as upstream lists it\n* **AMOLED dark mode** (opt-in, off by default) - the second, informed attempt at the AMOLED night map:\n  night skin files only, the canvas becomes true black (`#000000`) and the nine road families are lifted\n  15% toward white (the first attempt used 10%) so they keep their contrast against it. Day mode, labels,\n  traffic and route colours stay stock, and the day files are asserted byte-identical. Two measured facts\n  from the first attempt's post-mortem shape it: `map_background` is also the render tree's \"eraser\"\n  colour (referenced ~20 times as feature strokes), so the black cascades by design to match the canvas,\n  and the higher lift compensates the dark-on-dark night palette. Applied at patch time; nothing injected\n* **Disable Play Store updates** (opt-in, off by default) - a port of Morphe's universal patch of the same\n  name (`MorpheApp/morphe-patches`, GPLv3, credited): the manifest version code is locked above Play's\n  2,100,000,000 ceiling, so the store always sees the installed copy as newer and never offers or applies\n  an update. Two deliberate Waze adaptations: the locked value is `2,100,000,000 + minutes since 2026`\n  rather than a frozen maximum, because Waze re-extracts its skins only when the versionCode *changes* -\n  frozen, it would silently freeze every future skin edit; and instead of upstream's rewrite-everything\n  preserve, only Waze's own package-version accessor (`com.waze.utils.n.a`, the push module's source) is\n  made to report the pre-lock code, while the two extraction gates keep seeing the change. The manifest\n  write runs in the resource half's `finalize`, so the lock is the last word on the number regardless of\n  selection order\n* the descriptions Morphe and the README show for every patch got a plain-language pass, and the credits\n  section now lists only sources whose work actually ships in the bundle",
+    "description": "## [0.22.5](https://github.com/Forsigh/waze-patches/compare/v0.22.4...v0.22.5) (2026-10-13)\n\n### 🗑️ Removed\n\n* **AMOLED dark mode** is removed. On-device testing once more showed the app failing at startup\n  with the row ticked - a loading screen, then an error, then exit - so the skin-value rewrite is\n  retired for good: the night skins ship exactly as Waze builds them, and nothing overrides them at\n  patch time",
     "apps": [
       {
         "app_name": "Waze",
         "package": "com.waze",
         "patches": [
-          {
-            "name": "AMOLED dark mode",
-            "description": "Replaces Waze's stock night map with an AMOLED one: the map canvas becomes true black (#000000) and the nine road families are lifted 15% toward white so they keep their contrast against it. Only the night skins change - day mode, labels, traffic and route colours stay as Waze ships them. Applied at patch time: no runtime switch, nothing injected.",
-            "use": false,
-            "options": [],
-            "compatible_versions": [
-              "5.24.90.901",
-              "5.25.0.1",
-              "5.25.4.900"
-            ]
-          },
           {
             "name": "Allow high refresh rate",
             "description": "Waze rejects any display mode above 60 Hz when it picks the mode for its surface, so a 120 Hz screen is served 60 Hz. This raises that ceiling to the requested rate (120 Hz by default). Costs battery and heat - off by default.",
@@ -147233,7 +147266,7 @@
       }
     ],
     "patches_name": "Forsigh Waze Patches",
-    "fingerprint": "00c082bb8eaa6ab599c2a32aad6608d4482b102c761cf957937902b492486f9b",
+    "fingerprint": "461a6fc350100c6729131a99b98affcd354c2ca4b30a042ce129677cb0512717",
     "release_notes": "## [0.27.0](https://github.com/Forsigh/waze-patches/compare/v0.26.0...v0.27.0) (2026-10-13)\n\n### ✨ New Features\n\n* support Waze 5.25.4.900 alongside 5.25.0.1 ([05d3b68](https://github.com/Forsigh/waze-patches/commit/05d3b68ab5fb7423aa98426b43e52029d8a8e257))\n",
     "release_tag": "v0.27.0",
     "release_date": "2026-10-13T07:57:14Z",
@@ -152765,6 +152798,35 @@
     "release_notes": "**Release Tag:** `1.0.4`  \r\n**Target App:** Google Pixel Camera `11.1.040.982810059.19` (APKM -> https://www.apkmirror.com/apk/google-inc/camera/pixel-camera-11-1-040-982810059-19-release/)  \r\n**Supported Devices:** Google Pixel 6, 7, 8, 9, 10 series (Tensor G1 – G5)\r\n\r\n---\r\n\r\n## What's New in v1.0.4\r\n\r\n### 1. All 13 Camera Looks Unlocked (3 New Looks Added)\r\nIn addition to the 10 original signature Looks, all **3 brand-new Pixel Camera 11.1 Looks** are now fully enabled and integrated directly into the carousel UI:\r\n* **Flat** (`qvd` / *Pesto*): Low-contrast, high dynamic range flat color profile optimized for post-shot color grading.\r\n* **Buffalo** (`qvg` / *Unflat*): Warm, punchy earth tones with balanced contrast and expanded dynamic latitude.\r\n* **Dijon** (`qvi` / *Yellow-Green Faded*): Nostalgic retro analog look with olive-tinted highlights and muted shadows.\r\n* *Total available Looks:* **13** (Original, Natural, Vanilla, Editorial, Shadows, Velvet, Classic, Digi, Black Tie, Minimal, Flat, Buffalo, Dijon).\r\n\r\n---\r\n\r\n### 2. Viewfinder Dual Sliders & Universal Bidirectional Sync\r\n* **Viewfinder Tap-to-Focus Sliders Restored:** Resolved the issue where the dual sliders were missing from the viewfinder. Sliders now reliably appear on tap-to-focus across all modes.\r\n* **Full Dynamic Exposure Range:** Restored full range on both sliders:\r\n  * **Brightness:** -4.0 to +4.0 stops.\r\n  * **Shadow:** Linearized HDR+ shadow boost up to 15.3x.\r\n* **Bidirectional Synchronization:** Viewfinder on-screen knobs and bottom sheet drawers now share the exact same underlying HAL observables—scrubbing either slider updates the other instantly in real time.\r\n* **Camera2 HAL Preview Integration:** Decoupled `DualEvCtrl` from twilight flags (`ptm.g = false`), allowing real-time tone mapping previews directly in the viewfinder.\r\n\r\n---\r\n\r\n### 3. Pixel 10 & Pro 12MP Photo Saving Fix\r\n* Fixed an issue on Pixel 10 / Tensor G5 hardware where 12MP captures failed to save or froze during post-processing.\r\n* Disabled incompatible Tensor G5-exclusive pipelines (`camera.ceftazidime = 0` Flare Removal and `camera.use_eclipse = 0` Eclipse AE).\r\n* Injected fallbacks for binned RAW stream dimensions (`tele_binned_raw_width` = 2016, `tele_binned_raw_height` = 1512, `binned_row_start` = 0) to ensure zero capture drops.\r\n\r\n---\r\n\r\n### 4. Complete Feature Matrix\r\n* **Permanent Portrait Mode Fix:** Pure-TFLite monocular depth routing (`midasnet`, `portrait_matting_mask`) fixing front camera blur and rear camera bokeh drops.\r\n* **Pro Manual Controls:** Unlocks Manual Focus, Shutter Speed, ISO, and Focus Peaking on all supported models.\r\n* **10x Quick Zoom:** Discrete 10x viewfinder zoom toggle in Photo mode.\r\n* **Creator Suite:** Teleprompter HUD (`biotite`), Live Audio VU Meter (`mica`), and Social Framing Guides (`slate`).\r\n* **Non-Root App Clone:** Installable side-by-side with stock Pixel Camera (`com.google.android.GoogleCamera.morphe`).\r\n\r\n---\r\n\r\n##  How to Install via Morphe Manager\r\n\r\n1. Download and install the latest **Morphe Manager** on your device.\r\n2. Download official **Pixel Camera 11.1** APK (`11.1.040.982810059.19`). \r\n3. Download **`morphe-patches-pixelcamera-1.0.4.mpp`** (or `patches-1.0.4.mpp`) from the Assets below.\r\n4. In Morphe Manager:\r\n   * Select the downloaded Pixel Camera APK.\r\n   * Load the patch bundle (`.mpp`).\r\n   * Select your preferred patches and tap **Patch**.\r\n5. Install the generated APK and enjoy!\r\n\r\n---\r\n\r\n## Assets\r\n\r\n* **`morphe-patches-pixelcamera-1.0.4.mpp`** — Morphe patch bundle\r\n* **`patches-1.0.4.mpp`** — Standalone bundle mirror\r\n",
     "release_tag": "1.0.4",
     "release_date": "2026-10-09T18:07:20Z",
+    "isPreRelease": false
+  },
+  "blazko381:stable": {
+    "bundle": "blazko381",
+    "channel": "stable",
+    "repo_url": "https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag",
+    "created_at": "2026-10-03T23:51:15Z",
+    "version": "1.1.3",
+    "description": "## [1.1.3](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/compare/v1.1.2...v1.1.3) (2026-10-03)\n\n### 🐛 Bug Fixes\n\n* wymuszenie nowego wydania ([c4ca0e4](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/commit/c4ca0e4a444a726fc0273912486ed365b00a5d5a))",
+    "apps": [
+      {
+        "app_name": "Spiderpork",
+        "package": "com.amazon.spiderpork",
+        "patches": [
+          {
+            "name": "Luna Low Latency Codecs",
+            "description": "Forces Amazon Luna to avoid codecs not supporting low latency, reducing input lag (based on mocelet patch).",
+            "use": true,
+            "options": [],
+            "compatible_versions": []
+          }
+        ]
+      }
+    ],
+    "patches_name": "Luna TV Patches",
+    "fingerprint": "1aafa9031adb9e75c898a3cdc56855e64beabb68bb2c80c7efd884286d588954",
+    "release_notes": "## [1.1.3](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/compare/v1.1.2...v1.1.3) (2026-10-03)\n\n### 🐛 Bug Fixes\n\n* wymuszenie nowego wydania ([c4ca0e4](https://github.com/Blazko381/Luna-TV-device-comp-patch-and-no-lag/commit/c4ca0e4a444a726fc0273912486ed365b00a5d5a))\n",
+    "release_tag": "v1.1.3",
+    "release_date": "2026-10-03T23:51:15Z",
     "isPreRelease": false
   },
   "bartlomiejfornalczyk:dev": {
@@ -171197,9 +171259,9 @@
     ],
     "patches_name": "legendsciber's Patches",
     "fingerprint": "da3e5ce4aeb317d9829f82fb78b716234159ec19054ee68361392dfa39e5c7e8",
-    "release_notes": "## [1.46.0](https://github.com/legendsciber/morphe-patches/compare/v1.45.0...v1.46.0) (2026-10-13)\n\n### ✨ New Features\n\n* **keymapper:** add premium unlock patch ([9133e98](https://github.com/legendsciber/morphe-patches/commit/9133e988c0e461b653b7767941cd325f10b30e16))\n",
-    "release_tag": "v1.46.0",
-    "release_date": "2026-10-13T02:32:55Z",
+    "release_notes": "## [1.47.0](https://github.com/legendsciber/morphe-patches/compare/v1.46.0...v1.47.0) (2026-10-13)\n\n### ✨ New Features\n\n* **newstarsoccer:** add free IAP patch ([5fcc116](https://github.com/legendsciber/morphe-patches/commit/5fcc116f3731e87f37a5173cd85ac5fe517ec838))\n",
+    "release_tag": "v1.47.0",
+    "release_date": "2026-10-13T21:28:12Z",
     "isPreRelease": false
   },
   "abhis1n:latest": {
