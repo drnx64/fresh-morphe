@@ -2,9 +2,9 @@
   "bundle": "commit-regrets",
   "channel": "stable",
   "repo_url": "https://github.com/commit-regrets/morphe-youtube-vr-patches",
-  "created_at": "2026-10-11T22:14:21Z",
-  "version": "1.23.1",
-  "description": "## [1.23.1](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.23.0...v1.23.1) (2026-10-11)\n\n### 🐛 Bug Fixes\n\n* **sponsorblock:** find the settings XML from Manager's split patcher session ([579f978](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/579f978e3a5019cca481ded103e2872bd9caf286))",
+  "created_at": "2026-10-13T00:13:07Z",
+  "version": "1.24.0",
+  "description": "## [1.24.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.23.1...v1.24.0) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* describe what the Extension patch actually provides ([cef1e21](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/cef1e217faa58000d3b9cd1e77923601f1de8811))\n* point at the Extension patch as the ad blocker in the SSAI note ([d0314aa](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/d0314aa8af5a5bc8f2e7b8020efd2b5244610c29))\n* qualify the quality picker's array references (@type/name) ([a7fad4f](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/a7fad4fd43d2a338bbaccfbd61fd8af77d3f63d2))\n* remove the Spoof osName patch (measured ineffective on VR) ([4e8f3ad](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/4e8f3ad0ec6d92a140661a629a4e85c3b9be4fa2))\n* say that the two spoof options ship set to the no-op value ([be145f3](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/be145f3426cfe8d95e3e3e77a1b0b865a045377a))\n* select SponsorBlock by default and drop its stale off-by-default note ([f9611dc](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/f9611dc8470f7253c15468e5d211cd5aea757dd4))\n* single-source the supported app version in Constants.kt ([6a74415](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/6a74415e3f17ba5caa2ac4e751d0832ef34b16d2))\n* state that the Disable QUIC option is off by default ([81d99a6](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/81d99a6eebffff0ba40c87640f42e899722cf063))\n* state the measured result in the Spoof osName note ([96ba4f9](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/96ba4f9dc1dc642ec2b224dde6e237f8092ab982))\n* verify the quality hook's Optional and make its settings row usable ([468b6df](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/468b6df8f312cd8f1335d44839508b038b299cca))\n\n### ✨ New Features\n\n* add the Default video quality patch ([043bee1](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/043bee17388b28eb71879035eaa34657775bb311))\n* force verbose logging in local test builds ([51f7a30](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/51f7a30a5fc132f8aad9c56c1f293a39e10e7986))",
   "apps": [
     {
       "app_name": "YouTube VR",
@@ -25,6 +25,20 @@
           ]
         },
         {
+          "name": "Default video quality",
+          "description": "Starts every video at one resolution instead of the app's per-video choice; a resolution the video lacks falls back to its highest available (8K included when the stream spoof provides it). Changeable in the headset's Patch settings; Auto keeps the app's own behaviour.",
+          "use": true,
+          "options": [
+            {
+              "key": "videoQuality",
+              "description": "Seeds the in-headset setting on first launch; the Patch settings row governs from the first change there."
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
           "name": "Disable DRC audio",
           "description": "Disables DRC (Dynamic Range Compression) audio.",
           "use": true,
@@ -35,7 +49,7 @@
         },
         {
           "name": "Disable QUIC protocol",
-          "description": "Adds an option to disable QUIC (Quick UDP Internet Connections) network protocol.",
+          "description": "Adds an option (off by default) to disable QUIC (Quick UDP Internet Connections) network protocol; selecting the patch alone changes nothing until the option is enabled.",
           "use": false,
           "options": [
             {
@@ -49,7 +63,7 @@
         },
         {
           "name": "Extension",
-          "description": "Injects the YouTube VR patch extension used by streaming patches.",
+          "description": "Injects the extension the other patches run through: its streaming spoof is what removes the pre-roll (ad-free playback) and provides the 8K format support. Turning this patch off restores ads.",
           "use": true,
           "options": [
             {
@@ -58,6 +72,10 @@
             },
             {
               "key": "enableDiagnostics",
+              "description": ""
+            },
+            {
+              "key": "forceVerboseLogging",
               "description": ""
             },
             {
@@ -88,7 +106,7 @@
         },
         {
           "name": "Hide stitched ads (SSAI)",
-          "description": "Removes the client side ad configuration and cue points for server-stitched (SSAI) streams. Does not remove the ad itself; off by default.",
+          "description": "Removes the client side ad configuration and cue points for server-stitched (SSAI) streams. It does not remove the ad itself; keeping ads out is the Extension patch's streaming spoof. Off by default.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -128,8 +146,8 @@
         },
         {
           "name": "SponsorBlock",
-          "description": "Automatically skips SponsorBlock segments (sponsors, self-promos, intros, ...). Off by default; configure per-category behaviour below.",
-          "use": false,
+          "description": "Automatically skips SponsorBlock segments (sponsors, self-promos, intros, ...). On by default (sponsors: skip once); configure per-category behaviour below or in the headset's Patch settings screen.",
+          "use": true,
           "options": [
             {
               "key": "sponsorBlockApi",
@@ -182,7 +200,7 @@
         },
         {
           "name": "Spoof app version",
-          "description": "Adds an option to trick the app into thinking you are running a different version.",
+          "description": "Adds an option to trick the app into thinking you are running a different version; the option ships set to the app's current version, so selecting the patch alone changes nothing.",
           "use": true,
           "options": [
             {
@@ -195,17 +213,8 @@
           ]
         },
         {
-          "name": "Spoof osName (Android Automotive)",
-          "description": "Reports the app as an Android Automotive device, the way the phone patch set blocks video ads.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.88.10"
-          ]
-        },
-        {
           "name": "Spoof package name in User-Agent",
-          "description": "Adds an option to report a different app package name in the Cronet User-Agent.",
+          "description": "Adds an option to report a different app package name in the Cronet User-Agent; the option ships set to the original package name, so selecting the patch alone changes nothing.",
           "use": true,
           "options": [
             {
@@ -221,9 +230,9 @@
     }
   ],
   "patches_name": "YouTube VR Patches",
-  "fingerprint": "f6b569015626a058de3e0826906f594669cd89d57dcf0f9aa86f92972cdff16e",
-  "release_notes": "## [1.23.1](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.23.0...v1.23.1) (2026-10-11)\n\n### 🐛 Bug Fixes\n\n* **sponsorblock:** find the settings XML from Manager's split patcher session ([579f978](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/579f978e3a5019cca481ded103e2872bd9caf286))\n",
-  "release_tag": "v1.23.1",
-  "release_date": "2026-10-11T22:14:21Z",
+  "fingerprint": "d2aeb117483e5788af8a8512af91e9148804f1c78a614e34b215761186e5ada3",
+  "release_notes": "## [1.24.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.23.1...v1.24.0) (2026-10-13)\n\n### 🐛 Bug Fixes\n\n* describe what the Extension patch actually provides ([cef1e21](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/cef1e217faa58000d3b9cd1e77923601f1de8811))\n* point at the Extension patch as the ad blocker in the SSAI note ([d0314aa](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/d0314aa8af5a5bc8f2e7b8020efd2b5244610c29))\n* qualify the quality picker's array references (@type/name) ([a7fad4f](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/a7fad4fd43d2a338bbaccfbd61fd8af77d3f63d2))\n* remove the Spoof osName patch (measured ineffective on VR) ([4e8f3ad](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/4e8f3ad0ec6d92a140661a629a4e85c3b9be4fa2))\n* say that the two spoof options ship set to the no-op value ([be145f3](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/be145f3426cfe8d95e3e3e77a1b0b865a045377a))\n* select SponsorBlock by default and drop its stale off-by-default note ([f9611dc](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/f9611dc8470f7253c15468e5d211cd5aea757dd4))\n* single-source the supported app version in Constants.kt ([6a74415](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/6a74415e3f17ba5caa2ac4e751d0832ef34b16d2))\n* state that the Disable QUIC option is off by default ([81d99a6](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/81d99a6eebffff0ba40c87640f42e899722cf063))\n* state the measured result in the Spoof osName note ([96ba4f9](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/96ba4f9dc1dc642ec2b224dde6e237f8092ab982))\n* verify the quality hook's Optional and make its settings row usable ([468b6df](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/468b6df8f312cd8f1335d44839508b038b299cca))\n\n### ✨ New Features\n\n* add the Default video quality patch ([043bee1](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/043bee17388b28eb71879035eaa34657775bb311))\n* force verbose logging in local test builds ([51f7a30](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/51f7a30a5fc132f8aad9c56c1f293a39e10e7986))\n",
+  "release_tag": "v1.24.0",
+  "release_date": "2026-10-13T00:13:07Z",
   "isPreRelease": false
 }
