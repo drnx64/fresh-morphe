@@ -2,14 +2,46 @@
   "bundle": "forsigh",
   "channel": "stable",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-10-10T07:58:25Z",
-  "version": "0.21.0",
-  "description": "## [0.21.0](https://github.com/Forsigh/waze-patches/compare/v0.20.2...v0.21.0) (2026-10-10)\n\n### ✨ New Features\n\n* replace Waze's YouTube Music entry at the source, add high refresh rate ([f5c4bda](https://github.com/Forsigh/waze-patches/commit/f5c4bda47fad5e9cdd24c0c50bb70b2f7b45be9a))",
+  "created_at": "2026-10-13T07:57:14Z",
+  "version": "0.27.0",
+  "description": "## [0.27.0](https://github.com/Forsigh/waze-patches/compare/v0.26.0...v0.27.0) (2026-10-13)\n\n### ✨ New Features\n\n* support Waze 5.25.4.900 alongside 5.25.0.1 ([05d3b68](https://github.com/Forsigh/waze-patches/commit/05d3b68ab5fb7423aa98426b43e52029d8a8e257))",
   "apps": [
     {
       "app_name": "Waze",
       "package": "com.waze",
       "patches": [
+        {
+          "name": "Add your own media apps as Waze audio partners",
+          "description": "Waze's audio-partner list is a table compiled into the app - it contains Spotify and an internal demo, and Waze never scans installed apps (getInstalledPackages has zero references in the APK). One patch for the whole media feature: it adds your own entries to that table at the point where Waze persists each partner's scope, and declares the media browser service in Waze's manifest, without which Android hides your players from Waze entirely. Waze's own availability check is opened as well: any installed app qualifies as a partner, and Waze reaches it through the generic media-browser client instead of requiring Waze's own SDK.",
+          "use": false,
+          "options": [
+            {
+              "key": "alsoAllowPackage",
+              "description": "Package names to declare individually, for an app that does not expose a media browser service. Leave empty for none."
+            },
+            {
+              "key": "mediaBrowserAction",
+              "description": "The action Waze is allowed to query for. The default is the standard Android media browser service, which every player capable of Android Auto support implements."
+            },
+            {
+              "key": "allowAllPackages",
+              "description": "Adds the QUERY_ALL_PACKAGES permission instead of a targeted declaration. The blunt version: use it only if the targeted declaration is not enough, and expect Waze to learn about apps it has no use for."
+            },
+            {
+              "key": "partners",
+              "description": "One entry per partner, comma separated, written package=Label. The label defaults to the package when omitted. Each app must expose an android.media.browse.MediaBrowserService for Waze to be able to reach it."
+            },
+            {
+              "key": "enableAudioSdk",
+              "description": "Forces CONFIG_VALUE_AUDIO_EXTENSION_SDK_FEATURE_ENABLED and CONFIG_VALUE_AUDIO_EXTENSION_SDK_ON to true. Without them Waze builds an empty partner list and the entries above would never be reached."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900"
+          ]
+        },
         {
           "name": "Allow high refresh rate",
           "description": "Waze rejects any display mode above 60 Hz when it picks the mode for its surface, so a 120 Hz screen is served 60 Hz. This raises that ceiling to the requested rate (120 Hz by default). Costs battery and heat - off by default.",
@@ -22,7 +54,8 @@
           ],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -37,7 +70,8 @@
           ],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -47,7 +81,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -57,17 +92,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
-          ]
-        },
-        {
-          "name": "Config overrides",
-          "description": "Applies the configuration changes requested by the other patches. Applied automatically; there is nothing to configure.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -77,7 +103,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -87,7 +114,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -97,7 +125,35 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
+          ]
+        },
+        {
+          "name": "Map theme",
+          "description": "Recolours Waze's own map skin (Google Maps-like light/dark, or OLED black) by rewriting the compiled skin descriptions in the APK, and raises the app's versionCode so Waze re-extracts its skins instead of serving the cached stock ones. Applied at patch time: change the theme by re-patching. No injected code, nothing to render at runtime.",
+          "use": false,
+          "options": [
+            {
+              "key": "theme",
+              "description": "google = light and dark palettes sampled from Google Maps. oled = pure-black night palette for both modes. Anything else fails the patch run."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900"
+          ]
+        },
+        {
+          "name": "OLED dark mode",
+          "description": "Makes the night map truly dark for OLED screens: the map background becomes pure black (#000000) and the road colours are lifted slightly (one Waze lighten step) so they stay readable against it. Only the background and the road palette change - day mode, labels, traffic and routes are left as Waze ships them. Applied at patch time: no runtime switch and nothing injected into the app. Steps aside if Map theme is also selected.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -107,7 +163,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -117,7 +174,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -127,7 +185,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -137,7 +196,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -147,7 +207,8 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
@@ -157,39 +218,28 @@
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         },
         {
-          "name": "Wire Morphe YouTube Music into Waze",
-          "description": "Replaces the official YouTube Music entry with your Morphe YouTube Music: the package Waze launches and the row label, at the single point every audio-partner list entry is built from - plus both launch paths as a fallback.",
-          "use": false,
-          "options": [
-            {
-              "key": "officialPackage",
-              "description": "The package Waze asks for. Requests matching this prefix are rewritten."
-            },
-            {
-              "key": "targetPackage",
-              "description": "The package your Morphe YouTube Music is installed as. Morphe Manager shows it on the app's patch screen."
-            },
-            {
-              "key": "rowTitle",
-              "description": "What the list entry reads once it points at your build. Set it back to \"YouTube Music\" to leave the label as Waze ships it."
-            }
-          ],
+          "name": "Unlock driver moods",
+          "description": "Waze's mood picker is gated three ways: an eligibility check that accepts only one mood name (and reads the beta-moods flag), a baby-account gate that hides moods, and a filtered native catalogue call. This opens all three, so moods already in the local catalogue - including special and hidden entries - become selectable. Artwork Waze has never downloaded is not invented.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "5.24.90.901",
-            "5.25.0.1"
+            "5.25.0.1",
+            "5.25.4.900"
           ]
         }
       ]
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "a1801f6f440b1793800e12641712d5e0cf76b5b89ededa4f05eff9e3a60f1036",
-  "release_notes": "## [0.21.0](https://github.com/Forsigh/waze-patches/compare/v0.20.2...v0.21.0) (2026-10-10)\n\n### ✨ New Features\n\n* replace Waze's YouTube Music entry at the source, add high refresh rate ([f5c4bda](https://github.com/Forsigh/waze-patches/commit/f5c4bda47fad5e9cdd24c0c50bb70b2f7b45be9a))\n",
-  "release_tag": "v0.21.0",
-  "release_date": "2026-10-10T07:58:25Z",
+  "fingerprint": "109e182dcbf4db42bbb16b0e3bfabd956a11ea5e08b00438fd7c34a99eb03b12",
+  "release_notes": "## [0.27.0](https://github.com/Forsigh/waze-patches/compare/v0.26.0...v0.27.0) (2026-10-13)\n\n### ✨ New Features\n\n* support Waze 5.25.4.900 alongside 5.25.0.1 ([05d3b68](https://github.com/Forsigh/waze-patches/commit/05d3b68ab5fb7423aa98426b43e52029d8a8e257))\n",
+  "release_tag": "v0.27.0",
+  "release_date": "2026-10-13T07:57:14Z",
   "isPreRelease": false
 }

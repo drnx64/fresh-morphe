@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-12T21:31:34Z",
-  "version": "1.13.0",
-  "description": "## [1.13.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.12.5...v1.13.0) (2026-10-12)\n\n### New Features\n\n* **capcut:** add bypass geoblock region restriction patch ([665c9f9](https://github.com/kveld9/kveld-extra-morphe-patches/commit/665c9f94f7c7d8d980229d023f5f9b5ca906e23b))",
+  "created_at": "2026-10-13T04:53:49Z",
+  "version": "1.14.0",
+  "description": "## [1.14.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.13.0...v1.14.0) (2026-10-13)\n\n### Bug Fixes\n\n* **twitter:** demote braze anchors to best-effort ([1581b35](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1581b35c26c4263fdc515c9c7eb53c6ddeb903db))\n* **twitter:** extend telemetry neutralization to braze and sentry surfaces ([c95d687](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c95d68759da292992ddd3201675b8e53a1ad63f6))\n* **twitter:** reject quote and backslash in Custom Fonts paths ([423b2d3](https://github.com/kveld9/kveld-extra-morphe-patches/commit/423b2d378d9e908bc47abd8d448041cea3e6682c))\n* **twitter:** resolve nullable fingerprint matches via matchAll ([ea5f7db](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ea5f7dbbbe833a7d6dccf58aeffe48bf833a4b6a))\n* **twitter:** select first safe dispatcher per anchor ([330a22e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/330a22e4829db04aca241aaedff87b2d3a2dd885))\n\n### New Features\n\n* **twitter:** add background and companion-surface slimmer ([0527f06](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0527f065afd93713369e129beb2fdd2c897411c1))\n* **twitter:** add Custom Deep Links patch ([399f3d4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/399f3d4a9c310f337e7d197a1b17e8cdd50ce287))\n* **twitter:** add Custom Fonts patch with text font support ([4826150](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4826150d2d11a0782937307411a893152cea97b6))\n* **twitter:** add emoji font option to Custom Fonts ([16ed849](https://github.com/kveld9/kveld-extra-morphe-patches/commit/16ed849515bc8b2881ea19c7cf50a53cc6b7d25e))\n* **twitter:** add Hide FAB option to Navigation UI ([046da1f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/046da1fb0a79b8d3811bb42715bf449d07d2dc69))\n* **twitter:** add Round Off Numbers patch ([588d05b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/588d05bc2836855b789d4a329c96324e748d7aff))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -440,7 +440,7 @@
       "patches": [
         {
           "name": "Block Telemetry & Trackers",
-          "description": "Neutralizes Google AppMeasurement and Firebase Performance Trace dispatchers, and strips advertising identifiers.",
+          "description": "Neutralizes Google AppMeasurement, Firebase Performance, Braze marketing SDK, and strips advertising identifiers.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -461,6 +461,38 @@
           "description": "Prevents automatic scrolling to the next video in immersive view",
           "use": false,
           "options": [],
+          "compatible_versions": [
+            "12.33.1-prod.01"
+          ]
+        },
+        {
+          "name": "Custom Deep Links",
+          "description": "Registers intent filters to open custom links directly in the app",
+          "use": false,
+          "options": [
+            {
+              "key": "customLinkHosts",
+              "description": "Custom domains to register for opening in the app"
+            }
+          ],
+          "compatible_versions": [
+            "12.33.1-prod.01"
+          ]
+        },
+        {
+          "name": "Custom Fonts",
+          "description": "Applies custom typography to post and profile text",
+          "use": false,
+          "options": [
+            {
+              "key": "fontTtfPath",
+              "description": "Absolute device path to a .ttf applied to post/profile text, e.g. /sdcard/fonts/myfont.ttf"
+            },
+            {
+              "key": "emojiFontTtfPath",
+              "description": "Absolute device path to a .ttf applied to emojis, e.g. /sdcard/fonts/myemojifont.ttf"
+            }
+          ],
           "compatible_versions": [
             "12.33.1-prod.01"
           ]
@@ -533,6 +565,10 @@
             {
               "key": "hideBadges",
               "description": "Hide badges and unread indicator counters from navigation bar icons"
+            },
+            {
+              "key": "hideFab",
+              "description": "Hide floating action button entirely"
             },
             {
               "key": "hideFabMenu",
@@ -620,6 +656,20 @@
             {
               "key": "hideProfileGetVerified",
               "description": "Hide Get Verified upsell pill on user profile"
+            }
+          ],
+          "compatible_versions": [
+            "12.33.1-prod.01"
+          ]
+        },
+        {
+          "name": "Round Off Numbers",
+          "description": "Enable or disable rounding off numbers",
+          "use": false,
+          "options": [
+            {
+              "key": "showFullNumbers",
+              "description": "Display full numbers without abbreviation (e.g. 1,234 instead of 1.2K)"
             }
           ],
           "compatible_versions": [
@@ -728,6 +778,15 @@
           ]
         },
         {
+          "name": "X Background Slimmer",
+          "description": "Disables background WorkManager services, home screen widgets, and Cast/NFC companion services to reduce background resource consumption.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "12.33.1-prod.01"
+          ]
+        },
+        {
           "name": "X MLKit Vision Slimmer",
           "description": "Disables MLKit component discovery and registrars. WARNING: this breaks in-app QR and barcode scanning.",
           "use": false,
@@ -740,9 +799,9 @@
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "74aa43f7637d3a7f602ba5dddc3a0f80ad3371552e8831c46294662eec32caea",
-  "release_notes": "## [1.13.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.12.5...v1.13.0) (2026-10-12)\n\n### New Features\n\n* **capcut:** add bypass geoblock region restriction patch ([665c9f9](https://github.com/kveld9/kveld-extra-morphe-patches/commit/665c9f94f7c7d8d980229d023f5f9b5ca906e23b))\n",
-  "release_tag": "v1.13.0",
-  "release_date": "2026-10-12T21:31:34Z",
+  "fingerprint": "aae13534ccd2de9eb1cccb1c36686b45995a92121b6ff30a5350692fae15f968",
+  "release_notes": "## [1.14.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.13.0...v1.14.0) (2026-10-13)\n\n### Bug Fixes\n\n* **twitter:** demote braze anchors to best-effort ([1581b35](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1581b35c26c4263fdc515c9c7eb53c6ddeb903db))\n* **twitter:** extend telemetry neutralization to braze and sentry surfaces ([c95d687](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c95d68759da292992ddd3201675b8e53a1ad63f6))\n* **twitter:** reject quote and backslash in Custom Fonts paths ([423b2d3](https://github.com/kveld9/kveld-extra-morphe-patches/commit/423b2d378d9e908bc47abd8d448041cea3e6682c))\n* **twitter:** resolve nullable fingerprint matches via matchAll ([ea5f7db](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ea5f7dbbbe833a7d6dccf58aeffe48bf833a4b6a))\n* **twitter:** select first safe dispatcher per anchor ([330a22e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/330a22e4829db04aca241aaedff87b2d3a2dd885))\n\n### New Features\n\n* **twitter:** add background and companion-surface slimmer ([0527f06](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0527f065afd93713369e129beb2fdd2c897411c1))\n* **twitter:** add Custom Deep Links patch ([399f3d4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/399f3d4a9c310f337e7d197a1b17e8cdd50ce287))\n* **twitter:** add Custom Fonts patch with text font support ([4826150](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4826150d2d11a0782937307411a893152cea97b6))\n* **twitter:** add emoji font option to Custom Fonts ([16ed849](https://github.com/kveld9/kveld-extra-morphe-patches/commit/16ed849515bc8b2881ea19c7cf50a53cc6b7d25e))\n* **twitter:** add Hide FAB option to Navigation UI ([046da1f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/046da1fb0a79b8d3811bb42715bf449d07d2dc69))\n* **twitter:** add Round Off Numbers patch ([588d05b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/588d05bc2836855b789d4a329c96324e748d7aff))\n",
+  "release_tag": "v1.14.0",
+  "release_date": "2026-10-13T04:53:49Z",
   "isPreRelease": false
 }

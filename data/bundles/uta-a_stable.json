@@ -1,0 +1,409 @@
+{
+  "bundle": "uta-a",
+  "channel": "stable",
+  "repo_url": "https://github.com/uta-a/linimal",
+  "created_at": "2026-10-11T19:31:42Z",
+  "version": "0.5.0",
+  "description": "Linimal v0.5.0。\n\n追加:\n- 「通知から既読をつけずに開く」を追加しました。メッセージ通知をタップして開いた通常トークでは、閉じるまで既読の送信とローカル未読の解除を止めます。設定は「既読」にあり、既定は OFF です。メニュー追加の設定が OFF でも使えます。通知の返信・既読アクションや、OpenChat などの別経路は対象外です。\n\n修正・改善:\n- 「既読をつけずに読む」の抑制が、一時的なバックグラウンド移行や30分経過で解除される不具合を直しました。確認済みの閲覧セッションはトークを閉じるまで維持し、画面再生成時は同じセッションと確認できた場合だけ引き継ぎます。\n- トーク終了・通常再入室・設定 OFF で抑制を解除し、古い状態が復活しないようにしました。\n- MicroG-RE がないときの案内をトーストでも表示し、通知が許可されていない場合でも導入案内が見えるようにしました。\n\n対象: LINE 26.11.0 (versionCode 261100124) arm64-v8a の APKM のみ。\n\n注意: 通知の登録復旧とバックアップの機能は、Google に対してアプリの署名を公式版と偽って申告します。Google や LINE の利用規約に抵触する可能性があります。パッチ適用後の APK は公式アプリへ上書きインストールできません。公式 LINE から移行するときは、Google ドライブへバックアップしてから入れ替え、MicroG-RE 経由で復元してください。",
+  "apps": [
+    {
+      "app_name": "LINE",
+      "package": "jp.naver.line.android",
+      "patches": [
+        {
+          "name": "Linimal",
+          "description": "LINE の設定画面に Linimal を追加し、実行時設定で不要な機能を無効化できるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal のパッチ適用状況",
+          "description": "各パッチの適用結果を APK 内の asset として書き出します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal のパッチ適用確認",
+          "description": "bytecode パッチの処理が対象を変更せずに最後まで実行されたことを確認します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal の初期化",
+          "description": "LINE の起動処理へ Linimal の初期化を差し込みます。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal の基盤",
+          "description": "Linimal の実行時 extension を対象 APK へ統合します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal 設定の文字列",
+          "description": "Linimal の設定項目が参照する文字列 resource を追加します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal 設定の追加",
+          "description": "LINE の設定画面へ Linimal の設定項目を追加します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Linimal 設定画面の登録",
+          "description": "Linimal の設定画面を AndroidManifest へ component として登録します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "MicroG-RE でトークをバックアップする",
+          "description": "Google ドライブ連携の token 要求を、実行時設定で MicroG-RE へ向けられるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "MicroG-RE でトークをバックアップする（manifest）",
+          "description": "MicroG-RE に公式 LINE の証明書を申告する meta-data を追加します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Smart Channel の広告",
+          "description": "トーク一覧の Smart Channel にある広告を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "アプリを閉じていても通知を受け取る",
+          "description": "Firebase Installations の登録で送る署名情報を、実行時設定で公式 LINE のものに置き換えられるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ウォレット上部の Agent i",
+          "description": "ウォレット画面上部にある Agent i の入口を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "チャット入力欄の Agent i",
+          "description": "チャット入力欄にある Agent i のボタンと候補チップを、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "チャット情報の Agent i",
+          "description": "チャット情報画面にある Agent i の入口を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "トークの ＋ メニュー",
+          "description": "トークの ＋ メニューからカレンダー・LINE ギフト・LINE Pay を、実行時設定で個別に取り除けるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "トーク一覧の検索欄の Agent i",
+          "description": "トーク一覧上部の検索欄にある Agent i のボタンを、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "トーク一覧上部のアイコン",
+          "description": "トーク一覧上部の AI Friends・カレンダー・オープンチャットのアイコンを、実行時設定で個別に取り除けるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホームのおすすめ枠",
+          "description": "ホームのおすすめ枠を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホームの投稿カード",
+          "description": "ホーム下部にある投稿カードを、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホームの最近の履歴",
+          "description": "ホーム上部にある最近使用したサービスの枠を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホームの特集枠",
+          "description": "ホームの特集枠にある動画のグリッドを、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホームの話題枠",
+          "description": "ホームの話題・トレンド枠を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホームの読み込み表示",
+          "description": "ホームのフィードが読み込み中に出る円形の読み込み表示を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホーム上部の Agent i",
+          "description": "ホーム画面上部にある Agent i の入口を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "ホーム内の広告",
+          "description": "ホーム画面内の Performance Ad とフィード広告を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "メッセージ長押しメニューの LINE AI",
+          "description": "メッセージの長押しメニューにある LINE AI の項目を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "リンクを外部ブラウザで開く",
+          "description": "トーク本文の通常の http/https リンクを、実行時設定で外部ブラウザへ渡せるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "下部タブ",
+          "description": "下部タブの VOOM・ショッピング・ニュース・ウォレット・アプリを、実行時設定で個別に取り除けるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "写真・動画表示画面の LINE AI",
+          "description": "チャットの写真・動画表示画面にある LINE AI の入口を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "手動既読の受け渡し",
+          "description": "手動既読の印を、非同期処理へ引き継ぐための識別子として登録します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "手動既読の呼び出し元",
+          "description": "LINE 自身の手動既読操作を識別できるよう、呼び出し元スレッドへ印を付けます。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "手動既読の送信許可",
+          "description": "非同期処理側で手動既読の識別子を送信許可へ変換し、処理の終了時に破棄します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "既読をつけずに読む",
+          "description": "トーク一覧の長押しメニューへ「既読をつけずに読む」の行を追加します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "既読をつけずに読むの文字列",
+          "description": "「既読をつけずに読む」のメニュー項目が参照する文字列 resource を追加します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "既読をつけずに読むの既読停止",
+          "description": "「既読をつけずに読む」で開いたトークだけ、既読送信の RPC を実行しないようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "既読をつけずに読むの未読維持",
+          "description": "「既読をつけずに読む」で開いたトークだけ、ローカルの未読クリアも実行しないようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "既読をつけずに読むの閲覧セッション",
+          "description": "トーク画面の生成時に閲覧セッションを開始し、一時的な離脱で既読抑制が解除されないようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "設定の Premium",
+          "description": "LINE の設定画面にある LINE Premium の行を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "設定画面の Agent i",
+          "description": "LINE の設定画面にある Agent i と LINE AI Services の入口を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "送信取消の Premium 案内",
+          "description": "送信取消時に出る LINE Premium の案内を、実行時設定で非表示にできるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "通常チャットの自動既読",
+          "description": "通常チャットの既読送信を、実行時設定で止められるようにします。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "通知から既読をつけずに開く",
+          "description": "メッセージ通知からのトーク起動時だけ既読をつけない閲覧セッションを予約します。",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Linimal",
+  "fingerprint": "cc84f518369c2e55364aa3fbd79cfe50e5d042bea479b096dc752b9fa2ff306d",
+  "release_notes": "## 追加\n\n- 「通知から既読をつけずに開く」を追加しました。メッセージ通知をタップして開いた通常トークでは、閉じるまで既読の送信とローカル未読の解除を止めます。設定は「既読」にあり、既定は OFF です。メニュー追加の設定が OFF でも使えます。通知の返信・既読アクションや、OpenChat などの別経路は対象外です。\n\n## 修正・改善\n\n- 「既読をつけずに読む」の抑制が、一時的なバックグラウンド移行や30分経過で解除される不具合を直しました。確認済みの閲覧セッションはトークを閉じるまで維持し、画面再生成時は同じセッションと確認できた場合だけ引き継ぎます。\n- トーク終了・通常再入室・設定 OFF で抑制を解除し、古い状態が復活しないようにしました。\n- MicroG-RE がないときの案内をトーストでも表示し、通知が許可されていない場合でも導入案内が見えるようにしました。\n\n対象: LINE 26.11.0 (versionCode 261100124) arm64-v8a の APKM のみ。\n\n注意: 通知の登録復旧とバックアップの機能は、Google に対してアプリの署名を公式版と偽って申告します。Google や LINE の利用規約に抵触する可能性があります。パッチ適用後の APK は公式アプリへ上書きインストールできません。公式 LINE から移行するときは、Google ドライブへバックアップしてから入れ替え、MicroG-RE 経由で復元してください。\n\n## 検証\n\n- 全テスト・パッチバンドルのビルド成功。\n- XIG07（Android 16）で、通知からの既読なし入室・未読維持・通常再入室での既読送信を確認。\n- 配布物はパッチバンドルのみです。LINE の APK や署名鍵は含みません。\n",
+  "release_tag": "v0.5.0",
+  "release_date": "2026-10-11T19:31:42Z",
+  "isPreRelease": false
+}
