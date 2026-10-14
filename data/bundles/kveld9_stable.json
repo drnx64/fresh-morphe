@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-13T10:32:26Z",
-  "version": "1.14.2",
-  "description": "## [1.14.2](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.14.1...v1.14.2) (2026-10-13)\n\n### Bug Fixes\n\n* **extension:** anotar TargetApi P en TypefaceSpan de Custom Fonts ([4633a0d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4633a0d9970d40557d578835aad4d65940c9e2ab))",
+  "created_at": "2026-10-14T20:04:05Z",
+  "version": "1.15.1",
+  "description": "## [1.15.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.15.0...v1.15.1) (2026-10-14)\n\n### Bug Fixes\n\n* **harness:** prevent regex backtracking when scanning download targets ([410f415](https://github.com/kveld9/kveld-extra-morphe-patches/commit/410f415ca00424a5076290b4bb97f6d7e996107a))\n* **tooling:** prevent path traversal during split extraction ([5709ba7](https://github.com/kveld9/kveld-extra-morphe-patches/commit/5709ba7b87472f1778da8a9d060202010a25c523))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -89,15 +89,6 @@
           ]
         },
         {
-          "name": "Breakpad Crash Reporter Slimmer",
-          "description": "Zeroes Google Breakpad native crash reporter binaries (libbreakpad.so, libbreakpad_cpp_helper.so) in-situ. WARNING: Native crash reporting is silenced. If the host application loads these libraries unconditionally without exception guards, startup crashes could occur.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81"
-          ]
-        },
-        {
           "name": "MLKit Vision Slimmer",
           "description": "Disable MLKit component discovery and registrars. WARNING: this breaks in-app QR and barcode scanning.",
           "use": false,
@@ -133,6 +124,24 @@
         {
           "name": "Bypass GeoBlock Region Restriction",
           "description": "Forces CapCut GeoBlock config lists (cert, dock, entrance, page, scheme) to empty so region-blocked surfaces stay enabled. Server-refused content may still fail to load.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7.0"
+          ]
+        },
+        {
+          "name": "Bypass Signature Check",
+          "description": "Spoofs the official APK signature (SHA-256) for tamper telemetry, drops the server-driven signature blacklist, silences the abnormal-source toast, and disables the Godzilla inject-detect gate so re-signed builds are not blocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7.0"
+          ]
+        },
+        {
+          "name": "Bypass Unsafe Package Modal",
+          "description": "Replaces the unsafe-package modal fallback URL in the Lynx schema defaults with the real template portal URL so region-blocked or untrusted-client fallbacks open templates instead of the blocking security notice.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -799,9 +808,9 @@
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "aae13534ccd2de9eb1cccb1c36686b45995a92121b6ff30a5350692fae15f968",
-  "release_notes": "## [1.14.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.13.0...v1.14.0) (2026-10-13)\n\n### Bug Fixes\n\n* **twitter:** demote braze anchors to best-effort ([1581b35](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1581b35c26c4263fdc515c9c7eb53c6ddeb903db))\n* **twitter:** extend telemetry neutralization to braze and sentry surfaces ([c95d687](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c95d68759da292992ddd3201675b8e53a1ad63f6))\n* **twitter:** reject quote and backslash in Custom Fonts paths ([423b2d3](https://github.com/kveld9/kveld-extra-morphe-patches/commit/423b2d378d9e908bc47abd8d448041cea3e6682c))\n* **twitter:** resolve nullable fingerprint matches via matchAll ([ea5f7db](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ea5f7dbbbe833a7d6dccf58aeffe48bf833a4b6a))\n* **twitter:** select first safe dispatcher per anchor ([330a22e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/330a22e4829db04aca241aaedff87b2d3a2dd885))\n\n### New Features\n\n* **twitter:** add background and companion-surface slimmer ([0527f06](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0527f065afd93713369e129beb2fdd2c897411c1))\n* **twitter:** add Custom Deep Links patch ([399f3d4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/399f3d4a9c310f337e7d197a1b17e8cdd50ce287))\n* **twitter:** add Custom Fonts patch with text font support ([4826150](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4826150d2d11a0782937307411a893152cea97b6))\n* **twitter:** add emoji font option to Custom Fonts ([16ed849](https://github.com/kveld9/kveld-extra-morphe-patches/commit/16ed849515bc8b2881ea19c7cf50a53cc6b7d25e))\n* **twitter:** add Hide FAB option to Navigation UI ([046da1f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/046da1fb0a79b8d3811bb42715bf449d07d2dc69))\n* **twitter:** add Round Off Numbers patch ([588d05b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/588d05bc2836855b789d4a329c96324e748d7aff))\n",
-  "release_tag": "v1.14.0",
-  "release_date": "2026-10-13T04:53:49Z",
+  "fingerprint": "6c3165c3579b70b2602726523767024f81cca7357e748ff543bf676c324ad860",
+  "release_notes": "## [1.15.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.15.0...v1.15.1) (2026-10-14)\n\n### Bug Fixes\n\n* **harness:** prevent regex backtracking when scanning download targets ([410f415](https://github.com/kveld9/kveld-extra-morphe-patches/commit/410f415ca00424a5076290b4bb97f6d7e996107a))\n* **tooling:** prevent path traversal during split extraction ([5709ba7](https://github.com/kveld9/kveld-extra-morphe-patches/commit/5709ba7b87472f1778da8a9d060202010a25c523))\n",
+  "release_tag": "v1.15.1",
+  "release_date": "2026-10-14T20:04:05Z",
   "isPreRelease": false
 }

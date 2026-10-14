@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/Forsigh/waze-patches",
   "created_at": "2026-10-13T07:57:14Z",
   "version": "0.27.0",
-  "description": "## [0.22.5](https://github.com/Forsigh/waze-patches/compare/v0.22.4...v0.22.5) (2026-10-13)\n\n### 🗑️ Removed\n\n* **AMOLED dark mode** is removed. On-device testing once more showed the app failing at startup\n  with the row ticked - a loading screen, then an error, then exit - so the skin-value rewrite is\n  retired for good: the night skins ship exactly as Waze builds them, and nothing overrides them at\n  patch time",
+  "description": "## [0.22.6](https://github.com/Forsigh/waze-patches/compare/v0.22.5...v0.22.6) (2026-10-14)\n\n### ✨ New patches\n\n* **Skip sign-in** boots Waze straight into the map as a guest\n* **UI AMOLED dark mode** turns Waze's dark-mode backgrounds true black - bottom sheets, menus and dialogs; light mode stays as it is\n* **Theme** picks the look of the Waze map for day and for night from one menu - the AMOLED family (AMOLED Pop has brighter roads), the Dark family and the light themes; map text follows the theme so it stays readable\n* **Extended police & hazard alert distances** warns earlier in Waze, with a level picker: Stock (default), Moderate or Maximum",
   "apps": [
     {
       "app_name": "Waze",
@@ -88,9 +88,14 @@
         },
         {
           "name": "Extended police & hazard alert distances",
-          "description": "Police, accident and heavy-traffic alerts fire earlier.",
+          "description": "Pick how early police and hazard alerts fire.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "level",
+              "description": "Stock is Waze's own; the others warn earlier."
+            }
+          ],
           "compatible_versions": [
             "5.24.90.901",
             "5.25.0.1",
@@ -153,6 +158,17 @@
           ]
         },
         {
+          "name": "Skip sign-in",
+          "description": "Boots straight into the map as a guest.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900"
+          ]
+        },
+        {
           "name": "Speed limit sign always shown",
           "description": "Always shows the speed limit sign.",
           "use": true,
@@ -186,6 +202,37 @@
           ]
         },
         {
+          "name": "Theme",
+          "description": "Pick any theme for the map - day and night.",
+          "use": false,
+          "options": [
+            {
+              "key": "dayTheme",
+              "description": "The day map's theme. Stock leaves it untouched."
+            },
+            {
+              "key": "nightTheme",
+              "description": "The night map's theme. Stock leaves it untouched."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900"
+          ]
+        },
+        {
+          "name": "UI AMOLED dark mode",
+          "description": "Dark-mode backgrounds go pure black.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900"
+          ]
+        },
+        {
           "name": "Unlock driver moods",
           "description": "Unlocks all moods already on the device.",
           "use": true,
@@ -200,7 +247,7 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "720cb247e07cb68eebe52937124db4609fc7527991c74e145bfe49c1c1b9c330",
+  "fingerprint": "d0f81f7850662836cfa9ffecd69fc87e0c7e7e386ed2e7af640c970ef692c25a",
   "release_notes": "## [0.27.0](https://github.com/Forsigh/waze-patches/compare/v0.26.0...v0.27.0) (2026-10-13)\n\n### ✨ New Features\n\n* support Waze 5.25.4.900 alongside 5.25.0.1 ([05d3b68](https://github.com/Forsigh/waze-patches/commit/05d3b68ab5fb7423aa98426b43e52029d8a8e257))\n",
   "release_tag": "v0.27.0",
   "release_date": "2026-10-13T07:57:14Z",
