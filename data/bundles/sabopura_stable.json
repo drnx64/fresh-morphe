@@ -2,9 +2,9 @@
   "bundle": "sabopura",
   "channel": "stable",
   "repo_url": "https://github.com/sabopura/sabopura-morphe-patches",
-  "created_at": "2026-10-13T14:13:37Z",
-  "version": "1.14.1",
-  "description": "Sabopura Morphe Patches 1.14.1",
+  "created_at": "2026-10-14T11:16:18Z",
+  "version": "1.15.0",
+  "description": "Sabopura Morphe Patches 1.15.0",
   "apps": [
     {
       "app_name": "Google News",
@@ -290,6 +290,15 @@
           ]
         },
         {
+          "name": "Block ads",
+          "description": "Blocks pre-roll, mid-roll and VOD ads, ads stitched into live streams, audio ads, picture-by-picture ads and banner or feed ads, without a third-party server. Can be switched off in the settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.5.2"
+          ]
+        },
+        {
           "name": "Chat enhancements",
           "description": "7TV, BTTV and FFZ emotes, local word/user filters, repeat filtering, highlights, timestamps and font size. Configure them from the player menu button.",
           "use": true,
@@ -351,16 +360,6 @@
           ]
         },
         {
-          "name": "Hide display ads",
-          "description": "Hide display banners and in-feed ad units.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "31.5.2",
-            "30.7.2"
-          ]
-        },
-        {
           "name": "Player enhancements",
           "description": "Playback speed, seek steps, statistics, sleep timer, VOD chat offset and chapters. Optional public manifest proxy, gestures, layout and Following feed controls in the player menu settings.",
           "use": true,
@@ -384,9 +383,9 @@
     }
   ],
   "patches_name": "Sabopura Morphe Patches",
-  "fingerprint": "ad935943029fb6c15a752a385ca9cc118800be0815dda82590290c78994d5344",
-  "release_notes": "Sabopura Morphe Patches の初回公開版です。\r\n\r\n## 使い方\r\n\r\nMorphe Manager の **ソース → ＋ → リモート** に `https://github.com/sabopura/sabopura-morphe-patches` を入力すると、更新も自動で届きます。下の `.mpp` をダウンロードして **ローカル** として追加することもできます。パッチを当てる元の APK は、各アプリの公式版をご自身で用意してください。\r\n\r\n## 主な内容\r\n\r\n### Twitch\r\n\r\n- プレイヤーのボタンを 1 つにまとめました。タップでメニュー（弾幕のオン/オフ、再生速度、スリープタイマー、シーク、再読み込み、再生統計、VOD のチャプター・チャット同期、過去チャット・履歴検索・ユーザー検索）、長押しで弾幕をすぐオン/オフします。\r\n- 設定画面を 1 つにまとめ、カテゴリー分け、検索、タブレットでの 2 列表示、ライト/ダークテーマへの追従に対応しました。\r\n\r\n### 対応バージョンの追加\r\n\r\nYouTube 21.40.165、Reddit 2026.41.0、SmartNews 26.10.10、Pinterest 14.39.0。これまでの対応バージョンもすべて使えます。\r\n\r\n対応アプリ・バージョンの一覧と、確認した範囲は README を見てください。\r\n\r\n> ⚠️ 個人用に作ったものを公開しています。動作確認は限られた環境のみです。自己責任でお使いください。\r\n\r\n\r\n### SHA-256\r\n\r\n```\r\n07bbac85141da87b8f10074773f4df17a8798ca344e5043508cbe2c34bd3daea  sabopura-morphe-patches-1.14.0.mpp\r\n```\r\n",
-  "release_tag": "v1.14.0",
-  "release_date": "2026-10-11T14:05:27Z",
+  "fingerprint": "63dc4b563a30b4607fe8cd0eced24ada9fb47a3b53446942a80519c464230166",
+  "release_notes": "Twitch に広告ブロックを追加し、設定と視聴画面まわりを改善しました。\n\n## 変更内容\n\n### Twitch\n\n- **Block ads** を追加しました（Twitch 31.5.2）。外部のサーバーを使わずに、広告をまとめて止めます。\n  - 再生前・途中・VOD の動画広告、音声広告、PbyP（配信を小さくして横に出す広告）\n  - 配信に埋め込まれた広告：広告が入ったときだけ、Twitch から広告のない再生リストを取り直して差し替えます\n  - バナー・フィード内・フォロー中ページ上部などの表示広告（新しい React Native の画面を含む）\n  - 差し替えられなかった広告は、黒い画面で隠して消音します（設定で「そのまま表示」も選べます）\n- `Hide display ads` は `Block ads` に統合しました。パッチを当て直すときは `Block ads` を選んでください。\n- Twitch の設定画面（プロフィールの歯車）の一番上に「パッチの設定」を追加しました。プレイヤーメニューの右上にも「⚙ 設定」ボタンを追加しました。\n- 配信プロキシの設定を「広告ブロック」の中に移しました。広告を差し替えられなかったときの予備にも使います。\n- 31.5.2 では、配信を Twitch が試験中の新しい視聴画面ではなく、従来の視聴画面で開きます。新しい画面ではプレイヤーのボタン・弾幕・チャット拡張が出ませんでした。\n- プレイヤーのボタンの位置を固定しました（共有ボタンのすぐ左）。\n- 設定画面で、Android の戻るジェスチャーが 1 つ前の画面に戻るようにしました。\n- 「アプリの言語」で Twitch だけを英語にした場合も、英語で表示します。\n\nMorphe Manager にリモートで追加している場合は、更新が自動で届きます。\n\n> ⚠️ 個人用に作ったものを公開しています。動作確認は限られた環境のみです。自己責任でお使いください。\n\n### SHA-256\n\n```\n5dc59346a6514e66e1fcd35eb038ae21a443293cae8e1449f79b8efc783dfa8b  sabopura-morphe-patches-1.15.0.mpp\n```\n",
+  "release_tag": "v1.15.0",
+  "release_date": "2026-10-14T11:16:18Z",
   "isPreRelease": false
 }

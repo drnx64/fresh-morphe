@@ -2,9 +2,9 @@
   "bundle": "totsiaw",
   "channel": "stable",
   "repo_url": "https://github.com/totsiaw/proxma-patches",
-  "created_at": "2026-09-21T08:37:37Z",
-  "version": "1.9.0",
-  "description": "## [1.15.1](https://github.com/totsiaw/proxma-patches/compare/1.15.0...1.15.1) (2026-10-13)\n\n### Bug Fixes\n\n* foodpanda — add second anti-tamper layer short-circuiting the block-screen orchestrator ([c7ffeb9](https://github.com/totsiaw/proxma-patches/commit/c7ffeb91bcd6b2883cc1ba35f10292d30d1dc949))",
+  "created_at": "2026-10-14T12:46:21Z",
+  "version": "1.16.1",
+  "description": "## [1.16.1](https://github.com/totsiaw/proxma-patches/compare/1.16.0...1.16.1) (2026-10-14)\n\n### Bug Fixes\n\n* foodpanda — build the toggle row without the app's classes ([5b3d0a1](https://github.com/totsiaw/proxma-patches/commit/5b3d0a1d240156b398d02ec1a418e40aa3df673e))\n* foodpanda — ship the dark mode toggle's classes in the bundle ([0ad4af6](https://github.com/totsiaw/proxma-patches/commit/0ad4af65a100658be769ff390df37d2215ad8ff4))",
   "apps": [
     {
       "app_name": "Investify",
@@ -37,6 +37,15 @@
         {
           "name": "Bypass anti-tamper (foodpanda)",
           "description": "Bypasses foodpanda's DeliveryHero MAS integrity block — forces the master security gate (`w9u.a`) to report the device/app as trusted AND short-circuits the enforcement orchestrator that launches the block screen, so re-signed / sideloaded builds no longer hit the \"This device or application is not supported\" BlockedActivity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.38.1"
+          ]
+        },
+        {
+          "name": "Force dark mode",
+          "description": "Rewrites foodpanda's baked-in Bento color constants to dark equivalents so the app renders a real dark theme. The app ships no dark palette — R8 merged its light and dark token sets into one identical set of dex constants — so theme, force-dark and values-night changes have no effect. Brand colors are left untouched.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -160,6 +169,39 @@
       ]
     },
     {
+      "app_name": "Storywise",
+      "package": "com.storywise.storywise",
+      "patches": [
+        {
+          "name": "Block update prompt",
+          "description": "Forces Remote Config to report latest_version_name=1.0.3 and android_latest_build=34, matching the installed version so the force-update dialog never appears.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.3"
+          ]
+        },
+        {
+          "name": "Bypass login",
+          "description": "Restores a signed-in user from an embedded assets/sw_cred.json (pre-formatted Firebase credential file) into SharedPreferences before FirebaseAuth initialises, so the constructor picks up the stored user. Falls back to anonymous sign-in (H3/h + zzacq.zza) if the asset is missing. Also short-circuits the Google sign-in provider flow (O5/p pswitch_5) to reuse the current user.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.3"
+          ]
+        },
+        {
+          "name": "Unlock pass",
+          "description": "Unlocks paid content (Monthly Pass: lessons, tutor, reports) by forging pass-expiry and active fields in Firestore document maps the app reads. Also forces latest_version_name and android_latest_build to installed values when present in a Firestore doc, blocking the update prompt via the Firestore path.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.3"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "My Telenor",
       "package": "com.telenor.pakistan.mytelenor",
       "patches": [
@@ -242,9 +284,9 @@
     }
   ],
   "patches_name": "Proxma Patches",
-  "fingerprint": "705f5c607b7fb26bdd44421a698e93d4d87da286159f9e19ce25423f35ee9940",
-  "release_notes": "## [1.9.0](https://github.com/totsiaw/proxma-patches/compare/1.8.0...1.9.0) (2026-09-21)\n\n### Bug Fixes\n\n* **simosa:** target Simosa 3.3.4.2 ([0363c02](https://github.com/totsiaw/proxma-patches/commit/0363c026d685ecc5e2b333f4e5b4dd04325aa727))\n\n### New Features\n\n* **simosa:** remove daily check-in / SocialPlus feed ads ([0c962f7](https://github.com/totsiaw/proxma-patches/commit/0c962f7b8c38cdb1e80e147b3d87defe2a97fd21))\n",
-  "release_tag": "1.9.0",
-  "release_date": "2026-09-21T08:37:37Z",
+  "fingerprint": "cdbfa21ecd40012435cb483305f3a28781ed56b9d1d85edb6d5954e6a583ca11",
+  "release_notes": "## [1.16.1](https://github.com/totsiaw/proxma-patches/compare/1.16.0...1.16.1) (2026-10-14)\n\n### Bug Fixes\n\n* foodpanda — build the toggle row without the app's classes ([5b3d0a1](https://github.com/totsiaw/proxma-patches/commit/5b3d0a1d240156b398d02ec1a418e40aa3df673e))\n* foodpanda — ship the dark mode toggle's classes in the bundle ([0ad4af6](https://github.com/totsiaw/proxma-patches/commit/0ad4af65a100658be769ff390df37d2215ad8ff4))\n",
+  "release_tag": "1.16.1",
+  "release_date": "2026-10-14T12:46:21Z",
   "isPreRelease": false
 }

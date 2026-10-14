@@ -12,12 +12,12 @@
       "patches": [
         {
           "name": "Allow high refresh rate",
-          "description": "Waze rejects any display mode above 60 Hz when it picks the mode for its surface, so a 120 Hz screen is served 60 Hz. This raises that ceiling to the requested rate (120 Hz by default). Costs battery and heat - off by default.",
+          "description": "Runs Waze above 60 Hz, up to your screen's refresh rate.",
           "use": false,
           "options": [
             {
               "key": "targetRefreshRate",
-              "description": "The ceiling Waze accepts when choosing a display mode. 120 suits most modern panels; 90 or 60 to back off if the phone throttles."
+              "description": "Refresh rate ceiling. 120 suits most phones; lower it if the phone gets hot."
             }
           ],
           "compatible_versions": [
@@ -28,7 +28,7 @@
         },
         {
           "name": "Auto zoom",
-          "description": "Keeps the auto-zoom mode you pick (no / yes / speed) from being overwritten when Waze syncs its server config. The setting comes from Waze itself; this makes it stick.",
+          "description": "Keeps your chosen auto-zoom mode from being reset.",
           "use": true,
           "options": [
             {
@@ -44,7 +44,7 @@
         },
         {
           "name": "Average-speed camera alerts",
-          "description": "Turns on average-speed camera alerts and the recommended speed for the zone.",
+          "description": "Average-speed camera alerts, with the zone's recommended speed.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -55,7 +55,7 @@
         },
         {
           "name": "Brief voice guidance",
-          "description": "Enables Waze's brief voice-guidance mode, which trims the spoken directions down.",
+          "description": "Shorter spoken directions.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -66,7 +66,7 @@
         },
         {
           "name": "Disable Play Store updates",
-          "description": "Stops the Play Store from offering or applying updates to Waze: the manifest version code is locked above Play's maximum (2,100,000,000 + minutes), so the store always sees the installed copy as newer than its listing. The value advances on every re-patch, so Waze still refreshes its extracted resources, and Waze's own package-version accessor keeps reporting the pre-lock code. Ported from Morphe's universal \"Disable Play Store updates\" (GPLv3).",
+          "description": "Stops the Play Store from updating Waze.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -77,7 +77,7 @@
         },
         {
           "name": "Enable police & enforcement alerts",
-          "description": "Turns on Waze's police and enforcement alerts.",
+          "description": "Turns on police and enforcement alerts.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -88,7 +88,7 @@
         },
         {
           "name": "Extended police & hazard alert distances",
-          "description": "Alerts for police, accidents and heavy traffic fire earlier, with their pre-alert distances extended.",
+          "description": "Police, accident and heavy-traffic alerts fire earlier.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -99,7 +99,7 @@
         },
         {
           "name": "Lane guidance",
-          "description": "Turns on lane guidance, including the continue-straight hints.",
+          "description": "Lane guidance, including continue-straight hints.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -110,7 +110,7 @@
         },
         {
           "name": "Morphe YouTube Music as a Waze audio partner",
-          "description": "Makes Morphe YouTube Music (app.morphe.android.apps.youtube.music) usable as Waze's audio partner: the package is declared in Waze's manifest so Android's package visibility lets Waze see it, and it is added to the audio-partner table (SdkConfiguration.appConfigs) whenever Waze rebuilds that roster. Ported from Loupric/morphe-waze-music-patch (GPLv3).",
+          "description": "Lets Morphe YouTube Music work as Waze's audio partner.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -121,7 +121,7 @@
         },
         {
           "name": "Radar sound at any speed",
-          "description": "Plays the speed-camera alert sound even when you are not over the limit. Waze normally only sounds it when you are.",
+          "description": "Plays the speed-camera sound even below the limit.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -132,7 +132,7 @@
         },
         {
           "name": "Remove ads",
-          "description": "Forces Waze's advertising settings off, so the ad slots that respect those values stay empty.",
+          "description": "Removes ads from Waze.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -143,7 +143,7 @@
         },
         {
           "name": "Show all cameras & road hazards",
-          "description": "Draws speed cameras, red-light cameras and speed bumps on the map, with their on-route notifications enabled.",
+          "description": "Shows cameras and road hazards on the map, with alerts.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -154,7 +154,7 @@
         },
         {
           "name": "Speed limit sign always shown",
-          "description": "The speed-limit sign stays on the map, and its manual overrides become available.",
+          "description": "Always shows the speed limit sign.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -165,7 +165,7 @@
         },
         {
           "name": "Speed-limit decrease warnings",
-          "description": "Warns when the posted speed limit drops, with a longer pre-alert distance than stock.",
+          "description": "Warns when the speed limit drops.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -176,7 +176,7 @@
         },
         {
           "name": "Speedometer always on",
-          "description": "The speedometer stays on screen at any speed, including when stopped. Waze hides it below its own minimum speed otherwise.",
+          "description": "Visible at any speed.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -187,7 +187,7 @@
         },
         {
           "name": "Unlock driver moods",
-          "description": "Waze's mood picker is gated three ways: an eligibility check that accepts only one mood name (and reads the beta-moods flag), a baby-account gate that hides moods, and a filtered native catalogue call. This opens all three, so moods already in the local catalogue - including special and hidden entries - become selectable. Artwork Waze has never downloaded is not invented.",
+          "description": "Unlocks all moods already on the device.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -200,7 +200,7 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "461a6fc350100c6729131a99b98affcd354c2ca4b30a042ce129677cb0512717",
+  "fingerprint": "720cb247e07cb68eebe52937124db4609fc7527991c74e145bfe49c1c1b9c330",
   "release_notes": "## [0.27.0](https://github.com/Forsigh/waze-patches/compare/v0.26.0...v0.27.0) (2026-10-13)\n\n### ✨ New Features\n\n* support Waze 5.25.4.900 alongside 5.25.0.1 ([05d3b68](https://github.com/Forsigh/waze-patches/commit/05d3b68ab5fb7423aa98426b43e52029d8a8e257))\n",
   "release_tag": "v0.27.0",
   "release_date": "2026-10-13T07:57:14Z",
