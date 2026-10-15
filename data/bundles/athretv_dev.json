@@ -4,22 +4,34 @@
   "repo_url": "https://github.com/athretv/revanced-patches",
   "created_at": "2026-03-18T17:46:47Z",
   "version": "1.9.1-dev.2",
-  "description": "# [1.11.0](https://github.com/athretv/revanced-patches/compare/v1.10.0...v1.11.0) (2026-08-11)\n\n\n### Features\n\n* update default settings and branding ([9791a92](https://github.com/athretv/revanced-patches/commit/9791a92fe21c4e03ba016c22f3370391e3e0cc5e))",
+  "description": "# [1.12.0](https://github.com/athretv/revanced-patches/compare/v1.11.0...v1.12.0) (2026-10-15)\n\n\n### Bug Fixes\n\n* **ci:** fetch full git history and notes for release ([4bd5466](https://github.com/athretv/revanced-patches/commit/4bd546654971940b338d2c4158775d9f6b94fc09))\n\n\n### Features\n\n* merge with the upstream ([f9eb368](https://github.com/athretv/revanced-patches/commit/f9eb3687abdc9d0633911f5589add0dab1c6a4c1))",
   "apps": [
     {
       "app_name": "YouTube Music",
       "package": "com.google.android.apps.youtube.music",
       "patches": [
         {
+          "name": "App refresh rate",
+          "description": "Adds an option to change the app refresh rate.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
+        {
           "name": "Bitrate default value",
           "description": "Sets the audio quality to 'Always High' when you first install the app.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -28,10 +40,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -40,10 +52,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -52,10 +64,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -64,94 +76,35 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
-          "name": "Custom branding icon for YouTube Music",
-          "description": "Changes the YouTube Music app icon to the icon specified in patch options.",
-          "use": false,
-          "options": [
-            {
-              "key": "appIcon",
-              "description": "The icon to apply to the app.\n\nIf a path to a folder is provided, the folder must contain the following folders:\n\n- mipmap-xxxhdpi\n- mipmap-xxhdpi\n- mipmap-xhdpi\n- mipmap-hdpi\n- mipmap-mdpi\n\nEach of these folders must contain the following files:\n\n- adaptiveproduct_youtube_music_background_color_108.png\n- adaptiveproduct_youtube_music_foreground_color_108.png\n- ic_launcher_release.png"
-            },
-            {
-              "key": "changeSplashIcon",
-              "description": "Apply the custom branding icon to the splash screen."
-            },
-            {
-              "key": "restoreOldSplashIcon",
-              "description": "Restore the old style splash icon.\n\nIf you enable both the old style splash icon and the Cairo splash animation,\n\nOld style splash icon will appear first and then the Cairo splash animation will start."
-            }
-          ],
-          "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
-            "8.30.54",
-            "9.15.51"
-          ]
-        },
-        {
-          "name": "Custom branding name for YouTube Music",
-          "description": "Changes the YouTube Music app name to the name specified in patch options.",
-          "use": false,
-          "options": [
-            {
-              "key": "appNameNotification",
-              "description": "The name of the app as it appears in the notification panel."
-            },
-            {
-              "key": "appNameLauncher",
-              "description": "The name of the app as it appears in the launcher."
-            }
-          ],
-          "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
-            "8.30.54",
-            "9.15.51"
-          ]
-        },
-        {
-          "name": "Custom header for YouTube Music",
-          "description": "Applies a custom header in the top left corner within the app.",
-          "use": false,
-          "options": [
-            {
-              "key": "customHeader",
-              "description": "The header to apply to the app.\n\nPatch option 'Custom branding icon' applies only when:\n\n1. Patch 'Custom branding icon for YouTube Music' is included.\n2. Patch option for 'Custom branding icon for YouTube Music' is selected from the preset.\n\nIf a path to a folder is provided, the folder must contain one or more of the following folders, depending on the DPI of the device:\n\n- drawable-xxxhdpi\n- drawable-xxhdpi\n- drawable-xhdpi\n- drawable-hdpi\n- drawable-mdpi\n\nEach of the folders must contain all of the following files:\n\n- action_bar_logo.png\n- logo_music.png\n- ytm_logo.png\n\nThe image 'action_bar_logo.png' dimensions must be as follows:\n\n- drawable-xxxhdpi: 320px x 96px\n- drawable-xxhdpi: 240px x 72px\n- drawable-xhdpi: 160px x 48px\n- drawable-hdpi: 121px x 36px\n- drawable-mdpi: 80px x 24px\n\nThe image 'logo_music.png' dimensions must be as follows:\n\n- drawable-xxxhdpi: 576px x 200px\n- drawable-xxhdpi: 432px x 150px\n- drawable-xhdpi: 288px x 100px\n- drawable-hdpi: 217px x 76px\n- drawable-mdpi: 144px x 50px\n\nThe image 'ytm_logo.png' dimensions must be as follows:\n\n- drawable-xxxhdpi: 412px x 144px\n- drawable-xxhdpi: 309px x 108px\n- drawable-xhdpi: 206px x 72px\n- drawable-hdpi: 155px x 54px\n- drawable-mdpi: 103px x 36px"
-            }
-          ],
-          "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
-            "8.30.54",
-            "9.15.51"
-          ]
-        },
-        {
-          "name": "Dark theme",
-          "description": "Changes the app's dark theme to the values specified in patch options.",
+          "name": "Custom branding for YouTube Music",
+          "description": "Adds in-app app-name, launcher-icon, header, splash, and settings-icon selection.",
           "use": true,
           "options": [
             {
-              "key": "darkThemeBackgroundColor",
-              "description": "Can be a hex color (#AARRGGBB) or a color resource reference."
+              "key": "customName",
+              "description": "Custom app name."
             },
             {
-              "key": "materialYou",
-              "description": "Applies the MaterialYou theme for Android 12+ devices."
+              "key": "appIcon",
+              "description": "Icon used by Android and selected by default in the app. Choose Custom to use the Custom icon folder, or enter a resource folder path. Mounted (root) installs require patching again to change the launcher icon."
+            },
+            {
+              "key": "customIcon",
+              "description": "Folder containing custom branding resources. The folder is scanned recursively, so Android\nresource folders can be placed at the root or grouped under folders such as 'launcher',\n'header', 'splash', 'monochrome', and 'settings'.\n\nEvery resource is optional. Icon resources accept XML or PNG files. \nA launcher icon is also used for the RVX settings entry when no dedicated settings icon \nis present. A complete 'drawable/avd_anim.xml' splash takes priority over static splash images."
             }
           ],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -160,10 +113,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -172,10 +125,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -184,10 +137,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -196,10 +149,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -208,10 +161,22 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
+        {
+          "name": "Downloads",
+          "description": "Adds support to download songs for offline playback inside YouTube Music.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -220,10 +185,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -232,10 +197,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -244,10 +209,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -256,10 +221,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -293,10 +258,10 @@
             }
           ],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -305,10 +270,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -317,10 +282,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -329,10 +294,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -341,10 +306,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -353,10 +318,10 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -365,10 +330,10 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -377,10 +342,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -394,10 +359,22 @@
             }
           ],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
+        {
+          "name": "PoToken provider",
+          "description": "Adds option to get PoToken using the built-in PoToken provider.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -406,10 +383,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -418,10 +395,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -430,10 +407,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -442,10 +419,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -454,10 +431,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -466,10 +443,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -487,10 +464,10 @@
             }
           ],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -499,10 +476,22 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
+        {
+          "name": "Skip silence",
+          "description": "Adds an option to automatically skip silent pauses in audio playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -511,10 +500,22 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
+        {
+          "name": "Spoof app version",
+          "description": "Adds options to spoof the YouTube Music client version. This can be used to restore old UI elements and features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -523,10 +524,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -535,15 +536,36 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
+        {
+          "name": "Theme",
+          "description": "Changes the app's dark theme to the values specified in patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "darkThemeColor",
+              "description": "Static system splash color for the in-app Custom dark theme. Can be a hex color (#AARRGGBB) or a color resource reference."
+            },
+            {
+              "key": "precompileLegacyThemes",
+              "description": "Precompile 15 theme palettes into resources for Android 8–10 devices. Required for theme presets on Android 8–10. On Android 11+, leave this disabled to speed up patching and reduce APK size."
+            }
+          ],
+          "compatible_versions": [
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
           "name": "Third-party lyrics",
-          "description": "Adds an option to show synced lyrics from LRCLIB or KuGou in the lyrics panel.",
+          "description": "Adds an option to show synced lyrics with experience enhancement from 15+ providers in the lyrics panel.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -556,10 +578,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -581,10 +603,10 @@
             }
           ],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -593,10 +615,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -614,10 +636,10 @@
             }
           ],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         },
         {
@@ -626,10 +648,10 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.12.54",
-            "8.28.54",
+            "9.15.51",
             "8.30.54",
-            "9.15.51"
+            "8.28.54",
+            "8.12.54"
           ]
         }
       ]
@@ -639,25 +661,23 @@
       "package": "com.google.android.youtube",
       "patches": [
         {
-          "name": "Alternative thumbnails",
-          "description": "Adds options to replace video thumbnails using the DeArrow API or image captures from the video.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
-          ]
-        },
-        {
           "name": "Ambient mode control",
           "description": "Adds options to disable Ambient mode and to bypass Ambient mode restrictions.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "App refresh rate",
+          "description": "Adds an option to change the app refresh rate.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -666,9 +686,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -677,9 +696,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -688,9 +706,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -699,9 +716,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -710,9 +726,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -721,9 +736,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -732,9 +746,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -748,49 +761,31 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
-          "name": "Custom branding icon for YouTube",
-          "description": "Changes the YouTube app icon to the icon specified in patch options.",
-          "use": false,
+          "name": "Custom branding for YouTube",
+          "description": "Adds in-app app-name, launcher-icon, header, splash, and settings-icon selection.",
+          "use": true,
           "options": [
+            {
+              "key": "customName",
+              "description": "Custom app name."
+            },
             {
               "key": "appIcon",
-              "description": "The icon to apply to the app.\n\nIf a path to a folder is provided, the folder must contain the following folders:\n\n- mipmap-xxxhdpi\n- mipmap-xxhdpi\n- mipmap-xhdpi\n- mipmap-hdpi\n- mipmap-mdpi\n\nEach of these folders must contain the following files:\n\n- adaptiveproduct_youtube_background_color_108.png\n- adaptiveproduct_youtube_foreground_color_108.png\n- ic_launcher.png\n- ic_launcher_round.png"
+              "description": "Icon used by Android and selected by default in the app. Choose Custom to use the Custom icon folder, or enter a resource folder path. Mounted (root) installs require patching again to change the launcher icon."
             },
             {
-              "key": "changeSplashIcon",
-              "description": "Apply the custom branding icon to the splash screen. Supports from YouTube 19.05.36 to YouTube 19.16.39."
-            },
-            {
-              "key": "restoreOldSplashAnimation",
-              "description": "Restore the old style splash animation.\n\nThis patch option is only supported on Android 12+, as splash animation was added to Android 12.\n\nIncluding this patch option on Android 8.0 - 11 may cause your app to crash."
+              "key": "customIcon",
+              "description": "Folder containing custom branding resources. The folder is scanned recursively, so Android\nresource folders can be placed at the root or grouped under folders such as 'launcher',\n'header', 'splash', 'monochrome', and 'settings'.\n\nEvery resource is optional. Icon resources accept XML or PNG files. \nA launcher icon is also used for the RVX settings entry when no dedicated settings icon \nis present. A complete 'drawable/avd_anim.xml' splash takes priority over static splash images."
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
-          ]
-        },
-        {
-          "name": "Custom branding name for YouTube",
-          "description": "Changes the YouTube app name to the name specified in patch options.",
-          "use": false,
-          "options": [
-            {
-              "key": "appName",
-              "description": "The name of the app."
-            }
-          ],
-          "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -804,25 +799,18 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
-          "name": "Custom header for YouTube",
-          "description": "Applies a custom header in the top left corner within the app.",
-          "use": false,
-          "options": [
-            {
-              "key": "customHeader",
-              "description": "The header to apply to the app.\n\nPatch option 'Custom branding icon' applies only when:\n\n1. Patch 'Custom branding icon for YouTube' is included.\n2. Patch option for 'Custom branding icon for YouTube' is selected from the preset.\n\nIf a path to a folder is provided, the folder must contain one or more of the following folders, depending on the DPI of the device:\n\n- drawable-xxxhdpi\n- drawable-xxhdpi\n- drawable-xhdpi\n- drawable-hdpi\n- drawable-mdpi\n\nEach of the folders must contain all of the following files:\n\n[Generic header]\n\n- yt_wordmark_header_light.png\n- yt_wordmark_header_dark.png\n\nThe image dimensions must be as follows:\n\n- drawable-xxxhdpi: 488px x 192px\n- drawable-xxhdpi: 366px x 144px\n- drawable-xhdpi: 244px x 96px\n- drawable-hdpi: 184px x 72px\n- drawable-mdpi: 122px x 48px\n\n[Premium header]\n\n- yt_premium_wordmark_header_light.png\n- yt_premium_wordmark_header_dark.png\n\nThe image dimensions must be as follows:\n- drawable-xxxhdpi: 516px x 192px\n- drawable-xxhdpi: 387px x 144px\n- drawable-xhdpi: 258px x 96px\n- drawable-hdpi: 194px x 72px\n- drawable-mdpi: 129px x 48px"
-            }
-          ],
+          "name": "DeArrow",
+          "description": "Adds options to replace video thumbnails and titles using the DeArrow API, or replace video thumbnails with image captures from the video.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -831,9 +819,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -842,9 +829,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Disable auto feed refresh",
+          "description": "Adds an option to stop feeds from refreshing automatically after they become outdated.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -853,9 +849,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -864,9 +859,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -875,9 +869,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Disable playlist autoplay",
+          "description": "Adds an option to stop a playlist from automatically advancing to the next video.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -886,9 +889,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -897,9 +899,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Disable scrolling speed limit",
+          "description": "Adds an option to remove limits of how fast the home and subscription feed can be scrolled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -908,20 +919,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
-          ]
-        },
-        {
-          "name": "Disable splash animation",
-          "description": "Adds an option to disable the splash animation on app startup.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -930,9 +929,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -941,9 +939,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -952,25 +949,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
-          ]
-        },
-        {
-          "name": "Force player buttons background",
-          "description": "Changes the dark background surrounding the video player controls at compile time.",
-          "use": true,
-          "options": [
-            {
-              "key": "BackgroundColor",
-              "description": "Specify a background color for player buttons using a hex color code. The first two symbols of the hex code represent the alpha channel, which is used to change the opacity."
-            }
-          ],
-          "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -979,9 +959,28 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Fullscreen video scale",
+          "description": "Adds options to stretch or zoom videos to fill the screen in fullscreen mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Gemini",
+          "description": "Adds options to use Gemini for video summaries, transcription, and settings search.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1015,9 +1014,8 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1026,9 +1024,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1037,9 +1034,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1048,9 +1044,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1059,9 +1054,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1070,9 +1064,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1081,9 +1074,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1092,9 +1084,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1103,20 +1094,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
           "name": "Hide player buttons",
-          "description": "Adds options to hide buttons in the video player.",
+          "description": "Adds options to hide buttons in the video player, and to hide or change the opacity of the player control buttons background.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1125,9 +1114,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1153,20 +1141,8 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
-          ]
-        },
-        {
-          "name": "Hook YouTube Music actions",
-          "description": "Adds support for opening music in RVX Music using the in-app YouTube Music button.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1175,20 +1151,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
-          ]
-        },
-        {
-          "name": "MaterialYou",
-          "description": "Applies the MaterialYou theme for Android 12+ devices.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1197,9 +1161,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1208,9 +1171,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Open channel of live avatar",
+          "description": "Adds an option to prevent a channel's current live video from opening when tapping its avatar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1219,9 +1191,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1247,9 +1218,28 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Override YouTube Music buttons",
+          "description": "Overrides YouTube Music buttons to open RVX Music or any compatible third-party client.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Playback buffer",
+          "description": "Adds an option to change the video playback buffer size.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1258,9 +1248,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1269,9 +1258,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "PoToken provider",
+          "description": "Adds option to get PoToken using the built-in PoToken provider.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1280,8 +1278,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Remember livestream playback position",
+          "description": "Adds an option to remember the playback position of ongoing livestreams and resume from there when reopening a livestream.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1290,9 +1298,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1301,9 +1308,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Restore original titles",
+          "description": "Adds an option to show the original video titles and descriptions instead of the auto-translated ones.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1312,9 +1328,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1323,9 +1338,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1334,9 +1348,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Save to Watch later",
+          "description": "Adds options to save videos to Watch later from the video player or feed flyout menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1345,9 +1368,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1356,9 +1378,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1372,9 +1393,8 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1383,9 +1403,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1394,9 +1413,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Skip silence",
+          "description": "Adds an option to automatically skip silent pauses in audio playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1426,9 +1454,8 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1442,9 +1469,8 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1453,9 +1479,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1464,9 +1489,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1475,9 +1499,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1486,29 +1509,31 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
           "name": "Theme",
-          "description": "Changes the app's themes to the values specified in patch options.",
-          "use": false,
+          "description": "Adds options to change the app's themes and splash screen style.",
+          "use": true,
           "options": [
             {
-              "key": "darkThemeBackgroundColor",
-              "description": "Can be a hex color (#AARRGGBB) or a color resource reference."
+              "key": "darkThemeColor",
+              "description": "Color for the in-app Patch option and its system splash theme. Can be a hex color (#AARRGGBB) or a color resource reference."
             },
             {
-              "key": "lightThemeBackgroundColor",
-              "description": "Can be a hex color (#AARRGGBB) or a color resource reference."
+              "key": "lightThemeColor",
+              "description": "Color for the in-app Patch option and its system splash theme. Can be a hex color (#AARRGGBB) or a color resource reference."
+            },
+            {
+              "key": "precompileLegacyThemes",
+              "description": "Precompile all 768 theme permutations into resources for Android 8–10 devices. Required for theme presets on Android 8–10. On Android 11+, leave this disabled to significantly speed up patching and reduce APK size."
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1517,9 +1542,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1541,9 +1565,8 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1552,9 +1575,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1572,20 +1594,18 @@
             }
           ],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
           "name": "Voice Over Translation",
           "description": "Adds an option to enable Yandex voice-over translation of video audio tracks.",
-          "use": true,
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         },
         {
@@ -1594,16 +1614,15 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "19.43.41",
-            "20.05.46",
-            "20.51.39"
+            "21.13.164",
+            "20.05.46"
           ]
         }
       ]
     }
   ],
   "patches_name": "RVX Patches",
-  "fingerprint": "22c6f2f46648bc1e1f04b2d6b3472c0ba8dc33f0a5975958a8a9177506e03c91",
+  "fingerprint": "8601446034b5da7ee9c7b951f2a30d97ebd0a28d7026d63def947bea2439614d",
   "release_notes": "## [1.9.1-dev.2](https://github.com/AykhanUV/revanced-patches/compare/v1.9.1-dev.1...v1.9.1-dev.2) (2026-03-18)\n\n\n### Bug Fixes\n\n* **YouTube Music:** revert old preferences ([21abba5](https://github.com/AykhanUV/revanced-patches/commit/21abba5b4336e9b62a20979f6bd159414e80297b))\n\n\n\n",
   "release_tag": "v1.9.1-dev.2",
   "release_date": "2026-03-18T17:46:47Z",
