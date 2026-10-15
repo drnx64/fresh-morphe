@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-14T20:04:05Z",
-  "version": "1.15.1",
-  "description": "## [1.15.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.15.0...v1.15.1) (2026-10-14)\n\n### Bug Fixes\n\n* **harness:** prevent regex backtracking when scanning download targets ([410f415](https://github.com/kveld9/kveld-extra-morphe-patches/commit/410f415ca00424a5076290b4bb97f6d7e996107a))\n* **tooling:** prevent path traversal during split extraction ([5709ba7](https://github.com/kveld9/kveld-extra-morphe-patches/commit/5709ba7b87472f1778da8a9d060202010a25c523))",
+  "created_at": "2026-10-15T06:54:51Z",
+  "version": "1.16.0",
+  "description": "## [1.16.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.15.4...v1.16.0) (2026-10-15)\n\n### Bug Fixes\n\n* **twitter:** prefix labels in TwitterRemoveAdsPatch with rmad_ ([a27098a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a27098ab698ebf610d88c931665363df8c5a3b48))\n* **twitter:** prefix labels in TwitterTimelineUiPatch with tlflt_ and tluid_ ([4184d29](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4184d2960b86df2ae5104190c16e297e90f3cd8a))\n\n### New Features\n\n* **harness:** add smali member reference verifier for target DEX ([360d2bd](https://github.com/kveld9/kveld-extra-morphe-patches/commit/360d2bd84fc54e8c38f5fffa88e79e213144fafd))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -448,369 +448,361 @@
       "package": "com.twitter.android",
       "patches": [
         {
+          "name": "Background Slimmer",
+          "description": "Disables background periodic jobs, home screen widgets, and companion services to reduce resource usage.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "12.34.0-prod.01"
+          ]
+        },
+        {
           "name": "Block Telemetry & Trackers",
-          "description": "Neutralizes Google AppMeasurement, Firebase Performance, Braze marketing SDK, and strips advertising identifiers.",
+          "description": "Blocks tracking services, analytics collection, and advertising identifiers.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Block Update Screen",
-          "description": "Blocks the 'This app is out of date' screen and suppresses in-app update prompts on launch",
+          "description": "Blocks the outdated app screen and suppresses in-app update prompts on launch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Control Video Auto Scroll",
-          "description": "Prevents automatic scrolling to the next video in immersive view",
+          "description": "Prevents automatic scrolling to the next video in immersive view.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Custom Deep Links",
-          "description": "Registers intent filters to open custom links directly in the app",
+          "description": "Opens supported custom and alternative domain links directly in the app (for shared link domains, see Share Links).",
           "use": false,
           "options": [
             {
               "key": "customLinkHosts",
-              "description": "Custom domains to register for opening in the app"
+              "description": "Custom domains to register for opening directly in the app."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Custom Fonts",
-          "description": "Applies custom typography to post and profile text",
+          "description": "Applies custom typography to post and profile text.",
           "use": false,
           "options": [
             {
               "key": "fontTtfPath",
-              "description": "Absolute device path to a .ttf applied to post/profile text, e.g. /sdcard/fonts/myfont.ttf"
+              "description": "Absolute device path to a TTF font applied to post and profile text, e.g. /sdcard/fonts/myfont.ttf."
             },
             {
               "key": "emojiFontTtfPath",
-              "description": "Absolute device path to a .ttf applied to emojis, e.g. /sdcard/fonts/myemojifont.ttf"
+              "description": "Absolute device path to a TTF font applied to emojis, e.g. /sdcard/fonts/myemojifont.ttf."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "DM Debloat",
-          "description": "Hide call buttons and composer actions in direct message conversations",
+          "description": "Hides call buttons and composer actions in direct message conversations.",
           "use": false,
           "options": [
             {
               "key": "hideDmCalls",
-              "description": "Hide audio and video call buttons in direct message conversation header. WARNING: neutralizing the unified xchat calling flag disables DM outgoing-call entrypoints, not just the icons."
+              "description": "Hide audio and video call buttons in direct message conversations (warning: disables outgoing direct message calls)."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Drawer Items",
-          "description": "Hide individual items in the navigation drawer",
+          "description": "Hides individual menu items, badges, and sidebar entries in the navigation drawer.",
           "use": false,
           "options": [
             {
               "key": "hideProfile",
-              "description": "Hide Profile entry in navigation drawer"
+              "description": "Hide Profile entry in navigation drawer."
             },
             {
               "key": "hidePremium",
-              "description": "Hide Premium subscription entry and discount badges in navigation drawer"
+              "description": "Hide Premium subscription entry and discount badges in navigation drawer (for profile and home upsells, see Remove Premium Upsell)."
             },
             {
               "key": "hideCommunities",
-              "description": "Hide Communities entry in navigation drawer"
+              "description": "Hide Communities entry in navigation drawer."
             },
             {
               "key": "hideBookmarks",
-              "description": "Hide Bookmarks entry in navigation drawer"
+              "description": "Hide Bookmarks entry in navigation drawer."
             },
             {
               "key": "hideLists",
-              "description": "Hide Lists entry in navigation drawer"
+              "description": "Hide Lists entry in navigation drawer."
             },
             {
               "key": "hideSpaces",
-              "description": "Hide Spaces entry in navigation drawer"
+              "description": "Hide Spaces entry in navigation drawer."
             },
             {
               "key": "hideCreatorStudio",
-              "description": "Hide Creator Studio entry in navigation drawer"
+              "description": "Hide Creator Studio entry in navigation drawer."
             },
             {
               "key": "hideGetGrok",
-              "description": "Hide Get Grok assistant entry in navigation drawer"
+              "description": "Hide Grok assistant entry in navigation drawer and sidebar (for Grok navigation tab and post actions, see Navigation UI and Post & Profile UI)."
             },
             {
               "key": "hideHelpCenter",
-              "description": "Hide Help Center and feedback entries in navigation drawer"
+              "description": "Hide Help Center and feedback entries in navigation drawer."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
+          ]
+        },
+        {
+          "name": "MLKit Vision Slimmer",
+          "description": "Disables machine learning vision components to reduce binary overhead (breaks QR and barcode scanning).",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Navigation UI",
-          "description": "Bottom navigation, FAB, tabs and bars",
+          "description": "Customizes bottom navigation bar tabs, unread badges, and search surfaces.",
           "use": false,
           "options": [
             {
               "key": "hideBadges",
-              "description": "Hide badges and unread indicator counters from navigation bar icons"
+              "description": "Hide unread indicator badges from Grok and navigation bar tabs (for Grok drawer and post actions, see Drawer Items and Post & Profile UI)."
             },
             {
               "key": "hideFab",
-              "description": "Hide floating action button entirely"
+              "description": "Hide floating action button entirely."
             },
             {
               "key": "hideFabMenu",
-              "description": "Hide secondary action expansion menu on floating action button"
+              "description": "Hide secondary action expansion menu on floating action button."
             },
             {
               "key": "navigationBar",
-              "description": "Toggle persistent bottom navigation bar behavior"
+              "description": "Hide persistent bottom navigation bar."
             },
             {
               "key": "grokTab",
-              "description": "Hide Grok tab from bottom navigation bar"
+              "description": "Hide Grok tab from bottom navigation bar (for Grok drawer and post actions, see Drawer Items and Post & Profile UI)."
             },
             {
               "key": "exploreTabs",
-              "description": "Toggle rich explore tab surfaces"
+              "description": "Hide rich explore tab surfaces."
             },
             {
               "key": "searchTabItems",
-              "description": "Toggle rich search tab items and surfaces"
-            },
-            {
-              "key": "sideBarItems",
-              "description": "Toggle drawer sidebar items including Grok assistant entry"
+              "description": "Hide rich search tab items and surfaces."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "No Shortened URL",
-          "description": "Expands t.co shortened URLs, removing the click-tracking intermediary",
+          "description": "Expands t.co shortened URLs, removing the click-tracking intermediary.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Pause Search Suggestions",
-          "description": "Stops persisting search suggestions locally without breaking search",
+          "description": "Stops persisting search suggestions locally without breaking search.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Post & Profile UI",
-          "description": "Post actions, profile header and Grok surfaces",
+          "description": "Customizes post action buttons, Grok surfaces, and user profile tabs.",
           "use": false,
           "options": [
             {
               "key": "hideGrokPostAction",
-              "description": "Hide Grok analysis action button in post headers"
+              "description": "Hide Grok analysis action button on posts (for Grok drawer and navigation tab, see Drawer Items and Navigation UI)."
             },
             {
               "key": "hideProfileGrokButton",
-              "description": "Hide Grok Imagine action button on profile header banner"
+              "description": "Hide Grok Imagine action button on profile header banner (for Grok drawer and navigation tab, see Drawer Items and Navigation UI)."
             },
             {
               "key": "profileTabs",
-              "description": "Toggle extra connect and media tabs on user profiles"
+              "description": "Hide extra connect and media tabs on user profiles."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Remove Ads",
-          "description": "Removes promoted posts, trends and ads from timeline",
+          "description": "Removes promoted posts, trends, and ads from timeline feeds.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Remove Premium Upsell",
-          "description": "Removes premium upsell surfaces",
+          "description": "Removes Premium subscription prompts and verification upsell surfaces across the app (for drawer entry, see Drawer Items).",
           "use": true,
           "options": [
             {
               "key": "hideProfileGetVerified",
-              "description": "Hide Get Verified upsell pill on user profile"
+              "description": "Hide Get Verified subscription pill on user profiles (for drawer Premium entry, see Drawer Items)."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Round Off Numbers",
-          "description": "Enable or disable rounding off numbers",
+          "description": "Displays full metric counts without abbreviation on posts and profiles.",
           "use": false,
           "options": [
             {
               "key": "showFullNumbers",
-              "description": "Display full numbers without abbreviation (e.g. 1,234 instead of 1.2K)"
+              "description": "Show full numbers without abbreviation instead of rounded values (e.g. 1,234 instead of 1.2K)."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Share Links",
-          "description": "Custom sharing domain, handle custom links and legacy share links",
+          "description": "Customizes domain and format for shared post links (for opening custom links in app, see Custom Deep Links).",
           "use": false,
           "options": [
             {
               "key": "customSharingDomain",
-              "description": "Substitutes twitter.com/x.com with custom domain when sharing post links"
+              "description": "Replace x.com with the selected custom domain when sharing post links."
             },
             {
               "key": "sharingDomain",
-              "description": "Domain replacing x.com when sharing post links, e.g. https://fxtwitter.com"
-            },
-            {
-              "key": "handleCustomLinks",
-              "description": "Enables in-app handling of alternative Twitter domains (vxtwitter.com, fxtwitter.com, fixupx.com)"
+              "description": "Domain replacing x.com when sharing post links, e.g. https://fxtwitter.com."
             },
             {
               "key": "legacyShareLinks",
-              "description": "Restores post author username in shared links instead of the modern generic /i/status/ format"
+              "description": "Include post author username in shared links instead of the modern generic status format."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Show Sensitive Media",
-          "description": "Displays sensitive media directly without requiring tap to reveal",
+          "description": "Displays sensitive media directly without requiring tap to reveal.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         },
         {
           "name": "Timeline UI",
-          "description": "Timeline surfaces: posts, threads, banners, recommendations and video entry points",
+          "description": "Customizes timeline surfaces including banners, recommendation carousels, and action buttons.",
           "use": true,
           "options": [
             {
               "key": "hideBanner",
-              "description": "Hides new post banner"
+              "description": "Hide new post banner."
             },
             {
               "key": "hidePromoteButton",
-              "description": "Hides promote button under self posts"
+              "description": "Hide promote button under self posts."
             },
             {
               "key": "hideNudgeButton",
-              "description": "Hides follow/subscribe/follow back buttons on posts"
+              "description": "Hide follow, subscribe, and follow back buttons on posts."
             },
             {
               "key": "hideRecommendationItems",
-              "description": "Hides recommendation items such as Who to follow and Today's news in timeline, search, and replies"
+              "description": "Hide recommendation items such as Who to follow and Today's news in timeline, search, and replies."
             },
             {
               "key": "hideDiscoverMore",
-              "description": "Hides Discover more recommendations in tweet reply threads"
+              "description": "Hide Discover more recommendations in tweet reply threads."
             },
             {
               "key": "hideRecommendedUsers",
-              "description": "Hides recommended users popup shown when following someone"
+              "description": "Hide recommended users popup shown when following someone."
             },
             {
               "key": "hideLiveThreads",
-              "description": "Hides live threads"
+              "description": "Hide live threads."
             },
             {
               "key": "hideCommunityNotes",
-              "description": "Hide community notes and birdwatch contributions on posts"
+              "description": "Hide community notes and birdwatch contributions on posts."
             },
             {
               "key": "hidePostMetrics",
-              "description": "Hide like, repost, and reply count metrics on timeline posts"
+              "description": "Hide like, repost, and reply count metrics on timeline posts."
             },
             {
               "key": "hideViewCount",
-              "description": "Hide post view count metrics on timeline and post detail"
+              "description": "Hide post view count metrics on timeline and post detail."
             },
             {
               "key": "inlineActionBar",
-              "description": "Toggle inline action buttons across notification timeline"
+              "description": "Hide inline action buttons across notification timeline."
             },
             {
               "key": "timelineAddTab",
-              "description": "Hide add tab (+) button in home timeline tab header"
+              "description": "Hide add tab (+) button in home timeline tab header."
             },
             {
               "key": "timelineTopBar",
-              "description": "Toggle top bar elements in home and custom timelines"
+              "description": "Hide top bar elements in home and custom timelines."
             },
             {
               "key": "hideLiveBanner",
-              "description": "Hides live and broadcast pill at top of home timeline"
+              "description": "Hide live and broadcast pill at top of home timeline."
             }
           ],
           "compatible_versions": [
-            "12.33.1-prod.01"
-          ]
-        },
-        {
-          "name": "X Background Slimmer",
-          "description": "Disables background WorkManager services, home screen widgets, and Cast/NFC companion services to reduce background resource consumption.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.33.1-prod.01"
-          ]
-        },
-        {
-          "name": "X MLKit Vision Slimmer",
-          "description": "Disables MLKit component discovery and registrars. WARNING: this breaks in-app QR and barcode scanning.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.33.1-prod.01"
+            "12.34.0-prod.01"
           ]
         }
       ]
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "6c3165c3579b70b2602726523767024f81cca7357e748ff543bf676c324ad860",
-  "release_notes": "## [1.15.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.15.0...v1.15.1) (2026-10-14)\n\n### Bug Fixes\n\n* **harness:** prevent regex backtracking when scanning download targets ([410f415](https://github.com/kveld9/kveld-extra-morphe-patches/commit/410f415ca00424a5076290b4bb97f6d7e996107a))\n* **tooling:** prevent path traversal during split extraction ([5709ba7](https://github.com/kveld9/kveld-extra-morphe-patches/commit/5709ba7b87472f1778da8a9d060202010a25c523))\n",
-  "release_tag": "v1.15.1",
-  "release_date": "2026-10-14T20:04:05Z",
+  "fingerprint": "cf946bffcf874f8cf627a11956bc40dfe40544462e0206f84f8bc3fb55f064c8",
+  "release_notes": "## [1.16.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.15.4...v1.16.0) (2026-10-15)\n\n### Bug Fixes\n\n* **twitter:** prefix labels in TwitterRemoveAdsPatch with rmad_ ([a27098a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a27098ab698ebf610d88c931665363df8c5a3b48))\n* **twitter:** prefix labels in TwitterTimelineUiPatch with tlflt_ and tluid_ ([4184d29](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4184d2960b86df2ae5104190c16e297e90f3cd8a))\n\n### New Features\n\n* **harness:** add smali member reference verifier for target DEX ([360d2bd](https://github.com/kveld9/kveld-extra-morphe-patches/commit/360d2bd84fc54e8c38f5fffa88e79e213144fafd))\n",
+  "release_tag": "v1.16.0",
+  "release_date": "2026-10-15T06:54:51Z",
   "isPreRelease": false
 }

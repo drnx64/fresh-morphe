@@ -1,0 +1,453 @@
+{
+  "bundle": "jordanwoodson",
+  "channel": "dev",
+  "repo_url": "https://github.com/jordanwoodson/lurk-morphe-patches",
+  "created_at": "2026-10-14T23:49:39Z",
+  "version": "1.6.0-dev.1",
+  "description": "## [1.6.0](https://github.com/jordanwoodson/lurk-morphe-patches/compare/v1.5.0...v1.6.0) (2026-10-14)\n\n### ✨ New Features\n\n* **twitch:** add thirteen patches with native and Hermes runtime controls ([224042e](https://github.com/jordanwoodson/lurk-morphe-patches/commit/224042ee212146d7d0321edc32cbbf876828b46f))",
+  "apps": [
+    {
+      "app_name": "Kick",
+      "package": "com.kick.mobile",
+      "patches": [
+        {
+          "name": "Bypass VOD ad sessions",
+          "description": "Experimental: uses the original VOD URL instead of requesting a separate ad-session manifest. Does not remove ads stitched into live streams. Enable in Lurk settings after patching.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Changes Kick's name in the launcher and Android settings.",
+          "use": false,
+          "options": [
+            {
+              "key": "appName",
+              "description": "The name to show."
+            }
+          ],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Clean share links",
+          "description": "Removes known campaign and advertising click parameters from kick.com links in share sheets. Keeps timestamps, clip IDs, unknown parameters and fragments. Kick's current share links are already clean.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Clone app",
+          "description": "Installs Kick under another package name alongside the original, with separate sign-in and settings. Sharing sign-in with Kick's broadcaster app may not work after re-signing.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "A unique package name for this install."
+            }
+          ],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Default video quality",
+          "description": "Sets the default adaptive quality ceiling to the selected height when that rendition exists. Kick can still choose a lower quality. The player's Auto option uses this ceiling.",
+          "use": false,
+          "options": [
+            {
+              "key": "quality",
+              "description": "Adaptive playback ceiling. Repatch to change this height."
+            }
+          ],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Disable analytics",
+          "description": "Disables Firebase Analytics collection, Insider and Datadog initialization/events, Mux/Datazoom player analytics and PAL nonce requests. Playback API requests remain necessary to obtain streams. Restart Kick after changing this setting. This does not remove video ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Disable autoplay",
+          "description": "Starts Kick's feed previews switched off. Existing preferences and Kick's own autoplay switch keep working. Does not change intentionally opened streams.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Hide Clips",
+          "description": "Hides Clips tabs in Browse, channels and categories, and the popular-clips row on channels. Shared clip links still open.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Hide KICKs tipping",
+          "description": "Hides the chat gift-shop button, KICKs purchase button and leaderboard tipping prompt.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Hide subscription upsells",
+          "description": "Hides channel Subscribe and Gift a Sub buttons and the leaderboard gift-subscription prompt. Keeps the existing subscribed indicator.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Lurk icon",
+          "description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        },
+        {
+          "name": "Remove tracking permissions",
+          "description": "Removes advertising ID, ad attribution and Google Play install-referrer permissions. Other identifiers and analytics require separate controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.32.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Rumble",
+      "package": "com.rumble.battles",
+      "patches": [
+        {
+          "name": "Block ads",
+          "description": "Removes video ads (before and during videos and live streams) and the ads in feeds and under videos, signed in or not. The app never requests them, so it never sends the ad server your advertising ID, and no ad or Boosted video impressions or clicks are reported.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Block cookie notice",
+          "description": "Stops Rumble's Ketch consent SDK from loading, so the cookie notice never appears and no consent is recorded. Rumble then keeps the analytics and ad tracking it gates on consent switched off. Push notifications stop too, since Rumble only starts its push service (Airship) with consent. Settings > Data Consent no longer opens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Changes the name shown under Rumble's launcher icon and in Android's settings.",
+          "use": false,
+          "options": [
+            {
+              "key": "appName",
+              "description": "The name to show."
+            }
+          ],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Clean share links",
+          "description": "Removes everything after the ? from Rumble links before they are shared, so tracking tags such as e9s (where you found the video) can't go out with them. Rumble 3.21.0 shares clean links; this keeps them clean if the server starts adding tags.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Clone app",
+          "description": "Installs Rumble under another package name, so it sits alongside the original app with its own sign-in and settings. Use \"Change app name\" to tell the two apart in the launcher.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name for the clone. Each install needs its own."
+            }
+          ],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Default video quality",
+          "description": "Starts videos at the chosen quality, or the closest one available, instead of 480p. Once you pick a quality in the player, Rumble keeps using that one. Live streams stay on Auto.",
+          "use": false,
+          "options": [
+            {
+              "key": "quality",
+              "description": "The video height to start with, such as 1080. Can be changed later in Settings > Lurk."
+            }
+          ],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Disable analytics",
+          "description": "Stops Rumble's own analytics, which it sends whatever the consent setting: clicks, impressions, searches, watch progress and player state, with your user ID, username, advertising ID and AppsFlyer ID, to e.rumble.com and its debug log. Signed-in watch history may stop updating unless watch progress is kept.",
+          "use": true,
+          "options": [
+            {
+              "key": "keepWatchProgress",
+              "description": "Keep sending watch progress (video, position and player state). Rumble may use it for your watch history and for creators' view counts. Can be changed later in Settings > Lurk."
+            }
+          ],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Disable autoplay",
+          "description": "Stops Rumble from playing the next video when one ends, and from playing muted previews in feeds, including the featured video on Home. Only the defaults change: Settings > Playback can turn either back on.",
+          "use": false,
+          "options": [
+            {
+              "key": "nextVideo",
+              "description": "Don't play the next video when one ends (Autoplay next video). Can be changed later in Settings > Lurk."
+            },
+            {
+              "key": "feedPreviews",
+              "description": "Don't play muted previews in feeds or the featured video on Home (Playback in feeds: Off). Can be changed later in Settings > Lurk."
+            }
+          ],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Hide Premium upsells",
+          "description": "Hides Rumble Premium promotions: the sheet that opens over videos, the Upgrade Now banner on Home and My Feed, the special offer on the account screen, the downloads pitch and Premium gifts in live chat. Premium-only videos still say so.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Hide Shorts",
+          "description": "Removes Shorts from the bottom bar, Home, My Feed, channel pages, categories and search. Shorts links still open.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Hide tipping and Rants",
+          "description": "Hides the Tip buttons on channels, videos and Shorts, Rants (paid live chat messages) and paying with Rumble Wallet. Rants other viewers send still show.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Lurk icon",
+          "description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Remove tracking permissions",
+          "description": "Removes the advertising ID, ad measurement, install referrer and phone state permissions. Every SDK and Rumble's own requests then get an all-zero advertising ID.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Enables Rumble's local premium state after signing in and refreshing the profile, including ad-free playback and hiding premium upsells. Server-controlled content and subscription benefits still require server authorization.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Twitch",
+      "package": "tv.twitch.android.app",
+      "patches": [
+        {
+          "name": "Block client ads",
+          "description": "Declines ads handled by Twitch's native client ad eligibility check using its existing not eligible result. Does not remove ads stitched into streams by the server or guarantee ad-free playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Block cookie notice",
+          "description": "Hides Twitch's automatic cookie consent notice without accepting it or changing saved vendor consent. Manual consent settings stay available. Use Disable analytics to block tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Changes the name shown under Twitch's launcher icon and in Android's settings.",
+          "use": false,
+          "options": [
+            {
+              "key": "appName",
+              "description": "The name to show."
+            }
+          ],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Clean share links",
+          "description": "Removes known Twitch attribution and campaign parameters from shared links and copied share text. Keeps timestamps, clip IDs, unknown parameters and fragments. Covers native and React Native sharing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Clone app",
+          "description": "Installs Twitch under another package name alongside the original, with separate sign-in and settings. Amazon sign-in and verified app links may not work after re-signing.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "A unique package name for this install."
+            }
+          ],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Default video quality",
+          "description": "Starts playback at the selected rendition when available, with Source as the default. Saved player choices, including Auto, take priority. Unavailable renditions use Twitch's fallback.",
+          "use": false,
+          "options": [
+            {
+              "key": "quality",
+              "description": "Rendition to use before a player quality is saved."
+            }
+          ],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Disable analytics",
+          "description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Disable autoplay",
+          "description": "Stops the next recommended video and React Native feed clip from playing automatically, and defaults feed previews to Never. Manual Play and saved feed preview choices keep working.",
+          "use": true,
+          "options": [
+            {
+              "key": "feedPreviews",
+              "description": "Default feed previews to Never; existing Twitch preferences still take priority."
+            },
+            {
+              "key": "nextVideo",
+              "description": "Stop automatic recommendations and feed clip advancement; manual playback still works."
+            }
+          ],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Hide Bits tipping",
+          "description": "Hides chat Bits buttons, Bits purchase cards, the cheering tray and one-tap Bits controls. Keeps normal chat and Bits messages sent by other viewers.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Hide Clips",
+          "description": "Hides the Clips discovery tab on Home and the Clips tab on native channel profiles. Shared clip links still open.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Hide subscription upsells",
+          "description": "Hides Subscribe and Gift a Sub prompts, Turbo promotions and the native Turbo signup/startup offer. Keeps the existing subscribed indicator and legitimate account entitlements.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Lurk icon",
+          "description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        },
+        {
+          "name": "Remove tracking permissions",
+          "description": "Removes advertising ID and Google Play install-referrer permissions. Other identifiers and analytics require separate controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.6.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Lurk",
+  "fingerprint": "a0a7984b7cc784c31b78b8194896d5c405f5ceb8c3018af25b7aaef7d366b2b9",
+  "release_notes": "## [1.6.0-dev.1](https://github.com/jordanwoodson/lurk-morphe-patches/compare/v1.5.0...v1.6.0-dev.1) (2026-10-14)\n\n### ✨ New Features\n\n* **twitch:** add thirteen patches with native and Hermes runtime controls ([224042e](https://github.com/jordanwoodson/lurk-morphe-patches/commit/224042ee212146d7d0321edc32cbbf876828b46f))\n",
+  "release_tag": "v1.6.0-dev.1",
+  "release_date": "2026-10-14T23:49:39Z",
+  "isPreRelease": true
+}
