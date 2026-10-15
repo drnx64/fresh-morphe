@@ -2,9 +2,9 @@
   "bundle": "akash-sriram",
   "channel": "stable",
   "repo_url": "https://github.com/Akash-Sriram/morphe-google-photos",
-  "created_at": "2026-10-12T08:30:31Z",
-  "version": "1.14.4",
-  "description": "## [1.14.4](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.3...v1.14.4) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* **Google Photos - Backup:** initialize missing notification channels on startup to prevent JobScheduler crash ([1ee0725](https://github.com/Akash-Sriram/morphe-google-photos/commit/1ee072577222a1e59fcebfcf624174daacecc3a4)), closes [#32](https://github.com/Akash-Sriram/morphe-google-photos/issues/32)",
+  "created_at": "2026-10-15T19:43:47Z",
+  "version": "1.15.0",
+  "description": "## [1.15.0](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.4...v1.15.0) (2026-10-15)\n\n### 🚀 Updated App Support\n\n* **Google Photos:** Add support for v7.97.0.997578476 ([ad8039a](https://github.com/Akash-Sriram/morphe-google-photos/commit/ad8039a2630226babc9f5e5e2fa0971acfc35dd2))\n\n### ✨ New Features\n\n* **Google Photos - Toolkit:** Introduce Morphe Toolkit in Photos Settings for batch cloud trash, restore, archive, personal/shared album management, and DCIM export ([04d6868](https://github.com/Akash-Sriram/morphe-google-photos/commit/04d68687248536b0136fb1a5ce13b9aa34613170))\n* **Google Photos - Toolkit:** Photo inspector & comparison modal with difference hash (dHash) visual similarity clustering ([50931df](https://github.com/Akash-Sriram/morphe-google-photos/commit/50931df181f77e99239d95f763905367e53df041))\n* **Google Photos - Toolkit:** Direct biometric unlock for Locked Folder with local-vs-cloud storage backup status notices ([899da3e](https://github.com/Akash-Sriram/morphe-google-photos/commit/899da3eccfb41c6690829409288b99babf4f620d))\n* **Google Photos - Diagnostics:** In-app universal diagnostic log viewer with severity/scope filters, noise suppression, and one-tap GitHub report export ([85197e9](https://github.com/Akash-Sriram/morphe-google-photos/commit/85197e9af6911f6750ebb9b0299af2e47d590b12))\n* **Google Photos - Flags:** Add `components` option to choose between Flag Manager, Morphe Toolkit, or both ([19f0a62](https://github.com/Akash-Sriram/morphe-google-photos/commit/19f0a622192b40c5d76c834cb43bb86a74918aec))\n* **Google Photos - UI:** Unify Material 3 styling, search inputs, dialog geometries, and add a dedicated terminal console vector icon ([ea345e1](https://github.com/Akash-Sriram/morphe-google-photos/commit/ea345e128ae34cbe90bc2614b7e1ce8e11a684b7), [14652a8](https://github.com/Akash-Sriram/morphe-google-photos/commit/14652a8c3d0f046b043c9ba81b7e289bf592c3a7))\n\n### 🐛 Bug Fixes\n\n* **Google Photos - Patches:** Consolidate patch registry into 8 core patches and integrate Play Store update blocker directly into `Official package name` ([5a59076](https://github.com/Akash-Sriram/morphe-google-photos/commit/5a590760f3817f7d1b3294c7b88ec7b09c6ae983))\n* **Google Photos - UI:** Dynamically adapt floating pill launchers to system navigation bar and gesture insets ([c11bb7c](https://github.com/Akash-Sriram/morphe-google-photos/commit/c11bb7c4ad11c3a1bc7b561c72369b9f227fdaa9))\n* **Google Photos - Gms:** Automatically rename all package and component permissions during package name changes ([cc4ba67](https://github.com/Akash-Sriram/morphe-google-photos/commit/cc4ba676334e4b8d6ce4707bcfdfaa7a95fca51f))\n* **Google Photos - Flags:** Remove obsolete and dead legacy flags purged by upstream Google servers ([738c08b](https://github.com/Akash-Sriram/morphe-google-photos/commit/738c08b23073b58cc4ab8450cf4bdac218399f7b))\n",
   "apps": [
     {
       "app_name": "Google Photos",
@@ -16,25 +16,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Account avatar",
-          "description": "Loads and displays account profile avatars across the top toolbar, Bento menu, and account switcher.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Change to official package name",
-          "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos. This is an exceptional option strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM (such as custom ROMs or de-Googled devices). Root users do not need this (simply deselect GmsCore support instead). When selecting this, also enable 'Disable Play Store updates'.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
@@ -43,43 +25,30 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
-          "name": "Disable Play Store updates",
-          "description": "Disables Play Store updates by setting the version code to the maximum allowed (Int.MAX_VALUE). Prevents Google Play from automatically overwriting the patched app when using the official package name on devices without preinstalled Photos.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Enable DCIM folders backup control",
-          "description": "Disables always on backup for the Camera and other DCIM folders, allowing you to control backup for each folder individually. This will make the app default to having no folders backed up.",
+          "name": "DCIM & backup control",
+          "description": "Disables always on backup for the Camera and other DCIM folders, allowing individual folder control, and exports memory collages and creations to DCIM/Google Photos for quota-free backup.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
-          "name": "Enable Phenotype flag manager",
-          "description": "Enables an in-app flag manager in Photos Settings to toggle curated experimental UI redesigns, video editor tools, and feature flags.",
+          "name": "Flag manager & Toolkit",
+          "description": "Enables an in-app flag manager and Morphe toolkit in Photos Settings to toggle experimental UI redesigns, video editor tools, and feature flags.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "components",
+              "description": "Choose which components to show: Flag Manager, Morphe Toolkit, or Both."
+            }
+          ],
           "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Fix memory style font loading",
-          "description": "Redirects font loading across Stories and UI to authentic Google Fonts with local caching and CDN downloading, fixing fallback fonts and blank text in Memories.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
@@ -88,34 +57,25 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
-          "name": "Google One Bento Badge",
-          "description": "Restores the genuine Google One subscription badge in the Google Photos Bento account menu.",
+          "name": "Media engine & AI fixes",
+          "description": "Bypasses the 0MB Mobile Data Download check for AI models and fixes font loading across Stories and UI to prevent blank text and fallback fonts.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
-          "name": "Local creation downloader",
-          "description": "Intercepts saving memory collages and creations, exporting them to the device Google Photos folder (DCIM/Google Photos) for quota-free backup instead of direct cloud library commits.",
-          "use": true,
+          "name": "Official package name",
+          "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos and disables Play Store updates by setting the version code to maximum to prevent automatic overwriting. This is strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM.",
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Model Readiness Gates",
-          "description": "Bypasses the 0MB Mobile Data Download check for AI models and reports them as loaded.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         },
         {
@@ -124,16 +84,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.97.0.997578476"
           ]
         }
       ]
     }
   ],
   "patches_name": "Morphe Google Photos Patches",
-  "fingerprint": "3ff243276060f9ac6e9aadc92362c737ef78d98c349763b5d1a7a63b8a67c1d9",
-  "release_notes": "## [1.14.4](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.3...v1.14.4) (2026-10-12)\n\n### 🐛 Bug Fixes\n\n* **backup:** initialize missing notification channels on startup to prevent JobScheduler crash ([1ee0725](https://github.com/Akash-Sriram/morphe-google-photos/commit/1ee072577222a1e59fcebfcf624174daacecc3a4)), closes [#32](https://github.com/Akash-Sriram/morphe-google-photos/issues/32)\n",
-  "release_tag": "v1.14.4",
-  "release_date": "2026-10-12T08:30:31Z",
+  "fingerprint": "562520794c02359764a6256b661f44f241bb9b84b600eb302a6d1a2539eda414",
+  "release_notes": "## [1.15.0](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.4...v1.15.0) (2026-10-15)\n\n### 🚀 Updated App Support\n\n* **Google Photos:** Add support for v7.97.0.997578476 ([ad8039a](https://github.com/Akash-Sriram/morphe-google-photos/commit/ad8039a2630226babc9f5e5e2fa0971acfc35dd2))\n\n### ✨ New Features\n\n* **Google Photos - Toolkit:** Introduce Morphe Toolkit in Photos Settings for batch cloud trash, restore, archive, personal/shared album management, and DCIM export ([04d6868](https://github.com/Akash-Sriram/morphe-google-photos/commit/04d68687248536b0136fb1a5ce13b9aa34613170))\n* **Google Photos - Toolkit:** Photo inspector & comparison modal with difference hash (dHash) visual similarity clustering ([50931df](https://github.com/Akash-Sriram/morphe-google-photos/commit/50931df181f77e99239d95f763905367e53df041))\n* **Google Photos - Toolkit:** Direct biometric unlock for Locked Folder with local-vs-cloud storage backup status notices ([899da3e](https://github.com/Akash-Sriram/morphe-google-photos/commit/899da3eccfb41c6690829409288b99babf4f620d))\n* **Google Photos - Diagnostics:** In-app universal diagnostic log viewer with severity/scope filters, noise suppression, and one-tap GitHub report export ([85197e9](https://github.com/Akash-Sriram/morphe-google-photos/commit/85197e9af6911f6750ebb9b0299af2e47d590b12))\n* **Google Photos - Flags:** Add `components` option to choose between Flag Manager, Morphe Toolkit, or both ([19f0a62](https://github.com/Akash-Sriram/morphe-google-photos/commit/19f0a622192b40c5d76c834cb43bb86a74918aec))\n* **Google Photos - UI:** Unify Material 3 styling, search inputs, dialog geometries, and add a dedicated terminal console vector icon ([ea345e1](https://github.com/Akash-Sriram/morphe-google-photos/commit/ea345e128ae34cbe90bc2614b7e1ce8e11a684b7), [14652a8](https://github.com/Akash-Sriram/morphe-google-photos/commit/14652a8c3d0f046b043c9ba81b7e289bf592c3a7))\n\n### 🐛 Bug Fixes\n\n* **Google Photos - Patches:** Consolidate patch registry into 8 core patches and integrate Play Store update blocker directly into `Official package name` ([5a59076](https://github.com/Akash-Sriram/morphe-google-photos/commit/5a590760f3817f7d1b3294c7b88ec7b09c6ae983))\n* **Google Photos - UI:** Dynamically adapt floating pill launchers to system navigation bar and gesture insets ([c11bb7c](https://github.com/Akash-Sriram/morphe-google-photos/commit/c11bb7c4ad11c3a1bc7b561c72369b9f227fdaa9))\n* **Google Photos - Gms:** Automatically rename all package and component permissions during package name changes ([cc4ba67](https://github.com/Akash-Sriram/morphe-google-photos/commit/cc4ba676334e4b8d6ce4707bcfdfaa7a95fca51f))\n* **Google Photos - Flags:** Remove obsolete and dead legacy flags purged by upstream Google servers ([738c08b](https://github.com/Akash-Sriram/morphe-google-photos/commit/738c08b23073b58cc4ab8450cf4bdac218399f7b))\n",
+  "release_tag": "v1.15.0",
+  "release_date": "2026-10-15T19:43:47Z",
   "isPreRelease": false
 }

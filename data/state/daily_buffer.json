@@ -1,7 +1,7 @@
 {
   "date": "2026-10-15",
-  "lastChecked": "2026-10-15T18:31:54Z",
-  "scan_counter": 4,
+  "lastChecked": "2026-10-15T22:33:44Z",
+  "scan_counter": 5,
   "affected_bundles": {
     "legendsciber:stable": {
       "bundle": "legendsciber",
@@ -201,12 +201,21 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Unlock app icons",
+                "description": "Lets you pick the app icons Facebook keeps for Facebook Plus on its App icon page (Menu > Settings and privacy > App icon), so your home screen icon and the logo at the top of Home match your pick. The normal blue icon keeps Facebook's wordmark. Starts off. Turn it on in Hushfacebook settings > Appearance.",
+                "previous_description": "Lets you pick the app icons Facebook keeps for Facebook Plus on its App icon page (Menu > Settings and privacy > App icon), so your home screen icon can be any of them. Starts off. Turn it on in Hushfacebook settings > Appearance.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            5
           ]
         }
       ],
@@ -535,12 +544,21 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Unlock app icons",
+                "description": "Lets you pick the app icons Facebook keeps for Facebook Plus on its App icon page (Menu > Settings and privacy > App icon), so your home screen icon and the logo at the top of Home match your pick. The normal blue icon keeps Facebook's wordmark. Starts off. Turn it on in Hushfacebook settings > Appearance.",
+                "previous_description": "Lets you pick the app icons Facebook keeps for Facebook Plus on its App icon page (Menu > Settings and privacy > App icon), so your home screen icon can be any of them. Starts off. Turn it on in Hushfacebook settings > Appearance.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            5
           ]
         }
       ],
@@ -826,8 +844,152 @@
           "package": "tv.twitch.android.app",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            2
-          ]
+            2,
+            5
+          ],
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Anonymous chat",
+                "description": "Adds a switch that reads chat as an anonymous guest, the way Twitch does when signed out, while the rest of the app stays signed in, so you aren't listed among a channel's chatters. Sending chat messages is disabled while it's on. Off by default; applies after a restart."
+              },
+              {
+                "name": "Auto-claim channel points",
+                "description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Off by default; needs a signed-in account."
+              },
+              {
+                "name": "Avoid stitched ads",
+                "description": "While Twitch's server stitches an ad break into a live stream, plays the stream instead from a picture-by-picture session, the kind Twitch itself shows during breaks, which gets no ads: at 360p at most, with sound, then back to the stream's own session and quality when the break is over. The player doesn't reload. The playback token for that session is requested without your account. When none can be had, the break plays, and Mute stitched ads still mutes and covers it. Native and React Native players; streams started while it's off are left alone."
+              },
+              {
+                "name": "Background audio",
+                "description": "Keeps streams and videos playing as audio when you leave the app, using Twitch's own \"Continue Playing Audio in the Background\" with its audio-only stream and media notification. Changes only the default, Never in Twitch: a choice made in Twitch's settings still wins."
+              },
+              {
+                "name": "Block display ads",
+                "description": "Blocks the ad requests that Block client ads doesn't cover: stream display ads (squeezeback and lower third), audio ads, multi-format ad pods, the Following headliner, feed display and video ads and brand surveys, in both the native and React Native parts of the app. Each request gets the failure or no-ad answer Twitch already handles. Sponsorship and paid-promotion labels are kept. Ads stitched into the stream by the server still play."
+              },
+              {
+                "name": "Chat appearance",
+                "description": "Adds chat look settings: text size, alternating row backgrounds, plain /me messages, and the width and background opacity of the landscape chat panel. Each keeps Twitch's look until changed in Lurk settings. Native live chat, chat history and VOD chat replay; not React Native chat."
+              },
+              {
+                "name": "Chat keywords",
+                "description": "Highlights chat messages that mention you or contain your highlight words with a tinted background, optionally with a vibration, and hides messages with blocked words or from blocked users. Mentions are on by default; the word and user lists start empty and are set in Lurk settings. Native live chat, chat history and VOD chat replay; not React Native chat."
+              },
+              {
+                "name": "Chat overlay",
+                "description": "Adds a switch that scrolls live chat messages right to left across the top of the video in landscape (danmaku), as plain white text with the sender's name. Off until turned on in Lurk settings, with choices for speed and number of lines. Native live channels only: not React Native chat, VODs or chat replay. The overlay never takes touches."
+              },
+              {
+                "name": "Chat timestamps",
+                "description": "Shows the time each live chat message was sent in front of it, the way Twitch already shows it on chat history, in 24-hour or 12-hour format. Whispers are unchanged."
+              },
+              {
+                "name": "Default startup tab",
+                "description": "Adds a choice of the screen Twitch opens on instead of Home: Browse, Following or Activity. Links and notifications still open what they point to."
+              },
+              {
+                "name": "Fix notifications",
+                "description": "Lets the patched app register for push notifications. Firebase only accepts Twitch's original package name and signing certificate, and refuses the re-signed app, so its registration requests send the original ones."
+              },
+              {
+                "name": "Fix stuck start screen",
+                "description": "Opens Twitch when its start screen is still waiting after 5 seconds. Twitch waits for Branch's link lookup before it routes, and when that never answers, it stays on a blank start screen until it's closed, unpatched Twitch included."
+              },
+              {
+                "name": "Force ExoPlayer",
+                "description": "Adds a switch that plays live channels and videos with the ExoPlayer backend Twitch still ships instead of Amazon IVS. Off until turned on in Lurk settings. Clips, encrypted streams and React Native players stay on IVS. Lurk patches that hook IVS, such as Normal latency, Mute stitched ads and Show video stats, don't act on ExoPlayer."
+              },
+              {
+                "name": "Hide Home sections",
+                "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following."
+              },
+              {
+                "name": "Hide chat highlights",
+                "description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations can be hidden too. Other chat messages are unchanged."
+              },
+              {
+                "name": "Hide mature content warning",
+                "description": "Skips the content warning on streams, videos and clips with mature content labels, as if you had chosen Start Watching. Age, region, guardian and account restrictions still apply. Off by default."
+              },
+              {
+                "name": "Hide player buttons",
+                "description": "Hides the player's Clip, Cast and Share buttons, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged."
+              },
+              {
+                "name": "Mute stitched ads",
+                "description": "While an ad break that Twitch's server stitched into a stream plays, mutes the player and covers the video with black, then restores both when the stream returns. Works in the native and React Native players. The ad still plays and the break isn't shorter."
+              },
+              {
+                "name": "Navigation bar position",
+                "description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons. Twitch's own layout stays until another choice is made in Lurk settings."
+              },
+              {
+                "name": "Normal latency",
+                "description": "Adds a setting that turns off the player's low-latency mode for live streams: a few seconds more delay to the broadcaster, for fewer rebuffers on a weak connection. Off until turned on in Lurk settings."
+              },
+              {
+                "name": "Player gestures",
+                "description": "Sets the skip interval of the video (VOD) rewind and forward buttons and the media notification, and adds brightness (left) and volume (right) swipes on the video in landscape. Twitch's -10/+30 seconds stay until you choose another interval in Lurk settings; swipes start off."
+              },
+              {
+                "name": "Playlist proxy",
+                "description": "Sends live stream playlist requests to a proxy server you set in this patch's options, for example one that returns playlists without stitched ads. The proxy receives each request in full, including your signed playback token, which identifies your account: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the token then travels unencrypted. Does nothing while the proxy URL is empty. Videos and clips are not proxied."
+              },
+              {
+                "name": "Refresh stream",
+                "description": "Long-press the player's settings gear, or the middle of the video, to reload a stuck stream through Twitch's own Retry: a new access token and playlist for live streams, the same position for videos. Covers Twitch's native players."
+              },
+              {
+                "name": "Show deleted messages",
+                "description": "Keeps the text of chat messages that moderators delete, or remove with a timeout or ban, struck through and dimmed instead of Twitch's \"message deleted\" placeholder. A second switch keeps the messages when a moderator clears the whole chat."
+              },
+              {
+                "name": "Show video stats",
+                "description": "Adds the video stats button Twitch shows only to its staff to the native player: latency to the broadcaster, bitrate, buffer, dropped frames, codecs and server. Everything shown is local to the player."
+              },
+              {
+                "name": "Sleep timer",
+                "description": "Pauses playback a chosen time after it last started or resumed, through Twitch's own pause for native, portal and React Native players, and says so in a short notice. Choose the time in Lurk settings; it is off until then."
+              },
+              {
+                "name": "Tablet layout",
+                "description": "Adds a switch that makes Twitch treat the phone as a tablet: Home and the player rotate, the player shows chat beside the video in landscape, and a navigation rail on the left replaces the bottom bar in landscape (and in portrait too with a second switch). Off until turned on in Lurk settings; applies after a restart."
+              },
+              {
+                "name": "Third-party badges",
+                "description": "Adds switches that show FrankerFaceZ and Chatterino badges and pronouns.alejo.io pronouns next to chatters' names in native chat. Each switch is off until turned on in Lurk settings. The badge switches download that service's public list of all badge holders (api.frankerfacez.com, api.chatterino.com) about once an hour and check it on the phone. The pronouns switch sends the username of each chatter whose message you see to pronouns.alejo.io. 7TV badges are not included."
+              },
+              {
+                "name": "Third-party emotes",
+                "description": "Adds switches that show 7TV, BetterTTV and FrankerFaceZ emotes in chat, Twitch's chat history and VOD chat replay. Each switch is off until turned on in Lurk settings; when on, it sends the ID of the channel you watch to that service (7tv.io, api.betterttv.net, api.frankerfacez.com) for its emote lists and loads the emote images from its CDN. Not in the emote picker or autocomplete."
+              },
+              {
+                "name": "Use native player",
+                "description": "Always opens live channels in Twitch's native player, never the React Native \"Ultralight\" player a server experiment can switch some users to. Most Lurk playback, chat and ad patches hook the native player."
+              },
+              {
+                "name": "VOD chapters",
+                "description": "Adds a Chapters button to the native video (VOD) player that lists the stream's game and category changes and jumps to one through Twitch's own seek. The list comes from Twitch's public data, fetched with the app's client ID. On by default."
+              },
+              {
+                "name": "Watch without signing in",
+                "description": "Opens Twitch without an account instead of stopping at the Log In / Sign Up screen, using Twitch's own signed-out mode. Streams, videos and chat can be watched; following, chatting and other account actions still ask you to sign in. Signed-in use is unchanged."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable analytics",
+                "description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "previous_description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          }
         }
       ],
       "repo_url": "https://github.com/jordanwoodson/lurk-morphe-patches",
@@ -836,7 +998,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.6.0-dev.1",
-      "new_version": "1.7.0-dev.1",
+      "new_version": "1.9.0-dev.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -881,8 +1043,152 @@
           "package": "tv.twitch.android.app",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            2
-          ]
+            2,
+            5
+          ],
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Anonymous chat",
+                "description": "Adds a switch that reads chat as an anonymous guest, the way Twitch does when signed out, while the rest of the app stays signed in, so you aren't listed among a channel's chatters. Sending chat messages is disabled while it's on. Off by default; applies after a restart."
+              },
+              {
+                "name": "Auto-claim channel points",
+                "description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Off by default; needs a signed-in account."
+              },
+              {
+                "name": "Avoid stitched ads",
+                "description": "While Twitch's server stitches an ad break into a live stream, plays the stream instead from a picture-by-picture session, the kind Twitch itself shows during breaks, which gets no ads: at 360p at most, with sound, then back to the stream's own session and quality when the break is over. The player doesn't reload. The playback token for that session is requested without your account. When none can be had, the break plays, and Mute stitched ads still mutes and covers it. Native and React Native players; streams started while it's off are left alone."
+              },
+              {
+                "name": "Background audio",
+                "description": "Keeps streams and videos playing as audio when you leave the app, using Twitch's own \"Continue Playing Audio in the Background\" with its audio-only stream and media notification. Changes only the default, Never in Twitch: a choice made in Twitch's settings still wins."
+              },
+              {
+                "name": "Block display ads",
+                "description": "Blocks the ad requests that Block client ads doesn't cover: stream display ads (squeezeback and lower third), audio ads, multi-format ad pods, the Following headliner, feed display and video ads and brand surveys, in both the native and React Native parts of the app. Each request gets the failure or no-ad answer Twitch already handles. Sponsorship and paid-promotion labels are kept. Ads stitched into the stream by the server still play."
+              },
+              {
+                "name": "Chat appearance",
+                "description": "Adds chat look settings: text size, alternating row backgrounds, plain /me messages, and the width and background opacity of the landscape chat panel. Each keeps Twitch's look until changed in Lurk settings. Native live chat, chat history and VOD chat replay; not React Native chat."
+              },
+              {
+                "name": "Chat keywords",
+                "description": "Highlights chat messages that mention you or contain your highlight words with a tinted background, optionally with a vibration, and hides messages with blocked words or from blocked users. Mentions are on by default; the word and user lists start empty and are set in Lurk settings. Native live chat, chat history and VOD chat replay; not React Native chat."
+              },
+              {
+                "name": "Chat overlay",
+                "description": "Adds a switch that scrolls live chat messages right to left across the top of the video in landscape (danmaku), as plain white text with the sender's name. Off until turned on in Lurk settings, with choices for speed and number of lines. Native live channels only: not React Native chat, VODs or chat replay. The overlay never takes touches."
+              },
+              {
+                "name": "Chat timestamps",
+                "description": "Shows the time each live chat message was sent in front of it, the way Twitch already shows it on chat history, in 24-hour or 12-hour format. Whispers are unchanged."
+              },
+              {
+                "name": "Default startup tab",
+                "description": "Adds a choice of the screen Twitch opens on instead of Home: Browse, Following or Activity. Links and notifications still open what they point to."
+              },
+              {
+                "name": "Fix notifications",
+                "description": "Lets the patched app register for push notifications. Firebase only accepts Twitch's original package name and signing certificate, and refuses the re-signed app, so its registration requests send the original ones."
+              },
+              {
+                "name": "Fix stuck start screen",
+                "description": "Opens Twitch when its start screen is still waiting after 5 seconds. Twitch waits for Branch's link lookup before it routes, and when that never answers, it stays on a blank start screen until it's closed, unpatched Twitch included."
+              },
+              {
+                "name": "Force ExoPlayer",
+                "description": "Adds a switch that plays live channels and videos with the ExoPlayer backend Twitch still ships instead of Amazon IVS. Off until turned on in Lurk settings. Clips, encrypted streams and React Native players stay on IVS. Lurk patches that hook IVS, such as Normal latency, Mute stitched ads and Show video stats, don't act on ExoPlayer."
+              },
+              {
+                "name": "Hide Home sections",
+                "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following."
+              },
+              {
+                "name": "Hide chat highlights",
+                "description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations can be hidden too. Other chat messages are unchanged."
+              },
+              {
+                "name": "Hide mature content warning",
+                "description": "Skips the content warning on streams, videos and clips with mature content labels, as if you had chosen Start Watching. Age, region, guardian and account restrictions still apply. Off by default."
+              },
+              {
+                "name": "Hide player buttons",
+                "description": "Hides the player's Clip, Cast and Share buttons, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged."
+              },
+              {
+                "name": "Mute stitched ads",
+                "description": "While an ad break that Twitch's server stitched into a stream plays, mutes the player and covers the video with black, then restores both when the stream returns. Works in the native and React Native players. The ad still plays and the break isn't shorter."
+              },
+              {
+                "name": "Navigation bar position",
+                "description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons. Twitch's own layout stays until another choice is made in Lurk settings."
+              },
+              {
+                "name": "Normal latency",
+                "description": "Adds a setting that turns off the player's low-latency mode for live streams: a few seconds more delay to the broadcaster, for fewer rebuffers on a weak connection. Off until turned on in Lurk settings."
+              },
+              {
+                "name": "Player gestures",
+                "description": "Sets the skip interval of the video (VOD) rewind and forward buttons and the media notification, and adds brightness (left) and volume (right) swipes on the video in landscape. Twitch's -10/+30 seconds stay until you choose another interval in Lurk settings; swipes start off."
+              },
+              {
+                "name": "Playlist proxy",
+                "description": "Sends live stream playlist requests to a proxy server you set in this patch's options, for example one that returns playlists without stitched ads. The proxy receives each request in full, including your signed playback token, which identifies your account: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the token then travels unencrypted. Does nothing while the proxy URL is empty. Videos and clips are not proxied."
+              },
+              {
+                "name": "Refresh stream",
+                "description": "Long-press the player's settings gear, or the middle of the video, to reload a stuck stream through Twitch's own Retry: a new access token and playlist for live streams, the same position for videos. Covers Twitch's native players."
+              },
+              {
+                "name": "Show deleted messages",
+                "description": "Keeps the text of chat messages that moderators delete, or remove with a timeout or ban, struck through and dimmed instead of Twitch's \"message deleted\" placeholder. A second switch keeps the messages when a moderator clears the whole chat."
+              },
+              {
+                "name": "Show video stats",
+                "description": "Adds the video stats button Twitch shows only to its staff to the native player: latency to the broadcaster, bitrate, buffer, dropped frames, codecs and server. Everything shown is local to the player."
+              },
+              {
+                "name": "Sleep timer",
+                "description": "Pauses playback a chosen time after it last started or resumed, through Twitch's own pause for native, portal and React Native players, and says so in a short notice. Choose the time in Lurk settings; it is off until then."
+              },
+              {
+                "name": "Tablet layout",
+                "description": "Adds a switch that makes Twitch treat the phone as a tablet: Home and the player rotate, the player shows chat beside the video in landscape, and a navigation rail on the left replaces the bottom bar in landscape (and in portrait too with a second switch). Off until turned on in Lurk settings; applies after a restart."
+              },
+              {
+                "name": "Third-party badges",
+                "description": "Adds switches that show FrankerFaceZ and Chatterino badges and pronouns.alejo.io pronouns next to chatters' names in native chat. Each switch is off until turned on in Lurk settings. The badge switches download that service's public list of all badge holders (api.frankerfacez.com, api.chatterino.com) about once an hour and check it on the phone. The pronouns switch sends the username of each chatter whose message you see to pronouns.alejo.io. 7TV badges are not included."
+              },
+              {
+                "name": "Third-party emotes",
+                "description": "Adds switches that show 7TV, BetterTTV and FrankerFaceZ emotes in chat, Twitch's chat history and VOD chat replay. Each switch is off until turned on in Lurk settings; when on, it sends the ID of the channel you watch to that service (7tv.io, api.betterttv.net, api.frankerfacez.com) for its emote lists and loads the emote images from its CDN. Not in the emote picker or autocomplete."
+              },
+              {
+                "name": "Use native player",
+                "description": "Always opens live channels in Twitch's native player, never the React Native \"Ultralight\" player a server experiment can switch some users to. Most Lurk playback, chat and ad patches hook the native player."
+              },
+              {
+                "name": "VOD chapters",
+                "description": "Adds a Chapters button to the native video (VOD) player that lists the stream's game and category changes and jumps to one through Twitch's own seek. The list comes from Twitch's public data, fetched with the app's client ID. On by default."
+              },
+              {
+                "name": "Watch without signing in",
+                "description": "Opens Twitch without an account instead of stopping at the Log In / Sign Up screen, using Twitch's own signed-out mode. Streams, videos and chat can be watched; following, chatting and other account actions still ask you to sign in. Signed-in use is unchanged."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable analytics",
+                "description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "previous_description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          }
         }
       ],
       "repo_url": "https://github.com/jordanwoodson/lurk-morphe-patches",
@@ -891,7 +1197,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.6.0",
-      "new_version": "1.7.0",
+      "new_version": "1.9.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -3502,7 +3808,8 @@
             ]
           },
           "scan_numbers": [
-            4
+            4,
+            5
           ]
         }
       ],
@@ -3512,7 +3819,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.23.0-dev.1",
-      "new_version": "1.27.0-dev.1",
+      "new_version": "1.28.0-dev.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -3540,7 +3847,8 @@
             ]
           },
           "scan_numbers": [
-            4
+            4,
+            5
           ]
         }
       ],
@@ -3550,7 +3858,2344 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.23.0",
-      "new_version": "1.27.0",
+      "new_version": "1.28.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "kveld9-kveld-morphe-patches:dev": {
+      "bundle": "kveld9-kveld-morphe-patches",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Brave Private Web Browser, VPN",
+          "package": "com.brave.browser",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Motion Sensors",
+                "description": "Stops sites from reading motion sensors to identify you."
+              },
+              {
+                "name": "Block Popups & Rating Requests",
+                "description": "Blocks rating popups, review requests and promo dialogs."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Blocks usage analytics, crash uploads and experiment downloads."
+              },
+              {
+                "name": "Clean Shared Links",
+                "description": "Removes tracking codes from links you share or copy."
+              },
+              {
+                "name": "Clean Start Page",
+                "description": "Removes sponsored wallpapers, news feed and promo cards."
+              },
+              {
+                "name": "Faster Startup",
+                "description": "Speeds up launch by disabling carrier customizations."
+              },
+              {
+                "name": "Hide Battery Status",
+                "description": "Stops sites from reading your battery level to track you."
+              },
+              {
+                "name": "Keep Tabs Open",
+                "description": "Stops Brave from minimizing your tabs in the background."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes unused AI, VPN and AR files to shrink the app."
+              },
+              {
+                "name": "Remove Extra Languages",
+                "description": "Deletes unselected language packs."
+              },
+              {
+                "name": "Select Previous Tab on Close",
+                "description": "Selects the previous tab in the tab group when closing a tab."
+              },
+              {
+                "name": "Silence Promo Notifications",
+                "description": "Stops tips, reward promos and marketing notifications."
+              },
+              {
+                "name": "Skip Welcome Screens",
+                "description": "Skips welcome, search choice and onboarding on fresh installs."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background wakeups and battery drain."
+              },
+              {
+                "name": "Stop Text Sharing with System",
+                "description": "Stops sending page text to the Android capture service."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Block Brave Telemetry",
+                "description": "Blocks P3A product analytics, Brave Stats usage pings, crash dump uploads, WDP, Chromium UMA metrics, and Variations seed fetching."
+              },
+              {
+                "name": "Brave In-Product & Commercial Notification Optimizer",
+                "description": "Eliminates background wakeups and notifications from Chromium tips scheduler (Job ID 105), Brave Rewards onboarding promo, and retention marketing campaigns."
+              },
+              {
+                "name": "Brave Startup Performance Optimization",
+                "description": "Optimizes startup time and eliminates background CPU/disk overhead by disabling unused OEM carrier partner customizations."
+              },
+              {
+                "name": "Clean New Tab Page",
+                "description": "Removes sponsored wallpaper images, Brave News/Today feeds, marketing widgets, and promo cards from the New Tab Page."
+              },
+              {
+                "name": "Clean Share URL",
+                "description": "Strips tracking parameters (utm_*, fbclid, gclid, igshid, si, msclkid) when sharing or copying links."
+              },
+              {
+                "name": "Disable Background Sync & Periodic Sync",
+                "description": "Eliminates background wakeups, radio modem activity, and battery drain by forcing GooglePlayServicesChecker.shouldDisableBackgroundSync() -> true and neutralizing wakeup tasks."
+              },
+              {
+                "name": "Disable Battery Status API & OS Listener",
+                "description": "Neutralizes the Battery Status API (navigator.getBattery) to prevent cross-site device fingerprinting and drops OS battery change broadcasts."
+              },
+              {
+                "name": "Disable Content Capture",
+                "description": "Stops Chromium from streaming on-screen page text and URLs to the Android ContentCapture system service (Android System Intelligence)."
+              },
+              {
+                "name": "Disable Tab Auto-Minimization",
+                "description": "Prevents Brave from minimizing active tabs to the background and forcing a New Tab Page when returning to the browser after inactivity."
+              },
+              {
+                "name": "Locale PAK Slimmer",
+                "description": "Strips unselected language resource PAKs from assets/locales/."
+              },
+              {
+                "name": "Native Bloat Slimmer",
+                "description": "Strips unused native companion binaries (Impress Vision AI, WireGuard VPN, and Android XR) to significantly reduce APK size."
+              },
+              {
+                "name": "Sensor Privacy Guard",
+                "description": "Neutralizes motion, ambient, and orientation sensor providers to prevent hardware fingerprinting and tracking via Generic Sensor APIs."
+              },
+              {
+                "name": "Skip First Run",
+                "description": "Skips the welcome screen, search engine selection, and onboarding First Run Experience (FRE) on clean installs."
+              },
+              {
+                "name": "Suppress In-App Promos & Surveys",
+                "description": "Suppresses intrusive in-app rating surveys, Play Store review prompts, and marketing promo popups (YouTube promo, ad-free callouts, and Brave Ads onboarding)."
+              },
+              {
+                "name": "Tab Group Close Selection",
+                "description": "When closing the active tab in a tab group, selects the previous tab in the same group instead of jumping outside the group."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Brave Origin",
+                "description": "Unlocks Brave Origin feature switches.",
+                "previous_description": "Unlocks Brave Origin and enables local feature toggle controls.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "Gboard Lite",
+          "package": "com.google.android.inputmethod.latin",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block App Hijacking",
+                "description": "Protects against other apps hijacking Gboard and removes debug tools."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Stops background metrics, event logging and crash reporting."
+              },
+              {
+                "name": "Disable Play Services",
+                "description": "Runs without Google Play services. Also turns off inline Translate."
+              },
+              {
+                "name": "Install a Copy",
+                "description": "Installs this Gboard next to the original one."
+              },
+              {
+                "name": "Keyboard Settings",
+                "description": "Adds a settings screen inside Gboard: theme, vibration, clipboard and more."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes licenses, tutorial animations and junk."
+              },
+              {
+                "name": "Remove Permissions",
+                "description": "Removes permissions you pick below."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background downloads and sync to save battery."
+              },
+              {
+                "name": "Stop Remote Updates",
+                "description": "Stops Google from changing settings remotely."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Block Telemetry",
+                "description": "Disables background metrics dispatch, event logging, daily pings, Google Primes profiling, crash reporting, AppDoctor diagnostics, and Tenor share tracking."
+              },
+              {
+                "name": "Clone Gboard",
+                "description": "Changes the package name by appending a dot and custom suffix (defaults to 'clone') to allow installing Gboard alongside the original application."
+              },
+              {
+                "name": "Disable Background Sync",
+                "description": "Neutralizes AndroidX WorkManager schedulers, MDD (Mobile Data Download) periodic sync, and Superpacks eager asset synchronization (opt-in to preserve initial dictionary downloads)."
+              },
+              {
+                "name": "Disable Play Services Integration",
+                "description": "Makes Gboard's Google Play services availability check always report SERVICE_DISABLED, so GMS-backed code paths (Clearcut logging, Phenotype, account sync, Google Help feedback) are skipped at the source instead of being attempted. Note: Disables Gboard's inline Google Translate tool, which relies on Play Services Cronet."
+              },
+              {
+                "name": "Disable Remote Configuration",
+                "description": "Disables periodic remote experiment flag synchronization and background updates."
+              },
+              {
+                "name": "Gboard Enhancements",
+                "description": "Master customization suite bundling in-app toggleable features (AMOLED Pure Black theme, zero bottom inset, independent keyboard vibration, force incognito, voice typing in incognito, clipboard in incognito, clipboard retention, top toolbar icons count, cursor trackpad, and smart flags) managed directly from a top-level Morphe Patches category in Gboard Settings."
+              },
+              {
+                "name": "Hardened Intent Security",
+                "description": "Enables Gboard internal external intent protection against unauthorized intent hijacking and removes the exported, permissionless web debug bridge content provider."
+              },
+              {
+                "name": "Resource Slimmer",
+                "description": "Strips embedded third-party license text, onboarding tutorial Lottie animations, promotional GIFs, and APK root metadata/junk files."
+              },
+              {
+                "name": "Strip Permissions",
+                "description": "Selectively revokes sensitive hardware, privacy, and system permissions from AndroidManifest.xml."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Disable Cloud Backup",
+                "description": "Keeps keyboard data off Google Drive backups.",
+                "previous_description": "Disables Android backup for Gboard (allowBackup=false and backup agent removed) so keyboard settings, learned words, and personal dictionary data are never uploaded to Google Drive backups or copied by device-to-device transfer.",
+                "changes": [
+                  "description updated",
+                  "versions: +2 versions, -2 versions"
+                ]
+              },
+              {
+                "name": "Offline Only",
+                "description": "Fully disconnects Gboard. Download dictionaries first.",
+                "previous_description": "Completely isolates Gboard from the network by revoking network permissions, neutralizing HTTP clients (Cronet, OkHttp, Superpacks), and spoofing offline status.",
+                "changes": [
+                  "description updated",
+                  "versions: +2 versions, -2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "Hevy - Gym Log Workout Tracker",
+          "package": "com.hevy",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Trackers",
+                "description": "Blocks crash reporting, ad attribution and referral tracking."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes tutorial videos, editor stickers and junk to shrink the app."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background sync tasks and alarms that drain the battery."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Battery & Background Sync Optimizer",
+                "description": "Disables background WorkManager alarms, periodic job schedulers, Google Play Billing IPC (~89 MB RAM), and removes largeHeap to force aggressive Garbage Collection."
+              },
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Sentry crash reporting, Adjust attribution, Facebook AppEvents, Branch referral tracking, and WearOS background sync."
+              },
+              {
+                "name": "Resource Slimmer",
+                "description": "Strips embedded onboarding MP4 tutorial video, heavy IMG.LY photo editor stickers/textures, and compiler junk metadata."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Pro features stored on the device (routines, folders, charts). Server-limited items may still need a subscription.",
+                "previous_description": "Unlocks local Hevy Pro capabilities (unlimited workout routines, routine folders, advanced graphs, and local analytics) by dynamically enabling Pro getters and suppressing grace period payment warnings in Hermes Bytecode (HBC96).",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "Xiaomi Earbuds",
+          "package": "com.mi.earphone",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Trackers",
+                "description": "Stops analytics and usage reporting."
+              },
+              {
+                "name": "Run on Rooted Devices",
+                "description": "Lets the app run on rooted phones and network tools without crashing."
+              },
+              {
+                "name": "Safer Connections",
+                "description": "Blocks unencrypted traffic and disables certificate pinning."
+              },
+              {
+                "name": "Show All Models",
+                "description": "Shows every earbud model for pairing."
+              },
+              {
+                "name": "Skip Popups & Tutorials",
+                "description": "Skips startup agreements, tutorials, and promo banners."
+              },
+              {
+                "name": "Stop Background Activity",
+                "description": "Stops persistent notifications and background battery drain."
+              },
+              {
+                "name": "Unlock Sound Features",
+                "description": "Enables spatial audio and hearing features on all devices."
+              },
+              {
+                "name": "Unlock for Other Phones",
+                "description": "Enables full features on Samsung, Pixel, and other non-Xiaomi phones."
+              },
+              {
+                "name": "Update Without Account",
+                "description": "Lets guests check and install earbud firmware updates."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Anti-Tamper Bypass",
+                "description": "Bypasses Xposed and hook detection, neutralizes VPN and ADB security checks, bypasses root and emulator detection, and hardens WebView JavaScript bridges."
+              },
+              {
+                "name": "Background Optimizer",
+                "description": "Neutralizes KeepAliveForegroundService, background BLE observation, companion device manager, and MIUI Nearby discovery to eliminate persistent notifications, wakelocks, and background battery drain."
+              },
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Firebase Analytics, Xiaomi OneTrack, AutoReportHelper, and GlobalReport telemetry and event dispatching."
+              },
+              {
+                "name": "Disable Promos & Nags",
+                "description": "Bypasses startup privacy agreements, onboarding guides, region selector prompts, and Bluetooth permission nags, and disables in-app promotional banners, marketing activities, and store review nag dialogs."
+              },
+              {
+                "name": "Guest OTA Unlock",
+                "description": "Bypasses mandatory Xiaomi account login checks for firmware update queries, allowing guest users to check and perform device OTA updates."
+              },
+              {
+                "name": "Model Catalog Unlock",
+                "description": "Forces DeviceInfoListCache.isShowProduct to return true, bypassing version-gating and distribution restrictions so that all device models are always displayed and discoverable."
+              },
+              {
+                "name": "Network Security & TLS Inspection",
+                "description": "Disables cleartext traffic, trusts user-installed certificates, and bypasses OkHttp certificate pinning."
+              },
+              {
+                "name": "Sound Features Unlock",
+                "description": "Unblocks Spatial Audio, hearing enhancement, and voice wake-up restrictions, unbans Spatial Audio on 96kHz aptX Adaptive connections, and bypasses XPAN requirements."
+              },
+              {
+                "name": "Surgical OEM Unlock",
+                "description": "Bypasses Xiaomi OEM gating to enable full feature parity (voice assistant & spatial audio dialogs) on non-Xiaomi devices (Samsung, Pixel, etc.)."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Device Privacy Guard",
+                "description": "Hides hardware IDs and lets Bluetooth work without location.",
+                "previous_description": "Blinds hardware device IDs, anonymizes device identifiers, neutralizes environment info leakage, and bypasses location checks for Bluetooth scanning.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Offline Only",
+                "description": "Fully disconnects the app from the internet. Pair your earbuds first.",
+                "previous_description": "Completely isolates the app from the network by revoking internet permissions and spoofing offline status. Note: do not activate on first launch; pair your earbuds once before enabling.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "NokoPrint - WiFi, Bluetooth, USB",
+          "package": "com.nokoprint",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Ads",
+                "description": "Blocks ad loaders and unlocks ad-free status."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Blocks analytics and ad tracking."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes hidden ad files and trackers to shrink the app."
+              },
+              {
+                "name": "Remove Extra Stores",
+                "description": "Disables payment components for other app stores you do not use."
+              },
+              {
+                "name": "Safer Connections",
+                "description": "Uses trusted certificates while keeping printer downloads working."
+              },
+              {
+                "name": "Skip Welcome Screen",
+                "description": "Skips the first-launch popup (the About menu still works)."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background tasks that drain the battery."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Ad Dispatch Governor",
+                "description": "Neutralizes ad loaders, unlocks ad-free status, and strips mediation components & startup providers."
+              },
+              {
+                "name": "Asset Debloat",
+                "description": "Strips embedded ad DEX, tracking scripts, web templates, and ad drawables to reduce APK size."
+              },
+              {
+                "name": "Background Sync Optimizer",
+                "description": "Neutralizes background WorkManager constraint tasks and diagnostic wakelocks."
+              },
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Firebase Analytics, Google Measurement, TikTok Business SDK, and crashlytics tracking."
+              },
+              {
+                "name": "Multi-Store Debridger",
+                "description": "Disables orphan billing activities, services, and permissions for alternative OEM stores (Huawei, Xiaomi, Samsung)."
+              },
+              {
+                "name": "Network Security Hardening",
+                "description": "Enforces user trust anchors while preserving HTTP cleartext traffic for driver downloads and LAN printers."
+              },
+              {
+                "name": "Skip Welcome Dialog",
+                "description": "Suppresses the first-launch About/privacy dialog by applying the app's own accept action silently. The About entry in the menu keeps working."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "TikTok",
+          "package": "com.zhiliaoapp.musically",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Allow Screenshots",
+                "description": "Removes screenshot and screen recording blocking."
+              },
+              {
+                "name": "Battery & Resource Saver",
+                "description": "Stops 3D ad sensors and aggressive video preloading to save battery and data."
+              },
+              {
+                "name": "Block P2P Video Relay",
+                "description": "Stops your device from uploading videos to other users."
+              },
+              {
+                "name": "Block Popups & Prompts",
+                "description": "Blocks popups, nags and promo dialogs across the app."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Neutralizes ByteDance AppLog tracking, crash monitors, and analytics."
+              },
+              {
+                "name": "Block Trackers (Setup)",
+                "description": "Removes tracking permissions and disables telemetry components."
+              },
+              {
+                "name": "Clean Share Links",
+                "description": "Removes tracking parameters from shared links."
+              },
+              {
+                "name": "Customize Search",
+                "description": "Customizes search suggestions, live recommendations, and autoplay."
+              },
+              {
+                "name": "Declutter Direct Messages",
+                "description": "Cleans up chat and DM screens by hiding extra buttons."
+              },
+              {
+                "name": "Declutter Navigation Bar",
+                "description": "Removes extra tabs and buttons from navigation bars."
+              },
+              {
+                "name": "Declutter Video Interface",
+                "description": "Cleans up the buttons and overlays on top of videos."
+              },
+              {
+                "name": "Disable History Recording",
+                "description": "Prevents TikTok from recording your watch history and search queries."
+              },
+              {
+                "name": "Disable Live Gift Effects",
+                "description": "Disables 3D gift animations in live streams to prevent frame drops."
+              },
+              {
+                "name": "Disable On-Device AI",
+                "description": "Turns off on-device AI, the chatbot and AI search."
+              },
+              {
+                "name": "Download Without Watermark",
+                "description": "Unlocks downloading and saves videos without watermarks."
+              },
+              {
+                "name": "Feed Ads & Content Filter",
+                "description": "Filters ads, shopping tags, live cards, and clutter from your feed."
+              },
+              {
+                "name": "Friends & Suggestions Filter",
+                "description": "Keeps the Friends feed strictly mutual and hides suggested accounts across the app."
+              },
+              {
+                "name": "Hide Inbox Story Tray",
+                "description": "Hides the stories and status tray at the top of the inbox."
+              },
+              {
+                "name": "Instant Launch",
+                "description": "Opens the app immediately without splash screens or ad delays."
+              },
+              {
+                "name": "Login Compatibility Fix",
+                "description": "Restores Google and Spotify sign-in on modified app builds."
+              },
+              {
+                "name": "Offline Video Limit",
+                "description": "Customizes the maximum number of videos saved for offline viewing."
+              },
+              {
+                "name": "Playback & Display Governor",
+                "description": "Limits playback resolution and HDR to save battery, and locks the screen refresh rate."
+              },
+              {
+                "name": "Remember Playback Speed",
+                "description": "Keeps your chosen playback speed across videos and restarts."
+              },
+              {
+                "name": "Remove Creator Tools",
+                "description": "Removes video editing and effects tools to free up space."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Removes card scanners, AI engines and extra fonts to save space."
+              },
+              {
+                "name": "Remove Extra Languages",
+                "description": "Deletes unselected language packs."
+              },
+              {
+                "name": "Remove Live Stream Files",
+                "description": "Removes live streaming and minigame files. Breaks lives and video calls."
+              },
+              {
+                "name": "Remove Voice Tools",
+                "description": "Removes voice search and text-to-speech to save space. Breaks voice features."
+              },
+              {
+                "name": "Strip Sensitive Permissions",
+                "description": "Removes sensitive hardware, sensor, and tracking permissions."
+              },
+              {
+                "name": "Use System Font",
+                "description": "Uses the system font instead of bundled TikTok fonts."
+              },
+              {
+                "name": "Video Fit Mode",
+                "description": "Lets you choose between fitting the whole video or filling the screen."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Bypass Screen Capture Detection",
+                "description": "Clears FLAG_SECURE on protected windows, restores Circle to Search / screen translate and recent apps snapshots, and neutralizes screenshot detection listeners and feedback prompts."
+              },
+              {
+                "name": "Clean Share Panel",
+                "description": "Removes clutter from the share panel and direct message dialog, including suggested quick emojis and the 'Send to new group' button."
+              },
+              {
+                "name": "Clean Share URL",
+                "description": "Strips tracking parameters, user IDs, device fingerprints, and marketing tokens from shared TikTok links, with optional custom host redirection."
+              },
+              {
+                "name": "Client-Side AI & Behavioral Profiling Governor",
+                "description": "Neutralizes on-device machine learning inference (Pitaya), Tako AI chatbot entry points and icons, and AI smart search suggestion clutter."
+              },
+              {
+                "name": "Core Asset De-bloat",
+                "description": "Strips embedded Microblink/FinTech card scanner models, Pitaya AI & ByteNN LLM engines, C2PA origin verification, DLNA cast scanners, and redundant non-Latin fonts to save APK space."
+              },
+              {
+                "name": "Custom Offline Videos Limit",
+                "description": "Customizes the maximum number of videos available for offline download caching."
+              },
+              {
+                "name": "Direct Message Declutter",
+                "description": "Removes visual clutter in direct messages and chat list, including the call button, reaction tray, message forward button, camera icons, input action buttons, try effect button, sticker reply suggestions, and the typing-triggered sticker strip."
+              },
+              {
+                "name": "Disable Double Tap to Like",
+                "description": "Disables double tap like in the feed."
+              },
+              {
+                "name": "Disable Feed Long-Press Actions",
+                "description": "Disables long-press action gestures on feed buttons, including Like to repost, Share to quick DMs, and Comment to quick emojis, with optional long-press video body redirection."
+              },
+              {
+                "name": "Disable HDR Video Playback",
+                "description": "Forces the video playback engine to select standard SDR bitrates (BT.709/sRGB) instead of HDR (HDR10/PQ/HLG), preventing blinding screen brightness spikes and display thermal throttling while preserving smooth playback."
+              },
+              {
+                "name": "Disable Post-Download Share Dialog",
+                "description": "Suppresses the automatic 'Share to' and friend suggestions bottom sheet that pops up after finishing a download."
+              },
+              {
+                "name": "Disable Profile Photo LIVE Status",
+                "description": "Removes the pulsing LIVE ring and badge from creator avatars in the feed and ensures clicking navigates strictly to the user profile instead of launching the live stream."
+              },
+              {
+                "name": "Disable Search History Recording",
+                "description": "Prevents search queries and keywords from being recorded in local history, databases, and analytics stores."
+              },
+              {
+                "name": "Disable Search Video Autoplay",
+                "description": "Disables automatic video playback in search results. Videos only play when tapped to view in detail."
+              },
+              {
+                "name": "Disable Watch History Recording",
+                "description": "Prevents viewed videos from being recorded in account watch history, playback duration stores, and local history caches."
+              },
+              {
+                "name": "Display Refresh Rate Governor",
+                "description": "Forces TikTok to run at peak display refresh rate (120Hz/90Hz/60Hz) and neutralizes video playback framerate downclocking routines."
+              },
+              {
+                "name": "Enable Live Search",
+                "description": "Shows TikTok's search entry in the Live drawer where supported."
+              },
+              {
+                "name": "Feed Ad Blocker",
+                "description": "Removes sponsored advertisements, brand promotions, and promotional audio from the For You, Following, and Search feeds."
+              },
+              {
+                "name": "Feed Bloat & Distraction Blocker",
+                "description": "Removes non-video clutter and floating ad widgets from the For You, Following, and Friends feeds, including Touchpoint Rewards pendants, floating ad stickers, suggested friend cards, mini-games, CapCut/template creation prompts, memories ('On This Day'), community/topic cards, post-video surveys and evaluation questionnaires, mini-drama paywalls, and in-feed search recommendations/interest cards."
+              },
+              {
+                "name": "Feed Content Filter",
+                "description": "Hides stories, photo posts, and videos outside configured view or like ranges from feeds."
+              },
+              {
+                "name": "Feed Interface Declutter",
+                "description": "Customizes and cleans feed video overlay elements, including the full screen button, repost pill, interest feedback pills, video descriptions, profile photo follow badges, story rings, playlist bottom bars, save buttons, and music discs."
+              },
+              {
+                "name": "Feed Live Stream Blocker",
+                "description": "Removes live stream broadcast cards and live recommendations from the For You and Following feeds."
+              },
+              {
+                "name": "Fix Google Login",
+                "description": "Restores Google account sign-in after patching by forcing fallback to Web-based OAuth when Google Play Services rejects the modified APK signature."
+              },
+              {
+                "name": "Fix Spotify Login",
+                "description": "Restores the 'Add to Spotify' music button after patching by routing the Spotify app sign-in, which rejects the modified APK signature, through Spotify's Web-based OAuth."
+              },
+              {
+                "name": "Friends Feed Strict Mutuals",
+                "description": "Filters out suggested accounts, recommended videos, and non-mutual profiles (such as 'People you may know') from the Friends feed so it only plays videos from accounts you mutually follow."
+              },
+              {
+                "name": "Hide AI-Generated Content",
+                "description": "Filters and skips videos tagged with native AI-generated metadata, C2PA content credentials, or creator AI disclosure tags across the For You, Following, and Friends feeds."
+              },
+              {
+                "name": "Hide Inbox Story & Status Tray",
+                "description": "Hides the horizontal story, notes, and status tray (Skylight) displayed at the top of direct messages and the inbox."
+              },
+              {
+                "name": "Hide Popular Lives In Search",
+                "description": "Removes the Popular LIVEs recommendation card and live stream broadcasts from the search discovery page."
+              },
+              {
+                "name": "Hide Promotional Content",
+                "description": "Filters videos disclosing branded/paid-promotional content (Contenido Promocional tag) from For You, Following and Friends feeds."
+              },
+              {
+                "name": "Hide Seen Videos",
+                "description": "Filters previously watched videos from incoming For You feed batches."
+              },
+              {
+                "name": "Hide Suggested Accounts",
+                "description": "Removes suggested-account cards from profile headers and inbox surfaces."
+              },
+              {
+                "name": "Hide Suggested Searches",
+                "description": "Removes the suggested search keywords section ('You may like' / 'Search suggestions') from the search discovery page."
+              },
+              {
+                "name": "Hide TikTok Shop & Mall",
+                "description": "Removes product showcase badges, shopping cart tags, and the TikTok Shop / Mall tab from navigation bars and video posts."
+              },
+              {
+                "name": "Instant Launch & Splash Blocker",
+                "description": "Eliminates cold startup delays, background resume splash advertisements, real-time splash requests, and TopView ad preloading."
+              },
+              {
+                "name": "Language Pack Purger",
+                "description": "Strips unselected language string bundles from assets/strings#lang_* to save APK space."
+              },
+              {
+                "name": "Live Stream 3D Gift Optimizer",
+                "description": "Disables Live 3D gift particle effect engine and widget rendering lifecycle to eliminate frame drops during live streams."
+              },
+              {
+                "name": "Live Stream SDK & Minigame De-bloat",
+                "description": "Strips Live link mic SDK (liblink_mic_sdk.so), Lyrax RTC broadcasting engines (liblyrax.so), DM voice/video call engine (libvoip.so), live RTM messaging (librtmglobal.so) and live base runtime (libbase_live.so), plus live stream interactive minigames to reduce APK size and memory footprint. Breaks live viewing/broadcasting and direct message calls."
+              },
+              {
+                "name": "Media Usability & Watermark-Free Downloader",
+                "description": "Unblocks the download button on creator-restricted videos inside the Share panel, and routes downloads to clean unwatermarked media streams."
+              },
+              {
+                "name": "Navigation & Header Declutter",
+                "description": "Removes clutter from the feed navigation and top header bar, including the Nearby feed tab, Community (Explore) tab, top-left LIVE broadcast button, central '+' create content button, in-video bottom search suggestion bar, friend profile photo previews on the bottom Friends tab, and unread notification badges on the bottom Messages (Inbox) tab."
+              },
+              {
+                "name": "Non-Personalized Search",
+                "description": "Forces TikTok's non-personalized search mode instead of the saved account choice."
+              },
+              {
+                "name": "P2P Video Relay & Mesh CDN Blocker",
+                "description": "Strips background Peer-to-Peer CDN distribution binaries (libavmdlp2pv2.so and libp2plivevdp.so) to prevent battery drain, background data upload, and mesh relay."
+              },
+              {
+                "name": "Playback Speed Persistence",
+                "description": "Persists selected video playback speed across all feed videos and application restarts, and optionally enables the native hold-and-slide 2x speed lock gesture."
+              },
+              {
+                "name": "Popups & Prompts Suppressor",
+                "description": "Suppresses intrusive popups, dialogs, and modal prompts, including 'Follow your friends' dialogs, contacts sync overlays, multi-account notification guides, 2SV security checkup modals, PopLayer promotional sheets, live stream teaser bubbles, sticker recommendations, and DM streak expiration warnings."
+              },
+              {
+                "name": "Resource & Battery Governor",
+                "description": "Throttles background sensor polling (gyroscope/accelerometer 3D ads) and prevents aggressive video buffer preloading to conserve battery and CPU resources."
+              },
+              {
+                "name": "Skip Content Warnings",
+                "description": "Bypasses and clears sensitive content warnings, graphic media blur overlays, and age gates on feed videos."
+              },
+              {
+                "name": "Skip First-Launch Onboarding",
+                "description": "Bypasses the entire first-run introduction funnel (interest pickers, swipe tutorials, language prompts, and consent sheets) directly to the feed."
+              },
+              {
+                "name": "Studio & Creation De-bloat",
+                "description": "Strips heavy video creation plugins, CapCut NLE editor SDKs, effect plugins, camera dynamic features, upload video encoders, on-device AI runtimes (LiteRT), and AR camera face models to significantly reduce APK size."
+              },
+              {
+                "name": "System Font",
+                "description": "Forces TikTok to use the Android system font instead of bundled proprietary TikTokSans fonts."
+              },
+              {
+                "name": "TikTok Privacy Permissions Stripper",
+                "description": "Selectively strips sensitive privacy, sensor, hardware, and tracking permissions from AndroidManifest.xml via configurable boolean toggles."
+              },
+              {
+                "name": "Unified Telemetry & Tracker Silencer",
+                "description": "Neutralizes ByteDance AppLog user tracking, APM/Npth/Heimdallr crash monitors, AppsFlyer attribution, and Firebase analytics."
+              },
+              {
+                "name": "Update Prompt Suppressor",
+                "description": "Neutralizes background update polling tasks and device ID check routines to prevent forced update popups."
+              },
+              {
+                "name": "Video Fit",
+                "description": "Adjusts video display aspect ratio across feeds and story cells: 'fit' ensures the entire video is visible without cropping, or 'fill' expands the video to fill the screen."
+              },
+              {
+                "name": "Video Quality Governor",
+                "description": "Caps video playback resolution (1080p, 720p, 540p, 480p, 360p) to conserve battery, GPU/MediaCodec load, and mobile data. Download quality is controlled separately by the Media Usability patch (downloadQuality)."
+              },
+              {
+                "name": "Voice & Speech Engine De-bloat",
+                "description": "Strips on-device voice recognition and speech synthesis engines (libspeechspg.so, libspeechsdk.so) and their loader stubs (libspeechengine.so, libspeechepg.so) to save APK space. Breaks voice search (microphone button), voice input, and editor text-to-speech/sing features."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Always Show Publish Date",
+                "description": "Shows the upload date on all videos.",
+                "previous_description": "Forces video publish/upload date to remain visible in video author information across all feed types.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Auto-Pause First Video",
+                "description": "Pauses the first video on launch so it plays without lag.",
+                "previous_description": "Automatically pauses the first video when opening TikTok, allowing the application to finish background initialization and preventing playback lag.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Bypass Mandatory Login",
+                "description": "Lets you browse videos and feeds without creating an account or logging in.",
+                "previous_description": "Neutralizes mandatory login walls, dynamic regional forced login gates, and guest browsing restrictions.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Comment Customizer",
+                "description": "Takes control of comments: sort, copy, translate and hide clutter.",
+                "previous_description": "Customizes TikTok's comment section, including native sort controls, clean text copying, disabling suggested emojis bar, hiding comment quick actions, hiding in-comment surveys and feedback cards, hiding profile photo story rings, enabling voice comments, automatic comment translation, fixing silent comment drops, and hiding comment popup ads.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
+              },
+              {
+                "name": "Custom Share Sheet",
+                "description": "Lets you hide share menu entries you do not use.",
+                "previous_description": "Customizes and cleans the native TikTok share sheet via individual toggle switches for third-party apps, essential sharing features, and secondary utility actions.",
+                "changes": [
+                  "description updated",
+                  "options: +2 options"
+                ]
+              },
+              {
+                "name": "Device Privacy Guard",
+                "description": "Blocks access to your contacts, location, apps and sensors.",
+                "previous_description": "Neutralizes invasive runtime permissions, contacts queries, package inventory inspection, location hardware tracking, advertising ID profiling, background clipboard snooping routines, and motion sensor profiling to protect user data.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Disable Push Notifications",
+                "description": "Stops background push notifications.",
+                "previous_description": "Neutralizes background push notification tasks and persistent socket wake locks to eliminate background battery drain.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Enable Profile Banner",
+                "description": "Unlocks the profile banner and its editing tools.",
+                "previous_description": "Unlocks the custom profile banner (background header cover) feature on user profiles and enables the banner selection and editing tools in Edit Profile.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Force Auto-Scroll",
+                "description": "Enables native auto-scrolling to the next video.",
+                "previous_description": "Forces the activation of the native video auto-scroll experiment flag for accounts and regions that lack it due to A/B testing.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Inbox Promos & Alerts",
+                "description": "Hides promo banners, streak cards and suggestions in your inbox.",
+                "previous_description": "Hides promotional banners, streak mascot cards, contact sync suggestions, friend recommendations, and migration guide tooltips in the inbox and direct messages.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "In-App Browser Privacy Guard",
+                "description": "Opens web links in your browser and blocks tracking in the remaining web views.",
+                "previous_description": "Redirects external and third-party web links to the default system browser and neutralizes inline JavaScript tracking, DOM monitoring, and AJAX hooking in residual in-app WebViews.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Remember Clear Display",
+                "description": "Keeps clear-display mode active when scrolling to the next video.",
+                "previous_description": "Remembers TikTok's clear-display state between videos and re-applies it when new videos start.",
+                "changes": [
+                  "description updated",
+                  "disabled"
+                ]
+              },
+              {
+                "name": "Resume Video After Scroll",
+                "description": "Resumes playback from where you left off when returning to a video.",
+                "previous_description": "Remembers playback timestamp when scrolling away and resumes from where playback stopped upon returning.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "SIM Region Selector",
+                "description": "Locks the app to a chosen country to unlock regional content.",
+                "previous_description": "Spoofs the detected SIM and network country ISO code, operator numeric codes, operator names, and cell identity MCC/MNC to bypass regional feed restrictions and catalog blocks.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Show Author Region",
+                "description": "Displays the creator's country code next to their username.",
+                "previous_description": "Displays the creator's country or region code next to their username in video author info across feeds and deep-linked detail views.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Show Seekbar",
+                "description": "Restores the video progress seekbar and scrubbing controls.",
+                "previous_description": "Restores TikTok's native video seekbar and scrubbing controls where normally hidden or disabled.",
+                "changes": [
+                  "description updated",
+                  "options: ~1 option"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/kveld9/kveld-morphe-patches",
+      "patches_name": "kveld9 Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "2.7.0-experimental.24",
+      "new_version": "2.7.0-experimental.25",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "kveld9-kveld-morphe-patches:stable": {
+      "bundle": "kveld9-kveld-morphe-patches",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Brave Private Web Browser, VPN",
+          "package": "com.brave.browser",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Motion Sensors",
+                "description": "Stops sites from reading motion sensors to identify you."
+              },
+              {
+                "name": "Block Popups & Rating Requests",
+                "description": "Blocks rating popups, review requests and promo dialogs."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Blocks usage analytics, crash uploads and experiment downloads."
+              },
+              {
+                "name": "Clean Shared Links",
+                "description": "Removes tracking codes from links you share or copy."
+              },
+              {
+                "name": "Clean Start Page",
+                "description": "Removes sponsored wallpapers, news feed and promo cards."
+              },
+              {
+                "name": "Faster Startup",
+                "description": "Speeds up launch by disabling carrier customizations."
+              },
+              {
+                "name": "Hide Battery Status",
+                "description": "Stops sites from reading your battery level to track you."
+              },
+              {
+                "name": "Keep Tabs Open",
+                "description": "Stops Brave from minimizing your tabs in the background."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes unused AI, VPN and AR files to shrink the app."
+              },
+              {
+                "name": "Remove Extra Languages",
+                "description": "Deletes unselected language packs."
+              },
+              {
+                "name": "Select Previous Tab on Close",
+                "description": "Selects the previous tab in the tab group when closing a tab."
+              },
+              {
+                "name": "Silence Promo Notifications",
+                "description": "Stops tips, reward promos and marketing notifications."
+              },
+              {
+                "name": "Skip Welcome Screens",
+                "description": "Skips welcome, search choice and onboarding on fresh installs."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background wakeups and battery drain."
+              },
+              {
+                "name": "Stop Text Sharing with System",
+                "description": "Stops sending page text to the Android capture service."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Block Brave Telemetry",
+                "description": "Blocks P3A product analytics, Brave Stats usage pings, crash dump uploads, WDP, Chromium UMA metrics, and Variations seed fetching."
+              },
+              {
+                "name": "Brave In-Product & Commercial Notification Optimizer",
+                "description": "Eliminates background wakeups and notifications from Chromium tips scheduler (Job ID 105), Brave Rewards onboarding promo, and retention marketing campaigns."
+              },
+              {
+                "name": "Brave Startup Performance Optimization",
+                "description": "Optimizes startup time and eliminates background CPU/disk overhead by disabling unused OEM carrier partner customizations."
+              },
+              {
+                "name": "Clean New Tab Page",
+                "description": "Removes sponsored wallpaper images, Brave News/Today feeds, marketing widgets, and promo cards from the New Tab Page."
+              },
+              {
+                "name": "Clean Share URL",
+                "description": "Strips tracking parameters (utm_*, fbclid, gclid, igshid, si, msclkid) when sharing or copying links."
+              },
+              {
+                "name": "Disable Background Sync & Periodic Sync",
+                "description": "Eliminates background wakeups, radio modem activity, and battery drain by forcing GooglePlayServicesChecker.shouldDisableBackgroundSync() -> true and neutralizing wakeup tasks."
+              },
+              {
+                "name": "Disable Battery Status API & OS Listener",
+                "description": "Neutralizes the Battery Status API (navigator.getBattery) to prevent cross-site device fingerprinting and drops OS battery change broadcasts."
+              },
+              {
+                "name": "Disable Content Capture",
+                "description": "Stops Chromium from streaming on-screen page text and URLs to the Android ContentCapture system service (Android System Intelligence)."
+              },
+              {
+                "name": "Disable Tab Auto-Minimization",
+                "description": "Prevents Brave from minimizing active tabs to the background and forcing a New Tab Page when returning to the browser after inactivity."
+              },
+              {
+                "name": "Locale PAK Slimmer",
+                "description": "Strips unselected language resource PAKs from assets/locales/."
+              },
+              {
+                "name": "Native Bloat Slimmer",
+                "description": "Strips unused native companion binaries (Impress Vision AI, WireGuard VPN, and Android XR) to significantly reduce APK size."
+              },
+              {
+                "name": "Sensor Privacy Guard",
+                "description": "Neutralizes motion, ambient, and orientation sensor providers to prevent hardware fingerprinting and tracking via Generic Sensor APIs."
+              },
+              {
+                "name": "Skip First Run",
+                "description": "Skips the welcome screen, search engine selection, and onboarding First Run Experience (FRE) on clean installs."
+              },
+              {
+                "name": "Suppress In-App Promos & Surveys",
+                "description": "Suppresses intrusive in-app rating surveys, Play Store review prompts, and marketing promo popups (YouTube promo, ad-free callouts, and Brave Ads onboarding)."
+              },
+              {
+                "name": "Tab Group Close Selection",
+                "description": "When closing the active tab in a tab group, selects the previous tab in the same group instead of jumping outside the group."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Brave Origin",
+                "description": "Unlocks Brave Origin feature switches.",
+                "previous_description": "Unlocks Brave Origin and enables local feature toggle controls.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "Gboard Lite",
+          "package": "com.google.android.inputmethod.latin",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block App Hijacking",
+                "description": "Protects against other apps hijacking Gboard and removes debug tools."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Stops background metrics, event logging and crash reporting."
+              },
+              {
+                "name": "Disable Play Services",
+                "description": "Runs without Google Play services. Also turns off inline Translate."
+              },
+              {
+                "name": "Install a Copy",
+                "description": "Installs this Gboard next to the original one."
+              },
+              {
+                "name": "Keyboard Settings",
+                "description": "Adds a settings screen inside Gboard: theme, vibration, clipboard and more."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes licenses, tutorial animations and junk."
+              },
+              {
+                "name": "Remove Permissions",
+                "description": "Removes permissions you pick below."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background downloads and sync to save battery."
+              },
+              {
+                "name": "Stop Remote Updates",
+                "description": "Stops Google from changing settings remotely."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Block Telemetry",
+                "description": "Disables background metrics dispatch, event logging, daily pings, Google Primes profiling, crash reporting, AppDoctor diagnostics, and Tenor share tracking."
+              },
+              {
+                "name": "Clone Gboard",
+                "description": "Changes the package name by appending a dot and custom suffix (defaults to 'clone') to allow installing Gboard alongside the original application."
+              },
+              {
+                "name": "Disable Background Sync",
+                "description": "Neutralizes AndroidX WorkManager schedulers, MDD (Mobile Data Download) periodic sync, and Superpacks eager asset synchronization (opt-in to preserve initial dictionary downloads)."
+              },
+              {
+                "name": "Disable Play Services Integration",
+                "description": "Makes Gboard's Google Play services availability check always report SERVICE_DISABLED, so GMS-backed code paths (Clearcut logging, Phenotype, account sync, Google Help feedback) are skipped at the source instead of being attempted. Note: Disables Gboard's inline Google Translate tool, which relies on Play Services Cronet."
+              },
+              {
+                "name": "Disable Remote Configuration",
+                "description": "Disables periodic remote experiment flag synchronization and background updates."
+              },
+              {
+                "name": "Gboard Enhancements",
+                "description": "Master customization suite bundling in-app toggleable features (AMOLED Pure Black theme, zero bottom inset, independent keyboard vibration, force incognito, voice typing in incognito, clipboard in incognito, clipboard retention, top toolbar icons count, cursor trackpad, and smart flags) managed directly from a top-level Morphe Patches category in Gboard Settings."
+              },
+              {
+                "name": "Hardened Intent Security",
+                "description": "Enables Gboard internal external intent protection against unauthorized intent hijacking and removes the exported, permissionless web debug bridge content provider."
+              },
+              {
+                "name": "Resource Slimmer",
+                "description": "Strips embedded third-party license text, onboarding tutorial Lottie animations, promotional GIFs, and APK root metadata/junk files."
+              },
+              {
+                "name": "Strip Permissions",
+                "description": "Selectively revokes sensitive hardware, privacy, and system permissions from AndroidManifest.xml."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Disable Cloud Backup",
+                "description": "Keeps keyboard data off Google Drive backups.",
+                "previous_description": "Disables Android backup for Gboard (allowBackup=false and backup agent removed) so keyboard settings, learned words, and personal dictionary data are never uploaded to Google Drive backups or copied by device-to-device transfer.",
+                "changes": [
+                  "description updated",
+                  "versions: +2 versions, -2 versions"
+                ]
+              },
+              {
+                "name": "Offline Only",
+                "description": "Fully disconnects Gboard. Download dictionaries first.",
+                "previous_description": "Completely isolates Gboard from the network by revoking network permissions, neutralizing HTTP clients (Cronet, OkHttp, Superpacks), and spoofing offline status.",
+                "changes": [
+                  "description updated",
+                  "versions: +2 versions, -2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "Hevy - Gym Log Workout Tracker",
+          "package": "com.hevy",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Trackers",
+                "description": "Blocks crash reporting, ad attribution and referral tracking."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes tutorial videos, editor stickers and junk to shrink the app."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background sync tasks and alarms that drain the battery."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Battery & Background Sync Optimizer",
+                "description": "Disables background WorkManager alarms, periodic job schedulers, Google Play Billing IPC (~89 MB RAM), and removes largeHeap to force aggressive Garbage Collection."
+              },
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Sentry crash reporting, Adjust attribution, Facebook AppEvents, Branch referral tracking, and WearOS background sync."
+              },
+              {
+                "name": "Resource Slimmer",
+                "description": "Strips embedded onboarding MP4 tutorial video, heavy IMG.LY photo editor stickers/textures, and compiler junk metadata."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Pro features stored on the device (routines, folders, charts). Server-limited items may still need a subscription.",
+                "previous_description": "Unlocks local Hevy Pro capabilities (unlimited workout routines, routine folders, advanced graphs, and local analytics) by dynamically enabling Pro getters and suppressing grace period payment warnings in Hermes Bytecode (HBC96).",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "Xiaomi Earbuds",
+          "package": "com.mi.earphone",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Trackers",
+                "description": "Stops analytics and usage reporting."
+              },
+              {
+                "name": "Run on Rooted Devices",
+                "description": "Lets the app run on rooted phones and network tools without crashing."
+              },
+              {
+                "name": "Safer Connections",
+                "description": "Blocks unencrypted traffic and disables certificate pinning."
+              },
+              {
+                "name": "Show All Models",
+                "description": "Shows every earbud model for pairing."
+              },
+              {
+                "name": "Skip Popups & Tutorials",
+                "description": "Skips startup agreements, tutorials, and promo banners."
+              },
+              {
+                "name": "Stop Background Activity",
+                "description": "Stops persistent notifications and background battery drain."
+              },
+              {
+                "name": "Unlock Sound Features",
+                "description": "Enables spatial audio and hearing features on all devices."
+              },
+              {
+                "name": "Unlock for Other Phones",
+                "description": "Enables full features on Samsung, Pixel, and other non-Xiaomi phones."
+              },
+              {
+                "name": "Update Without Account",
+                "description": "Lets guests check and install earbud firmware updates."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Anti-Tamper Bypass",
+                "description": "Bypasses Xposed and hook detection, neutralizes VPN and ADB security checks, bypasses root and emulator detection, and hardens WebView JavaScript bridges."
+              },
+              {
+                "name": "Background Optimizer",
+                "description": "Neutralizes KeepAliveForegroundService, background BLE observation, companion device manager, and MIUI Nearby discovery to eliminate persistent notifications, wakelocks, and background battery drain."
+              },
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Firebase Analytics, Xiaomi OneTrack, AutoReportHelper, and GlobalReport telemetry and event dispatching."
+              },
+              {
+                "name": "Disable Promos & Nags",
+                "description": "Bypasses startup privacy agreements, onboarding guides, region selector prompts, and Bluetooth permission nags, and disables in-app promotional banners, marketing activities, and store review nag dialogs."
+              },
+              {
+                "name": "Guest OTA Unlock",
+                "description": "Bypasses mandatory Xiaomi account login checks for firmware update queries, allowing guest users to check and perform device OTA updates."
+              },
+              {
+                "name": "Model Catalog Unlock",
+                "description": "Forces DeviceInfoListCache.isShowProduct to return true, bypassing version-gating and distribution restrictions so that all device models are always displayed and discoverable."
+              },
+              {
+                "name": "Network Security & TLS Inspection",
+                "description": "Disables cleartext traffic, trusts user-installed certificates, and bypasses OkHttp certificate pinning."
+              },
+              {
+                "name": "Sound Features Unlock",
+                "description": "Unblocks Spatial Audio, hearing enhancement, and voice wake-up restrictions, unbans Spatial Audio on 96kHz aptX Adaptive connections, and bypasses XPAN requirements."
+              },
+              {
+                "name": "Surgical OEM Unlock",
+                "description": "Bypasses Xiaomi OEM gating to enable full feature parity (voice assistant & spatial audio dialogs) on non-Xiaomi devices (Samsung, Pixel, etc.)."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Device Privacy Guard",
+                "description": "Hides hardware IDs and lets Bluetooth work without location.",
+                "previous_description": "Blinds hardware device IDs, anonymizes device identifiers, neutralizes environment info leakage, and bypasses location checks for Bluetooth scanning.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Offline Only",
+                "description": "Fully disconnects the app from the internet. Pair your earbuds first.",
+                "previous_description": "Completely isolates the app from the network by revoking internet permissions and spoofing offline status. Note: do not activate on first launch; pair your earbuds once before enabling.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "NokoPrint - WiFi, Bluetooth, USB",
+          "package": "com.nokoprint",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Block Ads",
+                "description": "Blocks ad loaders and unlocks ad-free status."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Blocks analytics and ad tracking."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Deletes hidden ad files and trackers to shrink the app."
+              },
+              {
+                "name": "Remove Extra Stores",
+                "description": "Disables payment components for other app stores you do not use."
+              },
+              {
+                "name": "Safer Connections",
+                "description": "Uses trusted certificates while keeping printer downloads working."
+              },
+              {
+                "name": "Skip Welcome Screen",
+                "description": "Skips the first-launch popup (the About menu still works)."
+              },
+              {
+                "name": "Stop Background Sync",
+                "description": "Stops background tasks that drain the battery."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Ad Dispatch Governor",
+                "description": "Neutralizes ad loaders, unlocks ad-free status, and strips mediation components & startup providers."
+              },
+              {
+                "name": "Asset Debloat",
+                "description": "Strips embedded ad DEX, tracking scripts, web templates, and ad drawables to reduce APK size."
+              },
+              {
+                "name": "Background Sync Optimizer",
+                "description": "Neutralizes background WorkManager constraint tasks and diagnostic wakelocks."
+              },
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Firebase Analytics, Google Measurement, TikTok Business SDK, and crashlytics tracking."
+              },
+              {
+                "name": "Multi-Store Debridger",
+                "description": "Disables orphan billing activities, services, and permissions for alternative OEM stores (Huawei, Xiaomi, Samsung)."
+              },
+              {
+                "name": "Network Security Hardening",
+                "description": "Enforces user trust anchors while preserving HTTP cleartext traffic for driver downloads and LAN printers."
+              },
+              {
+                "name": "Skip Welcome Dialog",
+                "description": "Suppresses the first-launch About/privacy dialog by applying the app's own accept action silently. The About entry in the menu keeps working."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            5
+          ]
+        },
+        {
+          "app_name": "TikTok",
+          "package": "com.zhiliaoapp.musically",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Allow Screenshots",
+                "description": "Removes screenshot and screen recording blocking."
+              },
+              {
+                "name": "Battery & Resource Saver",
+                "description": "Stops 3D ad sensors and aggressive video preloading to save battery and data."
+              },
+              {
+                "name": "Block P2P Video Relay",
+                "description": "Stops your device from uploading videos to other users."
+              },
+              {
+                "name": "Block Popups & Prompts",
+                "description": "Blocks popups, nags and promo dialogs across the app."
+              },
+              {
+                "name": "Block Trackers",
+                "description": "Neutralizes ByteDance AppLog tracking, crash monitors, and analytics."
+              },
+              {
+                "name": "Block Trackers (Setup)",
+                "description": "Removes tracking permissions and disables telemetry components."
+              },
+              {
+                "name": "Clean Share Links",
+                "description": "Removes tracking parameters from shared links."
+              },
+              {
+                "name": "Customize Search",
+                "description": "Customizes search suggestions, live recommendations, and autoplay."
+              },
+              {
+                "name": "Declutter Direct Messages",
+                "description": "Cleans up chat and DM screens by hiding extra buttons."
+              },
+              {
+                "name": "Declutter Navigation Bar",
+                "description": "Removes extra tabs and buttons from navigation bars."
+              },
+              {
+                "name": "Declutter Video Interface",
+                "description": "Cleans up the buttons and overlays on top of videos."
+              },
+              {
+                "name": "Disable History Recording",
+                "description": "Prevents TikTok from recording your watch history and search queries."
+              },
+              {
+                "name": "Disable Live Gift Effects",
+                "description": "Disables 3D gift animations in live streams to prevent frame drops."
+              },
+              {
+                "name": "Disable On-Device AI",
+                "description": "Turns off on-device AI, the chatbot and AI search."
+              },
+              {
+                "name": "Download Without Watermark",
+                "description": "Unlocks downloading and saves videos without watermarks."
+              },
+              {
+                "name": "Feed Ads & Content Filter",
+                "description": "Filters ads, shopping tags, live cards, and clutter from your feed."
+              },
+              {
+                "name": "Friends & Suggestions Filter",
+                "description": "Keeps the Friends feed strictly mutual and hides suggested accounts across the app."
+              },
+              {
+                "name": "Hide Inbox Story Tray",
+                "description": "Hides the stories and status tray at the top of the inbox."
+              },
+              {
+                "name": "Instant Launch",
+                "description": "Opens the app immediately without splash screens or ad delays."
+              },
+              {
+                "name": "Login Compatibility Fix",
+                "description": "Restores Google and Spotify sign-in on modified app builds."
+              },
+              {
+                "name": "Offline Video Limit",
+                "description": "Customizes the maximum number of videos saved for offline viewing."
+              },
+              {
+                "name": "Playback & Display Governor",
+                "description": "Limits playback resolution and HDR to save battery, and locks the screen refresh rate."
+              },
+              {
+                "name": "Remember Playback Speed",
+                "description": "Keeps your chosen playback speed across videos and restarts."
+              },
+              {
+                "name": "Remove Creator Tools",
+                "description": "Removes video editing and effects tools to free up space."
+              },
+              {
+                "name": "Remove Extra Files",
+                "description": "Removes card scanners, AI engines and extra fonts to save space."
+              },
+              {
+                "name": "Remove Extra Languages",
+                "description": "Deletes unselected language packs."
+              },
+              {
+                "name": "Remove Live Stream Files",
+                "description": "Removes live streaming and minigame files. Breaks lives and video calls."
+              },
+              {
+                "name": "Remove Voice Tools",
+                "description": "Removes voice search and text-to-speech to save space. Breaks voice features."
+              },
+              {
+                "name": "Strip Sensitive Permissions",
+                "description": "Removes sensitive hardware, sensor, and tracking permissions."
+              },
+              {
+                "name": "Use System Font",
+                "description": "Uses the system font instead of bundled TikTok fonts."
+              },
+              {
+                "name": "Video Fit Mode",
+                "description": "Lets you choose between fitting the whole video or filling the screen."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Bypass Screen Capture Detection",
+                "description": "Clears FLAG_SECURE on protected windows, restores Circle to Search / screen translate and recent apps snapshots, and neutralizes screenshot detection listeners and feedback prompts."
+              },
+              {
+                "name": "Clean Share Panel",
+                "description": "Removes clutter from the share panel and direct message dialog, including suggested quick emojis and the 'Send to new group' button."
+              },
+              {
+                "name": "Clean Share URL",
+                "description": "Strips tracking parameters, user IDs, device fingerprints, and marketing tokens from shared TikTok links, with optional custom host redirection."
+              },
+              {
+                "name": "Client-Side AI & Behavioral Profiling Governor",
+                "description": "Neutralizes on-device machine learning inference (Pitaya), Tako AI chatbot entry points and icons, and AI smart search suggestion clutter."
+              },
+              {
+                "name": "Core Asset De-bloat",
+                "description": "Strips embedded Microblink/FinTech card scanner models, Pitaya AI & ByteNN LLM engines, C2PA origin verification, DLNA cast scanners, and redundant non-Latin fonts to save APK space."
+              },
+              {
+                "name": "Custom Offline Videos Limit",
+                "description": "Customizes the maximum number of videos available for offline download caching."
+              },
+              {
+                "name": "Direct Message Declutter",
+                "description": "Removes visual clutter in direct messages and chat list, including the call button, reaction tray, message forward button, camera icons, input action buttons, try effect button, sticker reply suggestions, and the typing-triggered sticker strip."
+              },
+              {
+                "name": "Disable Double Tap to Like",
+                "description": "Disables double tap like in the feed."
+              },
+              {
+                "name": "Disable Feed Long-Press Actions",
+                "description": "Disables long-press action gestures on feed buttons, including Like to repost, Share to quick DMs, and Comment to quick emojis, with optional long-press video body redirection."
+              },
+              {
+                "name": "Disable HDR Video Playback",
+                "description": "Forces the video playback engine to select standard SDR bitrates (BT.709/sRGB) instead of HDR (HDR10/PQ/HLG), preventing blinding screen brightness spikes and display thermal throttling while preserving smooth playback."
+              },
+              {
+                "name": "Disable Post-Download Share Dialog",
+                "description": "Suppresses the automatic 'Share to' and friend suggestions bottom sheet that pops up after finishing a download."
+              },
+              {
+                "name": "Disable Profile Photo LIVE Status",
+                "description": "Removes the pulsing LIVE ring and badge from creator avatars in the feed and ensures clicking navigates strictly to the user profile instead of launching the live stream."
+              },
+              {
+                "name": "Disable Search History Recording",
+                "description": "Prevents search queries and keywords from being recorded in local history, databases, and analytics stores."
+              },
+              {
+                "name": "Disable Search Video Autoplay",
+                "description": "Disables automatic video playback in search results. Videos only play when tapped to view in detail."
+              },
+              {
+                "name": "Disable Watch History Recording",
+                "description": "Prevents viewed videos from being recorded in account watch history, playback duration stores, and local history caches."
+              },
+              {
+                "name": "Display Refresh Rate Governor",
+                "description": "Forces TikTok to run at peak display refresh rate (120Hz/90Hz/60Hz) and neutralizes video playback framerate downclocking routines."
+              },
+              {
+                "name": "Enable Live Search",
+                "description": "Shows TikTok's search entry in the Live drawer where supported."
+              },
+              {
+                "name": "Feed Ad Blocker",
+                "description": "Removes sponsored advertisements, brand promotions, and promotional audio from the For You, Following, and Search feeds."
+              },
+              {
+                "name": "Feed Bloat & Distraction Blocker",
+                "description": "Removes non-video clutter and floating ad widgets from the For You, Following, and Friends feeds, including Touchpoint Rewards pendants, floating ad stickers, suggested friend cards, mini-games, CapCut/template creation prompts, memories ('On This Day'), community/topic cards, post-video surveys and evaluation questionnaires, mini-drama paywalls, and in-feed search recommendations/interest cards."
+              },
+              {
+                "name": "Feed Content Filter",
+                "description": "Hides stories, photo posts, and videos outside configured view or like ranges from feeds."
+              },
+              {
+                "name": "Feed Interface Declutter",
+                "description": "Customizes and cleans feed video overlay elements, including the full screen button, repost pill, interest feedback pills, video descriptions, profile photo follow badges, story rings, playlist bottom bars, save buttons, and music discs."
+              },
+              {
+                "name": "Feed Live Stream Blocker",
+                "description": "Removes live stream broadcast cards and live recommendations from the For You and Following feeds."
+              },
+              {
+                "name": "Fix Google Login",
+                "description": "Restores Google account sign-in after patching by forcing fallback to Web-based OAuth when Google Play Services rejects the modified APK signature."
+              },
+              {
+                "name": "Fix Spotify Login",
+                "description": "Restores the 'Add to Spotify' music button after patching by routing the Spotify app sign-in, which rejects the modified APK signature, through Spotify's Web-based OAuth."
+              },
+              {
+                "name": "Friends Feed Strict Mutuals",
+                "description": "Filters out suggested accounts, recommended videos, and non-mutual profiles (such as 'People you may know') from the Friends feed so it only plays videos from accounts you mutually follow."
+              },
+              {
+                "name": "Hide AI-Generated Content",
+                "description": "Filters and skips videos tagged with native AI-generated metadata, C2PA content credentials, or creator AI disclosure tags across the For You, Following, and Friends feeds."
+              },
+              {
+                "name": "Hide Inbox Story & Status Tray",
+                "description": "Hides the horizontal story, notes, and status tray (Skylight) displayed at the top of direct messages and the inbox."
+              },
+              {
+                "name": "Hide Popular Lives In Search",
+                "description": "Removes the Popular LIVEs recommendation card and live stream broadcasts from the search discovery page."
+              },
+              {
+                "name": "Hide Promotional Content",
+                "description": "Filters videos disclosing branded/paid-promotional content (Contenido Promocional tag) from For You, Following and Friends feeds."
+              },
+              {
+                "name": "Hide Seen Videos",
+                "description": "Filters previously watched videos from incoming For You feed batches."
+              },
+              {
+                "name": "Hide Suggested Accounts",
+                "description": "Removes suggested-account cards from profile headers and inbox surfaces."
+              },
+              {
+                "name": "Hide Suggested Searches",
+                "description": "Removes the suggested search keywords section ('You may like' / 'Search suggestions') from the search discovery page."
+              },
+              {
+                "name": "Hide TikTok Shop & Mall",
+                "description": "Removes product showcase badges, shopping cart tags, and the TikTok Shop / Mall tab from navigation bars and video posts."
+              },
+              {
+                "name": "Instant Launch & Splash Blocker",
+                "description": "Eliminates cold startup delays, background resume splash advertisements, real-time splash requests, and TopView ad preloading."
+              },
+              {
+                "name": "Language Pack Purger",
+                "description": "Strips unselected language string bundles from assets/strings#lang_* to save APK space."
+              },
+              {
+                "name": "Live Stream 3D Gift Optimizer",
+                "description": "Disables Live 3D gift particle effect engine and widget rendering lifecycle to eliminate frame drops during live streams."
+              },
+              {
+                "name": "Live Stream SDK & Minigame De-bloat",
+                "description": "Strips Live link mic SDK (liblink_mic_sdk.so), Lyrax RTC broadcasting engines (liblyrax.so), DM voice/video call engine (libvoip.so), live RTM messaging (librtmglobal.so) and live base runtime (libbase_live.so), plus live stream interactive minigames to reduce APK size and memory footprint. Breaks live viewing/broadcasting and direct message calls."
+              },
+              {
+                "name": "Media Usability & Watermark-Free Downloader",
+                "description": "Unblocks the download button on creator-restricted videos inside the Share panel, and routes downloads to clean unwatermarked media streams."
+              },
+              {
+                "name": "Navigation & Header Declutter",
+                "description": "Removes clutter from the feed navigation and top header bar, including the Nearby feed tab, Community (Explore) tab, top-left LIVE broadcast button, central '+' create content button, in-video bottom search suggestion bar, friend profile photo previews on the bottom Friends tab, and unread notification badges on the bottom Messages (Inbox) tab."
+              },
+              {
+                "name": "Non-Personalized Search",
+                "description": "Forces TikTok's non-personalized search mode instead of the saved account choice."
+              },
+              {
+                "name": "P2P Video Relay & Mesh CDN Blocker",
+                "description": "Strips background Peer-to-Peer CDN distribution binaries (libavmdlp2pv2.so and libp2plivevdp.so) to prevent battery drain, background data upload, and mesh relay."
+              },
+              {
+                "name": "Playback Speed Persistence",
+                "description": "Persists selected video playback speed across all feed videos and application restarts, and optionally enables the native hold-and-slide 2x speed lock gesture."
+              },
+              {
+                "name": "Popups & Prompts Suppressor",
+                "description": "Suppresses intrusive popups, dialogs, and modal prompts, including 'Follow your friends' dialogs, contacts sync overlays, multi-account notification guides, 2SV security checkup modals, PopLayer promotional sheets, live stream teaser bubbles, sticker recommendations, and DM streak expiration warnings."
+              },
+              {
+                "name": "Resource & Battery Governor",
+                "description": "Throttles background sensor polling (gyroscope/accelerometer 3D ads) and prevents aggressive video buffer preloading to conserve battery and CPU resources."
+              },
+              {
+                "name": "Skip Content Warnings",
+                "description": "Bypasses and clears sensitive content warnings, graphic media blur overlays, and age gates on feed videos."
+              },
+              {
+                "name": "Skip First-Launch Onboarding",
+                "description": "Bypasses the entire first-run introduction funnel (interest pickers, swipe tutorials, language prompts, and consent sheets) directly to the feed."
+              },
+              {
+                "name": "Studio & Creation De-bloat",
+                "description": "Strips heavy video creation plugins, CapCut NLE editor SDKs, effect plugins, camera dynamic features, upload video encoders, on-device AI runtimes (LiteRT), and AR camera face models to significantly reduce APK size."
+              },
+              {
+                "name": "System Font",
+                "description": "Forces TikTok to use the Android system font instead of bundled proprietary TikTokSans fonts."
+              },
+              {
+                "name": "TikTok Privacy Permissions Stripper",
+                "description": "Selectively strips sensitive privacy, sensor, hardware, and tracking permissions from AndroidManifest.xml via configurable boolean toggles."
+              },
+              {
+                "name": "Unified Telemetry & Tracker Silencer",
+                "description": "Neutralizes ByteDance AppLog user tracking, APM/Npth/Heimdallr crash monitors, AppsFlyer attribution, and Firebase analytics."
+              },
+              {
+                "name": "Update Prompt Suppressor",
+                "description": "Neutralizes background update polling tasks and device ID check routines to prevent forced update popups."
+              },
+              {
+                "name": "Video Fit",
+                "description": "Adjusts video display aspect ratio across feeds and story cells: 'fit' ensures the entire video is visible without cropping, or 'fill' expands the video to fill the screen."
+              },
+              {
+                "name": "Video Quality Governor",
+                "description": "Caps video playback resolution (1080p, 720p, 540p, 480p, 360p) to conserve battery, GPU/MediaCodec load, and mobile data. Download quality is controlled separately by the Media Usability patch (downloadQuality)."
+              },
+              {
+                "name": "Voice & Speech Engine De-bloat",
+                "description": "Strips on-device voice recognition and speech synthesis engines (libspeechspg.so, libspeechsdk.so) and their loader stubs (libspeechengine.so, libspeechepg.so) to save APK space. Breaks voice search (microphone button), voice input, and editor text-to-speech/sing features."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Always Show Publish Date",
+                "description": "Shows the upload date on all videos.",
+                "previous_description": "Forces video publish/upload date to remain visible in video author information across all feed types.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Auto-Pause First Video",
+                "description": "Pauses the first video on launch so it plays without lag.",
+                "previous_description": "Automatically pauses the first video when opening TikTok, allowing the application to finish background initialization and preventing playback lag.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Bypass Mandatory Login",
+                "description": "Lets you browse videos and feeds without creating an account or logging in.",
+                "previous_description": "Neutralizes mandatory login walls, dynamic regional forced login gates, and guest browsing restrictions.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Comment Customizer",
+                "description": "Takes control of comments: sort, copy, translate and hide clutter.",
+                "previous_description": "Customizes TikTok's comment section, including native sort controls, clean text copying, disabling suggested emojis bar, hiding comment quick actions, hiding in-comment surveys and feedback cards, hiding profile photo story rings, enabling voice comments, automatic comment translation, fixing silent comment drops, and hiding comment popup ads.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
+              },
+              {
+                "name": "Custom Share Sheet",
+                "description": "Lets you hide share menu entries you do not use.",
+                "previous_description": "Customizes and cleans the native TikTok share sheet via individual toggle switches for third-party apps, essential sharing features, and secondary utility actions.",
+                "changes": [
+                  "description updated",
+                  "options: +2 options"
+                ]
+              },
+              {
+                "name": "Device Privacy Guard",
+                "description": "Blocks access to your contacts, location, apps and sensors.",
+                "previous_description": "Neutralizes invasive runtime permissions, contacts queries, package inventory inspection, location hardware tracking, advertising ID profiling, background clipboard snooping routines, and motion sensor profiling to protect user data.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Disable Push Notifications",
+                "description": "Stops background push notifications.",
+                "previous_description": "Neutralizes background push notification tasks and persistent socket wake locks to eliminate background battery drain.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Enable Profile Banner",
+                "description": "Unlocks the profile banner and its editing tools.",
+                "previous_description": "Unlocks the custom profile banner (background header cover) feature on user profiles and enables the banner selection and editing tools in Edit Profile.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Force Auto-Scroll",
+                "description": "Enables native auto-scrolling to the next video.",
+                "previous_description": "Forces the activation of the native video auto-scroll experiment flag for accounts and regions that lack it due to A/B testing.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Inbox Promos & Alerts",
+                "description": "Hides promo banners, streak cards and suggestions in your inbox.",
+                "previous_description": "Hides promotional banners, streak mascot cards, contact sync suggestions, friend recommendations, and migration guide tooltips in the inbox and direct messages.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "In-App Browser Privacy Guard",
+                "description": "Opens web links in your browser and blocks tracking in the remaining web views.",
+                "previous_description": "Redirects external and third-party web links to the default system browser and neutralizes inline JavaScript tracking, DOM monitoring, and AJAX hooking in residual in-app WebViews.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Remember Clear Display",
+                "description": "Keeps clear-display mode active when scrolling to the next video.",
+                "previous_description": "Remembers TikTok's clear-display state between videos and re-applies it when new videos start.",
+                "changes": [
+                  "description updated",
+                  "disabled"
+                ]
+              },
+              {
+                "name": "Resume Video After Scroll",
+                "description": "Resumes playback from where you left off when returning to a video.",
+                "previous_description": "Remembers playback timestamp when scrolling away and resumes from where playback stopped upon returning.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "SIM Region Selector",
+                "description": "Locks the app to a chosen country to unlock regional content.",
+                "previous_description": "Spoofs the detected SIM and network country ISO code, operator numeric codes, operator names, and cell identity MCC/MNC to bypass regional feed restrictions and catalog blocks.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Show Author Region",
+                "description": "Displays the creator's country code next to their username.",
+                "previous_description": "Displays the creator's country or region code next to their username in video author info across feeds and deep-linked detail views.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Show Seekbar",
+                "description": "Restores the video progress seekbar and scrubbing controls.",
+                "previous_description": "Restores TikTok's native video seekbar and scrubbing controls where normally hidden or disabled.",
+                "changes": [
+                  "description updated",
+                  "options: ~1 option"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/kveld9/kveld-morphe-patches",
+      "patches_name": "kveld9 Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "2.6.0",
+      "new_version": "2.7.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "akash-sriram:stable": {
+      "bundle": "akash-sriram",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Google Photos",
+          "package": "com.google.android.apps.photos",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "DCIM & backup control",
+                "description": "Disables always on backup for the Camera and other DCIM folders, allowing individual folder control, and exports memory collages and creations to DCIM/Google Photos for quota-free backup."
+              },
+              {
+                "name": "Flag manager & Toolkit",
+                "description": "Enables an in-app flag manager and Morphe toolkit in Photos Settings to toggle experimental UI redesigns, video editor tools, and feature flags."
+              },
+              {
+                "name": "Media engine & AI fixes",
+                "description": "Bypasses the 0MB Mobile Data Download check for AI models and fixes font loading across Stories and UI to prevent blank text and fallback fonts."
+              },
+              {
+                "name": "Official package name",
+                "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos and disables Play Store updates by setting the version code to maximum to prevent automatic overwriting. This is strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Account avatar",
+                "description": "Loads and displays account profile avatars across the top toolbar, Bento menu, and account switcher."
+              },
+              {
+                "name": "Change to official package name",
+                "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos. This is an exceptional option strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM (such as custom ROMs or de-Googled devices). Root users do not need this (simply deselect GmsCore support instead). When selecting this, also enable 'Disable Play Store updates'."
+              },
+              {
+                "name": "Disable Play Store updates",
+                "description": "Disables Play Store updates by setting the version code to the maximum allowed (Int.MAX_VALUE). Prevents Google Play from automatically overwriting the patched app when using the official package name on devices without preinstalled Photos."
+              },
+              {
+                "name": "Enable DCIM folders backup control",
+                "description": "Disables always on backup for the Camera and other DCIM folders, allowing you to control backup for each folder individually. This will make the app default to having no folders backed up."
+              },
+              {
+                "name": "Enable Phenotype flag manager",
+                "description": "Enables an in-app flag manager in Photos Settings to toggle curated experimental UI redesigns, video editor tools, and feature flags."
+              },
+              {
+                "name": "Fix memory style font loading",
+                "description": "Redirects font loading across Stories and UI to authentic Google Fonts with local caching and CDN downloading, fixing fallback fonts and blank text in Memories."
+              },
+              {
+                "name": "Google One Bento Badge",
+                "description": "Restores the genuine Google One subscription badge in the Google Photos Bento account menu."
+              },
+              {
+                "name": "Local creation downloader",
+                "description": "Intercepts saving memory collages and creations, exporting them to the device Google Photos folder (DCIM/Google Photos) for quota-free backup instead of direct cloud library commits."
+              },
+              {
+                "name": "Model Readiness Gates",
+                "description": "Bypasses the 0MB Mobile Data Download check for AI models and reports them as loaded."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "AMOLED dark theme",
+                "description": "Makes Google Photos dark surfaces true black while keeping light mode untouched.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Custom Morphe branding",
+                "description": "Replaces the Google Photos icon and in-app logos with Morphe branding (violet / teal / indigo / slate pinwheel, hand-drawn style).",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Enables GmsCore / MicroG support and renames package for non-root installs. Leave enabled for standard non-root installs; disable only for rooted system installs using genuine Google Play Services.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof features",
+                "description": "Spoofs the device to enable Google Pixel exclusive features, including unlimited storage.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Akash-Sriram/morphe-google-photos",
+      "patches_name": "Morphe Google Photos Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.14.4",
+      "new_version": "1.15.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "bigyank:dev": {
+      "bundle": "bigyank",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Samsung Health",
+          "package": "com.sec.android.app.shealth",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Hide home promotion panel",
+                "description": "Removes the Discover+ advertising card from the home screen by replicating the app's own offline early-exit in the promotion load path. No-ops on builds without the promotion package."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            5
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/bigyank/morphe-patches-samsung",
+      "patches_name": "Bigyank Samsung Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.0-dev.1",
+      "new_version": "1.4.0-dev.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "bigyank:stable": {
+      "bundle": "bigyank",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Samsung Health",
+          "package": "com.sec.android.app.shealth",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Hide home promotion panel",
+                "description": "Removes the Discover+ advertising card from the home screen by replicating the app's own offline early-exit in the promotion load path. No-ops on builds without the promotion package."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            5
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/bigyank/morphe-patches-samsung",
+      "patches_name": "Bigyank Samsung Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.3.0",
+      "new_version": "1.4.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "forsigh:stable": {
+      "bundle": "forsigh",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze",
+          "package": "com.waze",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "AMOLED Dark Mode For UI",
+                "description": "Dark-mode backgrounds go pure black."
+              },
+              {
+                "name": "Alert distances",
+                "description": "Choose how early alerts fire: Standard, Moderate, Heavier or Custom."
+              },
+              {
+                "name": "Car alerts as notifications",
+                "description": "Delivers police and hazard alerts as car notifications."
+              },
+              {
+                "name": "Instrument cluster support",
+                "description": "Shows the map, alerts and ETA on the car's digital cluster, where it has one."
+              },
+              {
+                "name": "Keep Waze alive on car",
+                "description": "Keeps Waze connected through car service restarts."
+              },
+              {
+                "name": "Report speed limit",
+                "description": "Turns on fixing the speed limit from the speedometer."
+              },
+              {
+                "name": "Show FPS counter",
+                "description": "Shows Waze's frames-per-second counter on the map."
+              },
+              {
+                "name": "Smoother Android Auto map",
+                "description": "Smoothes the car map's movement and heading on Android Auto."
+              },
+              {
+                "name": "Speed-limit sign style",
+                "description": "Picks the sign beside the speedometer: US or World."
+              },
+              {
+                "name": "Stay awake in the background",
+                "description": "Keeps Waze running in the background without a route."
+              },
+              {
+                "name": "Traffic meter",
+                "description": "Shows the traffic meter on the car screen."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Extended police & hazard alert distances",
+                "description": "Pick how early police and hazard alerts fire."
+              },
+              {
+                "name": "UI AMOLED dark mode",
+                "description": "Dark-mode backgrounds go pure black."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Allow high refresh rate",
+                "description": "Runs Waze above 60 Hz, up to your screen's refresh rate.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Auto zoom",
+                "description": "Keeps your chosen auto-zoom mode from being reset.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Average-speed camera alerts",
+                "description": "Average-speed camera alerts, with the zone's recommended speed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Brief voice guidance",
+                "description": "Shorter spoken directions.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable Play Store updates",
+                "description": "Stops the Play Store from updating Waze.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Enable police & enforcement alerts",
+                "description": "Turns on police and enforcement alerts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Lane guidance",
+                "description": "Lane guidance, including continue-straight hints.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Morphe YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music work as Waze's audio partner.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Radar sound at any speed",
+                "description": "Plays the speed-camera sound even below the limit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Removes ads from Waze.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show all cameras & road hazards",
+                "description": "Shows cameras and road hazards on the map, with alerts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Skip sign-in",
+                "description": "Boots straight into the map as a guest.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speed limit sign always shown",
+                "description": "Always shows the speed limit sign.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speed-limit decrease warnings",
+                "description": "Warns when the speed limit drops.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speedometer always on",
+                "description": "Visible at any speed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Theme",
+                "description": "Pick any theme for the map - day and night.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Unlock driver moods",
+                "description": "Unlocks all moods already on the device.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Forsigh/waze-patches",
+      "patches_name": "Forsigh Waze Patches",
+      "extra_badges": [],
+      "previous_version": "0.22.7",
+      "new_version": "0.22.7",
       "avatarUrl": "",
       "bundleImageUrl": ""
     }
