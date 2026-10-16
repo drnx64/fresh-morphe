@@ -2,9 +2,9 @@
   "bundle": "voltoxderechte",
   "channel": "stable",
   "repo_url": "https://github.com/VoltoxderEchte/waze-gearslip-morphe-patch",
-  "created_at": "2026-10-15T14:20:35Z",
-  "version": "1.0.0",
-  "description": "## 1.0.0\n\nFirst release: **Allow Gearslip** lets Gearslip show Waze on the car screen.\n\n> ⚠️ Written entirely by AI and untested against a real Waze APK. Use at your own risk.",
+  "created_at": "2026-10-16T09:29:14Z",
+  "version": "1.1.0",
+  "description": "## 1.1.0\n\n### New\n\n* **Fix speed drops**: stops Waze from showing 0 km/h for a moment while driving on phones without Google Play services.\n\n### Changes\n\n* The extension no longer bundles the Kotlin standard library (2.2 MB smaller, no clash with Waze's own copy).\n\n> ⚠️ Written entirely by AI. Fix speed drops has not been tested in a real car yet.",
   "apps": [
     {
       "app_name": "Waze",
@@ -23,14 +23,36 @@
           "compatible_versions": [
             "5.24.5.0"
           ]
+        },
+        {
+          "name": "Fix speed drops",
+          "description": "Stops Waze from showing 0 km/h for a moment while driving on phones without Google Play services. A location without a speed gets one from the distance travelled, or keeps the last speed briefly, and short gaps between locations can be bridged. Real stops are not affected.",
+          "use": true,
+          "options": [
+            {
+              "key": "holdSeconds",
+              "description": "How long the last speed is kept when a location comes without one and its position is too coarse to compute one. After that the speed falls as if braking."
+            },
+            {
+              "key": "braking",
+              "description": "How fast a held speed may fall after the hold time. 4 is firm braking."
+            },
+            {
+              "key": "bridgeSeconds",
+              "description": "When no location arrives while driving, continue along the last heading for at most this many seconds. 0 turns this off."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
         }
       ]
     }
   ],
   "patches_name": "waze-gearslip-patch",
-  "fingerprint": "017a73f850f2ae24dde888a1527ef6775f1a8035e8b7e6d9a7cba131c1f4831a",
-  "release_notes": "> [!CAUTION]\n> **This release was written entirely by AI (Claude) and has not been tested against a real Waze APK or in a real car.** Use at your own risk. Read the README before you use it.\n\nFirst release of **Allow Gearslip**: lets [Gearslip](https://github.com/Seb3thehacker/gearslip) host Waze's car screen by adding it to the hosts Waze's Car App Library accepts. Android Auto keeps working as before.\n\n- Target: Waze 5.24.5.0 (APKM); other versions experimental\n- Patcher: morphe-patcher 1.13.0\n- Asset SHA-256: `9fa1fce85b78fede53cf6893b9515e2b2f1302300efae5d6fe1d78c0d3ecce39`\n\nAdd to Morphe Manager: https://morphe.software/add-source?github=VoltoxderEchte/waze-gearslip-morphe-patch",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-10-15T14:20:35Z",
+  "fingerprint": "5908a21316b3ed6963f64ee2bec645ed5f6fed97024d229caf2d9d8e1cc56cb6",
+  "release_notes": "> [!CAUTION]\n> **Written entirely by AI (Claude).** **Fix speed drops** has not been tested in a real car yet. Use at your own risk.\n\n### New: Fix speed drops\n\nStops Waze from showing 0 km/h for a moment while driving on phones without Google Play services (e.g. GrapheneOS). Waze's location listener is wrapped so that a fix without a speed gets one from the distance travelled, or keeps the last speed briefly; short gaps can be bridged. Real stops are unaffected. Options: hold speed, braking, bridge gaps. See the README.\n\n### Changes\n\n- The extension no longer bundles the Kotlin standard library (2.2 MB smaller, no clash with Waze's own copy).\n- `gradle.properties` is now in the repo, so forks build with the right version.\n\n### Patches\n\n- **Allow Gearslip** (unchanged)\n- **Fix speed drops** (new)\n\nTarget: Waze 5.24.5.0 (APKM), other versions experimental. Patcher: morphe-patcher 1.13.0.\nAsset SHA-256: `97116f6d4ce447f52ae9cd3e709787e989d2586e149220444e557bf92a836983`\n\nAdd to Morphe Manager: https://morphe.software/add-source?github=VoltoxderEchte/waze-gearslip-morphe-patch",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-10-16T09:29:14Z",
   "isPreRelease": false
 }
