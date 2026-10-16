@@ -383,6 +383,100 @@
           "scan_numbers": [
             2
           ]
+        },
+        {
+          "app_name": "CapCut",
+          "package": "com.lemon.lvoverseas",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Remove Watermark",
+                "description": "Forces CapCut watermark-removal gates to allow export without watermark (WatermarkBusinessFunction)."
+              },
+              {
+                "name": "Unlock Premium Templates",
+                "description": "Marks premium template styles as available so locked template features stay usable."
+              },
+              {
+                "name": "Unlock Ultra HD Export",
+                "description": "Forces CapCut Ultra HD / high-resolution export gates to unlocked so 4K export options stay available."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Neutralizes Google AppMeasurement, AppsFlyer, and ByteDance AppLog event dispatchers.",
+                "previous_description": "Neutralizes Google AppMeasurement event dispatchers.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Bypass Effects Region Restriction",
+                "description": "Fixes effects, transitions, and templates failing to load (ByteDance Shark WAF block) by spoofing device_platform to 'windows' and resetting deviceId in effect requests.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Bypass GeoBlock Region Restriction",
+                "description": "Forces CapCut GeoBlock config lists (cert, dock, entrance, page, scheme) to empty so region-blocked surfaces stay enabled. Server-refused content may still fail to load.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Bypass Signature Check",
+                "description": "Spoofs the official APK signature (SHA-256) for tamper telemetry, drops the server-driven signature blacklist, silences the abnormal-source toast, and disables the Godzilla inject-detect gate so re-signed builds are not blocked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Bypass Unsafe Package Modal",
+                "description": "Replaces the unsafe-package modal fallback URL in the Lynx schema defaults with the real template portal URL so region-blocked or untrusted-client fallbacks open templates instead of the blocking security notice.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Locale Slimmer",
+                "description": "Strips unselected language string tables, resources, and asset JSON files from the APK. Base fallback and English are always preserved.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Native Bloat Slimmer",
+                "description": "Strips non-essential companion native libraries by zeroing bytes in-situ. Always zeroes AppLovin ad crash reporter. WARNING: Stripping speech recognition and synthesis engines (libspeech*.so) disables voice recognition, voiceover captions, and speech-to-text features.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Screen Density Slimmer",
+                "description": "Strips unselected screen density assets and purges non-phone UI mode qualifiers. Launcher icons, nodpi/anydpi, and single-density orphans are always preserved.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Premium",
+                "description": "Forces CapCut VIP gates to return true (SubscribeImpl, PayVipImpl, UserVipInfo, UserDetailInfo, VipUserServiceImpl, SubscribeCloudImpl) plus central account status flags (BusinessManager). Cloud-gated assets may still fail.",
+                "previous_description": "Forces CapCut VIP gates to return true (SubscribeImpl, PayVipImpl, UserVipInfo, UserDetailInfo, VipUserServiceImpl, SubscribeCloudImpl). Cloud-gated assets may still fail.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
         }
       ],
       "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
@@ -391,7 +485,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.16.3",
-      "new_version": "1.17.0",
+      "new_version": "1.18.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -893,18 +987,30 @@
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "[Chat] Keep unsent messages",
+                "description": "Keeps messages that others unsend in 1:1 and group chats, with a red \"Unsent\" label next to the time. OpenChat is not covered.",
+                "previous_description": "Keeps messages that others unsend in 1:1 and group chats, with a notice below each one. OpenChat is not covered.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            4
           ]
         }
       ],
       "repo_url": "https://github.com/andrewliang25/morphe-patches",
       "patches_name": "Andrew's Patches",
-      "extra_badges": [],
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
       "previous_version": "3.7.0-dev.1",
-      "new_version": "3.7.0-dev.1",
+      "new_version": "3.8.0-dev.2",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -925,10 +1031,20 @@
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "[Chat] Keep unsent messages",
+                "description": "Keeps messages that others unsend in 1:1 and group chats, with a red \"Unsent\" label next to the time. OpenChat is not covered.",
+                "previous_description": "Keeps messages that others unsend in 1:1 and group chats, with a notice below each one. OpenChat is not covered.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            4
           ]
         }
       ],
@@ -938,7 +1054,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "3.6.0",
-      "new_version": "3.7.0",
+      "new_version": "3.8.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -1777,6 +1893,1906 @@
       ],
       "previous_version": "3.12.0",
       "new_version": "3.13.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "heval99",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Pro Launcher",
+          "package": "app.prolauncher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Interval Timer",
+          "package": "cc.dreamspark.intervaltimer",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Business Calendar 2",
+          "package": "com.appgenix.bizcal",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Firebase Analytics (including automatic events), Crashlytics crash reporting, Fyber's crash handler and the sale promo push notifications. Remote Config keeps working."
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Business Calendar 2 Pro by forcing the app's own complete-pro and force-pro status to true. Billing is not touched."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Turns off Business Calendar 2's ad-serving gate and the \"ads or Pro\" dialog, stops FairBid from starting, preloading or showing interstitials, and disables Facebook Audience Network's auto-initialization.",
+                "previous_description": "Turns off Business Calendar 2's ad-serving gate, so the mediation SDKs never start and no interstitial is shown. Pro features are not changed.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "VesselFinder",
+          "package": "com.astrapaging.vff",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Moneycontrol",
+          "package": "com.divum.moneycontrol",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Duplila",
+          "package": "com.duplila.screenshare",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hevy",
+          "package": "com.hevy",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block telemetry & trackers",
+                "description": "Blocks Sentry crash reporting, Adjust and Branch attribution, Facebook app events and Amplitude ad-ID and legacy event uploads. Push notifications and purchases keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Hevy Pro features that run on your device's workout data (unlimited routines, custom exercises, advanced stats and graphs). Pro features Hevy's servers provide, like cloud limits and Hevy Coach, can stay locked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Livescore",
+          "package": "com.livescore",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Forces AdsRemovalSettings.areAdsDisabled() to return true, disabling banner, interstitial, MPU, hero placement, coverage sponsorship and announcement ads.",
+                "changes": [
+                  "versions: +1 version, -3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "BLE Scanner",
+          "package": "com.macdom.ble.blescanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "MyFitnessPal",
+          "package": "com.myfitnesspal.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Datadog telemetry",
+                "description": "Stops Datadog real-user monitoring (sessions, screens, taps, crashes, ANRs and network traces). Other analytics in the app are not changed."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Enable Premium+",
+                "description": "Enables app features locked behind the subscription paywall.",
+                "changes": [
+                  "versions: +1 version, -4 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "LuckyClick",
+          "package": "com.peter890331.luckyclick.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Bluetooth Scanner",
+          "package": "com.pzolee.bluetoothscanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Simple Radio",
+          "package": "com.streema.simpleradio",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Disables banner, interstitial, rewarded, app-open and native ads.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks Simple Radio Premium (ad-free listening) by forcing the local subscription checks to true.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Truecaller",
+          "package": "com.truecaller",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix T9 contact search",
+                "description": "Builds Truecaller's T9 dialer search index for new contacts each time the app opens, instead of waiting for the 12-hour background job. Helps when T9 finds no saved contacts after a fresh install."
+              },
+              {
+                "name": "Hide Messages tab",
+                "description": "Removes the Messages tab from the bottom bar and always opens Calls. SMS notifications still open their conversation. When Calls is the only tab left, the bottom bar is hidden."
+              },
+              {
+                "name": "Hide Wear OS settings",
+                "description": "Removes the \"Truecaller for Wear OS\" entry from the Settings screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Hides banner and native ads and the ad slots in the call log and inbox, and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once. Also turns off the remaining ad checks (including rewarded ads), the ad campaign and ad config syncs, and the \"Explore Truecaller Premium\" row in the contacts list.",
+                "previous_description": "Hides banner and native ads and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Turns off the app start tracker, CleverTap event tracking and AppsFlyer attribution.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Stops the Google Play in-app update prompts and the app's own \"update required\" page, so the app does not block you from using the patched version.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks the Premium interface and the Premium features that are checked on the device. Features backed by Truecaller's servers (Call Assistant, family sharing, Who viewed / searched for me data, Identify AI, cloud call recording, fraud insurance, the verified badge) are not unlocked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
+                "changes": [
+                  "options: -1 option",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Assistant tab",
+                "description": "Turns off the Call Assistant feature, which removes the Assistant tab.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Blocking tab",
+                "description": "Removes the Blocking tab from the bottom bar. Spam blocking keeps working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium tab",
+                "description": "Removes the Premium tab from the bottom bar and the Premium entry from the Settings screen.",
+                "previous_description": "Removes the Premium tab from the bottom bar.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Scam feed",
+                "description": "Turns off the Scam Feed, which removes its tab and menu entry and stops its notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide family button",
+                "description": "Turns off Family Protect, which removes the family button at the top of the home screen and its onboarding and notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore classic call log",
+                "description": "Experimental: turns off the redesigned call log, which brings back the classic call log and its \"Frequently called\" setting.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof signature",
+                "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Use SMS for verification codes",
+                "description": "Reads the phone verification code from the SMS inbox instead of Google's SMS Retriever, for devices without Google Play services or with MicroG. Phone verification can still fail on modified builds, because Truecaller's servers check the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Yahoo Sports",
+          "package": "com.yahoo.mobile.client.android.sportacular",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Brevent",
+          "package": "me.piebridge.brevent",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hyperion Launcher",
+          "package": "projekt.launcher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "IrCode Finder",
+          "package": "ru.wasiliysoft.ircodefindernec",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "The Wall Street Journal",
+          "package": "wsj.reader_sp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
+      "patches_name": "heval patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.15.0-dev.9",
+      "new_version": "1.16.0-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "heval99",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Pro Launcher",
+          "package": "app.prolauncher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Interval Timer",
+          "package": "cc.dreamspark.intervaltimer",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Business Calendar 2",
+          "package": "com.appgenix.bizcal",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Firebase Analytics (including automatic events), Crashlytics crash reporting, Fyber's crash handler and the sale promo push notifications. Remote Config keeps working."
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Business Calendar 2 Pro by forcing the app's own complete-pro and force-pro status to true. Billing is not touched."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Turns off Business Calendar 2's ad-serving gate and the \"ads or Pro\" dialog, stops FairBid from starting, preloading or showing interstitials, and disables Facebook Audience Network's auto-initialization.",
+                "previous_description": "Turns off Business Calendar 2's ad-serving gate, so the mediation SDKs never start and no interstitial is shown. Pro features are not changed.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "VesselFinder",
+          "package": "com.astrapaging.vff",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Moneycontrol",
+          "package": "com.divum.moneycontrol",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Duplila",
+          "package": "com.duplila.screenshare",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hevy",
+          "package": "com.hevy",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block telemetry & trackers",
+                "description": "Blocks Sentry crash reporting, Adjust and Branch attribution, Facebook app events and Amplitude ad-ID and legacy event uploads. Push notifications and purchases keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Hevy Pro features that run on your device's workout data (unlimited routines, custom exercises, advanced stats and graphs). Pro features Hevy's servers provide, like cloud limits and Hevy Coach, can stay locked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Livescore",
+          "package": "com.livescore",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Forces AdsRemovalSettings.areAdsDisabled() to return true, disabling banner, interstitial, MPU, hero placement, coverage sponsorship and announcement ads.",
+                "changes": [
+                  "versions: +1 version, -3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "BLE Scanner",
+          "package": "com.macdom.ble.blescanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "MyFitnessPal",
+          "package": "com.myfitnesspal.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Datadog telemetry",
+                "description": "Stops Datadog real-user monitoring (sessions, screens, taps, crashes, ANRs and network traces). Other analytics in the app are not changed."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Enable Premium+",
+                "description": "Enables app features locked behind the subscription paywall.",
+                "changes": [
+                  "versions: +1 version, -4 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "LuckyClick",
+          "package": "com.peter890331.luckyclick.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Bluetooth Scanner",
+          "package": "com.pzolee.bluetoothscanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Simple Radio",
+          "package": "com.streema.simpleradio",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Disables banner, interstitial, rewarded, app-open and native ads.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks Simple Radio Premium (ad-free listening) by forcing the local subscription checks to true.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Truecaller",
+          "package": "com.truecaller",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix T9 contact search",
+                "description": "Builds Truecaller's T9 dialer search index for new contacts each time the app opens, instead of waiting for the 12-hour background job. Helps when T9 finds no saved contacts after a fresh install."
+              },
+              {
+                "name": "Hide Messages tab",
+                "description": "Removes the Messages tab from the bottom bar and always opens Calls. SMS notifications still open their conversation. When Calls is the only tab left, the bottom bar is hidden."
+              },
+              {
+                "name": "Hide Wear OS settings",
+                "description": "Removes the \"Truecaller for Wear OS\" entry from the Settings screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Hides banner and native ads and the ad slots in the call log and inbox, and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once. Also turns off the remaining ad checks (including rewarded ads), the ad campaign and ad config syncs, and the \"Explore Truecaller Premium\" row in the contacts list.",
+                "previous_description": "Hides banner and native ads and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Turns off the app start tracker, CleverTap event tracking and AppsFlyer attribution.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Stops the Google Play in-app update prompts and the app's own \"update required\" page, so the app does not block you from using the patched version.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks the Premium interface and the Premium features that are checked on the device. Features backed by Truecaller's servers (Call Assistant, family sharing, Who viewed / searched for me data, Identify AI, cloud call recording, fraud insurance, the verified badge) are not unlocked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
+                "changes": [
+                  "options: -1 option",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Assistant tab",
+                "description": "Turns off the Call Assistant feature, which removes the Assistant tab.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Blocking tab",
+                "description": "Removes the Blocking tab from the bottom bar. Spam blocking keeps working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium tab",
+                "description": "Removes the Premium tab from the bottom bar and the Premium entry from the Settings screen.",
+                "previous_description": "Removes the Premium tab from the bottom bar.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Scam feed",
+                "description": "Turns off the Scam Feed, which removes its tab and menu entry and stops its notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide family button",
+                "description": "Turns off Family Protect, which removes the family button at the top of the home screen and its onboarding and notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore classic call log",
+                "description": "Experimental: turns off the redesigned call log, which brings back the classic call log and its \"Frequently called\" setting.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof signature",
+                "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Use SMS for verification codes",
+                "description": "Reads the phone verification code from the SMS inbox instead of Google's SMS Retriever, for devices without Google Play services or with MicroG. Phone verification can still fail on modified builds, because Truecaller's servers check the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Yahoo Sports",
+          "package": "com.yahoo.mobile.client.android.sportacular",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Brevent",
+          "package": "me.piebridge.brevent",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hyperion Launcher",
+          "package": "projekt.launcher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "IrCode Finder",
+          "package": "ru.wasiliysoft.ircodefindernec",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "The Wall Street Journal",
+          "package": "wsj.reader_sp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
+      "patches_name": "heval patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.14.0",
+      "new_version": "1.15.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "ajstrick81",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Production",
+          "package": "com.formulaone.production",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
+      "patches_name": "ajstrick81 Patches",
+      "extra_badges": [],
+      "previous_version": "test-212",
+      "new_version": "test-212",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "ajstrick81",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Production",
+          "package": "com.formulaone.production",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
+      "patches_name": "ajstrick81 Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.40.6",
+      "new_version": "1.41.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "nekogryphou",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Crunchyroll",
+          "package": "com.crunchyroll.crunchyroid",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Enable Picture-in-Picture",
+                "description": "Enables automatic Android Picture-in-Picture when leaving Crunchyroll playback.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "De'Longhi Comfort",
+          "package": "com.ddsx_ayla_android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable review request dialog",
+                "description": "Prevents De'Longhi Comfort from asking to rate the app."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/NekoGryphou/gryphous-morphe-patches",
+      "patches_name": "Gryphou's Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.0-dev.1",
+      "new_version": "1.2.0-dev.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "nekogryphou",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Crunchyroll",
+          "package": "com.crunchyroll.crunchyroid",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Enable Picture-in-Picture",
+                "description": "Enables automatic Android Picture-in-Picture when leaving Crunchyroll playback.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "De'Longhi Comfort",
+          "package": "com.ddsx_ayla_android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable review request dialog",
+                "description": "Prevents De'Longhi Comfort from asking to rate the app."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/NekoGryphou/gryphous-morphe-patches",
+      "patches_name": "Gryphou's Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.1.0",
+      "new_version": "1.2.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "heval99-morphe-patches",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Pro Launcher",
+          "package": "app.prolauncher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Interval Timer",
+          "package": "cc.dreamspark.intervaltimer",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Business Calendar 2",
+          "package": "com.appgenix.bizcal",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Firebase Analytics (including automatic events), Crashlytics crash reporting, Fyber's crash handler and the sale promo push notifications. Remote Config keeps working."
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Business Calendar 2 Pro by forcing the app's own complete-pro and force-pro status to true. Billing is not touched."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Turns off Business Calendar 2's ad-serving gate and the \"ads or Pro\" dialog, stops FairBid from starting, preloading or showing interstitials, and disables Facebook Audience Network's auto-initialization.",
+                "previous_description": "Turns off Business Calendar 2's ad-serving gate, so the mediation SDKs never start and no interstitial is shown. Pro features are not changed.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "VesselFinder",
+          "package": "com.astrapaging.vff",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Moneycontrol",
+          "package": "com.divum.moneycontrol",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Duplila",
+          "package": "com.duplila.screenshare",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hevy",
+          "package": "com.hevy",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block telemetry & trackers",
+                "description": "Blocks Sentry crash reporting, Adjust and Branch attribution, Facebook app events and Amplitude ad-ID and legacy event uploads. Push notifications and purchases keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Hevy Pro features that run on your device's workout data (unlimited routines, custom exercises, advanced stats and graphs). Pro features Hevy's servers provide, like cloud limits and Hevy Coach, can stay locked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Livescore",
+          "package": "com.livescore",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Forces AdsRemovalSettings.areAdsDisabled() to return true, disabling banner, interstitial, MPU, hero placement, coverage sponsorship and announcement ads.",
+                "changes": [
+                  "versions: +1 version, -3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "BLE Scanner",
+          "package": "com.macdom.ble.blescanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "MyFitnessPal",
+          "package": "com.myfitnesspal.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Datadog telemetry",
+                "description": "Stops Datadog real-user monitoring (sessions, screens, taps, crashes, ANRs and network traces). Other analytics in the app are not changed."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Enable Premium+",
+                "description": "Enables app features locked behind the subscription paywall.",
+                "changes": [
+                  "versions: +1 version, -4 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "LuckyClick",
+          "package": "com.peter890331.luckyclick.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Bluetooth Scanner",
+          "package": "com.pzolee.bluetoothscanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Simple Radio",
+          "package": "com.streema.simpleradio",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Disables banner, interstitial, rewarded, app-open and native ads.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks Simple Radio Premium (ad-free listening) by forcing the local subscription checks to true.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Truecaller",
+          "package": "com.truecaller",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix T9 contact search",
+                "description": "Builds Truecaller's T9 dialer search index for new contacts each time the app opens, instead of waiting for the 12-hour background job. Helps when T9 finds no saved contacts after a fresh install."
+              },
+              {
+                "name": "Hide Messages tab",
+                "description": "Removes the Messages tab from the bottom bar and always opens Calls. SMS notifications still open their conversation. When Calls is the only tab left, the bottom bar is hidden."
+              },
+              {
+                "name": "Hide Wear OS settings",
+                "description": "Removes the \"Truecaller for Wear OS\" entry from the Settings screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Hides banner and native ads and the ad slots in the call log and inbox, and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once. Also turns off the remaining ad checks (including rewarded ads), the ad campaign and ad config syncs, and the \"Explore Truecaller Premium\" row in the contacts list.",
+                "previous_description": "Hides banner and native ads and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Turns off the app start tracker, CleverTap event tracking and AppsFlyer attribution.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Stops the Google Play in-app update prompts and the app's own \"update required\" page, so the app does not block you from using the patched version.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks the Premium interface and the Premium features that are checked on the device. Features backed by Truecaller's servers (Call Assistant, family sharing, Who viewed / searched for me data, Identify AI, cloud call recording, fraud insurance, the verified badge) are not unlocked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
+                "changes": [
+                  "options: -1 option",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Assistant tab",
+                "description": "Turns off the Call Assistant feature, which removes the Assistant tab.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Blocking tab",
+                "description": "Removes the Blocking tab from the bottom bar. Spam blocking keeps working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium tab",
+                "description": "Removes the Premium tab from the bottom bar and the Premium entry from the Settings screen.",
+                "previous_description": "Removes the Premium tab from the bottom bar.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Scam feed",
+                "description": "Turns off the Scam Feed, which removes its tab and menu entry and stops its notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide family button",
+                "description": "Turns off Family Protect, which removes the family button at the top of the home screen and its onboarding and notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore classic call log",
+                "description": "Experimental: turns off the redesigned call log, which brings back the classic call log and its \"Frequently called\" setting.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof signature",
+                "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Use SMS for verification codes",
+                "description": "Reads the phone verification code from the SMS inbox instead of Google's SMS Retriever, for devices without Google Play services or with MicroG. Phone verification can still fail on modified builds, because Truecaller's servers check the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Yahoo Sports",
+          "package": "com.yahoo.mobile.client.android.sportacular",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Brevent",
+          "package": "me.piebridge.brevent",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hyperion Launcher",
+          "package": "projekt.launcher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "IrCode Finder",
+          "package": "ru.wasiliysoft.ircodefindernec",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "The Wall Street Journal",
+          "package": "wsj.reader_sp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
+      "patches_name": "heval patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.15.0-dev.9",
+      "new_version": "1.16.0-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "heval99-morphe-patches",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Pro Launcher",
+          "package": "app.prolauncher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Interval Timer",
+          "package": "cc.dreamspark.intervaltimer",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Business Calendar 2",
+          "package": "com.appgenix.bizcal",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Firebase Analytics (including automatic events), Crashlytics crash reporting, Fyber's crash handler and the sale promo push notifications. Remote Config keeps working."
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Business Calendar 2 Pro by forcing the app's own complete-pro and force-pro status to true. Billing is not touched."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Turns off Business Calendar 2's ad-serving gate and the \"ads or Pro\" dialog, stops FairBid from starting, preloading or showing interstitials, and disables Facebook Audience Network's auto-initialization.",
+                "previous_description": "Turns off Business Calendar 2's ad-serving gate, so the mediation SDKs never start and no interstitial is shown. Pro features are not changed.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "VesselFinder",
+          "package": "com.astrapaging.vff",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Moneycontrol",
+          "package": "com.divum.moneycontrol",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Duplila",
+          "package": "com.duplila.screenshare",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hevy",
+          "package": "com.hevy",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block telemetry & trackers",
+                "description": "Blocks Sentry crash reporting, Adjust and Branch attribution, Facebook app events and Amplitude ad-ID and legacy event uploads. Push notifications and purchases keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Pro",
+                "description": "Unlocks Hevy Pro features that run on your device's workout data (unlimited routines, custom exercises, advanced stats and graphs). Pro features Hevy's servers provide, like cloud limits and Hevy Coach, can stay locked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Livescore",
+          "package": "com.livescore",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Forces AdsRemovalSettings.areAdsDisabled() to return true, disabling banner, interstitial, MPU, hero placement, coverage sponsorship and announcement ads.",
+                "changes": [
+                  "versions: +1 version, -3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "BLE Scanner",
+          "package": "com.macdom.ble.blescanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "MyFitnessPal",
+          "package": "com.myfitnesspal.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Datadog telemetry",
+                "description": "Stops Datadog real-user monitoring (sessions, screens, taps, crashes, ANRs and network traces). Other analytics in the app are not changed."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Enable Premium+",
+                "description": "Enables app features locked behind the subscription paywall.",
+                "changes": [
+                  "versions: +1 version, -4 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "LuckyClick",
+          "package": "com.peter890331.luckyclick.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Bluetooth Scanner",
+          "package": "com.pzolee.bluetoothscanner",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Simple Radio",
+          "package": "com.streema.simpleradio",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Disables banner, interstitial, rewarded, app-open and native ads.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks Simple Radio Premium (ad-free listening) by forcing the local subscription checks to true.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Truecaller",
+          "package": "com.truecaller",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix T9 contact search",
+                "description": "Builds Truecaller's T9 dialer search index for new contacts each time the app opens, instead of waiting for the 12-hour background job. Helps when T9 finds no saved contacts after a fresh install."
+              },
+              {
+                "name": "Hide Messages tab",
+                "description": "Removes the Messages tab from the bottom bar and always opens Calls. SMS notifications still open their conversation. When Calls is the only tab left, the bottom bar is hidden."
+              },
+              {
+                "name": "Hide Wear OS settings",
+                "description": "Removes the \"Truecaller for Wear OS\" entry from the Settings screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable ads",
+                "description": "Hides banner and native ads and the ad slots in the call log and inbox, and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once. Also turns off the remaining ad checks (including rewarded ads), the ad campaign and ad config syncs, and the \"Explore Truecaller Premium\" row in the contacts list.",
+                "previous_description": "Hides banner and native ads and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Turns off the app start tracker, CleverTap event tracking and AppsFlyer attribution.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Stops the Google Play in-app update prompts and the app's own \"update required\" page, so the app does not block you from using the patched version.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable Premium",
+                "description": "Unlocks the Premium interface and the Premium features that are checked on the device. Features backed by Truecaller's servers (Call Assistant, family sharing, Who viewed / searched for me data, Identify AI, cloud call recording, fraud insurance, the verified badge) are not unlocked.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
+                "changes": [
+                  "options: -1 option",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Assistant tab",
+                "description": "Turns off the Call Assistant feature, which removes the Assistant tab.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Blocking tab",
+                "description": "Removes the Blocking tab from the bottom bar. Spam blocking keeps working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium tab",
+                "description": "Removes the Premium tab from the bottom bar and the Premium entry from the Settings screen.",
+                "previous_description": "Removes the Premium tab from the bottom bar.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Scam feed",
+                "description": "Turns off the Scam Feed, which removes its tab and menu entry and stops its notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide family button",
+                "description": "Turns off Family Protect, which removes the family button at the top of the home screen and its onboarding and notifications.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore classic call log",
+                "description": "Experimental: turns off the redesigned call log, which brings back the classic call log and its \"Frequently called\" setting.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof signature",
+                "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Use SMS for verification codes",
+                "description": "Reads the phone verification code from the SMS inbox instead of Google's SMS Retriever, for devices without Google Play services or with MicroG. Phone verification can still fail on modified builds, because Truecaller's servers check the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Yahoo Sports",
+          "package": "com.yahoo.mobile.client.android.sportacular",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Brevent",
+          "package": "me.piebridge.brevent",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Hyperion Launcher",
+          "package": "projekt.launcher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "IrCode Finder",
+          "package": "ru.wasiliysoft.ircodefindernec",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "The Wall Street Journal",
+          "package": "wsj.reader_sp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
+      "patches_name": "heval patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.14.0",
+      "new_version": "1.15.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "sabopura",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Ambient light",
+                "description": "Fills the black bars around the video with a soft glow of the picture's colours, like Ambient light for YouTube. Configurable in Settings > Video and audio > Ambient light.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Danmaku comments",
+                "description": "Flows regular comments, live chat, and chat replays over videos like NicoNico/bilibili, with native in-app settings, NG words, and no API key.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Pinterest",
+          "package": "com.pinterest",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable Bugsnag Telemetry",
+                "description": "Makes the Bugsnag SDK discard every error and session report.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable General Telemetry",
+                "description": "Skips Pinterest's analytics, attribution, ads measurement and tracking startup tasks.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Promoted Pins",
+                "description": "Makes every pin report itself as not promoted and not an active ad, which disables Pinterest's ad handling for pins.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "SmartNews",
+          "package": "jp.gocro.smartnews.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "SmartNews cleanup",
+                "description": "Disables SmartNews ad config, native layouts, and reader ad nodes via stable anchors.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "pixiv",
+          "package": "jp.pxv.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable pixiv ad SDKs",
+                "description": "Skips initialization of AppLovin MAX, Google Mobile Ads and Amazon APS to reduce ad-related network traffic.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide pixiv ads",
+                "description": "Removes the overlay, list, detail and interstitial ads. Does not unlock Premium features.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        },
+        {
+          "app_name": "Twitch",
+          "package": "tv.twitch.android.app",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Auto claim channel points",
+                "description": "Claim available bonus chests automatically after Twitch's eligibility checks. Coalesces updates and bounds retries for each claim.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Block ads",
+                "description": "Blocks pre-roll, mid-roll and VOD ads, ads stitched into live streams, audio ads, picture-by-picture ads and banner or feed ads, without a third-party server. Can be switched off in the settings.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Chat enhancements",
+                "description": "7TV, BTTV and FFZ emotes, local word/user filters, repeat filtering, highlights, timestamps and font size. Configure them from the player menu button.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Danmaku chat",
+                "description": "Flows live chat over the stream like NicoNico/bilibili, with emotes and NG words. Long-press the player menu button to switch it on or off.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Fix login",
+                "description": "Optional workaround for the unsupported app/OS login error after re-signing. Skips Twitch's Play Integrity submission; leave off when login works.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Fix notifications",
+                "description": "Repair push registration after re-signing. Adjusts the certificate header only for HTTPS Firebase Installations requests.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Player enhancements",
+                "description": "Playback speed, seek steps, statistics, sleep timer, VOD chat offset and chapters. Optional public manifest proxy, gestures, layout and Following feed controls in the player menu settings.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show deleted messages",
+                "description": "Keeps deleted or moderated chat messages readable instead of replacing them with \"<message deleted>\". The message turns into a tappable spoiler: tap it to reveal the original text. Only text already received by this client can be revealed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/sabopura/sabopura-morphe-patches",
+      "patches_name": "Sabopura Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.15.0",
+      "new_version": "1.15.4",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    {
+      "bundle": "forsigh",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Keep Waze alive on Android Auto",
+                "description": "Keeps Waze running after you disconnect from Android Auto."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            4
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Forsigh/waze-patches",
+      "patches_name": "Forsigh Waze Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "0.22.7",
+      "new_version": "0.22.8",
       "avatarUrl": "",
       "bundleImageUrl": ""
     }

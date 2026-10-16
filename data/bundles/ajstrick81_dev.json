@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
   "created_at": "2026-10-06T22:01:57Z",
   "version": "test-212",
-  "description": "## [1.40.6](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.40.5...v1.40.6) (2026-10-15)\n\n\n### Bug Fixes\n\n* **vix:** restore ad suppression on 4.51.0 by emptying the Lura break schedule ([3692391](https://github.com/ajstrick81/morphe-androidtv-patches/commit/36923917e245dbfc3e920ff70fd4ecdf83606e6f))",
+  "description": "# [1.41.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.40.6...v1.41.0) (2026-10-16)\n\n\n### Features\n\n* **f1tv:** add Unlock UHD (4K) patch ([#245](https://github.com/ajstrick81/morphe-androidtv-patches/issues/245)) ([3d78305](https://github.com/ajstrick81/morphe-androidtv-patches/commit/3d78305dc818ee41c46d27c96c67ef3a1feb5c95)), closes [#243](https://github.com/ajstrick81/morphe-androidtv-patches/issues/243)",
   "apps": [
     {
       "app_name": "Livingroom",
@@ -178,6 +178,21 @@
           "options": [],
           "compatible_versions": [
             "6.11.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Production",
+      "package": "com.formulaone.production",
+      "patches": [
+        {
+          "name": "Unlock UHD (4K)",
+          "description": "Unlocks the 2160p/4K streaming tier for F1 TV on all Android TV hardware by removing the client-side device-capability gates and advertising HDR support to the F1 backend, while routing each device to the render path its GPU can actually drive. Requires a paid F1 TV Premium subscription — this changes no entitlement, only which video tier the app's own capability checks allow.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0.49.4-SP166.4.1-release-R54.2-tv"
           ]
         }
       ]
@@ -493,7 +508,7 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "288f7152fa8bf291578f6ac23e1474e10c48a3153175c40ac0b0e6f746afe556",
+  "fingerprint": "8acfbe3e5a390ca513770877bf8614ea17f8daa2b2426e871d307ee64f86775a",
   "release_notes": "Test-only build for #212. Netflix 13.0.1 build 25028 received re-minified ad code; this recovers the ad-kill (V3) and scans the large memory region the code now often sits in. Patch with the same patches as usual, then: force-stop, relaunch, wait ~60s on home, play a title, and attach `adb logcat -d -s KILL > kill.txt`. Success = `PATCH V3-ADV … verify=OK` and `PATCH V3-MASTER … verify=OK`.",
   "release_tag": "test-212",
   "release_date": "2026-10-06T22:01:57Z",
