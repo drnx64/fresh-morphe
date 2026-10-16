@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/SysAdminDoc/HushTelegram",
   "created_at": "2026-10-05T15:08:19Z",
   "version": "0.0.9",
-  "description": "HushTelegram v0.0.17 targets telegram.org's Telegram 13.0.2 (org.telegram.messenger.web) and the official beta 13.0.2 (org.telegram.messenger.beta) with 68 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. New this time: patching on a phone no longer fails when HushTelegram icon and name, Black and white launch logo or Use registered Maps API key is picked. HushTelegram settings has a new look with a Restart Telegram row and Quick setups, and pressing and holding the Telegram title on your chat list opens it. There are four new privacy switches, including ones that keep your drafts and searches on your phone.\n\nIf Telegram won't send you a login code, register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 1129 runtime tests passed locally. All 447 patch tests passed too, along with both Android lints. All 68 patches applied to Telegram 13.0.2 and the 13.0.2 beta without forcing, and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 13.0.2, version code 71759, or the beta 13.0.2, version code 71809. The .mpp is a patch bundle, not a Telegram APK. Coming from v0.0.13, patch 13.0.2 and install it over your current build with the same signing key. New installs uninstall the stock Telegram first and keep the manager's signing key for updates.",
+  "description": "HushTelegram v0.0.18 targets telegram.org's Telegram 13.0.3 (org.telegram.messenger.web) and the official beta 13.0.3 (org.telegram.messenger.beta) with 68 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. This release brings back a side menu, since Telegram 13 dropped its own, and adds Search only my chats and a settings lock with a 24 hour wait. Patching takes about half as long.\n\nIf Telegram won't send you a login code, register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 1360 runtime tests passed locally. All 487 patch tests passed too, along with both Android lints. All 68 patches applied to Telegram 13.0.3 and the 13.0.3 beta without forcing, and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 13.0.3 or the beta 13.0.3, both version code 71839. The .mpp is a patch bundle, not a Telegram APK. Coming from v0.0.17, patch 13.0.3 and install it over your current build with the same signing key. New installs uninstall the stock Telegram first and keep the manager's signing key for updates.\n\n### What's new\n\n* **Telegram:** Moved to Telegram 13.0.3, telegram.org's build and the official beta (both version code 71839). Every patch carried over without a change.\n* **Telegram:** The descriptions in Morphe Manager now mention the switches that were added inside existing patches, so you can see what **Hide popular apps**, **Faster downloads**, **Repair Firebase push registration** and nine others also bring before you patch. The patch names didn't change, so your saved selection carries over.\n* **Telegram:** **Black and white launch logo** shows the white logo on black every time now, with AMOLED black on and your phone in dark mode. Before, Telegram's blue launch screen came back whenever Android reopened a Telegram it had closed in the background, since Android skips the launch screen an app names for itself in that case. The logo now sits in Telegram's own dark launch screen instead. With AMOLED black off you get Telegram's usual launch screen, except after Android has closed Telegram in the background in dark mode, when it's the black one. Reported in #6.\n* **Telegram:** HushTelegram settings can drop the cards. **Settings look** at the top of Look and feel switches every page to plain rows with a thin line between them, the text closer to the edge and section titles in the accent color, and dialogs' choices follow. Tap it again for the cards. The status card at the top keeps its card either way. It's only how the settings screen looks, so settings files and Quick setups leave it out and Pause doesn't touch it. Asked for in #18.\n* **Telegram:** **Hide phone number** no longer says it covers your number in the side menu, in Morphe Manager or in its settings line. Telegram 13 dropped its side menu, and the new **Side menu** switch shows your name but never your number.\n* **Telegram:** **Hide folder tab counters** adds an **Open a folder at launch** switch, off by default, with a **Folder to open** row under it. Pick one of your folders and the chat list opens on it instead of All Chats. Each account keeps its own pick on this phone, and your folder order and the folders on Telegram's servers aren't touched. A folder that's gone, renamed or locked falls back to All Chats (a new folder that takes a deleted one's place doesn't count as your pick), and the chat pickers for sharing and forwarding open as they always have.\n* **Telegram:** **Hide popular apps** adds a **Find names in styled letters** switch, off by default. With it on, searching your chats and contacts finds names written in decorative letters (𝐁𝐨𝐥𝐝, 𝘐𝘵𝘢𝘭𝘪𝘤, Ｗｉｄｅ, circled and the like) when you type ordinary ones. Names still show as they're written, numbers and other alphabets aren't touched, and a name found this way isn't highlighted.\n* **Telegram:** Export diagnostic report has a third choice, **Preview the report**. It shows the report as it would be shared, with a box for each part, such as hook status or the selected events. Untick anything you'd rather keep to yourself and Copy or Save takes only what's still ticked. Cancel leaves nothing on the clipboard and no file behind. A very long report shows its first 30,000 characters and says how much there is. A file saved with a part left out isn't called the full report.\n* **Telegram:** **Open links externally** has a second switch on the Links page, **Keep your location from Mini Apps**. With it on, a Mini App that asks for your location is told it isn't available, the same answer Telegram gives on a phone without GPS, and Android is never asked. A web page opened inside Telegram is refused your location without the dialog. A page you already allowed keeps it until you close it, and any site can still guess a rough area from your connection. Sending your location in a chat works as before. It's off unless you turn it on, and Mini Apps get your location again while HushTelegram is paused.\n* **Telegram:** Quick setups can be hidden from the settings home with a long press on its row, and its help line now says so. The **Quick setups on the home page** row on Settings backup brings it back. The choice stays out of settings backups and Quick setups, and Pause leaves it alone.\n* **Telegram:** The Support HushTelegram row at the bottom of HushTelegram settings is just its name now. The line under it is gone.\n* **Telegram:** When Telegram's server turns down the push sign-up, which is what happens with your own API ID, `Repair Firebase push registration` now turns on Telegram's own `Keep-Alive Service` and `Background Connection`, the same thing Telegram does on phones without Google Play. Messages then come in over Telegram's own connection instead of whenever Android lets it wake up. It only does this when you've never set either switch yourself, and it hands them back if push starts working later. The notification status shows whether both are on and where to turn them on. Related to #5 and #16.\n* **Telegram:** When push is turned down, the notification status now says Telegram's own two switches are in Telegram's Settings > Notifications, under Other. In German, Spanish, Indonesian, Portuguese and Turkish it names them exactly as Telegram does in that language. Before, some of those languages used other words for them, so they were hard to find. Related to #16.\n* **Telegram:** UnifiedPush notifications now sign up with Telegram as a Web Push address. The old sign-up was accepted, but Telegram's servers only call that kind for a few events, so an ordinary message never woke Telegram through ntfy. Turning the switch off still hands Telegram back to Firebase after an update from 0.0.17. Related to #5 and #16.\n* **Telegram:** **Hide Contacts tab** has a second switch on the Chat list page, **Compact bottom bar**. With it on, the bar at the bottom of the main screen is 64 dp tall instead of 72, with less room around its tabs, and it no longer stretches to 320 dp across when its tabs need less. Each tab keeps Telegram's 48 dp height, so taps and swipes work the way they did. It works with the Contacts tab shown or hidden. It's off unless you turn it on, the bar goes back to Telegram's size while HushTelegram is paused, and a restart shows either change.\n* **Telegram:** **Hide Contacts tab** has a third switch on the Chat list page, **Side menu**. Telegram 13 dropped the menu that slid in from the left, so this draws one again. With it on, swipe right on your first chat folder and it follows your finger out. It has your name with a **Switch account** row, then My Profile, New Message, Contacts, Calls, Saved Messages, Settings and HushTelegram settings, each opening Telegram's own screen and named in Telegram's own words for your language. Back or a tap beside it closes it, and swiping between your other folders works as before. The menu takes the chat list's colors, or black with AMOLED black on. It's off unless you turn it on, it works the moment you flip it, and swipes are Telegram's again while HushTelegram is paused. Asked for in #14.\n* **Telegram:** **Holiday look all year** adds an **Emoji next to the chat list title** row on the Look and feel page. Type an emoji or a few letters and they show after Telegram's name at the top of the chat list, with the New Year look on or off. It's only on this phone, so nothing goes to Telegram and your Premium emoji status stays as it is. Clear the text to get the plain title back. A change shows after a restart, and settings backups carry it.\n* **Telegram:** **Hide popular apps** has a second switch on the Ads page, **Search only my chats**. With it on, search still finds your chats, your contacts and messages in chats you're in, but it stops asking Telegram for public accounts, channels and sponsored results. A contact you find by typing a \"+\" phone number still turns up in the Chats tab, matched on the phone. The Channels, Apps and Posts tabs go away, and the Downloads button above search still opens Downloads. Looking someone up by name anywhere else works the same way, so New Message and the pickers for contacts, forwarding and adding members show only your own contacts and chats. A hashtag still finds messages in your own chats, and a tag like #news@channel still searches a channel you're in. Its public posts, public stories and channels you haven't joined come back empty. It's off unless you turn it on, and search goes back to normal while HushTelegram is paused. Asked for in #17.\n* **Telegram:** **Keep searches on this phone** now covers more of search. The Channels and Apps tabs don't ask Telegram about what you type and show no results instead. The media tabs and the Chats tab with a chat or date filter don't search for typed text either, so they keep what they showed. A contact you find by typing a \"+\" phone number turns up in the Chats tab again with the switch on. The Posts tab and search inside a chat still go to Telegram, and the switch's description now says which parts of the main search stay on the phone. With the switch off or HushTelegram paused, search works the way Telegram's does.\n* **Telegram:** The settings home page has a new row under Quick setups, **Lock HushTelegram settings**. Once it's on, every setting on the screen is read-only. Switches, Quick setups (Back to defaults too), Pause, the choosers and settings import all stay as they are and a short note says why. To change something again, tap **Start unlock** and wait 24 hours. The row shows the time left and can cancel the wait, and turning the phone's clock back past the start begins it again. Resume, Debug logging and Export settings still work while it's locked. Asked for in #17.\n* **Telegram:** The AI translation service has a **How to translate** box. Write how you want things translated in your own words (keep it casual, leave names alone, a word list) and it goes to your AI service along with each message, up to 1,000 characters. It's optional and stays on this phone with your key. Google's web translate doesn't use it, and it's still there if you switch back to an AI service later. Asked for in #6.\n* **Telegram:** **Hide messages by keyword** turns away an expression whose count only makes work, like `/(?:(?=x)){16777215}(?!x)/`, with the same \"may be slow\" note it gives other slow lines. Large counts are refused now, and so is a count on a look-ahead or right after an open-ended repeat. Short ones like `\\d{4}` still work. The lines of one list also share a single budget, so a hundred heavy lines can't add up to a slow chat. A line like that from an older list or a settings file stays in the editor and in backups, but the chat skips it without running it. A repeat that can only stop in one place, like the spaces in `/airdrop\\s+0x[a-f0-9]{40}/`, isn't counted as many ways into the count after it, so filters for wallet addresses work. That shortcut isn't taken for a letter written by its number, like `\\x61`, or one that matches two letters when case is ignored, like ß or ẞ, so `/\\x61+a{1000}!/` is turned away like `/a+a{1000}!/`. Checking that shortcut reads each pair of characters once and keeps the answer, so a list of a hundred wallet lines is ready in a moment instead of holding up the first message after it's saved.\n* **Telegram:** A switch you flip while a settings import is running stays the way you left it. Before, the switch and the setting Telegram was running could snap back while your change was still saved, so the next start disagreed with what you saw. Only the switches the file names wait for the import now, and every settings page that's open shows how it ended.\n* **Telegram:** A settings import that changes **Use system font**, **AMOLED black**, **Disable pull to archive**, **Hide Contacts tab** or the **Emoji next to the chat list title** now brings up the Restart Telegram row, just like flipping one of them by hand. A file that sets a switch back to what Telegram is running clears that one, and an import that fails doesn't add any.\n* **Telegram:** Saving a filter list, the translation service, the sticker size or the emoji next to the chat list title no longer freezes the settings screen while the phone writes it. The dialog dims its buttons until the save is done, so a second tap doesn't start another, and it only closes once the save worked. If it didn't, what you typed stays and the list goes back to the size that's saved. Chats keep using the old value until the new one is actually saved. A save you make while a settings import is still running waits with a short note and keeps what you typed.\n* **Telegram:** **Clear diagnostic data** and its undo do their file work in the background now, so slow storage doesn't hold the settings screen. The row waits while it works and ignores extra taps. If putting the data back fails, the row still offers to try again. Whatever HushTelegram records in the meantime doesn't wait for the files either.\n* **Telegram:** Patching is faster. Most patches used to read every instruction in Telegram on their own to find the few methods they change. Now the app is read once per patching session, and each patch only looks inside the classes that mention what it's searching for. On a PC, the default patches for Telegram 13.0.2 took about 32 seconds instead of 52, and the patches themselves went from about 34 seconds to 15. In Morphe Manager on a two-core Android 14 emulator, 67 patches on the same Telegram took about 51 seconds instead of 111 to 116. What each patch changes stays the same, and so does every check that makes it refuse a build it doesn't recognize.\n* **Telegram:** Searching HushTelegram settings for \"null\" no longer turns up rows that just don't have a line under their title.\n* **Telegram:** **Notification status on this phone** now gives Telegram's reply to each account's push sign-up on its own line, with Firebase and UnifiedPush apart and how long ago the reply came. Before, it kept only the newest reply, so one account's refusal could hide behind another account's success. Accounts show as 1, 2 and so on, never by name or number, and a reply that can't be tied to one account isn't shown as anyone's. The diagnostic report carries the same lines.\n* **Telegram:** **Play voice messages one at a time** has a second switch on the Playback page, **Keep voice messages quiet while locked**. With it on, voice and round video messages don't start, resume or skip to the next one while your phone is locked, whether the tap comes from headphones, a car, the notification or the lock screen, and a short note says to unlock first. One that's already playing finishes. Music and other videos play as usual. It starts off.\n* **Telegram:** **Faster downloads** has a second switch on the Playback page, **Hold automatic downloads on Data Saver**. With it on, while Android's Data Saver is on and the network is metered, Telegram doesn't start photos, videos, files, voice messages, music or stories downloading on its own, and the next song and upcoming stories aren't loaded ahead. Automatic downloads in Telegram's download queue stop when the hold starts and pick up again once it lifts, though one a chat had already started as it showed the message gets to finish. What you tap still downloads. A video you open streams without being saved for later, so it doesn't land in Telegram's Downloads, and a download from Telegram's in-app browser asks first. Both work that way when automatic downloads are off, too. With Data Saver off, Telegram allowed to use data freely, an unmetered network or no network, Telegram's own rules apply. The hold notices the switch, Data Saver or the network changing right away, and the row shows what Android reports when you open the page. It starts off, and it doesn't hold anything while HushTelegram is paused.\n* **Telegram:** Settings say which account they work on. **Folders by chat type** works on the account you have open. A chat or message you turn on for outside translation stays on only in the account you turned it on in. **Keep drafts on this phone** covers every account. **Export settings** lists what a settings file leaves out in your build, the translation service and its key, the settings lock and a hidden Quick setups row among them, and says your chats, drafts and kept messages aren't in it.\n* **Telegram:** The **Hide messages by keyword** list editors have a **Try** button. Type or paste a message under the list and it tells you which line would hide it, numbered the way you see the lines, or that none would. It reads the list the way a chat does, unsaved changes included, so the first line that matches is the one named. A line that can't be used gets the same note Save gives. The message you try isn't saved, logged or sent, and it's gone when the editor closes. Autofill doesn't see it either. **Try** waits for its answer before it takes another tap, and when the phone is too busy to check, it asks you to try again in a moment rather than freezing the screen. A check that fails says the same instead of showing nothing.\n* **Telegram:** The settings home page has a **Changed switches** row just above More settings. It counts the switches that aren't the way they started and opens a page with only those, each under the name of its page, including ones that start on and were turned off. Flip one there and it's back the way it started and off the list. The settings lock and a change that needs a restart work there just like on the switch's own page.\n* **Telegram:** After a **Quick setups** choice changes switches, its note says you can undo it, and Quick setups shows an **Undo the last setup** card. The card names what the choice turned on and off, and how many switches were already set or couldn't change. Undo puts back only the switches you haven't touched since, through the same steps as a tap, so the lock and restart notes still apply. It only moves switches, so the chats' translate choices a switch cleared stay cleared. A settings import ends the undo. If an undo couldn't put everything back, the card lists only what's left.\n* **Telegram:** **Notification status on this phone** splits its details into three parts, each with its own fix. The first is what Android allows, now including whether it restricts Telegram in the background and whether battery optimization is on. The second is the push service, with the UnifiedPush app's state when your build has it. The third is what Telegram answered each account, and an APP_PUSH_APIKEY_MISSING refusal now explains that it's set up on Telegram's side, not on your phone. When Android holds Telegram back, a button takes you to where that's changed. That's App info, or before Android 12, Android's battery optimization list when battery optimization is all that applies, since App info only reaches it a few taps in there. Nothing gets changed for you, and anything that can't be read says Unknown.",
   "apps": [
     {
       "app_name": "Beta",
@@ -16,7 +16,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -25,7 +25,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -34,7 +34,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -43,7 +43,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -52,7 +52,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -61,7 +61,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -70,7 +70,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -79,7 +79,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -88,7 +88,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -97,7 +97,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -106,7 +106,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -115,7 +115,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -124,7 +124,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -133,7 +133,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -142,7 +142,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -151,7 +151,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -160,7 +160,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -169,7 +169,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -178,7 +178,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -187,7 +187,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -196,7 +196,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -205,7 +205,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -214,7 +214,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -223,7 +223,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -232,7 +232,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -241,7 +241,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -250,7 +250,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -259,7 +259,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -268,7 +268,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -277,7 +277,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -286,7 +286,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -295,7 +295,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -304,7 +304,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -313,7 +313,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -322,7 +322,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -331,7 +331,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -340,7 +340,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -349,7 +349,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -358,7 +358,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -367,7 +367,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -376,7 +376,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -390,7 +390,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -399,7 +399,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -408,7 +408,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -417,7 +417,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -426,7 +426,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -435,7 +435,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -444,7 +444,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -453,7 +453,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -462,7 +462,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -471,7 +471,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -480,7 +480,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -489,7 +489,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -498,7 +498,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -507,7 +507,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -516,7 +516,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -525,7 +525,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -534,7 +534,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -543,7 +543,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -552,7 +552,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -561,7 +561,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -570,7 +570,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -579,7 +579,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -588,7 +588,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -602,7 +602,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -620,7 +620,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -629,7 +629,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -638,7 +638,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         }
       ]
@@ -653,7 +653,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -662,7 +662,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -671,7 +671,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -680,7 +680,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -689,7 +689,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -698,7 +698,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -707,7 +707,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -716,7 +716,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -725,7 +725,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -734,7 +734,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -743,7 +743,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -752,7 +752,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -761,7 +761,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -770,7 +770,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -779,7 +779,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -788,7 +788,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -797,7 +797,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -806,7 +806,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -815,7 +815,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -824,7 +824,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -833,7 +833,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -842,7 +842,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -851,7 +851,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -860,7 +860,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -869,7 +869,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -878,7 +878,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -887,7 +887,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -896,7 +896,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -905,7 +905,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -914,7 +914,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -923,7 +923,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -932,7 +932,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -941,7 +941,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -950,7 +950,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -959,7 +959,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -968,7 +968,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -977,7 +977,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -986,7 +986,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -995,7 +995,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1004,7 +1004,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1013,7 +1013,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1027,7 +1027,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1036,7 +1036,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1045,7 +1045,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1054,7 +1054,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1063,7 +1063,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1072,7 +1072,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1081,7 +1081,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1090,7 +1090,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1099,7 +1099,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1108,7 +1108,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1117,7 +1117,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1126,7 +1126,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1135,7 +1135,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1144,7 +1144,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1153,7 +1153,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1162,7 +1162,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1171,7 +1171,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1180,7 +1180,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1189,7 +1189,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1198,7 +1198,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1207,7 +1207,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1216,7 +1216,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1225,7 +1225,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1239,7 +1239,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1257,7 +1257,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1266,7 +1266,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         },
         {
@@ -1275,14 +1275,14 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.2"
+            "13.0.3"
           ]
         }
       ]
     }
   ],
   "patches_name": "HushTelegram",
-  "fingerprint": "9ef84fe51bc632595177d77be736f9bc0ec55f1f1b984066723a14339021df4e",
+  "fingerprint": "1f97a206a8c54ab822941731bb8711e7f50b458831dfd5f9f21e9269237de3af",
   "release_notes": "HushTelegram v0.0.9 has 25 patches for telegram.org's Telegram 12.10.6 (`org.telegram.messenger.web`) and the official Telegram beta 12.10.7 (`org.telegram.messenger.beta`), up from 22 in v0.0.8. Twenty-three are selected by default. The two credential patches take your own values, so they stay off until you pick them.\n\n## What's new\n\n* **Telegram:** Repair Firebase push registration now works on slower phones. Firebase starts its first Installations request while Telegram is still starting, and on a slow phone that request could get there before HushTelegram's settings were ready. It then went out with the re-signed certificate, Firebase refused it, and no push token was saved. The request now waits for the settings, up to 10 seconds, on Firebase's own background thread. The diagnostic report counts requests that waited and any that still went out early.\n* **Telegram:** The beta target is now telegram.org's current 12.10.7 build, version code 71179, which replaced build 71159. Every patch applies and passes its fixture tests on it.\n* **Telegram:** The README says every way into HushTelegram settings (Telegram's own Settings, a long-press on the Telegram icon, or App info), and walks through the my.telegram.org form for your own API ID, including what causes \"Incorrect app name!\".\n* **Telegram:** Three independent switches add plain-text paste, copyable local user and chat IDs, and a way to stop double-tap reactions. They start off. Pause restores the stock behavior, and the existing clipboard and explicit reaction actions stay available.\n* **Telegram:** Pause, Settings backup and Diagnostics now have separate pages with shorter headings. Search still reaches every control, and all five translations include the new page names.\n* **Telegram:** New Year look all year now puts Telegram's Santa hat over the chat list logo. It follows the logo's bounds and color so it stays visible in light and dark themes. Other titles keep their original drawing path. Changed title geometry getters refuse before patching. The switch remains off by default, and Pause restores Telegram's seasonal behavior.\n* **Telegram:** External links now recognize browser aliases that Android enables at runtime, even when their manifest default is disabled. Disabled or private components stay excluded, and the browser chooser keeps its existing order.\n* **Telegram:** HushTelegram settings now opens from a row in Telegram's own Settings. Repeated taps share one screen, and the launcher and Android App-info entries remain available. Partial patch selections show only their installed controls. Changed incoming item registers or callback casts refuse before any hook is edited.\n* **Telegram:** Changing the registered API ID now refreshes the native connection identity for every valid ID. IDs that differ by 128 no longer share a marker. Updates also stay distinct from the previous marker scheme, without changing saved account keys or the app version. Changed native argument shapes refuse before either credential is edited.\n\n### Tooling\n\n* **Tooling:** Builds use Morphe patcher 1.15.1, which brings faster fingerprint matching and signing, and stricter DEX path checks. Morphe Manager 1.34.0 is the first stable Manager that carries it, so the README now asks for 1.34.0 or newer. Fixture checks use the desktop CLI 1.18.1.\n* **Tooling:** The source-ledger paragraph now identifies v0.0.8 as the published bundle and distinguishes newer source changes.\n* **Tooling:** A bounded selection matrix checks both declared Telegram builds 41 ways each, from the defaults and the full catalog down to single patches and bad credential options. It checks each build's dependencies, minimum Android version, preserved resources, native libraries and settings switches. Configured credentials must change only their own values and the native connection version marker. Mutation controls reject missing, duplicated or altered markers.\n\n## Install\n\n1. Install [Morphe Manager](https://github.com/MorpheApp/morphe-manager) 1.34.0 or newer.\n2. Add HushTelegram as a patch source: https://morphe.software/add-source?github=SysAdminDoc%2FHushTelegram\n3. Get Telegram **12.10.6** from [telegram.org/android](https://telegram.org/android) by tapping Download Telegram (it saves as plain `Telegram.apk`), or the [official beta](https://telegram.org/dl/android/apk-public-beta) **12.10.7**, and patch it. The patched app needs Android 9 or newer.\n4. Coming from v0.0.8? Patch again and install over it with the same Morphe Manager signing key. New to HushTelegram? Uninstall the stock Telegram first, since Android won't put one over the other. Your chats come back when you sign in, but secret chats don't. Back up Morphe Manager's signing key after your first patch. You'll need it for every update.\n5. If Telegram won't send you a login code, register your own app at [my.telegram.org/apps](https://my.telegram.org/apps). Use only letters and numbers in the short name. Then select **Use registered Telegram API credentials**, fill in `apiId` and `apiHash`, and patch again. The result installs over your current HushTelegram build. Keep both values private.\n6. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n7. To change HushTelegram's switches, open Telegram's Settings and tap HushTelegram settings.\n\nThe `.mpp` download is a patch bundle, not a Telegram APK. [Installation instructions](https://github.com/SysAdminDoc/HushTelegram#install).\n\n## Validation\n\n579 runtime tests and 303 patch tests passed locally, along with both Android lints and the release script checks. All 25 patches applied without forcing to Telegram 12.10.6 and to the 12.10.7 beta, build 71179. The dependency advisory check passed. On an Android 9 emulator slowed down to match the push report, this build saved a push token in all seven runs. The patched beta started, opened HushTelegram settings and registered for push.\n",
   "release_tag": "v0.0.9",
   "release_date": "2026-10-05T15:08:19Z",
