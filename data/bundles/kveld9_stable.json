@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-16T19:01:12Z",
-  "version": "1.19.0",
-  "description": "## [1.19.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.18.0...v1.19.0) (2026-10-16)\n\n### Bug Fixes\n\n* **twitter:** hide empty Discover More section in reply threads ([a4c7c19](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a4c7c19ad562fcde944cff65632c4ee761121544))\n\n### New Features\n\n* add Hevy, NokoPrint and Xiaomi Earbuds (migrated from main repo) ([da9f835](https://github.com/kveld9/kveld-extra-morphe-patches/commit/da9f835854a5c43232457ec9021bc09aea13c02a))\n* **twitter:** download videos and GIFs without Premium ([1536948](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1536948098b054bbfd8c8decab35b0bd27a02918))\n* **twitter:** stop the timeline from refreshing to new posts on its own ([93fbe09](https://github.com/kveld9/kveld-extra-morphe-patches/commit/93fbe09e8bd854e736221b64452d506385aea3fa))",
+  "created_at": "2026-10-16T22:24:24Z",
+  "version": "1.21.0",
+  "description": "## [1.21.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.20.0...v1.21.0) (2026-10-16)\n\n### Bug Fixes\n\n* **twitter:** purge Sentry manifest metadata and redirect tracker endpoints ([bbfc560](https://github.com/kveld9/kveld-extra-morphe-patches/commit/bbfc560d3ed0e19724448d6fedd27f8e3eb61c6b))\n* **twitter:** show the download option on every video and GIF ([777f05d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/777f05d649e14975b5f7efcc6ba3832d91ed5a68))\n* **twitter:** stop timeline refresh when reopening the app ([d2d8f6c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d2d8f6c5aeb7610c957fbd1bb85cf95752126697))\n\n### New Features\n\n* **twitter:** block Google Ads, DoubleClick, and opt-in payments telemetry ([643d59e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/643d59e7dd37cc83a2b5bd7989458fc159991248))\n\n### Code Refactoring\n\n* **capcut:** remove redundant Screen Density Slimmer ([5fa88d2](https://github.com/kveld9/kveld-extra-morphe-patches/commit/5fa88d210cc5524f074935caaff2aad757ed3dd9))\n* **capcut:** scope Locale Slimmer to asset bundles only ([9f85e3b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/9f85e3bf6286bc3d82de7231d6c3df9043c3623d))\n* **instagram:** remove redundant MLKit Vision Slimmer ([6eff44a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/6eff44a524c8f166a4d3c448965f597d868c0b21))\n* **lrmobile:** remove redundant Background Sync ([704ddb5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/704ddb5fccc28d63cdf6775a8de5d6104afef72e))\n* **lrmobile:** remove redundant Junk Cleaner ([9a029bb](https://github.com/kveld9/kveld-extra-morphe-patches/commit/9a029bbdb4f2560aa48f6c148344277b205b803e))\n* **moovit:** remove redundant Locale Slimmer ([eca83ff](https://github.com/kveld9/kveld-extra-morphe-patches/commit/eca83ffa6b69de75a87ee601f9e3765e0b7959d9))\n* **moovit:** remove redundant Screen Density Slimmer ([dadf25b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/dadf25be835c162d6b272dd8a0ee24d0b98cf2d8))\n* **officehub:** remove redundant DPI Slimmer ([a79fa13](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a79fa132837d8a611572e57a8e580fed2b2c1545))\n* **officehub:** remove redundant Junk Cleaner ([26b78b8](https://github.com/kveld9/kveld-extra-morphe-patches/commit/26b78b8aa904f01558cc535f3c738c5b6d213446))\n* **powerpoint:** remove redundant DPI Slimmer ([91b0db9](https://github.com/kveld9/kveld-extra-morphe-patches/commit/91b0db956faeaa848c6b38fef911d5bdf4b40f8f))\n* **powerpoint:** remove redundant Locale Slimmer ([2204a9e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/2204a9e7a71e3999e5890954f4a515809672034d))\n* **twitter:** deduplicate tracker endpoint literals in Block Telemetry ([d8e91b3](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d8e91b3ed5cb6da3489cb031354556278d80a055))\n* **twitter:** remove redundant MLKit Vision Slimmer ([29f73a7](https://github.com/kveld9/kveld-extra-morphe-patches/commit/29f73a70f0475f748a0fd396d947cb103d8b0474))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -14,24 +14,6 @@
           "name": "Block Telemetry & Trackers",
           "description": "Neutralizes Google AppMeasurement, Firebase Crashlytics, Branch attribution, and Adobe Creative SDK analytics dispatchers, redirects Adobe Edge and DTM endpoints to 0.0.0.0, strips advertising permissions, and injects analytics opt-out flags.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "11.6.01"
-          ]
-        },
-        {
-          "name": "Lightroom Background Sync",
-          "description": "Disables WorkManager background sync services, scheduled jobs, and boot receiver. The WorkManager startup initializer is intentionally preserved because removing it prevents application boot. WARNING: Disabling WorkManager can affect background photo uploads, syncing, and exports.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "11.6.01"
-          ]
-        },
-        {
-          "name": "Lightroom Junk Cleaner",
-          "description": "Purges non-functional build metadata, compiler properties, and duplicate license files from the APK root and META-INF.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "11.6.01"
@@ -129,15 +111,6 @@
           "compatible_versions": [
             "447.0.0.55.81"
           ]
-        },
-        {
-          "name": "MLKit Vision Slimmer",
-          "description": "Disable MLKit component discovery and registrars. WARNING: this breaks in-app QR and barcode scanning.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81"
-          ]
         }
       ]
     },
@@ -191,8 +164,8 @@
           ]
         },
         {
-          "name": "Locale Slimmer",
-          "description": "Strips unselected language string tables, resources, and asset JSON files from the APK. Base fallback and English are always preserved.",
+          "name": "Locale Assets Slimmer",
+          "description": "Strips unselected CapCut asset locale bundles (assets/locales/*.json) from the APK. English is always preserved. For res/values-* string tables use the canonical universal Remove Extra Languages patch.",
           "use": false,
           "options": [
             {
@@ -223,20 +196,6 @@
           "description": "Forces CapCut watermark-removal gates to allow export without watermark (WatermarkBusinessFunction).",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "19.8.0"
-          ]
-        },
-        {
-          "name": "Screen Density Slimmer",
-          "description": "Strips unselected screen density assets and purges non-phone UI mode qualifiers. Launcher icons, nodpi/anydpi, and single-density orphans are always preserved.",
-          "use": false,
-          "options": [
-            {
-              "key": "density",
-              "description": "Screen density to preserve (e.g. 'xxhdpi', 'xhdpi', 'hdpi', 'mdpi', 'xxxhdpi'). Single-density orphans, launcher icons, and nodpi/anydpi are always protected."
-            }
-          ],
           "compatible_versions": [
             "19.8.0"
           ]
@@ -412,29 +371,6 @@
           ]
         },
         {
-          "name": "Copilot DPI Slimmer",
-          "description": "Strips drawables for unselected screen densities from Copilot base APK while preserving launcher icons and single-density assets. Non-phone UI mode qualifiers (watch, television, car, vrheadset) are purged from drawable/mipmap resources. WARNING: Displays matching stripped densities will scale preserved assets.",
-          "use": false,
-          "options": [
-            {
-              "key": "dpi",
-              "description": "Screen density to preserve (ldpi, mdpi, tvdpi, hdpi, xhdpi, xxhdpi, xxxhdpi). Default is xxhdpi."
-            }
-          ],
-          "compatible_versions": [
-            "16.0.20527.20022"
-          ]
-        },
-        {
-          "name": "Copilot Junk Cleaner",
-          "description": "Purges non-functional build metadata, properties, proto descriptors, and duplicate license notices from APK root and META-INF while strictly protecting runtime assets and signatures.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "16.0.20527.20022"
-          ]
-        },
-        {
           "name": "Disable Login Requirement",
           "description": "Removes login requirement and FTUX paywall screens. Cloud-backed features still require sign-in server-side.",
           "use": true,
@@ -481,34 +417,6 @@
           "description": "Strips optional companion native binaries (React Native and Hermes JavaScript runtime stack) via in-situ zeroing. WARNING: stripped libraries are load-bearing for React Native initialization - enabling this WILL crash the app with UnsatisfiedLinkError when Copilot or other React Native surfaces start, not merely hide those features.",
           "use": false,
           "options": [],
-          "compatible_versions": [
-            "16.0.20527.20034"
-          ]
-        },
-        {
-          "name": "PowerPoint DPI Slimmer",
-          "description": "Strips drawables for unselected screen densities from PowerPoint base APK while preserving launcher icons and single-density assets. WARNING: Displays matching stripped densities will scale preserved assets.",
-          "use": false,
-          "options": [
-            {
-              "key": "dpi",
-              "description": "Screen density to preserve (ldpi, mdpi, tvdpi, hdpi, xhdpi, xxhdpi, xxxhdpi). Default is xxhdpi."
-            }
-          ],
-          "compatible_versions": [
-            "16.0.20527.20034"
-          ]
-        },
-        {
-          "name": "PowerPoint Locale Slimmer",
-          "description": "Strips unselected localized resource directories (res/values-<locale>/) from PowerPoint base APK. English (en, en-us) is always retained. WARNING: Application strings for stripped locales will fall back to English.",
-          "use": false,
-          "options": [
-            {
-              "key": "locales",
-              "description": "Comma-separated language codes to preserve (e.g. 'en, es, fr, de'). English fallback (en, en-us) is always retained."
-            }
-          ],
           "compatible_versions": [
             "16.0.20527.20034"
           ]
@@ -630,38 +538,10 @@
           ]
         },
         {
-          "name": "Locale Slimmer",
-          "description": "Strips unselected language string tables and resources from base APK. Base fallback and English are always preserved.",
-          "use": false,
-          "options": [
-            {
-              "key": "locales",
-              "description": "Comma-separated language codes to preserve (e.g. 'en, es, pt, fr, de'). Base fallback and English are always retained."
-            }
-          ],
-          "compatible_versions": [
-            "5.201.1.1809"
-          ]
-        },
-        {
           "name": "Remove Ads",
           "description": "Hides banner and inline ads and neutralizes ad unit ID lookups.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "5.201.1.1809"
-          ]
-        },
-        {
-          "name": "Screen Density Slimmer",
-          "description": "Strips unselected screen density assets and purges non-phone UI mode qualifiers. Launcher icons, nodpi/anydpi, and single-density orphans are always preserved.",
-          "use": false,
-          "options": [
-            {
-              "key": "density",
-              "description": "Screen density to preserve (e.g. 'xxhdpi', 'xhdpi', 'hdpi', 'mdpi', 'xxxhdpi'). Single-density orphans, launcher icons, and nodpi/anydpi are always protected."
-            }
-          ],
           "compatible_versions": [
             "5.201.1.1809"
           ]
@@ -701,9 +581,14 @@
         },
         {
           "name": "Block Telemetry & Trackers",
-          "description": "Blocks tracking services, analytics collection, and advertising identifiers.",
+          "description": "Blocks tracking services, analytics collection, and advertising identifiers, redirects Braze and Sentry endpoints to 0.0.0.0, and purges Sentry manifest metadata.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "blockPaymentsTelemetry",
+              "description": "Redirects Plaid, ScribeUp, and financial anti-fraud telemetry endpoints to 0.0.0.0. WARNING: Enabling this disables X Payments and banking verification features."
+            }
+          ],
           "compatible_versions": [
             "12.34.0-prod.01"
           ]
@@ -773,6 +658,20 @@
           ]
         },
         {
+          "name": "Default Reply Sorting",
+          "description": "Opens replies on every post with the selected sort mode instead of Relevance.",
+          "use": false,
+          "options": [
+            {
+              "key": "replySortMode",
+              "description": "Sort mode replies open with on every post."
+            }
+          ],
+          "compatible_versions": [
+            "12.34.0-prod.01"
+          ]
+        },
+        {
           "name": "Disable Auto Refresh",
           "description": "Stops the home timeline from automatically jumping to new posts.",
           "use": false,
@@ -823,15 +722,6 @@
               "description": "Hide Help Center and feedback entries in navigation drawer."
             }
           ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "MLKit Vision Slimmer",
-          "description": "Disables machine learning vision components to reduce binary overhead (breaks QR and barcode scanning).",
-          "use": false,
-          "options": [],
           "compatible_versions": [
             "12.34.0-prod.01"
           ]
@@ -1061,9 +951,9 @@
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "3d3083454ee30db74746c9ca27b499a20c2eb0dfde6aa039a4543ba3e50c409d",
-  "release_notes": "## [1.19.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.18.0...v1.19.0) (2026-10-16)\n\n### Bug Fixes\n\n* **twitter:** hide empty Discover More section in reply threads ([a4c7c19](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a4c7c19ad562fcde944cff65632c4ee761121544))\n\n### New Features\n\n* add Hevy, NokoPrint and Xiaomi Earbuds (migrated from main repo) ([da9f835](https://github.com/kveld9/kveld-extra-morphe-patches/commit/da9f835854a5c43232457ec9021bc09aea13c02a))\n* **twitter:** download videos and GIFs without Premium ([1536948](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1536948098b054bbfd8c8decab35b0bd27a02918))\n* **twitter:** stop the timeline from refreshing to new posts on its own ([93fbe09](https://github.com/kveld9/kveld-extra-morphe-patches/commit/93fbe09e8bd854e736221b64452d506385aea3fa))\n",
-  "release_tag": "v1.19.0",
-  "release_date": "2026-10-16T19:01:12Z",
+  "fingerprint": "45b49742e8bec7f83e6452c7e79c53afc3564719f3e6ad76068ae45086c323d9",
+  "release_notes": "## [1.21.0](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.20.0...v1.21.0) (2026-10-16)\n\n### Bug Fixes\n\n* **twitter:** purge Sentry manifest metadata and redirect tracker endpoints ([bbfc560](https://github.com/kveld9/kveld-extra-morphe-patches/commit/bbfc560d3ed0e19724448d6fedd27f8e3eb61c6b))\n* **twitter:** show the download option on every video and GIF ([777f05d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/777f05d649e14975b5f7efcc6ba3832d91ed5a68))\n* **twitter:** stop timeline refresh when reopening the app ([d2d8f6c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d2d8f6c5aeb7610c957fbd1bb85cf95752126697))\n\n### New Features\n\n* **twitter:** block Google Ads, DoubleClick, and opt-in payments telemetry ([643d59e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/643d59e7dd37cc83a2b5bd7989458fc159991248))\n\n### Code Refactoring\n\n* **capcut:** remove redundant Screen Density Slimmer ([5fa88d2](https://github.com/kveld9/kveld-extra-morphe-patches/commit/5fa88d210cc5524f074935caaff2aad757ed3dd9))\n* **capcut:** scope Locale Slimmer to asset bundles only ([9f85e3b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/9f85e3bf6286bc3d82de7231d6c3df9043c3623d))\n* **instagram:** remove redundant MLKit Vision Slimmer ([6eff44a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/6eff44a524c8f166a4d3c448965f597d868c0b21))\n* **lrmobile:** remove redundant Background Sync ([704ddb5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/704ddb5fccc28d63cdf6775a8de5d6104afef72e))\n* **lrmobile:** remove redundant Junk Cleaner ([9a029bb](https://github.com/kveld9/kveld-extra-morphe-patches/commit/9a029bbdb4f2560aa48f6c148344277b205b803e))\n* **moovit:** remove redundant Locale Slimmer ([eca83ff](https://github.com/kveld9/kveld-extra-morphe-patches/commit/eca83ffa6b69de75a87ee601f9e3765e0b7959d9))\n* **moovit:** remove redundant Screen Density Slimmer ([dadf25b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/dadf25be835c162d6b272dd8a0ee24d0b98cf2d8))\n* **officehub:** remove redundant DPI Slimmer ([a79fa13](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a79fa132837d8a611572e57a8e580fed2b2c1545))\n* **officehub:** remove redundant Junk Cleaner ([26b78b8](https://github.com/kveld9/kveld-extra-morphe-patches/commit/26b78b8aa904f01558cc535f3c738c5b6d213446))\n* **powerpoint:** remove redundant DPI Slimmer ([91b0db9](https://github.com/kveld9/kveld-extra-morphe-patches/commit/91b0db956faeaa848c6b38fef911d5bdf4b40f8f))\n* **powerpoint:** remove redundant Locale Slimmer ([2204a9e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/2204a9e7a71e3999e5890954f4a515809672034d))\n* **twitter:** deduplicate tracker endpoint literals in Block Telemetry ([d8e91b3](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d8e91b3ed5cb6da3489cb031354556278d80a055))\n* **twitter:** remove redundant MLKit Vision Slimmer ([29f73a7](https://github.com/kveld9/kveld-extra-morphe-patches/commit/29f73a70f0475f748a0fd396d947cb103d8b0474))\n",
+  "release_tag": "v1.21.0",
+  "release_date": "2026-10-16T22:24:24Z",
   "isPreRelease": false
 }

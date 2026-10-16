@@ -1,7 +1,7 @@
 {
   "date": "2026-10-16",
-  "lastChecked": "2026-10-16T21:28:08Z",
-  "scan_counter": 5,
+  "lastChecked": "2026-10-16T23:53:45Z",
+  "scan_counter": 6,
   "affected_bundles": {
     "sysadmindoc-hushfacebook:stable": {
       "bundle": "sysadmindoc-hushfacebook",
@@ -1626,7 +1626,16 @@
           "badge_type": "UPDATED APP",
           "patch_diff": {
             "patches_added": [],
-            "patches_removed": [],
+            "patches_removed": [
+              {
+                "name": "Lightroom Background Sync",
+                "description": "Disables WorkManager background sync services, scheduled jobs, and boot receiver. The WorkManager startup initializer is intentionally preserved because removing it prevents application boot. WARNING: Disabling WorkManager can affect background photo uploads, syncing, and exports."
+              },
+              {
+                "name": "Lightroom Junk Cleaner",
+                "description": "Purges non-functional build metadata, compiler properties, and duplicate license files from the APK root and META-INF."
+              }
+            ],
             "patches_modified": [
               {
                 "name": "Block Telemetry & Trackers",
@@ -1639,7 +1648,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            6
           ]
         },
         {
@@ -1659,9 +1669,22 @@
               {
                 "name": "Unlock Ultra HD Export",
                 "description": "Forces CapCut Ultra HD / high-resolution export gates to unlocked so 4K export options stay available."
+              },
+              {
+                "name": "Locale Assets Slimmer",
+                "description": "Strips unselected CapCut asset locale bundles (assets/locales/*.json) from the APK. English is always preserved. For res/values-* string tables use the canonical universal Remove Extra Languages patch."
               }
             ],
-            "patches_removed": [],
+            "patches_removed": [
+              {
+                "name": "Locale Slimmer",
+                "description": "Strips unselected language string tables, resources, and asset JSON files from the APK. Base fallback and English are always preserved."
+              },
+              {
+                "name": "Screen Density Slimmer",
+                "description": "Strips unselected screen density assets and purges non-phone UI mode qualifiers. Launcher icons, nodpi/anydpi, and single-density orphans are always preserved."
+              }
+            ],
             "patches_modified": [
               {
                 "name": "Block Telemetry & Trackers",
@@ -1733,7 +1756,8 @@
             ]
           },
           "scan_numbers": [
-            4
+            4,
+            6
           ]
         },
         {
@@ -1776,13 +1800,117 @@
               {
                 "name": "Unlock Video Downloads",
                 "description": "Lets you save videos and GIFs with the app's built-in download option without Premium."
+              },
+              {
+                "name": "Default Reply Sorting",
+                "description": "Opens replies on every post with the selected sort mode instead of Relevance."
               }
             ],
-            "patches_removed": [],
+            "patches_removed": [
+              {
+                "name": "MLKit Vision Slimmer",
+                "description": "Disables machine learning vision components to reduce binary overhead (breaks QR and barcode scanning)."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Block Telemetry & Trackers",
+                "description": "Blocks tracking services, analytics collection, and advertising identifiers, redirects Braze and Sentry endpoints to 0.0.0.0, and purges Sentry manifest metadata.",
+                "previous_description": "Blocks tracking services, analytics collection, and advertising identifiers.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            5,
+            6
+          ]
+        },
+        {
+          "app_name": "Instagram",
+          "package": "com.instagram.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [
+              {
+                "name": "MLKit Vision Slimmer",
+                "description": "Disable MLKit component discovery and registrars. WARNING: this breaks in-app QR and barcode scanning."
+              }
+            ],
             "patches_modified": []
           },
           "scan_numbers": [
-            5
+            6
+          ]
+        },
+        {
+          "app_name": "Copilot",
+          "package": "com.microsoft.office.officehubrow",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [
+              {
+                "name": "Copilot DPI Slimmer",
+                "description": "Strips drawables for unselected screen densities from Copilot base APK while preserving launcher icons and single-density assets. Non-phone UI mode qualifiers (watch, television, car, vrheadset) are purged from drawable/mipmap resources. WARNING: Displays matching stripped densities will scale preserved assets."
+              },
+              {
+                "name": "Copilot Junk Cleaner",
+                "description": "Purges non-functional build metadata, properties, proto descriptors, and duplicate license notices from APK root and META-INF while strictly protecting runtime assets and signatures."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            6
+          ]
+        },
+        {
+          "app_name": "PowerPoint",
+          "package": "com.microsoft.office.powerpoint",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [
+              {
+                "name": "PowerPoint DPI Slimmer",
+                "description": "Strips drawables for unselected screen densities from PowerPoint base APK while preserving launcher icons and single-density assets. WARNING: Displays matching stripped densities will scale preserved assets."
+              },
+              {
+                "name": "PowerPoint Locale Slimmer",
+                "description": "Strips unselected localized resource directories (res/values-<locale>/) from PowerPoint base APK. English (en, en-us) is always retained. WARNING: Application strings for stripped locales will fall back to English."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            6
+          ]
+        },
+        {
+          "app_name": "Moovit",
+          "package": "com.tranzmate",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [
+              {
+                "name": "Locale Slimmer",
+                "description": "Strips unselected language string tables and resources from base APK. Base fallback and English are always preserved."
+              },
+              {
+                "name": "Screen Density Slimmer",
+                "description": "Strips unselected screen density assets and purges non-phone UI mode qualifiers. Launcher icons, nodpi/anydpi, and single-density orphans are always preserved."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            6
           ]
         }
       ],
@@ -1792,7 +1920,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.16.3",
-      "new_version": "1.19.0",
+      "new_version": "1.21.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -6425,7 +6553,8 @@
             ]
           },
           "scan_numbers": [
-            5
+            5,
+            6
           ]
         },
         {
@@ -6434,7 +6563,12 @@
           "badge_type": "MAJOR UPDATE",
           "patch_diff": {
             "patches_added": [],
-            "patches_removed": [],
+            "patches_removed": [
+              {
+                "name": "Turn off beta debug logs",
+                "description": "Telegram Beta always writes debug logs to your phone, its connection log included, and its own debug menu can't stop that. This stops them, so the beta only logs when you turn logs on in its debug menu. The regular telegram.org build doesn't force them, so nothing changes there. Starts off. Turn it on in HushTelegram settings > Privacy, then restart Telegram."
+              }
+            ],
             "patches_modified": [
               {
                 "name": "AMOLED black",
@@ -6915,7 +7049,16 @@
             ]
           },
           "scan_numbers": [
-            5
+            5,
+            6
+          ]
+        },
+        {
+          "app_name": "Telegram",
+          "package": "org.telegram.messenger",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            6
           ]
         }
       ],
@@ -6924,6 +7067,206 @@
       "extra_badges": [],
       "previous_version": "0.0.9",
       "new_version": "0.0.9",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hu-liberator:dev": {
+      "bundle": "hu-liberator",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "MÁVPlusz",
+          "package": "hu.mav.emmapp",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable Firebase Crashlytics",
+                "description": "Adds the official firebase_crashlytics_collection_enabled=false manifest flag, disabling all crash/log reporting to Firebase Crashlytics at SDK init.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Pairip license check",
+                "description": "Prevents the Pairip-injected Application class from binding to the Play Store licensing service, which would otherwise redirect to / force-close for a side-loaded APK.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity failure crash",
+                "description": "Prevents SecurityException when the Play Integrity API call itself fails (APP_NOT_INSTALLED / APP_UID_MISMATCH), as happens for side-loaded APKs.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity gating flag wait",
+                "description": "Stops the startup coroutine from waiting forever on a Remote-Config-backed flag to decide whether to run the Play Integrity flow, by always treating it as disabled.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity token request",
+                "description": "Makes the Play Integrity token request always fail immediately with an unclassified exception, so the app treats it as gracefully unavailable and continues initialization instead of getting stuck on a Play-Store-required gate.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity verdict validation",
+                "description": "Removes client-side SecurityException throws that reject unlicensed/unattested/unrecognized Play Integrity verdicts, without touching unrelated code sharing the same method.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable StoreLogs telemetry",
+                "description": "Prevents the app from uploading queued client-side log entries to its own backend telemetry endpoint (.../Log/StoreLogs).",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable broadcast receiver security check",
+                "description": "Removes SecurityException throws gating a BroadcastReceiver's onReceive, which fail when the broadcast sender isn't verified as the real Play Store.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable certificate pinning",
+                "description": "Prevents the app's OkHttp CertificatePinner from ever being installed, allowing HTTPS traffic to be intercepted (e.g. by a proxy) for analysis.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Trust user-installed certificates",
+                "description": "Adds a user certificate trust anchor to the network security config, so a MITM proxy's installed CA is accepted (this is separate from and in addition to disabling OkHttp's code-level certificate pinning).",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            6
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/hu-liberator/patches",
+      "patches_name": "hu-liberator",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0-dev.1",
+      "new_version": "1.0.1-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hu-liberator:stable": {
+      "bundle": "hu-liberator",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "MÁVPlusz",
+          "package": "hu.mav.emmapp",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable Firebase Crashlytics",
+                "description": "Adds the official firebase_crashlytics_collection_enabled=false manifest flag, disabling all crash/log reporting to Firebase Crashlytics at SDK init.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Pairip license check",
+                "description": "Prevents the Pairip-injected Application class from binding to the Play Store licensing service, which would otherwise redirect to / force-close for a side-loaded APK.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity failure crash",
+                "description": "Prevents SecurityException when the Play Integrity API call itself fails (APP_NOT_INSTALLED / APP_UID_MISMATCH), as happens for side-loaded APKs.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity gating flag wait",
+                "description": "Stops the startup coroutine from waiting forever on a Remote-Config-backed flag to decide whether to run the Play Integrity flow, by always treating it as disabled.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity token request",
+                "description": "Makes the Play Integrity token request always fail immediately with an unclassified exception, so the app treats it as gracefully unavailable and continues initialization instead of getting stuck on a Play-Store-required gate.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable Play Integrity verdict validation",
+                "description": "Removes client-side SecurityException throws that reject unlicensed/unattested/unrecognized Play Integrity verdicts, without touching unrelated code sharing the same method.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable StoreLogs telemetry",
+                "description": "Prevents the app from uploading queued client-side log entries to its own backend telemetry endpoint (.../Log/StoreLogs).",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable broadcast receiver security check",
+                "description": "Removes SecurityException throws gating a BroadcastReceiver's onReceive, which fail when the broadcast sender isn't verified as the real Play Store.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Disable certificate pinning",
+                "description": "Prevents the app's OkHttp CertificatePinner from ever being installed, allowing HTTPS traffic to be intercepted (e.g. by a proxy) for analysis.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              },
+              {
+                "name": "Trust user-installed certificates",
+                "description": "Adds a user certificate trust anchor to the network security config, so a MITM proxy's installed CA is accepted (this is separate from and in addition to disabling OkHttp's code-level certificate pinning).",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            6
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/hu-liberator/patches",
+      "patches_name": "hu-liberator",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.0.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     }
