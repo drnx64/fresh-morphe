@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
   "created_at": "2026-10-06T22:01:57Z",
   "version": "test-212",
-  "description": "# [1.41.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.40.6...v1.41.0) (2026-10-16)\n\n\n### Features\n\n* **f1tv:** add Unlock UHD (4K) patch ([#245](https://github.com/ajstrick81/morphe-androidtv-patches/issues/245)) ([3d78305](https://github.com/ajstrick81/morphe-androidtv-patches/commit/3d78305dc818ee41c46d27c96c67ef3a1feb5c95)), closes [#243](https://github.com/ajstrick81/morphe-androidtv-patches/issues/243)",
+  "description": "# [1.42.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.41.0...v1.42.0) (2026-10-17)\n\n\n### Features\n\n* **future:** add Skip ads patch for Fawesome Movies & TV (Android TV) ([aa21dce](https://github.com/ajstrick81/morphe-androidtv-patches/commit/aa21dcee309bc7132d4144bac7a61c7fc7c042dd)), closes [#233](https://github.com/ajstrick81/morphe-androidtv-patches/issues/233)",
   "apps": [
     {
       "app_name": "Livingroom",
@@ -208,6 +208,21 @@
           "options": [],
           "compatible_versions": [
             "1.9.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Moviesbyfawesomeandroidtv",
+      "package": "com.future.moviesbyfawesomeandroidtv",
+      "patches": [
+        {
+          "name": "Skip ads",
+          "description": "Removes client-side ads in Fawesome Movies & TV (Android TV). The IMA pre/mid-roll video ad is suppressed by firing the app's own ad-complete transition (so content loads/resumes normally instead of waiting on an ad that never plays); the in-player VAST banner is removed; and the pause-screen bug ad is removed while the pause/focus behaviour is preserved. Ads are requested client-side, so this is a full removal with no server-stitched (SSAI) fallback to break.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7"
           ]
         }
       ]
@@ -508,7 +523,7 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "8acfbe3e5a390ca513770877bf8614ea17f8daa2b2426e871d307ee64f86775a",
+  "fingerprint": "42ddee407eb917e0696ffaeb3d3ab723350489adb8f818cedcd34c3a0427e515",
   "release_notes": "Test-only build for #212. Netflix 13.0.1 build 25028 received re-minified ad code; this recovers the ad-kill (V3) and scans the large memory region the code now often sits in. Patch with the same patches as usual, then: force-stop, relaunch, wait ~60s on home, play a title, and attach `adb logcat -d -s KILL > kill.txt`. Success = `PATCH V3-ADV … verify=OK` and `PATCH V3-MASTER … verify=OK`.",
   "release_tag": "test-212",
   "release_date": "2026-10-06T22:01:57Z",
