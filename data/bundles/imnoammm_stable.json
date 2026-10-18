@@ -2,8 +2,8 @@
   "bundle": "imnoammm",
   "channel": "stable",
   "repo_url": "https://github.com/ImNoammm/Noams-Morphe-Patches",
-  "created_at": "2026-10-18T10:13:36Z",
-  "version": "1.2.0",
+  "created_at": "2026-10-18T13:09:58Z",
+  "version": "1.3.0",
   "description": "My Morphe patches for the apps I use.",
   "apps": [
     {
@@ -466,6 +466,15 @@
           ]
         },
         {
+          "name": "Dictionary downloads",
+          "description": "Adds \"Download dictionaries from Google\" to No-Google settings (off by default). Only English comes with Gboard; with the switch on, Gboard's own downloader gets the other languages' dictionaries (word suggestions, autocorrect) through the network helper app (included), which for this can only reach Google's dictionary folder. With it off, the first time a language without a dictionary is used, a hint says so.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.2.4.969776716-release-arm64-v8a"
+          ]
+        },
+        {
           "name": "Disable Google Play services",
           "description": "Makes Gboard's Play services availability check always report SERVICE_MISSING, so GMS-backed code paths (Clearcut logging, Phenotype, federated learning, sign-in, feedback) are skipped instead of retried.",
           "use": true,
@@ -602,7 +611,7 @@
         },
         {
           "name": "Runtime feature toggles",
-          "description": "Lets the No-Google settings turn off Gboard features that only work through Google servers (Emoji Kitchen, Tenor, Assistant voice, proofread…) and hide the GIF and sticker tabs.",
+          "description": "Lets the No-Google settings turn off Gboard features that only work through Google servers (Emoji Kitchen, Tenor, Assistant voice, proofread…), hide the GIF and sticker tabs, and keep Gboard in incognito mode everywhere.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -790,9 +799,9 @@
     }
   ],
   "patches_name": "Noam's Morphe Patches",
-  "fingerprint": "24bd531e5bd55a27bfa8bbb9fcdd6a9c37ef5222fba6a848447e60aed66c779a",
-  "release_notes": "- chess.com's game review asks who reviews each game: chess.com, lichess with your lichess account, or stockfish 19 on your phone, offline and with no daily limit. the phone and lichess mark moves the lichess way, right in chess.com's review screen. the local and lichess reviews are still in beta\n- stockfish also shows its best moves on finished games, the analysis boards and the game explorer, with an eval bar where chess.com has none. the stockfish analysis patch downloads the official stockfish 19 (80 mb) while morphe manager patches, so patching chess.com with it needs internet\n- lichess puzzles play offline in chess.com's own puzzle screen and get rated on your phone the way lichess rates them\n- the first time you open the patched app, a short setup screen lets you set up game review and download a puzzle pack\n- every bot can be played, play coach has no daily limit, and content the app itself keeps for premium opens up\n- clone chess.com (off by default) installs the patched app next to the real one\n- review on lichess is gone, game review's lichess option replaces it\n\n**Installing**: Morphe Manager gets the update from the source by itself. Patch chess.com 4.10.18 again, starting from the stock app, to get the new patches.\n",
-  "release_tag": "v1.2.0",
-  "release_date": "2026-10-18T10:13:36Z",
+  "fingerprint": "f8694805f3ff9a2d977cae74e0893d011dc836fc049d771821431d4f33a4c42f",
+  "release_notes": "- gboard can get dictionaries for languages other than english, so italian, hebrew and the rest have word suggestions and autocorrect. turn on download dictionaries from google in no-google settings, and the helper app fetches them from google's dictionary folder and nowhere else\n- with that switch off, a note on the keyboard tells you when a language has no dictionary\n- new always use incognito mode switch in no-google settings, so gboard doesn't learn from what you type or keep history in any app\n- bug fixes\n\n**Installing**: Morphe Manager gets the update from the source by itself. Patch Gboard 18.2.4 again to get the new patches, and update the helper app when Gboard asks.\n",
+  "release_tag": "v1.3.0",
+  "release_date": "2026-10-18T13:09:58Z",
   "isPreRelease": false
 }
