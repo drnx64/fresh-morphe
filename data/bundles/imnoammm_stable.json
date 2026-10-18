@@ -2,8 +2,8 @@
   "bundle": "imnoammm",
   "channel": "stable",
   "repo_url": "https://github.com/ImNoammm/Noams-Morphe-Patches",
-  "created_at": "2026-10-14T22:11:07Z",
-  "version": "1.1.0",
+  "created_at": "2026-10-18T10:13:36Z",
+  "version": "1.2.0",
   "description": "My Morphe patches for the apps I use.",
   "apps": [
     {
@@ -280,6 +280,15 @@
           ]
         },
         {
+          "name": "Clone Chess.com",
+          "description": "Renames the app to com.chess.noam so it installs next to the real Chess.com app instead of over it. Leave it off to keep updating your current install.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.10.18-googleplay"
+          ]
+        },
+        {
           "name": "Customize Home screen",
           "description": "Choose which tiles and sections the Home screen shows, and the order of the tiles. Works on both of chess.com's Home screens (the older list and the redesign).",
           "use": true,
@@ -300,6 +309,15 @@
         {
           "name": "Hide Premium-only content",
           "description": "Free accounts no longer see what only Premium members can use: Premium-only bots are not listed, and the Premium toolbar button, the Home and More banners and the Settings Upgrade row, the Home diamond, the sale banner and More's Membership row are gone. Nothing is unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.18-googleplay"
+          ]
+        },
+        {
+          "name": "Lichess Puzzles",
+          "description": "Puzzles from Lichess becomes the Puzzles tab's big button, with chess.com's Solve Puzzles above it. Lichess's puzzles play in chess.com's own puzzle screen (board, coach, sounds), rated on the phone the way Lichess rates them; nothing is sent to chess.com.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -343,8 +361,8 @@
           ]
         },
         {
-          "name": "Review on Lichess",
-          "description": "Game Review opens your game on Lichess (imported, with Lichess's analysis board) in a browser inside the app: always, or only once chess.com's free review is used up.",
+          "name": "Stockfish analysis",
+          "description": "Stockfish 19 on your phone, offline (arm64): best-move arrows on finished games, the analysis boards, the game explorer and Game Review (in a Lichess review, on the moves Lichess didn't mark), and an eval bar where chess.com has none of its own. It never shows while a game is being played or in puzzles. Patching downloads the official Stockfish 19 (80 MB) from Stockfish's GitHub, so it needs internet.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -354,6 +372,42 @@
         {
           "name": "Time controls under a minute",
           "description": "The custom time slider goes below one minute: 10, 15, 20, 30 and 45 seconds, with or without increment, the way the website allows. Labels read \"30 sec\" and \"0:30+1\".",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.18-googleplay"
+          ]
+        },
+        {
+          "name": "Unlimited Game Review",
+          "description": "Game Review asks who reviews the game: chess.com, Lichess's servers (online, with your Lichess account) or, with the Stockfish analysis patch, Stockfish on your phone (offline, no daily limit). The phone and Lichess mark moves the Lichess way (?! inaccuracies, ? mistakes, ?? blunders, accuracy and centipawn loss) in chess.com's own review screen. Finished games only; a live game on screen is never analysed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.18-googleplay"
+          ]
+        },
+        {
+          "name": "Unlimited Play Coach",
+          "description": "Removes the one-free-game-per-day limit on Play Coach, a bot-only practice mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.18-googleplay"
+          ]
+        },
+        {
+          "name": "Unlock Premium content",
+          "description": "The app's own premium-tier check always answers with the top tier, so content gated on it (lessons, drills, insights, themes, puzzle-rush extras and anything else that reads the account's tier) treats the account as a member. The server still decides what you may actually play online.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.18-googleplay"
+          ]
+        },
+        {
+          "name": "Unlock all bots",
+          "description": "Every bot in Versus Bots can be played, including ones only Premium members may play.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -736,9 +790,9 @@
     }
   ],
   "patches_name": "Noam's Morphe Patches",
-  "fingerprint": "51c4956ac15038d364b5322d5a02dcd7b70d8f01b6498fc00c9c1e95ced347dc",
-  "release_notes": "- new app: geocaching 10.21.0, with every feature as its own switch. map filters, statistics from your finds, log templates, lists, experimental features and finds and hides sorting work without premium, and the upgrade badges are gone\n- caches the app locks behind premium open too, with what geocaching.com shows your account. map search comes from geocaching.com as well, and the caches you see on the map or open stay on the phone for offline use\n- the geocaching map needs no google key, has free street, satellite, terrain and hybrid layers, and comes back faster when you switch tabs\n- geocaching also gets a native description viewer, photo downloads and one sign-in for the app and the website\n- gboard's app icon works again and walks you through setup: it opens the keyboard list to turn it on, then the picker to choose it, and gboard's settings once it's all set\n\n**Installing**: Morphe Manager gets the update from the source by itself. Patch Geocaching 10.21.0 to get the new patches, and patch Gboard again for the app icon fix.\n",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-10-14T22:11:07Z",
+  "fingerprint": "24bd531e5bd55a27bfa8bbb9fcdd6a9c37ef5222fba6a848447e60aed66c779a",
+  "release_notes": "- chess.com's game review asks who reviews each game: chess.com, lichess with your lichess account, or stockfish 19 on your phone, offline and with no daily limit. the phone and lichess mark moves the lichess way, right in chess.com's review screen. the local and lichess reviews are still in beta\n- stockfish also shows its best moves on finished games, the analysis boards and the game explorer, with an eval bar where chess.com has none. the stockfish analysis patch downloads the official stockfish 19 (80 mb) while morphe manager patches, so patching chess.com with it needs internet\n- lichess puzzles play offline in chess.com's own puzzle screen and get rated on your phone the way lichess rates them\n- the first time you open the patched app, a short setup screen lets you set up game review and download a puzzle pack\n- every bot can be played, play coach has no daily limit, and content the app itself keeps for premium opens up\n- clone chess.com (off by default) installs the patched app next to the real one\n- review on lichess is gone, game review's lichess option replaces it\n\n**Installing**: Morphe Manager gets the update from the source by itself. Patch chess.com 4.10.18 again, starting from the stock app, to get the new patches.\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-10-18T10:13:36Z",
   "isPreRelease": false
 }
