@@ -2,9 +2,9 @@
   "bundle": "vipinvip",
   "channel": "stable",
   "repo_url": "https://github.com/VipinVIP/railone-patches",
-  "created_at": "2026-10-11T07:03:32Z",
-  "version": "1.1.1",
-  "description": "## [1.1.1](https://github.com/VipinVIP/railone-patches/compare/v1.1.0...v1.1.1) (2026-10-11)\n\n### 🐛 Bug Fixes\n\n* **Source:** Re-release, no patch changes - the 1.1.0 download was missing classes.dex and could not load. Update the source if it showed as failed.",
+  "created_at": "2026-10-18T05:52:25Z",
+  "version": "1.2.0",
+  "description": "## [1.2.0](https://github.com/VipinVIP/railone-patches/compare/v1.1.1...v1.2.0) (2026-10-18)\n\n### ✨ New Features\n\n* **Icon:** Monochrome icon support",
   "apps": [
     {
       "app_name": "RailOne",
@@ -69,14 +69,24 @@
             "2.1.66",
             "2.1.62"
           ]
+        },
+        {
+          "name": "Monochrome icon support",
+          "description": "Adds the missing monochrome layer to the adaptive icon, so themed-icon launchers (Material You) can tint RailOne's icon instead of showing it untinted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.1.66",
+            "2.1.62"
+          ]
         }
       ]
     }
   ],
   "patches_name": "RailOne Patches",
-  "fingerprint": "c1fedeefafb77efa2e146f56091443efdeddcd3fffea5261e10ebd8729bfbd8a",
-  "release_notes": "## 1.1.1 (2026-10-11)\n\nRe-release of 1.1.0. No patch behaviour changed: the 1.1.0 release was published with a bundle that\nhad been built in the wrong task order and was **missing `classes.dex`**, so Morphe Manager could not\nload it (`IllegalStateException: Patch bundle is missing dex entries`) and marked the source failed.\nThe desktop CLI never noticed, because on a JVM it loads the `.class` entries instead.\n\n- `build.sh` now runs `generatePatchesList` before `buildAndroid`, forces `buildAndroid --rerun`\n  (it reports UP-TO-DATE even after the jar task overwrites the bundle), and fails the build if the\n  bundle has no `classes.dex`.\n- The release asset was replaced at the time; this version bump exists so that Manager's\n  version-keyed cache re-downloads the bundle. If your source shows as failed or has no patches,\n  update the source (or delete and re-add it) and it will fetch 1.1.1.\n\nVerified: the bundle loads in Morphe Manager on an emulator, patches the original Play-signed\n`railone-2.1.66.apks` (6/6 patches applied), and the Manager's own output was re-disassembled and\nconfirmed to carry all three screenshot edits plus the 1.0.0 anti-tamper patches.\n",
-  "release_tag": "v1.1.1",
-  "release_date": "2026-10-11T07:03:32Z",
+  "fingerprint": "11ad2fc0d2d8eb87d6360c428d9382b73115152f311e37ad17f52bfb523e676b",
+  "release_notes": "## [1.2.0](https://github.com/VipinVIP/railone-patches/compare/v1.1.1...v1.2.0) (2026-10-18)\n\n### ✨ New Features\n\n* **Icon:** Monochrome icon support\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-10-18T05:52:25Z",
   "isPreRelease": false
 }

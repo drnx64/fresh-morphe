@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-17T04:28:04Z",
-  "version": "1.21.1",
-  "description": "## [1.21.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.21.0...v1.21.1) (2026-10-17)\n\n### Bug Fixes\n\n* **hevy:** disable residual Adjust and Facebook manifest components ([3f3220e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/3f3220e1dd0247db86457fceba26dfee5d0243ec))\n* **hevy:** disable residual background sync components and neutralize WorkManagerInitializer ([800066b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/800066bec6adad4ccaa588b9865ca2671d00ded4))\n* **hevy:** sinkhole React Native telemetry in NetworkingModule ([ef9376f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ef9376f4c747859281ea4b731d1ed01e66d7731f))\n* **hevy:** use valid 0.0.0.0 sinkhole URL and preserve push messaging components ([c4b2413](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c4b24132c765bd2df4f631634ec0c2b0f932599e))\n* **moovit:** disable residual advertising activities and receiver ([683d692](https://github.com/kveld9/kveld-extra-morphe-patches/commit/683d692597fdfd360c1d280aa91270f628efdc98))\n* **nokoprint:** clear try blocks before replacing instructions in ad dispatch hooks ([1ec5ca5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1ec5ca5751a79a9b23298405b6d472557069a77e))\n* **nokoprint:** disable residual AdMob, BidMachine and Tappx manifest components ([2137a5d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/2137a5d4b6686be6e5648fac5da6ead795fa2925))\n* **nokoprint:** disable residual FirebaseInitProvider and ComponentDiscoveryService ([4ea7c5a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4ea7c5a7a42e95b50aa6ab14c646e634c34ce848))\n* **nokoprint:** preserve FirebaseInitProvider and ensure register count in ad dispatch hook ([ac65586](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ac65586e747ef021a92554261c240ce08195c1ed))\n* **officehub:** ensure register count in transparency hook and fix metadata bundle string ([c53e83b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c53e83b8819050599c68637d17658d7b98bde3e2))\n* **officehub:** escape target version in compatibility description ([010f027](https://github.com/kveld9/kveld-extra-morphe-patches/commit/010f027b2c3982d991cda1876dca004d0dceda44))\n* **officehub:** interpolate package name constant in compatibility description ([e708031](https://github.com/kveld9/kveld-extra-morphe-patches/commit/e70803199922465a52f0ce0d9737ae78c8457db4))\n* **officehub:** neutralize Singular attribution SDK and sinkhole AppCenter/events telemetry ([83c8e0d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/83c8e0d4ef3ac5c3c3c4052d404b977e76537f7c))\n* **officehub:** update code transparency verification hook for 16.0.20604.20012 ([27f1656](https://github.com/kveld9/kveld-extra-morphe-patches/commit/27f1656a66c8a4b2e5ac0c92f60f5e541059f2b5))\n* **officehub:** update supported version to 16.0.20604.20012 ([e38c102](https://github.com/kveld9/kveld-extra-morphe-patches/commit/e38c1026a3c5eca16a2811ab81e5014272b3773c))",
+  "created_at": "2026-10-18T05:10:32Z",
+  "version": "1.22.1",
+  "description": "## [1.22.2](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.22.1...v1.22.2) (2026-10-18)\n\n### Bug Fixes\n\n* **hevy:** narrow battery-patch manifest edits ([f150d46](https://github.com/kveld9/kveld-extra-morphe-patches/commit/f150d46eb3260b76508a94c5ae0f185f0553bceb))\n* **hevy:** report why a bundle failed the Hermes HBC96 check ([2425a00](https://github.com/kveld9/kveld-extra-morphe-patches/commit/2425a008284cc647a73a4d4ff859182364ab62a6))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -464,6 +464,15 @@
           ]
         },
         {
+          "name": "Printer-Compatible Connections",
+          "description": "Keeps HTTP cleartext for LAN printers and driver downloads and trusts user certificates. Less strict than stock; on by default because some printers need it, disable for maximum strictness.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
           "name": "Remove Extra Files",
           "description": "Deletes hidden ad files and trackers to shrink the app.",
           "use": true,
@@ -475,15 +484,6 @@
         {
           "name": "Remove Extra Stores",
           "description": "Disables payment components for other app stores you do not use.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.28.6"
-          ]
-        },
-        {
-          "name": "Safer Connections",
-          "description": "Uses trusted certificates while keeping printer downloads working.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -576,7 +576,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.34.0-prod.01"
+            "12.35.0-prod.01"
           ]
         },
         {
@@ -590,370 +590,16 @@
             }
           ],
           "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Block Update Screen",
-          "description": "Blocks the outdated app screen and suppresses in-app update prompts on launch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Control Video Auto Scroll",
-          "description": "Prevents automatic scrolling to the next video in immersive view.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Custom Deep Links",
-          "description": "Opens supported custom and alternative domain links directly in the app (for shared link domains, see Share Links).",
-          "use": false,
-          "options": [
-            {
-              "key": "customLinkHosts",
-              "description": "Custom domains to register for opening directly in the app."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Custom Fonts",
-          "description": "Applies custom typography to post and profile text.",
-          "use": false,
-          "options": [
-            {
-              "key": "fontTtfPath",
-              "description": "Absolute device path to a TTF font applied to post and profile text, e.g. /sdcard/fonts/myfont.ttf."
-            },
-            {
-              "key": "emojiFontTtfPath",
-              "description": "Absolute device path to a TTF font applied to emojis, e.g. /sdcard/fonts/myemojifont.ttf."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "DM Debloat",
-          "description": "Hides call buttons and composer actions in direct message conversations.",
-          "use": false,
-          "options": [
-            {
-              "key": "hideDmCalls",
-              "description": "Hide audio and video call buttons in direct message conversations (warning: disables outgoing direct message calls)."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Default Reply Sorting",
-          "description": "Opens replies on every post with the selected sort mode instead of Relevance.",
-          "use": false,
-          "options": [
-            {
-              "key": "replySortMode",
-              "description": "Sort mode replies open with on every post."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Disable Auto Refresh",
-          "description": "Stops the home timeline from automatically jumping to new posts.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Drawer Items",
-          "description": "Hides individual menu items, badges, and sidebar entries in the navigation drawer.",
-          "use": false,
-          "options": [
-            {
-              "key": "hideProfile",
-              "description": "Hide Profile entry in navigation drawer."
-            },
-            {
-              "key": "hidePremium",
-              "description": "Hide Premium subscription entry and discount badges in navigation drawer (for profile and home upsells, see Remove Premium Upsell)."
-            },
-            {
-              "key": "hideCommunities",
-              "description": "Hide Communities entry in navigation drawer."
-            },
-            {
-              "key": "hideBookmarks",
-              "description": "Hide Bookmarks entry in navigation drawer."
-            },
-            {
-              "key": "hideLists",
-              "description": "Hide Lists entry in navigation drawer."
-            },
-            {
-              "key": "hideSpaces",
-              "description": "Hide Spaces entry in navigation drawer."
-            },
-            {
-              "key": "hideCreatorStudio",
-              "description": "Hide Creator Studio entry in navigation drawer."
-            },
-            {
-              "key": "hideGetGrok",
-              "description": "Hide Grok assistant entry in navigation drawer and sidebar (for Grok navigation tab and post actions, see Navigation UI and Post & Profile UI)."
-            },
-            {
-              "key": "hideHelpCenter",
-              "description": "Hide Help Center and feedback entries in navigation drawer."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Navigation UI",
-          "description": "Customizes bottom navigation bar tabs, unread badges, and search surfaces.",
-          "use": false,
-          "options": [
-            {
-              "key": "hideBadges",
-              "description": "Hide unread indicator badges from Grok and navigation bar tabs (for Grok drawer and post actions, see Drawer Items and Post & Profile UI)."
-            },
-            {
-              "key": "hideFab",
-              "description": "Hide floating action button entirely."
-            },
-            {
-              "key": "hideFabMenu",
-              "description": "Hide secondary action expansion menu on floating action button."
-            },
-            {
-              "key": "navigationBar",
-              "description": "Hide persistent bottom navigation bar."
-            },
-            {
-              "key": "grokTab",
-              "description": "Hide Grok tab from bottom navigation bar (for Grok drawer and post actions, see Drawer Items and Post & Profile UI)."
-            },
-            {
-              "key": "exploreTabs",
-              "description": "Hide rich explore tab surfaces."
-            },
-            {
-              "key": "searchTabItems",
-              "description": "Hide rich search tab items and surfaces."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "No Shortened URL",
-          "description": "Expands t.co shortened URLs, removing the click-tracking intermediary.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Pause Search Suggestions",
-          "description": "Stops persisting search suggestions locally without breaking search.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Post & Profile UI",
-          "description": "Customizes post action buttons, Grok surfaces, and user profile tabs.",
-          "use": false,
-          "options": [
-            {
-              "key": "hideGrokPostAction",
-              "description": "Hide Grok analysis action button on posts (for Grok drawer and navigation tab, see Drawer Items and Navigation UI)."
-            },
-            {
-              "key": "hideProfileGrokButton",
-              "description": "Hide Grok Imagine action button on profile header banner (for Grok drawer and navigation tab, see Drawer Items and Navigation UI)."
-            },
-            {
-              "key": "profileTabs",
-              "description": "Hide extra connect and media tabs on user profiles."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Remove Ads",
-          "description": "Removes promoted posts, trends, and ads from timeline feeds.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Remove Premium Upsell",
-          "description": "Removes Premium subscription prompts and verification upsell surfaces across the app (for drawer entry, see Drawer Items).",
-          "use": true,
-          "options": [
-            {
-              "key": "hideProfileGetVerified",
-              "description": "Hide Get Verified subscription pill on user profiles (for drawer Premium entry, see Drawer Items)."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Round Off Numbers",
-          "description": "Displays full metric counts without abbreviation on posts and profiles.",
-          "use": false,
-          "options": [
-            {
-              "key": "showFullNumbers",
-              "description": "Show full numbers without abbreviation instead of rounded values (e.g. 1,234 instead of 1.2K)."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Share Links",
-          "description": "Customizes domain and format for shared post links (for opening custom links in app, see Custom Deep Links).",
-          "use": false,
-          "options": [
-            {
-              "key": "customSharingDomain",
-              "description": "Replace x.com with the selected custom domain when sharing post links."
-            },
-            {
-              "key": "sharingDomain",
-              "description": "Domain replacing x.com when sharing post links, e.g. https://fxtwitter.com."
-            },
-            {
-              "key": "legacyShareLinks",
-              "description": "Include post author username in shared links instead of the modern generic status format."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Show Sensitive Media",
-          "description": "Displays sensitive media directly without requiring tap to reveal.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Timeline UI",
-          "description": "Customizes timeline surfaces including banners, recommendation carousels, and action buttons.",
-          "use": true,
-          "options": [
-            {
-              "key": "hideBanner",
-              "description": "Hide new post banner."
-            },
-            {
-              "key": "hidePromoteButton",
-              "description": "Hide promote button under self posts."
-            },
-            {
-              "key": "hideNudgeButton",
-              "description": "Hide follow, subscribe, and follow back buttons on posts."
-            },
-            {
-              "key": "hideRecommendationItems",
-              "description": "Hide recommendation items such as Who to follow and Today's news in timeline, search, and replies."
-            },
-            {
-              "key": "hideDiscoverMore",
-              "description": "Hide Discover more recommendations in tweet reply threads."
-            },
-            {
-              "key": "hideRecommendedUsers",
-              "description": "Hide recommended users popup shown when following someone."
-            },
-            {
-              "key": "hideLiveThreads",
-              "description": "Hide live threads."
-            },
-            {
-              "key": "hideCommunityNotes",
-              "description": "Hide community notes and birdwatch contributions on posts."
-            },
-            {
-              "key": "hidePostMetrics",
-              "description": "Hide like, repost, and reply count metrics on timeline posts."
-            },
-            {
-              "key": "hideViewCount",
-              "description": "Hide post view count metrics on timeline and post detail."
-            },
-            {
-              "key": "inlineActionBar",
-              "description": "Hide inline action buttons across notification timeline."
-            },
-            {
-              "key": "timelineAddTab",
-              "description": "Hide add tab (+) button in home timeline tab header."
-            },
-            {
-              "key": "timelineTopBar",
-              "description": "Hide top bar elements in home and custom timelines."
-            },
-            {
-              "key": "hideLiveBanner",
-              "description": "Hide live and broadcast pill at top of home timeline."
-            }
-          ],
-          "compatible_versions": [
-            "12.34.0-prod.01"
-          ]
-        },
-        {
-          "name": "Unlock Video Downloads",
-          "description": "Lets you save videos and GIFs with the app's built-in download option without Premium.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.34.0-prod.01"
+            "12.35.0-prod.01"
           ]
         }
       ]
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "48a72fdb0c30480581c0f1c1c8a841e0ba0904bc3b28d09c5747de30f7f053e3",
-  "release_notes": "## [1.21.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.21.0...v1.21.1) (2026-10-17)\n\n### Bug Fixes\n\n* **hevy:** disable residual Adjust and Facebook manifest components ([3f3220e](https://github.com/kveld9/kveld-extra-morphe-patches/commit/3f3220e1dd0247db86457fceba26dfee5d0243ec))\n* **hevy:** disable residual background sync components and neutralize WorkManagerInitializer ([800066b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/800066bec6adad4ccaa588b9865ca2671d00ded4))\n* **hevy:** sinkhole React Native telemetry in NetworkingModule ([ef9376f](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ef9376f4c747859281ea4b731d1ed01e66d7731f))\n* **hevy:** use valid 0.0.0.0 sinkhole URL and preserve push messaging components ([c4b2413](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c4b24132c765bd2df4f631634ec0c2b0f932599e))\n* **moovit:** disable residual advertising activities and receiver ([683d692](https://github.com/kveld9/kveld-extra-morphe-patches/commit/683d692597fdfd360c1d280aa91270f628efdc98))\n* **nokoprint:** clear try blocks before replacing instructions in ad dispatch hooks ([1ec5ca5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/1ec5ca5751a79a9b23298405b6d472557069a77e))\n* **nokoprint:** disable residual AdMob, BidMachine and Tappx manifest components ([2137a5d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/2137a5d4b6686be6e5648fac5da6ead795fa2925))\n* **nokoprint:** disable residual FirebaseInitProvider and ComponentDiscoveryService ([4ea7c5a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4ea7c5a7a42e95b50aa6ab14c646e634c34ce848))\n* **nokoprint:** preserve FirebaseInitProvider and ensure register count in ad dispatch hook ([ac65586](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ac65586e747ef021a92554261c240ce08195c1ed))\n* **officehub:** ensure register count in transparency hook and fix metadata bundle string ([c53e83b](https://github.com/kveld9/kveld-extra-morphe-patches/commit/c53e83b8819050599c68637d17658d7b98bde3e2))\n* **officehub:** escape target version in compatibility description ([010f027](https://github.com/kveld9/kveld-extra-morphe-patches/commit/010f027b2c3982d991cda1876dca004d0dceda44))\n* **officehub:** interpolate package name constant in compatibility description ([e708031](https://github.com/kveld9/kveld-extra-morphe-patches/commit/e70803199922465a52f0ce0d9737ae78c8457db4))\n* **officehub:** neutralize Singular attribution SDK and sinkhole AppCenter/events telemetry ([83c8e0d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/83c8e0d4ef3ac5c3c3c4052d404b977e76537f7c))\n* **officehub:** update code transparency verification hook for 16.0.20604.20012 ([27f1656](https://github.com/kveld9/kveld-extra-morphe-patches/commit/27f1656a66c8a4b2e5ac0c92f60f5e541059f2b5))\n* **officehub:** update supported version to 16.0.20604.20012 ([e38c102](https://github.com/kveld9/kveld-extra-morphe-patches/commit/e38c1026a3c5eca16a2811ab81e5014272b3773c))\n",
-  "release_tag": "v1.21.1",
-  "release_date": "2026-10-17T04:28:04Z",
+  "fingerprint": "be7cff5281c65fddf7c2bc5bac89caa17279fc3af3c80b9a65a8abaaa5105054",
+  "release_notes": "## [1.22.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.22.0...v1.22.1) (2026-10-18)\n\n### Bug Fixes\n\n* **nokoprint:** honest label for the network security patch ([711af71](https://github.com/kveld9/kveld-extra-morphe-patches/commit/711af71b510dd427496ea280f48702fde22f3671))\n",
+  "release_tag": "v1.22.1",
+  "release_date": "2026-10-18T05:10:32Z",
   "isPreRelease": false
 }
