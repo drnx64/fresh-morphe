@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-18T14:34:58Z",
-  "version": "1.22.2",
-  "description": "## [1.22.2](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.22.1...v1.22.2) (2026-10-18)\n\n### Bug Fixes\n\n* **hevy:** narrow battery-patch manifest edits ([f150d46](https://github.com/kveld9/kveld-extra-morphe-patches/commit/f150d46eb3260b76508a94c5ae0f185f0553bceb))\n* **hevy:** report why a bundle failed the Hermes HBC96 check ([2425a00](https://github.com/kveld9/kveld-extra-morphe-patches/commit/2425a008284cc647a73a4d4ff859182364ab62a6))",
+  "created_at": "2026-10-18T22:34:09Z",
+  "version": "1.23.1",
+  "description": "## [1.23.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.23.0...v1.23.1) (2026-10-18)\n\n### Bug Fixes\n\n* **harness:** include source_name and optional keys in update-detector template ([575f284](https://github.com/kveld9/kveld-extra-morphe-patches/commit/575f2843703205863af96794756ab7fa592f5161))",
   "apps": [
     {
       "app_name": "Lightroom",
@@ -511,6 +511,57 @@
       ]
     },
     {
+      "app_name": "SUBE",
+      "package": "com.sube.app",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Google AppMeasurement, Firebase Analytics, and Firebase Crashlytics event dispatchers at bytecode entrypoints.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "Bypass SUBE NFC antenna check",
+          "description": "Bypasses the com.nxp.mifare system feature check in SUBE so the app runs on devices whose ROM does not declare NXP Mifare support.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "Cut Firebase Entirely",
+          "description": "Rewrites the Firebase Installations API endpoint (firebaseinstallations.googleapis.com) to 0.0.0.0 in DEX bytecode across all classes, severing background FID registration and installation auth tokens. WARNING: Breaks push notifications (FCM) and cloud messaging.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "Cut Firebase Manifest",
+          "description": "Disables Firebase Cloud Messaging services and instance ID receivers in AndroidManifest.xml. Breaks push notifications and FCM background delivery.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "SUBE Telemetry Manifest Purge",
+          "description": "Strips advertising permissions, disables measurement services, providers, and install receivers, and injects opt-out metadata flags in AndroidManifest.xml.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Moovit",
       "package": "com.tranzmate",
       "patches": [
@@ -597,9 +648,9 @@
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "be7cff5281c65fddf7c2bc5bac89caa17279fc3af3c80b9a65a8abaaa5105054",
-  "release_notes": "## [1.22.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.22.0...v1.22.1) (2026-10-18)\n\n### Bug Fixes\n\n* **nokoprint:** honest label for the network security patch ([711af71](https://github.com/kveld9/kveld-extra-morphe-patches/commit/711af71b510dd427496ea280f48702fde22f3671))\n",
-  "release_tag": "v1.22.1",
-  "release_date": "2026-10-18T05:10:32Z",
+  "fingerprint": "b47ba8557bcb51a400c68138018ce86fb518936d10a8cfd1511887271120177f",
+  "release_notes": "## [1.23.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.23.0...v1.23.1) (2026-10-18)\n\n### Bug Fixes\n\n* **harness:** include source_name and optional keys in update-detector template ([575f284](https://github.com/kveld9/kveld-extra-morphe-patches/commit/575f2843703205863af96794756ab7fa592f5161))\n",
+  "release_tag": "v1.23.1",
+  "release_date": "2026-10-18T22:34:09Z",
   "isPreRelease": false
 }
