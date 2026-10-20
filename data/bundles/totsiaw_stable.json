@@ -2,9 +2,9 @@
   "bundle": "totsiaw",
   "channel": "stable",
   "repo_url": "https://github.com/totsiaw/proxma-patches",
-  "created_at": "2026-10-20T06:40:38Z",
-  "version": "1.18.0",
-  "description": "## [1.18.0](https://github.com/totsiaw/proxma-patches/compare/1.17.0...1.18.0) (2026-10-20)\n\n### Bug Fixes\n\n* **netmonster:** expose the Google Maps key option in the patch list ([0a064e7](https://github.com/totsiaw/proxma-patches/commit/0a064e7103ef85140649eeac472178b5cb6ae3b9))\n* **netmonster:** retarget premium patch to 5.0.0 / 5.0.1 ([3e9a6ab](https://github.com/totsiaw/proxma-patches/commit/3e9a6abc5466a7333fb51da70fe5239a028fb171))\n* **simosa:** claim the daily check-in reward as soon as the state loads ([e9c07ad](https://github.com/totsiaw/proxma-patches/commit/e9c07ade230961213bb1f2d13ed8c35351075577))\n\n### New Features\n\n* **indrive:** add remove-ads patch for sinet.startup.inDriver 5.188.0 / 5.189.0 ([2c7a0a8](https://github.com/totsiaw/proxma-patches/commit/2c7a0a832496a2d221e250e8564cb6a167d16968))",
+  "created_at": "2026-10-20T16:42:11Z",
+  "version": "1.22.0",
+  "description": "## [1.22.0](https://github.com/totsiaw/proxma-patches/compare/1.21.0...1.22.0) (2026-10-20)\n\n### New Features\n\n* **simosa:** add pure black (AMOLED) background patch ([4788869](https://github.com/totsiaw/proxma-patches/commit/47888698a54a5de0f824da52ff753b7cb393ac13)), closes [#000000](https://github.com/totsiaw/proxma-patches/issues/000000)",
   "apps": [
     {
       "app_name": "Investify",
@@ -82,6 +82,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "3.3.5",
             "3.3.4.2"
           ]
         },
@@ -91,6 +92,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "3.3.5",
+            "3.3.4.2"
+          ]
+        },
+        {
+          "name": "Pure black background",
+          "description": "Turns Simosa's app background and Material surfaces pure black (#000000) for OLED screens: window, screens, sheets, dialogs and menus go true black and the app keeps its dark theme even when the phone is in light mode. Card and button colours are left as they are so text on them stays readable.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.3.5",
             "3.3.4.2"
           ]
         },
@@ -100,6 +112,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "3.3.5",
             "3.3.4.2"
           ]
         },
@@ -109,6 +122,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "3.3.5",
             "3.3.4.2"
           ]
         }
@@ -129,7 +143,7 @@
         },
         {
           "name": "Remove ads",
-          "description": "Removes native feed ads (Google GMA), the full-height ad slot, and the \"Buy with Delivery\" promo section (bar, cards and View all) from OLX. Pinned to the 18.8.0 build (matches that build's obfuscated feed classes).",
+          "description": "Removes native feed ads (Google GMA), the full-height ad slot, the \"Buy with Delivery\" promo section (bar, cards and View all), and the three item-page banner slots from OLX. Pinned to the 18.8.0 build (matches that build's obfuscated feed and item-page classes).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -305,6 +319,17 @@
       "package": "cz.mroczis.netmonster",
       "patches": [
         {
+          "name": "Bypass Play license check (NetMonster)",
+          "description": "Removes Google Play's PairIP license check so a re-signed NetMonster 5.0.x build runs instead of being blocked by the \"Get this app from Play\" screen. Without it, patched 5.0.0 / 5.0.1 open the Play Store on launch and close. No effect on 4.0.4, which has no such check.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.0.4",
+            "5.0.0",
+            "5.0.1"
+          ]
+        },
+        {
           "name": "Google Maps API key (NetMonster)",
           "description": "Optional: write YOUR OWN Google Maps API key so the map renders after re-signing (NetMonster's built-in key is cert-locked). Leave the key empty to leave the map as-is.",
           "use": true,
@@ -351,9 +376,9 @@
     }
   ],
   "patches_name": "Proxma Patches",
-  "fingerprint": "c800d9c5157604cdba2a1e9bbec30b1dd3c87813be4fd973cc936fbf2d5d0088",
-  "release_notes": "## [1.18.0](https://github.com/totsiaw/proxma-patches/compare/1.17.0...1.18.0) (2026-10-20)\n\n### Bug Fixes\n\n* **netmonster:** expose the Google Maps key option in the patch list ([0a064e7](https://github.com/totsiaw/proxma-patches/commit/0a064e7103ef85140649eeac472178b5cb6ae3b9))\n* **netmonster:** retarget premium patch to 5.0.0 / 5.0.1 ([3e9a6ab](https://github.com/totsiaw/proxma-patches/commit/3e9a6abc5466a7333fb51da70fe5239a028fb171))\n* **simosa:** claim the daily check-in reward as soon as the state loads ([e9c07ad](https://github.com/totsiaw/proxma-patches/commit/e9c07ade230961213bb1f2d13ed8c35351075577))\n\n### New Features\n\n* **indrive:** add remove-ads patch for sinet.startup.inDriver 5.188.0 / 5.189.0 ([2c7a0a8](https://github.com/totsiaw/proxma-patches/commit/2c7a0a832496a2d221e250e8564cb6a167d16968))\n",
-  "release_tag": "1.18.0",
-  "release_date": "2026-10-20T06:40:38Z",
+  "fingerprint": "2d4f3136bf780d2e4a086ee70f6e377aea0d8b50a3594012722e673fa6f14ad6",
+  "release_notes": "## [1.22.0](https://github.com/totsiaw/proxma-patches/compare/1.21.0...1.22.0) (2026-10-20)\n\n### New Features\n\n* **simosa:** add pure black (AMOLED) background patch ([4788869](https://github.com/totsiaw/proxma-patches/commit/47888698a54a5de0f824da52ff753b7cb393ac13)), closes [#000000](https://github.com/totsiaw/proxma-patches/issues/000000)\n",
+  "release_tag": "1.22.0",
+  "release_date": "2026-10-20T16:42:11Z",
   "isPreRelease": false
 }

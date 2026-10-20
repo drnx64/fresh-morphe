@@ -1794,19 +1794,53 @@
         {
           "app_name": "Simosa",
           "package": "com.jazz.jazzworld",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
             "patches_added": [
               {
                 "name": "Auto check-in & claim daily reward",
                 "description": "Claims the daily check-in reward on its own: opening the daily-rewards screen no longer waits for the check-in ad, the reward is granted right away. The missed-days restore and the day-10/20/30 milestone claim are untouched."
+              },
+              {
+                "name": "Pure black background",
+                "description": "Turns Simosa's app background and Material surfaces pure black (#000000) for OLED screens: window, screens, sheets, dialogs and menus go true black and the app keeps its dark theme even when the phone is in light mode. Card and button colours are left as they are so text on them stays readable."
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "Auto check-in & claim daily reward",
+                "description": "Claims the daily check-in reward on its own: opening the daily-rewards screen no longer waits for the check-in ad, the reward is granted right away. The missed-days restore and the day-10/20/30 milestone claim are untouched.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Bypass signature verification",
+                "description": "Disables Simosa's anti-tamper signature check so a re-signed APK launches normally instead of stalling on the splash / \"version is not correct\" dialog.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads & tracking",
+                "description": "Removes every ad (interstitial, banner, daily-reward) and every tracker (Mixpanel, Firebase, Facebook, AppsFlyer) — app events, network sends, ad-SDK requests (Google Ads / AppLovin / AnyMind / Prebid), SDK auto-collection, and the ipify IP leak. The app then phones home only to its own Jazz API.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove daily check-in ads",
+                "description": "Removes the SocialPlus daily check-in / in-feed ads (FeedAdsManager banner + native loaders) and the day-10/20/30 milestone-claim RewardedAd (the award is still granted, just with no ad). Separate from \"Remove ads & tracking\" to keep that patch Morphe-Manager-safe; enable this one when patching with the desktop CLI.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            4
           ]
         },
         {
@@ -1818,6 +1852,10 @@
               {
                 "name": "Google Maps API key (NetMonster)",
                 "description": "Optional: write YOUR OWN Google Maps API key so the map renders after re-signing (NetMonster's built-in key is cert-locked). Leave the key empty to leave the map as-is."
+              },
+              {
+                "name": "Bypass Play license check (NetMonster)",
+                "description": "Removes Google Play's PairIP license check so a re-signed NetMonster 5.0.x build runs instead of being blocked by the \"Get this app from Play\" screen. Without it, patched 5.0.0 / 5.0.1 open the Play Store on launch and close. No effect on 4.0.4, which has no such check."
               }
             ],
             "patches_removed": [],
@@ -1832,7 +1870,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            4
           ]
         },
         {
@@ -1842,6 +1881,28 @@
           "scan_numbers": [
             2
           ]
+        },
+        {
+          "app_name": "OLX",
+          "package": "com.olx.pk",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Remove ads",
+                "description": "Removes native feed ads (Google GMA), the full-height ad slot, the \"Buy with Delivery\" promo section (bar, cards and View all), and the three item-page banner slots from OLX. Pinned to the 18.8.0 build (matches that build's obfuscated feed and item-page classes).",
+                "previous_description": "Removes native feed ads (Google GMA), the full-height ad slot, and the \"Buy with Delivery\" promo section (bar, cards and View all) from OLX. Pinned to the 18.8.0 build (matches that build's obfuscated feed classes).",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            4
+          ]
         }
       ],
       "repo_url": "https://github.com/totsiaw/proxma-patches",
@@ -1850,7 +1911,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.17.0",
-      "new_version": "1.18.0",
+      "new_version": "1.22.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -2237,6 +2298,14 @@
               {
                 "name": "Show all recent searches",
                 "description": "Lists every recent search under the search bar instead of the first few. See all and the x on each row work as before. Starts off. Turn it on in HushGram settings > Explore."
+              },
+              {
+                "name": "Hide the search bar in Messages",
+                "description": "Takes the search bar, the Meta AI one too, off the top of your messages. Your chats and notes stay. Starts off. Turn it on in HushGram settings > Messages."
+              },
+              {
+                "name": "Swipe left to open the profile",
+                "description": "Makes a left swipe on a reel open the profile of the person who posted it, like Instagram used to. Tap Friends at the top to reach your friends' reels. Starts off. Turn it on in HushGram settings > Reels."
               }
             ],
             "patches_removed": [],
@@ -2999,7 +3068,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            4
           ]
         }
       ],
@@ -3676,19 +3746,227 @@
         {
           "app_name": "Waze",
           "package": "com.waze",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
             "patches_added": [
               {
                 "name": "Bigger speedometer & limit sign",
                 "description": "Scales the speedometer and the speed-limit sign."
+              },
+              {
+                "name": "Keep Waze alive",
+                "description": "Stops Waze shutting down after you leave it."
               }
             ],
-            "patches_removed": [],
-            "patches_modified": []
+            "patches_removed": [
+              {
+                "name": "Keep Waze alive on Android Auto",
+                "description": "Keeps Waze running after you disconnect from Android Auto."
+              },
+              {
+                "name": "Keep Waze alive on car",
+                "description": "Keeps Waze connected through car service restarts."
+              },
+              {
+                "name": "Stay awake in the background",
+                "description": "Keeps Waze running in the background without a route."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "AMOLED Dark Mode For UI",
+                "description": "Dark-mode backgrounds go pure black.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Alert distances",
+                "description": "Choose how early alerts fire: Standard, Moderate, Heavier or Custom.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Allow high refresh rate",
+                "description": "Runs Waze above 60 Hz, up to your screen's refresh rate.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Auto zoom",
+                "description": "Keeps your chosen auto-zoom mode from being reset.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Average-speed camera alerts",
+                "description": "Average-speed camera alerts, with the zone's recommended speed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Bigger speedometer & limit sign",
+                "description": "Scales the speedometer and the speed-limit sign.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Brief voice guidance",
+                "description": "Shorter spoken directions.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Car alerts as notifications",
+                "description": "Delivers police and hazard alerts as car notifications.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable Play Store updates",
+                "description": "Stops the Play Store from updating Waze.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Enable police & enforcement alerts",
+                "description": "Turns on police and enforcement alerts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Instrument cluster support",
+                "description": "Shows the map, alerts and ETA on the car's digital cluster, where it has one.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Lane guidance",
+                "description": "Lane guidance, including continue-straight hints.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Morphe YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music work as Waze's audio partner.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Radar sound at any speed",
+                "description": "Plays the speed-camera sound even below the limit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Removes ads from Waze.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Report speed limit",
+                "description": "Turns on fixing the speed limit from the speedometer.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show FPS counter",
+                "description": "Shows Waze's frames-per-second counter on the map.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show all cameras & road hazards",
+                "description": "Shows cameras and road hazards on the map, with alerts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Skip sign-in",
+                "description": "Boots straight into the map as a guest.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Smoother Android Auto map",
+                "description": "Smoothes the car map's movement and heading on Android Auto.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speed limit sign always shown",
+                "description": "Always shows the speed limit sign.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speed-limit decrease warnings",
+                "description": "Warns when the speed limit drops.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speed-limit sign style",
+                "description": "Picks the sign beside the speedometer: US or World.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Speedometer always on",
+                "description": "Visible at any speed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Theme",
+                "description": "Pick any theme for the map - day and night.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Traffic meter",
+                "description": "Shows the traffic meter on the car screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Unlock driver moods",
+                "description": "Unlocks all moods already on the device.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            4
           ]
         }
       ],
@@ -3698,7 +3976,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "0.22.8",
-      "new_version": "0.22.9",
+      "new_version": "0.23.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
