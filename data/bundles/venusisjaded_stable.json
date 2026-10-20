@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/VenusIsJaded/Venus-Patches",
   "created_at": "2026-10-13T03:03:46Z",
   "version": "1.9.0",
-  "description": "### 🐛 Bug Fixes\n\n* **Discord - Complete Quests automatically:** Fixed video Quests accepted earlier or resumed after restarting reporting progress about five times faster than real playback\n* **Discord - Complete Quests automatically:** Fixed video Quests continuing to send progress reports while Discord was in the background instead of pausing like Discord's video player\n* **Discord - Complete Quests automatically:** Fixed new Quests being automatically accepted while Discord was in the background instead of waiting until Discord is open\n* **Discord - Complete Quests automatically:** Fixed Play and Activity Quests waiting a full minute instead of one second for the final confirmation heartbeat at the target\n\n### 🔧 Improvements\n\n* **Discord - Complete Quests automatically:** Keep Play and Activity Quests running in the background while a paused video Quest waits until you reopen Discord\n\n### ⚡ Performance Improvements\n\n* **Discord:** Defer compiling Venus feature hooks, stores and settings pages until first needed and parse constant tables as JSON, cutting startup runtime eval time by almost 7x\n* **Discord:** Speed up startup Metro module wrapping and HBC98 bytecode prelude string decomposition when patching and launching Discord\n* **Discord - Pastel name colors:** Cache pastel colors per tone by user ID and copy each message row once, speeding up color lookups by 5.8x and row coloring by 1.5x\n* **Discord - Custom themes:** Sync and restore only touched experiment color slots when switching themes, making experiment slot updates 5.6x faster\n* **Discord - Spaces in channel names:** Cache formatted channel names and mentions with direct 1/2-argument hook calls, speeding up channel label rendering by 2.8x\n* **Discord - Translate messages:** Cache the target language code per locale and setting, speeding up per-row language resolution by 18x\n* **Discord - Message highlights:** Cache custom highlight color pairs and key recent highlights by message ID, speeding up highlighted row rendering by 1.3x\n* **Discord - Show hidden channels:** Filter ignored Flux events early, partition hidden directory channels in one pass, and add a 2-argument fast path for permission checks\n* **Discord - Keep deleted messages:** Filter ignored Flux events early and add 1/2-argument fast paths for message lookups and chat row generation\n* **Discord - User activity notifications:** Check watched-user membership before running ID validation or store lookups, speeding up gateway event checks by 7.8x\n* **Discord - Complete Quests automatically:** Avoid duplicate task lookups, eager application checks and repeated expiry date parsing when scanning Quests\n",
+  "description": "### ✨ New Features\n\n* **Discord:** Add `Server info` patch: hold a server's icon to see who's online, channels, roles, emojis, boosts, the owner and your friends there ([#77](https://github.com/VenusIsJaded/Venus-Patches/issues/77))\n* **Discord:** Add `Icon packs` patch: replace Discord's icons with 10 built-in community icon packs or a custom pack link, with a live preview ([#61](https://github.com/VenusIsJaded/Venus-Patches/issues/61))\n* **Discord:** Add `Custom branding` patch: install Venus next to normal Discord with your own app name, package name, icon color and icon picture ([#78](https://github.com/VenusIsJaded/Venus-Patches/issues/78))\n\n### ⚡ Performance Improvements\n\n* **Discord:** Shrink the startup runtime and register Discord's modules with less work, making the startup header 1.59x faster\n* **Discord - Venus settings:** Look up which feature each setting belongs to from a cache, 7.8x faster across settings, backups and switches\n* **Discord - Show hidden channels:** Skip rescanning unchanged server channel lists and check channel names with less work, up to 2.6x faster\n* **Discord - Custom themes:** Parse theme colors 2x faster and compile themes into Discord's color tables 1.3x faster\n* **Discord - Translate messages:** Skip escaping text that needs none when laying out translations, 1.7x faster\n* **Discord - Fix unknown mentions:** Check loaded messages for mentions with less work, 1.3x faster\n* **Discord - Show device indicators:** Read the current user once per presence update instead of once per indicator\n",
   "apps": [
     {
       "app_name": "Discord",
@@ -33,6 +33,32 @@
           "description": "Hold a bio to select and copy it.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "349.9 - Stable"
+          ]
+        },
+        {
+          "name": "Custom branding",
+          "description": "Installs Venus as its own app next to the normal Discord app, with the name, color and icon you pick. It starts signed out and keeps its own settings. Notifications work in both.",
+          "use": false,
+          "options": [
+            {
+              "key": "appName",
+              "description": "Type the name shown under the icon on your home screen and in your app list."
+            },
+            {
+              "key": "packageName",
+              "description": "Type any name made of lowercase words joined by dots, like com.discord.venus. A name other than com.discord installs Venus next to the normal Discord app. Type com.discord to replace Discord instead."
+            },
+            {
+              "key": "iconBackground",
+              "description": "The color behind the logo, to tell the two apps apart at a glance. Leave empty for Discord's blurple."
+            },
+            {
+              "key": "appIcon",
+              "description": "Replaces Discord's logo with your own square picture (PNG, JPG or WebP). Icon color still shows through any transparent parts. Leave empty to keep Discord's logo."
+            }
+          ],
           "compatible_versions": [
             "349.9 - Stable"
           ]
@@ -155,6 +181,15 @@
           ]
         },
         {
+          "name": "Icon packs",
+          "description": "Replace Discord's icons with community icon packs or a custom icon pack link. Works with Themes+ icon packs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "349.9 - Stable"
+          ]
+        },
+        {
           "name": "Jump to first message",
           "description": "A button to go straight to the start of a chat, channel or thread.",
           "use": true,
@@ -220,6 +255,15 @@
         {
           "name": "Send long messages",
           "description": "Type past the character limit. Long messages are sent in parts, split between lines or words. Based on SplitLargeMessages by sunnie.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "349.9 - Stable"
+          ]
+        },
+        {
+          "name": "Server info",
+          "description": "Hold a server's icon to see its details, boosts and friends there. Based on ServerInfo by fshin.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -347,7 +391,7 @@
     }
   ],
   "patches_name": "VenusIsJaded",
-  "fingerprint": "07470d08a1e47f847d6161b84e79c5832f49c6b20be5a61cdb759fd9e14ca43f",
+  "fingerprint": "c90eb1b901c8ec1ec6cdba473eec84e22ef712ad94d713c197f0887435e9d28a",
   "release_notes": "## [1.9.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.8.0...v1.9.0) (2026-10-13)\n\n### ✨ New Features\n\n* **Discord:** Add `ValidUser` patch\n* **Discord - ValidUser:** Fix @unknown-user mentions automatically, with no extra taps\n* **Discord:** Add `Profile bar settings button` patch\n* **Discord - Profile bar settings button:** Open Venus settings from a button next to the notifications bell\n* **Discord:** Add `Split Large Messages` patch\n* **Discord - Split Large Messages:** Send messages over the limit as several, keeping code blocks closed\n* **Discord:** Add `Translate messages` patch\n* **Discord - Translate messages:** Show messages in other languages translated into your language, newest first\n* **Discord - Translate messages:** Keep translations on your phone, so reopened chats show them at once\n\n### 🐛 Bug Fixes\n\n* **Discord - Pastelize:** Fixed Color message text leaving the quoted message in a reply uncolored instead of using that author's pastel color ([#45](https://github.com/VenusIsJaded/Venus-Patches/issues/45))\n\n### 🔧 Improvements\n\n* **Discord - Venus settings:** Every feature starts off, so nothing changes until you turn it on\n",
   "release_tag": "v1.9.0",
   "release_date": "2026-10-13T03:03:46Z",
