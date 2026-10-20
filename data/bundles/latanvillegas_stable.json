@@ -2,10 +2,115 @@
   "bundle": "latanvillegas",
   "channel": "stable",
   "repo_url": "https://github.com/latanvillegas/modo-patches",
-  "created_at": "2026-10-10T04:45:16Z",
-  "version": "1.50.2",
-  "description": "## [1.50.2](https://github.com/latanvillegas/modo-patches/compare/v1.50.1...v1.50.2) (2026-10-10)\n\n### 🐛 Bug Fixes\n\n* **ci:** repair YAML and enforce DEX bundle check ([d493d16](https://github.com/latanvillegas/modo-patches/commit/d493d165fc966da7d09a6fa39deeeacd06a781c5))\n* **ci:** supply D8 a JAR extension when dexing MPP classes ([2428625](https://github.com/latanvillegas/modo-patches/commit/2428625350948b66aea57206b9583787f415f312))",
+  "created_at": "2026-10-19T22:30:34Z",
+  "version": "1.51.0",
+  "description": "## [1.51.0](https://github.com/latanvillegas/modo-patches/compare/v1.50.2...v1.51.0) (2026-10-19)\n\n### ✨ New Features\n\n* integrate Movie, Cromite and File Manager Plus patches ([012177b](https://github.com/latanvillegas/modo-patches/commit/012177ba88bfbdb45af1af1e9e59be8ac27e5d37))",
   "apps": [
+    {
+      "app_name": "Filemanager",
+      "package": "com.alphainventor.filemanager",
+      "patches": [
+        {
+          "name": "File Manager Plus - Audio Cover Thumbnails",
+          "description": "Adds WAV/APIC cover thumbnails after native and MediaStore lookup fail; other audio formats retain their original artwork.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - High Quality Album Art",
+          "description": "Uses full-resolution album artwork, ARGB_8888 decoding, and WAV/ID3v2.3 APIC fallback when Android finds no embedded cover.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Premium (local feature gate experimental)",
+          "description": "Activa el control local principal de funciones Premium sin consulta de red en ese control. Oculta controles de caducidad/suscripción en la interfaz Premium; no crea una licencia vitalicia firmada ni elimina Billing.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy",
+          "description": "Desactiva las estadísticas de uso y los eventos de Analytics controlados por usage_diagnostics en File Manager Plus 3.8.2.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy v2 (Sessions experimental)",
+          "description": "Desactiva Firebase Sessions mediante su control de configuración; requiere pruebas en Android.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy v3 (Ad requests experimental)",
+          "description": "Evita solicitudes de banners y anuncios nativos, notificando fallo a la interfaz. Requiere pruebas en Android.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy v3 (App Open Ads experimental)",
+          "description": "Impide iniciar y solicitar anuncios de apertura. No desactiva banners ni anuncios nativos.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy v3 (Crashlytics experimental)",
+          "description": "Desactiva la recopilación automática de Crashlytics mediante su control interno. No bloquea todavía AdMob.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy v4 (Ad placement gates experimental)",
+          "description": "Desactiva ocho controles de anuncios sin eliminar bibliotecas ni alterar licencias o temas. Experimental.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Privacy v4 (Remote Config experimental)",
+          "description": "Evita la descarga de Firebase Remote Config y conserva los valores locales. Experimental.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        },
+        {
+          "name": "File Manager Plus - Pure AMOLED",
+          "description": "Separa superficies blancas en modo claro y negras AMOLED en modo oscuro; conserva la selección de tema en File Manager Plus 3.8.2.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.8.2"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "YouTube Music",
       "package": "com.google.android.apps.youtube.music",
@@ -1842,6 +1947,57 @@
       ]
     },
     {
+      "app_name": "Cinevi",
+      "package": "com.movievn.cinevi",
+      "patches": [
+        {
+          "name": "Movie - Hide status bar",
+          "description": "Hides the Android status bar and removes the window's top layout reservation without hiding bottom navigation.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.0.0"
+          ]
+        },
+        {
+          "name": "Movie - Native Picture-in-Picture",
+          "description": "Enter native Android PiP when leaving the Movie video player.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.0.0"
+          ]
+        },
+        {
+          "name": "Movie - Pure AMOLED",
+          "description": "Makes verified Movie interface surfaces pure black.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.0.0"
+          ]
+        },
+        {
+          "name": "Movie - Remove status bar spacing",
+          "description": "Removes Movie-owned status bar spacers, including their runtime measured height, and home header top spacing.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.0.0"
+          ]
+        },
+        {
+          "name": "Movie - Video Quality Selector",
+          "description": "Adds a fullscreen video quality popup using real ExoPlayer tracks and preserves audio/subtitle overrides.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.0.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Reddit",
       "package": "com.reddit.frontpage",
       "patches": [
@@ -2118,9 +2274,90 @@
       "package": "org.cromite.cromite",
       "patches": [
         {
+          "name": "AMOLED - App menu",
+          "description": "Restores native AppMenu resources and three verified bytecode injections.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "AMOLED - Context menu",
+          "description": "Applies Device default / Pure Black / Pure White to the verified Cromite context-menu content surface while preserving the transparent outer dialog window.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "AMOLED - New Tab Page (tile resources)",
+          "description": "Recovers original NTP tile icon background resources; NewTabPageLayout and Most Visited DEX changes remain pending.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "AMOLED - Omnibox and search UI",
+          "description": "Applies Device default / Pure Black / Pure White to verified LocationBarTablet background setters without adding control-flow branches.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "AMOLED - Settings",
+          "description": "Recovers SettingsActivity, preference backgrounds, and the original containment-card color override.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "AMOLED - Tabs and tab strip",
+          "description": "Applies Device default / Pure Black / Pure White directly to verified Cromite TabGridView and TabGridDialogView backgrounds.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "AMOLED - Toolbar",
+          "description": "Applies Device default / Pure Black / Pure White directly to the verified Cromite ToolbarTablet background setter.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "Cromite DevTools: native COPY button (experimental)",
+          "description": "Embed verified DevTools frontend and bootstrap for Cromite 153; runtime behavior unverified.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
           "name": "Hide Android status bar",
           "description": "Hides the Android status bar in Cromite (clock, battery, signal and notification icons).",
           "use": false,
+          "options": [],
+          "compatible_versions": [
+            "153.0.8010.37"
+          ]
+        },
+        {
+          "name": "Hide status bar in Settings",
+          "description": "Independent Cromite Settings patch. Hides the Android status bar only in SettingsActivity and does not modify the working main-browser status-bar patch.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "153.0.8010.37"
@@ -2148,9 +2385,9 @@
     }
   ],
   "patches_name": "Morphe Patches",
-  "fingerprint": "4a5dd834acbe909f1f53f08a31bcd6e611e640522cb26d46d4146437dcf927f4",
-  "release_notes": "## [1.50.2](https://github.com/latanvillegas/modo-patches/compare/v1.50.1...v1.50.2) (2026-10-10)\n\n### 🐛 Bug Fixes\n\n* **ci:** repair YAML and enforce DEX bundle check ([d493d16](https://github.com/latanvillegas/modo-patches/commit/d493d165fc966da7d09a6fa39deeeacd06a781c5))\n* **ci:** supply D8 a JAR extension when dexing MPP classes ([2428625](https://github.com/latanvillegas/modo-patches/commit/2428625350948b66aea57206b9583787f415f312))\n",
-  "release_tag": "v1.50.2",
-  "release_date": "2026-10-10T04:45:16Z",
+  "fingerprint": "ff442a5860fcfedeb93ddca88888cd85ff603721a780fd55ae9ffead0e8a4734",
+  "release_notes": "## [1.51.0](https://github.com/latanvillegas/modo-patches/compare/v1.50.2...v1.51.0) (2026-10-19)\n\n### ✨ New Features\n\n* integrate Movie, Cromite and File Manager Plus patches ([012177b](https://github.com/latanvillegas/modo-patches/commit/012177ba88bfbdb45af1af1e9e59be8ac27e5d37))\n",
+  "release_tag": "v1.51.0",
+  "release_date": "2026-10-19T22:30:34Z",
   "isPreRelease": false
 }
