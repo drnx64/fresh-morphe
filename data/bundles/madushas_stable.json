@@ -1,112 +1,94 @@
 {
   "bundle": "madushas",
   "channel": "stable",
-  "repo_url": "https://github.com/madushas/tele_web_patch",
-  "created_at": "2026-10-15T08:21:21Z",
-  "version": "1.0.0",
-  "description": "Initial release: 10 patches for Telegram Web (org.telegram.messenger.web) 10.2.0 (40569) — Unlock Premium, Bypass integrity check, Disable auto-update, Remove ads, Download speed boost, Hide typing indicator, Anti-delete messages, Anti-screenshot notification, Disable channel switching, Voice to music.",
+  "repo_url": "https://github.com/madushas/pdb_patch",
+  "created_at": "2026-10-19T06:00:00Z",
+  "version": "0.2.0",
+  "description": "Morphe patches for Pdb (pdb.app): premium unlock, ads removal, PairIP license bypass, tracker shutdown, launcher-icon fix and a power-user feature menu.",
   "apps": [
     {
-      "app_name": "Telegram Web",
-      "package": "org.telegram.messenger.web",
+      "app_name": "Pdb",
+      "package": "pdb.app",
       "patches": [
         {
-          "name": "Anti-delete messages",
-          "description": "Prevents messages deleted by other users from being removed locally.",
+          "name": "Allow standalone install (split-less APK)",
+          "description": "Removes Pdb's base-APK split requirement (requiredSplitTypes=base__abi,base__density) so the single patched APK installs. Required when patching the App Bundle's base APK.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
-          "name": "Anti-screenshot notification",
-          "description": "Blocks screenshot notifications from being sent to the other user.",
+          "name": "Bypass PairIP license check",
+          "description": "Disables Pdb's PairIP / Play licence verification so the app runs after Morphe re-signs it. Restores the real Application class (pdb.app.App).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
-          "name": "Bypass integrity check",
-          "description": "Spoofs certificate fingerprint and SafetyNet results so login works on patched APK.",
+          "name": "Disable trackers",
+          "description": "Disables Google Analytics measurement and Yandex AppMetrica telemetry, and turns off Crashlytics/Analytics data collection via their official opt-out flags.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
-          "name": "Disable auto-update",
-          "description": "Disables automatic app update checks, the blocking update screen, and the proxy sponsor channel insertion.",
+          "name": "Fix app icon",
+          "description": "Gives the default launcher icon a real foreground. The base APK ships an adaptive icon with a null foreground (the visible icon normally comes from a theme alias enabled at runtime).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
-          "name": "Disable channel switching",
-          "description": "Disables the pull-down gesture that switches to the next unread channel.",
+          "name": "Pdb Extras feature menu",
+          "description": "Adds a Pdb Extras entry to the top of Pdb's Settings screen with toggles, hidden overrides, power tools (preference writer, chat data, identity controls) and a one-tap shortcut to Pdb's native dev screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
-          "name": "Download speed boost",
-          "description": "Increases download chunk size to 1 MB and max concurrent requests to 12.",
+          "name": "Pdb Extras — resources",
+          "description": "Adds the Pdb Extras entry to the Settings screen and registers the extension components.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
-          ]
-        },
-        {
-          "name": "Hide typing indicator",
-          "description": "Hides your typing indicator from other users in all chats.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
           "name": "Remove ads",
-          "description": "Removes sponsored messages from all chats and channels.",
+          "description": "Disables Pdb's ad SDKs (GMS, AppLovin, Vungle, Yandex, Pangle) and turns off in-app ad initialisation.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         },
         {
-          "name": "Unlock Premium",
-          "description": "Unlocks Telegram Premium features for the current account.",
+          "name": "Unlock Pro",
+          "description": "Unlocks Pdb Pro: premium badge plus every entitlement (no ads, hide online, unlimited rewinds/extends, super chats, visitors, view requests, virtual travel, extra IRL slots, Power PDB server, Wonder-chat reconnect, AI-friend limits, name colour, chat bubbles).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2.0"
-          ]
-        },
-        {
-          "name": "Voice to music",
-          "description": "Plays voice notes in the full music player with seek bar and background playback.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "10.2.0"
+            "2.134.6"
           ]
         }
       ]
     }
   ],
-  "patches_name": "Telegram Web 10.2.0 Patches",
-  "fingerprint": "f99425f2557ccb08e23ae093f471a8092e3bd397aaa66bb6e654413a4442f0af",
-  "release_notes": "Initial release: 10 Morphe patches for Telegram Web (org.telegram.messenger.web) 10.2.0 (versionCode 40569).",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-10-15T08:21:21Z",
+  "patches_name": "Pdb Patches",
+  "fingerprint": "5a6e51454404a7870505a3121fe316bfe8bec890238c3e51b1fad9daaeb210e5",
+  "release_notes": "## Pdb Extras v0.2.0\n\nPower-user release for **Pdb: Personality & Friends** (`pdb.app` 2.134.6).\n\n### Fixes in this release\n- **Launcher icon restored** — the base APK ships an adaptive icon with a null\n  foreground (the real icon normally comes from a runtime-enabled theme alias).\n  The patch now points the default icon at the app's own brand glyph.\n- **Startup crash fixed** — Crashlytics registrars are kept registered (Pdb's\n  `Application.onCreate` requires them) while crash/analytics collection is\n  disabled via the official Firebase opt-out meta-data.\n- **Metadata fixed** — the bundle asset, `patches-bundle.json` download URL and\n  the project version now all agree (`0.2.0`).\n\n### Bundle\n- `patches-0.2.0.mpp` — 8 patches for `pdb.app` 2.134.6 (versionCode 2694):\n  standalone install, PairIP bypass, tracker shutdown, app-icon fix, Pdb Extras\n  menu + resources, ad removal, Pro unlock.\n\n### Notes\n- Pdb is ARM-only; on x86_64 emulators the app needs the arm64 `libmmkv` workaround.\n- Google Sign-In cannot work on a re-signed APK (GMS validates the SHA-1).\n",
+  "release_tag": "v0.2.0",
+  "release_date": "2026-10-19T06:00:00Z",
   "isPreRelease": false
 }

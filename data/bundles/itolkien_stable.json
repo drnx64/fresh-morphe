@@ -1,9 +1,9 @@
 {
   "bundle": "itolkien",
   "channel": "stable",
-  "repo_url": "https://github.com/itolkien/morphe-universal-captions",
-  "created_at": "2026-10-16T17:38:17Z",
-  "version": "2.1.0",
+  "repo_url": "https://github.com/itolkien/universal-captions",
+  "created_at": "2026-10-20T03:35:22Z",
+  "version": "3.0.1",
   "description": "Native YouTube Auto-translate languages and missing-menu fallback from original captions. Caption preferences remain managed by Morphe.",
   "apps": [
     {
@@ -25,8 +25,8 @@
   ],
   "patches_name": "itolkien",
   "fingerprint": "7af9adf59a4c13e7ead3813a852350f2ea81f9703572c11a30f160f0ea32a639",
-  "release_notes": "Restores missing YouTube Auto-translate menus and expands language coverage using YouTube's per-video metadata.\r\n\r\n### Changes\r\n- Restore the native Auto-translate option when valid original captions exist but Android returns an empty translation list.\r\n- Support ASR, uploaded/manual and named captions, including multiple current-audio sources.\r\n- Read target languages dynamically; use the dated 156-language fallback only when native metadata is empty. Preserve regional menu targets.\r\n- Preserve signed source URLs and Morphe's caption preference, Off and manual-selection policies. Existing native menus respect Morphe's additional-language setting.\r\n\r\n### Installation\r\nImport `universal-captions-2.1.0.mpp` or refresh this repository in Morphe Manager. Select **Universal Captions - additional translation languages** alongside **Captions**, using a clean YouTube **21.20.405** or **21.41.525** APK. Replace older experimental Universal Captions imports; select only one version. Repatch YouTube to apply the update.\r\n\r\n### Validation\r\nThe runtime is byte-for-byte identical to device-tested experiment.4. The user reported successful translation, Off/on, audio/source changes and video switching on 21.20.405; the app-process capture showed no crash. Automated construction checks cover 193,440 source/target/locale cases. The full 45-test native-combined suite passed again, and the exact stable MPP passed Android patching/DEX/hierarchy/signing verification on both declared APK versions. Native coexistence in both orders was validated with the identical experimental implementation.\r\n\r\nAdditional user-reported device testing confirmed working operation across YouTube **20.21.37–21.42.241**, including both endpoints and intermediate versions. Automated APK validation covers **21.20.405** and **21.41.525**.\r\n\r\n### Known limits\r\nYouTube may withhold a translation for particular videos/accounts. Native automatic regional preference matching may choose generic `pt` for `pt-PT`; manual menu options remain separate. The fallback uses the current-audio default/native order and does not guarantee tracking every manual source choice.\r\n\r\nSHA-256 (`universal-captions-2.1.0.mpp`):\r\n`f25f28130260895efcaea4f267b26293d057b2401c0e643c53d0aa7275923622`\r\n",
-  "release_tag": "v2.1.0",
-  "release_date": "2026-10-16T17:38:17Z",
+  "release_notes": "Universal Captions 3.0.1 is a maintenance update to 3.0.0. The translation menu and source-selection behavior remain unchanged.\r\n\r\n### What's Changed\r\n\r\n- **Safer caption parser cleanup:** Cleanup is now request-specific. Native exception handlers can no longer close another decoder's styling scope.\r\n- **Code cleanup:** Removed two test-only `augment()` overloads from the Android extension.\r\n- **Improved test coverage:** Added regression tests for nested exception cleanup and the recorded 156-language fallback catalog.\r\n- **Release workflow fixes:** Corrected the Morphe Manager bundle URL. The workflow now reads the version directly from `patches-list.json` and skips versions that have already been published.\r\n- **Documentation:** Updated the architecture and compatibility documentation.\r\n\r\n### Installation\r\n\r\nDownload `universal-captions-3.0.1.mpp` or refresh the custom source in **Morphe Manager**.\r\n\r\nPatch a clean YouTube APK using one of the supported versions: **21.20.405** or **21.41.525**.\r\n\r\n### Testing & Compatibility\r\n\r\n- Universal Captions 3.0 development builds were manually tested on both supported YouTube versions.\r\n- Version 3.0.1 includes automated regression coverage. The updated parser cleanup has not been separately documented in an on-device test.\r\n- YouTube may still withhold translations for certain tracks or languages.\r\n\r\n### Release Files\r\n\r\nThis release includes the **MPP patch bundle**, patch metadata, and a **SHA-256 checksum** for verification. It does not distribute a modified YouTube APK.",
+  "release_tag": "v3.0.1",
+  "release_date": "2026-10-20T03:35:22Z",
   "isPreRelease": false
 }

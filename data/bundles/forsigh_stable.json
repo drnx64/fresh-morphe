@@ -2,9 +2,9 @@
   "bundle": "forsigh",
   "channel": "stable",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-10-16T15:54:55Z",
-  "version": "0.22.8",
-  "description": "## [0.22.8](https://github.com/Forsigh/waze-patches/compare/v0.22.7...v0.22.8) (2026-10-16)\n\n### 🚀 Updated App Support\n\n* Android Auto tuning rows - smoother car map, FPS counter, car theme ([3d00b69](https://github.com/Forsigh/waze-patches/commit/3d00b69c4de40289145a25ce593d17706a91952a))\n* borrowed rows - speed-limit sign, no-AI, no-Assistant, report speed limit, stay awake, AA heads-up; ads/enforcement/alert-distance upgrades (bearinmindcat ports, our way) ([e188201](https://github.com/Forsigh/waze-patches/commit/e18820145c93941fa7943637328d66805f847417))\n* car feature rows - instrument cluster, traffic meter, car alerts, keep-alive ([34e1760](https://github.com/Forsigh/waze-patches/commit/34e17609ba014f7bdddf538f10711417567bbdf7))\n* group the Android Auto rows under their own Morphe category ([efac7ec](https://github.com/Forsigh/waze-patches/commit/efac7ec23dbf41e77c07d6872f811cc4134cb66e))\n* move the experimental rows (FPS counter, stay awake, keep alive, instrument cluster, AA heads-up) into their own Morphe 'Experimental' category ([a259705](https://github.com/Forsigh/waze-patches/commit/a259705b1e4aa940126fda7c3a0db967f6e39a70))\n* remove the Car screen follows the phone theme and Android Auto heads-up distances rows (28 patches) ([c100978](https://github.com/Forsigh/waze-patches/commit/c1009785fde5ddf01632db5bb22d06b2bfc35670))\n* remove the No AI reporting and No Google Assistant rows (30 patches) ([a9c6a23](https://github.com/Forsigh/waze-patches/commit/a9c6a23c3553923867d73c1098ab4e08c4ab1d1c))\n* rename 'UI AMOLED dark mode' to 'AMOLED Dark Mode For UI' ([81ef420](https://github.com/Forsigh/waze-patches/commit/81ef4204cb6ac2c2ad97756da5936ae105f2f78e))\n* support Waze 5.25.90.900 beta - multi-version anchors (welcome g/v, privacy g/p, consents bi/b + ba/a, age factory b/l, mood gates t()/r()/p(), theme extractor g.h, config delegate o/aq) ([cb0c95a](https://github.com/Forsigh/waze-patches/commit/cb0c95a44026db1e92562b1a40e269b94c69f489))",
+  "created_at": "2026-10-20T07:34:21Z",
+  "version": "0.22.9",
+  "description": "## [0.22.9](https://github.com/Forsigh/waze-patches/compare/v0.22.8...v0.22.9) (2026-10-20)\n\n### 🐛 Bug Fixes\n\n* speed-limit sign always, speedometer first-session gate, add size row ([1d35276](https://github.com/Forsigh/waze-patches/commit/1d352762253b34c8e474f0e93bf04b0af8d9ac6a))",
   "apps": [
     {
       "app_name": "Waze",
@@ -114,6 +114,27 @@
           "description": "Average-speed camera alerts, with the zone's recommended speed.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900"
+          ]
+        },
+        {
+          "name": "Bigger speedometer & limit sign",
+          "description": "Scales the speedometer and the speed-limit sign.",
+          "use": false,
+          "options": [
+            {
+              "key": "dial",
+              "description": "Ring, speed number and unit."
+            },
+            {
+              "key": "sign",
+              "description": "The limit sign next to the speedometer."
+            }
+          ],
           "compatible_versions": [
             "5.24.90.901",
             "5.25.0.1",
@@ -437,9 +458,9 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "fd5087c8a4430ca9144e1c4272e391b6962a4615dbd5de784e792e637a445e69",
-  "release_notes": "Fixed build for Waze 5.25.90.900.\n\n### Fixed\n* Config overrides are only injected for keys the build declares, so Waze 5.25.90.900 starts without the NoSuchFieldError crash\n\n### New\n* **Keep Waze alive on Android Auto**: keeps Waze running after you disconnect from the car (adjustable, default 10 minutes)\n* **Morphe YouTube Music as a Waze audio partner**: Waze's hidden audio-extension switches are now forced on, so the partner shows up without waiting on Waze's server flags\n\n### App support\n* Waze 5.25.90.900 (1030741) supported, verified end to end (all 29 rows)\n\nFull diff: [v0.22.7...v0.22.8](https://github.com/Forsigh/waze-patches/compare/v0.22.7...v0.22.8)\n",
-  "release_tag": "v0.22.8",
-  "release_date": "2026-10-16T15:54:55Z",
+  "fingerprint": "2d6b9d9994c62a182e754ea660c9c886edd33a36319e2a97330057dcc0fafc45",
+  "release_notes": "## [0.22.9](https://github.com/Forsigh/waze-patches/compare/v0.22.8...v0.22.9) (2026-10-20)\n\n### 🐛 Bug Fixes\n\n* speed-limit sign always, speedometer first-session gate, add size row ([1d35276](https://github.com/Forsigh/waze-patches/commit/1d352762253b34c8e474f0e93bf04b0af8d9ac6a))\n",
+  "release_tag": "v0.22.9",
+  "release_date": "2026-10-20T07:34:21Z",
   "isPreRelease": false
 }

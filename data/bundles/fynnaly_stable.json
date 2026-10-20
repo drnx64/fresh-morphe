@@ -1,121 +1,40 @@
 {
   "bundle": "fynnaly",
   "channel": "stable",
-  "repo_url": "https://github.com/fynnaly/test-morphe-patch",
-  "created_at": "2026-10-08T07:06:40Z",
-  "version": "1.9.0",
-  "description": "## [1.11.0](https://github.com/fynnaly/test-morphe-patch/compare/v1.10.1...v1.11.0) (2026-10-08)\n\n### ✨ New Features\n\n* **botworld:** force GMS static availability and add ads path tracer ([05c09d2](https://github.com/fynnaly/test-morphe-patch/commit/05c09d2f0a8ccba9234b4efe0ca81bb96caeb3ca))",
+  "repo_url": "https://github.com/fynnaly/morphe-patches",
+  "created_at": "2026-10-17T02:35:44Z",
+  "version": "1.0.0",
+  "description": "## 1.0.0 (2026-10-17)\n\n### 🐛 Bug Fixes\n\n* match PairIP StartupLauncher without exact access flags ([22a988b](https://github.com/fynnaly/morphe-patches/commit/22a988b9fc293c70c3a43af429c3ce4d145a32a3)), closes [#1](https://github.com/fynnaly/morphe-patches/issues/1)\n* remove trailing comma breaking patches build script ([354ce29](https://github.com/fynnaly/morphe-patches/commit/354ce2962e8563c3a4046ee27221eb0bd10c0281))\n* stop neutralizing VMRunner, it force-closes via Facebook provider ([42a8106](https://github.com/fynnaly/morphe-patches/commit/42a81066b76aec86574f0e39d4bc87fe82bb4129))\n\n### ✨ New Features\n\n* add PairIP bypass for 20 Minutes Till Dawn 8.6 ([4a50bf2](https://github.com/fynnaly/morphe-patches/commit/4a50bf21d879aed19187d991ecb6ddec198751a1))\n* bypass PairIP signature, license and VM gate for 20MTD ([fc766ae](https://github.com/fynnaly/morphe-patches/commit/fc766ae4a1660f4e681e47d904a5e74c6a879761))\n* fully unlock 20 Minutes Till Dawn runtime (PairIP VM, string pool, ads SDK) ([9dea8ac](https://github.com/fynnaly/morphe-patches/commit/9dea8ac660d1a772448fa8fa8325452b3c535fb2))\n* skip rewarded ads to instantly grant unlock rewards ([a70095f](https://github.com/fynnaly/morphe-patches/commit/a70095f52b649bac1f70984c68612ecc21f466b4))",
   "apps": [
     {
-      "app_name": "Botworld",
-      "package": "com.featherweightgames.fx",
+      "app_name": "20 Minutes Till Dawn",
+      "package": "com.flanne.minutestilldawn.roguelike.shooting.fr.gp",
       "patches": [
         {
-          "name": "Ads path tracer",
-          "description": "Logs every Java ads-bridge entry via logcat (tag BOTW) for diagnosis. Proves whether the game reaches the Java layer. Disable for release builds.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.36.2"
-          ]
-        },
-        {
-          "name": "Disable tamper guard",
-          "description": "Neutralizes the LuckyPatcher/signature guard so the re-signed app does not kill itself on launch. Does not grant items or currency.",
+          "name": "Bypass PairIP signature, license & VM gate",
+          "description": "Neutralises the PairIP signature and license gates, restores the virtualised lifecycle methods with real Unity delegating bodies, and skips the startup VM program. Required for every Minutes Till Dawn patch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.36.2"
-          ]
-        },
-        {
-          "name": "Force GMS rewarded available",
-          "description": "Forces the GMS static RewardedAd.isAdAvailable() probe to true so any direct static callers (bypassing the Unity bridge) also take the reward path. Pairs with the Skip patches; IAP purchases still require real payment.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.36.2"
-          ]
-        },
-        {
-          "name": "Play offline (guest)",
-          "description": "Disables Play Games sign-in so the game runs as guest without a Google login. Leaves the ads SDKs initializable so the local Skip patches can complete the reward flow. Does not grant items or currency.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.36.2"
-          ]
-        },
-        {
-          "name": "Skip AdMob rewarded ads",
-          "description": "Completes the AdMob rewarded flow locally so the requested reward is granted without loading or playing an ad. Pairs with Skip rewarded ads (AppLovin MAX); IAP purchases still require real payment.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.36.2"
-          ]
-        },
-        {
-          "name": "Skip decagon rewarded ads",
-          "description": "Completes the decagon AdMob rewarded flow locally so the requested reward is granted without loading or playing an ad. Pairs with Skip AdMob rewarded ads; IAP purchases still require real payment.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.36.2"
+            "8.6"
           ]
         },
         {
           "name": "Skip rewarded ads",
-          "description": "Completes the rewarded-video flow locally so the requested reward is granted without playing an ad. No ad-network impression or revenue is synthesized; IAP purchases still require real payment.",
+          "description": "Grants the rewarded-ad reward without playing the video, so every \"watch an ad to unlock\" gate (heroes, guns, coupons, daily gift) resolves instantly.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.36.2"
-          ]
-        }
-      ]
-    },
-    {
-      "app_name": "Wibuku",
-      "package": "wibuku.app.wibuku",
-      "patches": [
-        {
-          "name": "Google sign-in via MicroG-RE",
-          "description": "Routes Google sign-in through MicroG-RE 7.1.1+. Requires app.revanced.android.gms with the same Google account.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.4.5",
-            "1.4.1"
-          ]
-        },
-        {
-          "name": "Login tracer",
-          "description": "Logs splash/login gate progress via logcat for diagnosis. Disable for release builds.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.4.5",
-            "1.4.1"
-          ]
-        },
-        {
-          "name": "Premium",
-          "description": "Forces the local Premium check to always pass. Does not activate a subscription on your account; server-gated features may still require a real purchase.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.4.5",
-            "1.4.1"
+            "8.6"
           ]
         }
       ]
     }
   ],
-  "patches_name": "Wibuku Morphe Patches",
-  "fingerprint": "73ae20d5a47abc0ad6bc31aec9bccb644bce35904d3fb418e9de1d5d67f9f63f",
-  "release_notes": "## [1.9.0](https://github.com/fynnaly/test-morphe-patch/compare/v1.8.0...v1.9.0) (2026-10-08)\n\n### ✨ New Features\n\n* **botworld:** cover decagon bridge and fully offline init providers ([d03cf9f](https://github.com/fynnaly/test-morphe-patch/commit/d03cf9f6b2a2b8dc39f6509e1298d3ed874cff9f))\n",
-  "release_tag": "v1.9.0",
-  "release_date": "2026-10-08T07:06:40Z",
+  "patches_name": "Fynnaly can Patch",
+  "fingerprint": "b815695c07702754f053c91e2147aca000352a8104801064f010b00b391dc1b9",
+  "release_notes": "## 1.0.0 (2026-10-17)\n\n### 🐛 Bug Fixes\n\n* match PairIP StartupLauncher without exact access flags ([22a988b](https://github.com/fynnaly/morphe-patches/commit/22a988b9fc293c70c3a43af429c3ce4d145a32a3)), closes [#1](https://github.com/fynnaly/morphe-patches/issues/1)\n* remove trailing comma breaking patches build script ([354ce29](https://github.com/fynnaly/morphe-patches/commit/354ce2962e8563c3a4046ee27221eb0bd10c0281))\n* stop neutralizing VMRunner, it force-closes via Facebook provider ([42a8106](https://github.com/fynnaly/morphe-patches/commit/42a81066b76aec86574f0e39d4bc87fe82bb4129))\n\n### ✨ New Features\n\n* add PairIP bypass for 20 Minutes Till Dawn 8.6 ([4a50bf2](https://github.com/fynnaly/morphe-patches/commit/4a50bf21d879aed19187d991ecb6ddec198751a1))\n* bypass PairIP signature, license and VM gate for 20MTD ([fc766ae](https://github.com/fynnaly/morphe-patches/commit/fc766ae4a1660f4e681e47d904a5e74c6a879761))\n* fully unlock 20 Minutes Till Dawn runtime (PairIP VM, string pool, ads SDK) ([9dea8ac](https://github.com/fynnaly/morphe-patches/commit/9dea8ac660d1a772448fa8fa8325452b3c535fb2))\n* skip rewarded ads to instantly grant unlock rewards ([a70095f](https://github.com/fynnaly/morphe-patches/commit/a70095f52b649bac1f70984c68612ecc21f466b4))\n",
+  "release_tag": "v1.0.0",
+  "release_date": "2026-10-17T02:35:44Z",
   "isPreRelease": false
 }

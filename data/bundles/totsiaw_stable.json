@@ -2,9 +2,9 @@
   "bundle": "totsiaw",
   "channel": "stable",
   "repo_url": "https://github.com/totsiaw/proxma-patches",
-  "created_at": "2026-10-17T11:55:16Z",
-  "version": "1.17.0",
-  "description": "## [1.17.0](https://github.com/totsiaw/proxma-patches/compare/1.16.1...1.17.0) (2026-10-17)\n\n### New Features\n\n* **olx:** add OLX India remove-ads and remove-Elite-promotions patches ([4632596](https://github.com/totsiaw/proxma-patches/commit/463259672e3467319a9011283b2cd97c7bf0a751)), closes [#24](https://github.com/totsiaw/proxma-patches/issues/24)",
+  "created_at": "2026-10-20T06:40:38Z",
+  "version": "1.18.0",
+  "description": "## [1.18.0](https://github.com/totsiaw/proxma-patches/compare/1.17.0...1.18.0) (2026-10-20)\n\n### Bug Fixes\n\n* **netmonster:** expose the Google Maps key option in the patch list ([0a064e7](https://github.com/totsiaw/proxma-patches/commit/0a064e7103ef85140649eeac472178b5cb6ae3b9))\n* **netmonster:** retarget premium patch to 5.0.0 / 5.0.1 ([3e9a6ab](https://github.com/totsiaw/proxma-patches/commit/3e9a6abc5466a7333fb51da70fe5239a028fb171))\n* **simosa:** claim the daily check-in reward as soon as the state loads ([e9c07ad](https://github.com/totsiaw/proxma-patches/commit/e9c07ade230961213bb1f2d13ed8c35351075577))\n\n### New Features\n\n* **indrive:** add remove-ads patch for sinet.startup.inDriver 5.188.0 / 5.189.0 ([2c7a0a8](https://github.com/totsiaw/proxma-patches/commit/2c7a0a832496a2d221e250e8564cb6a167d16968))",
   "apps": [
     {
       "app_name": "Investify",
@@ -76,6 +76,15 @@
       "app_name": "Simosa",
       "package": "com.jazz.jazzworld",
       "patches": [
+        {
+          "name": "Auto check-in & claim daily reward",
+          "description": "Claims the daily check-in reward on its own: opening the daily-rewards screen no longer waits for the check-in ad, the reward is granted right away. The missed-days restore and the day-10/20/30 milestone claim are untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.3.4.2"
+          ]
+        },
         {
           "name": "Bypass signature verification",
           "description": "Disables Simosa's anti-tamper signature check so a re-signed APK launches normally instead of stalling on the splash / \"version is not correct\" dialog.",
@@ -296,21 +305,55 @@
       "package": "cz.mroczis.netmonster",
       "patches": [
         {
+          "name": "Google Maps API key (NetMonster)",
+          "description": "Optional: write YOUR OWN Google Maps API key so the map renders after re-signing (NetMonster's built-in key is cert-locked). Leave the key empty to leave the map as-is.",
+          "use": true,
+          "options": [
+            {
+              "key": "maps-api-key",
+              "description": "Your own unrestricted 'Maps SDK for Android' key (Google Cloud Console). NetMonster's built-in key is locked to their signing cert and dies on re-sign (blank map). Leave empty to keep the map disabled."
+            }
+          ],
+          "compatible_versions": [
+            "4.0.4",
+            "5.0.0",
+            "5.0.1"
+          ]
+        },
+        {
           "name": "Unlock premium (NetMonster)",
           "description": "Unlocks NetMonster Premium — forces the Adapty entitlement collector to always report premium active, so real-time LTE/NR-NSA location calculation is unlocked, ads are removed, and the status shows Active without a subscription.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.0.4"
+            "4.0.4",
+            "5.0.0",
+            "5.0.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "inDrive",
+      "package": "sinet.startup.indriver",
+      "patches": [
+        {
+          "name": "Remove ads",
+          "description": "Removes inDrive's Google ads — the banner, the card shown during and after a ride, and the full-screen ones — by switching the app's own Google Ads enable flags off, so it never asks Google for an ad. Rides, chat, payments and inDrive's own promo codes keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.188.0",
+            "5.189.0"
           ]
         }
       ]
     }
   ],
   "patches_name": "Proxma Patches",
-  "fingerprint": "0fd7fe0073f97517ba128144068f03cba6ff8bf12b46f829153b3607af6c929f",
-  "release_notes": "## [1.17.0](https://github.com/totsiaw/proxma-patches/compare/1.16.1...1.17.0) (2026-10-17)\n\n### New Features\n\n* **olx:** add OLX India remove-ads and remove-Elite-promotions patches ([4632596](https://github.com/totsiaw/proxma-patches/commit/463259672e3467319a9011283b2cd97c7bf0a751)), closes [#24](https://github.com/totsiaw/proxma-patches/issues/24)\n",
-  "release_tag": "1.17.0",
-  "release_date": "2026-10-17T11:55:16Z",
+  "fingerprint": "c800d9c5157604cdba2a1e9bbec30b1dd3c87813be4fd973cc936fbf2d5d0088",
+  "release_notes": "## [1.18.0](https://github.com/totsiaw/proxma-patches/compare/1.17.0...1.18.0) (2026-10-20)\n\n### Bug Fixes\n\n* **netmonster:** expose the Google Maps key option in the patch list ([0a064e7](https://github.com/totsiaw/proxma-patches/commit/0a064e7103ef85140649eeac472178b5cb6ae3b9))\n* **netmonster:** retarget premium patch to 5.0.0 / 5.0.1 ([3e9a6ab](https://github.com/totsiaw/proxma-patches/commit/3e9a6abc5466a7333fb51da70fe5239a028fb171))\n* **simosa:** claim the daily check-in reward as soon as the state loads ([e9c07ad](https://github.com/totsiaw/proxma-patches/commit/e9c07ade230961213bb1f2d13ed8c35351075577))\n\n### New Features\n\n* **indrive:** add remove-ads patch for sinet.startup.inDriver 5.188.0 / 5.189.0 ([2c7a0a8](https://github.com/totsiaw/proxma-patches/commit/2c7a0a832496a2d221e250e8564cb6a167d16968))\n",
+  "release_tag": "1.18.0",
+  "release_date": "2026-10-20T06:40:38Z",
   "isPreRelease": false
 }
