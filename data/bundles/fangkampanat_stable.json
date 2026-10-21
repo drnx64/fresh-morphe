@@ -2,14 +2,26 @@
   "bundle": "fangkampanat",
   "channel": "stable",
   "repo_url": "https://github.com/fangkampanat/gmaps-patches",
-  "created_at": "2026-10-09T10:45:21Z",
-  "version": "1.2.3",
-  "description": "Use official MicroG-RE 7.2.1 for Google Maps. Prefer synthesized navigation speech when available, with the existing audio fallback. Requires working TTS voice data; compatibility with every Maps release is not guaranteed.",
+  "created_at": "2026-10-21T05:36:00Z",
+  "version": "1.3.1",
+  "description": "Use official MicroG-RE 7.2.1 for Google Maps and synthesized navigation speech. Includes an opt-in native EV model experiment that sends BYD battery data and estimated road-load coefficients to Google. Arrival forecasts and navigation display remain experimental.",
   "apps": [
     {
       "app_name": "Google Maps Morphe",
       "package": "com.google.android.apps.maps",
       "patches": [
+        {
+          "name": "BYD native battery experiment",
+          "description": "Experimental: sends this BYD's battery and road-load model to Google through Maps' native EV route requests. Starts from the car's own average consumption, learns slowly from BMS energy/distance, and adds in-app vehicle settings. Native hooks inspected on Maps 26.41. Targets BYD DiLink 3; DiLink 5 unverified.",
+          "use": false,
+          "options": [
+            {
+              "key": "guidanceBattery",
+              "description": "Experimental: shows an inline battery icon and Google's arrival percentage after ETA."
+            }
+          ],
+          "compatible_versions": []
+        },
         {
           "name": "Google Maps for MicroG-RE",
           "description": "Connects supported Google Maps builds to MicroG-RE 7.2.1 and prefers synthesized navigation speech with the existing audio fallback.",
@@ -21,9 +33,9 @@
     }
   ],
   "patches_name": "Maps Patches",
-  "fingerprint": "f794f756a7e7be9ed6bce755ef997deeb62ffd9bab784c4718a17ae4ca7d8af4",
-  "release_notes": "- Reuse Morphe Patches Library 1.4.1 helpers and share invoke-register handling between Maps and TTS hooks.\n- Add method, opcode, register and branch details to navigation TTS layout errors.\n",
-  "release_tag": "v1.2.3",
-  "release_date": "2026-10-09T10:45:21Z",
+  "fingerprint": "355d620d78f33a7d6d5e554d8040b03220e4ffb7a270e9201bd2d7879fca09cd",
+  "release_notes": "- New: BYD native battery experiment (optional). It sends the car's battery level and an estimated road-load model to Maps' EV route requests, so route preview and navigation show the battery percentage at arrival.\n- Maps → Settings → Vehicle and battery offers Automatic (learns from the car), Fixed or Manual A/B/C. Battery capacity is measured automatically.\n- Google Maps for MicroG-RE: navigation speech works on Maps 26.41.\n\nTested on a BYD Dolphin, DiLink 3.0 with Maps `26.41.04.993332563` and MicroG-RE 7.2.1.\n\nLimitations: BYD DiLink 3.0 and Maps 26.41 only. Other models and DiLink 5.0 are untested.\n\n`patches-1.3.1.mpp` SHA-256: `540999b83ccc84de70674bbd3d6ccc4dc14056e9de94e915bf7575bd6f2af5d6`\n",
+  "release_tag": "v1.3.1",
+  "release_date": "2026-10-21T05:36:00Z",
   "isPreRelease": false
 }

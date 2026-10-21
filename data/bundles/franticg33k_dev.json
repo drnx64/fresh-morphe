@@ -4,8 +4,32 @@
   "repo_url": "https://github.com/franticg33k/morphe-patches",
   "created_at": "2026-10-20T07:39:29Z",
   "version": "1.6.0-dev.1",
-  "description": "## [1.5.1](https://github.com/franticg33k/morphe-patches/compare/v1.5.0...v1.5.1) (2026-10-19)\n\n### 🐛 Bug Fixes\n\n* **atlasphoto:** locate the branching setIsProMember setter in 2.7.9 ([cd3b267](https://github.com/franticg33k/morphe-patches/commit/cd3b267c5d7a7a43e4b945c807f62012a3e5486f))\n* **byair:** drop the dead UpdateSubscriptionUserId stub from Enable Online Pro ([2990578](https://github.com/franticg33k/morphe-patches/commit/2990578ef0628db348ddddfe6a1d1290f3d0495c)), closes [#51](https://github.com/franticg33k/morphe-patches/issues/51)",
+  "description": "## [1.6.0](https://github.com/franticg33k/morphe-patches/compare/v1.5.1...v1.6.0) (2026-10-21)\n\n### ✨ New Features\n\n* **marriage:** skip hourly gift cooldown and pay out on ad-load failure ([7811ecb](https://github.com/franticg33k/morphe-patches/commit/7811ecb1079f0f26731adfb0ad8f1eb71c42d8cb))",
   "apps": [
+    {
+      "app_name": "Marriage",
+      "package": "com.bhoos.marriage",
+      "patches": [
+        {
+          "name": "Reward when the ad fails to load",
+          "description": "The reward for a rewarded ad is granted by one branch of the ad listener, and the redemption call it makes (a/redeemAdReward) never checks that an ad was actually shown. This routes the ad-load-failure branch into that same reward call, so pressing \"Watch ad\" with no ad available pays out instead of showing \"Ad Error\".",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.45"
+          ]
+        },
+        {
+          "name": "Skip hourly gift cooldown",
+          "description": "Removes the one-hour countdown gate on the lobby gift button, so the gift screen opens on every press instead of after the timer. The window is computed on the device (account.giftTimeStamp + 1 h) - this only removes that gate; whether the server accepts a claim inside the hour is up to the server.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.45"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Bolpatra Nepal",
       "package": "com.bolpatranepal.axios",
@@ -308,9 +332,9 @@
     }
   ],
   "patches_name": "franticg33k's Morphe Patches",
-  "fingerprint": "6ebcc048f3bb669768a27431d2720e28ca1c492dc4fcbeb88851dbc8950b417e",
-  "release_notes": "## [1.5.0](https://github.com/franticg33k/morphe-patches/compare/v1.4.2...v1.5.0) (2026-10-16)\n\n### 🐛 Bug Fixes\n\n* **nepalipatro:** close every interstitial presenter, not just the popup gate ([58f6b01](https://github.com/franticg33k/morphe-patches/commit/58f6b0191cb958789b8371990d0fc8ea32c9bf0e)), closes [#0x961d78](https://github.com/franticg33k/morphe-patches/issues/0x961d78) [#0x961d68](https://github.com/franticg33k/morphe-patches/issues/0x961d68) [#0x9617a4](https://github.com/franticg33k/morphe-patches/issues/0x9617a4) [#0x9617a4](https://github.com/franticg33k/morphe-patches/issues/0x9617a4) [#-0x10](https://github.com/franticg33k/morphe-patches/issues/-0x10)\n* **tools:** never hand a sources or javadoc .mpp to the patcher or the gate ([7e99531](https://github.com/franticg33k/morphe-patches/commit/7e99531166a9810b07442a96936c5c441080cc27))\n\n### ✨ New Features\n\n* **nepalipatro:** drop the raster ad slots, not just the presenters ([efb504c](https://github.com/franticg33k/morphe-patches/commit/efb504cca6df7337a82c0614c81ed9d22cfa4211))\n* **tools:** make the pipeline run on Linux and macOS, not just Windows ([d167160](https://github.com/franticg33k/morphe-patches/commit/d1671600909acf7c6e048aad9f71bb022e959d3a))\n\n### 🚀 Updated App Support\n\n* **byair:** pin the byAir patches to 2.41.0 ([b8cd5be](https://github.com/franticg33k/morphe-patches/commit/b8cd5be699188155fb3e9d9c6c91ec59cf70b62b))\n",
-  "release_tag": "v1.5.0",
-  "release_date": "2026-10-16T05:40:52Z",
-  "isPreRelease": false
+  "fingerprint": "9225f894635eaf3bdf07c232f00bfddae0b7fb337b88cd2fe04157f3b1963f00",
+  "release_notes": "## [1.6.0-dev.1](https://github.com/franticg33k/morphe-patches/compare/v1.5.1...v1.6.0-dev.1) (2026-10-20)\n\n### ✨ New Features\n\n* **marriage:** skip hourly gift cooldown and pay out on ad-load failure ([7811ecb](https://github.com/franticg33k/morphe-patches/commit/7811ecb1079f0f26731adfb0ad8f1eb71c42d8cb))\n",
+  "release_tag": "v1.6.0-dev.1",
+  "release_date": "2026-10-20T07:39:29Z",
+  "isPreRelease": true
 }
