@@ -2,9 +2,9 @@
   "bundle": "yydarlinker",
   "channel": "stable",
   "repo_url": "https://github.com/YYDarlinker/morphe-ai-caption-translator",
-  "created_at": "2026-10-14T08:12:28Z",
-  "version": "1.5.4",
-  "description": "## [1.5.4](https://github.com/YYDarlinker/morphe-ai-caption-translator/compare/v1.5.3...v1.5.4) (2026-10-14)\n\n- The add-on icon is shown again on the player menu row for the regular player and Shorts; the 1.5.3 resource rewrite had dropped it.\n",
+  "created_at": "2026-10-21T12:57:11Z",
+  "version": "1.5.5",
+  "description": "## [1.5.5](https://github.com/YYDarlinker/morphe-ai-caption-translator/compare/v1.5.4...v1.5.5) (2026-10-21)\n\n- Translated captions no longer disappear when the model's sentence boundary differs from an uploaded subtitle's cue boundary. Exact cue pages stay preferred; remaining translated events are shown as event pages, so the reproduced 14.5 s authored-caption block now stays translated for its full duration instead of showing “Translating…”.\n- Partial translation results are published instead of rejecting the whole block. One invalid event no longer hides the rest; missing ranges show a neutral `…`, slow retries stop after three attempts, and a failed block shows the neutral marker instead of source text.\n- Pagination now follows the writing system instead of a Chinese-only path: Korean spacing, RTL/CJK/Indic profiles, language punctuation, explicit overflow pages for authored cues longer than two lines, and time-balanced page turns.\n- Source timing from subtitle XML is used where available, so auto-generated caption pages land on real speech boundaries rather than only estimated positions.\n- Numeric, date and unit differences are advisory instead of a hard rejection, and CJK whitespace or Unicode composition differences no longer discard an otherwise valid event.\n- The separate **Remember caption selection** patch is removed. This source now ships only **AI caption translator**, which follows YouTube's native caption selection and the official Captions / **Preferred caption language** setting; it no longer invents or carries a target language across videos.\n- Captions no longer go blank while a translation is still on its way: the previous line stays up briefly, then a neutral placeholder appears until the new line arrives. Only the line you are watching is translated again instead of the whole section.\n",
   "apps": [
     {
       "app_name": "YouTube",
@@ -24,29 +24,14 @@
             "21.20.405",
             "21.16.256"
           ]
-        },
-        {
-          "name": "Remember caption selection",
-          "description": "Remembers caption language, source/translation mode and on/off selection across videos for this app session, with or without AI.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "21.40.161",
-            "21.39.522",
-            "21.38.130",
-            "21.28.208",
-            "21.23.492",
-            "21.20.405",
-            "21.16.256"
-          ]
         }
       ]
     }
   ],
   "patches_name": "Anchored AI Captions",
-  "fingerprint": "f91eeabcfe89efa749b37cd9e600323ad85bdcffa987e75f7ad156d2707380e2",
-  "release_notes": "- Smaller and simpler: the code was hand-rewritten module by module (dead code removed, long logic split, about 8-12% less main code) and the extension is shrunk by R8; the patch package drops from 1.3 MB to about 0.57 MB. Translation prompts and protocol are unchanged and match the pinned upstream.\n- Experimental support for YouTube 21.40.161, 21.39.522, 21.38.130, 21.28.208 and 21.23.492, following the experimental targets of official Morphe Patches 1.47.0. 21.13.164 and 21.07.247 are no longer declared.\n- Both patches are selected by default. The reference caption cache now persists, saving one download when reopening a video.\n",
-  "release_tag": "v1.5.3",
-  "release_date": "2026-10-14T01:42:44Z",
+  "fingerprint": "5284a1c490cf91520cb8370a3ae1e068bf92bc71f423a44a6288023a918f5b36",
+  "release_notes": "## [1.5.5](https://github.com/YYDarlinker/morphe-ai-caption-translator/compare/v1.5.4...v1.5.5) (2026-10-21)\r\n\r\n- Translated captions no longer disappear when the model's sentence boundary differs from an uploaded subtitle's cue boundary. Exact cue pages stay preferred; remaining translated events are shown as event pages, so the reproduced 14.5 s authored-caption block now stays translated for its full duration instead of showing “Translating…”.\r\n- Partial translation results are published instead of rejecting the whole block. One invalid event no longer hides the rest; missing ranges show a neutral `…`, slow retries stop after three attempts, and a failed block shows the neutral marker instead of source text.\r\n- Pagination now follows the writing system instead of a Chinese-only path: Korean spacing, RTL/CJK/Indic profiles, language punctuation, explicit overflow pages for authored cues longer than two lines, and time-balanced page turns.\r\n- Source timing from subtitle XML is used where available, so auto-generated caption pages land on real speech boundaries rather than only estimated positions.\r\n- Numeric, date and unit differences are advisory instead of a hard rejection, and CJK whitespace or Unicode composition differences no longer discard an otherwise valid event.\r\n- The separate **Remember caption selection** patch is removed. This source now ships only **AI caption translator**, which follows YouTube's native caption selection and the official Captions / **Preferred caption language** setting; it no longer invents or carries a target language across videos.\r\n- Captions no longer go blank while a translation is still on its way: the previous line stays up briefly, then a neutral placeholder appears until the new line arrives. Only the line you are watching is translated again instead of the whole section.\r\n",
+  "release_tag": "v1.5.5",
+  "release_date": "2026-10-21T12:57:11Z",
   "isPreRelease": false
 }
