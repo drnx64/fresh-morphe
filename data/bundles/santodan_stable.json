@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/Santodan/santodan-patches",
   "created_at": "2026-10-08T13:06:41Z",
   "version": "0.9.0",
-  "description": "## [0.11.2](https://github.com/Santodan/santodan-patches/compare/v0.11.1...v0.11.2) (2026-10-19)\n\n### 🐛 Bug Fixes\n\n* **carscanner:** support 2.2.21 profiles and ECU connections [skip ci] ([f02159c](https://github.com/Santodan/santodan-patches/commit/f02159cda5b1f1b399d53518431883564c21f4f2))",
+  "description": "## [0.12.0](https://github.com/Santodan/santodan-patches/compare/v0.11.2...v0.12.0) (2026-10-21)\n\n### ✨ New Features\n\n* **nuviotv:** add native IntroDB segment submissions [skip ci] ([577ff4a](https://github.com/Santodan/santodan-patches/commit/577ff4acf7b5c9c2bce46ed5d2bb647d91c8972b))\n* **nuviotv:** customize playback button visibility, order and groups [skip ci] ([b903a08](https://github.com/Santodan/santodan-patches/commit/b903a0820f67768e7eeb7c8574fea778c2c22342))\n* **nuviotv:** indicate the current stream with a Streams setting [skip ci] ([09b209f](https://github.com/Santodan/santodan-patches/commit/09b209fa6ee9d092b95b6e23e0dc12c7e518d360))\n* **nuviotv:** prioritize and autoplay preferred source add-on ([6e77240](https://github.com/Santodan/santodan-patches/commit/6e7724044c10edc619d31c63732b96f40134b75e))",
   "apps": [
     {
       "app_name": "MEO (Android TV)",
@@ -77,8 +77,26 @@
           ]
         },
         {
+          "name": "NuvioTV - Customize playback buttons",
+          "description": "Adds optional playback button visibility, ordering and placement in the main row or More actions, with saved settings and reset.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.7"
+          ]
+        },
+        {
           "name": "NuvioTV - Finale dates in library and collections",
           "description": "Adds separate disabled-by-default settings to show the latest scheduled episode date in library and collection posters.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.7"
+          ]
+        },
+        {
+          "name": "NuvioTV - Indicate current stream",
+          "description": "Labels the current stream with [Playing], with an enabled-by-default toggle in Santodan-Patches > Streams.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -97,6 +115,15 @@
         {
           "name": "NuvioTV - Merge tracking progress",
           "description": "Merges Nuvio Sync and connected tracking-provider progress, preserving the previous snapshot while providers refresh.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.7"
+          ]
+        },
+        {
+          "name": "NuvioTV - Preferred source add-on",
+          "description": "Choose a per-profile add-on to refresh and display first, with optional automatic playback of its first playable stream.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -153,6 +180,15 @@
               "description": "Name displayed by Android launchers for this installation."
             }
           ],
+          "compatible_versions": [
+            "1.1.0-beta.7"
+          ]
+        },
+        {
+          "name": "NuvioTV - Submit segments to IntroDB",
+          "description": "Adds an optional playback button that captures segment start/end times and opens a native NuvioTV submission dialog. Enable it and enter your IntroDB API key in Settings.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "1.1.0-beta.7"
           ]
@@ -277,7 +313,7 @@
     }
   ],
   "patches_name": "SantoDan Patches",
-  "fingerprint": "3024312fb9adfb56bc8659d9e8e452164f09336e2b161ef0e2a2f873fb184cbc",
+  "fingerprint": "4911a89e2c80546854b3613f613213d33299b6c9985b4e2bbf1ca5c6ce703cf8",
   "release_notes": "## [0.9.0](https://github.com/Santodan/santodan-patches/compare/v0.8.0...v0.9.0) (2026-10-08)\n\n### 🐛 Bug Fixes\n\n* **nuviotv:** reduce badge work and isolate badge composition [skip ci] ([8bcfc45](https://github.com/Santodan/santodan-patches/commit/8bcfc45cbfbd3984371a578dd296fea7cb16a6ee))\n\n### ✨ New Features\n\n* **nuvio:** label patch settings groups [skip ci] ([c434e81](https://github.com/Santodan/santodan-patches/commit/c434e81f568db2d2fbe19588dcfd3d0800111956))\n* **nuvio:** preload stream sources with diagnostics [skip ci] ([c645e4f](https://github.com/Santodan/santodan-patches/commit/c645e4fa65b743424a75908be15b2e07cc63a484))\n* **nuvio:** show upcoming movie dates in library and collections ([f8d6bd1](https://github.com/Santodan/santodan-patches/commit/f8d6bd1915a4412e0731a9ecb1aed805d9b6aa3f))\n\n### 🚀 Updated App Support\n\n* **nuviotv:** support 1.1.0-beta.5 across all patches [skip ci] ([dd7a8f4](https://github.com/Santodan/santodan-patches/commit/dd7a8f4b08fa71cf9b167e7c67f9e27dfa4bea41))\n\n\n## Detailed changes\n\n## NuvioTV features\r\n\r\n- Add **Upcoming movie dates in library and collections** for beta.4 and beta.5.\r\n  Two independent, disabled-by-default switches under **UI** show blue `dd-MMM-yy`\r\n  badges on unreleased movie posters. Exact poster metadata takes precedence;\r\n  missing dates use a bounded background catalog lookup with a six-hour cache.\r\n  Released movies and unknown dates have no badge. A past release year skips\r\n  unnecessary lookups; current/future years still require an exact date.\r\n- Add **Preload streams in Continue Watching** for playable movie/episode cards.\r\n- Add **Preload streams on detail page** for the current Play or Resume target,\r\n  following changes to the next episode. Both **Streams** switches are independent\r\n  and disabled by default. They reuse Nuvio's native source search, installed\r\n  addons/plugins, cache expiration, profile checks, and playback pause controls.\r\n  Background work is bounded, and playback starts only when Play is pressed.\r\n- Group the Santodan-Patches menu under **Continue Watching**, **UI**, and **Streams**\r\n  using native, non-focusable labels. Groups with no installed patches are omitted.\r\n\r\n## Compatibility and improvements\r\n\r\n- Support NuvioTV **1.1.0-beta.5** across all existing patches. Movie dates, finale\r\n  dates, airing series, and stream preloading support beta.4/beta.5. Merged progress,\r\n  remaining episodes, and side-by-side installation also support beta.2.\r\n- Reduce remaining-episode badge work by counting recently displayed cards in the\r\n  background, limiting catalog fallback work, and stopping new work when disabled.\r\n- Isolate badge Compose groups to preserve the host's remembered state. Movie and\r\n  series date badges can be selected independently or together.\r\n- Add stream diagnostics for preload starts, elapsed time, source counts, and\r\n  timeout/cancellation outcomes. Repeated composition hits stay silent; stream\r\n  URLs are omitted and custom video IDs are redacted.\r\n- Movie-date toggle diagnostics identify **library** or **collections**. Routine\r\n  settings-render logs are suppressed.\r\n\r\n## Diagnostics and validation\r\n\r\n- Add `\"SantodanStreams:V\"` and `\"SantodanMovieRelease:V\"` to logcat filters.\r\n- Movie dates use native release-time rules: date-only releases use UTC midnight,\r\n  zoned timestamps use their exact instant, and timestamp badges show the local date.\r\n  Release metadata does not guarantee an available streaming source.\r\n- Local checks cover date parsing, release boundaries, timezone handling,\r\n  independent settings, nested/restart card scopes, and all 128 menu selections.\r\n  Original beta.4/beta.5 DEX checks verify coexistence with the existing patches.\r\n  Real beta.5 APK application and final DEX verification cover the movie patch on\r\n  its own and with all Nuvio patches. Device logs confirm working date lookups and\r\n  successful stream preloads without badge-rendering errors.\r\n",
   "release_tag": "v0.9.0",
   "release_date": "2026-10-08T13:06:41Z",
