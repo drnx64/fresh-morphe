@@ -2,9 +2,9 @@
   "bundle": "madushas",
   "channel": "stable",
   "repo_url": "https://github.com/madushas/pdb_patch",
-  "created_at": "2026-10-19T06:00:00Z",
-  "version": "0.2.0",
-  "description": "Morphe patches for Pdb (pdb.app): premium unlock, ads removal, PairIP license bypass, tracker shutdown, launcher-icon fix, a power-user feature menu, profile-ID display and a floating power button.",
+  "created_at": "2026-10-22T07:19:37Z",
+  "version": "0.4.0",
+  "description": "Morphe patches for Pdb (pdb.app): premium unlock, ads removal, PairIP license bypass, tracker shutdown, launcher-icon fix, the Pdb Extras power-user menu with a floating app-wide actions button, profile-ID display on every name, and a client-side limit extension (no profile-visitor cap).",
   "apps": [
     {
       "app_name": "Pdb",
@@ -47,6 +47,24 @@
           ]
         },
         {
+          "name": "Floating power button",
+          "description": "Adds a draggable quick-actions bubble to the main screen (profile IDs / receipts / pause toggles, copy your profile id, open Pdb Extras). Toggle: Pdb Extras → Quick → 'Show floating power button'.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.134.6"
+          ]
+        },
+        {
+          "name": "No profile-visitor limit",
+          "description": "Lifts Pdb's client-side cap of 3 profile-visitor views per hour (the 'slow down' sheet). Toggle: Pdb Extras → Limits → 'No profile-visitor limit'. The bytecode ships always-on and is inert until the switch is on.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.134.6"
+          ]
+        },
+        {
           "name": "Pdb Extras feature menu",
           "description": "Adds a Pdb Extras entry to the top of Pdb's Settings screen with toggles, hidden overrides, power tools (preference writer, chat data, identity controls) and a one-tap shortcut to Pdb's native dev screen.",
           "use": true,
@@ -74,6 +92,15 @@
           ]
         },
         {
+          "name": "Show profile IDs on names",
+          "description": "Appends the numeric profile id (#1234567) after every profile name — Soul cards, chat headers, lists. Toggle: Pdb Extras → 'Show profile IDs on names'. The bytecode ships always-on and is inert until the switch is enabled, so the toggle works without rebuilding.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.134.6"
+          ]
+        },
+        {
           "name": "Unlock Pro",
           "description": "Unlocks Pdb Pro: premium badge plus every entitlement (no ads, hide online, unlimited rewinds/extends, super chats, visitors, view requests, virtual travel, extra IRL slots, Power PDB server, Wonder-chat reconnect, AI-friend limits, name colour, chat bubbles).",
           "use": true,
@@ -86,9 +113,9 @@
     }
   ],
   "patches_name": "Pdb Patches",
-  "fingerprint": "5a6e51454404a7870505a3121fe316bfe8bec890238c3e51b1fad9daaeb210e5",
-  "release_notes": "## Pdb Extras v0.2.0\n\nPower-user release for **Pdb: Personality & Friends** (`pdb.app` 2.134.6).\n\n### Fixes in this release\n- **Launcher icon restored** — the base APK ships an adaptive icon with a null\n  foreground (the real icon normally comes from a runtime-enabled theme alias).\n  The patch now points the default icon at the app's own brand glyph.\n- **Startup crash fixed** — Crashlytics registrars are kept registered (Pdb's\n  `Application.onCreate` requires them) while crash/analytics collection is\n  disabled via the official Firebase opt-out meta-data.\n- **Metadata fixed** — the bundle asset, `patches-bundle.json` download URL and\n  the project version now all agree (`0.2.0`).\n\n### Bundle\n- `patches-0.2.0.mpp` — 8 patches for `pdb.app` 2.134.6 (versionCode 2694):\n  standalone install, PairIP bypass, tracker shutdown, app-icon fix, Pdb Extras\n  menu + resources, ad removal, Pro unlock.\n\n### Notes\n- Pdb is ARM-only; on x86_64 emulators the app needs the arm64 `libmmkv` workaround.\n- Google Sign-In cannot work on a re-signed APK (GMS validates the SHA-1).\n",
-  "release_tag": "v0.2.0",
-  "release_date": "2026-10-19T06:00:00Z",
+  "fingerprint": "e8246b017b72d974de0f0431bf96c2c2643aaedbd7474a5d447d4cce24412d95",
+  "release_notes": "Pdb (pdb.app) patches — power-user build.\n\n**In-screen, not just a menu**\n- **Profile IDs everywhere** — every name in the app (Soul cards, chat list, chat header, profiles) is followed by the account ID.\n- **Floating power button** on every Pdb screen: ID toggle, read receipts, pause patches, copy my ID, copy last-viewed profile, open Extras.\n- **Pdb Extras** redesigned: Quick · Limits · Power · Data · Advanced.\n\n**Client-side limits lifted**\n- **No profile-visitor limit** — removes the 3-visits-per-hour cap and the \"take a break\" sheet.\n- **Reset daily counters** — clears the app's day-scoped counters on demand.\n\n**Unlocks**\n- Pro features unlocked client-side, ads disabled, PairIP license check bypassed, trackers shut down.\n\n**Tools**\n- MMKV inspector, SQLite browser/statistics, preference overrides, device-ID randomizer.\n\nKnown limit: premium Soul filters (MBTI / region) are enforced by Pdb's backend, so they cannot be applied by a client patch — the Extras menu reports this plainly instead of pretending.\n\nAsset: `patches-0.4.0.mpp` (sha256 `0fa03ff3035eae917bc73d055a38e9b6c851c83724ac4c213c97c5f835a62093`).\n",
+  "release_tag": "v0.4.0",
+  "release_date": "2026-10-22T07:19:37Z",
   "isPreRelease": false
 }
