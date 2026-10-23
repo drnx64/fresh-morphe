@@ -1,11 +1,80 @@
 {
   "bundle": "madushas",
   "channel": "stable",
-  "repo_url": "https://github.com/madushas/pdb_patch",
-  "created_at": "2026-10-22T12:25:16Z",
-  "version": "0.4.3",
-  "description": "Morphe patches for Pdb (pdb.app): premium unlock, ads removal, PairIP license bypass, tracker shutdown, launcher-icon fix, the Pdb Extras power-user menu with a floating app-wide actions button, profile-ID display on every name, and a client-side limit extension (no profile-visitor cap).",
+  "repo_url": "https://github.com/madushas/morphe-patches-custom",
+  "created_at": "2026-10-23T19:51:25Z",
+  "version": "0.5.1",
+  "description": "Custom Morphe patches for any app: currently Pdb (pdb.app) and MyDialog (net.omobio.dialogsc) - telemetry removal, security-check and SSL-pinning bypasses, ad removal, premium unlock, SIM access fix, power-user menus and client-side limit extensions.",
   "apps": [
+    {
+      "app_name": "MyDialog",
+      "package": "net.omobio.dialogsc",
+      "patches": [
+        {
+          "name": "Disable AppsFlyer",
+          "description": "Neutralizes AppsFlyer attribution/telemetry: the SDK is never initialized or started, and the JS bridge reports success as usual.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Disable CleverTap",
+          "description": "Stops CleverTap session/activity tracking and push-click attribution. Push notifications themselves keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Disable Firebase Performance + installer check",
+          "description": "Makes Firebase Performance's connection wrapper a pass-through (no perf telemetry) and reports installs as Play-installed regardless of the actual installer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Disable SSL pinning",
+          "description": "Removes certificate pinning at both layers (OkHttp pin comparison and the platform network-security-config pin-set) and trusts user-installed CAs, so HTTPS traffic can be inspected with a MITM proxy. Normal TLS validation stays intact.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Disable security checks",
+          "description": "Stops MyDialog from exiting itself on root/debug/emulator/adb detection and on Play Integrity failure. Signature verification is reported clean so patched builds pass.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "Disables Google Analytics measurement and Facebook SDK auto-init, and turns off Firebase Analytics/AdID data collection via their official opt-out flags.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Fix SIM identifier access",
+          "description": "Replaces the IMSI lookup with the public getSimOperator() call so the pre-login flow passes on Android 11+ where re-signed builds lost carrier privileges ('App Error: NO IMSI'). Falls back to Dialog's 41305 on SIM-less devices.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Pdb",
       "package": "pdb.app",
@@ -112,10 +181,10 @@
       ]
     }
   ],
-  "patches_name": "Pdb Patches",
-  "fingerprint": "e8246b017b72d974de0f0431bf96c2c2643aaedbd7474a5d447d4cce24412d95",
-  "release_notes": "Pdb (pdb.app) patches — power-user build.\n\n**In-screen, not just a menu**\n- **Profile IDs everywhere** — every name in the app (Soul cards, chat list, chat header, profiles) is followed by the account ID.\n- **Floating power button** on every Pdb screen: ID toggle, read receipts, pause patches, copy my ID, copy last-viewed profile, open Extras.\n- **Pdb Extras** redesigned: Quick · Limits · Power · Data · Advanced.\n\n**Client-side limits lifted**\n- **No profile-visitor limit** — removes the 3-visits-per-hour cap and the \"take a break\" sheet.\n- **Reset daily counters** — clears the app's day-scoped counters on demand.\n\n**Unlocks**\n- Pro features unlocked client-side, ads disabled, PairIP license check bypassed, trackers shut down.\n\n**Tools**\n- MMKV inspector, SQLite browser/statistics, preference overrides, device-ID randomizer.\n\nKnown limit: premium Soul filters (MBTI / region) are enforced by Pdb's backend, so they cannot be applied by a client patch — the Extras menu reports this plainly instead of pretending.\n\nAsset: `patches-0.4.0.mpp` (sha256 `0fa03ff3035eae917bc73d055a38e9b6c851c83724ac4c213c97c5f835a62093`).\n",
-  "release_tag": "v0.4.0",
-  "release_date": "2026-10-22T07:19:37Z",
+  "patches_name": "Madusha's Morphe Patches",
+  "fingerprint": "ae8c4eeb614533f1a550ed7835514711b389a65f084752c80c3553dcaea3df3e",
+  "release_notes": "- Fix SIM identifier access (MyDialog): the pre-login flow dies with 'App Error: NO IMSI' on re-signed builds because Android 11+ requires carrier privileges (bound to the original signing cert) for getSubscriberId. Replaced with the public getSimOperator() call - same operator prefix the stock app sees, Dialog 41305 fallback on SIM-less devices. Default-on, replaces 'Mock SIM identifiers'.\n- Disable SSL pinning now strips the platform network-security-config pin-set and trusts user CAs (OkHttp pins were already removed) - enables HTTPS inspection with a user CA.\n- Bundle renamed to 'Madusha's Morphe Patches' (multi-app repo, more apps coming).",
+  "release_tag": "v0.5.1",
+  "release_date": "2026-10-23T19:51:25Z",
   "isPreRelease": false
 }

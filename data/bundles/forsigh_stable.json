@@ -2,9 +2,9 @@
   "bundle": "forsigh",
   "channel": "stable",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-10-20T18:04:47Z",
-  "version": "0.23.0",
-  "description": "## [0.23.0](https://github.com/Forsigh/waze-patches/compare/v0.22.9...v0.23.0) (2026-10-20)\n\n### ✨ New Features\n\n* one Keep Waze alive row, Waze 5.26.0.0 support ([0d2c121](https://github.com/Forsigh/waze-patches/commit/0d2c121d2f8ea2b6036a73a1463c223dbda8005b))",
+  "created_at": "2026-10-23T20:24:28Z",
+  "version": "0.30.3",
+  "description": "Morphe patches for Waze: themes, map colours, alerts, alert distances, speedometer, Android Auto and audio partners.",
   "apps": [
     {
       "app_name": "Waze",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "AMOLED Dark Mode For UI",
-          "description": "Dark-mode backgrounds go pure black.",
+          "description": "Makes the dark UI pure black.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -25,48 +25,52 @@
         },
         {
           "name": "Alert distances",
-          "description": "Choose how early alerts fire: Standard, Moderate, Heavier or Custom.",
+          "description": "How early alerts sound, plus a speed-bump switch and per-alert distances.",
           "use": true,
           "options": [
             {
               "key": "level",
-              "description": "Standard keeps Waze's own; Moderate and Heavier warn earlier."
+              "description": "Standard is Waze's own. Moderate and Heavier warn earlier - about 1.5x and 2.5x on average; cameras change more than police."
+            },
+            {
+              "key": "bumps",
+              "description": "Waze nags about speed bumps ahead. Off silences them; stock is on."
             },
             {
               "key": "police",
-              "description": "Waze: 600 m."
+              "description": "0 = keep the preset, Standard 600 m."
             },
             {
               "key": "hazard",
-              "description": "Waze: 600 m."
+              "description": "0 = keep the preset, Standard 600 m."
             },
             {
               "key": "accident",
-              "description": "Waze: 600 m."
+              "description": "0 = keep the preset, Standard 600 m."
             },
             {
               "key": "traffic",
-              "description": "Waze: 600 m."
+              "description": "0 = keep the preset, Standard 600 m."
             },
             {
               "key": "streets",
-              "description": "Waze: 500 m."
+              "description": "0 = keep the preset, Standard 500 m."
             },
             {
               "key": "highways",
-              "description": "Waze: 1000 m."
+              "description": "0 = keep the preset, Standard 1000 m."
             },
             {
               "key": "freeways",
-              "description": "Waze: 2000 m."
+              "description": "0 = keep the preset, Standard 2000 m."
             },
             {
               "key": "blocked",
-              "description": "Waze: 400 m."
+              "description": "0 = keep the preset, Standard 400 m."
             },
             {
               "key": "between",
-              "description": "Waze: 300 m."
+              "description": "0 = keep the preset, Standard 300 m."
             }
           ],
           "compatible_versions": [
@@ -79,7 +83,7 @@
         },
         {
           "name": "Allow high refresh rate",
-          "description": "Runs Waze above 60 Hz, up to your screen's refresh rate.",
+          "description": "Runs above 60 Hz, up to your screen's limit.",
           "use": false,
           "options": [
             {
@@ -97,47 +101,12 @@
         },
         {
           "name": "Auto zoom",
-          "description": "Keeps your chosen auto-zoom mode from being reset.",
+          "description": "Keeps your auto-zoom choice from being reset.",
           "use": true,
           "options": [
             {
               "key": "mode",
               "description": "speed = zoom out progressively with speed, yes = always on, no = off."
-            }
-          ],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0"
-          ]
-        },
-        {
-          "name": "Average-speed camera alerts",
-          "description": "Average-speed camera alerts, with the zone's recommended speed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0"
-          ]
-        },
-        {
-          "name": "Bigger speedometer & limit sign",
-          "description": "Scales the speedometer and the speed-limit sign.",
-          "use": false,
-          "options": [
-            {
-              "key": "dial",
-              "description": "Ring, speed number and unit."
-            },
-            {
-              "key": "sign",
-              "description": "The limit sign next to the speedometer."
             }
           ],
           "compatible_versions": [
@@ -162,8 +131,82 @@
           ]
         },
         {
+          "name": "Cameras & hazards",
+          "description": "Shows every camera and road hazard, with switches for the extra kinds.",
+          "use": true,
+          "options": [
+            {
+              "key": "average",
+              "description": "Average-speed zone feature and recommended speed. Stock: on."
+            },
+            {
+              "key": "radarSound",
+              "description": "Plays the camera sound even when you are under the limit. Stock: on."
+            },
+            {
+              "key": "extraTypes",
+              "description": "Phone, bus, carpool, HOV and noise cameras. Experimental."
+            },
+            {
+              "key": "crosswalks",
+              "description": "Highway and raised crosswalks drawn on the map and announced. Stock: off."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
           "name": "Car alerts as notifications",
-          "description": "Delivers police and hazard alerts as car notifications.",
+          "description": "Shows car alerts as notifications.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Car map zoom",
+          "description": "Zooms the map on the car screen.",
+          "use": false,
+          "options": [
+            {
+              "key": "zoom",
+              "description": "Map scale on the car screen."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Car screen fits its window",
+          "description": "Fits the car screen to its window, not the full display.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Car trip screen text",
+          "description": "Adds arrival time and time left to the car trip bar.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -176,7 +219,7 @@
         },
         {
           "name": "Disable Play Store updates",
-          "description": "Stops the Play Store from updating Waze.",
+          "description": "Stops the Play Store updating Waze.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -189,7 +232,7 @@
         },
         {
           "name": "Enable police & enforcement alerts",
-          "description": "Turns on police and enforcement alerts.",
+          "description": "Turns police and enforcement alerts on.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -201,10 +244,37 @@
           ]
         },
         {
-          "name": "Instrument cluster support",
-          "description": "Shows the map, alerts and ETA on the car's digital cluster, where it has one.",
+          "name": "Extra map info",
+          "description": "Compass always shown and toll price on routes.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "compass",
+              "description": "Keeps the compass on the map. Stock: only while turning."
+            },
+            {
+              "key": "tolls",
+              "description": "Shows what the toll costs on each route. Stock: hidden."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Instrument cluster support",
+          "description": "Shows the map and alerts on the car's cluster screen.",
+          "use": false,
+          "options": [
+            {
+              "key": "large",
+              "description": "Uses the bigger layout on the cluster. Stock: small."
+            }
+          ],
           "compatible_versions": [
             "5.24.90.901",
             "5.25.0.1",
@@ -215,7 +285,7 @@
         },
         {
           "name": "Keep Waze alive",
-          "description": "Stops Waze shutting down after you leave it.",
+          "description": "Stops Waze closing when you leave it.",
           "use": false,
           "options": [
             {
@@ -237,8 +307,21 @@
         },
         {
           "name": "Lane guidance",
-          "description": "Lane guidance, including continue-straight hints.",
+          "description": "Shows lane guidance, including straight-ahead hints.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Live drive sharing",
+          "description": "Adds the hidden share-your-drive link.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
@@ -250,7 +333,7 @@
         },
         {
           "name": "Morphe YouTube Music as a Waze audio partner",
-          "description": "Lets Morphe YouTube Music work as Waze's audio partner.",
+          "description": "Lets Morphe YouTube Music play through Waze.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -262,9 +345,22 @@
           ]
         },
         {
-          "name": "Radar sound at any speed",
-          "description": "Plays the speed-camera sound even below the limit.",
-          "use": true,
+          "name": "New alert icons",
+          "description": "Uses Waze's newer alert icons.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Picture-in-picture",
+          "description": "Floats Waze in a 9:16 window every time you leave it. Known issues: touch does not work on the floating window, and the UI does not scale down.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
@@ -276,22 +372,14 @@
         },
         {
           "name": "Remove ads",
-          "description": "Removes ads from Waze.",
+          "description": "Removes ads.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0"
-          ]
-        },
-        {
-          "name": "Report speed limit",
-          "description": "Turns on fixing the speed limit from the speedometer.",
-          "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "beacons",
+              "description": "Waze's promotional beacon popups. Stock: shown."
+            }
+          ],
           "compatible_versions": [
             "5.24.90.901",
             "5.25.0.1",
@@ -302,21 +390,8 @@
         },
         {
           "name": "Show FPS counter",
-          "description": "Shows Waze's frames-per-second counter on the map.",
+          "description": "Shows the frame-rate counter.",
           "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0"
-          ]
-        },
-        {
-          "name": "Show all cameras & road hazards",
-          "description": "Shows cameras and road hazards on the map, with alerts.",
-          "use": true,
           "options": [],
           "compatible_versions": [
             "5.24.90.901",
@@ -328,7 +403,7 @@
         },
         {
           "name": "Skip sign-in",
-          "description": "Boots straight into the map as a guest.",
+          "description": "Starts as a guest, straight to the map.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -341,7 +416,7 @@
         },
         {
           "name": "Smoother Android Auto map",
-          "description": "Smoothes the car map's movement and heading on Android Auto.",
+          "description": "Smooths map movement on Android Auto.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -353,36 +428,22 @@
           ]
         },
         {
-          "name": "Speed limit sign always shown",
-          "description": "Always shows the speed limit sign.",
+          "name": "Speed limits",
+          "description": "Sign always shown, limit-drop warnings, reporting and sign style.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0"
-          ]
-        },
-        {
-          "name": "Speed-limit decrease warnings",
-          "description": "Warns when the speed limit drops.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0"
-          ]
-        },
-        {
-          "name": "Speed-limit sign style",
-          "description": "Picks the sign beside the speedometer: US or World.",
-          "use": false,
           "options": [
+            {
+              "key": "alwaysOn",
+              "description": "Keeps the limit sign on screen when you are under the limit. Stock: hides."
+            },
+            {
+              "key": "decrease",
+              "description": "Warns when the limit falls, 1000 m ahead. Stock: on."
+            },
+            {
+              "key": "report",
+              "description": "Adds the report-limit option. Stock: off."
+            },
             {
               "key": "style",
               "description": "Waze picks one by country; this forces it."
@@ -397,10 +458,23 @@
           ]
         },
         {
-          "name": "Speedometer always on",
-          "description": "Visible at any speed.",
-          "use": true,
-          "options": [],
+          "name": "Speedometer & limit sign",
+          "description": "Size of the speedometer and limit sign, and keeps them on screen.",
+          "use": false,
+          "options": [
+            {
+              "key": "always",
+              "description": "Keeps the speedometer on screen from the first drive. Stock: appears after a few sessions."
+            },
+            {
+              "key": "dial",
+              "description": "Ring, speed number and unit."
+            },
+            {
+              "key": "sign",
+              "description": "The limit sign next to the speedometer."
+            }
+          ],
           "compatible_versions": [
             "5.24.90.901",
             "5.25.0.1",
@@ -411,7 +485,7 @@
         },
         {
           "name": "Theme",
-          "description": "Pick any theme for the map - day and night.",
+          "description": "Picks the map theme for day and night.",
           "use": false,
           "options": [
             {
@@ -446,7 +520,7 @@
         },
         {
           "name": "Unlock driver moods",
-          "description": "Unlocks all moods already on the device.",
+          "description": "Unlocks all moods on the device.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -461,9 +535,9 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "0a452709e4f9e3d3661c6fa7baf1d44e209790df2b57bb170642ace466be542e",
-  "release_notes": "## [0.23.0](https://github.com/Forsigh/waze-patches/compare/v0.22.9...v0.23.0) (2026-10-20)\n\n### ✨ New Features\n\n* one Keep Waze alive row, Waze 5.26.0.0 support ([0d2c121](https://github.com/Forsigh/waze-patches/commit/0d2c121d2f8ea2b6036a73a1463c223dbda8005b))\n",
-  "release_tag": "v0.23.0",
-  "release_date": "2026-10-20T18:04:47Z",
+  "fingerprint": "8fdf2685b26d472a6a6f211d6bd59a837e8779fb53e485845fceea4ec1bff134",
+  "release_notes": "Four brighter AMOLED themes - Lilac, Mint, Ice and Peach - so the roads stay readable on a black map.\n\nThe audio partner row is back to Morphe YouTube Music only. That is the version that works: YouTube Music already carries Waze's audio SDK, so Waze can talk to it. BitChord and Smart AudioBook Player do not carry it, which is why they asked to update instead of connecting.\n\nThe Picture-in-picture row now states its two known issues: touch does not work on the floating window, and the UI does not scale down. It stays in Experimental and off by default.\n\nAlert distance options now say which value is standard, next to each number.",
+  "release_tag": "v0.30.3",
+  "release_date": "2026-10-23T20:24:28Z",
   "isPreRelease": false
 }
