@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/SysAdminDoc/HushTelegram",
   "created_at": "2026-10-05T15:08:19Z",
   "version": "0.0.9",
-  "description": "HushTelegram v0.0.19 targets telegram.org's Telegram 13.0.3 (org.telegram.messenger.web) and the Google Play build 13.0.3 (org.telegram.messenger) with 67 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. This release makes the Google Play build patchable, the one most people already have, since Morphe Manager used to turn it away with \"Wrong package selected.\" The official beta isn't a target anymore.\n\nIf Telegram turns down your login code with API_ID_PUBLISHED_FLOOD, that's it refusing the public API ID every patched build carries, the Play one included. Register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 1348 runtime tests passed locally. All 481 patch tests passed too, along with both Android lints. All 67 patches applied to Telegram 13.0.3 without forcing, both telegram.org's build (version code 71839) and the Google Play build (version code 71831), and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 1.34.0 or newer. Patch telegram.org's Telegram 13.0.3 or the Google Play build 13.0.3. The .mpp is a patch bundle, not a Telegram APK. Coming from an earlier HushTelegram, patch 13.0.3 and install it over your current build with the same signing key. On the beta, switch to telegram.org's build or the Play build first. New installs uninstall the stock Telegram and keep the manager's signing key for updates.\n\n### What's new\n\n* **Telegram:** The Google Play version of Telegram 13.0.3 (`org.telegram.messenger`, version code 71831) can be patched now. That's the APK APKMirror and Uptodown carry, and Morphe Manager used to turn it away with \"Wrong package selected\" because it only knew telegram.org's build. telegram.org's build still works the same way.\n* **Telegram:** **Repair Firebase push registration** also covers the Play build, so its notifications sign up with Google like they do on telegram.org's build.\n* **Telegram:** The official Telegram beta isn't a target anymore. **Turn off beta debug logs** is gone with it, and so is the part of **Disable analytics** that only stopped the beta's crash and session reports. If you're on the beta, switch to telegram.org's build or the Play build before you patch.",
+  "description": "HushTelegram v0.0.20 targets telegram.org's Telegram 13.1.0 (org.telegram.messenger.web) and the Google Play build 13.1.0 (org.telegram.messenger) with 67 patches. It takes sponsored messages, search ads, Stories, recommendations and the Premium, gifts and Stars upsells out of Telegram, and keeps its usage reports on your phone. This release moves to Telegram 13.1.0 and Morphe's 2.0 patcher, and it adds four switches from your reports.\n\nIf Telegram turns down your login code with API_ID_PUBLISHED_FLOOD, that's it refusing the public API ID every patched build carries, the Play one included. Register an app at my.telegram.org/apps and fill in Use registered Telegram API credentials before patching. For notifications, open Telegram's Settings, then Notifications, and turn on Keep-Alive Service and Background Connection.\n\nValidation: 1378 runtime tests passed locally. All 488 patch tests passed too, along with both Android lints. All 67 patches applied to Telegram 13.1.0 without forcing, both telegram.org's build (version code 72299) and the Google Play build (version code 72291), and the release receipt checked each patched app's manifest, native libraries and alignment.\n\nNeeds Morphe Manager 2.0.0 or newer. Patch telegram.org's Telegram 13.1.0 or the Google Play build 13.1.0. The .mpp is a patch bundle, not a Telegram APK. Coming from an earlier HushTelegram, patch 13.1.0 and install it over your current build with the same signing key. New installs uninstall the stock Telegram and keep the manager's signing key for updates.\n\n### What's new\n\n* **Telegram:** Moved to Telegram 13.1.0, both telegram.org's build (version code 72299) and the Google Play build (version code 72291). Every patch carried over as it was.\n* **Telegram:** HushTelegram now builds on Morphe's 2.0 patcher, so this release needs **Morphe Manager 2.0.0 or newer**. Update Manager first, then patch. On a computer, use morphe-desktop 1.19.0 or newer. The patch count is the same, and every patch still applies to both 13.1.0 builds.\n* **Telegram:** The HushTelegram settings home page gets you to the settings sooner. The seven pages of switches now sit right under the status card, and the header, the gaps between cards, the section titles and the page rows all take less room. **Quick setups** moved to the Settings backup page and **Lock HushTelegram settings** to the Pause page under More settings. Search finds both, and they work like before. The long press that hid Quick setups is gone, and so is its **Quick setups on the home page** row.\n* **Telegram:** Locking the HushTelegram settings by mistake no longer costs you a day. For 10 minutes after you lock them, the row reads **Unlock now** and one tap opens them again. After that, unlocking takes the usual 24 hours. Changing the phone's clock or restarting the phone ends those 10 minutes early. (#23)\n* **Telegram:** Save downloaded files has a new switch under it, **Also save from chats that don't allow saving**, and it starts off. With it on, files and songs from chats whose owner turned off saving get a copy in Download/Telegram too. That's for chats where the owner doesn't mind you keeping things. Secret chats and self-destructing media still stay inside Telegram. (#29)\n* **Telegram:** Save downloaded files now covers the files and songs Telegram downloads on its own, too. Before, a file that auto-download fetched while its chat was closed stayed in Telegram even with the switch on, and only files downloaded in an open chat got a copy. Those now go to Download/Telegram under their own names, and chats that don't allow saving follow the same switch as everything else. (#29)\n* **Telegram:** Keep deleted messages gets a second switch, **Show deleted in red**. Off by default. Turn it on and the word \"deleted\" next to a kept message's time turns red, so those messages stand out while you scroll. The time keeps its usual color and the bubble stays the same size. (#25)\n* **Telegram:** **Hide Contacts tab** has one more switch on the Chat list page, **Hide new message button**. It hides the round pencil button on the chat list. The story camera button, the archive, your folders and search all work as before, and you start a new chat from the menu or from search instead. It's off until you turn it on, and the change shows after a restart. (#22)\n* **Telegram:** **Keep videos muted on volume keys** has a second switch on the Playback page, **Full screen videos turn either way**. Telegram puts a full screen video on one landscape side and leaves it there, so turning the phone the other way shows the picture upside down. With this switch on, the video follows your phone to either side, even with auto-rotate off. It starts off. (#27)",
   "apps": [
     {
       "app_name": "Telegram",
@@ -16,7 +16,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -25,7 +25,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -34,7 +34,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -43,7 +43,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -52,7 +52,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -61,7 +61,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -70,7 +70,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -79,7 +79,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -88,7 +88,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -97,7 +97,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -106,7 +106,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -115,7 +115,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -124,7 +124,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -133,7 +133,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -142,7 +142,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -151,7 +151,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -160,7 +160,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -169,7 +169,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -178,7 +178,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -187,7 +187,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -196,7 +196,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -205,7 +205,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -214,7 +214,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -223,7 +223,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -232,7 +232,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -241,7 +241,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -250,7 +250,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -259,7 +259,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -268,7 +268,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -277,7 +277,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -286,7 +286,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -295,7 +295,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -304,7 +304,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -313,7 +313,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -322,7 +322,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -331,7 +331,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -340,7 +340,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -349,7 +349,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -358,7 +358,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -367,7 +367,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -376,7 +376,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -390,7 +390,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -399,7 +399,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -408,7 +408,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -417,7 +417,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -426,7 +426,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -435,7 +435,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -444,7 +444,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -453,7 +453,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -462,7 +462,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -471,7 +471,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -480,7 +480,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -489,7 +489,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -498,7 +498,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -507,7 +507,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -516,7 +516,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -525,7 +525,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -534,7 +534,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -543,7 +543,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -552,7 +552,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -561,7 +561,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -570,7 +570,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -579,7 +579,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -593,7 +593,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -611,7 +611,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -620,7 +620,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -629,7 +629,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         }
       ]
@@ -644,7 +644,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -653,7 +653,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -662,7 +662,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -671,7 +671,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -680,7 +680,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -689,7 +689,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -698,7 +698,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -707,7 +707,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -716,7 +716,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -725,7 +725,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -734,7 +734,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -743,7 +743,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -752,7 +752,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -761,7 +761,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -770,7 +770,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -779,7 +779,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -788,7 +788,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -797,7 +797,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -806,7 +806,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -815,7 +815,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -824,7 +824,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -833,7 +833,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -842,7 +842,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -851,7 +851,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -860,7 +860,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -869,7 +869,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -878,7 +878,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -887,7 +887,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -896,7 +896,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -905,7 +905,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -914,7 +914,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -923,7 +923,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -932,7 +932,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -941,7 +941,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -950,7 +950,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -959,7 +959,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -968,7 +968,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -977,7 +977,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -986,7 +986,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -995,7 +995,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1004,7 +1004,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1018,7 +1018,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1027,7 +1027,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1036,7 +1036,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1045,7 +1045,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1054,7 +1054,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1063,7 +1063,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1072,7 +1072,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1081,7 +1081,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1090,7 +1090,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1099,7 +1099,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1108,7 +1108,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1117,7 +1117,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1126,7 +1126,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1135,7 +1135,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1144,7 +1144,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1153,7 +1153,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1162,7 +1162,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1171,7 +1171,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1180,7 +1180,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1189,7 +1189,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1198,7 +1198,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1207,7 +1207,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1221,7 +1221,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1239,7 +1239,7 @@
             }
           ],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1248,7 +1248,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         },
         {
@@ -1257,14 +1257,14 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.0.3"
+            "13.1.0"
           ]
         }
       ]
     }
   ],
   "patches_name": "HushTelegram",
-  "fingerprint": "1b9dd2f5277502f99aa7e754f6fb132e50998d2862f1f55a3798174d07e95f7c",
+  "fingerprint": "47f180182a0f74fbb651b33f063ec0c7a87da9660c27a3b5dc1e0886dd568706",
   "release_notes": "HushTelegram v0.0.9 has 25 patches for telegram.org's Telegram 12.10.6 (`org.telegram.messenger.web`) and the official Telegram beta 12.10.7 (`org.telegram.messenger.beta`), up from 22 in v0.0.8. Twenty-three are selected by default. The two credential patches take your own values, so they stay off until you pick them.\n\n## What's new\n\n* **Telegram:** Repair Firebase push registration now works on slower phones. Firebase starts its first Installations request while Telegram is still starting, and on a slow phone that request could get there before HushTelegram's settings were ready. It then went out with the re-signed certificate, Firebase refused it, and no push token was saved. The request now waits for the settings, up to 10 seconds, on Firebase's own background thread. The diagnostic report counts requests that waited and any that still went out early.\n* **Telegram:** The beta target is now telegram.org's current 12.10.7 build, version code 71179, which replaced build 71159. Every patch applies and passes its fixture tests on it.\n* **Telegram:** The README says every way into HushTelegram settings (Telegram's own Settings, a long-press on the Telegram icon, or App info), and walks through the my.telegram.org form for your own API ID, including what causes \"Incorrect app name!\".\n* **Telegram:** Three independent switches add plain-text paste, copyable local user and chat IDs, and a way to stop double-tap reactions. They start off. Pause restores the stock behavior, and the existing clipboard and explicit reaction actions stay available.\n* **Telegram:** Pause, Settings backup and Diagnostics now have separate pages with shorter headings. Search still reaches every control, and all five translations include the new page names.\n* **Telegram:** New Year look all year now puts Telegram's Santa hat over the chat list logo. It follows the logo's bounds and color so it stays visible in light and dark themes. Other titles keep their original drawing path. Changed title geometry getters refuse before patching. The switch remains off by default, and Pause restores Telegram's seasonal behavior.\n* **Telegram:** External links now recognize browser aliases that Android enables at runtime, even when their manifest default is disabled. Disabled or private components stay excluded, and the browser chooser keeps its existing order.\n* **Telegram:** HushTelegram settings now opens from a row in Telegram's own Settings. Repeated taps share one screen, and the launcher and Android App-info entries remain available. Partial patch selections show only their installed controls. Changed incoming item registers or callback casts refuse before any hook is edited.\n* **Telegram:** Changing the registered API ID now refreshes the native connection identity for every valid ID. IDs that differ by 128 no longer share a marker. Updates also stay distinct from the previous marker scheme, without changing saved account keys or the app version. Changed native argument shapes refuse before either credential is edited.\n\n### Tooling\n\n* **Tooling:** Builds use Morphe patcher 1.15.1, which brings faster fingerprint matching and signing, and stricter DEX path checks. Morphe Manager 1.34.0 is the first stable Manager that carries it, so the README now asks for 1.34.0 or newer. Fixture checks use the desktop CLI 1.18.1.\n* **Tooling:** The source-ledger paragraph now identifies v0.0.8 as the published bundle and distinguishes newer source changes.\n* **Tooling:** A bounded selection matrix checks both declared Telegram builds 41 ways each, from the defaults and the full catalog down to single patches and bad credential options. It checks each build's dependencies, minimum Android version, preserved resources, native libraries and settings switches. Configured credentials must change only their own values and the native connection version marker. Mutation controls reject missing, duplicated or altered markers.\n\n## Install\n\n1. Install [Morphe Manager](https://github.com/MorpheApp/morphe-manager) 1.34.0 or newer.\n2. Add HushTelegram as a patch source: https://morphe.software/add-source?github=SysAdminDoc%2FHushTelegram\n3. Get Telegram **12.10.6** from [telegram.org/android](https://telegram.org/android) by tapping Download Telegram (it saves as plain `Telegram.apk`), or the [official beta](https://telegram.org/dl/android/apk-public-beta) **12.10.7**, and patch it. The patched app needs Android 9 or newer.\n4. Coming from v0.0.8? Patch again and install over it with the same Morphe Manager signing key. New to HushTelegram? Uninstall the stock Telegram first, since Android won't put one over the other. Your chats come back when you sign in, but secret chats don't. Back up Morphe Manager's signing key after your first patch. You'll need it for every update.\n5. If Telegram won't send you a login code, register your own app at [my.telegram.org/apps](https://my.telegram.org/apps). Use only letters and numbers in the short name. Then select **Use registered Telegram API credentials**, fill in `apiId` and `apiHash`, and patch again. The result installs over your current HushTelegram build. Keep both values private.\n6. For notifications, open Telegram's Settings, then Notifications and Sounds, and turn on Keep-Alive Service and Background Connection.\n7. To change HushTelegram's switches, open Telegram's Settings and tap HushTelegram settings.\n\nThe `.mpp` download is a patch bundle, not a Telegram APK. [Installation instructions](https://github.com/SysAdminDoc/HushTelegram#install).\n\n## Validation\n\n579 runtime tests and 303 patch tests passed locally, along with both Android lints and the release script checks. All 25 patches applied without forcing to Telegram 12.10.6 and to the 12.10.7 beta, build 71179. The dependency advisory check passed. On an Android 9 emulator slowed down to match the push report, this build saved a push token in all seven runs. The patched beta started, opened HushTelegram settings and registered for push.\n",
   "release_tag": "v0.0.9",
   "release_date": "2026-10-05T15:08:19Z",
