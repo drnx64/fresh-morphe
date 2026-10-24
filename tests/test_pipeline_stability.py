@@ -193,6 +193,68 @@ class TestSaveBundlesSplitPruning:
         assert (bundles_dir / "foo_stable.json").exists()
 
 
+# ── index app package list (frontend paints from the index alone) ─────────
+
+class TestIndexAppPackages:
+    @pytest.fixture
+    def bundles_dir(self, tmp_path, monkeypatch):
+        d = tmp_path / "bundles"
+        d.mkdir()
+        monkeypatch.setattr(state_manager, "BUNDLES_DIR", str(d))
+        return d
+
+    @staticmethod
+    def _index(bundles_dir):
+        return json.loads((bundles_dir / "_index.json").read_text(encoding="utf-8"))
+
+    def test_index_lists_package_names_only(self, bundles_dir):
+        data = {"foo:stable": {"bundle": "foo", "channel": "stable", "apps": [
+            {"package": "com.a", "patches": [{"name": "p1"}]},
+            {"package": "com.b", "patches": []},
+        ]}}
+        save_bundles_split(data)
+        entry = self._index(bundles_dir)["foo:stable"]
+        assert entry["apps"] == ["com.a", "com.b"]
+        assert all(isinstance(pkg, str) for pkg in entry["apps"])
+        assert entry["app_count"] == 2
+
+    def test_index_app_count_matches_apps(self, bundles_dir):
+        data = {"foo:stable": {"bundle": "foo", "channel": "stable", "apps": [
+            {"package": "com.a"}, {"package": "com.b"}, {"package": "com.c"},
+        ]}}
+        save_bundles_split(data)
+        entry = self._index(bundles_dir)["foo:stable"]
+        assert entry["app_count"] == len(entry["apps"])
+
+    def test_index_apps_absent_from_bundle_file_metadata(self, bundles_dir):
+        # The index must not leak per-app detail (patches stay in the file)
+        data = {"foo:stable": {"bundle": "foo", "channel": "stable", "apps": [
+            {"package": "com.a", "patches": [{"name": "p1"}]},
+        ]}}
+        save_bundles_split(data)
+        assert self._index(bundles_dir)["foo:stable"]["apps"] == ["com.a"]
+
+    def test_snapshot_rebuild_ignores_index_apps(self, bundles_dir):
+        _write_json(str(bundles_dir / "_index.json"),
+                    {"foo:stable": {"bundle": "foo", "channel": "stable",
+                                    "apps": ["com.stale"]}})
+        _write_json(str(bundles_dir / "foo_stable.json"),
+                    {"bundle": "foo", "channel": "stable",
+                     "apps": [{"package": "com.real", "patches": []}]})
+        snapshot = rebuild_snapshot_from_bundles()
+        # Rebuild reads the file (full record), never the index copy
+        assert snapshot["foo:stable"]["apps"] == [{"package": "com.real", "patches": []}]
+
+    def test_committed_index_stays_in_sync(self):
+        """The site's cold boot must never see an index without package lists."""
+        index = state_manager.load_json(
+            os.path.join(state_manager.BUNDLES_DIR, "_index.json"), default={})
+        if not index:
+            pytest.skip("no committed data/bundles/_index.json")
+        missing = [k for k, v in index.items() if not isinstance(v.get("apps"), list)]
+        assert not missing, f"index entries missing apps[]: {missing[:5]}"
+
+
 # ── reconcile (stale drop + carry-forward) ────────────────────────────────
 
 class TestReconcile:

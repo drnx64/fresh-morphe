@@ -234,6 +234,10 @@ def save_bundles_split(data):
             "release_tag": record.get("release_tag", ""),
             "release_date": record.get("release_date", ""),
             "app_count": len(record.get("apps", [])),
+            # Package list lets the site paint the full apps directory from the
+            # index alone; per-app `patches` stay in the per-bundle file and are
+            # fetched on demand (see scripts/services/bundleLoader.js).
+            "apps": [app.get("package", "") for app in record.get("apps", [])],
             "stars": record.get("stars", 0),
             "avatarUrl": record.get("avatarUrl", ""),
             "bundleImageUrl": record.get("bundleImageUrl", ""),
