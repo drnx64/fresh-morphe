@@ -1,18 +1,17 @@
 /**
- * AppDetailModal — tabbed layout: Bundles | Patches | Changes.
- * Floating close button, hero section, expandable bundle accordions.
+ * AppDetailModal — tabbed layout: Patches | Changes.
+ * Floating close button, hero section. Scoped to the single bundle the app was
+ * opened from (a random supporting bundle when opened from the app list).
  */
 import { el } from '../ui.js'
 import { openModal, closeModal } from './modal.js'
 import * as store from '../store.js'
-import { resolveAppName, getAppIconUrl, copyToClipboard, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml } from '../utils/misc.js'
-import { getPlayStoreUrl, getAddMorpheUrl } from '../utils/url.js'
+import { resolveAppName, getAppIconUrl, copyToClipboard } from '../utils/misc.js'
+import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { wordDiffHtml } from '../utils/wordDiff.js'
-import { formatVersion } from '../utils/format.js'
-import { parseBundleKey, findBundleRecord, pickChannel } from '../utils/bundleKey.js'
-import { buildCompareMatrix } from './compareMatrixTable.js'
-import { CLOSE_ICON, CHEVRON_DOWN, CHEVRON_RIGHT } from '../utils/svg.js'
+import { parseBundleKey, findBundleRecord } from '../utils/bundleKey.js'
+import { CLOSE_ICON } from '../utils/svg.js'
 
 const PLAY_STORE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M.859 11.981V1.741c0-.672.79-1.098 1.434-.771L12.37 6.09c.662.336.662 1.207 0 1.543l-10.077 5.12c-.644.327-1.434-.099-1.434-.772M9.23 9.23l-8.1-8.101m8.1 3.364l-8.1 8.1"/></svg>'
 
@@ -29,35 +28,32 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
   const iconUrl = getAppIconUrl({ package: pkg }, iconCache)
   const hideDev = localStorage.getItem('morphe_hide_dev') === 'true'
 
-  // Collect all bundles containing this app
-  const appBundles = []
+  // One bundle only: the source the app was opened from, or a random bundle
+  // that supports it when opened from the directory. Never list every bundle.
+  const candidates = []
   for (const [key, bundle] of Object.entries(bundles)) {
     const { name: bName, channel } = parseBundleKey(key)
     if (hideDev && channel === 'dev') continue
-    if (bundle.apps?.some((a) => a.package === pkg)) {
-      const existing = appBundles.find((b) => b.bundleName === bName)
-      if (existing) {
-        if (!existing.channels.includes(channel)) existing.channels.push(channel)
-      } else {
-        appBundles.push({
-          bundleName: bName,
-          repoUrl: bundle.repo_url || '',
-          patchesName: bundle.patches_name || bName,
-          version: bundle.version || '',
-          channels: [channel],
-          avatarUrl: getDisplayAvatar(bundle.repo_url, bundle.avatarUrl),
-          bundleImageUrl: getDisplayBundleImage(bundle.repo_url, bundle.bundleImageUrl),
-        })
-      }
+    if (!bundle.apps?.some((a) => a.package === pkg)) continue
+    const existing = candidates.find((b) => b.bundleName === bName)
+    if (existing) {
+      if (!existing.channels.includes(channel)) existing.channels.push(channel)
+    } else {
+      candidates.push({
+        bundleName: bName,
+        patchesName: bundle.patches_name || bName,
+        channels: [channel],
+      })
     }
   }
 
-  // Find target bundle for Patches tab
-  const targetBundle = appBundles.find((b) => b.bundleName === bundleName) || appBundles[0]
+  const sourceBundle = candidates.find((b) => b.bundleName === bundleName)
+    || (candidates.length ? candidates[Math.floor(Math.random() * candidates.length)] : null)
+
   let patches = []
-  if (targetBundle) {
+  if (sourceBundle) {
     const { record: bundleData } = findBundleRecord(
-      bundles, targetBundle.bundleName, targetBundle.channels
+      bundles, sourceBundle.bundleName, sourceBundle.channels
     )
     if (bundleData) {
       const appData = bundleData.apps?.find((a) => a.package === pkg)
@@ -88,12 +84,10 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     ? `<img class="app-detail-icon" src="${escHtml(iconUrl)}" alt="" loading="lazy" onerror="this.style.display='none'">`
     : `<div class="app-detail-icon app-detail-icon--fallback">${appName.charAt(0).toUpperCase()}</div>`
 
-  // Attribution: "Facebook by Hushbook patches" — each bundle name links to
-  // that bundle's detail page (only bundles containing this app).
-  const sourceLinks = appBundles.map((b) =>
-    `<a href="#/bundle/${encodeURIComponent(b.bundleName)}" title="Open bundle page">${escHtml(b.patchesName)}</a>`
-  ).join(', ')
-  const sourceHtml = sourceLinks ? `<span class="app-detail-source"> by ${sourceLinks}</span>` : ''
+  // Attribution: only the bundle this app was opened from.
+  const sourceHtml = sourceBundle
+    ? ` <span class="app-detail-source">by <a href="#/bundle/${encodeURIComponent(sourceBundle.bundleName)}" title="Open bundle page">${escHtml(sourceBundle.patchesName)}</a></span>`
+    : ''
 
   const heroEl = el('div', { class: 'app-detail-hero' })
   heroEl.innerHTML = `
@@ -123,11 +117,8 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     })
   }
 
-  // Tabs — a single-bundle app opens directly on Patches (Bundles tab hidden)
-  const showBundlesTab = appBundles.length !== 1
-  const tabNames = []
-  if (showBundlesTab) tabNames.push('Bundles')
-  tabNames.push('Patches')
+  // Tabs — always scoped to one bundle, so Patches comes first.
+  const tabNames = ['Patches']
   if (hasChanges) tabNames.push('Changes')
   const initialTab = tabNames[0]
 
@@ -149,267 +140,41 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     })
   }
 
-  // ── Bundles tab ──────────────────────────────────────
-  const bundlesTab = tabContents['Bundles']
-  if (bundlesTab && appBundles.length > 0) {
-    // Compare bar: select 2+ bundles, then open comparison overlay
-    const selectedForCompare = new Set()
-    const getPatchesFor = (b) => {
-      const { record: bd } = findBundleRecord(bundles, b.bundleName, b.channels)
-      return bd?.apps?.find((a) => a.package === pkg)?.patches || []
-    }
-
-    const compareBar = el('div', { class: 'app-detail-compare-bar' })
-    const compareHint = el('span', { class: 'app-detail-compare-hint' }, ['Select bundles to compare'])
-    const compareBtn = el('button', { class: 'btn btn--primary btn--sm', type: 'button', disabled: '' }, ['Compare'])
-    compareBar.appendChild(compareHint)
-    compareBar.appendChild(compareBtn)
-    if (appBundles.length >= 2) bundlesTab.appendChild(compareBar)
-
-    function updateCompareBar() {
-      const n = selectedForCompare.size
-      compareBtn.disabled = n < 2
-      compareBtn.textContent = n >= 2 ? `Compare (${n})` : 'Compare'
-      compareHint.textContent = n >= 2
-        ? `${n} bundle${n !== 1 ? 's' : ''} selected`
-        : 'Select bundles to compare'
-    }
-
-    compareBtn.addEventListener('click', () => {
-      const picked = appBundles.filter((b) => selectedForCompare.has(b.bundleName))
-      if (picked.length < 2) return
-
-      const cols = picked.map((b) => ({
-        label: b.patchesName,
-        avatarUrl: b.avatarUrl,
-        version: b.version,
-        channel: pickChannel(b.channels),
-        patches: getPatchesFor(b),
-      }))
-
-      openModal({
-        title: `Compare ${appName} patches`,
-        content: buildCompareMatrix(cols),
-        className: 'compare-modal',
-        maxWidth: 880,
-        stack: true,
-      })
-    })
-
-    for (const b of appBundles) {
-      const bundleAccordion = el('div', { class: 'app-detail-bundle-accordion' })
-
-      const channelBadges = b.channels.map((ch) =>
-        `<span class="channel-badge ${ch}">${ch}</span>`
-      ).join(' ')
-
-      const bundleHeader = el('div', { class: 'app-detail-bundle-accordion-header', role: 'button', tabindex: '0' })
-      bundleHeader.innerHTML = `
-        <div class="app-detail-bundle-accordion-info">
-          ${avatarStackHtml(
-            b.bundleImageUrl,
-            b.avatarUrl,
-            (b.patchesName || '?').charAt(0).toUpperCase(),
-            'app-detail-bundle-avatar',
-            'app-detail-bundle-avatar app-detail-bundle-avatar--fallback',
-          )}
-          <span class="app-detail-bundle-name">${escHtml(b.patchesName)}</span>
-          ${channelBadges}
-          ${b.version ? `<span class="app-detail-bundle-version">${escHtml(formatVersion(b.version))}</span>` : ''}
-        </div>
-        <div class="app-detail-bundle-accordion-actions">
-          ${b.repoUrl ? `<a href="${escHtml(getAddMorpheUrl(b.repoUrl))}" class="btn btn--primary btn--sm" target="_blank" rel="noopener" onclick="event.stopPropagation()">Add to Morphe</a>` : ''}
-          <label class="app-detail-compare-check" title="Select for comparison" onclick="event.stopPropagation()">
-            <input type="checkbox" data-bundle="${escHtml(b.bundleName)}">
-          </label>
-          <span class="app-detail-bundle-chevron">${CHEVRON_DOWN}</span>
-        </div>
-      `
-
-      const checkBox = bundleHeader.querySelector('input[type="checkbox"]')
-      checkBox.addEventListener('change', () => {
-        if (checkBox.checked) selectedForCompare.add(b.bundleName)
-        else selectedForCompare.delete(b.bundleName)
-        updateCompareBar()
-      })
-
-      const patchesContainer = el('div', { class: 'app-detail-bundle-patches' })
-
-      let bundlePatches = []
-      const { record: bundleData } = findBundleRecord(bundles, b.bundleName, b.channels)
-      if (bundleData) {
-        const appData = bundleData.apps?.find((a) => a.package === pkg)
-        if (appData) bundlePatches = appData.patches || []
-      }
-
-      if (bundlePatches.length > 0) {
-        const sorted = [...bundlePatches].sort((a, b) => a.name.localeCompare(b.name))
-        for (const patch of sorted) {
-          const patchEl = el('div', { class: 'app-detail-patch' })
-          const defaultBadge = patch.use ? '<span class="badge badge--default-on">ON</span>' : ''
-          const versionsHtml = patch.compatible_versions?.length
-            ? `<span class="app-detail-patch-versions">${escHtml(patch.compatible_versions.join(', '))}</span>`
-            : '<span class="app-detail-patch-versions app-detail-patch-versions--any">Any version</span>'
-          patchEl.innerHTML = `
-            <div class="app-detail-patch-header">
-              <span class="app-detail-patch-name">${escHtml(patch.name)}</span>
-              ${defaultBadge}
-            </div>
-            ${patch.description ? `<p class="app-detail-patch-desc">${escHtml(patch.description)}</p>` : ''}
-            <div class="app-detail-patch-meta">${versionsHtml}</div>
-          `
-          patchesContainer.appendChild(patchEl)
-        }
-      } else {
-        patchesContainer.appendChild(el('div', { class: 'app-detail-patch-empty' }, ['No patch data available.']))
-      }
-
-      bundleHeader.addEventListener('click', () => {
-        const isOpen = bundleAccordion.classList.toggle('open')
-        if (isOpen) {
-          patchesContainer.style.maxHeight = patchesContainer.scrollHeight + 'px'
-        } else {
-          patchesContainer.style.maxHeight = '0'
-        }
-      })
-      bundleHeader.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          bundleHeader.click()
-        }
-      })
-
-      bundleAccordion.appendChild(bundleHeader)
-      bundleAccordion.appendChild(patchesContainer)
-      bundlesTab.appendChild(bundleAccordion)
-    }
-  } else if (bundlesTab) {
-    bundlesTab.innerHTML = '<div class="empty-state">No bundles found for this app.</div>'
-  }
-
   // ── Patches tab ──────────────────────────────────────
   const patchesTab = tabContents['Patches']
   const patchesList = el('div', { class: 'app-detail-patches' })
 
-  function renderPatchesForBundle(bundleInfo) {
+  function renderPatchList(list) {
     patchesList.replaceChildren()
-    let bundlePatches = []
-    const { record: bundleData } = findBundleRecord(
-      bundles, bundleInfo.bundleName, bundleInfo.channels
-    )
-    if (bundleData) {
-      const appData = bundleData.apps?.find((a) => a.package === pkg)
-      if (appData) bundlePatches = appData.patches || []
-    }
-
-    if (bundlePatches.length > 0) {
-      const sorted = [...bundlePatches].sort((a, b) => a.name.localeCompare(b.name))
-      for (const patch of sorted) {
-        const patchEl = el('div', { class: 'app-detail-patch' })
-        const defaultBadge = patch.use ? '<span class="badge badge--default-on">ON</span>' : ''
-        const versionsHtml = patch.compatible_versions?.length
-          ? `<span class="app-detail-patch-versions">${escHtml(patch.compatible_versions.join(', '))}</span>`
-          : '<span class="app-detail-patch-versions app-detail-patch-versions--any">Any version</span>'
-        patchEl.innerHTML = `
-          <div class="app-detail-patch-header">
-            <span class="app-detail-patch-name">${escHtml(patch.name)}</span>
-            ${defaultBadge}
-          </div>
-          ${patch.description ? `<p class="app-detail-patch-desc">${escHtml(patch.description)}</p>` : ''}
-          <div class="app-detail-patch-meta">${versionsHtml}</div>
-        `
-        patchesList.appendChild(patchEl)
-      }
-    } else {
+    if (list.length === 0) {
       patchesList.appendChild(el('div', { class: 'app-detail-patch-empty' }, ['No patch data available.']))
+      return
+    }
+    const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name))
+    for (const patch of sorted) {
+      const patchEl = el('div', { class: 'app-detail-patch' })
+      const defaultBadge = patch.use ? '<span class="badge badge--default-on">ON</span>' : ''
+      const versionsHtml = patch.compatible_versions?.length
+        ? `<span class="app-detail-patch-versions">${escHtml(patch.compatible_versions.join(', '))}</span>`
+        : '<span class="app-detail-patch-versions app-detail-patch-versions--any">Any version</span>'
+      patchEl.innerHTML = `
+        <div class="app-detail-patch-header">
+          <span class="app-detail-patch-name">${escHtml(patch.name)}</span>
+          ${defaultBadge}
+        </div>
+        ${patch.description ? `<p class="app-detail-patch-desc">${escHtml(patch.description)}</p>` : ''}
+        <div class="app-detail-patch-meta">${versionsHtml}</div>
+      `
+      patchesList.appendChild(patchEl)
     }
   }
 
-  if (appBundles.length > 0) {
-    let currentBundle = targetBundle || appBundles[0]
-
-    function getBundleLabel(b) {
-      return `${escHtml(b.patchesName)}${b.version ? ` ${escHtml(formatVersion(b.version))}` : ''}`
-    }
-
-    const dropdownWrapper = el('div', { class: 'app-detail-bundle-dropdown' })
-    const trigger = el('button', { class: 'app-detail-bundle-dropdown-trigger', type: 'button', 'aria-haspopup': 'listbox', 'aria-expanded': 'false' })
-    const triggerLabel = el('span', { class: 'app-detail-bundle-dropdown-label' })
-    const triggerChevron = el('span', { class: 'app-detail-bundle-dropdown-chevron', dangerouslySetInnerHTML: CHEVRON_DOWN })
-    trigger.appendChild(triggerLabel)
-    trigger.appendChild(triggerChevron)
-
-    const menu = el('div', { class: 'app-detail-bundle-dropdown-menu', role: 'listbox' })
-
-    function updateTrigger() {
-      const chBadges = currentBundle.channels.map((ch) =>
-        `<span class="channel-badge channel-badge--sm ${ch}">${ch}</span>`
-      ).join('')
-      triggerLabel.innerHTML = `${getBundleLabel(currentBundle)} ${chBadges}`
-    }
-
-    function renderMenu() {
-      menu.replaceChildren()
-      for (const b of appBundles) {
-        const isActive = b.bundleName === currentBundle.bundleName
-        const option = el('div', {
-          class: `app-detail-bundle-dropdown-option${isActive ? ' active' : ''}`,
-          role: 'option',
-          'aria-selected': String(isActive),
-        })
-        const chBadges = b.channels.map((ch) =>
-          `<span class="channel-badge channel-badge--sm ${ch}">${ch}</span>`
-        ).join(' ')
-        option.innerHTML = `
-          <span class="app-detail-bundle-dropdown-option-name">${escHtml(b.patchesName)}</span>
-          <span class="app-detail-bundle-dropdown-option-meta">${chBadges}${b.version ? ` ${escHtml(formatVersion(b.version))}` : ''}</span>
-        `
-        option.addEventListener('click', () => {
-          currentBundle = b
-          updateTrigger()
-          renderMenu()
-          renderPatchesForBundle(b)
-          closeDropdown()
-        })
-        menu.appendChild(option)
-      }
-    }
-
-    function openDropdown() {
-      renderMenu()
-      menu.classList.add('open')
-      trigger.setAttribute('aria-expanded', 'true')
-    }
-    function closeDropdown() {
-      menu.classList.remove('open')
-      trigger.setAttribute('aria-expanded', 'false')
-    }
-
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation()
-      menu.classList.contains('open') ? closeDropdown() : openDropdown()
-    })
-    document.addEventListener('click', (e) => {
-      if (!dropdownWrapper.contains(e.target)) closeDropdown()
-    })
-
-    updateTrigger()
-    // Dropdown is only useful when choosing between multiple bundles
-    if (appBundles.length > 1) {
-      dropdownWrapper.appendChild(trigger)
-      dropdownWrapper.appendChild(menu)
-      patchesTab.appendChild(dropdownWrapper)
-    }
-    renderPatchesForBundle(currentBundle)
+  if (sourceBundle) {
+    renderPatchList(patches)
     patchesTab.appendChild(patchesList)
 
-    // Deep-link: switch to Patches tab and highlight the target patch
+    // Deep-link: highlight the target patch
     if (patchName) {
-      const activateTab = (name) => {
-        tabsEl.querySelectorAll('.modal-tab').forEach((t) => t.classList.toggle('active', t.textContent === name))
-        Object.entries(tabContents).forEach(([k, c]) => c.classList.toggle('active', k === name))
-      }
-      activateTab('Patches')
       const target = [...patchesList.querySelectorAll('.app-detail-patch')].find(
         (n) => n.querySelector('.app-detail-patch-name')?.textContent === patchName
       )

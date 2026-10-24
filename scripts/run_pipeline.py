@@ -90,9 +90,11 @@ def run():
                 now_ts = time.time()
                 CACHE_TTL = 30 * 24 * 3600  # 30 days
 
+                # `isFork` is required so caches predating fork metadata refresh once.
                 fresh_urls = {url for url, entry in repo_cache.items()
                               if now_ts - entry.get("fetched_at", 0) < CACHE_TTL
-                              and "bundleImageUrl" in entry}
+                              and "bundleImageUrl" in entry
+                              and "isFork" in entry}
                 stale_entries = [e for e in bundle_index.values()
                                  if e.get("repo_url", "") and e["repo_url"] not in fresh_urls]
 

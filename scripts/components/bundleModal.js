@@ -64,7 +64,10 @@ export function openBundleModal({ bundleName, channels = [] }) {
       </div>
     </div>
   `
-  content.appendChild(headerEl)
+  // Phones: the identity block rides in the sticky modal header instead of
+  // scrolling away inside the body (and the duplicate text title is dropped).
+  const isPhone = window.matchMedia('(max-width: 639px)').matches
+  if (!isPhone) content.appendChild(headerEl)
 
   if (bundleData.repoDescription) {
     const descEl = el('div', { class: 'bundle-modal-description' }, [bundleData.repoDescription])
@@ -96,6 +99,8 @@ export function openBundleModal({ bundleName, channels = [] }) {
     content,
     className: 'bundle-modal',
     maxWidth: 600,
+    headerContent: isPhone ? headerEl : null,
+    hideTitle: isPhone,
   })
 
   mountAppRows(appsList, apps, {

@@ -12,21 +12,37 @@ export function padNum(n) {
   return n < 10 ? '0' + n : '' + n
 }
 
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+]
+
 export function formatFriendlyDate(dateStr) {
   if (!dateStr) return '-'
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ]
   const parts = dateStr.split('-')
   if (parts.length === 3) {
     const monthIndex = parseInt(parts[1], 10) - 1
     const day = parseInt(parts[2], 10)
     if (monthIndex >= 0 && monthIndex < 12) {
-      return `${months[monthIndex]} ${day}, ${parts[0]}`
+      return `${MONTHS[monthIndex]} ${day}, ${parts[0]}`
     }
   }
   return dateStr
+}
+
+/**
+ * Split an ISO date into display pieces so the day can be styled on its own.
+ * @param {string} dateStr - ISO date (YYYY-MM-DD)
+ * @returns {{day: string, month: string, year: string}}
+ */
+export function dateParts(dateStr) {
+  const [year, month, day] = String(dateStr || '').split('-')
+  const monthIndex = parseInt(month, 10) - 1
+  return {
+    day: String(parseInt(day, 10) || ''),
+    month: MONTHS[monthIndex] || '',
+    year: year || '',
+  }
 }
 
 /**
@@ -40,6 +56,53 @@ export function formatVersion(v) {
   const s = String(v).trim()
   if (!s) return ''
   return 'v' + s.replace(/^v+/i, '')
+}
+
+/**
+ * Reduce noisy CI-style version strings to the version itself.
+ * "privacy-tiktok-multi-v0.78.0-20261023-195538" -> "v0.78.0"
+ * "1.13.0-dev.1" -> "v1.13.0-dev.1" (alpha suffixes kept)
+ * @param {string} v
+ * @returns {string}
+ */
+export function shortVersion(v) {
+  if (!v) return ''
+  const s = String(v).trim()
+  if (!s) return ''
+  const match = s.match(/(\d+\.\d+\.\d+(?:-[a-z][\w.]*)?)/i)
+  return match ? 'v' + match[1] : formatVersion(s)
+}
+
+const BADGE_LABELS = {
+  UPDATED: 'UPDATE',
+  'UPDATED APP': 'PATCHED',
+}
+
+/**
+ * Short, human badge label for a pipeline badge_type.
+ * One word per badge; keeps the raw value for CSS classes.
+ * @param {string} type
+ * @returns {string}
+ */
+export function badgeLabel(type) {
+  if (!type) return ''
+  return BADGE_LABELS[type] || type
+}
+
+/**
+ * Stable hue per calendar day, spread by the golden angle. Uses the day of the
+ * year (not the day of the month) so the same number in two months never
+ * renders the same color.
+ * @param {string} dateStr - ISO date (YYYY-MM-DD)
+ * @returns {number} 0-359
+ */
+export function dayHue(dateStr) {
+  const [year, month, day] = String(dateStr || '').split('-').map(Number)
+  if (!year || !month || !day) return 28
+  const dayOfYear = Math.round(
+    (Date.UTC(year, month - 1, day) - Date.UTC(year, 0, 0)) / 86400000,
+  )
+  return Math.round((dayOfYear * 137.508) % 360)
 }
 
 export function formatTime(isoStr) {

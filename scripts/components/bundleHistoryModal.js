@@ -9,18 +9,22 @@ import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { VERSION_ARROW } from '../utils/svg.js'
 
-export function openBundleHistoryModal(bundleName) {
+export function openBundleHistoryModal(bundleName, bundleNames = []) {
   if (!bundleName) return
 
   const changelog = store.get('changelog') || []
   const bundles = store.get('bundles') || {}
   const nameCache = store.get('nameCache') || {}
   const iconCache = store.get('iconCache') || {}
+  const names = bundleNames.length ? bundleNames : [bundleName]
 
-  const bundleData =
-    bundles[`${bundleName}:stable`] ||
-    bundles[`${bundleName}:latest`] ||
-    bundles[`${bundleName}:dev`]
+  const bundleData = names
+    .flatMap((name) => [
+      bundles[`${name}:stable`],
+      bundles[`${name}:latest`],
+      bundles[`${name}:dev`],
+    ])
+    .find(Boolean)
   const displayName = bundleData?.patches_name || bundleName
   const avatarUrl = getDisplayAvatar(bundleData?.repo_url || '', bundleData?.avatarUrl || '')
   const bundleImageUrl = getDisplayBundleImage(bundleData?.repo_url || '', bundleData?.bundleImageUrl || '')
@@ -28,7 +32,7 @@ export function openBundleHistoryModal(bundleName) {
   const entries = []
   for (const day of changelog) {
     if (!day.affected_bundles) continue
-    const matching = day.affected_bundles.filter((b) => b.bundle === bundleName)
+    const matching = day.affected_bundles.filter((b) => names.includes(b.bundle))
     if (matching.length > 0) {
       entries.push({ date: day.date, lastChecked: day.lastChecked, bundles: matching })
     }

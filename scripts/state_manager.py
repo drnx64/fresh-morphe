@@ -244,6 +244,8 @@ def save_bundles_split(data):
             "repoDescription": record.get("repoDescription", ""),
             "isArchived": record.get("isArchived", False),
             "isPreRelease": record.get("isPreRelease", False),
+            "isFork": record.get("isFork", False),
+            "forkParent": record.get("forkParent", ""),
         }
         filename = key.replace(":", "_") + ".json"
         save_json(os.path.join(BUNDLES_DIR, filename), record)

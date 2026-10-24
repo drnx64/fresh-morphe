@@ -4,8 +4,7 @@
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { buildAppIndex, suggestFuzzy, resolveAppName } from '../utils/misc.js'
-import { parseBundleKey } from '../utils/bundleKey.js'
+import { buildAppIndex, suggestFuzzy, resolveAppName, groupBundleCards } from '../utils/misc.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { SEARCH_ICON } from '../utils/svg.js'
@@ -30,7 +29,10 @@ function saveRecentSearch(query) {
   localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recent.slice(0, MAX_RECENT)))
 }
 
+const MOBILE_QUERY = '(max-width: 767px)'
+
 export function renderGlobalSearch() {
+  const root = el('div', { class: 'global-search-root' })
   const wrapper = el('div', { class: 'global-search', id: 'global-search' })
 
   const input = el('input', {
@@ -55,6 +57,85 @@ export function renderGlobalSearch() {
   wrapper.appendChild(clearBtn)
   wrapper.appendChild(dropdown)
 
+  // Mobile: the header keeps only a search button; the bar opens as a sheet.
+  const mobileBtn = el('button', {
+    class: 'global-search-open',
+    type: 'button',
+    'aria-label': 'Open search',
+    'aria-haspopup': 'dialog',
+    dangerouslySetInnerHTML: SEARCH_ICON,
+  })
+  mobileBtn.addEventListener('click', openSheet)
+  root.appendChild(mobileBtn)
+  root.appendChild(wrapper)
+
+  const mobileQuery = window.matchMedia(MOBILE_QUERY)
+  let sheet = null
+  let sheetRow = null
+  let sheetOpen = false
+
+  function ensureSheet() {
+    if (sheet) return
+    sheet = el('div', {
+      class: 'search-sheet',
+      role: 'dialog',
+      'aria-modal': 'true',
+      'aria-label': 'Search',
+      hidden: '',
+    })
+    const panel = el('div', { class: 'search-sheet-panel' })
+    sheetRow = el('div', { class: 'search-sheet-row' })
+    const cancel = el('button', { class: 'search-sheet-cancel', type: 'button' }, ['Cancel'])
+    cancel.addEventListener('click', closeSheet)
+    sheetRow.appendChild(cancel)
+    panel.appendChild(sheetRow)
+    sheet.appendChild(panel)
+    sheet.addEventListener('click', (e) => {
+      if (!panel.contains(e.target)) closeSheet()
+    })
+  }
+
+  function openSheet() {
+    ensureSheet()
+    closeDropdown()
+    if (!sheet.isConnected) document.body.appendChild(sheet)
+    sheetRow.insertBefore(wrapper, sheetRow.querySelector('.search-sheet-cancel'))
+    sheet.hidden = false
+    sheetOpen = true
+    document.addEventListener('keydown', onSheetKey)
+    requestAnimationFrame(() => {
+      sheet.classList.add('open')
+      document.body.classList.add('search-sheet-open')
+      input.focus()
+    })
+  }
+
+  function closeSheet() {
+    if (!sheetOpen || !sheet) return
+    sheetOpen = false
+    document.removeEventListener('keydown', onSheetKey)
+    sheet.classList.remove('open')
+    document.body.classList.remove('search-sheet-open')
+    closeDropdown()
+    root.appendChild(wrapper)
+    if (mobileQuery.matches) mobileBtn.focus({ preventScroll: true })
+    setTimeout(() => {
+      if (sheetOpen || !sheet) return
+      sheet.hidden = true
+    }, 220)
+  }
+
+  function onSheetKey(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      closeSheet()
+    }
+  }
+
+  mobileQuery.addEventListener?.('change', (e) => {
+    if (!e.matches && sheetOpen) closeSheet()
+  })
+
   let appIndex = null
   let bundleList = null
   let selectedIndex = -1
@@ -74,24 +155,13 @@ export function renderGlobalSearch() {
   function getBundleList() {
     if (bundleList) return bundleList
     const bundles = store.get('bundles') || {}
-    const grouped = {}
-    for (const [key, bundle] of Object.entries(bundles)) {
-      const { name: bName } = parseBundleKey(key)
-      if (!grouped[bName]) {
-        grouped[bName] = {
-          name: bundle.patches_name || bName,
-          bundle: bName,
-          channels: [bundle.channel],
-          version: bundle.version || '',
-          appCount: (bundle.apps || []).length,
-        }
-      } else {
-        const g = grouped[bName]
-        if (!g.channels.includes(bundle.channel)) g.channels.push(bundle.channel)
-        if (bundle.version && !g.version) g.version = bundle.version
-      }
-    }
-    bundleList = Object.values(grouped)
+    bundleList = Object.values(groupBundleCards(bundles)).map((group) => ({
+      name: group.patches_name || group.bundle,
+      bundle: group.bundle,
+      channels: group.channels,
+      version: group.version || '',
+      appCount: Math.max(group.apps?.length || 0, group.appCount || 0),
+    }))
     return bundleList
   }
 
@@ -190,6 +260,7 @@ export function renderGlobalSearch() {
           }))
           saveRecentSearch(input.value.trim())
           closeDropdown()
+          closeSheet()
         })
         group.appendChild(item)
       }
@@ -220,6 +291,7 @@ export function renderGlobalSearch() {
           }))
           saveRecentSearch(input.value.trim())
           closeDropdown()
+          closeSheet()
         })
         group.appendChild(item)
       }
@@ -319,6 +391,11 @@ export function renderGlobalSearch() {
       e.preventDefault()
       selectResult()
     } else if (e.key === 'Escape') {
+      if (sheetOpen) {
+        e.preventDefault()
+        closeSheet()
+        return
+      }
       input.blur()
       closeDropdown()
     }
@@ -340,7 +417,8 @@ export function renderGlobalSearch() {
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
       e.preventDefault()
-      input.focus()
+      if (mobileQuery.matches) openSheet()
+      else input.focus()
     }
   })
 
@@ -349,5 +427,5 @@ export function renderGlobalSearch() {
     bundleList = null
   })
 
-  return wrapper
+  return root
 }

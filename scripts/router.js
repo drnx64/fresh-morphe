@@ -20,7 +20,7 @@ let currentRoute = null
  */
 export function addRoute(path, handler, name) {
   const pattern = pathToRegex(path)
-  routes.push({ pattern, handler, name: name || path })
+  routes.push({ pattern, handler, name: name || path, paramNames: paramNamesFromPath(path) })
 }
 
 /**
@@ -68,7 +68,7 @@ function handleHashChange() {
   for (const route of routes) {
     const match = path.match(route.pattern)
     if (match) {
-      const params = extractParams(route.pattern, match)
+      const params = extractParams(route.paramNames, match)
       try {
         route.handler(params)
       } catch (e) {
@@ -100,15 +100,22 @@ function pathToRegex(path) {
 }
 
 /**
+ * Collect `:param` names from a route path, before they are compiled away.
+ * @param {string} path
+ * @returns {string[]}
+ */
+function paramNamesFromPath(path) {
+  return (path.match(/:([a-zA-Z_][a-zA-Z0-9_]*)/g) || []).map((p) => p.slice(1))
+}
+
+/**
  * Extract named params from a match.
- * @param {RegExp} pattern
+ * @param {string[]} paramNames
  * @param {RegExpMatchArray} match
  * @returns {Object<string, string>}
  */
-function extractParams(pattern, match) {
+function extractParams(paramNames, match) {
   const params = {}
-  const paramNames = (pattern.source.match(/:([a-zA-Z_][a-zA-Z0-9_]*)/g) || [])
-    .map(p => p.slice(1))
   paramNames.forEach((name, i) => {
     params[name] = decodeURIComponent(match[i + 1])
   })

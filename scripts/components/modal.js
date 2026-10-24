@@ -20,8 +20,19 @@ function topModal() {
  * @param {number} [options.maxWidth]
  * @param {boolean} [options.hideHeader]
  * @param {boolean} [options.stack] - open above current modal instead of replacing it
+ * @param {Node} [options.headerContent] - replaces the title row content
+ * @param {boolean} [options.hideTitle] - omit the text title (keeps close button)
  */
-export function openModal({ title, content, className = '', maxWidth = 700, hideHeader = false, stack = false }) {
+export function openModal({
+  title,
+  content,
+  className = '',
+  maxWidth = 700,
+  hideHeader = false,
+  stack = false,
+  headerContent = null,
+  hideTitle = false,
+}) {
   if (!stack) {
     while (modalStack.length > 0) destroyModal(modalStack.pop())
   }
@@ -31,10 +42,10 @@ export function openModal({ title, content, className = '', maxWidth = 700, hide
   const modalBox = el('div', { class: 'modal-box', style: { maxWidth: maxWidth + 'px' } })
 
   if (!hideHeader) {
-    const header = el('div', { class: 'modal-header' }, [
-      el('h2', { class: 'modal-title' }, [title]),
-      el('button', { class: 'modal-close', 'aria-label': 'Close modal', dangerouslySetInnerHTML: CLOSE_ICON }),
-    ])
+    const header = el('div', { class: `modal-header${headerContent ? ' modal-header--custom' : ''}` })
+    if (headerContent) header.appendChild(headerContent)
+    if (!hideTitle) header.appendChild(el('h2', { class: 'modal-title' }, [title]))
+    header.appendChild(el('button', { class: 'modal-close', 'aria-label': 'Close modal', dangerouslySetInnerHTML: CLOSE_ICON }))
     const closeBtn = header.querySelector('.modal-close')
     closeBtn.addEventListener('click', closeModal)
     modalBox.appendChild(header)

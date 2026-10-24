@@ -1,13 +1,57 @@
 /**
- * Changelog page — historical changelog with pagination.
+ * Changelog page — historical changelog, collapsed by day.
  */
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
 import { renderAppIcon, groupAffectedBundles, resolveAppName } from '../utils/misc.js'
 import { escHtml } from '../utils/html.js'
-import { TELEGRAM_ICON, ARROW_LEFT, ARROW_RIGHT } from '../utils/svg.js'
+import { dateParts, dayHue, badgeLabel } from '../utils/format.js'
+import { TELEGRAM_ICON, CHEVRON_DOWN } from '../utils/svg.js'
 
 const HIDE_DEV_KEY = 'morphe_hide_dev'
+
+function plural(n, word) {
+  return `${n} ${word}${n === 1 ? '' : 's'}`
+}
+
+function buildDayBody(bundles, iconCache, nameCache) {
+  const fragment = document.createDocumentFragment()
+
+  for (const bundle of Object.values(groupAffectedBundles(bundles))) {
+    const bundleEl = el('div', { class: 'changelog-bundle' })
+    bundleEl.appendChild(el('span', { class: 'changelog-bundle-name' }, [bundle.patches_name || bundle.bundle]))
+
+    for (const app of bundle.apps || []) {
+      const appEl = el('div', { class: 'changelog-app changelog-app--clickable' })
+      const badgeClass = app.badge_type ? `badge--${app.badge_type.toLowerCase().replace(/\s+/g, '-')}` : ''
+      const iconHtml = renderAppIcon(app, iconCache, 'sm')
+      appEl.innerHTML = `
+        ${app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(badgeLabel(app.badge_type))}</span>` : ''}
+        ${iconHtml}
+        <span class="changelog-app-name">${escHtml(resolveAppName(app, nameCache))}</span>
+      `
+      appEl.style.cursor = 'pointer'
+      appEl.setAttribute('role', 'button')
+      appEl.setAttribute('tabindex', '0')
+      const openApp = () => {
+        window.dispatchEvent(new CustomEvent('open-app', {
+          detail: {
+            app: { package: app.package, app_name: app.app_name },
+            bundleName: bundle.bundle || '',
+          },
+        }))
+      }
+      appEl.addEventListener('click', openApp)
+      appEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openApp() }
+      })
+      bundleEl.appendChild(appEl)
+    }
+    fragment.appendChild(bundleEl)
+  }
+
+  return fragment
+}
 
 export function renderChangelog(container) {
   const page = el('div', { class: 'changelog-page' })
@@ -54,85 +98,62 @@ export function renderChangelog(container) {
     return
   }
 
-  const DAYS_PER_PAGE = 7
-  let currentPage = 0
-  const totalPages = Math.ceil(changelog.length / DAYS_PER_PAGE)
+  const iconCache = store.get('iconCache') || {}
+  const nameCache = store.get('nameCache') || {}
 
   const contentArea = el('div', { class: 'changelog-content' })
-  const pagination = el('div', { class: 'changelog-pagination' })
-
   page.appendChild(contentArea)
-  page.appendChild(pagination)
   mount(container, page)
 
-  function renderPage() {
-    contentArea.replaceChildren()
-    pagination.replaceChildren()
+  changelog.forEach((day, index) => {
+    const bundles = (day.affected_bundles || []).filter((b) => !(hideDev && b.channel === 'dev'))
+    const appCount = bundles.reduce((n, b) => n + (b.apps || []).length, 0)
+    const bodyId = `changelog-day-${index}`
 
-    const iconCache = store.get('iconCache') || {}
-  const nameCache = store.get('nameCache') || {}
-    const start = currentPage * DAYS_PER_PAGE
-    const end = Math.min(start + DAYS_PER_PAGE, changelog.length)
-    const pageDays = changelog.slice(start, end)
+    const dateEl = el('span', { class: 'changelog-date' }, [
+      el('span', { class: 'changelog-date-day' }, [dateParts(day.date).day]),
+      ` ${dateParts(day.date).month}, ${dateParts(day.date).year}`,
+    ])
+    dateEl.style.setProperty('--date-hue', String(dayHue(day.date)))
 
-    for (const day of pageDays) {
-      const dayEl = el('div', { class: 'changelog-day' })
-      dayEl.appendChild(el('h3', { class: 'changelog-date' }, [day.date]))
+    const toggle = el('button', {
+      type: 'button',
+      class: 'changelog-day-toggle',
+      'aria-expanded': 'false',
+      'aria-controls': bodyId,
+    }, [
+      dateEl,
+      el('span', { class: 'changelog-day-meta' }, [
+        plural(bundles.length, 'bundle'),
+        ' · ',
+        plural(appCount, 'app'),
+      ]),
+      el('span', {
+        class: 'changelog-day-chevron',
+        'aria-hidden': 'true',
+        dangerouslySetInnerHTML: CHEVRON_DOWN,
+      }),
+    ])
 
-      for (const bundle of Object.values(groupAffectedBundles(
-        (day.affected_bundles || []).filter((b) => !(hideDev && b.channel === 'dev')),
-      ))) {
-        const bundleEl = el('div', { class: 'changelog-bundle' })
-        bundleEl.appendChild(el('span', { class: 'changelog-bundle-name' }, [bundle.patches_name || bundle.bundle]))
+    const body = el('div', { class: 'changelog-day-body', id: bodyId })
+    body.hidden = true
+    let built = false
 
-        for (const app of bundle.apps || []) {
-          const appEl = el('div', { class: 'changelog-app changelog-app--clickable' })
-          const badgeClass = app.badge_type ? `badge--${app.badge_type.toLowerCase().replace(/\s+/g, '-')}` : ''
-          const iconHtml = renderAppIcon(app, iconCache, 'sm')
-          appEl.innerHTML = `
-            ${app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(app.badge_type)}</span>` : ''}
-            ${iconHtml}
-            <span class="changelog-app-name">${escHtml(resolveAppName(app, nameCache))}</span>
-          `
-          appEl.style.cursor = 'pointer'
-          appEl.setAttribute('role', 'button')
-          appEl.setAttribute('tabindex', '0')
-          const openApp = () => {
-            window.dispatchEvent(new CustomEvent('open-app', {
-              detail: {
-                app: { package: app.package, app_name: app.app_name },
-                bundleName: bundle.bundle || '',
-              },
-            }))
-          }
-          appEl.addEventListener('click', openApp)
-          appEl.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openApp() }
-          })
-          bundleEl.appendChild(appEl)
-        }
-        dayEl.appendChild(bundleEl)
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true'
+      if (!open && !built) {
+        body.appendChild(buildDayBody(bundles, iconCache, nameCache))
+        built = true
       }
-      contentArea.appendChild(dayEl)
-    }
+      toggle.setAttribute('aria-expanded', String(!open))
+      body.hidden = open
+      dayEl.classList.toggle('open', !open)
+    })
 
-    // Pagination
-    if (totalPages > 1) {
-      if (currentPage > 0) {
-        const prevBtn = el('button', { class: 'pagination-btn pagination-btn--prev' })
-        prevBtn.innerHTML = `${ARROW_LEFT} Previous`
-        prevBtn.addEventListener('click', () => { currentPage--; renderPage() })
-        pagination.appendChild(prevBtn)
-      }
-      pagination.appendChild(el('span', { class: 'pagination-info' }, [`Page ${currentPage + 1} of ${totalPages}`]))
-      if (currentPage < totalPages - 1) {
-        const nextBtn = el('button', { class: 'pagination-btn pagination-btn--next' })
-        nextBtn.innerHTML = `Next ${ARROW_RIGHT}`
-        nextBtn.addEventListener('click', () => { currentPage++; renderPage() })
-        pagination.appendChild(nextBtn)
-      }
-    }
-  }
-
-  renderPage()
+    const dayEl = el('div', { class: 'changelog-day' }, [
+      el('h3', { class: 'changelog-day-heading' }, [toggle]),
+      body,
+    ])
+    contentArea.appendChild(dayEl)
+  })
 }

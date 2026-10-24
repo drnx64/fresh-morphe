@@ -10,8 +10,9 @@ import * as store from '../store.js'
 import { groupAffectedBundles, resolveAppName, getAppIconUrl, renderAppIcon } from '../utils/misc.js'
 import { getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { formatFriendlyDate, formatVersion } from '../utils/format.js'
+import { dateParts, dayHue, shortVersion, badgeLabel } from '../utils/format.js'
 import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
+import { renderColorGame } from '../components/colorGame.js'
 
 const HIERARCHY_ORDER = { 'NEW BUNDLE': 0, 'UPDATED': 1, 'REMOVED BUNDLE': 2 }
 const STORAGE_KEY = 'morphe_updates_collapsed'
@@ -32,7 +33,13 @@ export function renderTodayUpdates() {
 
   const liveDate = store.get('liveDataDate') || ''
   if (liveDate) {
-    headingLeft.appendChild(el('span', { class: 'today-updates-date' }, [formatFriendlyDate(liveDate)]))
+    const liveParts = dateParts(liveDate)
+    const liveDateEl = el('span', { class: 'today-updates-date' }, [
+      el('span', { class: 'today-updates-date-day' }, [liveParts.day]),
+      ` ${liveParts.month}, ${liveParts.year}`,
+    ])
+    liveDateEl.style.setProperty('--date-hue', String(dayHue(liveDate)))
+    headingLeft.appendChild(liveDateEl)
   }
   headingRow.appendChild(headingLeft)
 
@@ -50,11 +57,13 @@ export function renderTodayUpdates() {
     class: 'today-updates-toggle',
     'aria-label': 'Toggle today\'s updates',
     'aria-expanded': String(!isCollapsed),
+    'aria-controls': 'today-updates-body',
   })
   toggleBtn.innerHTML = `<span class="today-updates-toggle-icon">${CHEVRON_DOWN}</span>`
   headingRight.appendChild(toggleBtn)
   headingRow.appendChild(headingRight)
   section.appendChild(headingRow)
+  section.appendChild(renderColorGame())
 
   const body = el('div', { class: 'today-updates-body' })
 
@@ -110,8 +119,8 @@ export function renderTodayUpdates() {
   })
 
   if (!affectedBundles || affectedBundles.length === 0) {
-    applyCollapsed(section, body, summaryEl, isCollapsed)
-    setupToggle(section, body, summaryEl, toggleBtn)
+    applyCollapsed(section, summaryEl, isCollapsed)
+    setupToggle(section, summaryEl, toggleBtn)
     return section
   }
 
@@ -134,7 +143,7 @@ export function renderTodayUpdates() {
     const bundleEl = el('div', { class: 'today-bundle-entry' })
 
     const headerParts = [
-      el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [entry.badge_type || 'UPDATED']),
+      el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [badgeLabel(entry.badge_type) || 'UPDATE']),
     ]
 
     const nameEl = el('span', {
@@ -159,15 +168,17 @@ export function renderTodayUpdates() {
     headerParts.push(nameEl)
     headerParts.push(el('span', { class: 'bundle-author', dangerouslySetInnerHTML: getAuthorLink(entry.repo_url) }))
 
-    const hasVersionTag = entry.previous_version && entry.new_version && entry.previous_version !== entry.new_version
-    if (entry.previous_version && entry.new_version && entry.previous_version !== entry.new_version) {
+    const prevVer = shortVersion(entry.previous_version)
+    const nextVer = shortVersion(entry.new_version)
+    const hasVersionTag = prevVer && nextVer && prevVer !== nextVer
+    if (hasVersionTag) {
       headerParts.push(el('span', { class: 'today-version-tag' }, [
-        formatVersion(entry.previous_version),
+        prevVer,
         el('span', { class: 'today-version-arrow', dangerouslySetInnerHTML: VERSION_ARROW }),
-        formatVersion(entry.new_version),
+        nextVer,
       ]))
-    } else if (entry.new_version) {
-      headerParts.push(el('span', { class: 'today-version-tag' }, [formatVersion(entry.new_version)]))
+    } else if (nextVer) {
+      headerParts.push(el('span', { class: 'today-version-tag' }, [nextVer]))
     }
 
     if (entry.extra_badges?.includes('VERSION BUMP') && !hasVersionTag && !entry.new_version) {
@@ -185,14 +196,16 @@ export function renderTodayUpdates() {
       const iconHtml = renderAppIcon(app, iconCache, 'sm')
 
       const badgeClass = app.badge_type ? `badge--${app.badge_type.toLowerCase().replace(/\s+/g, '-')}` : ''
-      const badgeHtml = app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(app.badge_type)}</span>` : ''
+      const badgeHtml = app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(badgeLabel(app.badge_type))}</span>` : ''
 
       const appName = resolveAppName(app, nameCache)
+      const appPrevVer = shortVersion(app.previous_version)
+      const appNextVer = shortVersion(app.new_version)
       let versionHtml = ''
-      if (app.previous_version && app.new_version && app.previous_version !== app.new_version) {
-        versionHtml = `<span class="today-app-version-diff">${escHtml(formatVersion(app.previous_version))} ${VERSION_ARROW} ${escHtml(formatVersion(app.new_version))}</span>`
-      } else if (app.new_version) {
-        versionHtml = `<span class="today-app-version-diff">${escHtml(formatVersion(app.new_version))}</span>`
+      if (appPrevVer && appNextVer && appPrevVer !== appNextVer) {
+        versionHtml = `<span class="today-app-version-diff">${escHtml(appPrevVer)} ${VERSION_ARROW} ${escHtml(appNextVer)}</span>`
+      } else if (appNextVer) {
+        versionHtml = `<span class="today-app-version-diff">${escHtml(appNextVer)}</span>`
       }
 
       appEl.innerHTML = `
@@ -260,55 +273,27 @@ export function renderTodayUpdates() {
     }
   }
 
-  section.appendChild(body)
-  applyCollapsed(section, body, summaryEl, isCollapsed)
-  setupToggle(section, body, summaryEl, toggleBtn)
+  const bodyWrap = el('div', { class: 'today-updates-body-wrap', id: 'today-updates-body' })
+  bodyWrap.appendChild(body)
+  section.appendChild(bodyWrap)
+  applyCollapsed(section, summaryEl, isCollapsed)
+  setupToggle(section, summaryEl, toggleBtn)
 
   return section
 }
 
-function applyCollapsed(section, body, summaryEl, isCollapsed) {
-  if (isCollapsed) {
-    section.classList.add('collapsed')
-    body.style.maxHeight = '0'
-    body.style.overflow = 'hidden'
-    summaryEl.classList.remove('today-updates-summary--hidden')
-    summaryEl.style.maxHeight = summaryEl.scrollHeight + 'px'
-    summaryEl.style.overflow = ''
-  } else {
-    section.classList.remove('collapsed')
-    body.style.maxHeight = ''
-    body.style.overflow = ''
-    summaryEl.classList.add('today-updates-summary--hidden')
-  }
+function applyCollapsed(section, summaryEl, isCollapsed) {
+  // Class-only: CSS animates grid-template-rows, so nothing re-measures
+  // scrollHeight and rapid clicks simply retarget the running transition.
+  section.classList.toggle('collapsed', isCollapsed)
+  summaryEl.classList.toggle('today-updates-summary--hidden', !isCollapsed)
 }
 
-function setupToggle(section, body, summaryEl, toggleBtn) {
+function setupToggle(section, summaryEl, toggleBtn) {
   toggleBtn.addEventListener('click', () => {
-    const isNowCollapsed = section.classList.toggle('collapsed')
+    const isNowCollapsed = !section.classList.contains('collapsed')
+    applyCollapsed(section, summaryEl, isNowCollapsed)
     localStorage.setItem(STORAGE_KEY, String(isNowCollapsed))
     toggleBtn.setAttribute('aria-expanded', String(!isNowCollapsed))
-
-    if (isNowCollapsed) {
-      // Collapse body
-      body.style.maxHeight = body.scrollHeight + 'px'
-      requestAnimationFrame(() => {
-        body.style.maxHeight = '0'
-        body.style.overflow = 'hidden'
-      })
-      // Show summary
-      summaryEl.classList.remove('today-updates-summary--hidden')
-      summaryEl.style.maxHeight = summaryEl.scrollHeight + 'px'
-      summaryEl.style.overflow = ''
-    } else {
-      // Expand body
-      body.style.maxHeight = body.scrollHeight + 'px'
-      body.style.overflow = ''
-      setTimeout(() => {
-        body.style.maxHeight = ''
-      }, 300)
-      // Hide summary
-      summaryEl.classList.add('today-updates-summary--hidden')
-    }
   })
 }

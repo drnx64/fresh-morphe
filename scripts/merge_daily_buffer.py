@@ -30,6 +30,16 @@ from state_manager import (
 )
 
 RELEASE_CACHE_PATH = os.path.join(STATE_DIR, "release_cache.json")
+REPO_CACHE_PATH = os.path.join(STATE_DIR, "repo_cache.json")
+REPO_META_FIELDS = (
+    "stars",
+    "avatarUrl",
+    "repoDescription",
+    "isArchived",
+    "isFork",
+    "forkParent",
+    "bundleImageUrl",
+)
 
 APP_PRECEDENCE = {"NEW APP": 0, "MAJOR UPDATE": 1, "UPDATED APP": 2, "REMOVED APP": 3}
 BUNDLE_PRECEDENCE = {"NEW BUNDLE": 0, "UPDATED": 1, "REMOVED BUNDLE": 2}
@@ -211,6 +221,24 @@ def generate_markdown_changelog(date_str, affected_bundles_dict):
     return "\n".join(lines)
 
 
+def apply_repo_metadata(bundles):
+    """Re-apply cached repo metadata (stars, description, fork, …) to bundles.
+
+    The snapshot is rebuilt from parsing every run, so metadata added by the
+    repoInfo step would otherwise be dropped when bundle files are rewritten.
+    """
+    repo_cache = load_json(REPO_CACHE_PATH, default={})
+    if not repo_cache:
+        return
+    for bundle_data in bundles.values():
+        meta = repo_cache.get(bundle_data.get("repo_url", ""))
+        if not meta:
+            continue
+        for field in REPO_META_FIELDS:
+            if field in meta:
+                bundle_data[field] = meta[field]
+
+
 def merge_release_notes(bundles):
     """Read release notes from cache and merge into bundles dict."""
     release_cache = load_json(RELEASE_CACHE_PATH, default={})
@@ -348,6 +376,7 @@ def finalize_buffer(buffer_data):
         }
         bundles = dict(snapshot)
         merge_release_notes(bundles)
+        apply_repo_metadata(bundles)
         save_core_json(core)
         save_stats_json(stats)
         save_changes_json(changes)
@@ -405,6 +434,7 @@ def update_data_files(today_str, buffer_data, snapshot):
     }
     bundles = dict(snapshot)
     merge_release_notes(bundles)
+    apply_repo_metadata(bundles)
     save_core_json(core)
     save_stats_json(stats)
     save_changes_json(changes_to_save)
@@ -468,6 +498,7 @@ def write_data_files(has_changes=True, preserve_changes_json=False):
 
     bundles = dict(snapshot)
     merge_release_notes(bundles)
+    apply_repo_metadata(bundles)
     save_core_json(core)
     save_stats_json(stats)
     if changes_to_save is not None:

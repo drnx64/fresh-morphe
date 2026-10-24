@@ -3,7 +3,7 @@
  */
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
-import { buildAppIndex, resolveAppName, getAppIconUrl, renderAppIcon, suggestFuzzy, copyToClipboard } from '../utils/misc.js'
+import { buildAppIndex, resolveAppName, getAppIconUrl, renderAppIcon, suggestFuzzy } from '../utils/misc.js'
 import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { renderTodayUpdates } from './todayUpdates.js'
@@ -127,7 +127,7 @@ export function renderApps(container) {
             ${iconHtml}
             <div class="app-card-info">
               <span class="app-card-name">${escHtml(app.name)}</span>
-              <span class="app-card-pkg copyable" title="Click to copy package name">${escHtml(app.package)}</span>
+              <span class="app-card-pkg">${escHtml(app.package)}</span>
             </div>
             <span class="app-card-bundle-count">${bundleCount} bundle${bundleCount !== 1 ? 's' : ''}</span>
           </div>
@@ -136,30 +136,16 @@ export function renderApps(container) {
         card.setAttribute('role', 'button')
         card.setAttribute('tabindex', '0')
 
-        // Copy package name on click
-        const pkgEl = card.querySelector('.app-card-pkg')
-        pkgEl.addEventListener('click', (e) => {
-          copyToClipboard(app.package, pkgEl)
-        })
-
         card.addEventListener('click', () => {
           window.dispatchEvent(new CustomEvent('open-app', {
-            detail: {
-              app: { package: app.package, app_name: app.name },
-              bundleName: app.bundles[0]?.bundleName || '',
-              channels: app.bundles[0]?.channels || [],
-            },
+            detail: { app: { package: app.package, app_name: app.name } },
           }))
         })
         card.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
             window.dispatchEvent(new CustomEvent('open-app', {
-              detail: {
-                app: { package: app.package, app_name: app.name },
-                bundleName: app.bundles[0]?.bundleName || '',
-                channels: app.bundles[0]?.channels || [],
-              },
+              detail: { app: { package: app.package, app_name: app.name } },
             }))
           }
         })

@@ -3,7 +3,7 @@
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { getStaleness, getStoredVersions, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml, groupBundleCards } from '../utils/misc.js'
+import { getStaleness, getStoredVersions, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml, groupBundleCards, normalizeRepoUrl } from '../utils/misc.js'
 import { mountAppRows, sortAppsByName } from '../utils/appList.js'
 import { ensureBundleChannels, isBundlePartial } from '../services/bundleLoader.js'
 import { getRepoInfo, getAddMorpheUrl, getAuthorLink } from '../utils/url.js'
@@ -53,10 +53,12 @@ export function renderBundleCard(bundle) {
     ? '<span class="bundle-pre-release-badge" title="Pre-release version">Pre-release</span>'
     : ''
 
-  const releaseDate =
-    store.get('bundles')?.[`${bundle.bundle}:stable`]?.release_date ||
-    store.get('bundles')?.[`${bundle.bundle}:latest`]?.release_date ||
-    store.get('bundles')?.[`${bundle.bundle}:dev`]?.release_date || ''
+  const forkOwner = bundle.isFork ? String(bundle.forkParent || '').split('/')[0] : ''
+  const forkHtml = bundle.isFork
+    ? `<span class="bundle-fork-badge" title="${escHtml(bundle.forkParent ? `Forked from ${bundle.forkParent}` : 'Fork of another patch bundle')}">${forkOwner ? `Fork of @${escHtml(forkOwner)}` : 'Fork'}</span>`
+    : ''
+
+  const releaseDate = bundle.releaseDate || ''
   const staleness = getStaleness(releaseDate)
   const stalenessHtml = staleness
     ? `<span class="staleness-badge staleness--${staleness.level}" title="Released ${releaseDate}">${staleness.label}</span>`
@@ -97,6 +99,7 @@ export function renderBundleCard(bundle) {
         <div class="bundle-card-row-badges">
           <div class="channel-badges-group">${channelBadges}</div>
           ${versionTag}
+          ${forkHtml}
           ${starsHtml}
           ${stalenessHtml}
         </div>
@@ -125,7 +128,9 @@ export function renderBundleCard(bundle) {
   const historyBtn = row.querySelector('.history-btn')
   historyBtn.addEventListener('click', (e) => {
     e.stopPropagation()
-    window.dispatchEvent(new CustomEvent('open-bundle-history', { detail: { bundleName: bundle.bundle } }))
+    window.dispatchEvent(new CustomEvent('open-bundle-history', {
+      detail: { bundleName: bundle.bundle, bundleNames: bundle.bundleNames },
+    }))
   })
 
   card.appendChild(row)
@@ -147,14 +152,26 @@ async function toggleExpand(card, bundle, nameCache, iconCache) {
     appsContainer = el('div', { class: 'bundle-card-apps' })
     card.appendChild(appsContainer)
 
-    const missing = bundle.channels.filter((ch) => isBundlePartial(makeBundleKey(bundle.bundle, ch)))
+    // A repo can be represented by more than one bundle name (tree vs release
+    // crawler). Pull every alias' channels before re-grouping by repository.
+    const names = bundle.bundleNames?.length ? bundle.bundleNames : [bundle.bundle]
+    const repoKey = normalizeRepoUrl(bundle.repo_url)
+    const missing = []
+    for (const name of names) {
+      for (const ch of bundle.channels) {
+        if (isBundlePartial(makeBundleKey(name, ch))) missing.push(makeBundleKey(name, ch))
+      }
+    }
     if (missing.length) {
       appsContainer.innerHTML = '<div class="bundle-card-apps-loading">Loading apps…</div>'
-      await ensureBundleChannels(bundle.bundle, bundle.channels)
+      await Promise.all(names.map((name) => ensureBundleChannels(name, bundle.channels)))
     }
 
-    const fresh = groupBundleCards(store.get('bundles') || {}, (b) =>
-      b.bundle === bundle.bundle && bundle.channels.includes(b.channel))[bundle.bundle]
+    const fresh = Object.values(groupBundleCards(store.get('bundles') || {}, (b) =>
+      names.includes(b.bundle) && bundle.channels.includes(b.channel),
+    )).find((g) => (repoKey
+      ? normalizeRepoUrl(g.repo_url) === repoKey
+      : g.bundleNames.some((name) => names.includes(name))))
     const apps = sortAppsByName(fresh?.apps || [], nameCache)
 
     appsContainer.replaceChildren()
