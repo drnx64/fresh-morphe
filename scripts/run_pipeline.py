@@ -144,9 +144,10 @@ def run():
 
         # ── PUBLISH ──
         log.info("STEP 6: Generating static files + RSS")
-        from generate_site import generate_static_files, generate_rss_feed
+        from generate_site import generate_static_files, generate_rss_feed, generate_daily_feed
         generate_static_files()
         generate_rss_feed()
+    generate_daily_feed()
 
         # Telegram notification
         log.info("STEP 7: Telegram notification")
@@ -187,9 +188,10 @@ def run():
 
 
 def _publish_silent():
-    from generate_site import generate_static_files, generate_rss_feed
+    from generate_site import generate_static_files, generate_rss_feed, generate_daily_feed
     generate_static_files()
     generate_rss_feed()
+    generate_daily_feed()
     log.info("SILENT RUN COMPLETE")
 
 
