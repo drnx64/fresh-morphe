@@ -2,9 +2,9 @@
   "bundle": "venusisjaded",
   "channel": "stable",
   "repo_url": "https://github.com/VenusIsJaded/Venus-Patches",
-  "created_at": "2026-10-13T03:03:46Z",
-  "version": "1.9.0",
-  "description": "### ✨ New Features\n\n* **Discord:** Add `Server info` patch: hold a server's icon to see who's online, channels, roles, emojis, boosts, the owner and your friends there ([#77](https://github.com/VenusIsJaded/Venus-Patches/issues/77))\n* **Discord:** Add `Icon packs` patch: replace Discord's icons with 10 built-in community icon packs or a custom pack link, with a live preview ([#61](https://github.com/VenusIsJaded/Venus-Patches/issues/61))\n* **Discord:** Add `Custom branding` patch: install Venus next to normal Discord with your own app name, package name, icon color and icon picture ([#78](https://github.com/VenusIsJaded/Venus-Patches/issues/78))\n\n### ⚡ Performance Improvements\n\n* **Discord:** Shrink the startup runtime and register Discord's modules with less work, making the startup header 1.59x faster\n* **Discord - Venus settings:** Look up which feature each setting belongs to from a cache, 7.8x faster across settings, backups and switches\n* **Discord - Show hidden channels:** Skip rescanning unchanged server channel lists and check channel names with less work, up to 2.6x faster\n* **Discord - Custom themes:** Parse theme colors 2x faster and compile themes into Discord's color tables 1.3x faster\n* **Discord - Translate messages:** Skip escaping text that needs none when laying out translations, 1.7x faster\n* **Discord - Fix unknown mentions:** Check loaded messages for mentions with less work, 1.3x faster\n* **Discord - Show device indicators:** Read the current user once per presence update instead of once per indicator\n",
+  "created_at": "2026-10-24T05:10:17Z",
+  "version": "1.18.0",
+  "description": "### 🚀 Updated App Support\n\n* **Discord:** Add support for `350.8 - Stable`, now the only supported version\n\n### ✨ New Features\n\n* **Discord - Translate messages:** Translate into any of 70 languages, not just Discord's or your phone's ([#79](https://github.com/VenusIsJaded/Venus-Patches/issues/79))\n* **Discord - Keep deleted messages:** Pick the color and brightness of kept messages, and type any limit next to the Keep up to presets\n* **Discord - Message highlights:** Choose how bright replies and mentions are, from presets or any value from 0 to 100%\n* **Discord:** Add `Bring back Tenor GIFs` patch: Tenor GIFs show in Discord's own GIF picker again, mixed with Discord's or on their own ([#83](https://github.com/VenusIsJaded/Venus-Patches/issues/83))\n* **Discord:** Add `Fix link previews` patch: links to X, Instagram, TikTok, Reddit, Bluesky, Threads, Facebook, pixiv and Bilibili show the post, through a service you pick per site ([#83](https://github.com/VenusIsJaded/Venus-Patches/issues/83))\n* **Discord:** Add `Complete badges automatically` patch: plays real detectable PC games in the background, up to 3 at once for up to 3x the game time, toward your Hours Played and Unique Games Played badges, with their real art on your profile. Its page explains when a game counts and when the badge updates, and an Advanced Add hours now option asks you to confirm three times. It's marked Risky and Experimental, and asks \"Are you sure?\" before it turns on ([#81](https://github.com/VenusIsJaded/Venus-Patches/issues/81))\n* **Discord:** Add `Hide extra buttons` patch: hide the Quests, Shop and Nitro buttons on your profile and the Apps, Polls or Photos buttons in the attach menu, with the rest closing up neatly ([#85](https://github.com/VenusIsJaded/Venus-Patches/issues/85))\n* **Discord - Translate messages:** Translate a whole chat from a bar that appears when it has messages in another language, kept until Discord restarts, and choose whether you ask from the bar, the message menu or both. The bar floats as a small pill under Discord's own banners, like the blue New messages bar, never on top of them ([#82](https://github.com/VenusIsJaded/Venus-Patches/issues/82))\n* **Discord:** Add `Unlock Nitro themes` patch: use Discord's gradient themes without Nitro, on your phone\n* **Discord - Account switcher:** Create a new account from Discord's Add account screen or the Account switcher page, without logging out ([#86](https://github.com/VenusIsJaded/Venus-Patches/issues/86))\n\n### 🐛 Bug Fixes\n\n* **Discord - Disable analytics:** Fixed blocking analytics also stopping Discord's session active state and time-spent session ID from being reported on the Gateway\n* **Discord - Message highlights:** Fixed messages that mention one of your roles not getting your custom mention color\n* **Discord - Translate messages:** Fixed Translate in the hold menu never saying a message was already in your language, and saying so for translations it dropped\n* **Discord - Custom themes:** Fixed a theme's background image only showing right after installing it, and missing from chat after Discord restarted ([#84](https://github.com/VenusIsJaded/Venus-Patches/issues/84))\n\n### 🔧 Improvements\n\n* **Discord - Message highlights:** The deleted messages color moved to Keep deleted messages, next to its new brightness option\n* **Discord - Translate messages:** The language list names each language in its own words and closes once you pick one\n* **Discord - Venus settings:** Previews just play: the Watch / Try it switch is gone, and pages whose description already says it all have no preview\n\n### ⚡ Performance Improvements\n\n* **Discord - Translate messages:** Skip rows nobody asked to translate before any other work, 1.44x faster per chat row\n* **Discord:** Discord starts faster: the startup bytecode prelude builds the Venus runtime in blocks instead of one oversized array, and the runtime is 28% smaller, and the code features only need later is no longer read at launch at all, making a cold boot about 1.2x faster than 1.17.0. Each feature's code is now set up the first time that feature runs, so getting Discord's screens ready after launch takes less work\n",
   "apps": [
     {
       "app_name": "Discord",
@@ -16,7 +16,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
+          ]
+        },
+        {
+          "name": "Bring back Tenor GIFs",
+          "description": "Tenor GIFs show in Discord's GIF picker again, mixed with Discord's own or on their own. Inspired by BringBackTenor by Livie.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "350.8 - Stable"
           ]
         },
         {
@@ -25,7 +34,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
+          ]
+        },
+        {
+          "name": "Complete badges automatically",
+          "description": "Plays real PC games in the background, up to 3 at once, toward your Hours Played and Unique Games Played badges.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "350.8 - Stable"
           ]
         },
         {
@@ -34,7 +52,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -60,7 +78,7 @@
             }
           ],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -69,7 +87,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -78,7 +96,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -87,7 +105,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -96,7 +114,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -105,7 +123,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -114,7 +132,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -123,7 +141,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -132,7 +150,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
+          ]
+        },
+        {
+          "name": "Fix link previews",
+          "description": "Links to X, Instagram, TikTok, Reddit and more show the post. Links you send go through an embed service like FxTwitter, without tracking. Inspired by FixEmbed by the ShiggyCord team.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "350.8 - Stable"
           ]
         },
         {
@@ -141,7 +168,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
+          ]
+        },
+        {
+          "name": "Hide extra buttons",
+          "description": "Removes the Quests, Shop, Nitro and Apps buttons you don't use. Pick which ones, including Polls and Photos in the attach menu; the rest close up with no gaps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "350.8 - Stable"
           ]
         },
         {
@@ -150,7 +186,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -159,7 +195,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -168,7 +204,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -177,7 +213,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -186,7 +222,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -195,7 +231,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -204,7 +240,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -213,7 +249,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -222,7 +258,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -231,7 +267,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -240,7 +276,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -249,7 +285,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -258,7 +294,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -267,7 +303,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -276,7 +312,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -285,7 +321,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -294,7 +330,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -303,7 +339,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -312,7 +348,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -321,7 +357,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
+          ]
+        },
+        {
+          "name": "Unlock Nitro themes",
+          "description": "Use Discord's gradient themes in Settings > Appearance without Nitro. Only this phone sees them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "350.8 - Stable"
           ]
         },
         {
@@ -330,7 +375,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -339,7 +384,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -348,7 +393,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -357,7 +402,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -366,7 +411,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -375,7 +420,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         },
         {
@@ -384,16 +429,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "349.9 - Stable"
+            "350.8 - Stable"
           ]
         }
       ]
     }
   ],
   "patches_name": "VenusIsJaded",
-  "fingerprint": "c90eb1b901c8ec1ec6cdba473eec84e22ef712ad94d713c197f0887435e9d28a",
-  "release_notes": "## [1.9.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.8.0...v1.9.0) (2026-10-13)\n\n### ✨ New Features\n\n* **Discord:** Add `ValidUser` patch\n* **Discord - ValidUser:** Fix @unknown-user mentions automatically, with no extra taps\n* **Discord:** Add `Profile bar settings button` patch\n* **Discord - Profile bar settings button:** Open Venus settings from a button next to the notifications bell\n* **Discord:** Add `Split Large Messages` patch\n* **Discord - Split Large Messages:** Send messages over the limit as several, keeping code blocks closed\n* **Discord:** Add `Translate messages` patch\n* **Discord - Translate messages:** Show messages in other languages translated into your language, newest first\n* **Discord - Translate messages:** Keep translations on your phone, so reopened chats show them at once\n\n### 🐛 Bug Fixes\n\n* **Discord - Pastelize:** Fixed Color message text leaving the quoted message in a reply uncolored instead of using that author's pastel color ([#45](https://github.com/VenusIsJaded/Venus-Patches/issues/45))\n\n### 🔧 Improvements\n\n* **Discord - Venus settings:** Every feature starts off, so nothing changes until you turn it on\n",
-  "release_tag": "v1.9.0",
-  "release_date": "2026-10-13T03:03:46Z",
+  "fingerprint": "4ff9fc74ba3d43f17018a29c0b21f4e577ce23d3fd2ad176ab0f7b9c9ea5937f",
+  "release_notes": "## [1.18.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.17.0...v1.18.0) (2026-10-24)\n\n### 🚀 Updated App Support\n\n* **Discord:** Add support for `350.8 - Stable`, now the only supported version\n\n### ✨ New Features\n\n* **Discord - Translate messages:** Translate into any of 70 languages, not just Discord's or your phone's ([#79](https://github.com/VenusIsJaded/Venus-Patches/issues/79))\n* **Discord - Keep deleted messages:** Pick the color and brightness of kept messages, and type any limit next to the Keep up to presets\n* **Discord - Message highlights:** Choose how bright replies and mentions are, from presets or any value from 0 to 100%\n* **Discord:** Add `Bring back Tenor GIFs` patch: Tenor GIFs show in Discord's own GIF picker again, mixed with Discord's or on their own ([#83](https://github.com/VenusIsJaded/Venus-Patches/issues/83))\n* **Discord:** Add `Fix link previews` patch: links to X, Instagram, TikTok, Reddit, Bluesky, Threads, Facebook, pixiv and Bilibili show the post, through a service you pick per site ([#83](https://github.com/VenusIsJaded/Venus-Patches/issues/83))\n* **Discord:** Add `Complete badges automatically` patch: plays real detectable PC games in the background, up to 3 at once for up to 3x the game time, toward your Hours Played and Unique Games Played badges, with their real art on your profile. Its page explains when a game counts and when the badge updates, and an Advanced Add hours now option asks you to confirm three times. It's marked Risky and Experimental, and asks \"Are you sure?\" before it turns on ([#81](https://github.com/VenusIsJaded/Venus-Patches/issues/81))\n* **Discord:** Add `Hide extra buttons` patch: hide the Quests, Shop and Nitro buttons on your profile and the Apps, Polls or Photos buttons in the attach menu, with the rest closing up neatly ([#85](https://github.com/VenusIsJaded/Venus-Patches/issues/85))\n* **Discord - Translate messages:** Translate a whole chat from a bar that appears when it has messages in another language, kept until Discord restarts, and choose whether you ask from the bar, the message menu or both. The bar floats as a small pill under Discord's own banners, like the blue New messages bar, never on top of them ([#82](https://github.com/VenusIsJaded/Venus-Patches/issues/82))\n* **Discord:** Add `Unlock Nitro themes` patch: use Discord's gradient themes without Nitro, on your phone\n* **Discord - Account switcher:** Create a new account from Discord's Add account screen or the Account switcher page, without logging out ([#86](https://github.com/VenusIsJaded/Venus-Patches/issues/86))\n\n### 🐛 Bug Fixes\n\n* **Discord - Disable analytics:** Fixed blocking analytics also stopping Discord's session active state and time-spent session ID from being reported on the Gateway\n* **Discord - Message highlights:** Fixed messages that mention one of your roles not getting your custom mention color\n* **Discord - Translate messages:** Fixed Translate in the hold menu never saying a message was already in your language, and saying so for translations it dropped\n* **Discord - Custom themes:** Fixed a theme's background image only showing right after installing it, and missing from chat after Discord restarted ([#84](https://github.com/VenusIsJaded/Venus-Patches/issues/84))\n\n### 🔧 Improvements\n\n* **Discord - Message highlights:** The deleted messages color moved to Keep deleted messages, next to its new brightness option\n* **Discord - Translate messages:** The language list names each language in its own words and closes once you pick one\n* **Discord - Venus settings:** Previews just play: the Watch / Try it switch is gone, and pages whose description already says it all have no preview\n\n### ⚡ Performance Improvements\n\n* **Discord - Translate messages:** Skip rows nobody asked to translate before any other work, 1.44x faster per chat row\n* **Discord:** Discord starts faster: the startup bytecode prelude builds the Venus runtime in blocks instead of one oversized array, and the runtime is 28% smaller, and the code features only need later is no longer read at launch at all, making a cold boot about 1.2x faster than 1.17.0. Each feature's code is now set up the first time that feature runs, so getting Discord's screens ready after launch takes less work\n",
+  "release_tag": "v1.18.0",
+  "release_date": "2026-10-24T05:10:17Z",
   "isPreRelease": false
 }
