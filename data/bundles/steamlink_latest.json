@@ -2,9 +2,9 @@
   "bundle": "steamlink",
   "channel": "latest",
   "repo_url": "https://github.com/AngelDark92/steamlink-patches",
-  "created_at": "2026-09-28T19:25:48",
-  "version": "v1.21.0",
-  "description": "## [1.21.0](https://github.com/AngelDark92/steamlink-patches/compare/v1.20.0...v1.21.0) (2026-09-28)\n\n### ✨ New Features\n\n* modified cavecrew included and patches for testing 2.0.20-5001812 and 2.0.21-5001968 ([fa3679b](https://github.com/AngelDark92/steamlink-patches/commit/fa3679b9d91523c271d487db18bc1c537b40829a))\n",
+  "created_at": "2026-10-08T19:26:42",
+  "version": "v1.28.0-dev.3",
+  "description": "## [1.28.0-dev.3](https://github.com/AngelDark92/steamlink-patches/compare/v1.28.0-dev.2...v1.28.0-dev.3) (2026-10-08)\n\n### 🐛 Bug Fixes\n\n* decode Packages validation responses ([14b3deb](https://github.com/AngelDark92/steamlink-patches/commit/14b3debf66f49c02f62c1e1fdb03a237f1d3a879))\n",
   "apps": [
     {
       "app_name": "Steam Link",
@@ -83,6 +83,76 @@
           ]
         },
         {
+          "name": "Background blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the background/base layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Background blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the background/base layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Background blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the background/base layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Background blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the background/base layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Background blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the background/base layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
           "name": "Change package name",
           "description": "Renames the manifest package and Steam Link's internal VR-launch component so the patched app can coexist with the original installation.",
           "use": false,
@@ -134,6 +204,141 @@
               "description": "Accepts either a full Java package name (for example, com.valvesoftware.steamlinkvr.galaxyxr) or a display suffix (for example, Galaxy XR). Suffix input appends to app name and generates a package suffix automatically."
             }
           ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Controller grip haptics through Shizuku (experimental)",
+          "description": "Sends controller vibration to the vibrator in the grip instead of the one at the trigger. Galaxy XR routes every OpenXR vibration to the trigger vibrator; the grip one is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku vibration stays as it is.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller grip haptics through Shizuku (experimental)",
+          "description": "Sends controller vibration to the vibrator in the grip instead of the one at the trigger. Galaxy XR routes every OpenXR vibration to the trigger vibrator; the grip one is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku vibration stays as it is.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller grip haptics through Shizuku (experimental)",
+          "description": "Sends controller vibration to the vibrator in the grip instead of the one at the trigger. Galaxy XR routes every OpenXR vibration to the trigger vibrator; the grip one is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku vibration stays as it is.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Controller grip haptics through Shizuku (experimental)",
+          "description": "Sends controller vibration to the vibrator in the grip instead of the one at the trigger. Galaxy XR routes every OpenXR vibration to the trigger vibrator; the grip one is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku vibration stays as it is.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Controller grip haptics through Shizuku (experimental)",
+          "description": "Sends controller vibration to the vibrator in the grip instead of the one at the trigger. Galaxy XR routes every OpenXR vibration to the trigger vibrator; the grip one is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku vibration stays as it is.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Controller pose extrapolation (experimental)",
+          "description": "Makes the Galaxy XR runtime extrapolate controller poses to the time VRLink requests. Stock, the runtime returns one controller sample per display frame, so 3 of VRLink's 4 pose sends per frame repeat it. Also filters jitter out of the streamed controller pose: strongly at rest, barely in fast motion. Adds an OpenXR API layer; no Steam Link code is changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller pose extrapolation (experimental)",
+          "description": "Makes the Galaxy XR runtime extrapolate controller poses to the time VRLink requests. Stock, the runtime returns one controller sample per display frame, so 3 of VRLink's 4 pose sends per frame repeat it. Also filters jitter out of the streamed controller pose: strongly at rest, barely in fast motion. Adds an OpenXR API layer; no Steam Link code is changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller pose extrapolation (experimental)",
+          "description": "Makes the Galaxy XR runtime extrapolate controller poses to the time VRLink requests. Stock, the runtime returns one controller sample per display frame, so 3 of VRLink's 4 pose sends per frame repeat it. Also filters jitter out of the streamed controller pose: strongly at rest, barely in fast motion. Adds an OpenXR API layer; no Steam Link code is changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Controller pose extrapolation (experimental)",
+          "description": "Makes the Galaxy XR runtime extrapolate controller poses to the time VRLink requests. Stock, the runtime returns one controller sample per display frame, so 3 of VRLink's 4 pose sends per frame repeat it. Also filters jitter out of the streamed controller pose: strongly at rest, barely in fast motion. Adds an OpenXR API layer; no Steam Link code is changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Controller pose extrapolation (experimental)",
+          "description": "Makes the Galaxy XR runtime extrapolate controller poses to the time VRLink requests. Stock, the runtime returns one controller sample per display frame, so 3 of VRLink's 4 pose sends per frame repeat it. Also filters jitter out of the streamed controller pose: strongly at rest, barely in fast motion. Adds an OpenXR API layer; no Steam Link code is changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Controller tracking from the controller HAL through Shizuku (experimental)",
+          "description": "Takes controller poses straight from the Galaxy XR controller HAL instead of the OpenXR runtime. The runtime hands an application one controller pose per display frame, about 35 ms behind the HAL; the HAL fuses the controller's IMU about 1000 times per second and predicts a pose for the requested time. The layer reads its pose and velocities 360 times per second, as often as Steam Link sends them, and filters jitter out of both. The HAL is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku tracking stays as it is. Steam Link 2.0.23: the angular velocity is reported local to the grip pose, as its VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Controller tracking from the controller HAL through Shizuku, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Takes controller poses straight from the Galaxy XR controller HAL instead of the OpenXR runtime. The runtime hands an application one controller pose per display frame, about 35 ms behind the HAL; the HAL fuses the controller's IMU about 1000 times per second and predicts a pose for the requested time. The layer reads its pose and velocities 360 times per second, as often as Steam Link sends them, and filters jitter out of both. The HAL is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku tracking stays as it is. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller tracking from the controller HAL through Shizuku, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Takes controller poses straight from the Galaxy XR controller HAL instead of the OpenXR runtime. The runtime hands an application one controller pose per display frame, about 35 ms behind the HAL; the HAL fuses the controller's IMU about 1000 times per second and predicts a pose for the requested time. The layer reads its pose and velocities 360 times per second, as often as Steam Link sends them, and filters jitter out of both. The HAL is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku tracking stays as it is. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller tracking from the controller HAL through Shizuku, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Takes controller poses straight from the Galaxy XR controller HAL instead of the OpenXR runtime. The runtime hands an application one controller pose per display frame, about 35 ms behind the HAL; the HAL fuses the controller's IMU about 1000 times per second and predicts a pose for the requested time. The layer reads its pose and velocities 360 times per second, as often as Steam Link sends them, and filters jitter out of both. The HAL is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku tracking stays as it is. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Controller tracking from the controller HAL through Shizuku, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Takes controller poses straight from the Galaxy XR controller HAL instead of the OpenXR runtime. The runtime hands an application one controller pose per display frame, about 35 ms behind the HAL; the HAL fuses the controller's IMU about 1000 times per second and predicts a pose for the requested time. The layer reads its pose and velocities 360 times per second, as often as Steam Link sends them, and filters jitter out of both. The HAL is reachable only with shell rights, so this needs Shizuku running and its permission granted to Steam Link. Without Shizuku tracking stays as it is. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "2.0.22"
           ]
@@ -254,6 +459,51 @@
               "description": "libgxr_controller_velocity.so config+44 (float32 rad/s). Falls back to runtime velocity above this derived angular speed. Allowed range: 1 to 100 rad/s."
             }
           ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Controller velocity frame (experimental)",
+          "description": "Rotates the controller velocities the Galaxy XR runtime reports into the frames SteamVR reads them in. Stock, they arrive in a frame attached to the controller, so thrown objects leave in the wrong direction. Adds an OpenXR API layer; no Steam Link code is changed. Steam Link 2.0.23: the angular velocity is reported local to the streamed pose, as its VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Controller velocity frame, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Rotates the controller velocities the Galaxy XR runtime reports into the frames SteamVR reads them in. Stock, they arrive in a frame attached to the controller, so thrown objects leave in the wrong direction. Adds an OpenXR API layer; no Steam Link code is changed. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller velocity frame, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Rotates the controller velocities the Galaxy XR runtime reports into the frames SteamVR reads them in. Stock, they arrive in a frame attached to the controller, so thrown objects leave in the wrong direction. Adds an OpenXR API layer; no Steam Link code is changed. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller velocity frame, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Rotates the controller velocities the Galaxy XR runtime reports into the frames SteamVR reads them in. Stock, they arrive in a frame attached to the controller, so thrown objects leave in the wrong direction. Adds an OpenXR API layer; no Steam Link code is changed. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Controller velocity frame, 2.0.20 - 2.0.22 (experimental)",
+          "description": "Rotates the controller velocities the Galaxy XR runtime reports into the frames SteamVR reads them in. Stock, they arrive in a frame attached to the controller, so thrown objects leave in the wrong direction. Adds an OpenXR API layer; no Steam Link code is changed. Steam Link 2.0.20 - 2.0.22: the angular velocity is reported in the base space, as their VRLink reads it.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "2.0.22"
           ]
@@ -434,6 +684,85 @@
           "options": [],
           "compatible_versions": [
             "2.0.22"
+          ]
+        },
+        {
+          "name": "Foveal blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the foveal layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Foveal blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the foveal layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Foveal blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the foveal layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Foveal blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the foveal layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Foveal blue-noise dithering (experimental)",
+          "description": "Static blue-noise quantization after video colour processing and fade, only on the foveal layer. Accepts 8-bit or 10-bit input and always uses 8-bit sRGB output. Select independently or together with the other layer's blue-noise patch. Separate from OLED/VD-like processing; headset validation pending. Unknown host shaders pass through unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "inputDepth",
+              "description": "Both choices apply the same final 8-bit output quantizer. This describes your stream; it does not change host negotiation or decoder precision. When combining with OLED calibration, leave both of its existing VD-like fovea toggles off."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Full-FOV foveal canvas (experimental)",
+          "description": "Exact Steam Link 2.0.20/5001812 experiment: copies only the foveal image onto a transparent 5000x6000 regular-GL canvas per eye and submits it as the 2nd projection. Preserves the original background projection and any existing static Surface-trigger quad. GPU allocation, runtime acceptance and resolution improvement require headset validation.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
           ]
         },
         {
@@ -1146,9 +1475,9 @@
     }
   ],
   "patches_name": "Steam Link GalaxyXR Patches",
-  "fingerprint": "e3a51d8127d5dacc400268e401caed5de49849e62de07327ca21acd6bbb0c045",
-  "release_notes": "## [1.21.0](https://github.com/AngelDark92/steamlink-patches/compare/v1.20.0...v1.21.0) (2026-09-28)\n\n### ✨ New Features\n\n* modified cavecrew included and patches for testing 2.0.20-5001812 and 2.0.21-5001968 ([fa3679b](https://github.com/AngelDark92/steamlink-patches/commit/fa3679b9d91523c271d487db18bc1c537b40829a))\n",
-  "release_tag": "v1.21.0",
-  "release_date": "2026-09-28T19:25:48Z",
-  "isPreRelease": false
+  "fingerprint": "63122bb2beb14cf7f31ebaa6a03f848bf4bc8a452aa67892176bed1091d148e7",
+  "release_notes": "## [1.28.0-dev.3](https://github.com/AngelDark92/steamlink-patches/compare/v1.28.0-dev.2...v1.28.0-dev.3) (2026-10-08)\n\n### 🐛 Bug Fixes\n\n* decode Packages validation responses ([14b3deb](https://github.com/AngelDark92/steamlink-patches/commit/14b3debf66f49c02f62c1e1fdb03a237f1d3a879))\n",
+  "release_tag": "v1.28.0-dev.3",
+  "release_date": "2026-10-08T19:26:42Z",
+  "isPreRelease": true
 }

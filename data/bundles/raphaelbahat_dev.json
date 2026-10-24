@@ -1,0 +1,76 @@
+{
+  "bundle": "raphaelbahat",
+  "channel": "dev",
+  "repo_url": "https://github.com/raphaelbahat/zotero-self-hosted-sync",
+  "created_at": "2026-09-24T20:32:19Z",
+  "version": "1.0.1-dev.1",
+  "description": "## [1.0.4](https://github.com/raphaelbahat/zotero-self-hosted-sync/compare/v1.0.3...v1.0.4) (2026-09-24)\n\n### 🐛 Bug Fixes\n\n* **ci:** retire dev — release on main, and validate dependabot against it ([198e670](https://github.com/raphaelbahat/zotero-self-hosted-sync/commit/198e670d8f861b0a6cb9a955fc1a78aa0bd1a553))",
+  "apps": [
+    {
+      "app_name": "Zotero",
+      "package": "org.zotero.android",
+      "patches": [
+        {
+          "name": "Custom sync server",
+          "description": "Redirects Zotero's sync API and live-update stream to your own server.",
+          "use": true,
+          "options": [
+            {
+              "key": "server",
+              "description": "HTTPS origin of your self-hosted Zotero server, for example https://zotero.example.org. Only the host (with an optional port) is accepted: no path and no trailing slash. A missing scheme is assumed to be https://."
+            },
+            {
+              "key": "streaming",
+              "description": "Full WebSocket URL for live updates, for example wss://zotero.example.org/stream or ws://zotero.example.org/stream. A path is allowed. Leave empty to derive it from the server address as wss://<server>/stream."
+            }
+          ],
+          "compatible_versions": [
+            "1.0.0-247"
+          ]
+        },
+        {
+          "name": "Custom sync server: allow cleartext streaming",
+          "description": "Adds the chosen streaming host to the app's cleartext allow-list when the stream URL is ws:// or http://.",
+          "use": true,
+          "options": [
+            {
+              "key": "server",
+              "description": "HTTPS origin of your self-hosted Zotero server, for example https://zotero.example.org. Only the host (with an optional port) is accepted: no path and no trailing slash. A missing scheme is assumed to be https://."
+            },
+            {
+              "key": "streaming",
+              "description": "Full WebSocket URL for live updates, for example wss://zotero.example.org/stream or ws://zotero.example.org/stream. A path is allowed. Leave empty to derive it from the server address as wss://<server>/stream."
+            }
+          ],
+          "compatible_versions": [
+            "1.0.0-247"
+          ]
+        },
+        {
+          "name": "Enable verbose logging",
+          "description": "For development only. Plants Timber's debug tree so the app's own log lines reach logcat — expect a lot of output, and do not patch this into a build you rely on.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.0-247"
+          ]
+        },
+        {
+          "name": "Recover attachments with an unusable modification time",
+          "description": "Temporary workaround: the Zotero Android app discards an attachment whose stored modification time it cannot parse, instead of repairing it, so the file is never uploaded. Reported upstream: https://github.com/zotero/zotero-android/issues/351",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.0-247"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Anondev Zotero Patches",
+  "fingerprint": "77740fe874ba5cd2e0a9a7b6e50ed38e8bb3c8767646f2be19d2a61855b7b1bd",
+  "release_notes": "## [1.0.1-dev.1](https://github.com/raphaelbahat/zotero-self-hosted-sync/compare/v1.0.0...v1.0.1-dev.1) (2026-09-24)\n\n### 🐛 Bug Fixes\n\n* **patches:** remove the workarounds the released server made unnecessary ([eccf02e](https://github.com/raphaelbahat/zotero-self-hosted-sync/commit/eccf02e30429270579c6d2bdfea052d0384a5316))\n",
+  "release_tag": "v1.0.1-dev.1",
+  "release_date": "2026-09-24T20:32:19Z",
+  "isPreRelease": true
+}

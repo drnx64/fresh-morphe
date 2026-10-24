@@ -1,0 +1,224 @@
+{
+  "bundle": "commit-regrets",
+  "channel": "dev",
+  "repo_url": "https://github.com/commit-regrets/morphe-youtube-vr-patches",
+  "created_at": "2026-10-11T18:20:16Z",
+  "version": "1.22.2-develop.1",
+  "description": "## [1.27.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.26.0...v1.27.0) (2026-10-14)\n\n### 🐛 Bug Fixes\n\n* **sponsorblock:** bound the stored-default migration, so a cyclic table cannot hang start-up ([11ddf39](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/11ddf396c5384ff75e7f9b79ad42a84a6d84756a))\n* **sponsorblock:** make the five-option behaviour picker actually fit the card ([6bb3eaa](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/6bb3eaa74409dccaea966d4381e193c7f4661b69))\n* **sponsorblock:** offer the innermost nested segment, as the phone patch does ([83d4625](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/83d46253637d7d12ad63d73361831af4de0222d2))\n* **sponsorblock:** one decision per tick, so a skip never also raises the button ([5292038](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/529203827cfcdd2cfab812c88e2a279d9d932646))\n\n### ✨ New Features\n\n* **sponsorblock:** implement \"Show a Skip button\", in the app's own skip-Ad card ([d2b6b9d](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/d2b6b9d5e3c558e86244e3632c68145775ca57d8))",
+  "apps": [
+    {
+      "app_name": "YouTube VR",
+      "package": "com.google.android.apps.youtube.vr.oculus",
+      "patches": [
+        {
+          "name": "App name",
+          "description": "Changes the app name shown in the headset's library and in app info. The stock name is just \"YouTube\", which is easy to confuse with the store app.",
+          "use": true,
+          "options": [
+            {
+              "key": "appName",
+              "description": "Shown in the headset library and in app info. A distinct name makes the patched app easy to tell apart from the store one."
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Default video quality",
+          "description": "Starts every video at one resolution instead of the app's per-video choice; a resolution the video lacks falls back to its highest available (8K included when the stream spoof provides it). Changeable in the headset's Patch settings; Auto keeps the app's own behaviour.",
+          "use": true,
+          "options": [
+            {
+              "key": "videoQuality",
+              "description": "Seeds the in-headset setting on first launch; the Patch settings row governs from the first change there."
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Extension",
+          "description": "Injects the extension the other patches run through: its streaming spoof is what removes the pre-roll (ad-free playback) and provides the 8K format support. Turning this patch off restores ads.",
+          "use": true,
+          "options": [
+            {
+              "key": "enableStreamSpoof",
+              "description": ""
+            },
+            {
+              "key": "enableDiagnostics",
+              "description": ""
+            },
+            {
+              "key": "forceVerboseLogging",
+              "description": ""
+            },
+            {
+              "key": "forceFallback",
+              "description": ""
+            },
+            {
+              "key": "enableIdentityMatrix",
+              "description": ""
+            },
+            {
+              "key": "enableNativeFormats",
+              "description": ""
+            },
+            {
+              "key": "enable8k",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Hides video ads, including the pre-roll when the streaming spoof is unavailable and the app falls back to its own player response.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Install as clone",
+          "description": "Installs the patched app as a separate app by default, so it sits alongside the store's YouTube VR instead of replacing it. Replace mode keeps the official package name: the store copy has to be removed to satisfy the signing difference, Horizon OS then treats this build as the YouTube VR app (a restore prompt, and a warning on every reboot), and a store update will collide with it because this build is signed differently.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Clone installs a second app under its own package name and leaves the store app untouched (recommended). Replace keeps com.google.android.apps.youtube.vr.oculus: the store app must be uninstalled first, Meta then warns on every reboot, and the next store update fails on the signature mismatch."
+            },
+            {
+              "key": "updatePermissions",
+              "description": "Update custom permissions declared by the app. Fixes installation conflicts, but can break features in certain apps."
+            },
+            {
+              "key": "updateProviders",
+              "description": "Update provider names declared by the app. Fixes installation conflicts, but can break features in certain apps."
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "QUIC (HTTP/3)",
+          "description": "Adds the in-headset switch for QUIC, the transport under HTTP/3: TLS over UDP, used for this app's API and media requests. Leave it on unless playback stalls on a network that blocks or throttles UDP 443 (corporate Wi-Fi, many VPNs), where turning it off forces TCP/TLS. A change applies after the app restarts.",
+          "use": true,
+          "options": [
+            {
+              "key": "enableQuic",
+              "description": "Seeds the in-headset switch on first launch; the Patch settings row governs from the first change there. Off forces TCP/TLS for every request."
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Remove viewer discretion dialog",
+          "description": "Removes the dialog that appears when opening a video that has been age-restricted by accepting it automatically. This does not bypass the age restriction.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "SponsorBlock",
+          "description": "Automatically skips SponsorBlock segments (sponsors, self-promos, intros, ...). On by default (sponsors: skip once); configure per-category behaviour below or in the headset's Patch settings screen.",
+          "use": true,
+          "options": [
+            {
+              "key": "sponsorBlockApi",
+              "description": "A self-hosted SponsorBlock instance works too. Must be the bare origin (scheme, host, optional port), no path."
+            },
+            {
+              "key": "sponsorCategory",
+              "description": ""
+            },
+            {
+              "key": "selfpromoCategory",
+              "description": ""
+            },
+            {
+              "key": "interactionCategory",
+              "description": ""
+            },
+            {
+              "key": "introCategory",
+              "description": ""
+            },
+            {
+              "key": "outroCategory",
+              "description": ""
+            },
+            {
+              "key": "previewCategory",
+              "description": ""
+            },
+            {
+              "key": "hookCategory",
+              "description": ""
+            },
+            {
+              "key": "fillerCategory",
+              "description": ""
+            },
+            {
+              "key": "musicOfftopicCategory",
+              "description": ""
+            },
+            {
+              "key": "poiHighlightCategory",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Spoof app version",
+          "description": "Adds an option to trick the app into thinking you are running a different version; the option ships set to the app's current version, so selecting the patch alone changes nothing.",
+          "use": true,
+          "options": [
+            {
+              "key": "spoofedVersionName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        },
+        {
+          "name": "Spoof package name in User-Agent",
+          "description": "Adds an option to report a different app package name in the Cronet User-Agent; the option ships set to the original package name, so selecting the patch alone changes nothing.",
+          "use": true,
+          "options": [
+            {
+              "key": "spoofedPackageName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "1.88.10"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "YouTube VR Patches",
+  "fingerprint": "a2871537799b67df9472701afd60161394404d2bec14a27d080247c7d8050bb7",
+  "release_notes": "## [1.22.2-develop.1](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.22.1...v1.22.2-develop.1) (2026-10-11)\n\n* gate the build on Spotless formatting and detekt static analysis ([32aa53b](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/32aa53b2c476d1d5da38351cfa11371f238527d3))\n\n### 🐛 Bug Fixes\n\n* **ci:** debug which writer the preset resolves on the runner ([f8d582f](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/f8d582f190f4c38e5a9440f3fafb8b084a231616))\n* **ci:** ESM-resolution debug with full stack on render failure ([ee7aa80](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/ee7aa80378d282e640d2337ed659180e08792fac))\n* **ci:** npm ci for releases -- npm install re-resolved away the plugin override ([7b392f3](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/7b392f37205a5a38bb1bc4dcca1df2d4ce43858a))\n* **ci:** one writer copy -- the preset resolved a hoisted writer@8 ([4b657b4](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/4b657b436ea100a372cd9233ef959f8c73e483e6))\n* **ci:** pair the changelog preset v10 with release-notes-generator 15 ([3bcd5e1](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/3bcd5e16cef0e9b8d0fdec48822d269341cefe2e))\n* **ci:** pin the changelog preset to v9 -- the release action ships writer@8 ([f353871](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/f3538718525b032caf4f7a649d832a4797019a32))\n* **ci:** read package.json files directly in the writer debug ([9001b27](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/9001b277309eec0f9fb97733c93d0aab1b8a8dec))\n* **ci:** run semantic-release directly so the preset and writer share a tree ([c8b0306](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/c8b03060352c8e4c1b88cb511158adc06bca3ef2))\n* **ci:** runtime debug of the preset's writer on the runner ([aac7c5b](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/aac7c5b8832ee10e0e51d6ec7dfc41bd737df807))\n* **ci:** track the release debug script (build/probe is gitignored) ([6e70252](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/6e70252fb2337b8bf6e9ca51d48609c0b0523013))\n* clear the four -Xlint:all deprecation warnings in the extension ([4135d04](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/4135d04d820eab2e8d766855bba4e290fa836b28))\n",
+  "release_tag": "v1.22.2-develop.1",
+  "release_date": "2026-10-11T18:20:16Z",
+  "isPreRelease": true
+}

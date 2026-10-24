@@ -2,10 +2,34 @@
   "bundle": "ynotzort",
   "channel": "dev",
   "repo_url": "https://github.com/ynotzort/morphe-patches",
-  "created_at": "2026-06-25T14:51:54",
-  "version": "v1.0.0-dev.1",
-  "description": "## 1.0.0-dev.1 (2026-06-25)\n\n### ✨ New Features\n\n* add TargoBank root-check patch (com.targo_prod.bad) ([a05b1af](https://github.com/ynotzort/morphe-patches/commit/a05b1afb76ed540a3abb99580baa2460474389cd))\n",
+  "created_at": "2026-06-25T14:51:54Z",
+  "version": "1.0.0-dev.1",
+  "description": "## [1.2.0](https://github.com/ynotzort/morphe-patches/compare/v1.1.0...v1.2.0) (2026-10-04)\n\n### ✨ New Features\n\n* Symfonium disable beta expiry nag ([edb5f21](https://github.com/ynotzort/morphe-patches/commit/edb5f213db36818e94bbbb25cc781719f8d60438))",
   "apps": [
+    {
+      "app_name": "Symfonium",
+      "package": "app.symfonik.music.player",
+      "patches": [
+        {
+          "name": "Disable Symfonium beta expiry",
+          "description": "Stops the intermittent \"this beta version has expired\" screen. The navigation resolver randomly (≈10% of screen changes, when in a particular licence state) hijacks navigation to the ExpiredBeta destination; this forces the guard that enables that redirect to fail, so navigation always goes to the requested screen. Nothing else (licence state, the random source) is modified. Validated on 15.0.1 (versionCode 127798).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "15.0.1"
+          ]
+        },
+        {
+          "name": "Disable Symfonium trial expiry",
+          "description": "Neutralises the expired-trial block screen. The welcome screen gates entry with a single `state instanceof ExpiredTrial` check; this forces that check to false, so the app proceeds on every launch (online, offline, or with a server-expired trial). The server handshake, billing/licence machinery and the offline fail-open path are left untouched. Validated on 15.0.1 (versionCode 127798).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "15.0.1"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "TARGOBANK",
       "package": "com.targo_prod.bad",
@@ -23,7 +47,7 @@
     }
   ],
   "patches_name": "ynotzort's morphe patches",
-  "fingerprint": "952478b78153de3028fdb1129a6591c27bcf4434a3cac6d79b61238976a047f2",
+  "fingerprint": "f6b5a01aaae7583762990a71caf5c3e622b6c4964e7a9bdda5a89b78b18f55cf",
   "release_notes": "## 1.0.0-dev.1 (2026-06-25)\n\n### ✨ New Features\n\n* add TargoBank root-check patch (com.targo_prod.bad) ([a05b1af](https://github.com/ynotzort/morphe-patches/commit/a05b1afb76ed540a3abb99580baa2460474389cd))\n",
   "release_tag": "v1.0.0-dev.1",
   "release_date": "2026-06-25T14:51:54Z",

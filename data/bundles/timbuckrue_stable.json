@@ -1,0 +1,40 @@
+{
+  "bundle": "timbuckrue",
+  "channel": "stable",
+  "repo_url": "https://github.com/TimBuckrue/nyt-games-vrr-patch",
+  "created_at": "2026-07-18T01:20:32Z",
+  "version": "1.1.0",
+  "description": "## [1.1.0](https://github.com/TimBuckrue/nyt-games-vrr-patch/compare/v1.0.1...v1.1.0) (2026-07-18)\n\n### ✨ New Features\n\n* add optional home-screen optimization patch ([63ac62e](https://github.com/TimBuckrue/nyt-games-vrr-patch/commit/63ac62e927d966a116f9b9eeeade0360715094de))",
+  "apps": [
+    {
+      "app_name": "NYT Games",
+      "package": "com.nytimes.crossword",
+      "patches": [
+        {
+          "name": "Optimize home screen (disable animated cards)",
+          "description": "Forces the NYT Games home screen to use its lightweight static-icon card layout instead of the animated Rive cards. The Rive cards are embedded in the Compose list via AndroidView interop, whose per-item churn plus Rive TextureView compositing is the dominant UI-thread cost while scrolling — the reason busy home screens can't hold 120 fps. Cards stay fully functional; they just don't animate.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.34.0"
+          ]
+        },
+        {
+          "name": "Unlock high refresh rate",
+          "description": "Let NYT Games render above 60 fps on 90/120 Hz and variable-refresh-rate displays. The app never opts into high refresh, so Android's power-saving frame-rate override pins it to 60 Hz; this makes each Activity window request the display's top refresh rate (a seamless, adaptive-refresh-friendly hint), lifting that cap.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.34.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Tim_Buckrue Patches",
+  "fingerprint": "5abcffa0b08d32f983a3dfe547d24657e8594b5850ea3fd36f557f89e6b79b6f",
+  "release_notes": "## [1.1.0](https://github.com/TimBuckrue/nyt-games-vrr-patch/compare/v1.0.1...v1.1.0) (2026-07-18)\n\n### ✨ New Features\n\n* add optional home-screen optimization patch ([63ac62e](https://github.com/TimBuckrue/nyt-games-vrr-patch/commit/63ac62e927d966a116f9b9eeeade0360715094de))\n",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-07-18T01:20:32Z",
+  "isPreRelease": false
+}

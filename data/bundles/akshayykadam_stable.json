@@ -1,0 +1,99 @@
+{
+  "bundle": "akshayykadam",
+  "channel": "stable",
+  "repo_url": "https://github.com/Akshayykadam/Pixel-Camera",
+  "created_at": "2026-10-10T17:28:56Z",
+  "version": "1.0.5",
+  "description": "Pixel Camera 11.1: 13 Camera Looks (Sauce/Tomte), Viewfinder Quick Access Controls, Pro Manual Controls (Focus, Shutter Speed, ISO, Peaking), 10x Quick Zoom Button, Creator Suite, Clone Companion, Permanent Portrait Mode Fix, Default Gallery Unblock, and Pixel 10 12MP Photo Saving Fix.",
+  "apps": [
+    {
+      "app_name": "Pixel Camera",
+      "package": "com.google.android.googlecamera",
+      "patches": [
+        {
+          "name": "Camera Looks Backport",
+          "description": "Enables Google Pixel 11's 10 signature Camera Looks (Sauce & Tomte) on Pixel 6 through Pixel 10, fixes Portrait Mode blur on all cameras, and resolves Pixel 10 photo saving.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "Viewfinder Quick Access Controls",
+          "description": "Enables customizable Left/Right viewfinder quick-access shortcut slots, interactive 10-tick Brightness & Shadow slider with tap-focus guards, smooth shadow curve, and proper tone pipeline reset.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "10x Viewfinder Quick Zoom",
+          "description": "Unlocks the discrete 10x quick zoom button on viewfinder in Photo mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "Pixel Camera Creator Suite",
+          "description": "Enables Teleprompter HUD (Biotite), Live Audio VU Meter (Mica), and Social Framing Guides (Slate).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "Pro Manual Controls",
+          "description": "Enables Pro Manual Controls (Manual Focus, Shutter Speed, ISO, Focus Peaking, and Live Badges) on non-Pro Pixel models.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "Permanent Portrait Mode Fix",
+          "description": "Fixes front camera total blur and rear camera flat/bokeh-less portraits by routing portrait processing to Google's pure-TFLite monocular depth pipeline across all cameras.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "Pixel 10 Photo Saving Fix",
+          "description": "Resolves Pixel 10 & Pro 12MP photos not saving by disabling failing Flare Removal (ceftazidime) and Eclipse AE, mapping binned RAW stream dimensions, and guarding telephoto streams.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        },
+        {
+          "name": "Pixel Camera Clone (Non-Root)",
+          "description": "Changes package identifier to com.google.android.GoogleCamera.morphe to allow side-by-side installation alongside stock Camera.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name to use for the cloned app."
+            }
+          ],
+          "compatible_versions": [
+            "11.1.040.982810059.19"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Akshayykadam",
+  "fingerprint": "184115afcfd275b9123a02a1666a86c3f7a5d4d973a7a5969c90b0996e9ca3ff",
+  "release_notes": "**Release Tag:** `1.0.4`  \r\n**Target App:** Google Pixel Camera `11.1.040.982810059.19` (APKM -> https://www.apkmirror.com/apk/google-inc/camera/pixel-camera-11-1-040-982810059-19-release/)  \r\n**Supported Devices:** Google Pixel 6, 7, 8, 9, 10 series (Tensor G1 – G5)\r\n\r\n---\r\n\r\n## What's New in v1.0.4\r\n\r\n### 1. All 13 Camera Looks Unlocked (3 New Looks Added)\r\nIn addition to the 10 original signature Looks, all **3 brand-new Pixel Camera 11.1 Looks** are now fully enabled and integrated directly into the carousel UI:\r\n* **Flat** (`qvd` / *Pesto*): Low-contrast, high dynamic range flat color profile optimized for post-shot color grading.\r\n* **Buffalo** (`qvg` / *Unflat*): Warm, punchy earth tones with balanced contrast and expanded dynamic latitude.\r\n* **Dijon** (`qvi` / *Yellow-Green Faded*): Nostalgic retro analog look with olive-tinted highlights and muted shadows.\r\n* *Total available Looks:* **13** (Original, Natural, Vanilla, Editorial, Shadows, Velvet, Classic, Digi, Black Tie, Minimal, Flat, Buffalo, Dijon).\r\n\r\n---\r\n\r\n### 2. Viewfinder Dual Sliders & Universal Bidirectional Sync\r\n* **Viewfinder Tap-to-Focus Sliders Restored:** Resolved the issue where the dual sliders were missing from the viewfinder. Sliders now reliably appear on tap-to-focus across all modes.\r\n* **Full Dynamic Exposure Range:** Restored full range on both sliders:\r\n  * **Brightness:** -4.0 to +4.0 stops.\r\n  * **Shadow:** Linearized HDR+ shadow boost up to 15.3x.\r\n* **Bidirectional Synchronization:** Viewfinder on-screen knobs and bottom sheet drawers now share the exact same underlying HAL observables—scrubbing either slider updates the other instantly in real time.\r\n* **Camera2 HAL Preview Integration:** Decoupled `DualEvCtrl` from twilight flags (`ptm.g = false`), allowing real-time tone mapping previews directly in the viewfinder.\r\n\r\n---\r\n\r\n### 3. Pixel 10 & Pro 12MP Photo Saving Fix\r\n* Fixed an issue on Pixel 10 / Tensor G5 hardware where 12MP captures failed to save or froze during post-processing.\r\n* Disabled incompatible Tensor G5-exclusive pipelines (`camera.ceftazidime = 0` Flare Removal and `camera.use_eclipse = 0` Eclipse AE).\r\n* Injected fallbacks for binned RAW stream dimensions (`tele_binned_raw_width` = 2016, `tele_binned_raw_height` = 1512, `binned_row_start` = 0) to ensure zero capture drops.\r\n\r\n---\r\n\r\n### 4. Complete Feature Matrix\r\n* **Permanent Portrait Mode Fix:** Pure-TFLite monocular depth routing (`midasnet`, `portrait_matting_mask`) fixing front camera blur and rear camera bokeh drops.\r\n* **Pro Manual Controls:** Unlocks Manual Focus, Shutter Speed, ISO, and Focus Peaking on all supported models.\r\n* **10x Quick Zoom:** Discrete 10x viewfinder zoom toggle in Photo mode.\r\n* **Creator Suite:** Teleprompter HUD (`biotite`), Live Audio VU Meter (`mica`), and Social Framing Guides (`slate`).\r\n* **Non-Root App Clone:** Installable side-by-side with stock Pixel Camera (`com.google.android.GoogleCamera.morphe`).\r\n\r\n---\r\n\r\n##  How to Install via Morphe Manager\r\n\r\n1. Download and install the latest **Morphe Manager** on your device.\r\n2. Download official **Pixel Camera 11.1** APK (`11.1.040.982810059.19`). \r\n3. Download **`morphe-patches-pixelcamera-1.0.4.mpp`** (or `patches-1.0.4.mpp`) from the Assets below.\r\n4. In Morphe Manager:\r\n   * Select the downloaded Pixel Camera APK.\r\n   * Load the patch bundle (`.mpp`).\r\n   * Select your preferred patches and tap **Patch**.\r\n5. Install the generated APK and enjoy!\r\n\r\n---\r\n\r\n## Assets\r\n\r\n* **`morphe-patches-pixelcamera-1.0.4.mpp`** — Morphe patch bundle\r\n* **`patches-1.0.4.mpp`** — Standalone bundle mirror\r\n",
+  "release_tag": "1.0.4",
+  "release_date": "2026-10-09T18:07:20Z",
+  "isPreRelease": false
+}

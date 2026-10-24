@@ -1,0 +1,43 @@
+{
+  "bundle": "jrddupont",
+  "channel": "stable",
+  "repo_url": "https://github.com/jrddupont/discord-patches",
+  "created_at": "2026-09-24T01:29:59Z",
+  "version": "1.5.0",
+  "description": "Hides the Discord quest promo banner (QuestBar) and the gift button in the chat composer, pinned to the built-in bundle.",
+  "apps": [
+    {
+      "app_name": "Discord",
+      "package": "com.discord",
+      "patches": [
+        {
+          "name": "Hide gift button",
+          "description": "Hides the gift button in the chat message composer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Hide quest promo banner",
+          "description": "Hides the quest promo banner at the top of the server channel list.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Pin app to built-in bundle",
+          "description": "Forces Discord to always run the bundle inside the APK and ignore downloaded (OTA) updates, which would otherwise silently undo the other patches. Turn this off (or update the APK) to receive official updates.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        }
+      ]
+    }
+  ],
+  "patches_name": "Discord Patches",
+  "fingerprint": "a052264332ee11f7d6918550d6f323015f15ca8a42bb1b4350d519e7dc7ee99f",
+  "release_notes": "\n- Self-locating patches: the QuestBar gate and gift-bar flag are now\n  discovered in the bundle at patch time (string co-occurrence + head\n  shape + flag write/test validation) instead of baked-in byte anchors,\n  and compat is a NULL version (any com.discord build). New Discord\n  versions need no patch update as long as discovery holds; anything\n  unrecognized fails loudly with the update point named. Only the\n  attach-sheet push keeps legacy anchors (frozen facts about old\n  bundles) with skip-or-fail reasoning. Proven: discovery reproduces\n  every v1.4.0 site exactly on all five known bundles, CLI bytes\n  identical. (stable)",
+  "release_tag": "v1.5.0",
+  "release_date": "2026-09-24T01:29:59Z",
+  "isPreRelease": false
+}

@@ -2,9 +2,9 @@
   "bundle": "hushfeed",
   "channel": "latest",
   "repo_url": "https://github.com/SysAdminDoc/HushFeed",
-  "created_at": "2026-09-30T03:21:31",
-  "version": "v0.65.0",
-  "description": "Hushfeed v0.65.0 has 98 patches for global TikTok 47.0.3 and 47.1.3 (`com.zhiliaoapp.musically`). It needs Morphe Manager 1.32.0 or newer.\n\n## What's changed\n\n* Mute feed videos now works on TikTok 47.1.3, and on 47.0.3 it silences photo posts with a sound too. A video is already quiet when you swipe to it, and it stays quiet after you watch the same video from a DM or scroll a long profile grid. DMs, stories and LIVE keep their sound, and another app's music keeps playing.\n* Press and hold the Home tab to open Hushfeed's settings (#45). A tap on Home works as before.\n* Every save says it's been taken the moment you ask, including the ones waiting in line. If TikTok closes in the middle of a save, a banner says which saves didn't finish the next time you open it.\n* Saves connect only to the server address Hushfeed checked, so nothing can swap in a different machine between the check and the download.\n* The block control, the mute button and Hushfeed's other buttons over the video now show on videos opened from a creator's profile, a hashtag or a sound.\n* When the time budget runs out partway through a long video, the notice and the hold come right then, and the budget label leaves as soon as you switch tabs.\n* New row under Downloads, Forget saved videos. It empties the already-saved record and keeps your files.\n* On Android 10 and older, the block button, Unblock and Save media on a sticker no longer close TikTok.\n* Your keyboard no longer rewrites a package name or host you type into the share settings.\n* Diagnostics can record a screen's layout for a \"please hide this\" report, and the feed filter table has a line for every route that delivers videos.\n\nSee the [changelog](https://github.com/SysAdminDoc/HushFeed/blob/v0.65.0/CHANGELOG.md) for the full list.\n\n## Checked\n\n* 2490 runtime tests and 459 patch tests passed. Both Android lint checks passed.\n* All 98 patches applied to both supported APKs. Resource checks passed, with no manifest changes. The attached release receipt records the exact bundle and each target's result.\n* On phones and Android emulators running TikTok 47.0.3 and 47.1.3, the mute silenced feed videos and photo posts while another app's music kept playing, saves went through the checked address, and holding Home opened Hushfeed's settings. A locked budget, What's new, the block control's larger tap area and Stay on the video in full screen behaved as described.\n\n## Install\n\nUse Morphe Manager 1.32.0 or newer. An older Manager says the bundle needs a Manager update. Refresh the Hushfeed source, select the TikTok 47.0.3 or 47.1.3 APK, then patch and install it. Keep the manager's existing signing key when updating.\n\n`patches-0.65.0.mpp` is the patch bundle, not a TikTok APK. `SHA256SUMS.txt` includes checksums for the bundle and its release receipt.\n",
+  "created_at": "2026-10-10T04:23:17",
+  "version": "v0.70.0",
+  "description": "Hushfeed v0.70.0 has 130 patches for global TikTok 47.1.4 (`com.zhiliaoapp.musically`). It needs Morphe Manager 1.34.0 or newer, since it's built on patcher 1.15.1.\n\nTikTok 47.1.4 is the only supported version now, so grab that APK and patch it with your usual signing key. Morphe Manager's simple mode picks 107 of the 130 patches, and every switch they add starts off until you turn it on. Hushfeed settings open on a shorter home page with search and seven groups. New switches hide the side menu button next to LIVE (#128), keep offline videos until you delete them (#123), hide Thoughts on profiles (#122) and leave the languages you pick out of TikTok's automatic translation (#121). Author text size now covers the post date too (#66).\n\n## What's changed\n\n* Author text size now sizes the post date next to the creator's name too, so the two stay the same size (#66).\n* Comments settings has a new row, Don't auto translate these languages. It's empty until you fill it in (#121). Type language codes like `es, de`, and when TikTok translates for you, captions and comments in those languages stay as they were written. See translation still works when you tap it, and TikTok's own Don't translate list isn't changed.\n* Keep offline videos until you delete them now covers two more ways TikTok cleared your list. With the switch on, TikTok's Auto adjust no longer lowers your offline videos limit or trims the list when TikTok starts, and the clean-up TikTok runs when its test of turning offline videos on by default ends is skipped (#123). Restart TikTok after you change the switch.\n* Restoring a settings backup made on an older TikTok build now brings back the Feature Gate Lab overrides that still fit this build. The ones that don't are kept but turned off.\n* Feed screen has a new switch, Hide the side menu button, off until you turn it on. It takes away the button at the top left of the feed, next to LIVE, that opens TikTok's side menu with Your orders, TikTok Minis and more. Restart TikTok after you change it (#128).\n* Every patch description in Morphe Manager is rewritten in plain English. Each one now says what the patch changes, why you might want it, and whether its switch starts on or off and where to find it in Hushfeed settings. A few patch options read more clearly too, and Skip push setup is now called Skip notification setup.\n* The rows in Hushfeed settings are reworded in plain English. Privacy, Comments, Downloads, Feed filter, Screen time, Region and other pages now say what each switch does and what you'll notice, without technical terms. A few titles changed too, like Stop TikTok's speed tests and Clean up shared links.\n* A handful of messages and status lines are plainer too, like the Ghost mode status, the Hook status explanation, the proxy password notice and the file name preview.\n* The Dark background color option in Morphe Manager now says \"color code\" instead of \"hex code\", and explains that black turns those pixels off completely on OLED screens.\n* The Hushfeed settings home now shows a compact status and search above seven groups. Related pages sit together, with backups, diagnostics and the Feature Gate Lab under App & advanced. About Hushfeed keeps build details and licenses in one place. Search still takes you straight to a setting, and your saved choices carry over. Pause now explains that saved settings and changes built into the APK remain.\n* Hushfeed now supports TikTok 47.1.4 only. If you're on 47.0.3 or 47.1.3, download the 47.1.4 APK from APKMirror and patch it in Morphe Manager with the same signing key, so your login and settings carry over. Feature Gate Lab keeps each override whose switch 47.1.4 still has and turns the rest off with its usual notice.\n* Custom offline videos limit has a new switch in Hushfeed settings > Downloads, Keep offline videos until you delete them. It's off until you turn it on (#123). TikTok throws out the videos it saved for offline viewing after a set time, sometimes only two days, and a list saved in one go disappears in one go, watched or not. With the switch on they stay until you delete them in TikTok's Offline videos settings, which is also how you get a fresh set. TikTok can still clear ones you've already watched when your phone runs low on space, and picking a lower limit still trims the list. Keep an eye on the storage line under the offline videos limit. The switch takes effect the next time TikTok starts.\n* Hide profile shortcuts has a new switch under App, Hide Thoughts on profiles, off until you turn it on (#122). It hides the Thoughts bubble TikTok puts above a profile picture, and on your own profile the prompt to share one. Restart TikTok after you change it.\n* Allow screenshots and Circle to Search now also takes the secure flag off popups and floating windows that set it in their own window settings, such as TikTok's Compose popups. They reach the screen without the window calls the patch already changed, so they could still show up black in screenshots and screen recordings. The idea comes from icysymmetra's TikTok patches.\n* Diagnostics has a new row, Capture the feed, for a feed problem that's easier to show than to describe. Tap it, scroll until the problem shows up, then come back and tap it again, and Hushfeed saves a text file to Download/Hushfeed. It has a line for every batch of videos the feed filters handled while it ran, with each video's verdict and the rule that hid it. Videos and creators appear only as short codes made fresh for each capture, and the file has no captions, names, handles or web addresses. Read it before you share it anyway. Nothing is recorded until you start a capture. The idea comes from icysymmetra's TikTok patches.\n* The Hide the Clear display controls description now mentions pinching the screen as another way to leave Clear display (#84).\n* A handful of switches now start off, like the rest of Hushfeed's switches, because their patches join the default selection. If you picked one of these patches before and want it to keep working, turn its switch back on after you update. Under Privacy that's Block contact list access, Block installed app scanning, Block location, Block clipboard reads, Block motion sensors, Don't save new searches and Show when the camera or microphone is in use. Under Comments it's Thumbs down blocks the commenter, Links in comments open and Hide comment popup ads, and under App it's Turn off haptics and Turn off screen transitions.\n* Morphe Manager's simple mode now picks 107 of Hushfeed's 130 patches, up from 55, so most of them no longer need Expert mode. Every switch the newly picked patches add starts off, and TikTok looks and works the way it ships until you turn something on in Hushfeed settings. Expert mode is still how you get the other 23, and the README's Patches section lists them with the reason each one stays out. Each patch's description now says where its switch is and that it starts off.\n* Morphe Manager has a new Interface group for the patches that change how TikTok looks. AMOLED dark theme, Use system font and Turn off screen transitions move there from Performance, Change app name, Custom launcher icon and Hide the launcher shortcuts from Settings, and Feed text sizes from Interaction.\n\n## Update\n\nRefresh the Hushfeed source in Morphe Manager 1.34.0 or newer and patch TikTok again. Keep the manager's existing signing key so your login and settings carry over. The .mpp is a patch bundle, not a TikTok APK.\n\n## Checked\n\n* 3618 runtime tests and 699 patch tests passed. Both Android lint checks passed.\n* All 130 patches applied to TikTok 47.1.4 with desktop CLI 1.18.1. Resource checks passed, and the attached release receipt records the exact bundle and its result.\n",
   "apps": [
     {
       "app_name": "TikTok",
@@ -12,1001 +12,1210 @@
       "patches": [
         {
           "name": "Advanced downloads",
-          "description": "Adds download quality choices, original Photo Mode images, separate audio files and optional video details. It can check for an existing saved video before downloading another copy. Long presses save profile pictures and stories. Switch: Hushfeed settings > Downloads.",
-          "use": false,
+          "description": "Adds more ways to save: pick the video quality, save full-size photos, the sound on its own or a photo post as one video, and hold a profile picture or story to save it. Starts off. Turn it on in Hushfeed settings > Downloads.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Allow Duet and Stitch",
-          "description": "Ignores the creator's Duet and Stitch setting so the entries appear for videos that closed them. Everything else the app checks still applies: a photo post, a private video or one with music it may not reuse is still refused, and whether the upload is accepted is the server's decision, not the app's. Switch: Hushfeed settings > App.",
-          "use": false,
+          "description": "Shows the Duet and Stitch buttons on videos whose creator turned them off, so you can still make one. TikTok may still refuse some videos or the upload. Starts off. Turn it on in Hushfeed settings > Share sheet.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Allow screenshots and Circle to Search",
-          "description": "Removes secure window flags and disables the Circle to Search block. Off by default. Restart after changing. Switch: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Lets screenshots, screen recordings and Circle to Search work on TikTok screens that would otherwise come out black. Starts off. Turn it on in Hushfeed settings > App, then restart TikTok.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Always show publish date",
-          "description": "Always shows the publish date in video author information. Switch: Hushfeed settings > Feed screen.",
+          "description": "Shows the date a video was posted next to the creator's name, so you can tell how old it is. It can also show the exact time, or dates on profile grids. On by default. Turn it off in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Always upload in HD",
+          "description": "Posts every video you upload in HD, as if you'd turned on TikTok's own HD upload setting each time. Videos TikTok doesn't count as high quality post as usual. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "AMOLED dark theme",
-          "description": "Replaces TikTok's dark background palette with black or a chosen color. The light theme keeps its colors. It rewrites TikTok's resources, so patching with it on is slower when the manager's memory limit is low. Give the manager 768 MB or more. At 640 MB it still finishes, just more slowly.",
+          "description": "Makes TikTok's dark mode backgrounds pure black, or a dark color you pick in this patch's options. Black lets OLED screens switch those pixels off. Light mode doesn't change. It's built in while patching, so only patching again without it undoes it.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
-              "description": "An opaque hex color. Black turns off OLED pixels on the main dark surfaces."
+              "description": "Pick a color, or type a solid color code like #000000. Black lets OLED screens turn those pixels off completely."
             }
           ],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "App lock",
+          "description": "Asks for your fingerprint, face or PIN before TikTok opens, and again when you come back after a time you pick, so nobody else can open it on your phone. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Automatic video advance",
-          "description": "Keeps TikTok's automatic advance enabled while preserving its pause, dialog and gesture checks, and shows TikTok's own Auto scroll action in the video panel for accounts outside its rollout, with a switch that hides that action instead. Switch: Hushfeed settings > Playback.",
-          "use": false,
+          "description": "Moves on to the next video by itself when one ends, so you can watch hands-free. It can also turn on TikTok's auto scroll in search results. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Block author button",
-          "description": "Adds one-tap controls for blocking the creator, hiding them locally and blocking the current sound. A confirmed account block skips to the next video and shows a small Unblock button at the top left for two seconds. The local-hide and sound controls have separate switches. Long press any visible control to move it. Hushfeed keeps it clear of system bars, cutouts and TikTok's bottom tabs when the window changes. A local action shows Undo only after its setting was saved. All controls hide while comments are open. Switch: Hushfeed settings > Feed filter.",
-          "use": false,
+          "description": "Adds buttons on videos to block the creator, hide them only on your phone, or block the sound, so you can get rid of what you don't want in one tap. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Block contact list access",
-          "description": "Answers TikTok's reads of your phone contacts with an empty list. Find Friends and People you may know lose access to your contact list. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Gives TikTok an empty contact list when it tries to read your phone's contacts, so it can't use them to suggest friends. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Block installed app scanning",
-          "description": "Answers TikTok's scan of the apps installed on your phone with an empty list. Checks for one named app, which TikTok also uses to open an app you tap, are left alone. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Gives TikTok an empty list when it asks which apps are on your phone, so it learns less about you. Opening another app from TikTok still works. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Block P2P video relay",
-          "description": "Strips TikTok's peer-to-peer CDN libraries so your phone is not used as a relay node for other people's video traffic. The APK gets about 3.5 MB smaller.",
+          "description": "Removes the files TikTok uses to pass videos on to other viewers through your phone's internet connection. The app gets about 3.5 MB smaller. It's built in while patching, so only patching again without it brings them back.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Block popups",
+          "description": "Lets you stop TikTok's popups, like friend suggestions and offers. Each one joins a checklist after it first appears, and once ticked it won't come back. Sign-in, age and verification screens are never blocked. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Block suggested video notifications",
+          "description": "Stops TikTok's \"Videos you might like\" notifications about popular videos it picked for you. Messages, comments, likes and posts from people you follow still come through. On by default. Turn it off in Hushfeed settings > Inbox.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Camera and microphone indicator",
-          "description": "Shows a small mark in the top corner while TikTok has the camera open or is recording sound. A green square for the camera, an orange diamond for the microphone, both when both. It goes when the access ends. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Shows a small mark in the top corner while TikTok is using the camera or microphone, so you always know when it is. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Shows a name you choose under the app icon, so the patched TikTok is easy to tell apart from another copy. Type the name in this patch's options. Inside the app it still says TikTok.",
+          "use": false,
+          "options": [
+            {
+              "key": "appName",
+              "description": "The name shown under the app icon, up to 50 characters."
+            }
+          ],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Comment publish diagnostics",
-          "description": "Says in the diagnostic report whether a comment send reached TikTok's publish code, what it had in hand, and whether it returned early or handed the comment to the request. A comment that never posts leaves no other trace.",
+          "description": "Adds a note to Hushfeed's diagnostic report about how far a comment got when it fails to post, which helps track down comments that vanish without an error. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Comment send fix",
-          "description": "Sends comments TikTok would drop without a word. TikTok checks a send against the most recently opened page, and when that page has already lost its screen it stops the comment and shows nothing. This checks it against the comment panel's own screen instead.",
+          "description": "Fixes comments that TikTok sometimes drops without any message, so the comment you send actually posts. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Comment sort controls",
-          "description": "Shows TikTok's own comment sort sheet on every post, with its hot, newest, media and creator options, instead of the cut-down row an account outside the rollout is given. Switch: Hushfeed settings > Comments.",
-          "use": false,
+          "description": "Shows TikTok's full comment sort menu on every video, with hot, newest, media and creator options, even when your account only got a cut-down version. Starts off. Turn it on in Hushfeed settings > Comments.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Comment tools",
-          "description": "Hides comments that contain chosen words or come from chosen accounts, turns the thumbs down on each comment into a block button that shows the block symbol, makes links tappable, can show a poll's results before you vote and can hide pictures, polls or TikTok's suggested-search banner above comments. Compact comment header removes the count, controls and suggestion space above the list. Easier comment likes extends the heart's touch area into nearby blank space without changing row spacing. A separate search box filters comments already loaded on the video. Tapping more under a video can open its comments with the caption at the top, and the comment button can open them that way too. Brings Double-tap controls with it, which opens the comments. Each tool has its own switch in Hushfeed settings > Comments.",
-          "use": false,
+          "description": "Hides comments with words you pick or from accounts you pick, and adds a search box for a video's comments. It can also make links tappable and show poll results before you vote. Starts off. Turn it on in Hushfeed settings > Comments.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Confirm feed interactions",
-          "description": "Asks for a second tap before the feed Follow button, the like heart, a comment or story like, or a quick repost goes through. A short message asks for the second tap, and most armed buttons also get a white ring. Switches: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Asks for a second tap before Follow, a like, or a quick repost goes through, so a stray tap doesn't count. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Copy bio and IDs",
+          "description": "Lets you long-press a bio to copy it, and adds share sheet buttons that copy a username, user ID or video ID. On by default. Turn it off in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Copy comments without username",
-          "description": "Copies only the comment text without including the creator's username. Switch: Hushfeed settings > Comments.",
+          "description": "When you copy a comment, you get just its text, without the username in front. On by default. Turn it off in Hushfeed settings > Comments.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Custom launcher icon",
+          "description": "Gives TikTok's home screen icon a themed version that takes your wallpaper's color on Android 13 and up. The options can also make it black, plain or your own picture. Only patching again without it puts the old icon back.",
+          "use": false,
+          "options": [
+            {
+              "key": "iconStyle",
+              "description": "TikTok colors keeps the icon as it is. Black background puts TikTok's note on pure black, and the two plain styles draw only the note in one color. Every style gets the themed icon."
+            },
+            {
+              "key": "iconPicture",
+              "description": "Where to find a square PNG picture of your own, 432 to 1024 pixels on each side, to use instead of TikTok's note. Home screens trim icons to their own shape, so keep what matters in the middle two thirds. With a picture, the style only sets the color behind it and there's no themed icon. Leave it empty to keep the note."
+            }
+          ],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Custom offline videos limit",
-          "description": "Adds a custom entry to TikTok's offline videos menu with a configurable limit from 1 to 1000 videos. Switch: Hushfeed settings > Downloads.",
+          "description": "Lets you pick how many videos TikTok saves for watching offline, from 1 to 10,000, and keep them until you delete them. Handy when you're often without internet. Starts off. Turn it on in Hushfeed settings > Downloads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Device privacy guard",
-          "description": "Blocks TikTok from reading your clipboard. Copying a link you asked for still works. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Stops TikTok reading what you copied, hides that you're on a VPN, and gives it a blank advertising ID so apps can't match you by it. Each has its own switch. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Diagnostic tools",
-          "description": "Adds diagnostic logging, filtered reports and local TikTok crash capture. The switches are under Diagnostics in Hushfeed settings. Switch: Hushfeed settings > Diagnostics.",
-          "use": false,
+          "description": "Adds logs and reports you can save or share when something goes wrong, so a problem is easier to report and fix. Starts off. Turn it on in Hushfeed settings > Diagnostics.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Disable login requirement",
-          "description": "Removes TikTok's mandatory login gate from supported flows.",
+          "description": "Stops TikTok from forcing you to sign in before you can keep browsing. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Disable screen capture detection",
-          "description": "Prevents TikTok from reacting to screenshots and screen recordings.",
+          "description": "Stops TikTok from noticing and reacting when you take a screenshot or record the screen. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Disable telemetry",
-          "description": "Adds a switch on the Privacy page that stops ByteDance AppLog analytics, AppsFlyer attribution, explicit Firebase screen reports and TikTok's Npth or MonitorCrash startup reporting. TikTok's own diagnostics go quiet with them. Off by default. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Stops TikTok sending usage statistics and crash reports to TikTok and the tracking services it uses, so less of what you do in the app leaves your phone. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Disable the long press quick share",
-          "description": "Keeps long-pressing Share from opening TikTok's quick-share interaction. Switch: Hushfeed settings > Feed screen.",
+          "description": "Stops a long press on Share from opening TikTok's quick share, so you don't send a video by accident. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Disable the long press repost",
-          "description": "Keeps holding Like from opening TikTok's repost action. Switch: Hushfeed settings > Feed screen.",
+          "description": "Stops a long press on Like from opening TikTok's repost option, so you don't repost by accident. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Double-tap controls",
-          "description": "Lets double taps do nothing or open the current video's comments. Switch: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Lets a double tap on a video open its comments or do nothing, instead of liking it, so you don't like videos by accident. Starts off. Pick an action in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Downloads",
-          "description": "Adds watermark-free downloads, comment sticker saving, configurable folders, and filename templates. It ignores the flag TikTok sets when a creator turns downloading off, so those videos save too. Network fetches accept public HTTPS addresses and follow at most five checked redirects. Switch: Hushfeed settings > Downloads.",
+          "description": "Saves videos and photos without TikTok's watermark, even when the creator turned downloads off. You can also choose the folders and file names. On by default. Turn it off in Hushfeed settings > Downloads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Drop the animated image cache",
-          "description": "Makes TikTok's reviewed Fresco animated-frame cache lookups return no cached frame. This can increase decoding work or change animation playback.",
+          "description": "Makes TikTok keep only the frame on screen for stickers and GIFs instead of every frame, so they use less memory and still play smoothly. It has no switch, so only patching again without it undoes it.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Enable voice comments",
-          "description": "Turns on TikTok's own voice comment recording and publishing entry points for accounts that do not have them.",
+          "description": "Turns on TikTok's voice comments, so you can record and post a spoken comment, for accounts that don't have them yet. It has no switch and hasn't been tried on a real account, so it may not work.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Expand activity list",
-          "description": "Show the full Activity and New followers lists instead of collapsing them behind a View all button. Switch: Hushfeed settings > Inbox.",
-          "use": false,
+          "description": "Shows the whole Activity and New followers lists in the Inbox, so you don't have to tap View all. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Feature Gate Lab",
-          "description": "Adds a menu for viewing and overriding supported TikTok feature flags and configuration values.",
+          "description": "Adds an advanced page that lists the hidden settings TikTok uses to test features and lets you change them. It's for people who like to experiment. Starts off. Turn it on in Hushfeed settings > Diagnostics.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Feature Gate Recorder",
-          "description": "Records feature gate reads while you use TikTok and compares them with their previous values. Switch: Hushfeed settings > Diagnostics.",
+          "description": "Records which hidden TikTok settings the app reads while you use it, and which ones changed. It's a research tool and changes nothing in TikTok. Start a recording in Hushfeed settings > Diagnostics.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Feed filter",
-          "description": "Hides feed ads, including videos with creator commission disclosures, TikTok Shop items, livestreams, LIVE replays, stories, photo posts, paid partnerships, AI labeled videos, location-tagged videos, verified accounts, series, mini dramas, playlists, the playlist bar, the floating event badge and inserted cards. Videos can also be filtered by your own caption words, creator handles or patterns, sound names, length, the country they were posted from, the language of their original caption and their view, like, comment, favorite and share counts. A short list of creator exceptions lets chosen accounts through the filters on the kind of post, its labels, age, length and counts. Ads, blocked creators, words, sounds, countries and caption languages, paid and Shop content, LIVE and seen videos still apply to them. Sponsored cards are dropped from the profile video viewer, the search grids and the Friends tab as well as the feed, and so are the mid-roll ads TikTok splices into a video pager after the list has loaded and the ads a creator's video pager asks for on its own. The share prompt that appears after a like can be hidden too, and so can TikTok Shop's Products block and product cards in search results. Switch: Hushfeed settings > Feed filter.",
+          "description": "Hides ads in the feed, and lets you hide other things you don't want to see, like LIVEs, Shop posts, AI videos or videos with words, creators or sounds you pick. Hiding ads is on by default. Everything else starts off in Hushfeed settings > Feed filter.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Feed tab navigation",
-          "description": "Controls which loaded top and bottom navigation tabs remain visible, blocks newly added tabs when requested, can hide the Following and For You names above the feed while swiping between them keeps working, can hide the Tako AI bubble and the unread badges on the bottom tabs, can keep For You from reloading on a Home tap or a pull down, brings TikTok's LIVE button back to the feed's corner when the LIVE tab is taken off either bar, can open TikTok on Following, Friends, Inbox or Profile, can show TikTok's own feed buttons without a screen reader, and opens Hushfeed's settings from a long press on Home. Switch: Hushfeed settings > Feed tabs.",
+          "description": "Lets you hide feed and bottom tabs you don't use, rename the bottom tabs, choose the tab TikTok opens on and stop For You reloading when you tap Home. Starts off, except holding Home to open Hushfeed settings. Find it in Hushfeed settings > Feed tabs.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Feed text sizes",
+          "description": "Lets you make video descriptions, creator names and post dates bigger or smaller, so they're easier to read. Starts off. Pick a size in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Fit the video to the screen",
-          "description": "Puts the whole of a vertical video on screen instead of cropping it to the window. On a 9:16 phone nothing changes, because the video already fills it. On a Fold opened up, a squarer phone or a split view the sides or the ends stop being cut off. A second switch, Fill the screen with the video, does the opposite and crops the video until it covers the screen, for the phones where TikTok leaves a black strip under a 9:16 video. Switches: Hushfeed settings > Playback.",
-          "use": false,
+          "description": "Shows the whole video instead of cutting off its sides on folding phones, squarer screens and split screen. A second switch does the opposite and fills the screen. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Fix Google login",
-          "description": "Restores Google account sign-in after patching.",
+          "description": "Makes Sign in with Google work in the patched app, where it would otherwise fail. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Foldable split comment view",
-          "description": "Shows comments beside the video on windows wider than a configurable threshold. Off by default. Switch: Hushfeed settings > App.",
-          "use": false,
+          "description": "On a folding phone or tablet, shows comments beside the video instead of over it when the screen is wide enough. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Follow diagnostics",
-          "description": "Reads what the server said about a follow. A follow TikTok turns down comes back looking like a success, so this reports the refusal and its reason once per session and, with diagnostic logging on, writes the whole exchange to the report.",
+          "description": "Tells you when TikTok quietly turned down a follow, and why, since the app shows it as if it worked. With diagnostic logging on, the details go in the report too. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Ghost mode",
-          "description": "Block hooked story, profile and typing reports. The switch shows local activity and retains a warning after a known story-reporting failure. Viewer-list privacy still needs a two-account check. Online status is unchanged. Switch and diagnostics: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Stops TikTok telling people you viewed their story or profile, or that you're typing. What TikTok already recorded stays. A separate switch hides your online status. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide already seen videos",
-          "description": "Keeps a local record of the videos you have watched and hides them when the feed sends them again. The record never leaves the device and can be cleared from settings. Switch: Hushfeed settings > Feed filter.",
-          "use": false,
+          "description": "Remembers the videos you've watched and hides them when the feed sends them again, so you only see new ones. The list stays on your phone. Starts off. Turn it on in Hushfeed settings > Feed filter.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide CAPTCHA popups",
-          "description": "Adds a default-off setting to hide the CAPTCHA dialogs raised while browsing or watching LIVE. Login and account verification stay visible, and so does any CAPTCHA the server raised over a follow, like, comment or repost, because hiding one of those makes the action fail with no message. Switch: Hushfeed settings > Feed screen.",
+          "description": "Notes in Hushfeed's diagnostic report when TikTok shows a verification puzzle. Its hide switch isn't available on this TikTok version, so every puzzle still shows. Works as soon as you patch it in.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide comment popup ads",
-          "description": "Stops the brand animation that plays over the comment sheet when a comment matches an advertiser's trigger word or emoji. Switch: Hushfeed settings > Comments.",
-          "use": false,
+          "description": "Stops the brand animation that pops up over the comments when someone types a word or emoji an advertiser paid for. Starts off. Turn it on in Hushfeed settings > Comments.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide comment typing suggestions",
-          "description": "Hides automatic emoji and sticker suggestions above the comment box. Manual buttons stay available. Switch: Hushfeed settings > Comments.",
+          "description": "Hides the emoji and sticker suggestions that pop up above the comment box while you type. The emoji and sticker buttons still work. Starts off. Turn it on in Hushfeed settings > Comments.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide feed follow button",
-          "description": "Hide the + follow button below creator avatars in video feeds. Switch: Hushfeed settings > Feed screen.",
+          "description": "Removes the + follow button under creators' pictures on the feed, so you don't follow someone by accident. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide feed LIVE button",
-          "description": "Hide the LIVE button at the top left of video feeds. Shares its switch with the LIVE entrance option of Hide video overlays, and stops the button before it is built rather than hiding it once it is on screen. Switch: Hushfeed settings > Feed screen.",
+          "description": "Removes the LIVE button and the side menu button from the top left of the feed, for a cleaner screen. Each has its own switch, and both start off. Turn them on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide feed save button",
-          "description": "Hide the save button from video feeds. Switch: Hushfeed settings > Feed screen.",
+          "description": "Removes the save button from the right side of the feed, for a cleaner screen. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide feed search button",
-          "description": "Hide the search button at the top right of video feeds. Switch: Hushfeed settings > Feed screen.",
+          "description": "Removes the search button from the top right of the feed, for a cleaner screen. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide floating promotions",
-          "description": "Removes floating promotional badges from the feed and can hide the rewards shortcut on Profile. Switches: Hushfeed settings > Feed screen and App.",
+          "description": "Hides the floating promotion badges, coins and timers on the feed, and can hide the rewards button on your profile. Starts off. Turn it on in Hushfeed settings > Feed screen, and App for the rewards button.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide inbox items",
-          "description": "Adds a switch for each row and header control on the Inbox tab, so message requests, TikTok Tako, TikTok Shop, the stories tray and the rest can be hidden individually. Switch: Hushfeed settings > Inbox.",
-          "use": false,
+          "description": "Lets you hide Inbox rows you don't use, like message requests, TikTok Shop and the stories row, plus call buttons and suggested replies in chats. Each has its own switch. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide inbox stories",
-          "description": "Hides the stories tray at the top of the Inbox and restores it immediately when the switch is turned off. Shares its switch with Hide inbox items. Switch: Hushfeed settings > Inbox.",
-          "use": false,
+          "description": "Hides the row of stories at the top of the Inbox. It uses the same switch as Hide inbox items. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide Play Store update offer",
-          "description": "Gives the patched APK the highest Android version code so Play shows Open instead of Update. TikTok's visible version stays the same in Morphe Manager. Off by default. Android won't install a lower-code APK over it, and uninstalling to return to a lower code can remove local TikTok data.",
+          "description": "Stops the Play Store offering to swap the patched TikTok for the store version. The catch: a build with a lower version number won't install over it, and uninstalling to go back can erase TikTok's data on your phone.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Hide profile shortcuts",
+          "description": "Hides the shortcuts you pick from the row under a profile's bio, like TikTok Studio or Your orders, and can hide the Thoughts bubble. Starts off. Turn it on in Hushfeed settings > App, then restart TikTok.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Hide search suggestions",
-          "description": "Hides the suggested searches TikTok offers on the search page before you type, and stops the page asking for them. Your own search history is left alone. A separate switch hides the search rewards banner and coin counter some regions get. Switch: Hushfeed settings > App.",
-          "use": false,
+          "description": "Hides the searches TikTok suggests before you type, and can hide the search rewards banner. Your own search history stays. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide suggested accounts",
-          "description": "Stops the suggested accounts list from being built on the Activity, New followers and Inbox pages, and collapses every other People you may like card: the profile header, the Friends tab and the feed. Shares its switch with Hide inbox items. Switch: Hushfeed settings > Inbox.",
-          "use": false,
+          "description": "Hides TikTok's People you may like suggestions in the Inbox, on profiles, on the Friends tab and in the feed. It uses the same switch as Hide inbox items. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide the launcher shortcuts",
-          "description": "Empties the menu that opens on pressing and holding TikTok's icon on the home screen. The entries are built while the app runs rather than declared in it, and TikTok only rewrites them when it notices a difference, so this removes what is already published and answers the handover that would publish more. Turning it off asks TikTok to build them again. Tapping the icon still opens the app, and a shortcut pinned to a home screen is left alone. Switch: Hushfeed settings > App.",
-          "use": false,
+          "description": "Empties the menu that pops up when you press and hold TikTok's icon on your home screen. Tapping the icon still opens the app. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide the risk control CAPTCHA",
-          "description": "Hides TikTok's risk control CAPTCHA dialog, raised by its BdTuring service, which the browsing CAPTCHA patch does not cover. Answers the Hide CAPTCHA popups setting, never touches SMS or two factor verification, and never hides a check the server raised over a follow, like, comment or repost. Off by default.",
+          "description": "Notes in the diagnostic report when TikTok's account safety check decides to show a verification puzzle. It doesn't hide anything, so it's only useful for research. It sits on TikTok's account checks, which is why it isn't picked for you.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hide video overlays",
-          "description": "Hides the visual search prompt TikTok lays over videos, the LIVE entrance in the top left corner, caption and music text, selected action buttons or their counts in the right column, survey cards and the status bar, which can also be hidden only while a LIVE room is open. Separate switches hide the Full screen button, location labels and the Report button some regions get above the creator's picture, without removing videos or changing location permissions. Switch: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Lets you hide clutter over videos, like the caption, the music line, buttons on the right, surveys and location labels, so you see more of the video. Each has its own switch. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Hold-and-slide 2x lock",
-          "description": "Enables TikTok's own hold, pull down and release gesture to lock the hold speed, 2x unless Playback speed sets another. Switch: Hushfeed settings > Feed screen.",
+          "description": "Turns on TikTok's own gesture where you hold a video, slide down and let go to keep it playing fast without holding. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "In-app browser privacy guard",
-          "description": "Keeps TikTok's JavaScript bridge off external pages in its in-app browser while leaving Activity center, Watch history, shop checkout and CAPTCHA working. The switch is off until you turn it on. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Stops websites you open in TikTok's built-in browser from reaching into the TikTok app. TikTok's own pages, like Watch history and checkout, keep working. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Keep a streak going",
+          "description": "Sends a daily message you choose to people you pick, at a time you set, so your message streaks keep going on days you don't open TikTok. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Keep playing in the background",
+          "description": "Keeps the video playing when you leave TikTok or turn the screen off, with a notification to pause it. Handy for music and talks. Starts off. Turn it on in Hushfeed settings > Playback, then restart TikTok.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Keep pulled sounds",
+          "description": "Plays the sound on videos TikTok muted for copyright or because of where you live. TikTok may still say the sound isn't available. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Keep the Favorites tab",
-          "description": "Keeps the Favorites tab on your profile when TikTok's server puts the account into an experiment that empties it. Two people saw that after patching: the tab was there and the saved videos were not. Switch: Hushfeed settings > App.",
+          "description": "Keeps the Favorites tab and your saved videos on your profile when TikTok tries out a version of the app that hides them. On by default. Turn it off in Hushfeed settings > App.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Keep the screen's refresh rate",
-          "description": "Stops TikTok asking the screen to run slower than it can, which it does by asking for the frame rate of the video it is playing. On a 90 or 120 Hz phone that ask takes the whole app down to that rate, scrolling included. A request that is not slower than the screen is left alone. Switch: Hushfeed settings > App.",
-          "use": false,
+          "description": "Stops TikTok slowing your screen down to the video's frame rate, so scrolling stays smooth on 90 or 120 Hz phones. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Lift text length limits",
+          "description": "Lets you write longer comments, repost notes and bios than the app normally allows. TikTok can still refuse one that's too long. Starts off. Turn it on in Hushfeed settings > Comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Limit background traffic",
-          "description": "Turns off TikTok's buffer-preload gate and skips its push initialization task. Videos may start buffering later, and TikTok push notifications may stop.",
+          "description": "Stops TikTok loading upcoming videos ahead of time, which uses less data in the background, but videos may take a moment longer to start. It has no switch, so only patching again without it undoes it.",
           "use": false,
+          "options": [
+            {
+              "key": "skipPushSetup",
+              "description": "Stops TikTok setting up notifications, so you won't get any, messages included. Pausing Hushfeed won't bring them back. Patch again with this off to get them back."
+            }
+          ],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "LIVE controls",
+          "description": "Stops a LIVE in the feed from opening by itself after a countdown, and can show a LIVE's exact viewer count instead of a rounded one. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Location access governor",
-          "description": "Answers TikTok's location requests with nothing: the last known location comes back empty and update requests never fire. The SIM and region spoof change the locale and timezone, not the coordinates. This patch stops the coordinates. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Gives TikTok no location when it asks, so it can't see where you are from your phone's location services. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Long-press controls",
-          "description": "Lets a long press on a video keep TikTok's own action, do nothing, open the video's comments, save the original sound, copy the link to the video or its sound, or look the sound up on YouTube Music. It can also turn a press on the left or right third of the screen into a jump back or forward, and make a long press on Comment, Share or Favorites play at the hold speed instead of opening TikTok's menu. Brings Double-tap controls with it, which supplies the comment control. Switch: Hushfeed settings > Feed screen.",
+          "description": "Lets a long press on a video do something else, like open the comments, copy the link, save the sound or the frame on screen, or set a sleep timer. Starts off. Pick an action in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Look like the store app",
+          "description": "Makes the patched app answer TikTok's checks as if it came from the Play Store, which can help when follows or likes undo themselves. TikTok has other checks, so it may not be enough. On once picked. Turn it off in Hushfeed settings > App.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Mute feed videos",
-          "description": "Adds a movable button that mutes feed videos without touching the phone's volume, and a switch that does the same. The button also shows on a video opened from a profile, a hashtag or a sound, and mutes that one too. While muted, music from another app keeps playing, and DMs, stories and LIVE keep their sound. Switch: Hushfeed settings > Playback.",
-          "use": false,
+          "description": "Mutes feed videos without changing your phone's volume, so music from another app keeps playing. You can also add a mute button on videos. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Network proxy",
+          "description": "Sends TikTok's feed, search and comments through a proxy server you set up. Videos and LIVEs still load directly, and other apps aren't affected. Starts off. Turn it on in Hushfeed settings > Region, then restart TikTok.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Network request report",
-          "description": "Counts the requests TikTok's own API client sends, by domain and kind, and adds them to the diagnostic export. Video and image downloads and other companies' SDKs keep their own connections and aren't counted. Nothing about the requests is changed.",
+          "description": "Counts the requests TikTok sends to its servers and adds the totals to the diagnostic report. It changes nothing in TikTok, but it has no switch and most people don't need it.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Not interested button",
-          "description": "Adds a movable button that tells TikTok you aren't interested in the current video. It hides while comments are open. Off by default. Switch: Hushfeed settings > Feed filter.",
-          "use": false,
+          "description": "Adds a button on videos that tells TikTok you're not interested in one tap, so it can show you fewer like it. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Notification controls",
-          "description": "Adds a switch for the notification saying somebody new followed you, and one for message streaks, neither of which TikTok lets you turn off. The follower switch drops the notification before Android is asked to post it, so nothing else in the drawer is affected. Switch: Hushfeed settings > Inbox.",
-          "use": false,
+          "description": "Lets you turn off new follower notifications and streak reminders, which TikTok has no switch for, or turn off TikTok's notifications altogether. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Open external links directly",
-          "description": "Opens profile and story website links in the system browser instead of TikTok's in-app browser. Switch: Hushfeed settings > Privacy.",
+          "description": "Opens website links from profiles and stories in your phone's own browser instead of TikTok's built-in one. On by default. Turn it off in Hushfeed settings > Privacy.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Picture-in-picture",
+          "description": "Keeps the video playing in a small window when you leave TikTok, so you can keep watching while you use other apps. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Play SDR instead of HDR",
+          "description": "Plays the normal version of HDR videos, so your screen doesn't suddenly jump to full brightness. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Playback quality",
-          "description": "Selects the lowest, highest or a target video quality for playback, adaptive streams included. A second choice caps quality on mobile data and only ever lowers it. Download quality has its own setting. Switch: Hushfeed settings > Playback.",
-          "use": false,
+          "description": "Lets you choose the video quality, like highest, lowest or 720p, and set a lower quality for mobile data to use less data. Starts off. Pick a quality in Hushfeed settings > Playback.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Playback speed",
-          "description": "Remembers playback speed or applies a default to each new video, with custom menu choices up to 3x and your own speed for the hold gesture. Switch: Hushfeed settings > Playback.",
+          "description": "Remembers the speed you picked for the next video, and lets you set a default speed, add speeds up to 3x to the menu and choose the speed for press and hold. On by default. Turn it off in Hushfeed settings > Playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Prefer H.264 playback",
+          "description": "Plays videos in an older format your phone decodes more easily, which can help older phones play smoothly and run cooler. Videos without it play as before. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Region spoof",
-          "description": "Matches locale, timezone and native region getters to the SIM preset, with a separate experimental store-region switch. Switch: Hushfeed settings > Region.",
+          "description": "Makes TikTok's region and time zone match the country you set for SIM spoof. It changes every region check, sign-in included, and its store region switch is experimental, so it isn't picked for you. Starts off. Turn it on in Hushfeed settings > Region.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Remember clear display",
-          "description": "Remembers clear display between videos, or enters it automatically after a chosen delay. Switch: Hushfeed settings > Feed screen.",
+          "description": "Keeps clear display, TikTok's mode that hides the buttons over a video, on as you swipe to the next video. It can also turn on by itself after a delay you pick, which starts off in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Remove avatar rings",
+          "description": "Takes the story and LIVE rings off profile pictures, so tapping a picture opens the profile instead of a story or LIVE. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Remove content credential and card scanner assets",
-          "description": "Empties TikTok's bundled C2PA and Microblink card-scanning assets, the Pitaya AI model libraries, the live-cast dynamic feature, and the ART log monitor probe. Saves about 12.5 MB of storage.",
+          "description": "Removes TikTok's built-in AI model files, payment card scanner and content credential files, saving about 19 MB of storage. Anything in TikTok that needs them may stop working. Only patching again without it brings them back.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Remove creation tools",
-          "description": "Empties TikTok's reviewed editor, camera-effect and face-model assets. The Create tab and all recording, editing and effects tools stop working. Saves about 40 MB of storage. Switch: Hushfeed settings > App behavior.",
+          "description": "Removes TikTok's camera, editing and effects files, saving about 40 MB of storage. The catch: the Create tab and every recording, editing and effects tool stop working.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Remove LIVE extras",
-          "description": "Empties TikTok's link-mic and LIVE match or minigame assets, then skips its gift-effect widget setup. Co-hosting, games and animated gifts may stop. The APK gets about 3 MB smaller.",
+          "description": "Removes the files for LIVE co-hosting, matches, games and gift effects, so the app gets about 3 MB smaller. The catch: in LIVEs, battle scores and guest names can go missing, and co-hosting, games or animated gifts may stop working.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Remove unused language packs",
-          "description": "Empties unselected TikTok language bundles while always keeping English. Selected language codes are checked before any file changes. With the default choices it saves about 26 MB of storage.",
+          "description": "Removes the app languages you don't list in this patch's options, saving up to about 26 MB of storage. English is always kept. With no list it keeps them all. Only patching again brings removed ones back.",
           "use": false,
           "options": [
             {
               "key": "locales",
-              "description": "Comma-separated language codes such as en, es, pt, fr or de. English is always kept."
+              "description": "The languages to keep, as short codes separated by commas, like en, es, pt, fr or de. Type all to keep every language. English is always kept."
             }
           ],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Repost diagnostics",
-          "description": "With diagnostic logging on, records a repost request, TikTok's answer, and the next repost-list read without recording the video's ID or note.",
+          "description": "With diagnostic logging on, notes when you repost a video and what TikTok answered, to help track down reposts that don't stick. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Resource and battery governor",
-          "description": "Stops TikTok listening to the motion sensors it polls for device fingerprinting: the accelerometer, gyroscope, magnetometer, rotation, gravity and linear acceleration sensors. Switch: Hushfeed settings > Privacy.",
-          "use": false,
+          "description": "Stops TikTok reading your phone's motion sensors, which it can use to identify your phone, and stops a background speed test that can use a lot of memory. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Resume videos after scrolling",
-          "description": "Continues supported videos from where playback stopped when returning after a scroll. Switch: Hushfeed settings > App.",
+          "description": "When you scroll back to a video, it picks up where you left off instead of starting over. On by default. Turn it off in Hushfeed settings > Playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Run beside the store app",
+          "description": "Lets a renamed copy of TikTok, made with Morphe's Clone app patch, sign in while the regular TikTok stays installed. Pick it together with Clone app. Google and Facebook sign-in won't work in the copy, so use email or phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Sanitize sharing links",
-          "description": "Removes tracking parameters from TikTok links before they are shared, and can put a host of your choosing in place of tiktok.com. Switch: Hushfeed settings > Privacy.",
+          "description": "Removes the tracking codes from TikTok links you share, so the link carries less about you. It can also swap tiktok.com for another site. On by default. Turn it off in Hushfeed settings > Privacy.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Settings",
-          "description": "Adds the Hushfeed settings screen to TikTok and keeps its entry first in Settings and privacy.",
+          "description": "Adds the Hushfeed settings page to TikTok, at the top of Settings and privacy. That's where you turn Hushfeed's features on and off. Works as soon as you patch it in, with no switch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Share sheet tools",
-          "description": "Asks twice before a video is sent to a friend from the share sheet. The check follows the account or conversation instead of the visible name and covers accessibility actions and keyboard input. It can also hide chosen people, share options or the whole Send to row, and a profile's or a LIVE's share sheet can hide a different set from a video's. Switch: Hushfeed settings > Share sheet.",
-          "use": false,
+          "description": "Lets you hide people, apps and buttons you don't use from the share sheet, and add apps you do use. Starts off. Turn it on in Hushfeed settings > Share sheet.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Show author region",
-          "description": "Show the country a video was posted from next to the creator's name on the feed. Switch: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Shows the country a video was posted from next to the creator's name. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Show engagement rate",
+          "description": "Shows how many people liked, commented on, shared or saved a video compared with how many watched it, next to the creator's name. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Show exact counts",
+          "description": "Shows likes, comments and other counts as full numbers, like 1,234,567 instead of 1.2M. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Show follow status",
+          "description": "Shows on a profile whether that person follows you back, and marks accounts in your follow lists that don't. On by default. Turn it off in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Show LIVE search",
-          "description": "Shows TikTok's search entry in the LIVE drawer where supported.",
+          "description": "Adds TikTok's search button inside the LIVE section where TikTok supports it, so you can look for LIVEs. Starts off. Turn it on in Hushfeed settings > App.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Show the progress bar",
-          "description": "Shows TikTok's native video seekbar where it would normally be hidden, including when one of TikTok's experiments takes it off every video but paid content. Switch: Hushfeed settings > App.",
+          "description": "Shows the progress bar on videos where TikTok hides it, so you can see how long a video is and skip around. On by default. Turn it off in Hushfeed settings > Playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Show the progress bar thumbnail",
-          "description": "Shows TikTok's video preview thumbnail while dragging the seekbar.",
+          "description": "Shows a small preview picture while you drag the progress bar, so you can find the part you want. On by default. Turn it off in Hushfeed settings > Playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "SIM spoof",
-          "description": "Spoofs SIM country and operator information retrieved by TikTok, with country presets for easier setup. Switch: Hushfeed settings > Region.",
+          "description": "Makes TikTok see the SIM country and carrier you choose. It may not change your region, since TikTok also goes by your internet connection and account. Starts off. Turn it on in Hushfeed settings > Region.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Skip content warnings",
-          "description": "Play videos TikTok has classified without the warning overlay asking to be tapped through first. Switch: Hushfeed settings > Feed screen.",
+          "description": "Plays videos without the warning screen you'd have to tap through first, and can hide the Check sources banner on unverified videos. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Skip first-launch setup",
+          "description": "Skips TikTok's setup screens on a fresh install, like the interest picker and the swipe tutorial. Sign-in and age screens still show. Its switch is on once picked, since setup runs before you can reach settings. Turn it off in Hushfeed settings > App.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Skip the splash ad",
-          "description": "Stops TikTok's splash-ad preload tasks and returns false from its reviewed splash and TopView gates. Other startup behavior is left in place.",
+          "description": "Stops the full-screen ad TikTok can show while it starts up. It has no switch, so only patching again without it brings the ad back.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Skip update checks",
-          "description": "Skips TikTok's background and boot-finished device-ID update-check tasks. This may suppress some in-app update checks. Play Store updates are unaffected.",
+          "description": "Stops two background tasks TikTok uses to check for updates, one of them when your phone starts. Some in-app update prompts may stop. Play Store updates still work. It has no switch, so only patching again undoes it.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Stay on the video in full screen",
-          "description": "Keeps TikTok's full-screen viewer on a video when it ends instead of moving to the next one, and leaves out its next-video countdown. Swiping still moves on. Switch: Hushfeed settings > Playback.",
+          "description": "When a video ends in TikTok's full screen view, it stays on that video instead of moving to the next one. Swiping still moves on. Starts off. Turn it on in Hushfeed settings > Playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Stop on-device AI profiling",
-          "description": "Kills the Pitaya on-device ML inference engine at startup so it cannot build a behavioral profile. The AI asset strip in the core de-bloat patch removes the native libraries. This patch stops the initialization code that would download replacements.",
+          "description": "Stops TikTok's built-in AI engine from starting, so it doesn't get a copy of everything TikTok logs about your use. TikTok works as if the engine weren't there. It has no switch, so only patching again without it undoes it.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Stop recording watch history",
+          "description": "Stops TikTok adding the videos you watch to your Watch history. The catch: your views stop counting, and For You learns less about what you like. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Stop saving search history",
+          "description": "Stops TikTok saving your new searches on your phone. Older searches stay until you delete them, and TikTok's servers may keep their own record. Starts off. Turn it on in Hushfeed settings > Privacy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Stop search autoplay",
+          "description": "Stops videos in search results from playing by themselves. Each one shows its cover until you open it, so searching stays quiet. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Stop video looping",
-          "description": "Stops videos at the end instead of replaying them. Switch: Hushfeed settings > App.",
+          "description": "Stops a video at its end instead of playing it again. Starts off. Turn it on in Hushfeed settings > Playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Story controls",
+          "description": "Lets a story replay when it ends instead of moving on, and keeps a photo story on screen until you tap or swipe. Starts off. Turn it on in Hushfeed settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Subtitle tools",
-          "description": "Saves subtitle files beside downloaded videos and adds caption size, background, and clear-display options. Switch: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Lets you make captions bigger, change their background and keep them in clear display, and save subtitle files with downloaded videos. Starts off. Turn it on in Hushfeed settings > Feed screen, and Downloads for subtitle files.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Swipe-left controls",
-          "description": "Lets a left swipe on a feed video do nothing or open its comments instead of opening the creator's profile. Switch: Hushfeed settings > Feed screen.",
-          "use": false,
+          "description": "Lets a left swipe on a video open its comments or do nothing, instead of opening the creator's profile. Starts off. Pick an action in Hushfeed settings > Feed screen.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Translate comments",
-          "description": "Adds comment translation controls using TikTok's translation system, with selectable language exclusions. Switch: Hushfeed settings > Comments.",
+          "description": "Translates comments as they load, using TikTok's own translator, so you don't have to tap Translate on each one. Starts off. Turn it on in Hushfeed settings > Comments, where a second row lists languages TikTok's automatic translation should leave alone.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Trust user certificates",
+          "description": "Lets TikTok trust security certificates you install yourself, so a tool like mitmproxy can show what the app sends. The risk: anyone who gets a certificate onto your phone can read TikTok's traffic too. Use it only on a test phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Turn off haptics",
+          "description": "Stops the little vibrations TikTok makes when you tap or hold things. Your keyboard and your phone's own vibrations stay. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
+          ]
+        },
+        {
+          "name": "Turn off screen transitions",
+          "description": "Opens and closes TikTok's screens without the sliding animation, so moving around feels quicker. Swipes still follow your finger. Starts off. Turn it on in Hushfeed settings > App.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.1.4"
           ]
         },
         {
           "name": "Use non-personalized search",
-          "description": "Uses TikTok's non-personalized search mode instead of its saved account choice. Switch: Hushfeed settings > App.",
+          "description": "Shows search results that aren't tailored to your account. Starts off. Turn it on in Hushfeed settings > App.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         },
         {
           "name": "Use system font",
-          "description": "Draws TikTok's text in your device's font instead of TikTok Sans. The icons, the gift animations and the @ and # glyphs keep their own fonts. Off by default. Restart after changing. Switch: Hushfeed settings > App.",
-          "use": false,
+          "description": "Shows TikTok's text in your phone's own font instead of TikTok's, and can use your phone's emoji too. Starts off. Turn it on in Hushfeed settings > App, then restart TikTok.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.3"
+            "47.1.4"
           ]
         }
       ]
     }
   ],
   "patches_name": "Hushfeed",
-  "fingerprint": "a23a548a1c8b3cf52d57b813a299ff9e4669e3486120a3f253e2abe4da36d0e9",
-  "release_notes": "Hushfeed v0.65.0 has 98 patches for global TikTok 47.0.3 and 47.1.3 (`com.zhiliaoapp.musically`). It needs Morphe Manager 1.32.0 or newer.\n\n## What's changed\n\n* Mute feed videos now works on TikTok 47.1.3, and on 47.0.3 it silences photo posts with a sound too. A video is already quiet when you swipe to it, and it stays quiet after you watch the same video from a DM or scroll a long profile grid. DMs, stories and LIVE keep their sound, and another app's music keeps playing.\n* Press and hold the Home tab to open Hushfeed's settings (#45). A tap on Home works as before.\n* Every save says it's been taken the moment you ask, including the ones waiting in line. If TikTok closes in the middle of a save, a banner says which saves didn't finish the next time you open it.\n* Saves connect only to the server address Hushfeed checked, so nothing can swap in a different machine between the check and the download.\n* The block control, the mute button and Hushfeed's other buttons over the video now show on videos opened from a creator's profile, a hashtag or a sound.\n* When the time budget runs out partway through a long video, the notice and the hold come right then, and the budget label leaves as soon as you switch tabs.\n* New row under Downloads, Forget saved videos. It empties the already-saved record and keeps your files.\n* On Android 10 and older, the block button, Unblock and Save media on a sticker no longer close TikTok.\n* Your keyboard no longer rewrites a package name or host you type into the share settings.\n* Diagnostics can record a screen's layout for a \"please hide this\" report, and the feed filter table has a line for every route that delivers videos.\n\nSee the [changelog](https://github.com/SysAdminDoc/HushFeed/blob/v0.65.0/CHANGELOG.md) for the full list.\n\n## Checked\n\n* 2490 runtime tests and 459 patch tests passed. Both Android lint checks passed.\n* All 98 patches applied to both supported APKs. Resource checks passed, with no manifest changes. The attached release receipt records the exact bundle and each target's result.\n* On phones and Android emulators running TikTok 47.0.3 and 47.1.3, the mute silenced feed videos and photo posts while another app's music kept playing, saves went through the checked address, and holding Home opened Hushfeed's settings. A locked budget, What's new, the block control's larger tap area and Stay on the video in full screen behaved as described.\n\n## Install\n\nUse Morphe Manager 1.32.0 or newer. An older Manager says the bundle needs a Manager update. Refresh the Hushfeed source, select the TikTok 47.0.3 or 47.1.3 APK, then patch and install it. Keep the manager's existing signing key when updating.\n\n`patches-0.65.0.mpp` is the patch bundle, not a TikTok APK. `SHA256SUMS.txt` includes checksums for the bundle and its release receipt.\n",
-  "release_tag": "v0.65.0",
-  "release_date": "2026-09-30T03:21:31Z",
+  "fingerprint": "a92a0fd391dd0be166e6a85e426cb66b55eb186c2959ac1fece7466a31204f3e",
+  "release_notes": "Hushfeed v0.70.0 has 130 patches for global TikTok 47.1.4 (`com.zhiliaoapp.musically`). It needs Morphe Manager 1.34.0 or newer, since it's built on patcher 1.15.1.\n\nTikTok 47.1.4 is the only supported version now, so grab that APK and patch it with your usual signing key. Morphe Manager's simple mode picks 107 of the 130 patches, and every switch they add starts off until you turn it on. Hushfeed settings open on a shorter home page with search and seven groups. New switches hide the side menu button next to LIVE (#128), keep offline videos until you delete them (#123), hide Thoughts on profiles (#122) and leave the languages you pick out of TikTok's automatic translation (#121). Author text size now covers the post date too (#66).\n\n## What's changed\n\n* Author text size now sizes the post date next to the creator's name too, so the two stay the same size (#66).\n* Comments settings has a new row, Don't auto translate these languages. It's empty until you fill it in (#121). Type language codes like `es, de`, and when TikTok translates for you, captions and comments in those languages stay as they were written. See translation still works when you tap it, and TikTok's own Don't translate list isn't changed.\n* Keep offline videos until you delete them now covers two more ways TikTok cleared your list. With the switch on, TikTok's Auto adjust no longer lowers your offline videos limit or trims the list when TikTok starts, and the clean-up TikTok runs when its test of turning offline videos on by default ends is skipped (#123). Restart TikTok after you change the switch.\n* Restoring a settings backup made on an older TikTok build now brings back the Feature Gate Lab overrides that still fit this build. The ones that don't are kept but turned off.\n* Feed screen has a new switch, Hide the side menu button, off until you turn it on. It takes away the button at the top left of the feed, next to LIVE, that opens TikTok's side menu with Your orders, TikTok Minis and more. Restart TikTok after you change it (#128).\n* Every patch description in Morphe Manager is rewritten in plain English. Each one now says what the patch changes, why you might want it, and whether its switch starts on or off and where to find it in Hushfeed settings. A few patch options read more clearly too, and Skip push setup is now called Skip notification setup.\n* The rows in Hushfeed settings are reworded in plain English. Privacy, Comments, Downloads, Feed filter, Screen time, Region and other pages now say what each switch does and what you'll notice, without technical terms. A few titles changed too, like Stop TikTok's speed tests and Clean up shared links.\n* A handful of messages and status lines are plainer too, like the Ghost mode status, the Hook status explanation, the proxy password notice and the file name preview.\n* The Dark background color option in Morphe Manager now says \"color code\" instead of \"hex code\", and explains that black turns those pixels off completely on OLED screens.\n* The Hushfeed settings home now shows a compact status and search above seven groups. Related pages sit together, with backups, diagnostics and the Feature Gate Lab under App & advanced. About Hushfeed keeps build details and licenses in one place. Search still takes you straight to a setting, and your saved choices carry over. Pause now explains that saved settings and changes built into the APK remain.\n* Hushfeed now supports TikTok 47.1.4 only. If you're on 47.0.3 or 47.1.3, download the 47.1.4 APK from APKMirror and patch it in Morphe Manager with the same signing key, so your login and settings carry over. Feature Gate Lab keeps each override whose switch 47.1.4 still has and turns the rest off with its usual notice.\n* Custom offline videos limit has a new switch in Hushfeed settings > Downloads, Keep offline videos until you delete them. It's off until you turn it on (#123). TikTok throws out the videos it saved for offline viewing after a set time, sometimes only two days, and a list saved in one go disappears in one go, watched or not. With the switch on they stay until you delete them in TikTok's Offline videos settings, which is also how you get a fresh set. TikTok can still clear ones you've already watched when your phone runs low on space, and picking a lower limit still trims the list. Keep an eye on the storage line under the offline videos limit. The switch takes effect the next time TikTok starts.\n* Hide profile shortcuts has a new switch under App, Hide Thoughts on profiles, off until you turn it on (#122). It hides the Thoughts bubble TikTok puts above a profile picture, and on your own profile the prompt to share one. Restart TikTok after you change it.\n* Allow screenshots and Circle to Search now also takes the secure flag off popups and floating windows that set it in their own window settings, such as TikTok's Compose popups. They reach the screen without the window calls the patch already changed, so they could still show up black in screenshots and screen recordings. The idea comes from icysymmetra's TikTok patches.\n* Diagnostics has a new row, Capture the feed, for a feed problem that's easier to show than to describe. Tap it, scroll until the problem shows up, then come back and tap it again, and Hushfeed saves a text file to Download/Hushfeed. It has a line for every batch of videos the feed filters handled while it ran, with each video's verdict and the rule that hid it. Videos and creators appear only as short codes made fresh for each capture, and the file has no captions, names, handles or web addresses. Read it before you share it anyway. Nothing is recorded until you start a capture. The idea comes from icysymmetra's TikTok patches.\n* The Hide the Clear display controls description now mentions pinching the screen as another way to leave Clear display (#84).\n* A handful of switches now start off, like the rest of Hushfeed's switches, because their patches join the default selection. If you picked one of these patches before and want it to keep working, turn its switch back on after you update. Under Privacy that's Block contact list access, Block installed app scanning, Block location, Block clipboard reads, Block motion sensors, Don't save new searches and Show when the camera or microphone is in use. Under Comments it's Thumbs down blocks the commenter, Links in comments open and Hide comment popup ads, and under App it's Turn off haptics and Turn off screen transitions.\n* Morphe Manager's simple mode now picks 107 of Hushfeed's 130 patches, up from 55, so most of them no longer need Expert mode. Every switch the newly picked patches add starts off, and TikTok looks and works the way it ships until you turn something on in Hushfeed settings. Expert mode is still how you get the other 23, and the README's Patches section lists them with the reason each one stays out. Each patch's description now says where its switch is and that it starts off.\n* Morphe Manager has a new Interface group for the patches that change how TikTok looks. AMOLED dark theme, Use system font and Turn off screen transitions move there from Performance, Change app name, Custom launcher icon and Hide the launcher shortcuts from Settings, and Feed text sizes from Interaction.\n\n## Update\n\nRefresh the Hushfeed source in Morphe Manager 1.34.0 or newer and patch TikTok again. Keep the manager's existing signing key so your login and settings carry over. The .mpp is a patch bundle, not a TikTok APK.\n\n## Checked\n\n* 3618 runtime tests and 699 patch tests passed. Both Android lint checks passed.\n* All 130 patches applied to TikTok 47.1.4 with desktop CLI 1.18.1. Resource checks passed, and the attached release receipt records the exact bundle and its result.\n",
+  "release_tag": "v0.70.0",
+  "release_date": "2026-10-10T04:23:17Z",
   "isPreRelease": false
 }

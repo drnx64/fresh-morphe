@@ -2,9 +2,9 @@
   "bundle": "morphe-google-photos",
   "channel": "stable",
   "repo_url": "https://github.com/Akash-Sriram/morphe-google-photos",
-  "created_at": "2026-09-26T18:05:38",
-  "version": "v1.12.2",
-  "description": "## [1.12.2](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.12.1...v1.12.2) (2026-09-26)\n\n### 🐛 Bug Fixes\n\n* **flags:** prevent empty search state when categories are collapsed without query ([0db0ccb](https://github.com/Akash-Sriram/morphe-google-photos/commit/0db0ccb7a738c76a6e7b008eb43ebc96d0b8f4b5))\n",
+  "created_at": "2026-10-09T05:51:17",
+  "version": "v1.14.3",
+  "description": "## [1.14.3](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.2...v1.14.3) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **LocalCreationDownloader:** Samsung specific optimization for local story and creation downloads ([aae1dc0](https://github.com/Akash-Sriram/morphe-google-photos/commit/aae1dc092c5d1b135290c646c621030904d008fc))\n",
   "apps": [
     {
       "app_name": "Google Photos",
@@ -16,7 +16,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -25,16 +25,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
           "name": "Change to official package name",
-          "description": "Keeps the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos. Enable this only if Google Photos is uninstalled via ADB or installed as a system app with root. When selecting this, also select 'Disable Play Store updates'.",
+          "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos. This is an exceptional option strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM (such as custom ROMs or de-Googled devices). Root users do not need this (simply deselect GmsCore support instead). When selecting this, also enable 'Disable Play Store updates'.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -43,16 +43,16 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
           "name": "Disable Play Store updates",
-          "description": "[Experimental] Disables Play Store updates by setting the version code to the maximum allowed. This patch may cause unexpected issues with some apps and does not work if the app is installed by root mounting",
+          "description": "Disables Play Store updates by setting the version code to the maximum allowed (Int.MAX_VALUE). Prevents Google Play from automatically overwriting the patched app when using the official package name on devices without preinstalled Photos.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -61,7 +61,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -70,7 +70,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -79,16 +79,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
           "name": "GmsCore support",
-          "description": "Allows the app to work without root by using a different package name when patched using a GmsCore instead of Google Play Services.",
+          "description": "Enables GmsCore / MicroG support and renames package for non-root installs. Leave enabled for standard non-root installs; disable only for rooted system installs using genuine Google Play Services.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -97,7 +97,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
+          ]
+        },
+        {
+          "name": "Local creation downloader",
+          "description": "Intercepts saving memory collages and creations, exporting them to the device Google Photos folder (DCIM/Google Photos) for quota-free backup instead of direct cloud library commits.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.96.0.993165104"
           ]
         },
         {
@@ -106,7 +115,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         },
         {
@@ -115,16 +124,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.94.0.984908898"
+            "7.96.0.993165104"
           ]
         }
       ]
     }
   ],
   "patches_name": "Morphe Google Photos Patches",
-  "fingerprint": "60aa4ce6a9f387777fd74fdca85e17f7053497450b68ea623bf551f80f6d9e68",
-  "release_notes": "## [1.12.2](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.12.1...v1.12.2) (2026-09-26)\n\n### 🐛 Bug Fixes\n\n* **flags:** prevent empty search state when categories are collapsed without query ([0db0ccb](https://github.com/Akash-Sriram/morphe-google-photos/commit/0db0ccb7a738c76a6e7b008eb43ebc96d0b8f4b5))\n",
-  "release_tag": "v1.12.2",
-  "release_date": "2026-09-26T18:05:38Z",
+  "fingerprint": "6c39a6d7759b2ce66b38b92eb03c8cf4bf81a48553d408652ffc890a05a51cc6",
+  "release_notes": "## [1.14.3](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.2...v1.14.3) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **LocalCreationDownloader:** Samsung specific optimization for local story and creation downloads ([aae1dc0](https://github.com/Akash-Sriram/morphe-google-photos/commit/aae1dc092c5d1b135290c646c621030904d008fc))\n",
+  "release_tag": "v1.14.3",
+  "release_date": "2026-10-09T05:51:17Z",
   "isPreRelease": false
 }

@@ -1,0 +1,148 @@
+{
+  "bundle": "jz6",
+  "channel": "dev",
+  "repo_url": "https://github.com/JZ6/Flexboard",
+  "created_at": "2026-10-07T23:10:30Z",
+  "version": "2.5.2-dev.1",
+  "description": "## 2.5.0\n\n- feat(flags): remove Hidden Features (unconfirmed)\n- docs: swipe up confirmed on a device, and on by default\n- feat(swipe-up): on by default; crash recorder moves to its own opt-in patch\n- docs: swipe up reverts through the decoder, not the undo stack\n- feat(swipe-up): revert the last autocorrection through Gboard's decoder\n- refactor(patches): resolve branch targets in one shared helper\n- chore: store gradlew.bat with LF, as .gitattributes declares\n- chore(deps): bump gradle-wrapper from 9.7.1 to 9.8.0\n- chore(deps): bump actions/upload-artifact from 4 to 7\n- chore(deps): bump actions/setup-java from 6.0.0 to 6.0.1\n- docs: correct issue forms for unsupported builds and roadmap\n- chore: pin editor scope and shell script line endings\n- docs: mark superseded gesture analyses and current undo path\n- docs: correct settings, toolbar and flag derivations\n- docs: refresh contributor gate, APK tooling and release guide\n- docs: align feature guide and roadmap with shipped behavior\n- docs(changelog): restore missing dev and stable release entries\n- docs: record full-repository findings and fix status\n- fix(gate): protect provider and verify the pushed tree\n- fix(release): make recovery resumable and stamp bundle sources\n- fix(driver): enforce patch selection and output handling\n- fix(checks): enforce generated artifacts and source contracts\n- fix(preflight): pin current Gboard bindings and flag defaults\n- fix(apk): validate resource replay and improve APK readers\n- fix(verify): follow real control flow and inspect same-size edits\n- fix(extension): harden settings, hotkeys, and crash diagnostics\n- fix(settings): guard resource metadata and defaults\n- fix(toolbar): validate native registration and capacity seams\n- fix(flags): validate isolated and long-valued flag rewrites\n- fix(patches): harden shared resolution and gesture emissions\n- fix(signature): bypass only Gboard's own startup check\n- fix(swipe-up): make Lozi; public so the takeover read-back can run\n- feat(verify): check what a patched class is allowed to reach\n- docs: the swipe-up crash happens from every row\n- feat: a crash recorder, so the next crash names its own cause\n- feat: swipe up stage 2 — take the gesture over, and say whether it took\n- refactor: one swipe-up patch, rebuilt in stages from the diagnostic\n- feat: swipe up to undo, rebuilt in the motion-event-handler layer\n- docs: record that swipe up sends Gboard's general undo, by decision\n- fix: the gate honours FLEXBOARD_BUNDLE as documented, and proves opt-in patches emit\n- refactor: delete the dead swipe-up paths and correct what the rest claims\n- test: report whether the flick crossed the threshold before the finger lifted\n- feat: move the swipe-up diagnostic into the motion-event-handler layer\n- fix: the tracker leaked state between gestures, and a tap inherited it\n- test: report the measurement, not a verdict on it\n- fix: measure the flick from the touch stream, not from Gboard's start fields\n- test: make the device say why the up-flick did not fire\n- revert: drop two patches that did not do what I claimed\n- feat: recognise the up-flick by its journey, not by where the finger lifted\n- feat: restore inline autofill suggestions, which a clone install loses\n- docs: the intermittency is the detection mechanism, not the threshold\n- feat: a patch for more sensitive slide gestures\n- docs: the pointer can be claimed — goal 2 confirmed on a device\n- fix: read the gesture direction from h(), not i() — dev.0 could never fire\n- feat: claim the pointer in Lpvi;->G instead of un-deciding a keypress",
+  "apps": [
+    {
+      "app_name": "Gboard",
+      "package": "com.google.android.inputmethod.latin",
+      "patches": [
+        {
+          "name": "Bigger Toolbar",
+          "description": "Raises how many icons Gboard's toolbar can hold — five on a stock build — to 12, so Flexboard's hotkeys and text action buttons fit alongside Gboard's own. How many actually show stays yours, set by dragging them in Gboard's toolbar settings. Force-stop Gboard afterwards: a cached keyboard view can go on showing the old capacity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Bypass Gboard Signature",
+          "description": "Bypass Gboard's own startup signature check without changing other callers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Crash reporter (debug)",
+          "description": "For debugging. After a keyboard crash, the error is saved and copied to your clipboard the next time the keyboard starts, so it can be pasted into a bug report. This replaces whatever was on the clipboard. Off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Enable Rambler",
+          "description": "Exposes Google Rambler — Gboard's agentic dictation, which rewrites what you say into composed text — as a choice in Voice settings. It is not switched on for you: the feature uses a Google server, has its own quota and asks for consent, so picking it is left to you.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Hidden Features",
+          "description": "Turns on two finished Gboard features that a resigned build can never receive: grammar check, and a close control on the chips Gboard offers unprompted. Their flags are delivered per app signature, so resigning the APK means they never arrive and stay off. Both are confirmed working on a device; five other flags were tried and dropped.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Install as Gboard Clone",
+          "description": "Rename the package to dev.jz6.com.google.android.inputmethod.latin so the patched build installs alongside the official Gboard instead of replacing it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Modern keypress haptics",
+          "description": "Uses Android's haptic primitives for keypresses — the crisp tick the rest of the system uses — instead of a plain buzz. Gboard has the code and disables it with an impossible minimum Android version; this removes that. Devices whose vibrator cannot do primitives are unaffected, because Gboard's own hardware check still runs. Note that it changes what the vibration strength slider means, from milliseconds to intensity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Suggested Settings",
+          "description": "Turns on flick keys for symbols, touch & hold keys for numbers, suggestion strip, grammar check and smart replies, and turns off block offensive words and word suggestions. Written once as defaults, so each can still be changed in Gboard's own settings. Grammar check is the switch, not the feature: the row only exists on a resigned build if Hidden Features is applied too.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Swipe Left to Delete",
+          "description": "Swipe left anywhere on the keyboard to delete the previous word, and swipe right to restore it. Uses Gboard's word-scrub engine; anywhere swipes have a one-word default cap, while deliberate backspace swipes keep Gboard's uncapped behaviour.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Swipe Right to Undo",
+          "description": "Swipe right after deleting to put the words back — the swipe starts on the Delete key, or anywhere when Swipe Left to Delete is also applied. Uses Gboard's own undo, which already records what a delete swipe removed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Swipe up to undo autocorrect",
+          "description": "Swipe up on the keyboard to undo the last autocorrection: the word you typed comes back, as with Gboard's own undo autocorrect on backspace. It works right after the correction, before you type anything else; otherwise the swipe does nothing. The key you swiped on is not typed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Text Action Buttons",
+          "description": "Add Select all, Copy and Paste buttons to the toolbar above the keyboard, so each is one tap instead of opening Gboard's text editing panel first. Registered natively, so drag-to-reorder through the toolbar customize page persists. These three share the toolbar with Gboard's own icons and with Toolbar Hotkeys. Bigger Toolbar, which is applied unless you deselect it, raises the ceiling from five to twelve; without it, five is all the bar can hold.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Toolbar Hotkeys",
+          "description": "Adds eight configurable hotkey slots to Gboard's toolbar — each commits a text of your choice on tap. A slot appears when its text is set; when cleared it hides at the next toolbar rebuild (rotate, switch IME, or restart — there's no mid-session un-register). Text and icon edits apply on the next keyboard open. The slots share the toolbar with Gboard's own icons: Bigger Toolbar, which is applied unless you deselect it, makes room for twelve, but on a stock ceiling of five not all eight fit.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Vibration Slider Everywhere",
+          "description": "Forces Gboard to show its own vibration strength slider on every device, rather than deferring to the system haptic settings page, so the strength is adjustable instead of being fixed by whichever rollout the device landed in.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Flexboard",
+  "fingerprint": "f0a67a0b0402bdb12653bbe0671af00546b4abec3294c9e722999d1078ab9c00",
+  "release_notes": "## 2.5.2-dev.1\n\n- feat(flags): remove Hidden Features (unconfirmed)\n- docs: swipe up confirmed on a device, and on by default\n- feat(swipe-up): on by default; crash recorder moves to its own opt-in patch",
+  "release_tag": "v2.5.2-dev.1",
+  "release_date": "2026-10-07T23:10:30Z",
+  "isPreRelease": true
+}

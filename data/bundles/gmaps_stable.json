@@ -2,17 +2,17 @@
   "bundle": "gmaps",
   "channel": "stable",
   "repo_url": "https://github.com/fangkampanat/gmaps-patches",
-  "created_at": "2026-09-14T18:11:26",
-  "version": "v1.2.0",
-  "description": "The patch now accepts any Google Maps version and finds the code it needs without relying on version-specific names. This builds on [PR #7](https://github.com/fangkampanat/gmaps-patches/pull/7) by [Harvey843](https://github.com/Harvey843), with additional checks that stop patching when required code is missing or matches are ambiguous.\n\nYou can reuse this bundle for newer Maps APKs. Each new APK still needs patching and testing; accepting any version does not guarantee that every version works.\n\nMorphe Desktop now displays `Google Maps Morphe` and uses that name in output filenames. The installed app name and package stay the same. The patch requires MicroG-RE-BYD.\n\nTesting covered:\n\n- Maps `26.36.05.973607363` with the final `1.2.0` bundle passed APK signature and 16 KiB alignment checks. Phone tests passed for sign-in, online maps and real-GPS navigation. Reinstalling the same APK preserved the account and app state.\n- Maps `26.29.02.946673643` and `26.37.05.977222275` beta passed phone tests with the local `1.1.2` bundle, which contains the same patch and extension code as `1.2.0`.\n- Maps `26.35.04.969485213` passed static checks with `1.1.2`; it was not tested on the phone in this round.\n\nBundle SHA-256: `587c7efef607d6c82c154d050b9410ae38bb9e58fda4c069820197ea50bcaa73`.\n",
+  "created_at": "2026-10-09T10:45:21",
+  "version": "v1.2.3",
+  "description": "- Reuse Morphe Patches Library 1.4.1 helpers and share invoke-register handling between Maps and TTS hooks.\n- Add method, opcode, register and branch details to navigation TTS layout errors.\n",
   "apps": [
     {
       "app_name": "Google Maps Morphe",
       "package": "com.google.android.apps.maps",
       "patches": [
         {
-          "name": "Google Maps for MicroG-RE-BYD",
-          "description": "Connects supported Google Maps builds to MicroG-RE-BYD, with BYD navigation audio and compatibility with devices that also have official Google Play services.",
+          "name": "Google Maps for MicroG-RE",
+          "description": "Connects supported Google Maps builds to MicroG-RE 7.2.1 and prefers synthesized navigation speech with the existing audio fallback.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -21,9 +21,9 @@
     }
   ],
   "patches_name": "Maps Patches",
-  "fingerprint": "0e9da43cf919fe9a8a00a9355cd60af9f735bbcf503a7eaa36d6e2745185b0bf",
-  "release_notes": "The patch now accepts any Google Maps version and finds the code it needs without relying on version-specific names. This builds on [PR #7](https://github.com/fangkampanat/gmaps-patches/pull/7) by [Harvey843](https://github.com/Harvey843), with additional checks that stop patching when required code is missing or matches are ambiguous.\n\nYou can reuse this bundle for newer Maps APKs. Each new APK still needs patching and testing; accepting any version does not guarantee that every version works.\n\nMorphe Desktop now displays `Google Maps Morphe` and uses that name in output filenames. The installed app name and package stay the same. The patch requires MicroG-RE-BYD.\n\nTesting covered:\n\n- Maps `26.36.05.973607363` with the final `1.2.0` bundle passed APK signature and 16 KiB alignment checks. Phone tests passed for sign-in, online maps and real-GPS navigation. Reinstalling the same APK preserved the account and app state.\n- Maps `26.29.02.946673643` and `26.37.05.977222275` beta passed phone tests with the local `1.1.2` bundle, which contains the same patch and extension code as `1.2.0`.\n- Maps `26.35.04.969485213` passed static checks with `1.1.2`; it was not tested on the phone in this round.\n\nBundle SHA-256: `587c7efef607d6c82c154d050b9410ae38bb9e58fda4c069820197ea50bcaa73`.\n",
-  "release_tag": "v1.2.0",
-  "release_date": "2026-09-14T18:11:26Z",
+  "fingerprint": "8795887d2f4fd5847281b836a4aa169481de2b8413669befa77c54d5fe3b8845",
+  "release_notes": "- Reuse Morphe Patches Library 1.4.1 helpers and share invoke-register handling between Maps and TTS hooks.\n- Add method, opcode, register and branch details to navigation TTS layout errors.\n",
+  "release_tag": "v1.2.3",
+  "release_date": "2026-10-09T10:45:21Z",
   "isPreRelease": false
 }

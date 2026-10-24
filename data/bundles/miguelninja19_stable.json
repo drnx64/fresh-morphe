@@ -1,0 +1,178 @@
+{
+  "bundle": "miguelninja19",
+  "channel": "stable",
+  "repo_url": "https://github.com/MiguelNinja19/miguel-morphe-patches",
+  "created_at": "2026-08-16T12:34:43",
+  "version": "1.13.6",
+  "description": "## [1.13.6](https://github.com/MiguelNinja19/miguel-morphe-patches/compare/v1.13.5...v1.13.6) (2026-08-16)\n\n### 🐛 Bug Fixes\n\n* **cubesolver:** remove ([d69291c](https://github.com/MiguelNinja19/miguel-morphe-patches/commit/d69291c49da4c7868bc026af2d4cd74408b061af))",
+  "apps": [
+    {
+      "app_name": "The Battle of Polytopia",
+      "package": "air.com.midjiwan.polytopia",
+      "patches": [
+        {
+          "name": "Free in-app purchases",
+          "description": "Patches the Google Play Billing bridge to report success and validate purchases. Handles crystal packs and other IAP items at the billing layer. For unlocking tribes and skins, use the 'Unlock all tribes' patch instead.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.17.2.16299"
+          ]
+        },
+        {
+          "name": "Unlock all tribes",
+          "description": "Unlocks all 20 tribes (Xinxi, Imperius, Bardur, Oumaji, Kickoo, Hoodrick, Luxidoor, Vengir, Zebasi, Aimo, Aquarion, Elyrion, Polaris, Magma, Yadakk, Quetzali, Cymanti, Swamp, Ikarus, Urkaz) and all skins by patching the native IL2CPP library (libil2cpp.so). Makes IsProductUnlocked return true, skips the purchase flow, and suppresses the 'Purchase error' dialog. Pure ARM64 hex patching, no smali, no extension.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.17.2.16299"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Plants vs. Zombies FREE",
+      "package": "com.ea.game.pvzfree_row",
+      "patches": [
+        {
+          "name": "Free in-app purchases",
+          "description": "When you try to buy something, the purchase is immediately marked as successful without contacting Google Play. The EA Nimble MTX system receives a null error (success) and grants the item.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.16.0"
+          ]
+        },
+        {
+          "name": "Free reward ads",
+          "description": "When the game tries to show a rewarded ad, it immediately fires the ad-clicked and ad-closed callbacks without actually showing the ad. You get the reward instantly.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.16.0"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Prevents video ads from loading. When the game tries to load an ad, nothing happens. Ads will not be shown.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.16.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Climb!",
+      "package": "com.ivanaf.climbamiypfree",
+      "patches": [
+        {
+          "name": "Free in-app purchases",
+          "description": "Skips purchase signature verification and forces billing to report success. Patches RunnerBillingSecurity.verifyPurchase to always return true, Purchase.isAcknowledged/getPurchaseState to return valid values, and the billing bridge callbacks.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.0.6",
+            "6.0.5"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Simulates the purchase of the 'climbnoads' IAP product by injecting a fake Purchase into the purchase list when the game queries purchases. The game finds 'climbnoads' and treats No Ads as purchased.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.0.6",
+            "6.0.5"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Oddmar",
+      "package": "com.mobge.oddmar",
+      "patches": [
+        {
+          "name": "Free in-app purchases",
+          "description": "Makes every IAP purchase succeed instantly without contacting Google Play Billing. When the user taps 'Buy' on any in-app product, the game credits the purchase immediately and skips the Play Store dialog. For Oddmar 0.111 the only IAP product is 'unlock_all_levels', so this patch gives a free full-game unlock on demand. Note: literal 'unlimited coins' (the in-game currency counter) requires native libil2cpp.so patching and is NOT covered by this Java patch.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.111"
+          ]
+        },
+        {
+          "name": "Unlock full game",
+          "description": "Unlocks the full game (all levels, all worlds) by intercepting the IAP 'has product been purchased' check. Oddmar's only IAP product is 'unlock_all_levels' — this patch makes the game think it has already been purchased, so every level is unlocked from the start. No Google Play Billing connection is required. Also disables the startup 'acknowledge all purchases' query so the patch doesn't try to reach Google Play at boot.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.111"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Hunter Assassin",
+      "package": "com.rubygames.assassin",
+      "patches": [
+        {
+          "name": "Auto reward ads",
+          "description": "When a rewarded ad is closed, the game always thinks you watched the entire ad. You get the reward even if you skip or close the ad immediately.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.041"
+          ]
+        },
+        {
+          "name": "Unlimited gems, rubies & unlock all",
+          "description": "Sets gems, rubies (diamonds), keys and tickets to 9999999. Unlocks VIP (removes ads + VIP rewards + Ninja Assassin VIP character), all assassin characters (2-44), including all Legendary characters (Scarecrow, Dracula, Thor, Wolverine, Myers, Santa, Grinch, Nutcracker, Cricket Player), and all special knives.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.041"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CubeX Solver",
+      "package": "diozz.cubex",
+      "patches": [
+        {
+          "name": "Unlock premium",
+          "description": "Unlocks all premium-gated features (Advanced Solver / Kociemba, custom color schemes, VIP support, no relaunch screens). Returns true from PremiumHelper.hasActivePurchase() so the entire app behaves as if a premium subscription is active.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1",
+            "4.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Anger of Stick 5",
+      "package": "jpark.aos5",
+      "patches": [
+        {
+          "name": "Free in-app purchases",
+          "description": "Skips Google Play Billing and credits IAP items (gem packs, coin packs, starter packs) directly. Lets the original failure path run after crediting to close the Contacting screen naturally. Also disables the startup purchase-restore flow.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.94"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Miguel's Patches",
+  "fingerprint": "475cafac406fe6e10846d1051852cdc1da19456c6d85756f403a462d62659b94",
+  "release_notes": "## [1.13.6](https://github.com/MiguelNinja19/miguel-morphe-patches/compare/v1.13.5...v1.13.6) (2026-08-16)\n\n### 🐛 Bug Fixes\n\n* **cubesolver:** remove ([d69291c](https://github.com/MiguelNinja19/miguel-morphe-patches/commit/d69291c49da4c7868bc026af2d4cd74408b061af))\n",
+  "release_tag": "v1.13.6",
+  "release_date": "2026-08-16T12:35:21Z",
+  "isPreRelease": false
+}

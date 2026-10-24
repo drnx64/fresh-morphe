@@ -1,0 +1,221 @@
+{
+  "bundle": "wzse",
+  "channel": "stable",
+  "repo_url": "https://github.com/WZSE/aapam-patches",
+  "created_at": "2026-10-10T16:17:07Z",
+  "version": "1.4.0",
+  "description": "## [1.4.0](https://github.com/WZSE/aapam-patches/compare/v1.3.1...v1.4.0) (2026-10-10)\n\n### ✨ New Features\n\n* add MyGate patches for premium plan unlock and ad blocking ([12f1c2f](https://github.com/WZSE/aapam-patches/commit/12f1c2f230e013414aedd2f3786797fa55691642))",
+  "apps": [
+    {
+      "app_name": "Prime Video Android TV",
+      "package": "com.amazon.amazonvideo.livingroom",
+      "patches": [
+        {
+          "name": "Bundle native ad-strip hook",
+          "description": "Packages the Prime Video libignite interception library for this APK's ABIs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a"
+          ]
+        },
+        {
+          "name": "Bundle native ad-strip hook",
+          "description": "Packages the Prime Video libignite interception library for this APK's ABIs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.24.5+v16.0.0.231-allAbis",
+            "6.24.8+v16.0.0.361-allAbis"
+          ]
+        },
+        {
+          "name": "Clone Prime Video",
+          "description": "Renames the package to <original>.mod (and its provider authorities / custom permissions) so the patched app installs side-by-side with a non-removable system Prime Video. Opt-in.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a",
+            "6.24.5+v16.0.0.231-allAbis",
+            "6.24.8+v16.0.0.361-allAbis"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Prevents Google Play Store from automatically replacing the patched APK with the official unpatched version.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a",
+            "6.24.5+v16.0.0.231-allAbis",
+            "6.24.8+v16.0.0.361-allAbis"
+          ]
+        },
+        {
+          "name": "Load native ad-strip hook",
+          "description": "Loads libpvhook.so at startup before Prime Video constructs its media pipeline.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a"
+          ]
+        },
+        {
+          "name": "Load native ad-strip hook",
+          "description": "Loads libpvhook.so at startup before Prime Video constructs its media pipeline.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.24.5+v16.0.0.231-allAbis",
+            "6.24.8+v16.0.0.361-allAbis"
+          ]
+        },
+        {
+          "name": "Override certificate pinning",
+          "description": "Adds a network_security_config trusting user CAs (no pin sets) so AdGuard Premium can inspect the app's platform-stack HTTPS. Optional adjunct: Prime Video's ad plane is largely native libcurl, so DNS blocking is the primary tool.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a",
+            "6.24.5+v16.0.0.231-allAbis",
+            "6.24.8+v16.0.0.361-allAbis"
+          ]
+        },
+        {
+          "name": "Prime Video extension",
+          "description": "Integrates the Prime Video ATV extension for ad group skipping.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a",
+            "6.24.5+v16.0.0.231-allAbis",
+            "6.24.8+v16.0.0.361-allAbis"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Multi-layer ad suppression targeting the SSAI schedule, impression reporting, and the Volley network chokepoint.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.23.23+v15.5.0.70-armv7a"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "ZEE5 Android TV",
+      "package": "com.graymatrix.did",
+      "patches": [
+        {
+          "name": "Disable CleverTap",
+          "description": "Prevents the CleverTap analytics SDK from initializing, stopping behavioral tracking and advertising-id (GAID) collection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.83.2"
+          ]
+        },
+        {
+          "name": "Disable Firebase analytics",
+          "description": "Prevents Firebase Analytics from initializing, stopping event and user-property reporting to Google.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.83.2"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Removes Google IMA ad insertion (client-side and server-side DAI) from the ZEE5 player. The media source factory is returned DRM-configured but with ad-insertion components never attached, so content and DRM playback are unaffected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.83.2"
+          ]
+        },
+        {
+          "name": "Disable analytics",
+          "description": "Disables all third-party analytics (CleverTap, Firebase, Mixpanel, videoanalytics) by short-circuiting the central analytics dispatch method. No tracking data is sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.83.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "MyGate",
+      "package": "com.mygate.user",
+      "patches": [
+        {
+          "name": "Block Flutter Ads",
+          "description": "Removes home feed advertisements and sponsored community notice cards.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.37.0",
+            "7.38.2"
+          ]
+        },
+        {
+          "name": "Unlock Premium Plan",
+          "description": "Enables premium resident status and removes promotional banners.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.37.0",
+            "7.38.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Coloring and Learn",
+      "package": "com.orange.coloring.learn.kids",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes all AdMob ads (banner, interstitial, rewarded, rewarded interstitial, app open) by intercepting the Corona SDK AdMob plugin bridge before any ad is initialised, loaded, or shown.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.28"
+          ]
+        },
+        {
+          "name": "Unlock ad-free",
+          "description": "Hooks CoronaRuntime.onWillLoadMain() to execute a Lua bootstrap script that stubs in-app purchases (Tienda.ProductoComprado returning 'S'), hides promo/ad UI buttons, and stubs libads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.28"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Telegram",
+      "package": "org.telegram.messenger.web",
+      "patches": [
+        {
+          "name": "Anti-disappearing media",
+          "description": "Keeps view-once and self-destructing media viewable forever; the sender sees them as expired.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.8.3",
+            "12.10.1"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "aapam Patches",
+  "fingerprint": "4137a892fb2e5856298465d5ca96aaba39e78393927c068a0104d7d66be8639c",
+  "release_notes": "## [1.4.0](https://github.com/WZSE/aapam-patches/compare/v1.3.1...v1.4.0) (2026-10-10)\n\n### ✨ New Features\n\n* add MyGate patches for premium plan unlock and ad blocking ([12f1c2f](https://github.com/WZSE/aapam-patches/commit/12f1c2f230e013414aedd2f3786797fa55691642))\n",
+  "release_tag": "v1.4.0",
+  "release_date": "2026-10-10T16:17:07Z",
+  "isPreRelease": false
+}

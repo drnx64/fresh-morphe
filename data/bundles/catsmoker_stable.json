@@ -1,0 +1,121 @@
+{
+  "bundle": "catsmoker",
+  "channel": "stable",
+  "repo_url": "https://github.com/catsmoker/anime-witcher-patches",
+  "created_at": "2026-09-05T17:58:55Z",
+  "version": "1.2.0",
+  "description": "## [1.2.0](https://github.com/catsmoker/anime-witcher-patches/compare/v1.1.0...v1.2.0) (2026-09-05)\n\n### ✨ New Features\n\n* add AMOLED black theme patch; consolidate TV and rebranding patches ([8fe3ff2](https://github.com/catsmoker/anime-witcher-patches/commit/8fe3ff2))",
+  "apps": [
+    {
+      "app_name": "Anime Witcher",
+      "package": "com.anime.witcher",
+      "patches": [
+        {
+          "name": "AMOLED black theme",
+          "description": "Sets the dark theme backgrounds (window, toolbars, cards, dialogs) to pure black (#000000) so OLED and AMOLED screens turn those pixels off and battery is saved. Light appearance is unchanged. Original APK: https://www.animewitcher.com/",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Android TV",
+          "description": "Adds full Android TV / Fire TV support: manifest declarations, TV launcher entry and D-pad remote navigation (focusable content rows, focus out of the top bar, dialog focus). Original APK: https://www.animewitcher.com/",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Android TV: D-pad navigation",
+          "description": "Part of Android TV: makes the app fully navigable with a TV / Fire TV remote (focusable content rows, D-pad focus out of the top bar, dialog focus). Original APK: https://www.animewitcher.com/",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Disable VPN detection and alerts",
+          "description": "Removes VPN/DNS detection and the VPN alert dialogs. Original APK: https://www.animewitcher.com/",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Disables all ad display logic in the app. Original APK: https://www.animewitcher.com/",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Play with external player",
+          "description": "Opens episodes in a system intent chooser so the user can pick their favorite video player (VLC, MX Player, etc.). Original APK: https://www.animewitcher.com/",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Rebranding",
+          "description": "Renames the app to 'Anime Witcher +', changes the package id to app.catsmoker.anime.witcher, badges the icon with a red +, points Telegram links to https://t.me/CATSM0KER and credits the About screen. Original APK: https://www.animewitcher.com/",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Rebranding: Telegram & About",
+          "description": "Part of Rebranding: points Telegram links to the configured handle (default https://t.me/CATSM0KER) and adds a credit line to the About screen. Original APK: https://www.animewitcher.com/",
+          "use": false,
+          "options": [
+            {
+              "key": "telegramHandle",
+              "description": "Telegram username used for every support/contact link in the app."
+            },
+            {
+              "key": "aboutCredit",
+              "description": "Extra credit line appended to the About screen."
+            }
+          ],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Remove AppLovin initialization",
+          "description": "Removes AppLovin SDK initialization from the Application class. Original APK: https://www.animewitcher.com/",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        },
+        {
+          "name": "Remove startup popup",
+          "description": "Removes the update/changelog and appearance popups that appear when the app starts. Original APK: https://www.animewitcher.com/",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.8"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Anime Witcher Patches",
+  "fingerprint": "54a65a146b8f40e9ff8a3838889b7edd72d7e43f134a3fd78f7582783b7ff987",
+  "release_notes": "## What's new\n\n- **AMOLED black theme.** New optional **AMOLED black theme** patch turns the whole dark appearance true black (`#000000`) — window, toolbars, tabs, nav drawer, cards, dialogs and backgrounds — so OLED/AMOLED screens switch those pixels off and battery life improves. The light appearance is untouched.\n- **Rebranding is now on by default.** The recommended **Rebranding** patch renames the install/launcher package to `app.catsmoker.anime.witcher`, moves every `com.anime.witcher.*` permission under it and badges the icon with a red + — so the mod installs and runs even when the original app is still installed (fixes `INSTALL_FAILED_DUPLICATE_PERMISSION` / `INSTALL_FAILED_CONFLICTING_PROVIDER`).\n- **Configurable Telegram handle & About credit.** The `Rebranding: Telegram & About` sub-patch now exposes `telegram handle` and `about credit` options, so the support links and the About-screen credit line are fully customizable.\n- **Faster, more reliable D-pad fix.** The Android TV support patch wires `TvFocusHelper` as an Activity lifecycle callbacks object, applies the focusability pass to every activity and every dialog the app shows, and only consumes a top-bar D-pad press once focus actually moved into a content row — so in-content D-pad navigation is left untouched.\n- Website metadata on the patch source points to the original app page.\n\n## Patches\n\n| Patch | Default |\n|---|---|\n| AMOLED black theme | off |\n| Android TV | off |\n| Android TV: D-pad navigation | off |\n| Disable VPN detection and alerts | on |\n| Disable ads | on |\n| Play with external player | on |\n| Rebranding | on |\n| Rebranding: Telegram & About | off |\n| Remove AppLovin initialization | on |\n| Remove startup popup | on |\n\nFull details: https://github.com/catsmoker/anime-witcher-patches",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-09-05T17:58:55Z",
+  "isPreRelease": false
+}

@@ -1,0 +1,89 @@
+{
+  "bundle": "andersonlucasg3",
+  "channel": "stable",
+  "repo_url": "https://github.com/andersonlucasg3/PetalMaps-NonHuawei",
+  "created_at": "2026-08-19T15:49:31Z",
+  "version": "1.3.4",
+  "description": "Fixed login crash (register overflow), added main activity orientation fix (allows free rotation).\n\n- **Anti-Repack Bypass**: neutralises the native SecurityDetect.irpj() integrity check that kills the process on re-signed APKs.\n- **Manufacturer Check Bypass**: removes the Huawei/Honor-only device gate, allowing Petal Maps to run on any Android device.\n- **Huawei Login Fix**: forces the Account Picker sign-in flow with WebView fallback, fixing login on devices without HMS Core.\n- **Change package name**: install alongside the original app (default: morphe.huawei.petal.maps).",
+  "apps": [
+    {
+      "app_name": "Petal Maps",
+      "package": "com.huawei.maps.app",
+      "patches": [
+        {
+          "name": "AccountPicker WebView force",
+          "description": "Forces AccountPickerSignInHubPresenter to always use the WebView H5 login path, bypassing HMS Core availability checks that fail on non-Huawei devices.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.7.0.322(001)"
+          ]
+        },
+        {
+          "name": "Anti-Repack Bypass",
+          "description": "Neutralizes the native integrity check (SecurityDetect.irpj) that kills the process upon detecting APK re-signing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.7.0.322(001)"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Changes the package name from com.huawei.maps.app to morphe.huawei.petal.maps by default, allowing the patched app to coexist with the original. Changing the package name can lead to unexpected issues.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to rename the app to. Leave as 'Default' to use morphe.huawei.petal.maps."
+            },
+            {
+              "key": "updatePermissions",
+              "description": "Update custom permissions declared by the app. Required for Petal Maps coexistence."
+            },
+            {
+              "key": "updateProviders",
+              "description": "Update provider authorities declared by the app. Required for Petal Maps coexistence."
+            }
+          ],
+          "compatible_versions": [
+            "4.7.0.322(001)"
+          ]
+        },
+        {
+          "name": "Huawei login fix",
+          "description": "Forces HMS Core sign-in path (a.g) in AccountFactory. Requires HMS Core installed. Disable if HMS Core is not available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.7.0.322(001)"
+          ]
+        },
+        {
+          "name": "Main activity orientation fix",
+          "description": "Changes PetalMapsActivity's screenOrientation from \"behind\" to \"unspecified\", allowing the app to rotate freely.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.7.0.322(001)"
+          ]
+        },
+        {
+          "name": "Manufacturer Check Bypass",
+          "description": "Forces the Huawei manufacturer check to always return true, allowing non-Huawei devices to use the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.7.0.322(001)"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Petal Maps Non-Huawei",
+  "fingerprint": "aba48e4401f6ba202f1f81696a2bc8c4942edbd3faa634f975316b37b3847b02",
+  "release_notes": "Fixed login crash (register overflow), added main activity orientation fix (allows free rotation).",
+  "release_tag": "v1.3.4",
+  "release_date": "2026-08-19T15:49:31Z",
+  "isPreRelease": false
+}

@@ -2,214 +2,10 @@
   "bundle": "logm1lo",
   "channel": "dev",
   "repo_url": "https://github.com/logm1lo/logm1lo-patches",
-  "created_at": "2026-09-10T06:29:40",
-  "version": "v1.2.0-dev.1",
-  "description": "## [1.2.0-dev.1](https://github.com/logm1lo/logm1lo-patches/compare/v1.1.0...v1.2.0-dev.1) (2026-09-10)\r\n\r\n* **calistree:** support 5.9.1 - versioned Dart hex tables + stdlib reshift ([21d3ac5](https://github.com/logm1lo/logm1lo-patches/commit/21d3ac584bc1020e50a1aa6c2b5efdbf9141a72b))\r\n",
+  "created_at": "2026-10-13T11:34:16Z",
+  "version": "1.3.0-dev.1",
+  "description": "## [1.3.0](https://github.com/logm1lo/logm1lo-patches/compare/v1.2.0...v1.3.0) (2026-10-13)\n\n### New Features\n\n* **calistree:** add 5.10.3 support ([086fc77](https://github.com/logm1lo/logm1lo-patches/commit/086fc7760fae003bac4cc935ac7e1f419a66992b))",
   "apps": [
-    {
-      "app_name": "MT Manager",
-      "package": "bin.mt.plus",
-      "patches": [
-        {
-          "name": "Feed file browser data (extension)",
-          "description": "Self-heals the empty file browser by listing the real filesystem into the active file source on first access.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Feed slide-panel file list (extension)",
-          "description": "Seeds the visible file browser's tab getters with the real directory listing via the MtTools extension, so the slide panel renders all files instead of only the breadcrumb.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix account map getter",
-          "description": "Makes l.ۨ᩸ܰ.۟()Ljava/util/Map; return an empty HashMap instead of null to prevent Purchase-VIP / account screen crashes.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix file listing (direct FileSource)",
-          "description": "Forces the node-factory mount check and node validation to pass so folders and file pickers populate.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix file-browser click (fed list)",
-          "description": "Makes the file-browser onItemClick read the fed file list (l/ۤۚܳ.᩷()) instead of the stale warm-state list, fixing IndexOutOfBounds on row clicks.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix file-browser pane geometry (full height + no shift)",
-          "description": "Makes l.ۗ᩺ܰ measure the pane at full available height and never translate it down, so all file rows render and scroll.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix file-browser pane visibility",
-          "description": "Forces l.ۗ᩺ܰ.addView to keep pane children VISIBLE so the file list renders.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix file-browser status counter (self-feeding)",
-          "description": "Rebuilds l.ۤۚܳ.᩷() to return the real file list (native warm state) or feed real items via the MtTools extension on fresh installs, never NPEing the browser.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix two-pane row text width (expanded rows)",
-          "description": "Forces l.۠᩺ܳ rows to stay in the complex measure branch so file names and sub-text render instead of being 0-width.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Fix VIP list variant",
-          "description": "Makes l.᩷ۛܰ.ܿ() (VIP file-list variant) delegate to the working normal variant so ۘ()=true keeps file listing intact.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Force file-browser ListView to draw rows (real target)",
-          "description": "Replaces l.ܳۚܰ.draw with a plain super call so the file browser's ListView always paints its rows.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Force file-browser ListView to layout rows",
-          "description": "Replaces l.ܳۚܰ.layoutChildren with a plain super call so the file browser's ListView lays out all its rows.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Force file-browser pane to draw rows",
-          "description": "Replaces l.֡ۚܰ.dispatchDraw with a plain super call so the visible file list always paints its rows.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Force User Agreement accepted",
-          "description": "Makes l.۬۟᩶.getBoolean return true for the user_agreement key so the EULA never re-shows.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Login removal / bypass",
-          "description": "Makes the app think you are logged into an MT account.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Neutralize anti-tamper",
-          "description": "Removes the RuntimeException self-verification throws in Main.<init>/onCreate.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Patch native keys",
-          "description": "Stubs K2M7 <clinit> canaries and patches the 39 native XOR keys / 12 bool flags to constants.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Reimplement native tools (extension)",
-          "description": "Reroutes Dex2Smali / Dex2Jar / Sign to pure-Java reimplementations bundled in the mtmanager extension.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Stub native methods",
-          "description": "Replaces all l.* native methods with safe Java defaults so the app no longer depends on native registration.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Unlock VIP",
-          "description": "Unlocks VIP features (FTP/SFTP/SMB/WebDav, MT_Protector, themes).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Unlock VIP (methods)",
-          "description": "Replaces all seven VIP getter methods on l.ۨ᩸ܰ to always return true.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        },
-        {
-          "name": "Unlock VIP (wrappers)",
-          "description": "Forces the four pure-Java VIP wrapper methods (l/ܽۜ.᩷ۢ᩶, l/ᩴ᩶.۫ۨۢ, l/᩵᩶.۠֫ۧ, l/᩸ۗ.᩹֡۫) to return true — splice-safe (no native methods touched).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "2.26.8"
-          ]
-        }
-      ]
-    },
     {
       "app_name": "Calistree",
       "package": "com.calistree.calistree",
@@ -221,7 +17,8 @@
           "options": [],
           "compatible_versions": [
             "5.8.5",
-            "5.9.1"
+            "5.9.1",
+            "5.10.3"
           ]
         },
         {
@@ -231,7 +28,8 @@
           "options": [],
           "compatible_versions": [
             "5.8.5",
-            "5.9.1"
+            "5.9.1",
+            "5.10.3"
           ]
         }
       ]
@@ -259,27 +57,12 @@
           ]
         }
       ]
-    },
-    {
-      "app_name": "Locket",
-      "package": "com.locket.locket",
-      "patches": [
-        {
-          "name": "Unlock Locket Gold",
-          "description": "Unlocks Locket Gold by forcing the internal android_gold_subscription_override flag to true.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.235.0"
-          ]
-        }
-      ]
     }
   ],
   "patches_name": "Logm1lo Patches",
-  "fingerprint": "1485b5a082f95b0f8cca5fde686a4654c3c298a30b48c8ba82f4718777bb6013",
-  "release_notes": "## [1.2.0-dev.1](https://github.com/logm1lo/logm1lo-patches/compare/v1.1.0...v1.2.0-dev.1) (2026-09-10)\r\n\r\n* **calistree:** support 5.9.1 - versioned Dart hex tables + stdlib reshift ([21d3ac5](https://github.com/logm1lo/logm1lo-patches/commit/21d3ac584bc1020e50a1aa6c2b5efdbf9141a72b))\r\n",
-  "release_tag": "v1.2.0-dev.1",
-  "release_date": "2026-09-10T06:29:40Z",
+  "fingerprint": "392ccb25d00562d1f36c6cb2f0468acdec06aef299d2a4ba71194b7040fc93cf",
+  "release_notes": "## [1.3.0-dev.1](https://github.com/logm1lo/logm1lo-patches/compare/v1.2.0...v1.3.0-dev.1) (2026-10-13)\n\n### New Features\n\n* **calistree:** add 5.10.3 support ([086fc77](https://github.com/logm1lo/logm1lo-patches/commit/086fc7760fae003bac4cc935ac7e1f419a66992b))\n",
+  "release_tag": "v1.3.0-dev.1",
+  "release_date": "2026-10-13T11:34:16Z",
   "isPreRelease": true
 }

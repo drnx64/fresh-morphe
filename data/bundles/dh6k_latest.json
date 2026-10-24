@@ -2,9 +2,9 @@
   "bundle": "dh6k",
   "channel": "latest",
   "repo_url": "https://github.com/dh6k/morphe-patches",
-  "created_at": "2026-10-01T06:24:48",
-  "version": "v1.8.0",
-  "description": "## [1.8.0](https://github.com/dh6k/morphe-patches/compare/v1.7.0...v1.8.0) (2026-10-01)\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* **brave:** actually kill Material You in AMOLED and stop greying the switch ([41fb1b4](https://github.com/dh6k/morphe-patches/commit/41fb1b4d376f5e4bb8f577f5a4392c7b9e82f1d7))\r\n* **brave:** keep accent-coloured text when declaring night ink ([5b6f269](https://github.com/dh6k/morphe-patches/commit/5b6f2690031607d733cfb049ad428462099e0364)), closes [#cd4400](https://github.com/dh6k/morphe-patches/issues/cd4400) [#545ff8](https://github.com/dh6k/morphe-patches/issues/545ff8) [#687485](https://github.com/dh6k/morphe-patches/issues/687485)\r\n* **brave:** keep colors the app renders text with out of the surface sweep ([0703501](https://github.com/dh6k/morphe-patches/commit/0703501ec7aecf9b1488e1185fd76afa568fe812)), closes [#1c1c1d](https://github.com/dh6k/morphe-patches/issues/1c1c1d) [#0d0f14](https://github.com/dh6k/morphe-patches/issues/0d0f14) [#202124](https://github.com/dh6k/morphe-patches/issues/202124) [#484b4e](https://github.com/dh6k/morphe-patches/issues/484b4e) [#25272b](https://github.com/dh6k/morphe-patches/issues/25272b)\r\n* **brave:** only force the dedicated AMOLED dynamic-colors getter ([84ed3a4](https://github.com/dh6k/morphe-patches/commit/84ed3a445584981592038e82f5b29a1c0cba6365))\r\n* **brave:** rewrite AMOLED dark surfaces in values/ not just values-night ([238a4f2](https://github.com/dh6k/morphe-patches/commit/238a4f27d78eafd4f8eab5cb5c31a33144f0af00)), closes [#121212](https://github.com/dh6k/morphe-patches/issues/121212) [#ff303030](https://github.com/dh6k/morphe-patches/issues/ff303030)\r\n* **brave:** stop declaring text colors that already have selectors ([4974aea](https://github.com/dh6k/morphe-patches/commit/4974aea31deb3b317bb6e9b557510cda4478d578))\r\n* **brave:** stop night-v31 overrides from re-asserting text as background ([6832558](https://github.com/dh6k/morphe-patches/commit/6832558e54e676c890e4b81820b1aff14474e3b2)), closes [#000000](https://github.com/dh6k/morphe-patches/issues/000000)\r\n\r\n### ✨ New Features\r\n\r\n* **brave:** add AMOLED text and accent color options ([9254614](https://github.com/dh6k/morphe-patches/commit/925461415ceb6b86bd3438aa0e9ba35b1984aef2))\r\n* **brave:** add patch-time AMOLED theme (issue [#21](https://github.com/dh6k/morphe-patches/issues/21)) ([7d0c8ad](https://github.com/dh6k/morphe-patches/commit/7d0c8ad3665a686c6f05e94b2464052934c92526))\r\n* **titanium:** scope keep-alive boosts to extension processes ([a461882](https://github.com/dh6k/morphe-patches/commit/a461882a418570b36eb0531176065dc1f8006a8f))\r\n",
+  "created_at": "2026-10-05T19:15:22",
+  "version": "v1.9.0-dev.4",
+  "description": "## [1.9.0-dev.4](https://github.com/dh6k/morphe-patches/compare/v1.9.0-dev.3...v1.9.0-dev.4) (2026-10-05)\n\n### 🐛 Bug Fixes\n\n* **brave:** give the app menu its surface colour on Android 12-13 ([0d33ca9](https://github.com/dh6k/morphe-patches/commit/0d33ca9d78d6283cdd4efd8201644dd9d2dd09d4)), closes [#000000](https://github.com/dh6k/morphe-patches/issues/000000) [#1e2029](https://github.com/dh6k/morphe-patches/issues/1e2029) [#000000](https://github.com/dh6k/morphe-patches/issues/000000)\n",
   "apps": [
     {
       "app_name": "Brave Browser",
@@ -12,12 +12,12 @@
       "patches": [
         {
           "name": "Brave AMOLED theme",
-          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
+          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Raised surfaces — buttons, cards, sheets and the Material You container ladder — can take their own surface color instead of one flat black, so the UI keeps an elevation step like Material 3. Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+; leaving that force off keeps the Material You roles and low-lStar selectors untouched. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
-              "description": "Opaque hex used for dark chrome surfaces. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
+              "description": "Opaque hex for window backgrounds and the rest of dark chrome. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
             },
             {
               "key": "textColor",
@@ -29,19 +29,27 @@
             },
             {
               "key": "disableDynamicColors",
-              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off."
+              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off. Turning this off also stops the Material You role rewrite, so the wallpaper palette survives."
+            },
+            {
+              "key": "surfaceUsesBackground",
+              "description": "ON: buttons, cards and sheets share the AMOLED background — one flat black, the original behaviour. OFF: raised surfaces take the surface color below instead, keeping the brighter elevation step Material 3 uses."
+            },
+            {
+              "key": "surfaceColor",
+              "description": "Opaque hex for raised surfaces — buttons, cards, sheets and the Material You container ladder. Only applied when 'Surfaces use the background color' is off. #1e2029 is Brave's own dark container tone."
             }
           ],
           "compatible_versions": []
         },
         {
           "name": "Brave AMOLED theme",
-          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
+          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Raised surfaces — buttons, cards, sheets and the Material You container ladder — can take their own surface color instead of one flat black, so the UI keeps an elevation step like Material 3. Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+; leaving that force off keeps the Material You roles and low-lStar selectors untouched. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
-              "description": "Opaque hex used for dark chrome surfaces. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
+              "description": "Opaque hex for window backgrounds and the rest of dark chrome. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
             },
             {
               "key": "textColor",
@@ -53,9 +61,24 @@
             },
             {
               "key": "disableDynamicColors",
-              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off."
+              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off. Turning this off also stops the Material You role rewrite, so the wallpaper palette survives."
+            },
+            {
+              "key": "surfaceUsesBackground",
+              "description": "ON: buttons, cards and sheets share the AMOLED background — one flat black, the original behaviour. OFF: raised surfaces take the surface color below instead, keeping the brighter elevation step Material 3 uses."
+            },
+            {
+              "key": "surfaceColor",
+              "description": "Opaque hex for raised surfaces — buttons, cards, sheets and the Material You container ladder. Only applied when 'Surfaces use the background color' is off. #1e2029 is Brave's own dark container tone."
             }
           ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Brave NTP four-column tiles",
+          "description": "Experimental version-unpinned patch (issue #24): keeps the new-tab pinned and most-visited tiles in a four-column grid that extends downwards, the same layout Brave uses with no background image, and keeps that layout when a background image is enabled. Neutralizes the \"brave.new_tab_page.show_background_image\" gate in the NTP builder that otherwise forces the tiles into a single horizontally scrolling row. Default off.",
+          "use": false,
+          "options": [],
           "compatible_versions": []
         },
         {
@@ -99,12 +122,12 @@
       "patches": [
         {
           "name": "Brave AMOLED theme",
-          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
+          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Raised surfaces — buttons, cards, sheets and the Material You container ladder — can take their own surface color instead of one flat black, so the UI keeps an elevation step like Material 3. Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+; leaving that force off keeps the Material You roles and low-lStar selectors untouched. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
-              "description": "Opaque hex used for dark chrome surfaces. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
+              "description": "Opaque hex for window backgrounds and the rest of dark chrome. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
             },
             {
               "key": "textColor",
@@ -116,9 +139,24 @@
             },
             {
               "key": "disableDynamicColors",
-              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off."
+              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off. Turning this off also stops the Material You role rewrite, so the wallpaper palette survives."
+            },
+            {
+              "key": "surfaceUsesBackground",
+              "description": "ON: buttons, cards and sheets share the AMOLED background — one flat black, the original behaviour. OFF: raised surfaces take the surface color below instead, keeping the brighter elevation step Material 3 uses."
+            },
+            {
+              "key": "surfaceColor",
+              "description": "Opaque hex for raised surfaces — buttons, cards, sheets and the Material You container ladder. Only applied when 'Surfaces use the background color' is off. #1e2029 is Brave's own dark container tone."
             }
           ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Brave NTP four-column tiles",
+          "description": "Experimental version-unpinned patch (issue #24): keeps the new-tab pinned and most-visited tiles in a four-column grid that extends downwards, the same layout Brave uses with no background image, and keeps that layout when a background image is enabled. Neutralizes the \"brave.new_tab_page.show_background_image\" gate in the NTP builder that otherwise forces the tiles into a single horizontally scrolling row. Default off.",
+          "use": false,
+          "options": [],
           "compatible_versions": []
         },
         {
@@ -155,12 +193,12 @@
       "patches": [
         {
           "name": "Brave AMOLED theme",
-          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
+          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Raised surfaces — buttons, cards, sheets and the Material You container ladder — can take their own surface color instead of one flat black, so the UI keeps an elevation step like Material 3. Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+; leaving that force off keeps the Material You roles and low-lStar selectors untouched. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
-              "description": "Opaque hex used for dark chrome surfaces. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
+              "description": "Opaque hex for window backgrounds and the rest of dark chrome. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
             },
             {
               "key": "textColor",
@@ -172,19 +210,27 @@
             },
             {
               "key": "disableDynamicColors",
-              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off."
+              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off. Turning this off also stops the Material You role rewrite, so the wallpaper palette survives."
+            },
+            {
+              "key": "surfaceUsesBackground",
+              "description": "ON: buttons, cards and sheets share the AMOLED background — one flat black, the original behaviour. OFF: raised surfaces take the surface color below instead, keeping the brighter elevation step Material 3 uses."
+            },
+            {
+              "key": "surfaceColor",
+              "description": "Opaque hex for raised surfaces — buttons, cards, sheets and the Material You container ladder. Only applied when 'Surfaces use the background color' is off. #1e2029 is Brave's own dark container tone."
             }
           ],
           "compatible_versions": []
         },
         {
           "name": "Brave AMOLED theme",
-          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
+          "description": "Patch-time AMOLED dark theme (issue #21): rewrites Brave dark chrome surfaces to pure black (or a custom opaque hex). Raised surfaces — buttons, cards, sheets and the Material You container ladder — can take their own surface color instead of one flat black, so the UI keeps an elevation step like Material 3. Optional text and accent colors (defaults keep Brave's #f0f2ff / #737ade). Forces Material You dynamic colors off in bytecode (the pref is non-persistent) and overrides system neutral night roles on Android 12+; leaving that force off keeps the Material You roles and low-lStar selectors untouched. Apply Dark theme in Brave to see it. Does not change web content force-dark, NTP theme collections, or add a runtime color picker. Default off.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
-              "description": "Opaque hex used for dark chrome surfaces. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
+              "description": "Opaque hex for window backgrounds and the rest of dark chrome. Use #000000 for pure black OLED. Example elevated near-black: #0a0a0a."
             },
             {
               "key": "textColor",
@@ -196,9 +242,24 @@
             },
             {
               "key": "disableDynamicColors",
-              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off."
+              "description": "Force Brave's wallpaper dynamic colors off so AMOLED surfaces are not replaced by system palette roles. The settings switch stays clickable but readers always return off. Turning this off also stops the Material You role rewrite, so the wallpaper palette survives."
+            },
+            {
+              "key": "surfaceUsesBackground",
+              "description": "ON: buttons, cards and sheets share the AMOLED background — one flat black, the original behaviour. OFF: raised surfaces take the surface color below instead, keeping the brighter elevation step Material 3 uses."
+            },
+            {
+              "key": "surfaceColor",
+              "description": "Opaque hex for raised surfaces — buttons, cards, sheets and the Material You container ladder. Only applied when 'Surfaces use the background color' is off. #1e2029 is Brave's own dark container tone."
             }
           ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Brave NTP four-column tiles",
+          "description": "Experimental version-unpinned patch (issue #24): keeps the new-tab pinned and most-visited tiles in a four-column grid that extends downwards, the same layout Brave uses with no background image, and keeps that layout when a background image is enabled. Neutralizes the \"brave.new_tab_page.show_background_image\" gate in the NTP builder that otherwise forces the tiles into a single horizontally scrolling row. Default off.",
+          "use": false,
+          "options": [],
           "compatible_versions": []
         },
         {
@@ -307,9 +368,9 @@
     }
   ],
   "patches_name": "Brave and universal patches",
-  "fingerprint": "980158315d2d5f0ca0cd9ac72810d960f686c9dc032a573abaf851097af3713a",
-  "release_notes": "## [1.8.0](https://github.com/dh6k/morphe-patches/compare/v1.7.0...v1.8.0) (2026-10-01)\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* **brave:** actually kill Material You in AMOLED and stop greying the switch ([41fb1b4](https://github.com/dh6k/morphe-patches/commit/41fb1b4d376f5e4bb8f577f5a4392c7b9e82f1d7))\r\n* **brave:** keep accent-coloured text when declaring night ink ([5b6f269](https://github.com/dh6k/morphe-patches/commit/5b6f2690031607d733cfb049ad428462099e0364)), closes [#cd4400](https://github.com/dh6k/morphe-patches/issues/cd4400) [#545ff8](https://github.com/dh6k/morphe-patches/issues/545ff8) [#687485](https://github.com/dh6k/morphe-patches/issues/687485)\r\n* **brave:** keep colors the app renders text with out of the surface sweep ([0703501](https://github.com/dh6k/morphe-patches/commit/0703501ec7aecf9b1488e1185fd76afa568fe812)), closes [#1c1c1d](https://github.com/dh6k/morphe-patches/issues/1c1c1d) [#0d0f14](https://github.com/dh6k/morphe-patches/issues/0d0f14) [#202124](https://github.com/dh6k/morphe-patches/issues/202124) [#484b4e](https://github.com/dh6k/morphe-patches/issues/484b4e) [#25272b](https://github.com/dh6k/morphe-patches/issues/25272b)\r\n* **brave:** only force the dedicated AMOLED dynamic-colors getter ([84ed3a4](https://github.com/dh6k/morphe-patches/commit/84ed3a445584981592038e82f5b29a1c0cba6365))\r\n* **brave:** rewrite AMOLED dark surfaces in values/ not just values-night ([238a4f2](https://github.com/dh6k/morphe-patches/commit/238a4f27d78eafd4f8eab5cb5c31a33144f0af00)), closes [#121212](https://github.com/dh6k/morphe-patches/issues/121212) [#ff303030](https://github.com/dh6k/morphe-patches/issues/ff303030)\r\n* **brave:** stop declaring text colors that already have selectors ([4974aea](https://github.com/dh6k/morphe-patches/commit/4974aea31deb3b317bb6e9b557510cda4478d578))\r\n* **brave:** stop night-v31 overrides from re-asserting text as background ([6832558](https://github.com/dh6k/morphe-patches/commit/6832558e54e676c890e4b81820b1aff14474e3b2)), closes [#000000](https://github.com/dh6k/morphe-patches/issues/000000)\r\n\r\n### ✨ New Features\r\n\r\n* **brave:** add AMOLED text and accent color options ([9254614](https://github.com/dh6k/morphe-patches/commit/925461415ceb6b86bd3438aa0e9ba35b1984aef2))\r\n* **brave:** add patch-time AMOLED theme (issue [#21](https://github.com/dh6k/morphe-patches/issues/21)) ([7d0c8ad](https://github.com/dh6k/morphe-patches/commit/7d0c8ad3665a686c6f05e94b2464052934c92526))\r\n* **titanium:** scope keep-alive boosts to extension processes ([a461882](https://github.com/dh6k/morphe-patches/commit/a461882a418570b36eb0531176065dc1f8006a8f))\r\n",
-  "release_tag": "v1.8.0",
-  "release_date": "2026-10-01T06:24:48Z",
-  "isPreRelease": false
+  "fingerprint": "7fee31becc8f8eb8d306c5df0b95a210babc5d038fb9f5278302450744212055",
+  "release_notes": "## [1.9.0-dev.4](https://github.com/dh6k/morphe-patches/compare/v1.9.0-dev.3...v1.9.0-dev.4) (2026-10-05)\n\n### 🐛 Bug Fixes\n\n* **brave:** give the app menu its surface colour on Android 12-13 ([0d33ca9](https://github.com/dh6k/morphe-patches/commit/0d33ca9d78d6283cdd4efd8201644dd9d2dd09d4)), closes [#000000](https://github.com/dh6k/morphe-patches/issues/000000) [#1e2029](https://github.com/dh6k/morphe-patches/issues/1e2029) [#000000](https://github.com/dh6k/morphe-patches/issues/000000)\n",
+  "release_tag": "v1.9.0-dev.4",
+  "release_date": "2026-10-05T19:15:22Z",
+  "isPreRelease": true
 }

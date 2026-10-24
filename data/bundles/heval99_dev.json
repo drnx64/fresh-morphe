@@ -2,54 +2,207 @@
   "bundle": "heval99",
   "channel": "dev",
   "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
-  "created_at": "2026-09-30T20:16:59",
-  "version": "v1.6.0-dev.4",
-  "description": "## [1.6.0-dev.4](https://github.com/heval99/Heval-Morphe-Patches/compare/v1.6.0-dev.3...v1.6.0-dev.4) (2026-09-30)\n\n### 🐛 Bug Fixes\n\n* **sofascore:** keep Facebook SDK initialized so login works (issue [#24](https://github.com/heval99/Heval-Morphe-Patches/issues/24)) ([f2d5544](https://github.com/heval99/Heval-Morphe-Patches/commit/f2d5544168a33a0255febfbff37c409658952582))\n",
+  "created_at": "2026-10-23T22:20:50Z",
+  "version": "1.19.0-dev.5",
+  "description": "## [1.18.0](https://github.com/heval99/Heval-Morphe-Patches/compare/v1.17.0...v1.18.0) (2026-10-22)\n\n### 🐛 Bug Fixes\n\n* **ads:** make Disable ads block what it promises in Castbox, Podcast Republic, Pi Music Player, BeSoccer, Expert Player and Moneycontrol ([40ac9d3](https://github.com/heval99/Heval-Morphe-Patches/commit/40ac9d3c3d730801d6ae3b39c01b3f3a219e7242))\n* fail loudly on drift and harden GmsCore support ([7dd00a6](https://github.com/heval99/Heval-Morphe-Patches/commit/7dd00a6284a765eb924d40017e33cf3baf28ef32))\n* **kakaotalk,line:** remove KakaoTalk and LINE support ([dd9dd18](https://github.com/heval99/Heval-Morphe-Patches/commit/dd9dd188ef4adbfb5597f779b4adff9d2100c2ab))\n* keep only the latest verified version per app and correct the patch notes ([d0f5354](https://github.com/heval99/Heval-Morphe-Patches/commit/d0f5354314601b483cdf0007ded73092668f1ad6))\n* **shazam:** open the Spotify login in a browser tab ([7075b7f](https://github.com/heval99/Heval-Morphe-Patches/commit/7075b7fe3815148b016ba8ac435f6020b90ba7a2)), closes [#62](https://github.com/heval99/Heval-Morphe-Patches/issues/62)\n* **sofascore,shazam,brave,truecaller:** complete the telemetry, Web Discovery and server-backed premium gates ([8708913](https://github.com/heval99/Heval-Morphe-Patches/commit/8708913a197aba881423f7352f16847619762762))\n\n### ✨ New Features\n\n* **truecaller:** add Disable contact upload ([94b5eca](https://github.com/heval99/Heval-Morphe-Patches/commit/94b5ecaec85fcf23ac97302f4ea6ebf4b03231cb))\n* **wemuslim:** add WeMuslim 3.5.4 support ([ef5b416](https://github.com/heval99/Heval-Morphe-Patches/commit/ef5b416ccd58b78a643e9d8fae74388a48013822))",
   "apps": [
+    {
+      "app_name": "TV Smarters Player Expert",
+      "package": "app.expert.player",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes banner, interstitial, rewarded and app-open ads: every ad load is reported to the app as \"no ad available\", so screens that wait for an ad carry on without it. Also skips PairIP's Play license check that otherwise kills the app when it is not installed from Play. Playback and playlists are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.2.0"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Experimental: marks every RevenueCat entitlement as active on the Java side, which is what the app's Dart premium check reads. Server-side features (account sync, recordings, the always-current EPG) still depend on the Expert backend and are not changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "11.2.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Pro Launcher",
+      "package": "app.prolauncher",
+      "patches": [
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Pro Launcher Pro features without a subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v2.4.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Interval Timer",
+      "package": "cc.dreamspark.intervaltimer",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables native and banner ads and hides the \"Remove ads\" upsell.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.3.30"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics, advertising ID collection and Crashlytics reports.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.3.30"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "BoxBox",
       "package": "club.boxbox.android",
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Disables AppLovin interstitial ads.",
+          "description": "Disables banner, interstitial and rewarded ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.4.9"
+            "5.4.17"
           ]
         },
         {
           "name": "Disable telemetry",
-          "description": "Disables AppsFlyer, Firebase Analytics and Crashlytics event logging.",
+          "description": "Disables AppsFlyer event logging, app-logged Firebase Analytics events and Crashlytics exception reporting.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.4.9"
+            "5.4.17"
           ]
         },
         {
           "name": "Enable Premium",
-          "description": "Unlocks premium features by bypassing RevenueCat subscription checks.",
+          "description": "Unlocks the app's Pro plan. Features the BoxBox server grants by account (UserProfiles.isPro) may stay locked.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.4.9"
+            "5.4.17"
           ]
         }
       ]
     },
     {
-      "app_name": "AnyDesk",
-      "package": "com.anydesk.anydeskandroid",
+      "app_name": "Alarm Clock Xtreme",
+      "package": "com.alarmclock.xtreme.free",
       "patches": [
         {
-          "name": "Enable Premium",
-          "description": "Enables premium features by making the app treat the free license as paid.",
+          "name": "Disable ads",
+          "description": "Turns on the ad-free entitlement so Alarm Clock Xtreme shows no banner, interstitial or consent ads. Only the ad-free feature is changed; the other shop features keep their purchase state.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.0.0"
+            "26.06.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Business Calendar 2",
+      "package": "com.appgenix.bizcal",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Turns off Business Calendar 2's ad-serving gate and the \"ads or Pro\" dialog, stops FairBid from starting, preloading or showing interstitials, and disables Facebook Audience Network's auto-initialization.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.55.7"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics (including automatic events), Crashlytics crash reporting, Fyber's crash handler and the sale promo push notifications. Remote Config keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.55.7"
+          ]
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks Business Calendar 2 Pro by forcing the app's own complete-pro and force-pro status to true. Billing is not touched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.55.7"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "VesselFinder",
+      "package": "com.astrapaging.vff",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner ad at the bottom of the map and stops the ad SDK from starting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.7.8"
+          ]
+        },
+        {
+          "name": "Disable license check",
+          "description": "Skips the Play Store license check so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.7.8"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Bleacher Report",
+      "package": "com.bleacherreport.android.teamstream",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the ads in feeds and articles, the banner ads and the splash ad, and stops the Google and Amazon ad SDKs from starting. Ads inside videos are part of the stream and stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.12.0.33"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Turns off mParticle analytics (which also removes the Apptentive surveys and rating prompts), Datadog, comScore, Crashlytics crash reports, Branch attribution tracking, the Beam event reporting and the event forwarding to Braze.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.12.0.33"
+          ]
+        },
+        {
+          "name": "Hide betting content",
+          "description": "Hides odds and betting content: the betting, odds, line and player prop blocks on game pages, the odds and trending bets modules in feeds, and the betting link and disclaimer on the Scores screen.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "11.12.0.33"
           ]
         }
       ]
@@ -64,22 +217,115 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.95.104"
+            "1.97.56"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Experimental: hides sponsored new tab images (including full-page takeovers) and the \"Earn BAT for viewing ads\" Rewards signup popup.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.97.56"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Experimental: turns off P3A analytics and the usage ping on every start (overriding the in-app switches), stops crash report uploads and drops the install-referrer attribution code.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.97.56"
+          ]
+        },
+        {
+          "name": "Hide promotional prompts",
+          "description": "Experimental: stops the recurring \"Set Brave as default browser\" dialog, the \"Rate Brave\" dialog and card, retention and Rewards promo notifications, the search widget promo and the VPN card in Settings.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.97.56"
           ]
         }
       ]
     },
     {
-      "app_name": "YouCut",
-      "package": "com.camerasideas.trimmer",
+      "app_name": "Moneycontrol",
+      "package": "com.divum.moneycontrol",
       "patches": [
         {
-          "name": "Enable Pro",
-          "description": "Unlocks YouCut Pro: watermark-free export and all paid features.",
+          "name": "Disable ads",
+          "description": "Experimental, not yet tested on a device. Removes banner, native, sticky, interstitial and video preroll ads and the Taboola sponsored links under articles. Pro content stays server-side and is not unlocked.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.716.1222"
+            "14.6.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Duplila",
+      "package": "com.duplila.screenshare",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner ad and skips the ad consent form, which otherwise closes the app for free users who refuse consent. Skipping the consent flow also removes the in-app privacy options entry and skips the app's Crashlytics setup, both of which run from that flow.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.1"
+          ]
+        },
+        {
+          "name": "Disable license check",
+          "description": "Skips the Play Store license check so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.1"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Duplila Premium: no watermark, the higher mirroring resolution and the other premium-only actions. Premium is checked on the device only; the license check is disabled as well so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Eurosport",
+      "package": "com.eurosport",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner and in-feed ads, the ads in the Stories and Clips players and the pre-roll ads on free videos. Ads inserted into live and premium streams are part of the stream and stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.33.0"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Adobe Analytics, AppsFlyer, Apptentive, Chartbeat, Comscore, Crashlytics, Firebase Analytics, MediaMelon, Mux, New Relic, Permutive and Storyteller tracking. AppsFlyer deep links may stop opening the app on the right page. Push notifications keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.33.0"
+          ]
+        },
+        {
+          "name": "Hide partner promotions",
+          "description": "Hides the \"Watch on\" banners that link to streaming partners. This also hides the links to HBO Max and discovery+ that open the event you are reading about.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.33.0"
           ]
         }
       ]
@@ -90,11 +336,65 @@
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Disables the banner ad.",
+          "description": "Disables the banner and full-screen ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.10.5-L"
+            "3.11.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Moon+ Reader",
+      "package": "com.flyersoft.moonreader",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables Moon+ Reader's banner, interstitial, exit and native ads by forcing the central ad gate to always report ads as disabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.7"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Librera",
+      "package": "com.foobnix.pdf.reader",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables Librera's banner, interstitial and rewarded ads by reporting ads as switched off and the reward window as open, so the Google Mobile Ads SDK never starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.4.20"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "433",
+      "package": "com.football433",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes banner, native, interstitial, rewarded and app-open ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.3.548"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Sentry crash and performance reports, UXCam session recording, Airship analytics and Branch attribution tracking. Push notifications and Branch deep links keep working; Airship in-app messages triggered by app events no longer show.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.3.548"
           ]
         }
       ]
@@ -105,11 +405,125 @@
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Disables banner, interstitial, native, app-open and rewarded ads.",
+          "description": "Disables banner, interstitial, native, app-open and rewarded ads, and the squad builder's video ad panel.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "27.02"
+            "27.08"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "WeMuslim",
+      "package": "com.fyxtech.muslim",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, native, interstitial and splash (app-open) ads and skips the splash ad wait. Opt-in rewarded ads keep working for make-up prayers and rewards.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.4"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics, Crashlytics reports and AppsFlyer and Adjust attribution.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.4"
+          ]
+        },
+        {
+          "name": "Fix native encryption check",
+          "description": "Makes the app start after re-signing. The stock libagora-ey.so refuses to load in a re-signed build, so its storage-key getters are replaced with the values from the developer-signed APK. The library is never loaded.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.4"
+          ]
+        },
+        {
+          "name": "Hide premium banners",
+          "description": "Hides the membership card on the Me screen and the membership offer cards in the home feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.4"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Fishing Points",
+      "package": "com.gregacucnik.fishingpoints",
+      "patches": [
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Fishing Points premium features and removes ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.7.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "The Guardian",
+      "package": "com.guardian",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes ads from fronts and articles, and the swipe-in ad pages between articles.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.238.23405"
+          ]
+        },
+        {
+          "name": "Disable article limit",
+          "description": "Removes the article limit wall, the warm-up prompt and the offline wall, and stops counting article views. The free sign-in prompt and the \"Support the Guardian\" button stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.238.23405"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics, Crashlytics, Ophan, the push \"received\" beacon and the third-party tracking SDKs (Comscore, Nielsen, Adjust, Braze, Permutive). News, live blog and football alerts keep working; Braze marketing pushes and in-app messages stop.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.238.23405"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Hevy",
+      "package": "com.hevy",
+      "patches": [
+        {
+          "name": "Block telemetry & trackers",
+          "description": "Blocks Sentry crash reporting, Adjust and Branch attribution, Facebook app events and Amplitude ad-ID and legacy event uploads. Push notifications and purchases keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.0"
+          ]
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks Hevy Pro features that run on your device's workout data (unlimited routines, custom exercises, advanced stats and graphs). Pro features Hevy's servers provide, like cloud limits and Hevy Coach, can stay locked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.0"
           ]
         }
       ]
@@ -139,7 +553,79 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.1"
+            "10.3.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "BLE Scanner",
+      "package": "com.macdom.ble.blescanner",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner and interstitial ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.8"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "mail.com",
+      "package": "com.mail.mobile.android.mail",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Turns off the inbox ads, banners, native ads and interstitials and stops the ad tracking pixels. The promotional cards the server places in the inbox (storage and eSIM hints, for example) go away with them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.18.3"
+          ]
+        },
+        {
+          "name": "Disable rating prompts",
+          "description": "Stops the Google Play rating request that opens after a mail is sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.18.3"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables the app's usage tracking (Tracking2, Brain), INFOnline audience measurement, app monitoring and Sentry crash reporting. Push notifications keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.18.3"
+          ]
+        },
+        {
+          "name": "Hide upsells",
+          "description": "Hides the upgrade offer that appears after swiping away ads. The upgrade entries in Settings and the side menu stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.18.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SoundHound",
+      "package": "com.melodis.midomimusicidentifier.freemium",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, interstitial, native, app-open and rewarded ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.5.8"
           ]
         }
       ]
@@ -150,13 +636,29 @@
       "patches": [
         {
           "name": "Enable FotMob+",
-          "description": "Enables app features locked behind the subscription paywall.",
+          "description": "Removes ads and the FotMob+ paywall. On 238 and newer it also unlocks the exclusive app icons (More > FotMob+). The membership screen still shows no subscription; early access is managed by FotMob.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "237.17536.20260911",
-            "236.17398.20260827",
-            "236.17338.20260822"
+            "238.17794.20261012"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed. FotMob's Sign in with Google needs it. FotMob's automatic sign-in at first start is skipped, because MicroG RE would show it as an account chooser; use the Sign in with Google button instead.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "238.17794.20261012"
+          ]
+        },
+        {
+          "name": "Spoof signature",
+          "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "238.17794.20261012"
           ]
         }
       ]
@@ -181,13 +683,69 @@
       "package": "com.myfitnesspal.android",
       "patches": [
         {
+          "name": "Disable Datadog telemetry",
+          "description": "Stops Datadog real-user monitoring (sessions, screens, taps, crashes, ANRs and network traces). Other analytics in the app are not changed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.41.0"
+          ]
+        },
+        {
           "name": "Enable Premium+",
           "description": "Enables app features locked behind the subscription paywall.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.37.0",
-            "26.38.0"
+            "26.41.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "AiScore",
+      "package": "com.onesports.score",
+      "patches": [
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks the VIP interface and removes ads. Premium data the AiScore server delivers (e.g. predictions, dropping odds) is validated server-side and is not unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.3.2"
+          ]
+        },
+        {
+          "name": "Spoof signature",
+          "description": "Fixes push notifications (goal alerts) on patched builds by reporting AiScore's original signing certificate to Firebase.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.3.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "LuckyClick",
+      "package": "com.peter890331.luckyclick.app",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Turns on the app's own ad-free mode, which removes the banner and the full-screen video ad shown before the auto clicker starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.28"
+          ]
+        },
+        {
+          "name": "Disable license check",
+          "description": "Skips the Play Store license check so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.28"
           ]
         }
       ]
@@ -203,6 +761,21 @@
           "options": [],
           "compatible_versions": [
             "3.26"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Podcast Republic",
+      "package": "com.podcast.podcasts",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, interstitial, native, app-open and rewarded ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.17.0-260909124"
           ]
         }
       ]
@@ -232,6 +805,21 @@
       ]
     },
     {
+      "app_name": "Bluetooth Scanner",
+      "package": "com.pzolee.bluetoothscanner",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner and interstitial ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.9.3"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Bluecoins",
       "package": "com.rammigsoftware.bluecoins",
       "patches": [
@@ -241,7 +829,31 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "13.1.79"
+            "13.1.149"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Native Camera",
+      "package": "com.rawcam.app",
+      "patches": [
+        {
+          "name": "Disable license check",
+          "description": "Skips the Play Store license check so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.4"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Native Camera premium (RAW DNG, 10-bit/HLG/UHDR video, boosted modes and the higher bitrate cap). Premium is a local flag; the license check is disabled as well so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.4"
           ]
         }
       ]
@@ -262,17 +874,132 @@
       ]
     },
     {
+      "app_name": "BeSoccer",
+      "package": "com.resultadosfutbol.mobile",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables Google Mobile Ads banner, native, interstitial, rewarded and app-open ads, and the ad networks mediated through it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.6.0"
+          ]
+        },
+        {
+          "name": "Disable license check",
+          "description": "Skips the Play Store license check so the patched app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.6.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "365Scores",
       "package": "com.scores365",
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Disables Google Mobile Ads (AdMob) initialization, blocking banner, interstitial, rewarded, native and mediated ads.",
+          "description": "Disables Google Mobile Ads (AdMob) initialization and the app's own ad placements, removing banner, interstitial, rewarded, native and mediated ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "14.9.4",
-            "14.9.5"
+            "14.9.7"
+          ]
+        },
+        {
+          "name": "Disable update prompts",
+          "description": "Hides the \"This app is out of date\" screen and the new version popup, so the patched version keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.9.7"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks 365Scores premium features (ad-free, tipster, plus, delayed notifications and notification sounds).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.9.7"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name of the patched app. Keep the original to install over the existing app. A different name installs next to it, but can break features that are tied to the original package name."
+            }
+          ],
+          "compatible_versions": [
+            "14.9.7"
+          ]
+        },
+        {
+          "name": "Spoof signature",
+          "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.9.7"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Shazam",
+      "package": "com.shazam.android",
+      "patches": [
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics event logging and Crashlytics crash reporting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.63.0-261008"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed. Shazam's Sign in with Google needs it. Shazam's automatic sign-in attempts are skipped, because MicroG RE would show them as an account chooser; use the Sign in with Google button instead.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "16.63.0-261008"
+          ]
+        },
+        {
+          "name": "Open in Morphe YouTube apps",
+          "description": "Makes \"Open in YouTube Music\" and \"Open in YouTube\" open the Morphe-patched apps when they are installed, falling back to the stock apps otherwise.",
+          "use": true,
+          "options": [
+            {
+              "key": "youTubeMusicPackage",
+              "description": "Package name of the patched YouTube Music app that \"Open in YouTube Music\" should open."
+            },
+            {
+              "key": "youTubePackage",
+              "description": "Package name of the patched YouTube app that \"Open in YouTube\" should open."
+            }
+          ],
+          "compatible_versions": [
+            "16.63.0-261008"
+          ]
+        },
+        {
+          "name": "Spoof signature",
+          "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working. Also connects Shazam to Spotify through Spotify's login page in a browser tab instead of the Spotify app, which rejects the patched app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.63.0-261008"
           ]
         }
       ]
@@ -283,26 +1010,11 @@
       "patches": [
         {
           "name": "Block marketing notifications",
-          "description": "Blocks promotional and marketing prompts and modals.",
+          "description": "Blocks in-app promotional prompts, modals, promotion banners and Firebase In-App Messaging popups. Note: this only affects in-app promotions. Match-alert push delivery on re-signed builds needs \"GmsCore support\" with MicroG RE (issue #25).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.07.27",
-            "26.08.24",
-            "26.09.07",
-            "26.09.14"
-          ]
-        },
-        {
-          "name": "Disable ads",
-          "description": "Disables banner, interstitial, feed, native, preroll and rewarded ads.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.07.27",
-            "26.08.24",
-            "26.09.07",
-            "26.09.14"
+            "26.10.05"
           ]
         },
         {
@@ -311,34 +1023,75 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.07.27",
-            "26.08.24",
-            "26.09.07",
-            "26.09.14"
+            "26.10.05"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, interstitial, feed, native, preroll and rewarded ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.05"
+          ]
+        },
+        {
+          "name": "Disable rating prompts",
+          "description": "Stops the in-app rating dialog that opens after repeated app starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.05"
           ]
         },
         {
           "name": "Disable telemetry",
-          "description": "Disables AppsFlyer and Firebase Analytics event logging, plus Crashlytics crash reporting.",
+          "description": "Disables AppsFlyer and Firebase Analytics (including its automatic events), plus Crashlytics crash reporting.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.07.27",
-            "26.08.24",
-            "26.09.07",
-            "26.09.14"
+            "26.10.05"
           ]
         },
         {
           "name": "Enable Premium",
-          "description": "Unlocks AI insights and premium features locked behind the Sofascore Plus/Pro subscription.",
+          "description": "Marks the account as premium in the app. Note: AI insights and other premium content are served by Sofascore's servers for paying accounts and are not unlocked; use \"Disable ads\" for an ad-free app.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.07.27",
-            "26.08.24",
-            "26.09.07",
-            "26.09.14"
+            "26.10.05"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name of the patched app. Keep the original to install over the existing app. A different name installs next to it, but can break features that are tied to the original package name."
+            }
+          ],
+          "compatible_versions": [
+            "26.10.05"
+          ]
+        },
+        {
+          "name": "Hide betting content",
+          "description": "Hides odds, bookmaker links and betting offers: odds in lists and match pages, the Odds tabs, Bet365 sign-up links and the promotions for streaming, tickets and betting.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.05"
+          ]
+        },
+        {
+          "name": "Spoof signature",
+          "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.05"
           ]
         }
       ]
@@ -349,11 +1102,11 @@
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Disables banner, interstitial, native and rewarded ads.",
+          "description": "Disables banner, interstitial, rewarded, app-open and native ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.2.0"
+            "6.3.0"
           ]
         },
         {
@@ -362,7 +1115,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.2.0"
+            "6.3.0"
           ]
         }
       ]
@@ -377,7 +1130,175 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.85"
+            "4.87"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Truecaller",
+      "package": "com.truecaller",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Hides banner and native ads and the ad slots in the call log and inbox, and turns off interstitial and app-open ads, so actions such as Click to WhatsApp run at once. Also turns off the remaining ad checks (including rewarded ads), the ad campaign and ad config syncs, the \"Explore Truecaller Premium\" row in the contacts list and the \"Recommended Offers\" (Offer Hub) entry.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Disable contact upload",
+          "description": "Stops Truecaller from sending your saved contacts' numbers to its servers (chat contact discovery, friends' Premium status and the Call Assistant whitelist) and hides the contact editor's name suggestion upload. Contacts, dialer search and caller ID keep working. Truecaller Chat no longer finds which of your contacts use it, and with the Call Assistant your saved contacts are no longer whitelisted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Turns off the app start tracker, CleverTap (event tracking, its SDK start, profile refresh and CleverTap marketing pushes), AppsFlyer attribution, Firebase Analytics (including advertising ID collection), Crashlytics crash reports and Firebase Sessions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Disable update prompts",
+          "description": "Stops the Google Play in-app update prompts and the app's own \"update required\" page, so the app does not block you from using the patched version.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks the Premium interface and the Premium features that are checked on the device. Features backed by Truecaller's servers (Call Assistant, family sharing, Who viewed / searched for me data, Identify AI, cloud call recording, fraud insurance, the verified badge) are reported as unavailable.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Fix T9 contact search",
+          "description": "Builds Truecaller's T9 dialer search index for new contacts each time the app opens, instead of waiting for the 12-hour background job. Helps when T9 finds no saved contacts after a fresh install.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed. Truecaller's Google sign-in and Google Drive backup need it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide Assistant tab",
+          "description": "Turns off the Call Assistant feature, which removes the Assistant tab.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide Blocking tab",
+          "description": "Removes the Blocking tab from the bottom bar. Spam blocking keeps working.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide Messages tab",
+          "description": "Removes the Messages tab from the bottom bar and always opens Calls. SMS notifications still open their conversation. When Calls is the only tab left, the bottom bar shrinks to the height of the system navigation bar.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide Premium tab",
+          "description": "Removes the Premium tab from the bottom bar and the Premium entry from the Settings screen.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide Scam feed",
+          "description": "Turns off the Scam Feed, which removes its tab and menu entry and stops its notifications.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide Wear OS settings",
+          "description": "Removes the \"Truecaller for Wear OS\" entry from the Settings screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide business media",
+          "description": "Hides the brand images and promo video on business contact details, and the verified business campaign cards in contact details and on the in-call and after-call screens. The description, website and call, message, save and block buttons stay.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Hide family button",
+          "description": "Turns off Family Protect, which removes the family button at the top of the home screen and its onboarding and notifications.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Restore classic call log",
+          "description": "Experimental: turns off the redesigned call log, which brings back the classic call log and its \"Frequently called\" setting. Swipe right to call and swipe left for SMS stay available.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Spoof signature",
+          "description": "Makes the app report its original signing certificate to itself, so Firebase and Google APIs restricted to the original app keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
+          ]
+        },
+        {
+          "name": "Use SMS for verification codes",
+          "description": "Reads the phone verification code from the SMS inbox instead of Google's SMS Retriever, for devices without Google Play services or with MicroG. Phone verification can still fail on modified builds, because Truecaller's servers check the app.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.40.5"
           ]
         }
       ]
@@ -398,6 +1319,54 @@
       ]
     },
     {
+      "app_name": "Yahoo Sports",
+      "package": "com.yahoo.mobile.client.android.sportacular",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Hides ad cards on the home, scores, game, team and league screens, above articles and on video screens, turns off Taboola stream ads and removes video pre-roll ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.3"
+          ]
+        },
+        {
+          "name": "Hide betting promotions",
+          "description": "Hides the sportsbook promotion banner.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "#Notepad",
+      "package": "com.ztnstudio.notepad",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Stops the bundled Calldorado ad SDK: no in-app ads and no after-call ad screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.4.3.19019"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks #Notepad premium and hides the paywall and in-app ad slots.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.4.3.19019"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "OneFootball",
       "package": "de.motain.iliga",
       "patches": [
@@ -407,7 +1376,91 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "15.142.0"
+            "15.146.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Transfermarkt",
+      "package": "de.transfermarkt.v2",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner, in-article and interstitial ads, the betting odds banners and the Outbrain recommendations.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.3.2"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Blocks Google Analytics and Tag Manager, Adobe Analytics, INFOnline and m6r tracking, and hides the advertising ID from the web app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.3.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Easy Homescreen",
+      "package": "easy.launcher",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes banner, native and app-open ads and skips the ad consent form.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.28"
+          ]
+        },
+        {
+          "name": "Disable default launcher reminder",
+          "description": "Stops the notification that asks you to set the app as the default launcher. It only appears while another launcher is the default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.10.28"
+          ]
+        },
+        {
+          "name": "Disable promotions",
+          "description": "Hides the GetJar and SportsPass partner banners, tiles, search cards and suggestions, the \"Discover\" app offers card and the keyboard promotion notification.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.28"
+          ]
+        },
+        {
+          "name": "Disable rating prompts",
+          "description": "Stops the app's feedback (sentiment) dialog and the Google Play review request.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.28"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics and Crashlytics, Amplitude, Braze, Singular and Rudderstack tracking. Push notifications keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.28"
+          ]
+        },
+        {
+          "name": "Hide sponsored content",
+          "description": "Removes sponsored links, sites, suggestions and articles from search and the news feed. The news feed is built from the sponsored article list, so it may show fewer posts or none at all.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.10.28"
           ]
         }
       ]
@@ -422,7 +1475,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.3.61.0907"
+            "1.3.63.0921"
           ]
         },
         {
@@ -431,7 +1484,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.3.61.0907"
+            "1.3.63.0921"
           ]
         }
       ]
@@ -446,7 +1499,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.2337"
+            "1.2338"
           ]
         }
       ]
@@ -456,12 +1509,141 @@
       "package": "eu.livesport.flashscore_com",
       "patches": [
         {
+          "name": "Block marketing popups",
+          "description": "Blocks the server-configured promo dialog, Firebase In-App Messaging popups and in-app promo strips. Push notifications are not affected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.2"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Disables Google ads, in-app ad slots and video ads. Bookmaker strips and odds are hidden by Hide betting content.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.2"
+          ]
+        },
+        {
+          "name": "Disable rating prompts",
+          "description": "Hides the rating banner and the in-app rating dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.2"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables AppsFlyer, Apptentive, Crashlytics, Firebase Analytics and Performance collection, and Facebook automatic event logging. Facebook Login and push notifications keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.2"
+          ]
+        },
+        {
+          "name": "Disable update prompts",
+          "description": "Hides the \"update available\" and \"update required\" dialogs. An old version may still stop working if Flashscore's servers drop support for it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.2"
+          ]
+        },
+        {
+          "name": "Hide betting content",
+          "description": "Hides odds in match lists and match summaries, the match and league Odds tabs, the league Winner Odds block, bet buttons, the bookmaker strip, betting bonuses and the gift icon, bookmakers next to TV channels and gambling notices.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Castbox",
+      "package": "fm.castbox.audiobook.radio.podcast",
+      "patches": [
+        {
           "name": "Disable ads",
           "description": "Disables banner, interstitial, native, app-open and rewarded ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.9.2"
+            "11.26.1-260915290"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CREX",
+      "package": "in.cricketexchange.app.cricketexchange",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Blocks every Google Mobile Ads load (banner, native, interstitial, rewarded, app-open and the networks mediated through it), CREX's own Parth house ads and Meta Audience Network banners. Rewarded videos never load, so their rewards are not granted; use with Enable Premium, which makes the app hide its ad slots.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.07"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Treats the CREX Premium subscription as active on this device, which removes ads (including in the floating score) wherever the app checks the plan. The CREX Premium menu entry still asks you to sign in and shows no plan, and server-checked content such as FanCode live streams stays locked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.07"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "L'Équipe",
+      "package": "lequipe.fr",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Stops every Google Mobile Ads banner, interstitial, native, rewarded and app-open ad from loading, including the Teads and Equativ ads it mediates. Taboola sponsored content and ads inside web pages are not removed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.69.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Via",
+      "package": "mark.via.gp",
+      "patches": [
+        {
+          "name": "Disable telemetry",
+          "description": "Stops Firebase Analytics events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.3.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "BlueMail",
+      "package": "me.bluemail.mail",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, native, interstitial, rewarded and app-open ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.2.408"
           ]
         }
       ]
@@ -476,31 +1658,22 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.0.0-rc1-play"
+            "1.0.1-rc1-play"
           ]
         }
       ]
     },
     {
-      "app_name": "Saphe Link",
-      "package": "my.saphelink",
+      "app_name": "Brevent",
+      "package": "me.piebridge.brevent",
       "patches": [
         {
-          "name": "Disable telemetry",
-          "description": "Disables Braze custom event tracking. Firebase Analytics/Crashlytics are covered by the universal \"Disable Firebase Analytics & Crashlytics\" patch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.6.0"
-          ]
-        },
-        {
           "name": "Enable Premium",
-          "description": "Unlocks all features locked behind the Saphe subscription paywall (navigation, car integration, speed limits, voice alarms, roadwork detection, animal nearby, slow-moving traffic, emergency vehicle, etc.).",
+          "description": "Unlocks all donation-gated settings, including dynamic GMS and suspend. Note: patched builds cannot validate genuine donation tokens, so the Brefoil count is forced; use the official build to have a real donation recognized.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.6.0"
+            "4.2.31.1"
           ]
         }
       ]
@@ -515,7 +1688,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.6.18"
+            "6.6.20"
           ]
         }
       ]
@@ -530,7 +1703,31 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.4.5"
+            "5.4.10"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SmartWOD Timer",
+      "package": "net.smartwod.timer",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, interstitial, rewarded and app-open ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.46.9"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Premium+ by reporting the lifetime and ad-free purchases as owned.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.46.9"
           ]
         }
       ]
@@ -545,7 +1742,22 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "11.0.101"
+            "11.0.125"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "OneCricket",
+      "package": "one.cricket.app",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Disables banner, interstitial, native/inline and app-open ads and hides the empty ad slots.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
           ]
         }
       ]
@@ -566,12 +1778,216 @@
       ]
     },
     {
+      "app_name": "Firefox",
+      "package": "org.mozilla.firefox",
+      "patches": [
+        {
+          "name": "Disable telemetry",
+          "description": "Stops Glean telemetry uploads (including the pings that ignore the in-app switch), the daily usage ping, Adjust marketing attribution, Sentry and Socorro crash report uploads and Nimbus experiment downloads. Crashes still show the local crash screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Enable about:config",
+          "description": "Opens about:config in release builds, where Firefox normally blocks it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Hide promotional prompts",
+          "description": "Stops Firefox's own promotions: in-app messages and their notifications, microsurveys, the \"Set as default browser\" prompts (at start, in onboarding and in the follow-up onboarding days), the onboarding sign-in page and the rating prompt. Sign-in, Set as default browser and Rate on Google Play in settings keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Hide sponsored content",
+          "description": "Hides the sponsored shortcuts on the home screen, sponsored stories and sponsored Firefox Suggest results in the address bar. Regular stories, shortcuts and suggestions stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Keep background tabs loaded",
+          "description": "Experimental: keeps the content processes of background tabs at background priority instead of letting them drop to idle, so Android is less likely to kill them and tabs reload less often. Raises memory use, and cannot stop Android from killing the whole app. Shows the last screenshot of a tab while it reloads.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Unlock secret settings",
+          "description": "Reveals the hidden debug menu without tapping the Firefox logo five times: Secret Settings, Install add-on from file, the custom add-on collection, Nimbus experiments, the Sync debug menu and Gecko logs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Firefox Focus",
+      "package": "org.mozilla.focus",
+      "patches": [
+        {
+          "name": "Add-on support",
+          "description": "Adds an Extensions menu to install and manage uBlock Origin, Violentmonkey and Tampermonkey, and shows their popups. Add-ons run in private mode, like every Focus tab; their data survives Erase. Installed add-ons are checked for updates from addons.mozilla.org at most once a day.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Disable rating prompts",
+          "description": "Stops the Google Play rating request that opens after a few app starts, and the Play Store page it opens when that request fails.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Stops the daily usage ping, even when its setting is turned on, and Nimbus experiment downloads. The other Glean telemetry is already off in Firefox Focus. Crash reports are still sent only when you choose to send them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Enable about:config",
+          "description": "Enables about:config, the page for viewing and changing the browser engine's preferences. Type about:config in the address bar to open it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        },
+        {
+          "name": "Hide promotional prompts",
+          "description": "Hides the search widget promotion that opens after erasing your history and the tip bubbles (\"Start browsing\", tracking protection, erase tabs, privacy settings).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "158.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Hyperion Launcher",
+      "package": "projekt.launcher",
+      "patches": [
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Hyperion Premium features without a purchase or the Launcher Key app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.2.7"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Digi Sport",
+      "package": "ro.rcsrds.digisport",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner ads and empty ad slots in articles, listings, results and the live programme list, and the pre-roll ads before live channels and videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Disable live stream ads",
+          "description": "Plays live channels from the plain stream instead of the Google DAI stream with inserted ads. Turn this off if a live channel stops playing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables Firebase Analytics, Crashlytics, Performance Monitoring and Piano (Cxense) page events. Push notifications keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Disable update prompts",
+          "description": "Stops the Play Store in-app update prompt. An old version may still stop working if Digi Sport's servers drop support for it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Hide betting odds",
+          "description": "Hides the bookmaker odds block in soccer match rows.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Hide promotions",
+          "description": "Hides the cross-promotion articles from other RCS&RDS apps below articles and the \"Exclusive online · live\" bar on Home.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Hide sponsored articles",
+          "description": "Hides sponsored articles in section listings and in the article widgets below an article.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        },
+        {
+          "name": "Skip ad consent form",
+          "description": "Skips Google's ad consent form at startup and in the GDPR screens, and hides the then empty ad consent section in Settings. Use it together with Disable ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.15"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "IPTV",
       "package": "ru.iptvremote.android.iptv",
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Disables Wortise ad SDK initialization, blocking banner, interstitial, native and mediated ads (AppLovin, Yandex, Google Mobile Ads, etc.).",
+          "description": "Switches the app to its built-in no-ads provider, removing banner, interstitial and video pre-roll ads (Yandex, Wortise and mediated networks).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -580,7 +1996,7 @@
         },
         {
           "name": "Enable Premium",
-          "description": "Forces IptvFreeApplication's pro/trial gate to return true, keeping pro features unlocked after the 20-minute trial expires and suppressing the in-app review / buy-pro upsell prompts.",
+          "description": "Unlocks the Pro-only access control settings (parental PIN, locking playlist/EPG/proxy/import-export/recording settings, hiding playlist URLs) and suppresses the in-app review prompt. Start on boot and autoplay last channel are only implemented in the separate IPTV Pro app and stay unavailable.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -588,12 +2004,42 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "IrCode Finder",
+      "package": "ru.wasiliysoft.ircodefindernec",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the banner and interstitial ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.17.0 build 206 InAPP"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "The Wall Street Journal",
+      "package": "wsj.reader_sp",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes the display and native ads from section fronts, articles and market pages, without leaving empty ad slots, and the pre-roll ads before videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.43.0.33886"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "heval patches",
-  "fingerprint": "f68d9925ccfa698caffae71bda9c19badeee7298bb43d894ae008d276bedf30d",
-  "release_notes": "## [1.6.0-dev.4](https://github.com/heval99/Heval-Morphe-Patches/compare/v1.6.0-dev.3...v1.6.0-dev.4) (2026-09-30)\n\n### 🐛 Bug Fixes\n\n* **sofascore:** keep Facebook SDK initialized so login works (issue [#24](https://github.com/heval99/Heval-Morphe-Patches/issues/24)) ([f2d5544](https://github.com/heval99/Heval-Morphe-Patches/commit/f2d5544168a33a0255febfbff37c409658952582))\n",
-  "release_tag": "v1.6.0-dev.4",
-  "release_date": "2026-09-30T20:16:59Z",
-  "isPreRelease": true
+  "fingerprint": "0fafa0e53636c3a3c4db071651df1af235feba73f97193be449ce6f9d7bfecb5",
+  "release_notes": "## [1.18.0](https://github.com/heval99/Heval-Morphe-Patches/compare/v1.17.0...v1.18.0) (2026-10-22)\n\n### 🐛 Bug Fixes\n\n* **ads:** make Disable ads block what it promises in Castbox, Podcast Republic, Pi Music Player, BeSoccer, Expert Player and Moneycontrol ([40ac9d3](https://github.com/heval99/Heval-Morphe-Patches/commit/40ac9d3c3d730801d6ae3b39c01b3f3a219e7242))\n* fail loudly on drift and harden GmsCore support ([7dd00a6](https://github.com/heval99/Heval-Morphe-Patches/commit/7dd00a6284a765eb924d40017e33cf3baf28ef32))\n* **kakaotalk,line:** remove KakaoTalk and LINE support ([dd9dd18](https://github.com/heval99/Heval-Morphe-Patches/commit/dd9dd188ef4adbfb5597f779b4adff9d2100c2ab))\n* keep only the latest verified version per app and correct the patch notes ([d0f5354](https://github.com/heval99/Heval-Morphe-Patches/commit/d0f5354314601b483cdf0007ded73092668f1ad6))\n* **shazam:** open the Spotify login in a browser tab ([7075b7f](https://github.com/heval99/Heval-Morphe-Patches/commit/7075b7fe3815148b016ba8ac435f6020b90ba7a2)), closes [#62](https://github.com/heval99/Heval-Morphe-Patches/issues/62)\n* **sofascore,shazam,brave,truecaller:** complete the telemetry, Web Discovery and server-backed premium gates ([8708913](https://github.com/heval99/Heval-Morphe-Patches/commit/8708913a197aba881423f7352f16847619762762))\n\n### ✨ New Features\n\n* **truecaller:** add Disable contact upload ([94b5eca](https://github.com/heval99/Heval-Morphe-Patches/commit/94b5ecaec85fcf23ac97302f4ea6ebf4b03231cb))\n* **wemuslim:** add WeMuslim 3.5.4 support ([ef5b416](https://github.com/heval99/Heval-Morphe-Patches/commit/ef5b416ccd58b78a643e9d8fae74388a48013822))\n",
+  "release_tag": "v1.18.0",
+  "release_date": "2026-10-22T15:14:16Z",
+  "isPreRelease": false
 }

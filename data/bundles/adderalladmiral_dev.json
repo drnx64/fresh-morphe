@@ -1,0 +1,103 @@
+{
+  "bundle": "adderalladmiral",
+  "channel": "dev",
+  "repo_url": "https://github.com/adderalladmiral/psychonaut-journal-patches",
+  "created_at": "2026-09-20T06:52:51Z",
+  "version": "1.0.1-dev.1",
+  "description": "## 1.0.0 (2026-09-02)\n\n### 🐛 Bug Fixes\n\n* Correct README punctuation and formatting ([3e21a3c](https://github.com/adderalladmiral/test-actual/commit/3e21a3c9132e7fd8842db60cd4461e49cc943ee5))\n* Merge pull request [#10](https://github.com/adderalladmiral/test-actual/issues/10) from adderalladmiral/dev ([f5d49d2](https://github.com/adderalladmiral/test-actual/commit/f5d49d2c8062b3a5eec83239dda4042a5cb108de))",
+  "apps": [
+    {
+      "app_name": "Journal",
+      "package": "com.isaakhanimann.journal",
+      "patches": [
+        {
+          "name": "Clone",
+          "description": "Renames the package and app label so the patched build installs alongside a stock Journal instead of replacing it.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "A new package name for the patched app."
+            },
+            {
+              "key": "appName",
+              "description": "A new app name (label). Entering \"Journal\" skips changing the label."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Custom substances database",
+          "description": "Replaces the bundled Substances.json asset with your own file.",
+          "use": false,
+          "options": [
+            {
+              "key": "substancesFile",
+              "description": "Absolute path on your machine to the replacement Substances.json file."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Hide bottom tabs",
+          "description": "Lets you individually hide the Stats, Drugs and Safer tabs from the bottom navigation bar. Journal and Settings can't be hidden.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideStats",
+              "description": "Removes the Stats tab from the bottom navigation bar."
+            },
+            {
+              "key": "hideDrugs",
+              "description": "Removes the Drugs tab from the bottom navigation bar."
+            },
+            {
+              "key": "hideSafer",
+              "description": "Removes the Safer tab from the bottom navigation bar."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Hide feedback section",
+          "description": "Removes the \"Feedback\" section (FAQ, bug report, copy support info) from Settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Purge RevenueCat",
+          "description": "Stops the app from ever talking to RevenueCat's servers: skips SDK initialization on startup and neuters the app's periodic \"refresh entitlement\" network calls. Requires Unlock premium to also be enabled - without it, premium status has no way to ever resolve as active.",
+          "use": false,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Remove internet permission",
+          "description": "Removes the ACCESS_NETWORK_STATE permission, and optionally INTERNET too.",
+          "use": true,
+          "options": [
+            {
+              "key": "removeInternet",
+              "description": "Also removes the INTERNET permission. Requires \"Purge RevenueCat\" to also be enabled - without it, RevenueCat's SDK crashes on startup when it can't find INTERNET declared in the manifest."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Unlock premium",
+          "description": "Forces the RevenueCat \"premium\" entitlement check to always resolve as active, including before the app has ever reached RevenueCat's servers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        }
+      ]
+    }
+  ],
+  "patches_name": "PsychonautWiki Journal Patches",
+  "fingerprint": "9b9ab5c7ac5110425a0364ac24270d6d71fde8519c5608cbfb8d46eba0211914",
+  "release_notes": "## [1.0.1-dev.1](https://github.com/adderalladmiral/psychonaut-journal-patches/compare/v1.0.0...v1.0.1-dev.1) (2026-09-20)\n\n### 🐛 Bug Fixes\n\n* Changed Target APK version to 15.5 (2) ([009757a](https://github.com/adderalladmiral/psychonaut-journal-patches/commit/009757afd08c75e90eae29f3954764fa7c4ad0ed))\n* Changed target input APK version to 15.5 ([7af2762](https://github.com/adderalladmiral/psychonaut-journal-patches/commit/7af276291f93f4247116ac4bf22f5aabfa47a53b))\n",
+  "release_tag": "v1.0.1-dev.1",
+  "release_date": "2026-09-20T06:52:51Z",
+  "isPreRelease": true
+}

@@ -1,0 +1,1355 @@
+{
+  "bundle": "angeldark92",
+  "channel": "dev",
+  "repo_url": "https://github.com/AngelDark92/xr-porting-hub",
+  "created_at": "2026-10-23T13:49:15Z",
+  "version": "2.0.1-dev.1",
+  "description": "## [2.0.0](https://github.com/AngelDark92/xr-porting-hub/compare/v1.32.1...v2.0.0) (2026-10-22)\n\n### ⚠ BREAKING CHANGES\n\n* Steam Link 2.0.20/5001812, 2.0.21/5001968 and 2.0.22/5002244 are\nno longer supported, and the patches \"Full-FOV foveal canvas (experimental)\" and\n\"OpenXR CPU and GPU BOOST (2.0.21/2.0.22)\" no longer exist.\n\n### 🐛 Bug Fixes\n\n* Add cavecrew skill and morphe-patches skill documentation ([9784e94](https://github.com/AngelDark92/xr-porting-hub/commit/9784e9443a80e998f4b1ac932f00992936cf8d7a))\n* edited Steam Link identity patches to unify model handling ([a5a9d8c](https://github.com/AngelDark92/xr-porting-hub/commit/a5a9d8cefc5d8935c9baa0a913750378e528e966))\n* enhance Android compilation and runtime behavior for GXR spacewarp layer ([09dc946](https://github.com/AngelDark92/xr-porting-hub/commit/09dc946ff41baaae7e0d76c8f02a48d1879cca16))\n\n### ✨ New Features\n\n* **foveal:** support 2.0.20/5001712 and 2.0.23/5002363 ([d426ee2](https://github.com/AngelDark92/xr-porting-hub/commit/d426ee22c3ee192f98591900fcaa94e8d5ef1a32))\n* implement context-safe resource management and ownership tracking for ASW sessions ([246b882](https://github.com/AngelDark92/xr-porting-hub/commit/246b882300f1250f0a439ee83d1eea0ee0e9ad8e))\n* retire half-rate synthesis mode and update related logic in VTS ([68048aa](https://github.com/AngelDark92/xr-porting-hub/commit/68048aa2d20107f95d7676b08db364d6f254708d))\n* retire Steam Link 5001812, 5001968 and 5002244 support ([6d19288](https://github.com/AngelDark92/xr-porting-hub/commit/6d19288bcc91a223ca6277c98f7428fbde19c528))\n* **spacewarp:** implement dormant fast path and carrier generation tracking ([68e9d1a](https://github.com/AngelDark92/xr-porting-hub/commit/68e9d1adbec53b98f218c354505b93cf27ddd8c3))\n* **steamlink:** make OpenXR BOOST experimental ([9b1d581](https://github.com/AngelDark92/xr-porting-hub/commit/9b1d581f0a934c3ad3314da9ecfc84b3f2a0f4b3))\n* **steamlink:** restore support for all five builds ([9a75e32](https://github.com/AngelDark92/xr-porting-hub/commit/9a75e32297b43c70907703a2c37c7ac0520ca07d))\n* update codecs support to version 7 with enhanced stability and crash fixes ([ba5c178](https://github.com/AngelDark92/xr-porting-hub/commit/ba5c178ff463717208abc33bd1edea67841bb669))\n* update codecs support to version 8 with stability improvements and crash fixes ([c9e0efa](https://github.com/AngelDark92/xr-porting-hub/commit/c9e0efa88e7005d37665662bd1c770a09b01c22e))",
+  "apps": [
+    {
+      "app_name": "4XVR",
+      "package": "cn.vr4p.oculus4xvrplayerov",
+      "patches": [
+        {
+          "name": "5.1-channel audio bridge (4XVR)",
+          "description": "Switches 4XVR video playback to 5.1 surround sound on the headset speakers. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Audio bridge payload (4XVR)",
+          "description": "Adds the bundled sound engine that lets 4XVR play 5.1 surround sound on the headset speakers. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Frame-synced render dispatch (4XVR)",
+          "description": "Syncs scene changes and screen updates to the display's frame rhythm, keeping playback smooth. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Galaxy XR controller models (4XVR)",
+          "description": "Replaces the Quest 3 controller artwork and shapes with the Galaxy XR controller models. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Galaxy XR launch compatibility (4XVR)",
+          "description": "Installs the standard XR files 4XVR needs to start on Galaxy XR instead of closing right after opening. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Galaxy XR launcher icon (4XVR)",
+          "description": "Restores the proper 4XVR icon on the device's app launcher and in the patch manager. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Galaxy XR refresh profile (72 Hz, 4XVR)",
+          "description": "Runs 4XVR's picture at Galaxy XR's native 72 Hz rate instead of 60 Hz. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "HDR pipeline payload (4XVR)",
+          "description": "Adds the HDR video component and its open-source notices; built on libplacebo (LGPL-2.1-or-later). Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Meta platform decoupling (4XVR)",
+          "description": "Keeps the Meta store calls out of the way, so 4XVR starts instead of hanging on its splash screen. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Popup refresh on resume (4XVR)",
+          "description": "Re-checks the first-launch prompts after you return from system settings. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Premium unlock (4XVR, experimental)",
+          "description": "Unlocks premium playback without a store check on Galaxy XR, where the store cannot be reached. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Render dispatch payload (4XVR)",
+          "description": "Adds the scene-timing engine that keeps 4XVR visuals and screens in step with the frames. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Startup and UI continuity helper (4XVR)",
+          "description": "Keeps the startup greeting and on-screen notifications working when the app rebuilds its display. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Subtitle suite (4XVR)",
+          "description": "Moves subtitles around, enlarges the subtitle panel and loads your own subtitle font. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Subtitle suite payload (4XVR)",
+          "description": "Adds the subtitle engine used by the 4XVR subtitle controls. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "libplacebo HDR pipeline (4XVR)",
+          "description": "HDR videos play with their full colors and brightness. Builds: 4XVR 2.0.22/20022. Based on @logkim1's 4XVR-GalaxyXR patches: https://github.com/logkim1/4XVR-GalaxyXR.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Steam Link",
+      "package": "com.valvesoftware.steamlinkvr",
+      "patches": [
+        {
+          "name": "Android XR native permission names",
+          "description": "Swaps the built-in Oculus face and eye permission names for Android XR ones. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Android XR native permission names",
+          "description": "Swaps the built-in Oculus face and eye permission names for Android XR ones. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Android XR native permission names",
+          "description": "Swaps the built-in Oculus face and eye permission names for Android XR ones. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Android XR native permission names",
+          "description": "Swaps the built-in Oculus face and eye permission names for Android XR ones. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Appear on top (legacy)",
+          "description": "Lets Steam Link draw its panel over other screens (legacy fallback). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Appear on top (legacy)",
+          "description": "Lets Steam Link draw its panel over other screens (legacy fallback). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Appear on top (legacy)",
+          "description": "Lets Steam Link draw its panel over other screens (legacy fallback). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Appear on top (legacy)",
+          "description": "Lets Steam Link draw its panel over other screens (legacy fallback). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Blue-noise dithering",
+          "description": "Adds fine grain that hides color steps; center and background can be toggled. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "fovea",
+              "description": "Fine grain in the center of the view only. Uses the exact stock video shader or an OLED calibration; turn that patch's VD-like center option off when this is on."
+            },
+            {
+              "key": "background",
+              "description": "Fine grain over the whole background, including under the center overlay on top; the center's own grain choice is not touched."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Blue-noise dithering",
+          "description": "Adds fine grain that hides color steps; center and background can be toggled. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "fovea",
+              "description": "Fine grain in the center of the view only. Uses the exact stock video shader or an OLED calibration; turn that patch's VD-like center option off when this is on."
+            },
+            {
+              "key": "background",
+              "description": "Fine grain over the whole background, including under the center overlay on top; the center's own grain choice is not touched."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Blue-noise dithering",
+          "description": "Adds fine grain that hides color steps; center and background can be toggled. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "fovea",
+              "description": "Fine grain in the center of the view only. Uses the exact stock video shader or an OLED calibration; turn that patch's VD-like center option off when this is on."
+            },
+            {
+              "key": "background",
+              "description": "Fine grain over the whole background, including under the center overlay on top; the center's own grain choice is not touched."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Blue-noise dithering",
+          "description": "Adds fine grain that hides color steps; center and background can be toggled. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "fovea",
+              "description": "Fine grain in the center of the view only. Uses the exact stock video shader or an OLED calibration; turn that patch's VD-like center option off when this is on."
+            },
+            {
+              "key": "background",
+              "description": "Fine grain over the whole background, including under the center overlay on top; the center's own grain choice is not touched."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Blue-noise dithering",
+          "description": "Adds fine grain that hides color steps; center and background can be toggled. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "fovea",
+              "description": "Fine grain in the center of the view only. Uses the exact stock video shader or an OLED calibration; turn that patch's VD-like center option off when this is on."
+            },
+            {
+              "key": "background",
+              "description": "Fine grain over the whole background, including under the center overlay on top; the center's own grain choice is not touched."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Renames the app so it can install next to the original. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Type a short name like Galaxy XR to add it to the app name as a package suffix, or a full package name like com.valvesoftware.steamlinkvr.galaxyxr."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Renames the app so it can install next to the original. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Type a short name like Galaxy XR to add it to the app name as a package suffix, or a full package name like com.valvesoftware.steamlinkvr.galaxyxr."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Renames the app so it can install next to the original. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Type a short name like Galaxy XR to add it to the app name as a package suffix, or a full package name like com.valvesoftware.steamlinkvr.galaxyxr."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Renames the app so it can install next to the original. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Type a short name like Galaxy XR to add it to the app name as a package suffix, or a full package name like com.valvesoftware.steamlinkvr.galaxyxr."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Controller velocity frame",
+          "description": "Fixes thrown-object directions by rotating controller speeds into the frame SteamVR expects. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Angular velocity is local to the streamed pose on 2.0.23/5002363 and in the base space on older builds; measured on 2.0.23/5002363. Details: https://github.com/4uva4ek.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller velocity frame",
+          "description": "Fixes thrown-object directions by rotating controller speeds into the frame SteamVR expects. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Angular velocity is local to the streamed pose on 2.0.23/5002363 and in the base space on older builds; measured on 2.0.23/5002363. Details: https://github.com/4uva4ek.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller velocity frame",
+          "description": "Fixes thrown-object directions by rotating controller speeds into the frame SteamVR expects. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Angular velocity is local to the streamed pose on 2.0.23/5002363 and in the base space on older builds; measured on 2.0.23/5002363. Details: https://github.com/4uva4ek.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Controller velocity frame",
+          "description": "Fixes thrown-object directions by rotating controller speeds into the frame SteamVR expects. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Angular velocity is local to the streamed pose on 2.0.23/5002363 and in the base space on older builds; measured on 2.0.23/5002363. Details: https://github.com/4uva4ek.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Controller velocity frame",
+          "description": "Fixes thrown-object directions by rotating controller speeds into the frame SteamVR expects. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Angular velocity is local to the streamed pose on 2.0.23/5002363 and in the base space on older builds; measured on 2.0.23/5002363. Details: https://github.com/4uva4ek.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Device identity",
+          "description": "Reports the Galaxy XR headset identity to SteamVR (model xrvst2ue). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Device identity",
+          "description": "Reports the Galaxy XR headset identity to SteamVR (model xrvst2ue). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Device identity",
+          "description": "Reports the Galaxy XR headset identity to SteamVR (model xrvst2ue). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Device identity",
+          "description": "Reports the Galaxy XR headset identity to SteamVR (model xrvst2ue). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Force HMD initialization gates",
+          "description": "Removes 2 startup checks that can stop headset tracking. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Force HMD initialization gates",
+          "description": "Removes 2 startup checks that can stop headset tracking. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Force HMD initialization gates",
+          "description": "Removes 2 startup checks that can stop headset tracking. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Force HMD initialization gates",
+          "description": "Removes 2 startup checks that can stop headset tracking. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Force lobby permission-state gate",
+          "description": "Skips a lobby permission check so the room screen loads. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Force lobby permission-state gate",
+          "description": "Skips a lobby permission check so the room screen loads. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Force lobby permission-state gate",
+          "description": "Skips a lobby permission check so the room screen loads. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Force lobby permission-state gate",
+          "description": "Skips a lobby permission check so the room screen loads. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Force stream XR gates",
+          "description": "Removes 3 XR checks so video can start. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Force stream XR gates",
+          "description": "Removes 3 XR checks so video can start. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Force stream XR gates",
+          "description": "Removes 3 XR checks so video can start. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Force stream XR gates",
+          "description": "Removes 3 XR checks so video can start. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "GXR face and tongue bridge",
+          "description": "Installs the VRCFT face bridge on legacy builds; on 2.0.23/5002363 it only adds tongue transport. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Valve's own expressions and tongue-out keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "GXR face and tongue bridge",
+          "description": "Installs the VRCFT face bridge on legacy builds; on 2.0.23/5002363 it only adds tongue transport. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Valve's own expressions and tongue-out keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "GXR face and tongue bridge",
+          "description": "Installs the VRCFT face bridge on legacy builds; on 2.0.23/5002363 it only adds tongue transport. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Valve's own expressions and tongue-out keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "GXR face and tongue bridge",
+          "description": "Installs the VRCFT face bridge on legacy builds; on 2.0.23/5002363 it only adds tongue transport. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Valve's own expressions and tongue-out keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "GXR face and tongue bridge",
+          "description": "Installs the VRCFT face bridge on legacy builds; on 2.0.23/5002363 it only adds tongue transport. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Valve's own expressions and tongue-out keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Galaxy XR SteamVR driver (galaxyxr)",
+          "description": "Sets Galaxy XR names in SteamVR; needs the PC-side Galaxy XR VRLink Setup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": false,
+          "options": [
+            {
+              "key": "offsetPositionCm",
+              "description": "Offsets the controller position from your grip point, in cm: x right, y up, z backward (negative = forward). Default is calibrated on Galaxy XR. Stock Quest Touch value is -0.7,-3.416,-9.607."
+            },
+            {
+              "key": "offsetRotationDeg",
+              "description": "Rotates the controller model around your grip point, in degrees: x pitch, y yaw, z roll. Stock Quest Touch value is -20.6,0,0."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Galaxy XR SteamVR driver (galaxyxr)",
+          "description": "Sets Galaxy XR names in SteamVR; needs the PC-side Galaxy XR VRLink Setup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": false,
+          "options": [
+            {
+              "key": "offsetPositionCm",
+              "description": "Offsets the controller position from your grip point, in cm: x right, y up, z backward (negative = forward). Default is calibrated on Galaxy XR. Stock Quest Touch value is -0.7,-3.416,-9.607."
+            },
+            {
+              "key": "offsetRotationDeg",
+              "description": "Rotates the controller model around your grip point, in degrees: x pitch, y yaw, z roll. Stock Quest Touch value is -20.6,0,0."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Galaxy XR SteamVR driver (galaxyxr)",
+          "description": "Sets Galaxy XR names in SteamVR; needs the PC-side Galaxy XR VRLink Setup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": false,
+          "options": [
+            {
+              "key": "offsetPositionCm",
+              "description": "Offsets the controller position from your grip point, in cm: x right, y up, z backward (negative = forward). Default is calibrated on Galaxy XR. Stock Quest Touch value is -0.7,-3.416,-9.607."
+            },
+            {
+              "key": "offsetRotationDeg",
+              "description": "Rotates the controller model around your grip point, in degrees: x pitch, y yaw, z roll. Stock Quest Touch value is -20.6,0,0."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Galaxy XR SteamVR driver (galaxyxr)",
+          "description": "Sets Galaxy XR names in SteamVR; needs the PC-side Galaxy XR VRLink Setup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": false,
+          "options": [
+            {
+              "key": "offsetPositionCm",
+              "description": "Offsets the controller position from your grip point, in cm: x right, y up, z backward (negative = forward). Default is calibrated on Galaxy XR. Stock Quest Touch value is -0.7,-3.416,-9.607."
+            },
+            {
+              "key": "offsetRotationDeg",
+              "description": "Rotates the controller model around your grip point, in degrees: x pitch, y yaw, z roll. Stock Quest Touch value is -20.6,0,0."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Galaxy XR SteamVR driver (galaxyxr)",
+          "description": "Sets Galaxy XR names in SteamVR; needs the PC-side Galaxy XR VRLink Setup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": false,
+          "options": [
+            {
+              "key": "offsetPositionCm",
+              "description": "Offsets the controller position from your grip point, in cm: x right, y up, z backward (negative = forward). Default is calibrated on Galaxy XR. Stock Quest Touch value is -0.7,-3.416,-9.607."
+            },
+            {
+              "key": "offsetRotationDeg",
+              "description": "Rotates the controller model around your grip point, in degrees: x pitch, y yaw, z roll. Stock Quest Touch value is -20.6,0,0."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Galaxy XR high-resolution 3-projection fix",
+          "description": "Permission-free high-resolution fix that leaves renderer formats, including future RGB10_A2, untouched. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Galaxy XR high-resolution 3-projection fix",
+          "description": "Permission-free high-resolution fix that leaves renderer formats, including future RGB10_A2, untouched. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Galaxy XR high-resolution 3-projection fix",
+          "description": "Permission-free high-resolution fix that leaves renderer formats, including future RGB10_A2, untouched. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Galaxy XR high-resolution 3-projection fix",
+          "description": "Permission-free high-resolution fix that leaves renderer formats, including future RGB10_A2, untouched. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Galaxy XR high-resolution 3-projection fix",
+          "description": "Permission-free high-resolution fix that leaves renderer formats, including future RGB10_A2, untouched. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Microphone input preset",
+          "description": "Switches microphone capture mode; Voice Recognition tested best. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "preset",
+              "description": "Voice Recognition was the clearest and loudest tested on Galaxy XR. Voice Performance and Unprocessed are much quieter; Voice Communication sounds more processed."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Microphone input preset",
+          "description": "Switches microphone capture mode; Voice Recognition tested best. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "preset",
+              "description": "Voice Recognition was the clearest and loudest tested on Galaxy XR. Voice Performance and Unprocessed are much quieter; Voice Communication sounds more processed."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Microphone input preset",
+          "description": "Switches microphone capture mode; Voice Recognition tested best. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "preset",
+              "description": "Voice Recognition was the clearest and loudest tested on Galaxy XR. Voice Performance and Unprocessed are much quieter; Voice Communication sounds more processed."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Microphone input preset",
+          "description": "Switches microphone capture mode; Voice Recognition tested best. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "preset",
+              "description": "Voice Recognition was the clearest and loudest tested on Galaxy XR. Voice Performance and Unprocessed are much quieter; Voice Communication sounds more processed."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Microphone input preset",
+          "description": "Switches microphone capture mode; Voice Recognition tested best. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "preset",
+              "description": "Voice Recognition was the clearest and loudest tested on Galaxy XR. Voice Performance and Unprocessed are much quieter; Voice Communication sounds more processed."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Network Optimizations",
+          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Network Optimizations",
+          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Network Optimizations",
+          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Network Optimizations",
+          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Network Optimizations",
+          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "OLED color calibration",
+          "description": "Tunes OLED color with gamma and saturation presets. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Headset verification pending.",
+          "use": true,
+          "options": [
+            {
+              "key": "profile",
+              "description": "Presets gamma and saturation. Applies to both layers, or only the background when a VD-like center option is on."
+            },
+            {
+              "key": "gamma",
+              "description": "Used with the Custom profile. Higher darkens dark tones. Range: 0.50 to 2.50."
+            },
+            {
+              "key": "saturation",
+              "description": "Used with the Custom profile. Higher makes colors more intense. Range: 0.00 to 3.00."
+            },
+            {
+              "key": "foveaVdLike",
+              "description": "A sharper center look (VD-style), keeping Valve's color correction and 8-bit output. Skips the profile above in the center; the center gamma below still applies. Turn off when Blue-noise dithering's center option is on."
+            },
+            {
+              "key": "fovealGamma",
+              "description": "Extra gamma for the center only. 1.00 = unchanged; higher darkens dark tones. Try 1.02 first for a slightly lighter center. The background keeps the profile above; this is a manual tweak, not a verified seam fix."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "OLED color calibration",
+          "description": "Tunes OLED color with gamma and saturation presets. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Headset verification pending.",
+          "use": true,
+          "options": [
+            {
+              "key": "profile",
+              "description": "Presets gamma and saturation. Applies to both layers, or only the background when a VD-like center option is on."
+            },
+            {
+              "key": "gamma",
+              "description": "Used with the Custom profile. Higher darkens dark tones. Range: 0.50 to 2.50."
+            },
+            {
+              "key": "saturation",
+              "description": "Used with the Custom profile. Higher makes colors more intense. Range: 0.00 to 3.00."
+            },
+            {
+              "key": "foveaVdLike",
+              "description": "A sharper center look (VD-style), keeping Valve's color correction and 8-bit output. Skips the profile above in the center; the center gamma below still applies. Turn off when Blue-noise dithering's center option is on."
+            },
+            {
+              "key": "fovealGamma",
+              "description": "Extra gamma for the center only. 1.00 = unchanged; higher darkens dark tones. Try 1.02 first for a slightly lighter center. The background keeps the profile above; this is a manual tweak, not a verified seam fix."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "OLED color calibration",
+          "description": "Tunes OLED color with gamma and saturation presets. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Headset verification pending.",
+          "use": true,
+          "options": [
+            {
+              "key": "profile",
+              "description": "Presets gamma and saturation. Applies to both layers, or only the background when a VD-like center option is on."
+            },
+            {
+              "key": "gamma",
+              "description": "Used with the Custom profile. Higher darkens dark tones. Range: 0.50 to 2.50."
+            },
+            {
+              "key": "saturation",
+              "description": "Used with the Custom profile. Higher makes colors more intense. Range: 0.00 to 3.00."
+            },
+            {
+              "key": "foveaVdLike",
+              "description": "A sharper center look (VD-style), keeping Valve's color correction and 8-bit output. Skips the profile above in the center; the center gamma below still applies. Turn off when Blue-noise dithering's center option is on."
+            },
+            {
+              "key": "fovealGamma",
+              "description": "Extra gamma for the center only. 1.00 = unchanged; higher darkens dark tones. Try 1.02 first for a slightly lighter center. The background keeps the profile above; this is a manual tweak, not a verified seam fix."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "OLED color calibration",
+          "description": "Tunes OLED color with gamma and saturation presets. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Headset verification pending.",
+          "use": true,
+          "options": [
+            {
+              "key": "profile",
+              "description": "Presets gamma and saturation. Applies to both layers, or only the background when a VD-like center option is on."
+            },
+            {
+              "key": "gamma",
+              "description": "Used with the Custom profile. Higher darkens dark tones. Range: 0.50 to 2.50."
+            },
+            {
+              "key": "saturation",
+              "description": "Used with the Custom profile. Higher makes colors more intense. Range: 0.00 to 3.00."
+            },
+            {
+              "key": "foveaVdLike",
+              "description": "A sharper center look (VD-style), keeping Valve's color correction and 8-bit output. Skips the profile above in the center; the center gamma below still applies. Turn off when Blue-noise dithering's center option is on."
+            },
+            {
+              "key": "fovealGamma",
+              "description": "Extra gamma for the center only. 1.00 = unchanged; higher darkens dark tones. Try 1.02 first for a slightly lighter center. The background keeps the profile above; this is a manual tweak, not a verified seam fix."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "OLED color calibration",
+          "description": "Tunes OLED color with gamma and saturation presets. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363. Headset verification pending.",
+          "use": true,
+          "options": [
+            {
+              "key": "profile",
+              "description": "Presets gamma and saturation. Applies to both layers, or only the background when a VD-like center option is on."
+            },
+            {
+              "key": "gamma",
+              "description": "Used with the Custom profile. Higher darkens dark tones. Range: 0.50 to 2.50."
+            },
+            {
+              "key": "saturation",
+              "description": "Used with the Custom profile. Higher makes colors more intense. Range: 0.00 to 3.00."
+            },
+            {
+              "key": "foveaVdLike",
+              "description": "A sharper center look (VD-style), keeping Valve's color correction and 8-bit output. Skips the profile above in the center; the center gamma below still applies. Turn off when Blue-noise dithering's center option is on."
+            },
+            {
+              "key": "fovealGamma",
+              "description": "Extra gamma for the center only. 1.00 = unchanged; higher darkens dark tones. Try 1.02 first for a slightly lighter center. The background keeps the profile above; this is a manual tweak, not a verified seam fix."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Startup permission requests (before 5002322)",
+          "description": "Requests hand, eye, face, microphone and Bluetooth permissions at startup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Startup permission requests (before 5002322)",
+          "description": "Requests hand, eye, face, microphone and Bluetooth permissions at startup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Startup permission requests (before 5002322)",
+          "description": "Requests hand, eye, face, microphone and Bluetooth permissions at startup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Startup permission requests (before 5002322)",
+          "description": "Requests hand, eye, face, microphone and Bluetooth permissions at startup. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Startup splash and XR launch mode (before 5002322)",
+          "description": "Adds the launch splash and full-space VR start mode. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Startup splash and XR launch mode (before 5002322)",
+          "description": "Adds the launch splash and full-space VR start mode. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Startup splash and XR launch mode (before 5002322)",
+          "description": "Adds the launch splash and full-space VR start mode. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Startup splash and XR launch mode (before 5002322)",
+          "description": "Adds the launch splash and full-space VR start mode. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Unrestricted battery usage",
+          "description": "Opens Android's Battery usage page at startup so XR streaming can run unrestricted. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Unrestricted battery usage",
+          "description": "Opens Android's Battery usage page at startup so XR streaming can run unrestricted. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Unrestricted battery usage",
+          "description": "Opens Android's Battery usage page at startup so XR streaming can run unrestricted. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Unrestricted battery usage",
+          "description": "Opens Android's Battery usage page at startup so XR streaming can run unrestricted. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Unrestricted battery usage",
+          "description": "Opens Android's Battery usage page at startup so XR streaming can run unrestricted. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Visual Delay Fix",
+          "description": "Makes head movement appear sooner without touching controller motion. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "offsetMs",
+              "description": "Shifts the headset's motion report by this many milliseconds. Tested default: 60 ms. Allowed range: 0 to 4000 ms."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Visual Delay Fix",
+          "description": "Makes head movement appear sooner without touching controller motion. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "offsetMs",
+              "description": "Shifts the headset's motion report by this many milliseconds. Tested default: 60 ms. Allowed range: 0 to 4000 ms."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Visual Delay Fix",
+          "description": "Makes head movement appear sooner without touching controller motion. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "offsetMs",
+              "description": "Shifts the headset's motion report by this many milliseconds. Tested default: 60 ms. Allowed range: 0 to 4000 ms."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "Visual Delay Fix",
+          "description": "Makes head movement appear sooner without touching controller motion. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "offsetMs",
+              "description": "Shifts the headset's motion report by this many milliseconds. Tested default: 60 ms. Allowed range: 0 to 4000 ms."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "Visual Delay Fix",
+          "description": "Makes head movement appear sooner without touching controller motion. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363.",
+          "use": true,
+          "options": [
+            {
+              "key": "offsetMs",
+              "description": "Shifts the headset's motion report by this many milliseconds. Tested default: 60 ms. Allowed range: 0 to 4000 ms."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "XR Core Runtime",
+          "description": "Installs the bridge files the other XR patches need. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Core Runtime",
+          "description": "Installs the bridge files the other XR patches need. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Core Runtime",
+          "description": "Installs the bridge files the other XR patches need. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "XR Core Runtime",
+          "description": "Installs the bridge files the other XR patches need. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "XR Device Config Baseline",
+          "description": "Installs the default Galaxy XR controller settings and dashboard files. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Device Config Baseline",
+          "description": "Installs the default Galaxy XR controller settings and dashboard files. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Device Config Baseline",
+          "description": "Installs the default Galaxy XR controller settings and dashboard files. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "XR Device Config Baseline",
+          "description": "Installs the default Galaxy XR controller settings and dashboard files. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "XR Input Routing Config",
+          "description": "Routes pointer and button input to the launcher UI. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Input Routing Config",
+          "description": "Routes pointer and button input to the launcher UI. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Input Routing Config",
+          "description": "Routes pointer and button input to the launcher UI. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "XR Input Routing Config",
+          "description": "Routes pointer and button input to the launcher UI. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        },
+        {
+          "name": "XR Manifest Capability Pack",
+          "description": "Adds the Android XR permissions, features and app properties Steam Link needs. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Manifest Capability Pack",
+          "description": "Adds the Android XR permissions, features and app properties Steam Link needs. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "XR Manifest Capability Pack",
+          "description": "Adds the Android XR permissions, features and app properties Steam Link needs. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.21"
+          ]
+        },
+        {
+          "name": "XR Manifest Capability Pack",
+          "description": "Adds the Android XR permissions, features and app properties Steam Link needs. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.22"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Steam Link GalaxyXR Patches",
+  "fingerprint": "b06f20137d71a1e4048bf101e9e3a2ab3a9578aed65705391c15dc308364acab",
+  "release_notes": "## [2.0.0](https://github.com/AngelDark92/xr-porting-hub/compare/v1.32.1...v2.0.0) (2026-10-22)\n\n### ⚠ BREAKING CHANGES\n\n* Steam Link 2.0.20/5001812, 2.0.21/5001968 and 2.0.22/5002244 are\nno longer supported, and the patches \"Full-FOV foveal canvas (experimental)\" and\n\"OpenXR CPU and GPU BOOST (2.0.21/2.0.22)\" no longer exist.\n\n### 🐛 Bug Fixes\n\n* Add cavecrew skill and morphe-patches skill documentation ([9784e94](https://github.com/AngelDark92/xr-porting-hub/commit/9784e9443a80e998f4b1ac932f00992936cf8d7a))\n* edited Steam Link identity patches to unify model handling ([a5a9d8c](https://github.com/AngelDark92/xr-porting-hub/commit/a5a9d8cefc5d8935c9baa0a913750378e528e966))\n* enhance Android compilation and runtime behavior for GXR spacewarp layer ([09dc946](https://github.com/AngelDark92/xr-porting-hub/commit/09dc946ff41baaae7e0d76c8f02a48d1879cca16))\n\n### ✨ New Features\n\n* **foveal:** support 2.0.20/5001712 and 2.0.23/5002363 ([d426ee2](https://github.com/AngelDark92/xr-porting-hub/commit/d426ee22c3ee192f98591900fcaa94e8d5ef1a32))\n* implement context-safe resource management and ownership tracking for ASW sessions ([246b882](https://github.com/AngelDark92/xr-porting-hub/commit/246b882300f1250f0a439ee83d1eea0ee0e9ad8e))\n* retire half-rate synthesis mode and update related logic in VTS ([68048aa](https://github.com/AngelDark92/xr-porting-hub/commit/68048aa2d20107f95d7676b08db364d6f254708d))\n* retire Steam Link 5001812, 5001968 and 5002244 support ([6d19288](https://github.com/AngelDark92/xr-porting-hub/commit/6d19288bcc91a223ca6277c98f7428fbde19c528))\n* **spacewarp:** implement dormant fast path and carrier generation tracking ([68e9d1a](https://github.com/AngelDark92/xr-porting-hub/commit/68e9d1adbec53b98f218c354505b93cf27ddd8c3))\n* **steamlink:** make OpenXR BOOST experimental ([9b1d581](https://github.com/AngelDark92/xr-porting-hub/commit/9b1d581f0a934c3ad3314da9ecfc84b3f2a0f4b3))\n* **steamlink:** restore support for all five builds ([9a75e32](https://github.com/AngelDark92/xr-porting-hub/commit/9a75e32297b43c70907703a2c37c7ac0520ca07d))\n* update codecs support to version 7 with enhanced stability and crash fixes ([ba5c178](https://github.com/AngelDark92/xr-porting-hub/commit/ba5c178ff463717208abc33bd1edea67841bb669))\n* update codecs support to version 8 with stability improvements and crash fixes ([c9e0efa](https://github.com/AngelDark92/xr-porting-hub/commit/c9e0efa88e7005d37665662bd1c770a09b01c22e))\n",
+  "release_tag": "v2.0.0",
+  "release_date": "2026-10-22T14:49:45Z",
+  "isPreRelease": false
+}

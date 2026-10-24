@@ -1,0 +1,288 @@
+{
+  "bundle": "soubryan",
+  "channel": "dev",
+  "repo_url": "https://github.com/SouBryan/pinterest-morphed",
+  "created_at": "2026-08-09T02:18:17Z",
+  "version": "1.7.0-dev.6",
+  "description": "## [1.7.0](https://github.com/SouBryan/pinterest-morphed/compare/v1.6.0...v1.7.0) (2026-08-09)\n\n### 🐛 Bug Fixes\n\n* **auth:** disable Google login patch by default — unproven end-to-end ([cf31d99](https://github.com/SouBryan/pinterest-morphed/commit/cf31d996eccc79073217a4b2afcec9c020701e22))\n* **auth:** don't redeclare FAKE_PACKAGE_SIGNATURE — XSpoofSignatures owns it ([ffea710](https://github.com/SouBryan/pinterest-morphed/commit/ffea71043f1576c7117db603de01a8d2cb478fe0))\n* **auth:** fake-signature needs the whole certificate, not its SHA-1 ([3f240f3](https://github.com/SouBryan/pinterest-morphed/commit/3f240f3d6f5d3da4b4bcc7a8a5cb89af4ab246a1))\n\n### ✨ New Features\n\n* **auth:** SpoofGoogleAuthPatch — restore Google Sign-In on microG-RE ([8d4fc62](https://github.com/SouBryan/pinterest-morphed/commit/8d4fc6281c68e13b22f6f949a5fcb6067e185ce2))\n* **auth:** support stock Play Services via XSpoofSignatures LSPosed module ([652d65e](https://github.com/SouBryan/pinterest-morphed/commit/652d65eff4c7e3222312b321d0ab6f22d14ed47c))\n* **compat:** extend Pinterest support to 14.28.0 - 14.30.0 ([bb7a5f0](https://github.com/SouBryan/pinterest-morphed/commit/bb7a5f045c7299d13437db84ac5a328761c3ce29)), closes [#1](https://github.com/SouBryan/pinterest-morphed/issues/1)",
+  "apps": [
+    {
+      "app_name": "Pinterest",
+      "package": "com.pinterest",
+      "patches": [
+        {
+          "name": "Disable Android Privacy Sandbox Ad Services",
+          "description": "Removes the AD_SERVICES_CONFIG property so Android Privacy Sandbox ad APIs (Topics, Attribution Reporting, Custom Audiences) are not opted into.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Disable AppsFlyer tracking",
+          "description": "Neutralises the AppsFlyer attribution / tracking SDK. init() becomes a no-op and isStopped() always returns true, so no events, installs, uninstalls or attribution data are transmitted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Disable Bugsnag crash tracking",
+          "description": "Removes the Bugsnag API key metadata so the crash reporting SDK cannot initialize or upload telemetry.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Disable Firebase services",
+          "description": "Adds the officially documented Firebase off-switches (`firebase_analytics_collection_deactivated`, `firebase_crashlytics_collection_enabled=false`, `firebase_performance_collection_deactivated`, `google_analytics_adid_collection_enabled=false`) so the Firebase Analytics, Crashlytics and Performance SDKs go dormant.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Disable Google Ads SDK",
+          "description": "Removes the Google Mobile Ads (AdMob) initialization metadata so the SDK never starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Disable Google Engage integration",
+          "description": "Removes the Google Engage broadcast receiver so Pinterest cannot publish content recommendations back to Google (Discover, Assistant, Play Store, etc.).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Disable Google Engage worker",
+          "description": "Rewrites GoogleEngageWorker.createWork() to return null so WorkManager fails the periodic job and no content recommendations are ever published to Google.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Hide ad views",
+          "description": "Collapses Pinterest's ad-specific views (TextAdView, promoted closeup action bars, board sponsor headers, …) to zero-size on construction, so ad chrome never draws even if the feed adapter tries to render one.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Hide promoted pins",
+          "description": "Neutralises every ad-indicator field on the Pinterest pin/story models (is_promoted, promoted_is_*, is_native, ad_data, ...) so Promoted Pins, shopping-carousel ads, native-content ads and click-out CTAs are never rendered or fired.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Opt out of Google Analytics",
+          "description": "Sets the default Google Analytics consent flags to false so the Firebase Measurement SDK does not collect analytics, ad data or personalization signals.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Remove Advertising ID permission",
+          "description": "Strips the com.google.android.gms.permission.AD_ID permission so any residual SDK cannot read the device's Google Advertising ID.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Restore Google login (signature spoofing)",
+          "description": "Experimental, off by default. Adds the signature-spoof metadata read by microG-RE and by the XSpoofSignatures LSPosed module, so \"Continue with Google\" may work on devices with a working signature-spoofing setup. Not confirmed working end-to-end; no-op without such a setup.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Sanitize copied links",
+          "description": "Resolves Pinterest short URLs (pin.it/…, pinterest.com/url_shortener/…) to their canonical pin URL before they are placed on the system clipboard, so \"Copy link\" no longer produces a fingerprinted short link.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        },
+        {
+          "name": "Sanitize sharing links",
+          "description": "Strips UTM and click-ID tracking parameters from the URL the app puts on the Android share sheet, so friends receive clean pin links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.30.0",
+            "14.29.0",
+            "14.28.0",
+            "14.27.0",
+            "14.26.0",
+            "14.25.0",
+            "14.24.0",
+            "14.23.0",
+            "14.22.0",
+            "14.21.0",
+            "14.20.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Pinterest Morphed",
+  "fingerprint": "41941c494fe0d322e3b11edef37f33c6ba333eb36d7b80f2c398f9c1f033d13f",
+  "release_notes": "## [1.7.0-dev.6](https://github.com/SouBryan/pinterest-morphed/compare/v1.7.0-dev.5...v1.7.0-dev.6) (2026-08-09)\n\n### ✨ New Features\n\n* **compat:** extend Pinterest support to 14.28.0 - 14.30.0 ([bb7a5f0](https://github.com/SouBryan/pinterest-morphed/commit/bb7a5f045c7299d13437db84ac5a328761c3ce29)), closes [#1](https://github.com/SouBryan/pinterest-morphed/issues/1)\n",
+  "release_tag": "v1.7.0-dev.6",
+  "release_date": "2026-08-09T02:18:17Z",
+  "isPreRelease": true
+}

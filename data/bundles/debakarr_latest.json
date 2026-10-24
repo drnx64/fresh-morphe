@@ -2,17 +2,35 @@
   "bundle": "debakarr",
   "channel": "latest",
   "repo_url": "https://github.com/debakarr/morphe-patches",
-  "created_at": "2026-09-29T11:41:24",
-  "version": "v1.6.0",
-  "description": "## [1.6.0](https://github.com/debakarr/morphe-patches/compare/v1.5.0...v1.6.0) (2026-09-29)\n\n### ✨ New Features\n\n* floating Sort/Hide-ads buttons for Flipkart, Myntra, Meesho ([de670a1](https://github.com/debakarr/morphe-patches/commit/de670a17a9fae227bb4fa506d7669f4b6a7e3dac))\n",
+  "created_at": "2026-10-06T06:26:09",
+  "version": "v1.8.0",
+  "description": "## [1.8.0](https://github.com/debakarr/morphe-patches/compare/v1.7.0...v1.8.0) (2026-10-06)\n\n### ✨ New Features\n\n* install alongside the original app ([5901471](https://github.com/debakarr/morphe-patches/commit/5901471a6aecab99b309d9e36af678aaf419daba))\n",
   "apps": [
     {
       "app_name": "Amazon Shopping",
       "package": "com.amazon.mshop.android.shopping",
       "patches": [
         {
+          "name": "Install alongside original",
+          "description": "Installs the patched app under its own package name and app name, so the original app stays installed. Push notifications and some sign-in options may not work in the separate copy. Disable it to replace the original app instead.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageSuffix",
+              "description": "Appended to the original package name, e.g. com.meesho.supply.sorted. Every copy installed on a device needs a different suffix."
+            },
+            {
+              "key": "appName",
+              "description": "Name shown under the launcher icon. \"Default\" adds \" Sorted\" to the original name."
+            }
+          ],
+          "compatible_versions": [
+            "32.13.2.100"
+          ]
+        },
+        {
           "name": "Sort by number of ratings",
-          "description": "Adds 'Sort: Most rated' and 'Hide ads' buttons on Amazon search pages; both stay on for new results and later searches.",
+          "description": "Adds Sort (off / most rated / top rated), 4★+, Hide ads and a 'Ranked' list to Amazon search pages. The ranked list covers every page loaded and can fetch more pages.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -26,8 +44,27 @@
       "package": "com.flipkart.android",
       "patches": [
         {
+          "name": "Install alongside original",
+          "description": "Installs the patched app under its own package name and app name, so the original app stays installed. Push notifications and some sign-in options may not work in the separate copy. Disable it to replace the original app instead.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageSuffix",
+              "description": "Appended to the original package name, e.g. com.meesho.supply.sorted. Every copy installed on a device needs a different suffix."
+            },
+            {
+              "key": "appName",
+              "description": "Name shown under the launcher icon. \"Default\" adds \" Sorted\" to the original name."
+            }
+          ],
+          "compatible_versions": [
+            "9.15",
+            "9.13"
+          ]
+        },
+        {
           "name": "Sort by number of ratings",
-          "description": "Sorts Flipkart search results by number of ratings (descending) and removes ad/sponsored items across all listing pages.",
+          "description": "Adds Sort (off / most rated / top rated), 4★+, Hide ads and a 'Ranked' list to Flipkart listings. The ranked list orders every page the app has loaded.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -42,11 +79,31 @@
       "package": "com.meesho.supply",
       "patches": [
         {
+          "name": "Install alongside original",
+          "description": "Installs the patched app under its own package name and app name, so the original app stays installed. Push notifications and some sign-in options may not work in the separate copy. Disable it to replace the original app instead.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageSuffix",
+              "description": "Appended to the original package name, e.g. com.meesho.supply.sorted. Every copy installed on a device needs a different suffix."
+            },
+            {
+              "key": "appName",
+              "description": "Name shown under the launcher icon. \"Default\" adds \" Sorted\" to the original name."
+            }
+          ],
+          "compatible_versions": [
+            "29.6",
+            "29.5"
+          ]
+        },
+        {
           "name": "Sort by number of ratings",
-          "description": "Sorts Meesho catalog, search and collection feeds by number of ratings (descending) and removes ad catalogs.",
+          "description": "Adds Sort (off / most rated / top rated), 4★+, Hide ads and a 'Ranked' list to Meesho catalog, search and collection feeds. The ranked list orders every page the app has loaded.",
           "use": false,
           "options": [],
           "compatible_versions": [
+            "29.6",
             "29.5"
           ]
         }
@@ -57,8 +114,26 @@
       "package": "com.myntra.android",
       "patches": [
         {
+          "name": "Install alongside original",
+          "description": "Installs the patched app under its own package name and app name, so the original app stays installed. Push notifications and some sign-in options may not work in the separate copy. Disable it to replace the original app instead.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageSuffix",
+              "description": "Appended to the original package name, e.g. com.meesho.supply.sorted. Every copy installed on a device needs a different suffix."
+            },
+            {
+              "key": "appName",
+              "description": "Name shown under the launcher icon. \"Default\" adds \" Sorted\" to the original name."
+            }
+          ],
+          "compatible_versions": [
+            "4.2609.30"
+          ]
+        },
+        {
           "name": "Sort by number of ratings",
-          "description": "Sorts Myntra search and listing results by number of ratings (descending) and removes sponsored items.",
+          "description": "Adds Sort (off / most rated / top rated), 4★+, Hide ads and a 'Ranked' list to Myntra search and listing pages. The ranked list orders every page the app has loaded.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -72,8 +147,27 @@
       "package": "in.amazon.mshop.android.shopping",
       "patches": [
         {
+          "name": "Install alongside original",
+          "description": "Installs the patched app under its own package name and app name, so the original app stays installed. Push notifications and some sign-in options may not work in the separate copy. Disable it to replace the original app instead.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageSuffix",
+              "description": "Appended to the original package name, e.g. com.meesho.supply.sorted. Every copy installed on a device needs a different suffix."
+            },
+            {
+              "key": "appName",
+              "description": "Name shown under the launcher icon. \"Default\" adds \" Sorted\" to the original name."
+            }
+          ],
+          "compatible_versions": [
+            "32.18.0.300",
+            "32.16.2.300"
+          ]
+        },
+        {
           "name": "Sort by number of ratings",
-          "description": "Adds 'Sort: Most rated' and 'Hide ads' buttons on Amazon search pages; both stay on for new results and later searches.",
+          "description": "Adds Sort (off / most rated / top rated), 4★+, Hide ads and a 'Ranked' list to Amazon search pages. The ranked list covers every page loaded and can fetch more pages.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -85,9 +179,9 @@
     }
   ],
   "patches_name": "Debakar's Morphe Patches",
-  "fingerprint": "b91da560125a99ad9557b571a86e3fda74008849bf6435c8d6ac13d9fac49eba",
-  "release_notes": "## [1.6.0](https://github.com/debakarr/morphe-patches/compare/v1.5.0...v1.6.0) (2026-09-29)\n\n### ✨ New Features\n\n* floating Sort/Hide-ads buttons for Flipkart, Myntra, Meesho ([de670a1](https://github.com/debakarr/morphe-patches/commit/de670a17a9fae227bb4fa506d7669f4b6a7e3dac))\n",
-  "release_tag": "v1.6.0",
-  "release_date": "2026-09-29T11:41:24Z",
+  "fingerprint": "74734929c83f1351717ce98f24267e20140f8ea16847a0a913542186986570ad",
+  "release_notes": "## [1.8.0](https://github.com/debakarr/morphe-patches/compare/v1.7.0...v1.8.0) (2026-10-06)\n\n### ✨ New Features\n\n* install alongside the original app ([5901471](https://github.com/debakarr/morphe-patches/commit/5901471a6aecab99b309d9e36af678aaf419daba))\n",
+  "release_tag": "v1.8.0",
+  "release_date": "2026-10-06T06:26:09Z",
   "isPreRelease": false
 }

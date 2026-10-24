@@ -2,30 +2,107 @@
   "bundle": "santodan",
   "channel": "latest",
   "repo_url": "https://github.com/Santodan/santodan-patches",
-  "created_at": "2026-09-28T14:44:05",
-  "version": "v0.5.0",
-  "description": "## [0.5.0](https://github.com/Santodan/santodan-patches/compare/v0.4.1...v0.5.0) (2026-09-28)\n\n### 🐛 Bug Fixes\n\n* **nuviotv:** preserve and refresh merged progress ([3e7595b](https://github.com/Santodan/santodan-patches/commit/3e7595bc1a830c88136ec0e068dfeae9a203172a))\n\n### ✨ New Features\n\n* **nuviotv:** add merged tracking progress [skip ci] ([be772fe](https://github.com/Santodan/santodan-patches/commit/be772fe379f73156595e1f4def5546e83525b417))\n* **nuviotv:** configure side-by-side installation ([1cfc77e](https://github.com/Santodan/santodan-patches/commit/1cfc77e21814eed47a5035053d096950227622cf))\n",
+  "created_at": "2026-10-09T13:32:12",
+  "version": "v0.10.0",
+  "description": "## [0.10.0](https://github.com/Santodan/santodan-patches/compare/v0.9.0...v0.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **build:** resolve Android test SDK on CI runners ([957501c](https://github.com/Santodan/santodan-patches/commit/957501ca771aa5f64a71c62c1aced6bd7676d20f))\n* **nuvio:** defer merged progress work during playback [skip ci] ([e69eff2](https://github.com/Santodan/santodan-patches/commit/e69eff25705851433c7ac7e6b6e4a675b82dd66f))\n\n### ✨ New Features\n\n* **nuvio:** show merged provider icons and refresh seeds [skip ci] ([7512085](https://github.com/Santodan/santodan-patches/commit/7512085bd6a7d9bad2fc32d32e4bf94517f3b18f))\n* **pillo:** add weight change summaries and selectable comparison date ([9a723a4](https://github.com/Santodan/santodan-patches/commit/9a723a4bbd3e0feec3a3dc4619b1d6282284ef28))\n* **pillo:** import weight history from JSON [skip ci] ([8079226](https://github.com/Santodan/santodan-patches/commit/807922648b4aee39659263ef712f586ac6546dd8))\n",
   "apps": [
+    {
+      "app_name": "MEO (Android TV)",
+      "package": "com.alticelabs.meo.androidtv",
+      "patches": [
+        {
+          "name": "MEO - Side-by-side installation",
+          "description": "Installs a separately named MEO clone using a configurable package name and app name.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Unique Android package name for this installation."
+            },
+            {
+              "key": "appName",
+              "description": "Name displayed by Android launchers for this installation."
+            }
+          ],
+          "compatible_versions": [
+            "5.7.0"
+          ]
+        },
+        {
+          "name": "MEO - Spoof supported device",
+          "description": "Reports a Sagemcom DIW3930 to MEO provisioning and skips the server's non-blocking device-verification warning.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.7.0"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "NuvioTV",
       "package": "com.nuvio.tv",
       "patches": [
+        {
+          "name": "NuvioTV - Finale dates in library and collections",
+          "description": "Adds separate disabled-by-default settings to show the latest scheduled episode date in library and collection posters.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
+          ]
+        },
+        {
+          "name": "NuvioTV - Keep airing series in Upcoming",
+          "description": "Adds a disabled-by-default setting that keeps currently-airing library series in Upcoming until the scheduled finale.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
+          ]
+        },
         {
           "name": "NuvioTV - Merge tracking progress",
           "description": "Merges Nuvio Sync and connected tracking-provider progress, preserving the previous snapshot while providers refresh.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.2"
+            "1.1.0-beta.2",
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
+          ]
+        },
+        {
+          "name": "NuvioTV - Preload streams in Continue Watching",
+          "description": "Adds an opt-in Streams setting to search sources in the background for visible Continue Watching episodes and movies, reusing Nuvio's native search cache.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
+          ]
+        },
+        {
+          "name": "NuvioTV - Preload streams on detail page",
+          "description": "Adds an opt-in Streams setting to search sources for the detail page's Play or Resume episode or movie, reusing Nuvio's native search cache.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
           ]
         },
         {
           "name": "NuvioTV - Remaining episodes in Continue Watching",
-          "description": "Adds a disabled-by-default Continue Watching setting that displays aired, unwatched episode counts for every tracking integration.",
+          "description": "Adds a disabled-by-default setting that displays aired, unwatched episode counts for every tracking integration. Controlled by Layout > Santodan-Patches on beta4 and beta5.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.2"
+            "1.1.0-beta.2",
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
           ]
         },
         {
@@ -43,7 +120,19 @@
             }
           ],
           "compatible_versions": [
-            "1.1.0-beta.2"
+            "1.1.0-beta.2",
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
+          ]
+        },
+        {
+          "name": "NuvioTV - Upcoming movie dates in library and collections",
+          "description": "Adds separate disabled-by-default settings to show known release dates on unreleased movie posters in library and collections.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.4",
+            "1.1.0-beta.5"
           ]
         }
       ]
@@ -106,16 +195,44 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "0.6.20",
             "0.6.19"
+          ]
+        },
+        {
+          "name": "Pillo - Import weight history from JSON",
+          "description": "Adds a native Import weights JSON button above Skip in Weight > Add record. Imports SWT backup weights with their dates into the selected profile, with kg/lb selection and duplicate skipping.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.6.20"
+          ]
+        },
+        {
+          "name": "Pillo - Local backup and restore",
+          "description": "Adds local-file export and restore of Pillo's database, settings and app-managed files, without Google sign-in. Restore replaces current data, keeps a recovery backup and restarts Pillo.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.6.20"
+          ]
+        },
+        {
+          "name": "Pillo - Weight change summaries",
+          "description": "Adds signed Total weight change, an All default filter, a selectable Last since date, and Last 30 days / Last 15 days / Change summaries using full profile history.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.6.20"
           ]
         }
       ]
     }
   ],
   "patches_name": "SantoDan Patches",
-  "fingerprint": "baabe063cb939d0627c68d598099bd0573d8b2d2ea344e16650f04fddde9373f",
-  "release_notes": "## [0.5.0](https://github.com/Santodan/santodan-patches/compare/v0.4.1...v0.5.0) (2026-09-28)\n\n### 🐛 Bug Fixes\n\n* **nuviotv:** preserve and refresh merged progress ([3e7595b](https://github.com/Santodan/santodan-patches/commit/3e7595bc1a830c88136ec0e068dfeae9a203172a))\n\n### ✨ New Features\n\n* **nuviotv:** add merged tracking progress [skip ci] ([be772fe](https://github.com/Santodan/santodan-patches/commit/be772fe379f73156595e1f4def5546e83525b417))\n* **nuviotv:** configure side-by-side installation ([1cfc77e](https://github.com/Santodan/santodan-patches/commit/1cfc77e21814eed47a5035053d096950227622cf))\n",
-  "release_tag": "v0.5.0",
-  "release_date": "2026-09-28T14:44:05Z",
+  "fingerprint": "8bc625b08955d31d33d01babe24f5a47431dca64baa9ddb8a00db31e6ba8bae4",
+  "release_notes": "## [0.10.0](https://github.com/Santodan/santodan-patches/compare/v0.9.0...v0.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **build:** resolve Android test SDK on CI runners ([957501c](https://github.com/Santodan/santodan-patches/commit/957501ca771aa5f64a71c62c1aced6bd7676d20f))\n* **nuvio:** defer merged progress work during playback [skip ci] ([e69eff2](https://github.com/Santodan/santodan-patches/commit/e69eff25705851433c7ac7e6b6e4a675b82dd66f))\n\n### ✨ New Features\n\n* **nuvio:** show merged provider icons and refresh seeds [skip ci] ([7512085](https://github.com/Santodan/santodan-patches/commit/7512085bd6a7d9bad2fc32d32e4bf94517f3b18f))\n* **pillo:** add weight change summaries and selectable comparison date ([9a723a4](https://github.com/Santodan/santodan-patches/commit/9a723a4bbd3e0feec3a3dc4619b1d6282284ef28))\n* **pillo:** import weight history from JSON [skip ci] ([8079226](https://github.com/Santodan/santodan-patches/commit/807922648b4aee39659263ef712f586ac6546dd8))\n",
+  "release_tag": "v0.10.0",
+  "release_date": "2026-10-09T13:32:12Z",
   "isPreRelease": false
 }

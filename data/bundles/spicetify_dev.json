@@ -2,9 +2,9 @@
   "bundle": "spicetify",
   "channel": "dev",
   "repo_url": "https://github.com/spicetify/morphe-patches",
-  "created_at": "2026-09-18T15:07:57",
-  "version": "v1.0.0-dev.4",
-  "description": "## [1.0.0-dev.4](https://github.com/spicetify/morphe-patches/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2026-09-18)\n\n### 🐛 Bug Fixes\n\n* clarify disabling server files after cancellation tests ([c98c63f](https://github.com/spicetify/morphe-patches/commit/c98c63f327b0091aa18cdd1accbcde4af901b193))\n* discard server listings cancelled during network reads ([9e844a5](https://github.com/spicetify/morphe-patches/commit/9e844a54ae4aa4f36d526dbd79f2c671ecbb6073))\n* polish server settings after device verification ([2429a12](https://github.com/spicetify/morphe-patches/commit/2429a12d9977a000d63f6c84f338f114bfb922b5))\n\n### ✨ New Features\n\n* add optional Home pins and WebDAV server files ([37b4f5e](https://github.com/spicetify/morphe-patches/commit/37b4f5e7da99168f06b24ef11371f257e58815cd))\n\n### 🔧 Improvements\n\n* avoid repeated server file scan and status work ([47a04d5](https://github.com/spicetify/morphe-patches/commit/47a04d51277410ff14c4aa881512c0384a9dd5d4))\n",
+  "created_at": "2026-09-18T15:07:57Z",
+  "version": "1.0.0-dev.4",
+  "description": "## [1.2.0](https://github.com/spicetify/morphe-patches/compare/v1.1.0...v1.2.0) (2026-10-08)\n\n### ✨ New Features\n\n* add a Random pill to Home's filter row ([8de9300](https://github.com/spicetify/morphe-patches/commit/8de9300795776309ef9c295e9a60409d77c376fd))\n* add Hide podcasts ([51a6bba](https://github.com/spicetify/morphe-patches/commit/51a6bba200e7a5db94a67ed83d3f9f7fa453c4c2))\n* add Play a random song ([a612526](https://github.com/spicetify/morphe-patches/commit/a612526e5229da8f84c4197dce56ad6ac2e09a6e))\n* add Show only my pins to Home shortcuts ([c8c1131](https://github.com/spicetify/morphe-patches/commit/c8c11317b7bc32e84581d9b135c17cd80c4f8c04))\n* add Shuffle+ ([2557b3e](https://github.com/spicetify/morphe-patches/commit/2557b3e1c25a5dcf809cb2afcf02191f72abd63a))\n* add Shuffle+ to the playlist menu ([9cd3e74](https://github.com/spicetify/morphe-patches/commit/9cd3e744aa4cfdcf9464c285f102bb76c4bf5270))\n* add Trash Bin ([d6a2842](https://github.com/spicetify/morphe-patches/commit/d6a284234a96667d6d95059df8df0a21693bc0b7))\n* connect extensions to Spotify's player core ([915e585](https://github.com/spicetify/morphe-patches/commit/915e5853d7e6a6301ed46cb905c8c1f2cfea44e0))\n* keep Home pins in the order they were picked ([c0174a9](https://github.com/spicetify/morphe-patches/commit/c0174a9ff97d6db6af480bc91ea81e5599847830))\n* list every saved playlist in the Home shortcuts picker ([9be6ddf](https://github.com/spicetify/morphe-patches/commit/9be6ddf3b6ed31deeb3e157ec1cdb1b9426908e2))\n* long-press Now Playing's shuffle button for Shuffle+ ([3dc2a81](https://github.com/spicetify/morphe-patches/commit/3dc2a81969cf7e22d64bc2bb31197d54b303cca2))\n* show pinned playlists on Home even when Spotify leaves them out ([465e5ed](https://github.com/spicetify/morphe-patches/commit/465e5ede38f2bfa4e4978ffd7d7ca9f3d1e2ec6b))\n* turn Marketplace extensions on in Spotify ([09d2ee6](https://github.com/spicetify/morphe-patches/commit/09d2ee61f41d386496b345bb0f044c42f9573f92))",
   "apps": [
     {
       "app_name": "Spotify",
@@ -20,8 +20,35 @@
           ]
         },
         {
+          "name": "Hide Home and Browse ads",
+          "description": "Hides image and video brand-ad sections on Home and Browse. Does not suppress audio ads, player ads, or upgrade prompts. Experimental.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.1.80.2221"
+          ]
+        },
+        {
+          "name": "Hide Premium tab",
+          "description": "Hides the Premium navigation tab. Change this in Spicetify settings, then restart Spotify. Does not change your subscription or remove other ads.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.1.80.2221"
+          ]
+        },
+        {
+          "name": "Hide player ad cards",
+          "description": "Hides image brand-ad cards and embedded ad pages in Now Playing. Does not suppress audio ads or other player overlays. Experimental.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.1.80.2221"
+          ]
+        },
+        {
           "name": "Local files from a server",
-          "description": "Streams audio from an HTTPS WebDAV folder into Local Files. Configure the server in Spicetify settings. Experimental; requires byte-range support.",
+          "description": "Streams audio from an HTTPS WebDAV folder or Jellyfin music library into Local Files and Your Library. Configure the server in Spicetify settings; playback needs Spotify's Local audio files setting. Experimental; requires byte-range support. Not available for root mount installs.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -30,7 +57,16 @@
         },
         {
           "name": "Pin shortcuts on Home",
-          "description": "Choose which of Spotify's Home shortcuts appear first in Spicetify settings. Pins are saved on this device. Restart Spotify after changing pins.",
+          "description": "Pick playlists, albums or Liked Songs to pin first on Home, or turn on Show only my pins to hide Spotify's other shortcuts. Pins are saved on this device; restart Spotify after changing them.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.1.80.2221"
+          ]
+        },
+        {
+          "name": "Spicetify extensions",
+          "description": "Adds Android versions of Spicetify extensions to the Spicetify Marketplace's Extensions tab, in Spicetify settings, each off until you turn it on. Trash Bin skips the songs and artists you throw away from their menus. Play a random song plays one from all of Spotify or your library, from a Random pill on Home. Shuffle+ plays a playlist, album or Liked Songs in a truly random order when you long-press the shuffle button in Now Playing, choose Shuffle+ this playlist in a playlist's menu, or use its sheet. Hide podcasts hides podcasts and episodes on Home and in Search, and their filters there and in Your Library, and audiobooks unless you turn that off.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -39,22 +75,9 @@
         },
         {
           "name": "Theme colors",
-          "description": "Changes selected background and accent color resources; defaults to AMOLED black. Some screens, hardcoded colors, and animations retain Spotify's colors.",
+          "description": "Choose a theme, such as OLED, or your own colors in Spicetify settings. Requires Android 11 or later. Some screens and hardcoded colors keep Spotify's colors.",
           "use": false,
-          "options": [
-            {
-              "key": "backgroundColor",
-              "description": "Background color in #RRGGBB or #AARRGGBB format."
-            },
-            {
-              "key": "accentColor",
-              "description": "Accent color in #RRGGBB or #AARRGGBB format."
-            },
-            {
-              "key": "pressedAccentColor",
-              "description": "Pressed accent color in #RRGGBB or #AARRGGBB format."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
             "9.1.80.2221"
           ]
@@ -63,7 +86,7 @@
     }
   ],
   "patches_name": "Spicetify Android patches",
-  "fingerprint": "9a9ee8ebe2e83a7e714bd25770abf04a7796362734e42a4f794bfe1c9cdfdd16",
+  "fingerprint": "9d2a4b947d981c8379e6be15ed265e82612d8f1c35f94a311ecfb4bf6055b444",
   "release_notes": "## [1.0.0-dev.4](https://github.com/spicetify/morphe-patches/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2026-09-18)\n\n### 🐛 Bug Fixes\n\n* clarify disabling server files after cancellation tests ([c98c63f](https://github.com/spicetify/morphe-patches/commit/c98c63f327b0091aa18cdd1accbcde4af901b193))\n* discard server listings cancelled during network reads ([9e844a5](https://github.com/spicetify/morphe-patches/commit/9e844a54ae4aa4f36d526dbd79f2c671ecbb6073))\n* polish server settings after device verification ([2429a12](https://github.com/spicetify/morphe-patches/commit/2429a12d9977a000d63f6c84f338f114bfb922b5))\n\n### ✨ New Features\n\n* add optional Home pins and WebDAV server files ([37b4f5e](https://github.com/spicetify/morphe-patches/commit/37b4f5e7da99168f06b24ef11371f257e58815cd))\n\n### 🔧 Improvements\n\n* avoid repeated server file scan and status work ([47a04d5](https://github.com/spicetify/morphe-patches/commit/47a04d51277410ff14c4aa881512c0384a9dd5d4))\n",
   "release_tag": "v1.0.0-dev.4",
   "release_date": "2026-09-18T15:07:57Z",

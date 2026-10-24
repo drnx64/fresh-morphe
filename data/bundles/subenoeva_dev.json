@@ -1,0 +1,54 @@
+{
+  "bundle": "subenoeva",
+  "channel": "dev",
+  "repo_url": "https://github.com/subenoeva/roadsync-patches",
+  "created_at": "2026-08-26T13:56:16Z",
+  "version": "1.2.2-dev.1",
+  "description": "## [1.2.2](https://github.com/subenoeva/roadsync-patches/compare/v1.2.1...v1.2.2) (2026-08-26)\n\n### 🐛 Bug Fixes\n\n* serve the offline pairing setup page locally past the server gate ([c881442](https://github.com/subenoeva/roadsync-patches/commit/c881442a21e828f10a9eab598fead6b10ea2b566))",
+  "apps": [
+    {
+      "app_name": "RoadSync",
+      "package": "com.honda.ms.dm.sab",
+      "patches": [
+        {
+          "name": "Add music sources",
+          "description": "Adds music apps to the list of sources RoadSync can browse and control from the handlebar. Apps must expose a media browser service to be browsable.",
+          "use": true,
+          "options": [
+            {
+              "key": "extraMusicPackages",
+              "description": "Package names of the music apps to add. An app is only browsable if it declares an android.media.browse.MediaBrowserService; apps without one keep working as plain transport control targets and do not need to be listed here."
+            }
+          ],
+          "compatible_versions": [
+            "26.4.10"
+          ]
+        },
+        {
+          "name": "Bypass Google login",
+          "description": "Lets RoadSync reach the motorcycle controls without a Google account. Server features (account, trip history, weather) stay unavailable, and pairing a new motorcycle still depends on Honda's server accepting an unauthenticated request.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.4.10"
+          ]
+        },
+        {
+          "name": "Offline pairing",
+          "description": "Lets RoadSync pair a new motorcycle and reach the handlebar controls with no Google account and no network, by serving the vehicle catalog locally instead of from Honda's server. Complements \"Bypass Google login\". Control pages fall back to defaults for the placeholder model.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.4.10"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "subenoeva Morphe patches",
+  "fingerprint": "f044d9d4a97cdc6d1f47eb3bc3de43d71bbef44c4b3e20b0042e0b4528a2fafa",
+  "release_notes": "## [1.2.2-dev.1](https://github.com/subenoeva/roadsync-patches/compare/v1.2.1...v1.2.2-dev.1) (2026-08-26)\n\n### 🐛 Bug Fixes\n\n* serve the offline pairing setup page locally past the server gate ([c881442](https://github.com/subenoeva/roadsync-patches/commit/c881442a21e828f10a9eab598fead6b10ea2b566))\n",
+  "release_tag": "v1.2.2-dev.1",
+  "release_date": "2026-08-26T13:56:16Z",
+  "isPreRelease": true
+}

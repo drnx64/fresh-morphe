@@ -2,9 +2,9 @@
   "bundle": "bugg4",
   "channel": "latest",
   "repo_url": "https://github.com/Bugg4/bugg4s-patches",
-  "created_at": "2026-09-30T19:45:18",
-  "version": "v1.1.0",
-  "description": "## [1.1.0](https://github.com/Bugg4/bugg4s-patches/compare/v1.0.0...v1.1.0) (2026-09-30)\n\n### ✨ New Features\n\n* Add Change installer source patch for PairIP startup check ([ee7e89c](https://github.com/Bugg4/bugg4s-patches/commit/ee7e89c9a2e60c1cafd9f1a0383fa967440abd87))\n",
+  "created_at": "2026-10-03T12:38:42",
+  "version": "v1.2.0",
+  "description": "## [1.2.0](https://github.com/Bugg4/bugg4s-patches/compare/v1.1.0...v1.2.0) (2026-10-03)\n\n### 🐛 Bug Fixes\n\n* Clarify patch descriptions and remove emojis from README ([209d0c9](https://github.com/Bugg4/bugg4s-patches/commit/209d0c9740ba9378c5e50a46cf62f964c7ec1f5e))\n\n### ✨ New Features\n\n* Add Remove license check patch for Android 9 and older devices ([eca270b](https://github.com/Bugg4/bugg4s-patches/commit/eca270bf6dde165758f41c008d322bd97169b3d8))\n",
   "apps": [
     {
       "app_name": "OPL Monitor",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Change installer source",
-          "description": "Spoofs the installer source so the app appears to be installed from an app store. Required for the patched app to pass the startup license check, otherwise it redirects to Google Play and closes.",
+          "description": "Passes the startup license check by making the app appear installed from an app store. Only works on Android 10 and newer. On Android 9 and older use 'Remove license check' instead.",
           "use": true,
           "options": [
             {
@@ -26,7 +26,7 @@
         },
         {
           "name": "Remove ads",
-          "description": "Removes banner, interstitial, rewarded, rewarded interstitial, app open and native ads by preventing the Google Mobile Ads SDK from loading them.",
+          "description": "Removes banner, interstitial, rewarded and native ads by preventing the Google Mobile Ads SDK from loading them.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -35,7 +35,16 @@
         },
         {
           "name": "Remove internet permission",
-          "description": "Removes the INTERNET permission from the manifest. This stops the app from reaching the network at all, which also prevents app update checks. This will likely break features that download data, such as DTC descriptions, VIN decoder gauges and function files.",
+          "description": "Removes the INTERNET permission, blocking all network access including update checks. Breaks DTC descriptions, VIN decoder gauges and function downloads.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.3.65"
+          ]
+        },
+        {
+          "name": "Remove license check",
+          "description": "Removes the startup license check (PairIP). Use this on Android 9 and older, where 'Change installer source' has no effect. Does not affect purchases or premium features.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -44,7 +53,7 @@
         },
         {
           "name": "Spoof app version",
-          "description": "Changes the version name the app reports to itself. Reporting a version higher than any published release can prevent the in-app update prompt. The spoofed version will also be shown in the app's about screen.",
+          "description": "Reports a high app version (default 9.9.9) to prevent the in-app update prompt. Also changes the version shown in the app's about screen.",
           "use": false,
           "options": [
             {
@@ -60,9 +69,9 @@
     }
   ],
   "patches_name": "Bugg4s Patches",
-  "fingerprint": "f56b54a7aee3973edb81da372b869871917457e5ad121d3e7cfe4cfc3a227cce",
-  "release_notes": "## [1.1.0](https://github.com/Bugg4/bugg4s-patches/compare/v1.0.0...v1.1.0) (2026-09-30)\n\n### ✨ New Features\n\n* Add Change installer source patch for PairIP startup check ([ee7e89c](https://github.com/Bugg4/bugg4s-patches/commit/ee7e89c9a2e60c1cafd9f1a0383fa967440abd87))\n",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-09-30T19:45:18Z",
+  "fingerprint": "1c98870412ad1a77af4a890208721fa9423bb33a7048ddf7b250d639b63a46cd",
+  "release_notes": "## [1.2.0](https://github.com/Bugg4/bugg4s-patches/compare/v1.1.0...v1.2.0) (2026-10-03)\n\n### 🐛 Bug Fixes\n\n* Clarify patch descriptions and remove emojis from README ([209d0c9](https://github.com/Bugg4/bugg4s-patches/commit/209d0c9740ba9378c5e50a46cf62f964c7ec1f5e))\n\n### ✨ New Features\n\n* Add Remove license check patch for Android 9 and older devices ([eca270b](https://github.com/Bugg4/bugg4s-patches/commit/eca270bf6dde165758f41c008d322bd97169b3d8))\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-10-03T12:38:42Z",
   "isPreRelease": false
 }

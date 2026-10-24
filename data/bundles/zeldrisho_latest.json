@@ -2,9 +2,9 @@
   "bundle": "zeldrisho",
   "channel": "latest",
   "repo_url": "https://github.com/zeldrisho/morphe-patches",
-  "created_at": "2026-09-27T03:02:20",
-  "version": "v1.6.3",
-  "description": "### 🐛 Bug Fixes\n* **Zalo - Prefer original photo quality:** Fixes image sending by applying the original-quality option to outgoing photos.\n",
+  "created_at": "2026-10-07T16:06:50",
+  "version": "v1.9.0",
+  "description": "### ✨ New Features\n* **Zalo - Hide chat list ads:** Removes dedicated Zinstant ad cards from the message list; server-inserted promotions or other ad surfaces may remain.\n* **Zalo - Hide Media Box:** Hides the Media Box row without deleting its content.\n",
   "apps": [
     {
       "app_name": "Threads",
@@ -12,8 +12,8 @@
       "patches": [
         {
           "name": "Change app name",
-          "description": "Changes the app name shown under the launcher icon. Set the desired name in the patch options.",
-          "use": true,
+          "description": "Opt-in customization: changes the app name shown under the launcher icon. Set the desired name in the patch options.",
+          "use": false,
           "options": [
             {
               "key": "appName",
@@ -22,7 +22,8 @@
           ],
           "compatible_versions": [
             "434.0.0.41.74",
-            "445.0.0.46.83"
+            "445.0.0.46.83",
+            "449.0.0.54.82"
           ]
         },
         {
@@ -37,7 +38,8 @@
           ],
           "compatible_versions": [
             "434.0.0.41.74",
-            "445.0.0.46.83"
+            "445.0.0.46.83",
+            "449.0.0.54.82"
           ]
         },
         {
@@ -47,7 +49,19 @@
           "options": [],
           "compatible_versions": [
             "434.0.0.41.74",
-            "445.0.0.46.83"
+            "445.0.0.46.83",
+            "449.0.0.54.82"
+          ]
+        },
+        {
+          "name": "Open links externally",
+          "description": "Opens HTTP(S) links in an external app when one can handle them; otherwise keeps Threads' normal link handling.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "434.0.0.41.74",
+            "445.0.0.46.83",
+            "449.0.0.54.82"
           ]
         },
         {
@@ -57,7 +71,8 @@
           "options": [],
           "compatible_versions": [
             "434.0.0.41.74",
-            "445.0.0.46.83"
+            "445.0.0.46.83",
+            "449.0.0.54.82"
           ]
         }
       ]
@@ -69,6 +84,15 @@
         {
           "name": "Bypass native startup tamper check",
           "description": "Preserves native key initialization and NOPs only the JNI System.exit dispatch in the pinned arm64 26.08.01 build.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
+          ]
+        },
+        {
+          "name": "Bypass Zalo Drive Contacts permission gate",
+          "description": "Uses Android's account picker for Drive photo restore without requesting Contacts/account-list permission. Contacts remain protected by Android and are not read by this bypass.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -91,12 +115,26 @@
         },
         {
           "name": "Change Zalo package name",
-          "description": "Changes Zalo's package name so a clone can be installed beside stock Zalo, including package-owned provider references used after login. WARNING: package- and certificate-bound login, push, sharing, deep links, and backup may not work with the renamed application.",
+          "description": "Changes Zalo's package name so a clone can be installed beside stock Zalo, including package-owned provider references used after login. Google Drive sign-in with the microG Drive support patch works for the renamed clone; other package- and certificate-bound login, push, sharing, and deep links may be affected.",
           "use": false,
           "options": [
             {
               "key": "packageName",
               "description": "The new application package name (for example com.zing.zalo.morphe)."
+            }
+          ],
+          "compatible_versions": [
+            "26.08.01"
+          ]
+        },
+        {
+          "name": "Configurable native backup interval",
+          "description": "Overrides only Zalo's native auto-backup interval (1, 3, 6, or 12 hours). Native opt-in, account, network, and backup guards remain in place.",
+          "use": false,
+          "options": [
+            {
+              "key": "hours",
+              "description": "Choose 1, 3, 6, or 12 hours."
             }
           ],
           "compatible_versions": [
@@ -131,9 +169,27 @@
           ]
         },
         {
+          "name": "Enable avatar saving",
+          "description": "Restores the “Save photo” action for avatars opened from a profile and allows screenshots. Other Zalo screenshot protections are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
+          ]
+        },
+        {
           "name": "Enable Google Drive photo backup",
-          "description": "Enables Zalo's existing Google Drive photo-backup option. It does not bypass Google authorization, server retention, encryption, or media exclusions.",
+          "description": "Forces Zalo's media-backup feature flag on and bypasses its local Drive-account eligibility check to expose the existing photo-backup option. This optional patch does not bypass Google authorization, server retention, encryption, or media exclusions.",
           "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
+          ]
+        },
+        {
+          "name": "Enable profile cover saving",
+          "description": "Restores the “Save photo” action and allows screenshots for profile cover photos. Other viewer entry points are unchanged.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "26.08.01"
@@ -158,6 +214,24 @@
           ]
         },
         {
+          "name": "Hide chat list ads",
+          "description": "Removes dedicated Zinstant ad cards from the message list. Server-inserted promotions or other ad surfaces may remain.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
+          ]
+        },
+        {
+          "name": "Hide Media Box",
+          "description": "Hides Zalo's Media Box row from the conversation list; Media Box content and data are not deleted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
+          ]
+        },
+        {
           "name": "Keep expired media accessible",
           "description": "Keeps locally stored large chat media usable after Zalo's client-side expiry window by bypassing the expired/subscription state. It does not restore missing files or bypass server download authorization.",
           "use": true,
@@ -168,7 +242,7 @@
         },
         {
           "name": "microG Drive support",
-          "description": "Adds Zalo launch/provider checks and redirects Google Drive account selection and token binding to microG-RE (app.revanced / app.revanced.android.gms). Initial photo restore and the complete backup/restore cycle were device-validated on Zalo 26.08.01.",
+          "description": "Adds Zalo launch/provider checks and redirects Google Drive account selection and token binding to microG-RE (app.revanced / app.revanced.android.gms). Preserves the clone's actual caller identity; MicroG manifest metadata supplies the upstream Zalo identity.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -204,7 +278,7 @@
         },
         {
           "name": "Suppress outbound seen status",
-          "description": "Stops Zalo from sending seen-status packets without changing message delivery or incoming status rendering.",
+          "description": "Prevents others from seeing when you read their messages while keeping incoming seen-status display enabled; delivery acknowledgements and message transport are unchanged.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -224,9 +298,9 @@
     }
   ],
   "patches_name": "Zeldris Patches",
-  "fingerprint": "dd8bcb7e68b53e5e25bdc0478687d11c7a5e038a2820c5bd69231c433cdc402f",
-  "release_notes": "### 🐛 Bug Fixes\n* **Zalo - Prefer original photo quality:** Fixes image sending by applying the original-quality option to outgoing photos.\n",
-  "release_tag": "v1.6.3",
-  "release_date": "2026-09-27T03:02:20Z",
+  "fingerprint": "8c8e142603805382d028274615f96c6ce0878de6d5488f4f542ed1c2a5a6cecc",
+  "release_notes": "### ✨ New Features\n* **Zalo - Hide chat list ads:** Removes dedicated Zinstant ad cards from the message list; server-inserted promotions or other ad surfaces may remain.\n* **Zalo - Hide Media Box:** Hides the Media Box row without deleting its content.\n",
+  "release_tag": "v1.9.0",
+  "release_date": "2026-10-07T16:06:50Z",
   "isPreRelease": false
 }

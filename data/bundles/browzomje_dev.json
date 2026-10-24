@@ -2,14 +2,23 @@
   "bundle": "browzomje",
   "channel": "dev",
   "repo_url": "https://github.com/browzomje/browzomje-patches",
-  "created_at": "2026-08-19T20:01:29",
-  "version": "v1.8.1-dev.1",
-  "description": "## [1.8.1-dev.1](https://github.com/browzomje/browzomje-patches/compare/v1.8.0...v1.8.1-dev.1) (2026-08-19)\n\n### 🐛 Bug Fixes\n\n* **pinterest:** make the long-press download button actually appear ([6ae2955](https://github.com/browzomje/browzomje-patches/commit/6ae29556e21956b5593f5a31e35b8797c4ca412f))\n",
+  "created_at": "2026-10-18T23:45:19Z",
+  "version": "1.14.1-dev.1",
+  "description": "## [1.14.0](https://github.com/browzomje/browzomje-patches/compare/v1.13.0...v1.14.0) (2026-10-18)\n\n### ✨ New Features\n\n* **Pinterest:** add startup screen selection, direct video downloader and improve video filtering ([9fd1db3](https://github.com/browzomje/browzomje-patches/commit/9fd1db3d3ce28f47880b499e358695528af04516))",
   "apps": [
     {
       "app_name": "Pinterest",
       "package": "com.pinterest",
       "patches": [
+        {
+          "name": "Choose startup tab",
+          "description": "Choose Home, Search or Saved for fresh launcher starts. Keeps deep links, notifications and restored sessions unchanged. Configure in Morphe settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.39.0"
+          ]
+        },
         {
           "name": "Copy direct link",
           "description": "Adds a \"Copy direct link\" option to the pin menu, copying the direct CDN media link instead of the Pinterest web link.",
@@ -18,18 +27,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
-          ]
-        },
-        {
-          "name": "Disable ads",
-          "description": "Removes sponsored pins from the home, search, related and board feeds. Also carries the \"Hide product pins\" and \"Hide board modules in search\" filters, both switchable from the Morphe settings screen.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.23.0",
-            "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -40,18 +40,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
-          ]
-        },
-        {
-          "name": "Disable email confirmation dialog",
-          "description": "Closes the \"confirm your email\" modal, and similar ones, when enabled in Morphe settings.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.23.0",
-            "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -62,7 +53,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -73,7 +66,35 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Removes sponsored pins from the home, search, related and board feeds. Also carries the \"Hide product pins\" and \"Hide board modules in search\" filters, and the opt-in \"Hide video pins\" filter, all switchable from the Morphe settings screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Disable email confirmation dialog",
+          "description": "Closes the \"confirm your email\" modal, and similar ones, when enabled in Morphe settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -84,7 +105,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -95,7 +118,22 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Download images in highest available quality",
+          "description": "Checks for an original image before downloading, with automatic fallback to the largest available app variant.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -106,7 +144,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -117,18 +157,22 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
-          "name": "Hide ad views",
-          "description": "Collapses Pinterest's ad-only views, so no ad chrome is drawn even if the app builds one. Follows the \"Disable ads\" switch.",
+          "name": "Filter pin menu actions",
+          "description": "Hides selected native pin menu actions by their localized labels, one per line.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -139,18 +183,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
-          ]
-        },
-        {
-          "name": "Hide greeting header buttons",
-          "description": "Hides the create and inbox buttons in the home feed header, when the matching Morphe settings are enabled.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.23.0",
-            "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -161,29 +196,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
-          ]
-        },
-        {
-          "name": "Hide screenshot share menu",
-          "description": "Removes the panel Pinterest opens after a screenshot, and stops it watching for screenshots where possible.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.23.0",
-            "14.28.0",
-            "14.32.0"
-          ]
-        },
-        {
-          "name": "Hide search history",
-          "description": "Hides the \"Recent searches\" section on the search screen and below the search bar. Pinterest still logs searches server-side.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.23.0",
-            "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -194,7 +209,92 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Hide ad views",
+          "description": "Collapses Pinterest's ad-only views, so no ad chrome is drawn even if the app builds one. Follows the \"Disable ads\" switch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Hide comments",
+          "description": "Hides the pin comments section, the comment preview and the comments button, when the matching Morphe setting is enabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Hide greeting header buttons",
+          "description": "Hides the create and inbox buttons in the home feed header, when the matching Morphe settings are enabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Hide save for later tooltip",
+          "description": "Always hides the save-for-later education popup without disabling the Save button.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Hide screenshot share menu",
+          "description": "Removes the panel Pinterest opens after a screenshot, and stops it watching for screenshots where possible.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Hide search history",
+          "description": "Hides the \"Recent searches\" section on the search screen and below the search bar. Pinterest still logs searches server-side.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Keep Home feed",
+          "description": "Keeps the Home feed when returning to Home instead of refreshing automatically. Pull-to-refresh remains available. Off by default and in the recommended preset; enable it in Morphe settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.39.0"
           ]
         },
         {
@@ -205,7 +305,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -216,7 +318,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -227,7 +331,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -238,7 +344,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -249,7 +357,22 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Open links in the default browser",
+          "description": "Opens links in the phone's default browser instead of Pinterest's in-app browser, when the matching Morphe setting is enabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -260,7 +383,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -271,7 +396,9 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         },
         {
@@ -282,7 +409,35 @@
           "compatible_versions": [
             "14.23.0",
             "14.28.0",
-            "14.32.0"
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Show pin image information",
+          "description": "Shows optional image dimensions and format below the image or instead of like/comment actions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
+          ]
+        },
+        {
+          "name": "Use the system share sheet",
+          "description": "Opens the Android system share sheet instead of Pinterest's in-app share sheet, when the matching Morphe setting is enabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.23.0",
+            "14.28.0",
+            "14.32.0",
+            "14.34.0",
+            "14.39.0"
           ]
         }
       ]
@@ -340,9 +495,9 @@
     }
   ],
   "patches_name": "browzomje Patches",
-  "fingerprint": "a0fde5f385b68a5e02701b3d582cdea20a7cdbae6c1039b9c8ff742031828ab4",
-  "release_notes": "## [1.8.1-dev.1](https://github.com/browzomje/browzomje-patches/compare/v1.8.0...v1.8.1-dev.1) (2026-08-19)\n\n### 🐛 Bug Fixes\n\n* **pinterest:** make the long-press download button actually appear ([6ae2955](https://github.com/browzomje/browzomje-patches/commit/6ae29556e21956b5593f5a31e35b8797c4ca412f))\n",
-  "release_tag": "v1.8.1-dev.1",
-  "release_date": "2026-08-19T20:01:29Z",
-  "isPreRelease": true
+  "fingerprint": "1d02531f71d396bfd5185797c1f17ec8700e1a3b8780d0e68e8f153c7f396ff1",
+  "release_notes": "## [1.14.0](https://github.com/browzomje/browzomje-patches/compare/v1.13.0...v1.14.0) (2026-10-18)\n\n### ✨ New Features\n\n* **Pinterest:** add startup screen selection, direct video downloader and improve video filtering ([9fd1db3](https://github.com/browzomje/browzomje-patches/commit/9fd1db3d3ce28f47880b499e358695528af04516))\n",
+  "release_tag": "v1.14.0",
+  "release_date": "2026-10-18T19:56:10Z",
+  "isPreRelease": false
 }

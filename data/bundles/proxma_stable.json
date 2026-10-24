@@ -2,9 +2,9 @@
   "bundle": "proxma",
   "channel": "stable",
   "repo_url": "https://github.com/totsiaw/proxma-patches",
-  "created_at": "2026-09-30T09:12:56",
-  "version": "1.13.0",
-  "description": "## [1.13.0](https://github.com/totsiaw/proxma-patches/compare/1.12.1...1.13.0) (2026-09-30)\n\n### New Features\n\n* add foodpanda Bypass anti-tamper + Unlock premium patches ([73da778](https://github.com/totsiaw/proxma-patches/commit/73da778994bc5973d0bdd56fec7365c3ae9c9d03))\n* **simosa:** remove day-10/20/30 check-in milestone RewardedAd ([8946da4](https://github.com/totsiaw/proxma-patches/commit/8946da4f1f764e29f6b120f6bad3f01f09be88f2))\n",
+  "created_at": "2026-10-07T15:01:39",
+  "version": "1.14.0",
+  "description": "## [1.14.0](https://github.com/totsiaw/proxma-patches/compare/1.13.0...1.14.0) (2026-10-07)\n\n### New Features\n\n* add foodpanda order-tracking ad + PandaMart popup removal ([804b285](https://github.com/totsiaw/proxma-patches/commit/804b2854313bf446f327883158562aebd0d29877))\n* add Safar (com.safar.fyi) ad removal ([299dc68](https://github.com/totsiaw/proxma-patches/commit/299dc68b66bdd3978784079923aef927605a5cc7))\n* bypass PairIP license check for Safar re-signed builds ([e00e097](https://github.com/totsiaw/proxma-patches/commit/e00e0972c78b36b789b72a8fac1b89326d657fe9))\n* update NetMonster premium unlock for 4.0.4 ([5ae6b63](https://github.com/totsiaw/proxma-patches/commit/5ae6b63e5dc8771c171f2d59632aae8622ea0c88))\n",
   "apps": [
     {
       "app_name": "Investify",
@@ -37,6 +37,15 @@
         {
           "name": "Bypass anti-tamper (foodpanda)",
           "description": "Bypasses foodpanda's DeliveryHero MAS integrity block — forces the master security gate (`w9u.a`) to report the device/app as trusted, so re-signed / sideloaded builds no longer hit the \"This device or application is not supported\" BlockedActivity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.38.1"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Removes foodpanda's order-tracking ads (DeliveryHero adtech) and the forced, repeatedly-reappearing PandaMart \"CrossSell\" promo popup on the order-tracking screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -107,6 +116,30 @@
           "options": [],
           "compatible_versions": [
             "18.8.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Safar",
+      "package": "com.safar.fyi",
+      "patches": [
+        {
+          "name": "Bypass license verification",
+          "description": "Bypasses Google Play's PairIP license check so a re-signed Safar build runs instead of being blocked by the \"Get this app from Play\" paywall or a \"Something went wrong\" dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0.1"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Removes Safar's AdMob banner, interstitial and app-open ads by stubbing the react-native-google-mobile-ads load funnels (no ad is requested, so none renders). User-initiated rewarded ads are left working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0.1"
           ]
         }
       ]
@@ -198,20 +231,20 @@
       "patches": [
         {
           "name": "Unlock premium (NetMonster)",
-          "description": "Unlocks NetMonster Premium — forces the premium repo's derived flows so real-time LTE/NR-NSA location calculation is unlocked, ads are removed, and the status shows Active (far-future expiry) without an Adapty subscription.",
+          "description": "Unlocks NetMonster Premium — forces the Adapty entitlement collector to always report premium active, so real-time LTE/NR-NSA location calculation is unlocked, ads are removed, and the status shows Active without a subscription.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.4.3"
+            "4.0.4"
           ]
         }
       ]
     }
   ],
   "patches_name": "Proxma Patches",
-  "fingerprint": "30971240097b5edffbc455555d2b5faec918f015e55704baa2fbaf5b144394be",
-  "release_notes": "## [1.13.0](https://github.com/totsiaw/proxma-patches/compare/1.12.1...1.13.0) (2026-09-30)\n\n### New Features\n\n* add foodpanda Bypass anti-tamper + Unlock premium patches ([73da778](https://github.com/totsiaw/proxma-patches/commit/73da778994bc5973d0bdd56fec7365c3ae9c9d03))\n* **simosa:** remove day-10/20/30 check-in milestone RewardedAd ([8946da4](https://github.com/totsiaw/proxma-patches/commit/8946da4f1f764e29f6b120f6bad3f01f09be88f2))\n",
-  "release_tag": "1.13.0",
-  "release_date": "2026-09-30T09:12:56Z",
+  "fingerprint": "0ce3fbe0ae9e4b0b8395cebfab193c2f631688b9241c5d71b3da09ac6ac23498",
+  "release_notes": "## [1.27.0](https://github.com/totsiaw/proxma-patches/compare/1.26.9...1.27.0) (2026-10-23)\n\n### New Features\n\n* **mytelenor:** auto-claim daily streak MBs and quiz rewards ([49ddd6c](https://github.com/totsiaw/proxma-patches/commit/49ddd6caca9f537cbe9f53195c65b341de86fea4))\n",
+  "release_tag": "1.27.0",
+  "release_date": "2026-10-23T10:39:07Z",
   "isPreRelease": false
 }

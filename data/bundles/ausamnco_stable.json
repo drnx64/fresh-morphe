@@ -1,0 +1,52 @@
+{
+  "bundle": "ausamnco",
+  "channel": "stable",
+  "repo_url": "https://github.com/ausamnco/gboard-enc-patches",
+  "created_at": "2026-09-22T04:52:37Z",
+  "version": "1.4.2",
+  "description": "Gboard enhancement patches suite: Backspace repeat continuous haptics, Enter key Tasker event, and Glide typing trail customization.",
+  "apps": [
+    {
+      "app_name": "Latin",
+      "package": "com.google.android.inputmethod.latin",
+      "patches": [
+        {
+          "name": "Backspace Repeat Haptic Feedback",
+          "description": "Triggers continuous tactile feedback pulses when the backspace key is held down during repeated deletion (with settings toggle and empty text suppression).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.0.3"
+          ]
+        },
+        {
+          "name": "Enter Key Tasker Event",
+          "description": "Broadcasts an Intent event to Tasker whenever the Enter or IME action key is pressed on Gboard (with target package, action type, and cursor text).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.0.3"
+          ]
+        },
+        {
+          "name": "Glide Trail Customization",
+          "description": "Allows customizing glide typing trail color (interactive HSV Color Wheel & Rainbow RGB), fade speed, thickness, and length.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.0.3"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "ausamnco",
+  "fingerprint": "7dcb8af828853b483453ee910cad62d24f10d7c3397ab0780f3d4e9b892bcd7c",
+  "release_notes": "### Gboard Enhancement Patches Suite v1.4.2\n\n#### 🐛 Fixes in v1.4.2\n- **Fix Glide Trail Custom Color Reflection:** Resolved an inverted branch condition (`if-gez` -> `if-ltz`) in `GestureOverlayView.morpheOnDrawHook` timing calculation which was prematurely returning and permanently blocking `morpheApplyCustomTrailSettings` from executing and applying the custom color during glide typing.\n- **Synchronous Dual-Context Storage:** Upgraded preference saving in `GlideTrailPreferences` to synchronously `.commit()` values to both default and Device-Encrypted (DE) storage contexts so preferences are immediately visible across all Gboard processes.\n- **Mutual Exclusivity:** Choosing a custom color in `ColorWheelDialog` automatically disables Rainbow RGB mode so your chosen color is immediately displayed without conflicting rainbow cycles.\n- **View Lifecycle Hook:** Added an active hook on `GestureOverlayView.onSizeChanged` to proactively reload and apply custom settings whenever the keyboard view is displayed or resized.\n\n#### ✨ Included Patches\n- **Backspace Repeat Haptic Feedback**: Delivers continuous tactile pulses on each repeated character deletion when holding down the backspace key.\n- **Enter Key Tasker Event**: Dispatches high-priority Android Intent broadcasts to Tasker on Enter/IME actions.\n- **Glide Trail Customization**: Color Wheel picker, continuous duration/width/length sliders, and dynamic Rainbow RGB effect.\n\n#### 📱 Add or Refresh in Morphe App\n1. Open **Morphe** on your Android device.\n2. Go to **Settings** -> **Sources** -> Refresh sources (or add `https://github.com/ausamnco/gboard-enc-patches`).\n3. Repatch Gboard and enjoy!",
+  "release_tag": "v1.4.2",
+  "release_date": "2026-09-22T04:52:37Z",
+  "isPreRelease": false
+}

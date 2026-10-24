@@ -2,9 +2,9 @@
   "bundle": "andrewliang25",
   "channel": "stable",
   "repo_url": "https://github.com/andrewliang25/morphe-patches",
-  "created_at": "2026-09-29T05:02:26",
-  "version": "v3.3.2",
-  "description": "## [3.3.2](https://github.com/andrewliang25/morphe-patches/compare/v3.3.1...v3.3.2) (2026-09-29)\n\n### 🐛 Bug Fixes\n\n* **facebook:** rename \"Hide suggested and promoted posts\" to \"Hide page suggestions and promo cards\" ([e466869](https://github.com/andrewliang25/morphe-patches/commit/e46686992675ea757590095ebd7eef059475f202)), closes [#143](https://github.com/andrewliang25/morphe-patches/issues/143)\n",
+  "created_at": "2026-10-23T17:54:38Z",
+  "version": "3.9.0",
+  "description": "## [3.9.0](https://github.com/andrewliang25/morphe-patches/compare/v3.8.0...v3.9.0) (2026-10-23)\n\n### ✨ New Features\n\n* **Facebook:** enable the \"Save as H.264\" download option by default ([7cfef68](https://github.com/andrewliang25/morphe-patches/commit/7cfef68fa9b058a00a74be5d8a1769814ffb7762))\n* **LINE:** add Restore biometric login patch and cover Remote Config in Restore push notifications ([02b1485](https://github.com/andrewliang25/morphe-patches/commit/02b1485db65c0baf04595c76044dafeac38d79b5))\n\n### 🚀 Updated App Support\n\n* **LINE:** add support for LINE 26.16.0 ([b2e3597](https://github.com/andrewliang25/morphe-patches/commit/b2e359785d05c8331fc1974e522b63708bb8b2b0))",
   "apps": [
     {
       "app_name": "Facebook",
@@ -113,7 +113,12 @@
           "name": "[Reels] Download any reel",
           "description": "Adds a Download button beside every reel. Videos save at the best quality the player streams.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "saveAsH264",
+              "description": "Saves videos as H.264 with AAC sound, so that apps such as WhatsApp can send them. The device converts a video in another format. This makes the save slower and the file larger."
+            }
+          ],
           "compatible_versions": [
             "577.0.0.50.72"
           ]
@@ -137,6 +142,15 @@
           ]
         },
         {
+          "name": "[Reels] Picture-in-picture",
+          "description": "Keeps a reel playing in a small window when you leave Facebook from the Reels tab. Only vertical reels get a window. Needs Android 12 or later.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "577.0.0.50.72"
+          ]
+        },
+        {
           "name": "[Stories] Disable auto advance",
           "description": "Keeps each story on the screen until you tap or swipe to the next one.",
           "use": false,
@@ -149,7 +163,12 @@
           "name": "[Stories] Download any story",
           "description": "Adds Save to the menu of any story, including stories with music. Videos save at the best quality the player streams.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "saveAsH264",
+              "description": "Saves videos as H.264 with AAC sound, so that apps such as WhatsApp can send them. The device converts a video in another format. This makes the save slower and the file larger."
+            }
+          ],
           "compatible_versions": [
             "577.0.0.50.72"
           ]
@@ -184,6 +203,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -193,6 +214,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -202,33 +225,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.14.0"
-          ]
-        },
-        {
-          "name": "[Chat] Hide attach menu extra tools",
-          "description": "Removes the server-provided tools (Poll, Schedule and more) from the + menu in a chat. Built-in tiles stay.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.14.0"
-          ]
-        },
-        {
-          "name": "[Chat] Hide calendar buttons",
-          "description": "Removes every LINE Calendar button: in the Chats tab, the chat toolbar and menus, and the Home tab.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.14.0"
-          ]
-        },
-        {
-          "name": "[Chat] Hide community button",
-          "description": "Removes the community (OpenChat) button from the top of the Chats tab header.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -238,6 +236,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -247,15 +247,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.14.0"
-          ]
-        },
-        {
-          "name": "[Chat] Hide tips under messages",
-          "description": "Hides the \"CHECK\" tips under some messages, such as a received video.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -265,6 +258,52 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[Chat] Hide attach menu extra tools",
+          "description": "Removes the server-provided tools (Poll, Schedule and more) from the + menu in a chat. Built-in tiles stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[Chat] Hide calendar buttons",
+          "description": "Removes every LINE Calendar button: in the Chats tab, the chat toolbar and menus, and the Home tab.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[Chat] Hide community button",
+          "description": "Removes the community (OpenChat) button from the top of the Chats tab header.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[Chat] Hide tips under messages",
+          "description": "Hides the \"CHECK\" tips under some messages, such as a received video.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -274,15 +313,30 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
         {
           "name": "[Chat] Keep unsent messages",
-          "description": "Keeps messages that others unsend in 1:1 and group chats, with a notice below each one. OpenChat is not covered.",
+          "description": "Keeps messages that others unsend in 1:1 and group chats, with a red \"Unsent\" label next to the time. OpenChat is not covered.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[Fix] Restore biometric login",
+          "description": "Biometric login can be linked again on a re-signed build. A Root Mount install does not need this patch.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -292,6 +346,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -301,15 +357,41 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
         {
           "name": "[Fix] Restore push notifications",
-          "description": "When LINE is fully closed, push notifications work again on a re-signed build. A Root Mount install does not need this patch.",
+          "description": "When LINE is fully closed, push notifications work again on a re-signed build. LINE also gets its Firebase Remote Config again. A Root Mount install does not need this patch.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[General] Andrew's Patch Setting",
+          "description": "Adds \"Andrew's Patch Setting\" to LINE Settings, below \"Profile\". There you can turn some patches on or off without patching again, and see the credits and licenses.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[General] Custom font",
+          "description": "Adds a button to LINE's Font page to use a font file from your device. The page then no longer loads LINE's font list from the server.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -319,6 +401,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -328,6 +412,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -337,6 +423,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -346,6 +434,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -355,6 +445,19 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
+            "26.14.0"
+          ]
+        },
+        {
+          "name": "[General] Trust user-installed CAs",
+          "description": "Makes LINE trust certificate authorities you install, so your own HTTPS proxy can read LIFF and mini-app web traffic. Bank and LINE Pay stay pinned. For debugging. Off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -364,6 +467,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -373,6 +478,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -382,6 +489,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -391,6 +500,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -400,6 +511,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -409,6 +522,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -418,6 +533,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         },
@@ -427,6 +544,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.16.0",
+            "26.15.1",
             "26.14.0"
           ]
         }
@@ -434,9 +553,9 @@
     }
   ],
   "patches_name": "Andrew's Patches",
-  "fingerprint": "d3544e1f79f0ba3319828fe660a189c9c4f132b1449a6e4930351f1ec316c5a9",
-  "release_notes": "## [3.3.2](https://github.com/andrewliang25/morphe-patches/compare/v3.3.1...v3.3.2) (2026-09-29)\n\n### 🐛 Bug Fixes\n\n* **facebook:** rename \"Hide suggested and promoted posts\" to \"Hide page suggestions and promo cards\" ([e466869](https://github.com/andrewliang25/morphe-patches/commit/e46686992675ea757590095ebd7eef059475f202)), closes [#143](https://github.com/andrewliang25/morphe-patches/issues/143)\n",
-  "release_tag": "v3.3.2",
-  "release_date": "2026-09-29T05:02:26Z",
+  "fingerprint": "4615898450522c942cfb269510c6419e67b5a9827b5b7a744937c426fe14af5b",
+  "release_notes": "## [3.9.0](https://github.com/andrewliang25/morphe-patches/compare/v3.8.0...v3.9.0) (2026-10-23)\n\n### ✨ New Features\n\n* **Facebook:** enable the \"Save as H.264\" download option by default ([7cfef68](https://github.com/andrewliang25/morphe-patches/commit/7cfef68fa9b058a00a74be5d8a1769814ffb7762))\n* **LINE:** add Restore biometric login patch and cover Remote Config in Restore push notifications ([02b1485](https://github.com/andrewliang25/morphe-patches/commit/02b1485db65c0baf04595c76044dafeac38d79b5))\n\n### 🚀 Updated App Support\n\n* **LINE:** add support for LINE 26.16.0 ([b2e3597](https://github.com/andrewliang25/morphe-patches/commit/b2e359785d05c8331fc1974e522b63708bb8b2b0))\n",
+  "release_tag": "v3.9.0",
+  "release_date": "2026-10-23T17:54:38Z",
   "isPreRelease": false
 }

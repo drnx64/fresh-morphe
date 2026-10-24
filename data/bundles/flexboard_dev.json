@@ -2,9 +2,9 @@
   "bundle": "flexboard",
   "channel": "dev",
   "repo_url": "https://github.com/JZ6/Flexboard",
-  "created_at": "2026-10-01T03:08:13",
-  "version": "v2.5.1-dev.9",
-  "description": "## 2.5.1-dev.9\n\n- feat: swipe up stage 2 — take the gesture over, and say whether it took",
+  "created_at": "2026-10-07T23:10:30",
+  "version": "v2.5.2-dev.1",
+  "description": "## 2.5.2-dev.1\n\n- feat(flags): remove Hidden Features (unconfirmed)\n- docs: swipe up confirmed on a device, and on by default\n- feat(swipe-up): on by default; crash recorder moves to its own opt-in patch",
   "apps": [
     {
       "app_name": "Gboard",
@@ -21,8 +21,17 @@
         },
         {
           "name": "Bypass Gboard Signature",
-          "description": "Bypass Gboard's signature whitelist checks and force them to pass.",
+          "description": "Bypass Gboard's own startup signature check without changing other callers.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Crash reporter (debug)",
+          "description": "For debugging. After a keyboard crash, the error is saved and copied to your clipboard the next time the keyboard starts, so it can be pasted into a bug report. This replaces whatever was on the clipboard. Off by default.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "18.0.3.954559732-release-arm64-v8a"
@@ -41,15 +50,6 @@
           "name": "Hidden Features",
           "description": "Turns on two finished Gboard features that a resigned build can never receive: grammar check, and a close control on the chips Gboard offers unprompted. Their flags are delivered per app signature, so resigning the APK means they never arrive and stay off. Both are confirmed working on a device; five other flags were tried and dropped.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "18.0.3.954559732-release-arm64-v8a"
-          ]
-        },
-        {
-          "name": "Hidden Features (unconfirmed)",
-          "description": "Turns on four finished Gboard features that a resigned build can never receive: Emoji Kitchen browse, the custom sticker tab, offline translation, and search in Gboard's settings. Off by default because none of the four has been seen working on a device — the flags flip, but each also depends on data Google only sends to an unpatched install. Safe to try: none of them crashes.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "18.0.3.954559732-release-arm64-v8a"
@@ -84,7 +84,7 @@
         },
         {
           "name": "Swipe Left to Delete",
-          "description": "Swipe left anywhere on the keyboard to delete the previous word, and swipe right to restore it. Uses Gboard's own word-scrub engine, so it behaves exactly like swiping on the backspace key already does — only it can start anywhere.",
+          "description": "Swipe left anywhere on the keyboard to delete the previous word, and swipe right to restore it. Uses Gboard's word-scrub engine; anywhere swipes have a one-word default cap, while deliberate backspace swipes keep Gboard's uncapped behaviour.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -102,8 +102,8 @@
         },
         {
           "name": "Swipe up to undo autocorrect",
-          "description": "Work in progress, being built in stages. This build takes the swipe over: swipe up on the keyboard and it types a 6 instead of the key you swiped on, or an x if it could not take the swipe over. It does not undo anything yet. Off by default.",
-          "use": false,
+          "description": "Swipe up on the keyboard to undo the last autocorrection: the word you typed comes back, as with Gboard's own undo autocorrect on backspace. It works right after the correction, before you type anything else; otherwise the swipe does nothing. The key you swiped on is not typed.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "18.0.3.954559732-release-arm64-v8a"
@@ -140,9 +140,9 @@
     }
   ],
   "patches_name": "Flexboard",
-  "fingerprint": "272ebf787fc40cd164a26ea661a3507d59c0259e8eb28f44837f2dfa84a6d98e",
-  "release_notes": "## 2.5.1-dev.9\n\n- feat: swipe up stage 2 — take the gesture over, and say whether it took",
-  "release_tag": "v2.5.1-dev.9",
-  "release_date": "2026-10-01T03:08:13Z",
+  "fingerprint": "e59733ad9fa708ebf8ea79b18d999b2895cb15705d1a1466fc2f2ba1e5c1555b",
+  "release_notes": "## 2.5.2-dev.1\n\n- feat(flags): remove Hidden Features (unconfirmed)\n- docs: swipe up confirmed on a device, and on by default\n- feat(swipe-up): on by default; crash recorder moves to its own opt-in patch",
+  "release_tag": "v2.5.2-dev.1",
+  "release_date": "2026-10-07T23:10:30Z",
   "isPreRelease": true
 }

@@ -1,0 +1,608 @@
+{
+  "bundle": "sysadmindoc-hushmessenger",
+  "channel": "stable",
+  "repo_url": "https://github.com/SysAdminDoc/HushMessenger",
+  "created_at": "2026-10-02T02:49:24Z",
+  "version": "0.8.0",
+  "description": "HushMessenger for Messenger 584.0.0.49.98, which needs Morphe Manager 2.0.0 or newer. 63 patches. New switches quiet incoming calls and hide the tab badges or the recent photo card, and they're off until you turn them on. An auto reply can send a picture after its text now. Hide inbox ads is gone, since 584 has no inbox ads left to hide. Source updates don't change installed apps.\n\n### Reported issues\n\n- [#69](https://github.com/SysAdminDoc/HushMessenger/issues/69) New **Quiet incoming calls** switch under Conversations. Calls still come in, but Messenger doesn't ring, vibrate or pop the call up over what you're doing. The call waits in the notification shade with its Answer and Decline buttons, and a call you miss still shows up in the chat. If the Facebook app is on your phone, it can still ring for the same call. It starts off.\n- [#81](https://github.com/SysAdminDoc/HushMessenger/issues/81) New **Hide tab badges** switch under Navigation. It clears the red dots and counts from the tabs at the bottom and from the Facebook button at the top. Want one of them back, say the Chats count? Turn on its Keep switch right below. Restart Messenger after a change. It's off until you turn it on.\n- [#85](https://github.com/SysAdminDoc/HushMessenger/issues/85) New **Hide the recent photo card** switch under Photos and videos. Take a screenshot or a photo and Messenger puts a card above the message box offering to send it. With this on, the card doesn't show up. Anything you took is still in the gallery button when you want to send it. It starts off.\n- [#64](https://github.com/SysAdminDoc/HushMessenger/issues/64) With two gallery apps on the phone and neither set as the default, **Open your gallery app** sent you to a Samsung Gallery that listed photos only. Videos show up there now too, and Android's list of apps to pick from still holds just your galleries.\n- [#64](https://github.com/SysAdminDoc/HushMessenger/issues/64) and [#82](https://github.com/SysAdminDoc/HushMessenger/issues/82) **Open your gallery app** lets you pick several photos and videos at once. Pick two or more and Messenger's Send to sheet opens with all of them and the chat you came from at the top, so one Send gets them there. Pick just one and it opens in Messenger's editor like before. Samsung's Gallery now asks for a tap on Done even when you pick a single photo.\n- [#80](https://github.com/SysAdminDoc/HushMessenger/issues/80) **Stop analytics uploads** now also stops the upload Messenger 584 starts from inside the app. On 584 Messenger can send its analytics batch, the one that holds the tap and scroll details from the report, without going through the background upload services the switch already stopped. With the switch on, that one doesn't start either.\n- [#79](https://github.com/SysAdminDoc/HushMessenger/issues/79) An auto reply can send a picture too. Open a reply under **Auto reply** and tap **Add a picture**. The text goes out first and the picture follows a couple of seconds later in the same chat, with the same once-per-chat wait, Off and Pause as the text. HushMessenger keeps its own copy of the picture, so moving or deleting the original won't break the reply. If that copy is gone, or a Messenger update changed how photos are sent, the text still goes out on its own.\n\n### Changed and fixed\n\n- HushMessenger now patches Messenger 584.0.0.49.98 (version code 346814894) and no longer takes 583.0.0.29.95. That's the one arm64 build of 584 on [APKMirror](https://www.apkmirror.com/apk/facebook-2/messenger/facebook-messenger-584-0-0-49-98-release/) so far. Every switch was checked against it again, so update Messenger to 584 before you repatch.\n- **Hide inbox ads** is gone. Meta stopped selling Messenger inbox ads in November 2025, and Messenger 584 took out the ad cards the switch used to filter, so there's nothing left for it to hide. If you pick patches by hand in Morphe, it just won't be in the list anymore.\n- The six photo and video switches now have their own **Photos and videos** group, in Morphe's patch list and on the settings Controls tab alike: original quality photos and videos, **Fix videos that won't send**, the camera and gallery app switches, and **Hide the recent photo card**. Conversations had grown too long to scan. The Chats filter still shows them.\n- **Patch controls** and **Restart Messenger** now stay at the top of the icon's long-press menu while Messenger sits in the background. New messages used to push them below the four rows your launcher shows until you next opened and left Messenger. Android 9 and 10 still put them back only when Messenger opens or closes.\n- Hiding Quick setups with a long press now names the button that brings it back, **Quick setups section** under Your choices. The old message sent you to the App tab you were already on, and the button talked about a home page that doesn't exist.\n- A video picked in a chat whose access ran out before or during the send no longer gets **Fix videos that won't send** marked as failing in settings. It goes out the way Messenger would send it anyway.\n- If the phone's sound encoder won't start while a video's sound is being fixed, it's let go right away instead of staying held until Messenger closes.\n- The copies **Fix videos that won't send** makes of videos you pick now go a day after their last use, even if you never pick another video or you've turned the switch off. Messenger clears them when it starts and again while it's open as each one's day runs out. They used to sit in Messenger's cache until the next pick.\n- Android 12 and newer show only two lines of a pop-up message and cut the rest with \"...\", which hid the useful part of 27 of HushMessenger's. They're shorter now and fit, from the font file and backup messages to the camera, gallery and restart ones.\n- Restoring your choices pops up how many of them it actually changed (\"Changed 3 of 58 choices\"), that none changed, or that they already match the backup, plus \"Changes paused\" or \"Changes resumed\" when the backup pauses or unpauses them. It used to count every choice in the backup, even ones that were already set that way, and the pause along with them. It only says they match when nothing in the backup was skipped or left off. Skipped choices and Auto reply staying off used to run past the end of that message. Now the whole result stays written under the backup buttons.\n- When reading a choices file takes too long, the message says your choices didn't change. It used to warn that a saved file may be cut off, which is only true when saving one.\n- If settings can't open from the side menu or the Messenger logo, two short messages now say so and then name the other way in. One message was too long and lost its second half.\n- Picking a font file while **Use your own font** is off now says to turn the switch on, instead of telling you to restart Messenger. The file's name stays on the line under the button, where a long one can't push the rest off the message.\n- **Use system emoji** loads the phone's emoji font once, even when Messenger asks for it from several threads at the same moment. Each thread could load its own copy before.\n- When the message log can't save new messages (the phone's key store is busy, say), it tries again by itself 30 seconds later, then less often while it keeps failing. Those messages used to wait for the next notification and were lost if Messenger closed first.\n- **Back to defaults**, the other Quick setups and **Clear log** each show an Undo button at the top of settings for about 10 seconds, and the emptied log shows one too. Clear log still deletes the saved messages and their key right away. Undo writes them back from a copy kept in memory until the button goes, and leaving settings makes the change final. Undo leaves alone any switch you flipped yourself after the change.\n- The **Patch controls** and **Restart Messenger** long-press shortcuts now tell your launcher when you use them, so it can rank them by use the way it does Messenger's own chat shortcuts.\n- On a Root Mount install, **Patch controls** and **Restart Messenger** never actually showed up on Messenger's icon. Android turned down the icons they used. They show up now.\n- Each way back into settings now has its own switch on the App tab, as asked in [HushFacebook#146](https://github.com/SysAdminDoc/HushFacebook/issues/146). Next to **Hide the Menu row** there's **Hide the icon shortcuts**, which takes **Patch controls** and **Restart Messenger** off the menu you get by long-pressing Messenger's home screen icon, and **Ignore the logo long press**. The last way in that's still on can't be switched off: its switch goes gray and says why, and if a saved choice leaves nothing else, the icon shortcuts come back by themselves. Pause and safe mode leave these switches alone, since they're how you get back in to undo either. If the logo long press is what lets the Menu row stay hidden, the row comes back after an update or a repatch until one long press on the logo opens settings again.\n- The two icon shortcuts now come from HushMessenger each time Messenger starts, on every install, which is what lets the new switch take them away. After updating, they show up again a moment after you first open Messenger. Messenger's own chat shortcuts can push them down that menu while it's open, so they move back to the top each time you leave Messenger. On a normal install, a copy you pinned to the home screen before this update stops working, so remove it and pin a new one. Copies pinned from now on turn gray while the shortcuts are hidden and work again once they're back.\n- When Messenger's chat shortcuts already fill everything Android lets one icon hold, the lowest of them now make room, so **Patch controls** and **Restart Messenger** still get on. Android refused to add them to a full icon before. Those are the same chat shortcuts Android drops when Messenger adds one to a full icon itself.\n- In the settings cards, the line between switches now sits below a switch's own buttons (Keep the Profile button, the bubble choices, the font file, message log and auto reply buttons) instead of between the switch and them. The last switch in a card no longer draws a second line just above the card's edge.\n- With a keyboard or a remote, the focus outline on a filled settings button (Restart Messenger, Save, the selected tab and filter) is now two rings, a dark and a light one, so it shows up against the button and the page in both themes. The single gray ring was hard to see on the button's own color.\n- The settings call each thing by one name now. Controls are the switches, and your choices are what you set them to. The clipboard backup buttons are **Copy choices** and **Paste choices**, since Export and Import sat right next to the file buttons and sounded like them. The third bubble mode is **Android bubbles**, which is what Android calls them. Flipping a control pops up \"Hide stories and notes is on\" instead of \"Hide stories and notes on\", and **Fix videos that won't send** says what it does before it names the sound format.\n- Two patches got plainer names, in Morphe's patch list and in settings. **Turn off the swipe up for disappearing messages** is now **Ignore the swipe up for disappearing messages**, and **Stop MQTT logging** is now **Stop live connection logging**. Morphe remembers your picks by name, so if you'd left either one out, it'll be picked again. Uncheck it before you repatch.\n- With **Hide People tab**, **Hide Notifications tab** or **Hide Meta AI** on, the bar at the bottom now lights up the tab you're actually on. With People hidden, opening Notifications used to light up Menu instead.\n- Some accounts get Meta's newer AI agent tab in the bar where the Meta AI tab usually sits. **Hide Meta AI** now hides that one too, and the bar still lights up the right tab. Restart Messenger to see it go.\n- On a new install of a patched Messenger, **Bold** and **Italic** no longer show up in the text selection menu while **Bold and italic text** is off. Messenger's very first start turned them on, and they stayed there until you opened Messenger a second time. Updating over an existing install never did this.\n- **Hide AI sticker tools** now hides the plain **Generate** button at the start of the sticker keyboard's Suggested row too. Accounts that get more than one sticker maker see that button instead of **Generate AI stickers**, and it opens a menu with AI stickers in it, so the switch used to miss it. The custom and music stickers in that menu are hidden along with it while the switch is on.\n- With **Hide AI sticker tools** on, the rest of the Suggested row now moves up to fill the spot where **Generate** or **Generate AI stickers** used to sit. The button went away before, but its slot at the start of the row stayed blank.\n- HushMessenger is now built for Morphe's 2.0 patcher, so this release needs **Morphe Manager 2.0.0 or newer**. Update Manager first, then repatch. Every patch still applies to Messenger 584 and the patch count is the same.\n\n### Docs\n\n- The README's troubleshooting list now covers a cloned Messenger showing the settings icon again, chats and calls notifying twice because of the Facebook app, and restoring chats with a PIN when the Google Drive restore errors out.\n\n### Checks\n\n- A release can't go public until the whole app has been walked with that exact bundle on a release phone or an emulator. The publish stage now takes the walk's receipt as `-Walk` and stops before the tag or GitHub if the walk wasn't a full pass, saw a Messenger crash, ran on some other device, or patched with a different bundle.\n- `scripts/walk-app.ps1` does that walk. It patches Messenger from the bundle, installs it in place on a leased phone or an emulator, opens both settings pages, a chat and the patched screens, then reads the crash buffer and writes the receipt publish asks for. Any Messenger crash fails the walk. Leaving out a page or a screen makes it partial, and neither one backs a release. The receipt also names the APK patched from the bundle and the one the phone actually ran, and publish wants them to match, so walking whatever was already installed (`-SkipPatch`) only counts when it's that same APK. A crash buffer the walk can't read fails it, and the script exits 0 only for a pass (2 for partial, 1 for a fail). A walk that finds the device busy keeps the APK it patched, so the next try goes straight to the device instead of patching again.\n- The development release check, the one a held build goes through, fails when the source has no bundle timestamp. Before, a bundle and a source both missing one counted as a match there. The full release check already refused it, and now it says why.\n- A Gradle run through this PC's build wrapper fails when the wrapper itself errors out before Gradle starts. It used to exit 0 and read as a pass.\n- Recording a Messenger build with `CompatReport.java --save` refuses an APK that isn't signed by Facebook or Meta, or whose signer apksigner can't read. A record pins the APK's checksum, so a re-signed copy could have been written down as the stock build. The release build stage also checks each stock APK against the checksum in its record before patching it, and CompatReport looks for Python as `py`, `python3` or `python` (never the Windows Store stub) instead of assuming `python`.",
+  "apps": [
+    {
+      "app_name": "Messenger",
+      "package": "com.facebook.orca",
+      "patches": [
+        {
+          "name": "Allow chat bubbles",
+          "description": "Lets you pick Stock, Chat heads or Android bubbles for floating chats. Needs Android 11 or newer. Chat heads also needs Messenger's own Chat heads switch, and Android bubbles need Messenger's bubbles allowed in Android's notification settings. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Allow screenshots",
+          "description": "Lets you screenshot protected chat media, such as view-once photos and Quicksnap, and stops screenshot notices. It doesn't add replay or saving. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Auto reply",
+          "description": "Answers messages with replies you write in HushMessenger settings, when they have words you pick or any message at all. Replies go out through Messenger's own notification reply, encrypted chats too, at most once every five minutes per chat. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Bold and italic text",
+          "description": "Adds Bold and Italic to the menu that shows when you select words you typed. They're special Unicode letters, so they show on any phone, but screen readers may read them oddly. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Clone install under another package name",
+          "description": "Installs a second copy of Messenger beside the first, with its own app name. Push notifications may not reach the copy. Pick it in Morphe Manager's Expert mode. Works as soon as you patch it in, with no switch.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneAppName",
+              "description": "The name shown under the copy's home screen icon. Up to 40 characters, starting with a letter or number."
+            },
+            {
+              "key": "clonePackageName",
+              "description": "The copy's unique app ID, like com.facebook.orca.hush. Use words joined by dots, each starting with a letter. It can't match Messenger or another Meta app."
+            }
+          ],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Custom new-message sound",
+          "description": "Replaces Messenger's new-message sound with an .ogg, .mp3, .m4a or .wav file (1 MB or less) that you choose. Pick it in Morphe Manager's Expert mode. Works as soon as you patch it in, with no switch.",
+          "use": false,
+          "options": [
+            {
+              "key": "soundFile",
+              "description": "Your .ogg, .mp3, .m4a or .wav file, 1 MB or smaller. Leave it empty to keep Messenger's own sound."
+            }
+          ],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Fix videos that won't send",
+          "description": "Messenger stops two kinds of video with \"Unable to send\". One is a video whose only sound is xHE-AAC, which Facebook and Instagram now use. The other is a Samsung screen recording whose recorder tag Messenger's media check rejects. Whether you share one into Messenger from another app or pick it in a chat, the sound is converted to regular AAC, or the tag is dropped, so it sends. The picture isn't touched. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide AI sticker tools",
+          "description": "Hides the Generate and Generate AI sticker buttons, the AI sticker tab and AI sticker suggestions. Custom and music stickers in the Generate menu go with it. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide Chat Moments",
+          "description": "Hides Chat Moments in the menu. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide Facebook shortcuts",
+          "description": "Hides Facebook buttons, profile and sharing shortcuts, and the Also from Meta and Subscriptions sections in the Menu tab. Handy if you only use Messenger. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide Mark as read",
+          "description": "Hides Mark as read in the menu you get when you press and hold a chat in your chat list, so you can't mark a chat read by accident. Mark as unread stays. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide Meta AI",
+          "description": "Hides the Meta AI floating button, toolbar button, tab and menu entries, plus AI in search and in @ suggestions. Restart Messenger to see the tab go. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide Notifications tab",
+          "description": "Hides the Notifications tab in the bar at the bottom. Restart Messenger to see the tab go. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide People You May Know",
+          "description": "Hides suggested people in chats, search and stories, and on the People and Notifications tabs, so you only see people you know. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide People tab",
+          "description": "Hides the People tab in the bar at the bottom. Restart Messenger to see the tab go. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide Reels badge",
+          "description": "Hides the Reels notification badge. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide ad banners in business chats",
+          "description": "In a chat you started from a business's ad, hides the banner that shows that ad. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide avatar stickers",
+          "description": "Hides the avatar tab in the sticker keyboard. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide business reply suggestions",
+          "description": "Hides suggested replies in conversations with businesses. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide business typing suggestions",
+          "description": "Hides business suggestions that pop up as you type. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide chat promotions",
+          "description": "Hides promotion banners inside conversations. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide event prompts",
+          "description": "Hides event promotion prompts inside chats. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide friend request cards",
+          "description": "Hides friend request cards in your chat list so they stop taking up room. It doesn't accept or decline anyone. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide growth prompts",
+          "description": "Hides prompts to add more people, the tip sheets in notes (like Make my notes public), and the Share your own story card after someone else's stories. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide inbox promotions",
+          "description": "Hides promotion banners in your chat list. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide inbox tabs",
+          "description": "Hides the Home and Channels tabs inside your inbox. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide joined community chats",
+          "description": "Hides the community chats you joined from your main chat list. Search and community folders still show them. Messages and unread counts don't change. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide read receipts",
+          "description": "Opening a chat no longer tells people you read their message, and the chat stays unread on this phone. Marking it read yourself or replying in it marks it read and shows Seen, like Messenger does. Group chats aren't tested. Messenger's own Read receipts setting under Privacy & safety marks chats read without showing Seen. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide stories and notes",
+          "description": "Hides the row of stories and notes above your chats. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide tab badges",
+          "description": "Hides the red dots and counts on the tabs at the bottom and on the Facebook button at the top. Turn on Keep for any you still want. Restart Messenger to see the change. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide the recent photo card",
+          "description": "Stops the card above the message box that offers to send the screenshot, photo or video you just took. You can still send it from the gallery. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hide typing indicator",
+          "description": "Stops Messenger from showing others when you're typing, even in end-to-end encrypted chats. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Hold stories at the end",
+          "description": "Keeps a story on screen when it ends instead of moving on to the next one, so you go on with a tap or a swipe. Photos and videos both wait, and the last story stays open until you close it. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Ignore the swipe up for disappearing messages",
+          "description": "Swiping up at the bottom of a chat no longer turns on disappearing messages, so a scroll can't set the timer by accident. You can still change it in the chat's settings. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Install beside Meta apps",
+          "description": "Lets your patched Messenger install next to Facebook and other Meta apps. Without it, the apps can clash over shared permissions and the install can stop at a blank screen. Works as soon as you patch it in, with no switch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Keep a message log",
+          "description": "Saves each message when its notification arrives, so you can still read it if it's unsent. Works in end-to-end encrypted chats too. Stays on your phone. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Keep emoji search on emoji",
+          "description": "Typing while the emoji keyboard is open no longer jumps to sticker search. The keyboard stays on emoji. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Keep unsent messages",
+          "description": "Keeps messages on screen after someone unsends them, in chats where it works. Encrypted chats aren't supported, and group chats aren't tested. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Mark as read button",
+          "description": "Puts Messenger's Mark as read icon in a chat's top bar while Hide read receipts is on. Opening the chat still sends nothing, and a tap on the icon sends Seen and marks the chat read. It takes the place of the chat details button, since tapping the chat's name opens the same page, so the call buttons stay put. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Material You theme",
+          "description": "Colors Messenger's dark mode with your wallpaper colors on Android 12 and newer, and a fixed blue on Android 11. Light mode stays the same. Turn on dark mode in Messenger first. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Open settings from menu",
+          "description": "Adds a HushMessenger entry to Messenger's Menu tab and side menu, and makes a long press on the Messenger logo at the top of Chats or on the Menu tab's title open these settings too. Works as soon as you patch it in. The settings App tab can turn off each way in, as long as one stays on.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Open web links externally",
+          "description": "Opens web links (http and https) in your default browser instead of inside Messenger. Other link types work as before. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Open your gallery app",
+          "description": "The gallery button in a chat opens your phone's own gallery app. One photo or video opens in Messenger's editor for that chat, ready to send. Pick several and Messenger's Send to sheet opens with all of them and that chat at the top. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Pin more chats",
+          "description": "Raises Messenger's limit of three pinned chats to 20, so you can keep more chats at the top of your chat list. Messenger's servers can still stop you sooner. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Quiet incoming calls",
+          "description": "Calls still come in, but Messenger doesn't ring, vibrate or pop the call up over your screen. The call waits in the notification shade with Answer and Decline. A call you miss still shows in the chat. If the Facebook app is on your phone, it can still ring for the same call. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Restore old emoji drawer",
+          "description": "Turns off Meta's redesigned emoji keyboard, so you keep the earlier layout. Restart Messenger after changing it. If Meta never gave you the redesign, nothing changes. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Restore screens on re-signed builds",
+          "description": "Patching and signing Messenger yourself can break some of its screens. This makes Messenger's signature check pass again, including for a Facebook you patched with the same key, and lets Threads and Instagram video links open in a Threads or Instagram you patched yourself. Works as soon as you patch it in, with no switch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Save any story",
+          "description": "Adds Save to the More options menu on other people's stories, so you can keep their photo or video on your phone. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Send photos at original quality",
+          "description": "With HD on, sends a JPEG photo at its full size instead of Messenger's smaller copy, so it stays sharp. Location is still removed. Photos over 20 MB are still made smaller. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Send videos without re-encoding",
+          "description": "Sends a video as the original file instead of a recompressed copy, when Messenger allows it. Videos over 25 MB, edited videos and some formats are still compressed. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Slide chats in and out",
+          "description": "Slides a chat in from the side when you open it and back out when you go back. Chat heads and bubbles keep their own animations. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Spoof package version",
+          "description": "Gives Messenger a high version number so the Play Store stops offering Meta's updates. Messenger may report it to Meta. Going back means uninstalling first, which erases its data. Pick it in Expert mode. Works as soon as you patch it in, with no switch.",
+          "use": false,
+          "options": [
+            {
+              "key": "versionCode",
+              "description": "A whole number up to 2147483647, no lower than the Messenger you're patching. Pick one higher than Messenger's version in the Play Store, or it will keep offering updates. The default is the highest Android allows."
+            }
+          ],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Stop ad attribution uploads",
+          "description": "Stops the job that reads your phone's advertising ID and sends it to Meta with your ad tracking setting. The ID itself doesn't change. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Stop analytics uploads",
+          "description": "Stops the background services Messenger uses to upload usage statistics. It still records them on your phone, and they can upload after you turn this off. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Stop app list and device ID sharing",
+          "description": "Stops Messenger from going through the apps on your phone to find other Meta apps, and from asking them for the device ID Meta uses to link the apps on one phone. Messenger keeps the ID it already has. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Stop inbox and ad link logging",
+          "description": "Stops two reports Messenger logs. One says which part of your chat list was on screen, which Messenger files under inbox ads. The other says which ad brought you in when a link from an ad opens a chat. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Stop live connection logging",
+          "description": "Drops the health reports and push logging Messenger sends over its live connection (MQTT). Messenger sends most of its traffic another way, so there's often little for it to drop. Messages, calls and active status keep working. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Stop nearby scans",
+          "description": "Stops Messenger from reading the list of Wi-Fi networks around you, and hides the name and hardware address of the one you're connected to, the way Android does when Messenger can't see your location. Also stops the timer it can run while it's open to check your location and scan for Wi-Fi networks and Bluetooth devices. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Unlock app icons",
+          "description": "Lets you pick any icon in Messenger's App icon setting without a subscription. Messenger still decides whether that setting shows for your account. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Use system emoji",
+          "description": "Shows emoji in your phone's own style instead of Messenger's. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Use the phone's camera app",
+          "description": "The camera button in a chat opens your phone's own camera app. The photo then opens in Messenger's editor, ready to send. Photos only. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "Use your own font",
+          "description": "Shows Messenger's text in your phone's font instead of Meta's, or in a .ttf or .otf file you pick in HushMessenger settings. Emoji don't change. Restart Messenger after changing it. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        },
+        {
+          "name": "View stories anonymously",
+          "description": "Opens other people's stories without adding you to their viewer list. Messenger still marks them as seen on your side. Starts off. Turn it on in HushMessenger settings > Controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.49.98"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "HushMessenger",
+  "fingerprint": "7c5a7c32b674d273462144e4b22affbd8e54371f7039b86fba99ca33b0c251cc",
+  "release_notes": "HushMessenger v0.8.0 is for Messenger 580.0.0.49.91 and works on all 21 arm64 builds. It has the same 31 patches as v0.7.0, and 28 of them are switches you turn on in settings.\n\nThe fix a lot of you were waiting for is in here. Patching with **Material You theme** selected no longer runs Morphe Manager out of memory (#18). Thanks to everyone who reported it and posted what they saw.\n\n**New patches**\n\nNone this time. The App tab does get one new feature:\n\n- **Save choices to a file** and **Restore choices from a file** go through Android's file picker, so HushMessenger doesn't need storage access. The file uses the same format as the clipboard backup. If you cancel, or pick a file that's damaged or isn't a backup, nothing changes.\n\n**Fixes and changes**\n\n- **Material You theme** checks every spot it changes before it edits anything. That keeps a full patch run within a 1 GB heap, the limit people ran into in #18, on every supported build.\n- Safe mode has a **Resume** button now. If you'd already turned on **Pause all changes**, the button reads **Clear safe mode** and leaves Pause alone. Your saved choices stay either way.\n- Crash recovery reads Android's own record of why Messenger stopped. When Android closes Messenger for low memory or an app update, that no longer counts toward safe mode, and the same crash can't be counted twice.\n- **Open** in settings takes you to Messenger instead of back into settings.\n- The status line under each switch refreshes when you come back to settings. Paused switches say **Changes paused**, and the text is easier to read in both themes.\n- **Keep unsent messages** now explains right beside the switch what it covers (#23). It works on Messenger's older unsend path. End-to-end encrypted chats aren't covered, and group chats haven't been checked. Its activity line only moves when it really catches an unsend, and two unsends arriving together can't overwrite each other anymore.\n- When **Hide app drawer icon** isn't offered, the App tab says why, for example on a Root Mount install. Searching settings for \"drawer icon\" takes you there (#6).\n- The update check shows that it's working and has a **Check now** button if it fails. Turning it off or closing settings stops a check that's still running. It only trusts a small, well formed reply that points at this repository.\n- Restoring a backup checks the whole thing first, so one bad line means nothing changes instead of half a restore. Older clipboard backups still work. Switches a backup doesn't mention keep their current setting.\n- Tapping a backup button twice quickly no longer opens two pickers.\n- The Menu tab's HushMessenger row checks every place it edits before it changes any of them.\n\n**Updating**\n\n1. Use Morphe Manager 1.33.0 or newer, since that's the version the memory fix was tried with, and refresh the HushMessenger source. It should show v0.8.0 with 31 patches. On a computer, Morphe Desktop needs 1.17.0 or newer.\n2. Patch an unmodified arm64 Messenger **580.0.0.49.91**. Any of the 21 version codes listed under Supported Messenger builds in the README works, for example 346013440 or 346013387. The 32-bit builds aren't supported.\n3. Sign with the same key you used last time and install over your current copy. A different key means uninstalling Messenger and losing its local data.\n4. Open HushMessenger settings and tap **Restart Messenger**.\n\nThe `.mpp` file is a patch bundle for Morphe. It isn't an APK you can install.\n\n**Known limitations**\n\n- Saving and restoring choices with a file has only been covered by the automated tests. It hasn't been tried on a phone yet.\n- The Android 17 crash records are covered by tests, but no phone running Android 17 has tried this build.\n- Morphe Manager was tried at its 1 GB limit with build 346013440 while this was being built. The release bundle itself was checked at that limit with Morphe Desktop on all 21 builds.\n- Keep unsent messages doesn't work in end-to-end encrypted chats, and group chats haven't been checked.\n- After you view a story anonymously, the ring around that person's picture in your chat list still shows the story as new until it expires.\n- Nobody has checked a fresh sign-in or recovering encrypted chat history on a phone yet, and live ad removal is still unconfirmed. Builds 346013354, 346013370, 346013394 and 346013423 patch cleanly but haven't been installed on a phone.\n\n**Validation**\n\n- 121 Kotlin tests, 352 Android unit tests and 47 Python checks pass. Android lint reports no errors.\n- Morphe Desktop 1.18.0 applied all 31 patches, Material You included, to every one of the 21 supported builds with a 1024 MB Java heap and without forcing compatibility. Each output had the settings code and the expected number of theme edits, and the stock files were unchanged afterwards.\n- One build from each of the five groups that share internal names (346013440, 346013372, 346013423, 346013357 and 346013374) was also patched and signed, and apksigner verified every v3 signature.\n- Two clean builds of the bundle, one of them from a fresh checkout of the release commit, came out byte for byte the same.\n- OSV-Scanner found no known advisories in anything the bundle ships or the patch build runs. Its only hits are old Netty and Apache HTTP libraries that the Android Gradle plugin keeps for its device test runner, which this build doesn't use.\n- `SHA256SUMS.txt.sig` is signed with the release key `SHA256:Z+UfHy7IUbtgNRO/wHkIr68+u4I+SIKPY9avfx/VAPU`. The README shows how to check it with `ssh-keygen`.\n\nThe full list is in the [changelog](https://github.com/SysAdminDoc/HushMessenger/blob/v0.8.0/CHANGELOG.md).\n\nSHA-256: 472ae92749e85c08b8de9de6154c863e415c876317c7dba91067a1ac0adbfc93  patches-0.8.0.mpp\n",
+  "release_tag": "v0.8.0",
+  "release_date": "2026-10-02T02:49:24Z",
+  "isPreRelease": false
+}

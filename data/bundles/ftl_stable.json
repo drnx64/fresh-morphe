@@ -2,9 +2,9 @@
   "bundle": "ftl",
   "channel": "stable",
   "repo_url": "https://github.com/BlazeFTL/FTL-Patches",
-  "created_at": "2026-09-13T14:55:44",
-  "version": "v1.43.1",
-  "description": "## [1.43.1](https://github.com/BlazeFTL/FTL-Patches/compare/v1.43.0...v1.43.1) (2026-09-13)\r\n\r\n### ✨ New Features\r\n\r\n#### ▶️ MX Player (Ad Version) Patches Updated For V3.2.2/V3.2.1\r\n* **Boost Splash Screen:** Disables the welcome/splash ad so video playback starts immediately.\r\n* **Clean Me Tab:** Removes promo rows and unused tiles from the Me tab. Includes a new toggle to add the \"Network Stream\" tile.\r\n* **Clean SideBar Top:** Streamlines the top section of the sidebar UI.\r\n* **Configure Smart Enhance:** Manages the Smart Enhance intro popup and notifications. Added options to skip the intro popup/animation and show a toast on enable.\r\n* **Configure SpeedUp Overlay:** Fixes the stock leftover-visible-view UI bug for long-press speedup. Added a \"No UI\" mode to apply speed changes silently without showing the overlay.\r\n* **Disable Bottom Bar & Add Me Tab To Top:** Hides the bottom navigation bar and attaches the Me tab button directly to the top toolbar.\r\n* **Sidebar & Player Defaults:** Cleans the player sidebar and \"More\" menu; configures default shortcuts and subtitle behavior.\r\n  * *New Toggles:* Hide Bookmark, Hide Favourite, Hide Add to Playlist, Hide Tutorial, Hide Playing Queue, Hide Video Display, Hide More menu Help section, Change default shortcuts, set Default shortcuts bitmask (hex), and Open subtitle settings by default.\r\n* **RecycleBin Remove Patch:** Allows complete removal of the recycle bin feature.\r\n\r\n#### 🌐 Universal & App-Specific Patches\r\n* **RemoveAdsLite (Adobo):** Updated hosts for broader and more effective ad-blocking coverage.\r\n* **APK Size & Resource Cleaning:**\r\n  * Made the **Drawable Clean Patch** significantly more aggressive to strip out junk DPI and resources.\r\n  * Updated **LangClean Patch**, **Duplicate Graphics**, and **PnG Optimizer** patches to be much more robust while further reducing the overall size of the APK.\r\n* **Analytics:** Introduced new, updated universal analytics removal patches.\r\n\r\n#### 🆕 New App\r\n* **ImpoStack PDF:** Added a new Premium Unlock Patch.\r\n",
+  "created_at": "2026-10-07T02:36:22",
+  "version": "v1.43.2",
+  "description": "### v1.43.2\r\n\r\n**Firefox Nightly**\r\n\r\n- Restore Old 3-Dot Menu\r\n- Extension Pinning\r\n- Remember Tab Scroll Position\r\n- Updated Mod Settings Icon and UI\r\n- Support for Newer Firefox Nightly Builds\r\n\r\n**MX Player**\r\n\r\n- Smart Enhance Control\r\n- Smart Enhance Always On\r\n- Replace Codec to Fix EAC3 Playback\r\n- Recycle Bin Fix\r\n- Configurable MX Player Mod Settings\r\n- Various patch updates and fixes\r\n\r\n**All Video Downloader**\r\n\r\n- Updated support for v1.9.8\r\n- Additional patches\r\n- Promo item removal updates\r\n\r\n**Video Downloader**\r\n\r\n- Custom Host Patch\r\n- Custom Popup Blocker\r\n- Updated existing patches and compatibility\r\n\r\n\r\n**General / Core**\r\n\r\n- Density Patch improvements\r\n- Fixed Analytics Removal breaking FCM push notifications",
   "apps": [
     {
       "app_name": "WiFi Analyzer",
@@ -164,122 +164,86 @@
       "patches": [
         {
           "name": "Boost Splash Screen Time",
-          "description": "WARNING: MX PLAYER HAS AN INTEGRITY CHECK, and some mods add their own on top. Use a Play Store build, Use URV Manager, patch with signing off, then use MT Manager Enhanced Signature Kill or the app may refuse to start.Disables MX Player's welcome/splash ad so playback starts immediately.",
+          "description": "Dont Apply These Patches Over Some Other Persons Mod, Use Untouched Apk. Disables MX Player's welcome/splash ad so playback starts immediately.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
           ]
         },
         {
           "name": "Clean Me Tab",
-          "description": "Removes promo rows and unused tiles from the Me tab. Optional Add Network Stream tile.",
-          "use": false,
-          "options": [
-            {
-              "key": "addNetworkStream",
-              "description": "Add back network stream to me tab"
-            }
-          ],
+          "description": "Adds Mod Settings switches, on by default, that hide promo rows, unused tiles, and Private Folder / File Transfer / Add to Playlist entries.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
           ]
         },
         {
           "name": "Configure Smart Enhance",
-          "description": "Configures the Smart Enhance intro popup and enable/disable toast.",
+          "description": "Removes the Smart Enhance disable toast and adds Mod Settings switches for the intro popup and the enable toast.",
           "use": true,
-          "options": [
-            {
-              "key": "skipPopup",
-              "description": "Tapping the menu item toggles Smart Enhance directly instead of showing the popup first and animation."
-            },
-            {
-              "key": "showToast",
-              "description": "On: toast when Smart Enhance turns on. Off: fully silent toggle."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
           ]
         },
         {
           "name": "Configure SpeedUp overlay",
-          "description": "\"2x UI\": keeps the long-press SpeedUp overlay/animation, with the stock leftover-visible-view bug fixed. \"No UI\": the overlay never shows at all - the speed change itself still applies, since that's handled elsewhere.",
+          "description": "Fixes the stock leftover-visible-view bug in the long-press SpeedUp overlay. \"No UI\" is toggled in Me tab > Mod Settings.",
           "use": true,
-          "options": [
-            {
-              "key": "noUi",
-              "description": "On: the SpeedUp overlay never shows. Off: 2x UI, with the leftover-view bug fixed."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
           ]
         },
         {
           "name": "Disable Bottom Bar And Add Me Tab To Top",
-          "description": "Hides the bottom navigation bar and adds a Me tab button to the toolbar.",
-          "use": false,
+          "description": "Adds a permanent Me tab button to the toolbar. Hiding the bottom bar itself is toggled live in Me tab > Mod Settings, not here - the Me tab button always stays wired, on purpose, since Mod Settings lives behind it and turning it off should never be able to lock you out of turning it back on.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
+          ]
+        },
+        {
+          "name": "Disable signature verification",
+          "description": "Patches libc++_shared.so (arm64-v8a and armeabi-v7a) to branch-to-self at the signature check call site, hanging that code path instead of letting it fail the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.3.0"
           ]
         },
         {
           "name": "Remove Recycle Bin",
-          "description": "Disables the Recycle Bin and removes it from the Me tab; deleted files are removed permanently.",
+          "description": "Deleted files are always removed permanently, whenever this patch is applied - there's no safe way to make that half a runtime switch without the stock (unpatched) delete-dialog code to fall back to. The Me tab tile itself is a Mod Settings switch: off just brings the tile back, it doesn't restore recycling.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
+          ]
+        },
+        {
+          "name": "Replace FFmpeg codec",
+          "description": "Replaces libffmpeg.mx.so in every lib/<abi>/ folder present in the APK with the matching file from a selected codec zip (EAC3 support). neon64 -> arm64-v8a, neon -> armeabi-v7a, x86 -> x86, x86_64 -> x86_64. ABI folders missing from the APK or from the zip are skipped.",
+          "use": false,
+          "options": [
+            {
+              "key": "ffmpegCodecZip",
+              "description": "Zip containing libffmpeg.mx.so.neon64.*, libffmpeg.mx.so.neon.*, libffmpeg.mx.so.x86.* and/or libffmpeg.mx.so.x86_64.* (any subfolder depth)."
+            }
+          ],
+          "compatible_versions": [
+            "3.3.0"
           ]
         },
         {
           "name": "Sidebar & Player Defaults",
-          "description": "Cleans the player sidebar and More menu; sets default shortcuts and subtitle view.",
+          "description": "Cleans the player sidebar and More menu; sets default shortcuts and subtitle view. Configurable in Mod Settings, except the default shortcuts bitmask, still a Morphe option pending its Mod Settings move.",
           "use": true,
           "options": [
-            {
-              "key": "hideBookmark",
-              "description": ""
-            },
-            {
-              "key": "hideFavourite",
-              "description": ""
-            },
-            {
-              "key": "hideAddToPlaylist",
-              "description": ""
-            },
-            {
-              "key": "hideTutorial",
-              "description": ""
-            },
-            {
-              "key": "hidePlayingQueue",
-              "description": ""
-            },
-            {
-              "key": "hideVideoDisplay",
-              "description": ""
-            },
-            {
-              "key": "hideMoreMenuHelp",
-              "description": "Hides What's New, Features, FAQ, Check for Update, Bug Report, and About."
-            },
             {
               "key": "enableDefaultShortcuts",
               "description": "Settings > Player > Customize Shortcuts still works and always wins once touched."
@@ -287,16 +251,28 @@
             {
               "key": "defaultShortcutsMask",
               "description": "Bit sum of enabled shortcuts, decimal or 0x-prefixed hex. Bits: 0x1 rotation, 0x2 speed, 0x4 background play, 0x8 loop, 0x10 mute, 0x20 shuffle, 0x40 equalizer, 0x100 sleep timer, 0x200 repeat A-B, 0x400 night mode, 0x800 customise items, 0x1000 screenshot, 0x2000 mirror mode, 0x4000 vertical flip, 0x8000 audio effect. Bit 0x80 isn't in this list (unused pre-3.2 legacy slot, suspected PiP shortcut on newer MX Player builds) and is never touched no matter what you set here - it always keeps MX Player's own default. Default 0x780F."
-            },
-            {
-              "key": "openSubtitleSettings",
-              "description": "Expands Sync/Speed/Panel/Customization in the subtitle menu instead of collapsed."
             }
           ],
           "compatible_versions": [
-            "3.1.4",
-            "3.2.1",
-            "3.2.2"
+            "3.3.0"
+          ]
+        },
+        {
+          "name": "Smart Enhance Always On",
+          "description": "Applies Smart Enhance to every video at a level set in Mod Settings, and keeps it after lock/unlock.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.3.0"
+          ]
+        },
+        {
+          "name": "Smart Enhance Slider",
+          "description": "Replaces the Smart Enhance toggle with a 0-100% popup slider and keeps the level after lock/unlock.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.3.0"
           ]
         }
       ]
@@ -309,19 +285,45 @@
           "name": "Hide File Transfer, Video Playlist, Private Folder tiles",
           "description": "Removes the File Transfer, Video Playlist, and Private Folder tiles from settings Page.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "hideFileTransfer",
+              "description": "Removes the File Transfer tile."
+            },
+            {
+              "key": "hidePrivateFolder",
+              "description": "Removes the Private Folder tile."
+            },
+            {
+              "key": "hideVideoPlaylists",
+              "description": "Removes the Video Playlists tile."
+            }
+          ],
           "compatible_versions": []
         },
         {
           "name": "Hide Settings Page UseLess Buttons",
           "description": "Collapses the WhatsApp, Legal, and Help entries on the Me tab.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "hideWhatsApp",
+              "description": "Collapses the WhatsApp entry."
+            },
+            {
+              "key": "hideLegal",
+              "description": "Collapses the Legal entry."
+            },
+            {
+              "key": "hideHelp",
+              "description": "Collapses the Help entry."
+            }
+          ],
           "compatible_versions": []
         },
         {
           "name": "Hide top tiles",
-          "description": "Hides the top tiles.",
+          "description": "Hides the top tiles that appears in top of video folders in homescreen",
           "use": false,
           "options": [],
           "compatible_versions": []
@@ -345,7 +347,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "2.3.0.4"
+            "2.3.1.2"
           ]
         },
         {
@@ -354,7 +356,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "2.3.0.4"
+            "2.3.1.2"
           ]
         },
         {
@@ -363,7 +365,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "2.3.0.4"
+            "2.3.1.2"
           ]
         },
         {
@@ -372,7 +374,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "2.3.0.4"
+            "2.3.1.2"
           ]
         },
         {
@@ -381,7 +383,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "2.3.0.4"
+            "2.3.1.2"
           ]
         },
         {
@@ -390,7 +392,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "2.3.0.4"
+            "2.3.1.2"
           ]
         }
       ]
@@ -501,6 +503,30 @@
       ]
     },
     {
+      "app_name": "Firefox Nightly",
+      "package": "org.mozilla.fenix",
+      "patches": [
+        {
+          "name": "Old style 3 dot menu",
+          "description": "Adds \"Mod Settings\" to the 3 dot menu: switch between the stock bottom sheet menu and the old style popup menu, and pin extensions to the search bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "159.0a1"
+          ]
+        },
+        {
+          "name": "Remember tab scroll position",
+          "description": "Keeps the tab tray scroll position when it is closed and reopened.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "159.0a1"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Video Downloader",
       "package": "video.downloader.videodownloader",
       "patches": [
@@ -508,6 +534,13 @@
           "name": "Disable downloader from download menu",
           "description": "Removes the http/https <data> entries from BrowserDownloaderActivity's so the app stops offering itself in the system \"Download file with\" chooser for ordinary web downloads.",
           "use": false,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Popup blocker",
+          "description": "Blocks popups and popunder redirects with Allow / Block / Always Block prompts. Adds \"Manage popup rules\" as the last item of the 3-dot menu.",
+          "use": true,
           "options": [],
           "compatible_versions": []
         },
@@ -533,11 +566,23 @@
           "compatible_versions": [
             "2.7.2"
           ]
+        },
+        {
+          "name": "Use Your Own Host File For Stronger AdBlock",
+          "description": "Replaces res/raw/hosts.txt with a text/host file you select.",
+          "use": false,
+          "options": [
+            {
+              "key": "hostsFile",
+              "description": "Text/host file that replaces the built-in res/raw/hosts.txt."
+            }
+          ],
+          "compatible_versions": []
         }
       ]
     },
     {
-      "app_name": "All Video Downloader & Ace Player",
+      "app_name": "All Video Downloader &amp; Player",
       "package": "videoplayer.videodownloader.downloader",
       "patches": [
         {
@@ -551,7 +596,7 @@
             }
           ],
           "compatible_versions": [
-            "1.9.7"
+            "1.9.8"
           ]
         },
         {
@@ -560,7 +605,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.9.7"
+            "1.9.8"
           ]
         },
         {
@@ -569,8 +614,22 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.9.7"
+            "1.9.8"
           ]
+        },
+        {
+          "name": "Disable rate dialogs",
+          "description": "Prevents the rate and star rating dialogs from showing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Hide Scan (AD) menu item",
+          "description": "Removes the Scan (AD) row from the browser overflow menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
         },
         {
           "name": "Remove from default browser list",
@@ -578,25 +637,32 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.9.7"
+            "1.9.8"
           ]
         },
         {
           "name": "Skip splash and language screens",
-          "description": "Jumps straight to the main activity from the splash screen, skipping the splash animation, the language-selection screen, and any ad/app-open dialog normally shown first.",
+          "description": "Jumps straight to the main activity from the splash screen, skipping the splash animation, the language-selection screen, DONT UNSELECT THIS,IT HAS SIGNATURE BYPASS INCLUDED.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.9.7"
+            "1.9.8"
           ]
+        },
+        {
+          "name": "Skip tips screen",
+          "description": "Closes the onboarding tips screen as soon as it opens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
         }
       ]
     }
   ],
   "patches_name": "BlazeFTL Patches",
-  "fingerprint": "aea47d60e803d167a7414a87949485f4076a87d2229072f93ee33485c39ba76a",
-  "release_notes": "## [1.43.1](https://github.com/BlazeFTL/FTL-Patches/compare/v1.43.0...v1.43.1) (2026-09-13)\r\n\r\n### ✨ New Features\r\n\r\n#### ▶️ MX Player (Ad Version) Patches Updated For V3.2.2/V3.2.1\r\n* **Boost Splash Screen:** Disables the welcome/splash ad so video playback starts immediately.\r\n* **Clean Me Tab:** Removes promo rows and unused tiles from the Me tab. Includes a new toggle to add the \"Network Stream\" tile.\r\n* **Clean SideBar Top:** Streamlines the top section of the sidebar UI.\r\n* **Configure Smart Enhance:** Manages the Smart Enhance intro popup and notifications. Added options to skip the intro popup/animation and show a toast on enable.\r\n* **Configure SpeedUp Overlay:** Fixes the stock leftover-visible-view UI bug for long-press speedup. Added a \"No UI\" mode to apply speed changes silently without showing the overlay.\r\n* **Disable Bottom Bar & Add Me Tab To Top:** Hides the bottom navigation bar and attaches the Me tab button directly to the top toolbar.\r\n* **Sidebar & Player Defaults:** Cleans the player sidebar and \"More\" menu; configures default shortcuts and subtitle behavior.\r\n  * *New Toggles:* Hide Bookmark, Hide Favourite, Hide Add to Playlist, Hide Tutorial, Hide Playing Queue, Hide Video Display, Hide More menu Help section, Change default shortcuts, set Default shortcuts bitmask (hex), and Open subtitle settings by default.\r\n* **RecycleBin Remove Patch:** Allows complete removal of the recycle bin feature.\r\n\r\n#### 🌐 Universal & App-Specific Patches\r\n* **RemoveAdsLite (Adobo):** Updated hosts for broader and more effective ad-blocking coverage.\r\n* **APK Size & Resource Cleaning:**\r\n  * Made the **Drawable Clean Patch** significantly more aggressive to strip out junk DPI and resources.\r\n  * Updated **LangClean Patch**, **Duplicate Graphics**, and **PnG Optimizer** patches to be much more robust while further reducing the overall size of the APK.\r\n* **Analytics:** Introduced new, updated universal analytics removal patches.\r\n\r\n#### 🆕 New App\r\n* **ImpoStack PDF:** Added a new Premium Unlock Patch.\r\n",
-  "release_tag": "v1.43.1",
-  "release_date": "2026-09-13T14:55:44Z",
+  "fingerprint": "7eadf3af4c0e37b2e896132dca761968096677f251126eba79cd3036b12910fd",
+  "release_notes": "### v1.43.2\r\n\r\n**Firefox Nightly**\r\n\r\n- Restore Old 3-Dot Menu\r\n- Extension Pinning\r\n- Remember Tab Scroll Position\r\n- Updated Mod Settings Icon and UI\r\n- Support for Newer Firefox Nightly Builds\r\n\r\n**MX Player**\r\n\r\n- Smart Enhance Control\r\n- Smart Enhance Always On\r\n- Replace Codec to Fix EAC3 Playback\r\n- Recycle Bin Fix\r\n- Configurable MX Player Mod Settings\r\n- Various patch updates and fixes\r\n\r\n**All Video Downloader**\r\n\r\n- Updated support for v1.9.8\r\n- Additional patches\r\n- Promo item removal updates\r\n\r\n**Video Downloader**\r\n\r\n- Custom Host Patch\r\n- Custom Popup Blocker\r\n- Updated existing patches and compatibility\r\n\r\n\r\n**General / Core**\r\n\r\n- Density Patch improvements\r\n- Fixed Analytics Removal breaking FCM push notifications",
+  "release_tag": "v1.43.2",
+  "release_date": "2026-10-07T02:36:22Z",
   "isPreRelease": false
 }

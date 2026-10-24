@@ -1,0 +1,574 @@
+{
+  "bundle": "hari-sys786",
+  "channel": "stable",
+  "repo_url": "https://github.com/Hari-sys786/telegram-patches",
+  "created_at": "2026-09-15T15:34:23Z",
+  "version": "1.0.2",
+  "description": "## [1.0.2](https://github.com/Hari-sys786/telegram-patches/compare/v1.0.1...v1.0.2) (2026-09-15)\n\n### 🐛 Bug Fixes\n\n* **Toolchain:** build the bundle against `morphe-patcher` **1.8.0** (Gradle 9.6.1, `app.morphe.patches`\n  plugin 1.3.3) instead of 1.11.0. The bundle manifest advertises its patcher version, and Morphe\n  refuses to load a bundle built for a newer patcher than the manager ships — the previous bundle\n  (`Patcher-Version: 1.11.0`) was therefore not offered by the manager at all. 1.8.0 matches the\n  reference Morphe sources that load correctly everywhere.\n\n## [1.0.1](https://github.com/Hari-sys786/telegram-patches/compare/v1.0.0...v1.0.1) (2026-09-15)\n\n### 🐛 Bug Fixes\n\n* **Compatibility:** declare the verified app version (Telegram `12.10.1`) as a concrete app target\n  instead of an unconstrained target. Morphe only treats a source as compatible when it can match the\n  app **version**, so the previous metadata reported `Any` and Morphe Manager fell back to expert mode\n  with its own built-in universal patches instead of this source. Unverified versions are now offered\n  as an *experimental* target.\n\n## [1.0.0](https://github.com/OWNER/telegram-patches/releases/tag/v1.0.0) (2026-09-15)\n\n### ✨ New Features\n\n* **Telegram:** first public release of the Morphe patch bundle, porting the `tgpatcher.py` feature\n  set to Morphe bytecode patches: signature-verification bypass, premium unlock (UserConfig +\n  Stories + PremiumPreviewFragment + premium-feature-available), download speed boost, upload speed\n  boost, forbidden-forward bypass, banned-channel access (both gates), media saving everywhere,\n  premium-locked content unlock, screenshots enabled, sponsored messages and proxy-sponsored\n  channels removed, secret media enabler, and the Cherrygram-style **Delete Account** dialog\n  (menu entry + 20s countdown + `account.deleteAccount` + logout).\n* **Telegram:** add the `Raise max account count` patch — `UserConfig.getMaxAccountCount()` returns\n  999 instead of the stock 3 (5 with premium).\n\n### ✨ 新功能\n\n* **Telegram:** 首个公开版本，将 `tgpatcher.py` 的功能移植为 Morphe bytecode patches：签名校验绕过、\n  Premium 解锁（UserConfig / Stories / PremiumPreviewFragment / premium-feature-available）、\n  下载加速、上传加速、禁止转发绕过、被封频道访问、随处保存媒体、解锁 Premium 锁定内容、启用截图、\n  去除赞助消息与代理赞助频道、Secret Media，以及 Cherrygram 风格的 **Delete Account** 对话框。\n* **Telegram:** 新增 `Raise max account count` patch：`UserConfig.getMaxAccountCount()` 返回 999。\n\n### ⚠️ Not included\n\n* Anti-messages-delete and AyuGram ghost mode are intentionally **not** part of this source.",
+  "apps": [
+    {
+      "app_name": "Telegram",
+      "package": "org.telegram.messenger",
+      "patches": [
+        {
+          "name": "Access banned channels",
+          "description": "Makes every MessagesController.checkCanOpenChat(...) overload always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Allow forwarding/saving restricted media",
+          "description": "Makes MessagesController.isChatNoForwards(...) always return false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Bypass isRestrictedMessage",
+          "description": "Forces every read of the isRestrictedMessage field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Delete Account dialog",
+          "description": "Adds a Settings entry that opens a Cherrygram-style Delete Account dialog (red 20s countdown, deletes all dialogs, calls account.deleteAccount, then logs out).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable marking stories as read",
+          "description": "Makes StoriesController.markStoryAsRead(...) always return false so watched stories are not marked read.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable signature verification",
+          "description": "Forces AndroidUtilities.getCertificateSHA256Fingerprint() to return the mod's known certificate SHA-256 so the official Telegram build can run after a repack.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable sponsored messages (client flag)",
+          "description": "Makes MessagesController.isSponsoredDisabled() always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Enable saving media everywhere",
+          "description": "Forces every read of the noforwards field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Enable screenshots",
+          "description": "Removes FLAG_SECURE everywhere (window flags, allowScreenCapture, allowScreenshots, secret media viewers).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (PremiumPreviewFragment.forcePremium)",
+          "description": "Forces every read of PremiumPreviewFragment.forcePremium to true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (StoriesController.isPremium)",
+          "description": "Makes StoriesController.isPremium(long) always return true so stories premium features are unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (UserConfig.isPremium)",
+          "description": "Makes UserConfig.isPremium() always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium feature available",
+          "description": "Makes isPremiumFeatureAvailable(...) report available by flipping its false constant to true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Hide sponsored messages",
+          "description": "Makes MessageObject.isSponsored() always return false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Increase download speed",
+          "description": "Raises FileLoadOperation.updateParams() chunk size (0x20000 -> 0x80000) and max requests (4 -> 8).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Increase upload speed",
+          "description": "Raises FileUploadOperation's inlined throughput cap (0x800 -> 0x2000) so Telegram uses up to 4x more parallel upload parts (maxRequestsCount).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Raise max account count (999)",
+          "description": "Makes UserConfig.getMaxAccountCount() return 999 instead of 3/5, removing the stock limit on the number of accounts that can be added.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Remove proxy sponsored channels",
+          "description": "Empties MessagesController.checkPromoInfoInternal(boolean) so no promo channel request is made.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Secret media enabler",
+          "description": "Prevents secret media from expiring and disables the secret-media checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Unlock premium-locked content",
+          "description": "Forces every read of the premiumLocked field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Beta",
+      "package": "org.telegram.messenger.beta",
+      "patches": [
+        {
+          "name": "Access banned channels",
+          "description": "Makes every MessagesController.checkCanOpenChat(...) overload always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Allow forwarding/saving restricted media",
+          "description": "Makes MessagesController.isChatNoForwards(...) always return false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Bypass isRestrictedMessage",
+          "description": "Forces every read of the isRestrictedMessage field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Delete Account dialog",
+          "description": "Adds a Settings entry that opens a Cherrygram-style Delete Account dialog (red 20s countdown, deletes all dialogs, calls account.deleteAccount, then logs out).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable marking stories as read",
+          "description": "Makes StoriesController.markStoryAsRead(...) always return false so watched stories are not marked read.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable signature verification",
+          "description": "Forces AndroidUtilities.getCertificateSHA256Fingerprint() to return the mod's known certificate SHA-256 so the official Telegram build can run after a repack.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable sponsored messages (client flag)",
+          "description": "Makes MessagesController.isSponsoredDisabled() always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Enable saving media everywhere",
+          "description": "Forces every read of the noforwards field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Enable screenshots",
+          "description": "Removes FLAG_SECURE everywhere (window flags, allowScreenCapture, allowScreenshots, secret media viewers).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (PremiumPreviewFragment.forcePremium)",
+          "description": "Forces every read of PremiumPreviewFragment.forcePremium to true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (StoriesController.isPremium)",
+          "description": "Makes StoriesController.isPremium(long) always return true so stories premium features are unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (UserConfig.isPremium)",
+          "description": "Makes UserConfig.isPremium() always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium feature available",
+          "description": "Makes isPremiumFeatureAvailable(...) report available by flipping its false constant to true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Hide sponsored messages",
+          "description": "Makes MessageObject.isSponsored() always return false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Increase download speed",
+          "description": "Raises FileLoadOperation.updateParams() chunk size (0x20000 -> 0x80000) and max requests (4 -> 8).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Increase upload speed",
+          "description": "Raises FileUploadOperation's inlined throughput cap (0x800 -> 0x2000) so Telegram uses up to 4x more parallel upload parts (maxRequestsCount).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Raise max account count (999)",
+          "description": "Makes UserConfig.getMaxAccountCount() return 999 instead of 3/5, removing the stock limit on the number of accounts that can be added.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Remove proxy sponsored channels",
+          "description": "Empties MessagesController.checkPromoInfoInternal(boolean) so no promo channel request is made.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Secret media enabler",
+          "description": "Prevents secret media from expiring and disables the secret-media checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Unlock premium-locked content",
+          "description": "Forces every read of the premiumLocked field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Web",
+      "package": "org.telegram.messenger.web",
+      "patches": [
+        {
+          "name": "Access banned channels",
+          "description": "Makes every MessagesController.checkCanOpenChat(...) overload always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Allow forwarding/saving restricted media",
+          "description": "Makes MessagesController.isChatNoForwards(...) always return false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Bypass isRestrictedMessage",
+          "description": "Forces every read of the isRestrictedMessage field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Delete Account dialog",
+          "description": "Adds a Settings entry that opens a Cherrygram-style Delete Account dialog (red 20s countdown, deletes all dialogs, calls account.deleteAccount, then logs out).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable marking stories as read",
+          "description": "Makes StoriesController.markStoryAsRead(...) always return false so watched stories are not marked read.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable signature verification",
+          "description": "Forces AndroidUtilities.getCertificateSHA256Fingerprint() to return the mod's known certificate SHA-256 so the official Telegram build can run after a repack.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Disable sponsored messages (client flag)",
+          "description": "Makes MessagesController.isSponsoredDisabled() always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Enable saving media everywhere",
+          "description": "Forces every read of the noforwards field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Enable screenshots",
+          "description": "Removes FLAG_SECURE everywhere (window flags, allowScreenCapture, allowScreenshots, secret media viewers).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (PremiumPreviewFragment.forcePremium)",
+          "description": "Forces every read of PremiumPreviewFragment.forcePremium to true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (StoriesController.isPremium)",
+          "description": "Makes StoriesController.isPremium(long) always return true so stories premium features are unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium (UserConfig.isPremium)",
+          "description": "Makes UserConfig.isPremium() always return true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Force premium feature available",
+          "description": "Makes isPremiumFeatureAvailable(...) report available by flipping its false constant to true.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Hide sponsored messages",
+          "description": "Makes MessageObject.isSponsored() always return false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Increase download speed",
+          "description": "Raises FileLoadOperation.updateParams() chunk size (0x20000 -> 0x80000) and max requests (4 -> 8).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Increase upload speed",
+          "description": "Raises FileUploadOperation's inlined throughput cap (0x800 -> 0x2000) so Telegram uses up to 4x more parallel upload parts (maxRequestsCount).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Raise max account count (999)",
+          "description": "Makes UserConfig.getMaxAccountCount() return 999 instead of 3/5, removing the stock limit on the number of accounts that can be added.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Remove proxy sponsored channels",
+          "description": "Empties MessagesController.checkPromoInfoInternal(boolean) so no promo channel request is made.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Secret media enabler",
+          "description": "Prevents secret media from expiring and disables the secret-media checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        },
+        {
+          "name": "Unlock premium-locked content",
+          "description": "Forces every read of the premiumLocked field to false.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.10.1"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Telegram Patches",
+  "fingerprint": "61838735fcaac9b09151871cb54a79e0626741fe231002531badefe03eb24929",
+  "release_notes": "## [1.0.2](https://github.com/Hari-sys786/telegram-patches/compare/v1.0.1...v1.0.2) (2026-09-15)\n\n### 🐛 Bug Fixes\n\n* **Toolchain:** build the bundle against `morphe-patcher` **1.8.0** (Gradle 9.6.1, `app.morphe.patches`\n  plugin 1.3.3) instead of 1.11.0. The bundle manifest advertises its patcher version, and Morphe\n  refuses to load a bundle built for a newer patcher than the manager ships — the previous bundle\n  (`Patcher-Version: 1.11.0`) was therefore not offered by the manager at all. 1.8.0 matches the\n  reference Morphe sources that load correctly everywhere.\n\n",
+  "release_tag": "v1.0.2",
+  "release_date": "2026-09-15T15:34:23Z",
+  "isPreRelease": false
+}

@@ -1,0 +1,54 @@
+{
+  "bundle": "pigfoot",
+  "channel": "latest",
+  "repo_url": "https://github.com/pigfoot/morphe-patches",
+  "created_at": "2026-10-06T15:41:17",
+  "version": "v0.1.0",
+  "description": "## [0.1.0](https://github.com/pigfoot/morphe-patches/releases/tag/v0.1.0) (2026-10-06)\n\n### Changed\n\n- Package renaming is optional and unselected by default. Without it RailsGo retains its original package, provider authorities, permissions and link scheme.\n- Selecting Change package name uses the default .morphe or a custom package and applies complete parallel isolation without changing the app display name.\n- Sideload startup compatibility is required for supported standard and Shizuku installs; the bus patch depends on it, not package renaming. Root mount remains unqualified and unavailable.\n- Preserve the helper-only extension, loaded reward metadata, original fallback and callback deduplication.\n- Publish readable dependency names and clean preflight bundle outputs before future versioned releases.\n\n### Migration\n\nExisting .morphe or custom-package installs must select Change package name, keep the same package value and use the same local signing key to update. This release replaces the earlier 1.0.0 numbering; patch behavior is unchanged. Device startup and live bus updates still require phone validation.\n",
+  "apps": [
+    {
+      "app_name": "台灣鐵道通",
+      "package": "com.waccliu.taiwanrail",
+      "patches": [
+        {
+          "name": "Change package name",
+          "description": "Optional parallel installation with a default or custom package name. Without this patch the original package is retained. The app name is unchanged; providers, permissions and links are isolated when selected.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Used only when this patch is selected. Keep the default to update an existing .morphe install with the same signing key. The app name is unchanged."
+            }
+          ],
+          "compatible_versions": [
+            "1.25.2"
+          ]
+        },
+        {
+          "name": "RailsGo bus update without video",
+          "description": "Complete the observed bus-update rewarded unit using its loaded reward metadata; retain the original fallback. Requires sideload startup compatibility, not package renaming.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.25.2"
+          ]
+        },
+        {
+          "name": "RailsGo sideload startup compatibility",
+          "description": "Required for supported re-signed standard or Shizuku installs, with or without package renaming. Bypasses the Java Play-license startup entry. Root mount is not qualified.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.25.2"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Pigfoot Patches",
+  "fingerprint": "ae434ce128a5433d472675d8b8599bb46e6791e76796e6ebbd4305bc10244244",
+  "release_notes": "## [0.1.0](https://github.com/pigfoot/morphe-patches/releases/tag/v0.1.0) (2026-10-06)\n\n### Changed\n\n- Package renaming is optional and unselected by default. Without it RailsGo retains its original package, provider authorities, permissions and link scheme.\n- Selecting Change package name uses the default .morphe or a custom package and applies complete parallel isolation without changing the app display name.\n- Sideload startup compatibility is required for supported standard and Shizuku installs; the bus patch depends on it, not package renaming. Root mount remains unqualified and unavailable.\n- Preserve the helper-only extension, loaded reward metadata, original fallback and callback deduplication.\n- Publish readable dependency names and clean preflight bundle outputs before future versioned releases.\n\n### Migration\n\nExisting .morphe or custom-package installs must select Change package name, keep the same package value and use the same local signing key to update. This release replaces the earlier 1.0.0 numbering; patch behavior is unchanged. Device startup and live bus updates still require phone validation.\n",
+  "release_tag": "v0.1.0",
+  "release_date": "2026-10-06T15:41:17Z",
+  "isPreRelease": false
+}

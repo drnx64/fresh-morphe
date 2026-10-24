@@ -2,21 +2,30 @@
   "bundle": "ahmedyarub",
   "channel": "dev",
   "repo_url": "https://github.com/ahmedyarub/morphe-patches",
-  "created_at": "2026-09-30T15:35:36",
-  "version": "v1.9.0-dev.1",
-  "description": "## [1.9.0-dev.1](https://github.com/ahmedyarub/morphe-patches/compare/v1.8.1...v1.9.0-dev.1) (2026-09-30)\n\n### 🐛 Bug Fixes\n\n* **X:** Keep Enable Undo Posts from failing verification ([73be101](https://github.com/ahmedyarub/morphe-patches/commit/73be10157f6c003a4470f96b6ca26bc7c3f5a38e))\n* **X:** Offer Download Video on every video in the video player ([19cd545](https://github.com/ahmedyarub/morphe-patches/commit/19cd5451192b34a0f1109f2df908a2cd4a45af88))\n* **X:** Show the post menu's dialogs on the activity ([2f00bd6](https://github.com/ahmedyarub/morphe-patches/commit/2f00bd613ee3cbff9887441d801212f61bc1ec6b))\n\n### ✨ New Features\n\n* **X:** Add Custom download folder ([46726c4](https://github.com/ahmedyarub/morphe-patches/commit/46726c4f07386cfba546fde21e134d4a09b6edde))\n* **X:** Add Enable Undo Posts, a settings screen, and login and database tools ([4a6a91a](https://github.com/ahmedyarub/morphe-patches/commit/4a6a91a58ac6c819a0746b71f1393e4577858c8f))\n* **X:** Add link patches for the rewritten 12.30 client ([a3665c7](https://github.com/ahmedyarub/morphe-patches/commit/a3665c7faec6028323d07dc345c14173f57c5bf5))\n* **X:** Add Native downloader, Unlock Premium checks and the hiding patches ([2550789](https://github.com/ahmedyarub/morphe-patches/commit/2550789a1377bcffd51353b1d7362f05fbeb7f6e))\n* **X:** Add Remove Ads, Hook feature flag and the Customize patches ([aa7917c](https://github.com/ahmedyarub/morphe-patches/commit/aa7917c2bf887da4811c6d4d6bb5a8dcd4905797))\n* **X:** Add sensitive media, poll results, force HD, translate and Add tab patches ([d2bd235](https://github.com/ahmedyarub/morphe-patches/commit/d2bd2358583fa4901ed738607bd97c2fe0c6c60c))\n* **X:** Add Share Tweet as Image and Disable auto timeline scroll on launch ([c4e5ebd](https://github.com/ahmedyarub/morphe-patches/commit/c4e5ebd7c414659cd229f45070e163a719820cc8))\n* **X:** Add the post menu actions and Filter posts by keyword ([43864b2](https://github.com/ahmedyarub/morphe-patches/commit/43864b292666eea67f6eb73d992367625c8f9b0f))\n",
+  "created_at": "2026-10-22T10:28:30Z",
+  "version": "1.20.0-dev.1",
+  "description": "## [1.20.0](https://github.com/ahmedyarub/morphe-patches/compare/v1.19.0...v1.20.0) (2026-10-22)\n\n### ✨ New Features\n\n* **Instagram:** Block the midcards shown between stories ([ebe6cb0](https://github.com/ahmedyarub/morphe-patches/commit/ebe6cb0004aa213afd603492b79e7c42ab554429))",
   "apps": [
     {
       "app_name": "Instagram",
       "package": "com.instagram.android",
       "patches": [
         {
+          "name": "Auto not interested",
+          "description": "Skips the reason popup and auto-submits when tapping Not Interested.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "452.1.0.53.64"
+          ]
+        },
+        {
           "name": "Bypass signature check",
           "description": "",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -25,7 +34,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -34,7 +43,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -43,7 +52,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -52,7 +61,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -60,6 +69,10 @@
           "description": "Hides categories of stories from the story tray.",
           "use": true,
           "options": [
+            {
+              "key": "onlyOrganicStories",
+              "description": "Shows only stories people posted: their own stories, close friends, shared and collab stories, lives and subscriber stories. Hides every suggestion, prompt, music and ad card Instagram adds to the tray or injects while watching, whatever the options below say."
+            },
             {
               "key": "hideAdsStories",
               "description": "Hides advertisements from the story tray."
@@ -71,19 +84,14 @@
             {
               "key": "hideHighlightStories",
               "description": "Hides resurfaced highlights, which carry no expiry, from the story tray."
+            },
+            {
+              "key": "hideYourTurnStories",
+              "description": "Hides \"Add Yours\" / \"Your Turn\" stories from the story tray."
             }
           ],
           "compatible_versions": [
-            "449.0.0.52.84"
-          ]
-        },
-        {
-          "name": "Hide ads",
-          "description": "Hides ads in the feed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -92,7 +100,25 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
+          ]
+        },
+        {
+          "name": "Hide Threads profile button",
+          "description": "Hides the Threads button from the profile page action bar (top right of the profile page).",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "452.1.0.53.64"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Hides ads in the feed and in the Following feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "452.1.0.53.64"
           ]
         },
         {
@@ -110,16 +136,7 @@
             }
           ],
           "compatible_versions": [
-            "449.0.0.52.84"
-          ]
-        },
-        {
-          "name": "Hide Threads profile button",
-          "description": "Hides the Threads button from the profile page action bar (top right of the profile page).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -128,16 +145,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
           "name": "Make ephemeral media permanent",
-          "description": "Changes unexpired view once, view twice media to permanent view.",
+          "description": "Changes unexpired view once, view twice media to permanent view. Opening such media no longer sends Instagram a seen receipt, so it is still there after the chat refreshes.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -146,7 +163,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
+          ]
+        },
+        {
+          "name": "Reorder menu options",
+          "description": "Moves Interested and Not Interested to the top of the post menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "452.1.0.53.64"
           ]
         },
         {
@@ -155,7 +181,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         },
         {
@@ -169,7 +195,7 @@
             }
           ],
           "compatible_versions": [
-            "449.0.0.52.84"
+            "452.1.0.53.64"
           ]
         }
       ]
@@ -208,7 +234,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -222,7 +253,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -236,7 +272,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -250,35 +291,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
-          ]
-        },
-        {
-          "name": "Customize default reply sorting",
-          "description": "Sets the sort replies open with.",
-          "use": true,
-          "options": [
-            {
-              "key": "replySort",
-              "description": ""
-            }
-          ],
-          "compatible_versions": [
-            "12.30.0-prod.01"
-          ]
-        },
-        {
-          "name": "Customize explore tabs",
-          "description": "Hides tabs from the Explore page.",
-          "use": true,
-          "options": [
-            {
-              "key": "hiddenExploreTabs",
-              "description": "The ids of the tabs to hide, e.g. trending, news, sports, entertainment. The server names them, so they are matched without regard to case, hyphens or underscores."
-            }
-          ],
-          "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -312,7 +330,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -338,7 +361,50 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
+          ]
+        },
+        {
+          "name": "Customize default reply sorting",
+          "description": "Sets the sort replies open with.",
+          "use": true,
+          "options": [
+            {
+              "key": "replySort",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
+          ]
+        },
+        {
+          "name": "Customize explore tabs",
+          "description": "Hides tabs from the Explore page.",
+          "use": true,
+          "options": [
+            {
+              "key": "hiddenExploreTabs",
+              "description": "The ids of the tabs to hide, e.g. trending, news, sports, entertainment. The server names them, so they are matched without regard to case, hyphens or underscores."
+            }
+          ],
+          "compatible_versions": [
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -364,7 +430,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -382,7 +453,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -412,7 +488,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -482,7 +563,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -524,7 +610,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -533,7 +624,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -542,25 +638,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
-          ]
-        },
-        {
-          "name": "Enable debug menu for posts",
-          "description": "Adds \"Post data\" to the post menu: everything the app knows about the post, as text.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.30.0-prod.01"
-          ]
-        },
-        {
-          "name": "Enable force HD videos",
-          "description": "Always plays videos at the highest quality the device supports, whatever the connection.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -574,7 +657,59 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
+          ]
+        },
+        {
+          "name": "Enable debug menu for posts",
+          "description": "Adds \"Post data\" to the post menu: everything the app knows about the post, as text.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
+          ]
+        },
+        {
+          "name": "Enable force HD videos",
+          "description": "Always plays videos at the highest quality the device supports, whatever the connection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
+          ]
+        },
+        {
+          "name": "Feed filters",
+          "description": "Adds feed filters to timelines: media only (images, videos, GIFs), hide followed profiles, and include/exclude keyword filtering. Toggle each filter from the Morphe settings.",
+          "use": true,
+          "options": [
+            {
+              "key": "includeKeywords",
+              "description": "When set, only posts containing at least one of these are shown. Edit in the app."
+            }
+          ],
+          "compatible_versions": [
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -588,7 +723,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -597,7 +737,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -611,16 +756,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
-          ]
-        },
-        {
-          "name": "Hide badges from navigation bar icons",
-          "description": "Hides the unread counts and dots on the bottom navigation bar.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -629,7 +770,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -638,7 +784,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -647,7 +798,26 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
+          ]
+        },
+        {
+          "name": "Hide badges from navigation bar icons",
+          "description": "Hides the unread counts and dots on the bottom navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -656,7 +826,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -670,7 +845,12 @@
             }
           ],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -679,7 +859,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -688,7 +873,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -697,7 +887,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -706,7 +901,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -715,7 +915,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -724,7 +929,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -733,7 +943,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -742,7 +957,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -751,7 +971,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -760,7 +985,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -769,7 +999,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -778,7 +1013,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         },
         {
@@ -787,16 +1027,21 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.30.0-prod.01"
+            "12.32.0-prod.01",
+            "12.33.0-prod.01",
+            "12.33.1-prod.01",
+            "12.34.0-prod.01",
+            "12.35.0-prod.01",
+            "12.36.1-prod.01"
           ]
         }
       ]
     }
   ],
   "patches_name": "Ahmed Yarub's Patches",
-  "fingerprint": "64a12e6b0982bfcc7cba81f3d685f2eeb1d7ecf6529f055465fb7d1308166c1e",
-  "release_notes": "## [1.9.0-dev.1](https://github.com/ahmedyarub/morphe-patches/compare/v1.8.1...v1.9.0-dev.1) (2026-09-30)\n\n### 🐛 Bug Fixes\n\n* **X:** Keep Enable Undo Posts from failing verification ([73be101](https://github.com/ahmedyarub/morphe-patches/commit/73be10157f6c003a4470f96b6ca26bc7c3f5a38e))\n* **X:** Offer Download Video on every video in the video player ([19cd545](https://github.com/ahmedyarub/morphe-patches/commit/19cd5451192b34a0f1109f2df908a2cd4a45af88))\n* **X:** Show the post menu's dialogs on the activity ([2f00bd6](https://github.com/ahmedyarub/morphe-patches/commit/2f00bd613ee3cbff9887441d801212f61bc1ec6b))\n\n### ✨ New Features\n\n* **X:** Add Custom download folder ([46726c4](https://github.com/ahmedyarub/morphe-patches/commit/46726c4f07386cfba546fde21e134d4a09b6edde))\n* **X:** Add Enable Undo Posts, a settings screen, and login and database tools ([4a6a91a](https://github.com/ahmedyarub/morphe-patches/commit/4a6a91a58ac6c819a0746b71f1393e4577858c8f))\n* **X:** Add link patches for the rewritten 12.30 client ([a3665c7](https://github.com/ahmedyarub/morphe-patches/commit/a3665c7faec6028323d07dc345c14173f57c5bf5))\n* **X:** Add Native downloader, Unlock Premium checks and the hiding patches ([2550789](https://github.com/ahmedyarub/morphe-patches/commit/2550789a1377bcffd51353b1d7362f05fbeb7f6e))\n* **X:** Add Remove Ads, Hook feature flag and the Customize patches ([aa7917c](https://github.com/ahmedyarub/morphe-patches/commit/aa7917c2bf887da4811c6d4d6bb5a8dcd4905797))\n* **X:** Add sensitive media, poll results, force HD, translate and Add tab patches ([d2bd235](https://github.com/ahmedyarub/morphe-patches/commit/d2bd2358583fa4901ed738607bd97c2fe0c6c60c))\n* **X:** Add Share Tweet as Image and Disable auto timeline scroll on launch ([c4e5ebd](https://github.com/ahmedyarub/morphe-patches/commit/c4e5ebd7c414659cd229f45070e163a719820cc8))\n* **X:** Add the post menu actions and Filter posts by keyword ([43864b2](https://github.com/ahmedyarub/morphe-patches/commit/43864b292666eea67f6eb73d992367625c8f9b0f))\n",
-  "release_tag": "v1.9.0-dev.1",
-  "release_date": "2026-09-30T15:35:36Z",
+  "fingerprint": "d88083f041d5be8ab41f27339d15c2129ac2f853eecc28ad617b9b1bace81b3d",
+  "release_notes": "## [1.20.0-dev.1](https://github.com/ahmedyarub/morphe-patches/compare/v1.19.0...v1.20.0-dev.1) (2026-10-22)\n\n### ✨ New Features\n\n* **Instagram:** Block the midcards shown between stories ([ebe6cb0](https://github.com/ahmedyarub/morphe-patches/commit/ebe6cb0004aa213afd603492b79e7c42ab554429))\n",
+  "release_tag": "v1.20.0-dev.1",
+  "release_date": "2026-10-22T10:28:30Z",
   "isPreRelease": true
 }
