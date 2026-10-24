@@ -5,7 +5,7 @@ import { el, mount } from '../ui.js'
 import * as store from '../store.js'
 import { renderAppIcon, groupAffectedBundles, resolveAppName } from '../utils/misc.js'
 import { escHtml } from '../utils/html.js'
-import { formatFriendlyDate, dayHue, badgeLabel } from '../utils/format.js'
+import { dateParts, dayHue, badgeLabel } from '../utils/format.js'
 import { TELEGRAM_ICON, ARROW_LEFT, ARROW_RIGHT } from '../utils/svg.js'
 
 const HIDE_DEV_KEY = 'morphe_hide_dev'
@@ -78,7 +78,11 @@ export function renderChangelog(container) {
 
     for (const day of pageDays) {
       const dayEl = el('div', { class: 'changelog-day' })
-      const dateEl = el('h3', { class: 'changelog-date' }, [formatFriendlyDate(day.date)])
+      const datePartsValue = dateParts(day.date)
+      const dateEl = el('h3', { class: 'changelog-date' }, [
+        el('span', { class: 'changelog-date-day' }, [datePartsValue.day]),
+        ` ${datePartsValue.month}, ${datePartsValue.year}`,
+      ])
       dateEl.style.setProperty('--date-hue', String(dayHue(day.date)))
       dayEl.appendChild(dateEl)
 

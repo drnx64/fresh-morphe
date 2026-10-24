@@ -12,21 +12,37 @@ export function padNum(n) {
   return n < 10 ? '0' + n : '' + n
 }
 
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+]
+
 export function formatFriendlyDate(dateStr) {
   if (!dateStr) return '-'
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ]
   const parts = dateStr.split('-')
   if (parts.length === 3) {
     const monthIndex = parseInt(parts[1], 10) - 1
     const day = parseInt(parts[2], 10)
     if (monthIndex >= 0 && monthIndex < 12) {
-      return `${months[monthIndex]} ${day}, ${parts[0]}`
+      return `${MONTHS[monthIndex]} ${day}, ${parts[0]}`
     }
   }
   return dateStr
+}
+
+/**
+ * Split an ISO date into display pieces so the day can be styled on its own.
+ * @param {string} dateStr - ISO date (YYYY-MM-DD)
+ * @returns {{day: string, month: string, year: string}}
+ */
+export function dateParts(dateStr) {
+  const [year, month, day] = String(dateStr || '').split('-')
+  const monthIndex = parseInt(month, 10) - 1
+  return {
+    day: String(parseInt(day, 10) || ''),
+    month: MONTHS[monthIndex] || '',
+    year: year || '',
+  }
 }
 
 /**

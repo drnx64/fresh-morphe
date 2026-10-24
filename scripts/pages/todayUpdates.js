@@ -10,7 +10,7 @@ import * as store from '../store.js'
 import { groupAffectedBundles, resolveAppName, getAppIconUrl, renderAppIcon } from '../utils/misc.js'
 import { getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { formatFriendlyDate, shortVersion, badgeLabel } from '../utils/format.js'
+import { dateParts, dayHue, shortVersion, badgeLabel } from '../utils/format.js'
 import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
 
 const HIERARCHY_ORDER = { 'NEW BUNDLE': 0, 'UPDATED': 1, 'REMOVED BUNDLE': 2 }
@@ -32,7 +32,13 @@ export function renderTodayUpdates() {
 
   const liveDate = store.get('liveDataDate') || ''
   if (liveDate) {
-    headingLeft.appendChild(el('span', { class: 'today-updates-date' }, [formatFriendlyDate(liveDate)]))
+    const liveParts = dateParts(liveDate)
+    const liveDateEl = el('span', { class: 'today-updates-date' }, [
+      el('span', { class: 'today-updates-date-day' }, [liveParts.day]),
+      ` ${liveParts.month}, ${liveParts.year}`,
+    ])
+    liveDateEl.style.setProperty('--date-hue', String(dayHue(liveDate)))
+    headingLeft.appendChild(liveDateEl)
   }
   headingRow.appendChild(headingLeft)
 
