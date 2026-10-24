@@ -164,3 +164,109 @@ class TestPackLines:
         blocks = [wn._render_header(), "x" * 300, "y" * 150, "z" * 150]
         assert wn._pack_lines(blocks, 400, 2, 300) is None
         assert wn._pack_lines(blocks, 400, 2, 0) is not None
+
+
+class TestAppNames:
+    def test_verified_cache_name_wins(self):
+        cache = {"com.example.gallery": {"name": "Gallery Pro", "name_source": "play"}}
+        assert wn._load_app_name("com.example.gallery", cache, "Bundle Name") == "Gallery Pro"
+
+    def test_bundle_name_used_when_cache_is_empty(self):
+        assert wn._load_app_name("com.example.gallery", {}, "Bundle Gallery") == "Bundle Gallery"
+
+    def test_never_renders_the_raw_package(self):
+        assert wn._load_app_name("com.example.gallery", {}) == "Gallery"
+
+    def test_package_echo_in_cache_is_ignored(self):
+        cache = {"com.example.gallery": {"name": "com.example.gallery"}}
+        assert wn._load_app_name("com.example.gallery", cache) == "Gallery"
+
+    def test_sections_never_show_a_package_as_an_app_name(self):
+        entries = {
+            "example:stable": {
+                "bundle": "example",
+                "badge_type": "UPDATED",
+                "apps": [{"package": "com.example.gallery", "badge_type": "REMOVED APP", "patch_diff": {}}],
+            }
+        }
+        sections = wn._build_sections(entries, {}, {})
+        names = [a["name"] for item in sections["updated_apps"] for a in item["apps"]]
+        assert names == ["Gallery"]
+
+
+class TestEscaping:
+    def test_ampersand_in_app_name_is_escaped(self):
+        item = {
+            "bundle_name": "B",
+            "patches_name": "B & Co",
+            "apps": [{"name": "Sync & Friends", "pkg": "com.x", "patches": []}],
+        }
+        rendered = wn._render_bundle(item)
+        assert "&amp;" in rendered
+        assert "Sync & Friends" not in rendered
+
+    def test_patch_label_is_escaped_inside_link(self):
+        out = wn._patch_link("Plus <Beta>", "com.x")
+        assert "Plus &lt;Beta&gt;" in out
+        assert "<a href=" in out
+
+
+class TestStoreLinks:
+    def _entry(self, pkg, cache):
+        entries = {
+            "example:stable": {
+                "bundle": "example",
+                "badge_type": "UPDATED",
+                "apps": [{
+                    "package": pkg,
+                    "badge_type": "UPDATED APP",
+                    "patch_diff": {"patches_added": [{"name": "Some patch"}]},
+                }],
+            }
+        }
+        sections = wn._build_sections(entries, cache, {})
+        return sections["updated_apps"][0]["apps"][0]
+
+    def test_play_app_gets_play_link(self):
+        cache = {"com.x": {"name": "X", "name_source": "play"}}
+        app = self._entry("com.x", cache)
+        assert app["url"] == "https://play.google.com/store/apps/details?id=com.x"
+        assert app["store"] == "play"
+
+    def test_fdroid_app_gets_fdroid_link(self):
+        cache = {"com.x": {"name": "X", "name_source": "fdroid"}}
+        app = self._entry("com.x", cache)
+        assert app["url"] == "https://f-droid.org/en/packages/com.x/"
+        assert app["store"] == "fdroid"
+
+    def test_unresolved_app_gets_apkmirror_search(self):
+        app = self._entry("com.example.gallery", {})
+        assert app["url"] == "https://www.apkmirror.com/?s=com.example.gallery"
+
+    def test_rendered_name_is_inside_link_and_bold(self):
+        item = {
+            "bundle_name": "B",
+            "patches_name": "B",
+            "apps": [{"name": "Gallery", "pkg": "com.example.gallery",
+                      "patches": [], "url": "https://play.google.com/store/apps/details?id=com.example.gallery"}],
+        }
+        rendered = wn._render_bundle(item)
+        assert '<a href="https://play.google.com/store/apps/details?id=com.example.gallery">Gallery</a>' in rendered
+        assert "<b>" in rendered
+
+    def test_removed_app_is_linked(self):
+        item = {
+            "bundle_name": "B",
+            "patches_name": "B",
+            "apps": [{"name": "Gallery", "pkg": "com.example.gallery", "removed": True,
+                      "url": "https://f-droid.org/en/packages/com.example.gallery/"}],
+        }
+        rendered = wn._render_bundle(item)
+        assert "<s><a href=" in rendered
+        assert "</a></s>" in rendered
+
+    def test_app_without_url_renders_plain(self):
+        item = {"bundle_name": "B", "patches_name": "B",
+                "apps": [{"name": "Gallery", "pkg": "com.example.gallery", "patches": []}]}
+        assert "<a href" not in wn._render_bundle(item)
+        assert "<b>Gallery</b>" in wn._render_bundle(item)

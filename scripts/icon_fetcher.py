@@ -3,16 +3,29 @@
 Stores URLs only (not base64) — the frontend handles fetching/resizing/caching.
 Unified cache: data/state/app_cache.json maps package -> {name, icon_url}.
 """
-import os
 import re
 import sys
 import time
 import random
 import urllib.error
 import urllib.request
-from state_manager import STATE_DIR, load_json, save_json
+from app_metadata import (
+    APP_CACHE_PATH, PLAY_SOURCE, clean_app_name, is_real_name, resolve_name, upsert,
+)
+from state_manager import load_json, save_json
 
-APP_CACHE_PATH = os.path.join(STATE_DIR, "app_cache.json")
+# Re-exported for callers that already import the path from here.
+__all__ = [
+    "APP_CACHE_PATH",
+    "fetch_app_icon",
+    "fetch_and_cache_app_name",
+    "fetch_app_name",
+    "enrich_parsed_bundles_with_icons",
+    "enrich_parsed_bundles_with_names",
+    "enrich_parsed_bundles_with_store_fallbacks",
+    "apply_resolved_names",
+    "retry_empty_icons",
+]
 
 PLAY_STORE_URL = "https://play.google.com/store/apps/details?id={}"
 
@@ -69,21 +82,8 @@ def _fetch_page_with_retry(url, retries=MAX_RETRIES):
 
 
 def _clean_play_store_name(name):
-    """Strip common Play Store suffixes from an app name."""
-    suffixes = [
-        " - Apps on Google Play",
-        " - Google Play",
-        " - Aplicaciones en Google Play",
-        " - App su Google Play",
-        " - Google Play のアプリ",
-        " - Google Play 앱",
-        " - Google Play 上的应用",
-        " - Google Play 上的應用程式",
-    ]
-    for suffix in suffixes:
-        if name.endswith(suffix):
-            return name[: -len(suffix)].strip()
-    return name
+    """Strip Play Store suffixes and HTML entities from an app name."""
+    return clean_app_name(name)
 
 
 def _fetch_app_details(package_name):
@@ -129,13 +129,9 @@ def fetch_app_icon(package_name, skip_cache=False):
 
     name, icon_url = _fetch_app_details(pkg)
 
-    cache = load_json(APP_CACHE_PATH, default={}
-    )
-    if pkg not in cache:
-        cache[pkg] = {}
-    if name:
-        cache[pkg]["name"] = name
-    cache[pkg]["icon_url"] = icon_url
+    cache = load_json(APP_CACHE_PATH, default={})
+    upsert(pkg, cache, name=name, name_source=PLAY_SOURCE,
+           icon_url=icon_url, icon_source=PLAY_SOURCE)
     save_json(APP_CACHE_PATH, cache)
 
     return icon_url
@@ -213,12 +209,8 @@ def fetch_and_cache_app_name(package_name):
     name, icon_url = _fetch_app_details(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
-    if pkg not in cache:
-        cache[pkg] = {}
-    if name:
-        cache[pkg]["name"] = name
-    if icon_url:
-        cache[pkg]["icon_url"] = icon_url
+    upsert(pkg, cache, name=name, name_source=PLAY_SOURCE,
+           icon_url=icon_url, icon_source=PLAY_SOURCE)
     save_json(APP_CACHE_PATH, cache)
 
     return name or ""
@@ -234,7 +226,7 @@ def enrich_parsed_bundles_with_names(parsed_bundles):
                 all_packages.add(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
-    uncached = [p for p in all_packages if p not in cache or not cache[p].get("name")]
+    uncached = [p for p in all_packages if not is_real_name(_cached_name(cache, p), p)]
 
     if uncached:
         print(f"[names] Fetching Play Store names for {len(uncached)} uncached packages...")
@@ -247,19 +239,57 @@ def enrich_parsed_bundles_with_names(parsed_bundles):
 
         cache = load_json(APP_CACHE_PATH, default={})
 
+    apply_resolved_names(parsed_bundles, cache)
+    return parsed_bundles
+
+
+def _cached_name(cache, pkg):
+    entry = cache.get(pkg)
+    return entry.get("name", "") if isinstance(entry, dict) else ""
+
+
+def apply_resolved_names(parsed_bundles, cache=None):
+    """Write the best available name into bundle app records.
+
+    Bundle metadata only contributes a name when it is a real one; verified
+    store names win, and packages with no metadata keep whatever they had
+    (never the raw package as a display name — readers resolve that lazily).
+    """
+    cache = load_json(APP_CACHE_PATH, default={}) if cache is None else cache
     for record in parsed_bundles.values():
         for app in record.get("apps", []):
             pkg = app.get("package", "").lower().strip()
-            entry = cache.get(pkg, {})
-            if isinstance(entry, dict):
-                play_name = entry.get("name", "")
-            else:
-                play_name = ""
-            if play_name:
-                existing = app.get("app_name", "")
-                if not existing or existing == pkg:
-                    app["app_name"] = play_name
+            existing = app.get("app_name", "")
+            name, _source = resolve_name(pkg, cache, existing)
+            if name and name != existing:
+                app["app_name"] = name
+    return parsed_bundles
 
+
+def enrich_parsed_bundles_with_store_fallbacks(parsed_bundles):
+    """Query F-Droid for packages Play Store could not resolve.
+
+    Runs after the Play passes, so only genuinely unresolved packages cost a
+    request. Both names and icons land in the registry (app_cache.json), which
+    is what the site and the digest read.
+    """
+    all_packages = set()
+    for record in parsed_bundles.values():
+        for app in record.get("apps", []):
+            pkg = app.get("package", "").lower().strip()
+            if pkg:
+                all_packages.add(pkg)
+
+    cache = load_json(APP_CACHE_PATH, default={})
+    try:
+        import fdroid_source
+        fdroid_source.enrich_unresolved(cache, all_packages)
+    except Exception as e:
+        print(f"[-] F-Droid lookup failed (non-fatal): {e}")
+        return parsed_bundles
+
+    save_json(APP_CACHE_PATH, cache)
+    apply_resolved_names(parsed_bundles, cache)
     return parsed_bundles
 
 

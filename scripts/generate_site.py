@@ -5,10 +5,27 @@ import json
 from datetime import datetime, timezone
 from xml.sax.saxutils import escape as xml_escape
 from state_manager import ensure_dirs, ROOT_DIR, ROOT_DATA_DIR, OUTPUT_DIR, save_json, load_json
+from app_metadata import load_cache, resolve_name as _resolve_app_name
 
 PUBLIC_DATA_DIR = os.path.join(ROOT_DIR, "public", "data")
 REPOS_LIST_PATH = os.path.join(ROOT_DATA_DIR, "repos_list.txt")
 README_PATH = os.path.join(ROOT_DIR, "README.md")
+
+_app_cache = None
+
+
+def _registry():
+    global _app_cache
+    if _app_cache is None:
+        _app_cache = load_cache()
+    return _app_cache
+
+
+def _display_app_name(app):
+    """Resolved display name; falls back to a derived name, never the package."""
+    pkg = app.get("package", "") or ""
+    name, _source = _resolve_app_name(pkg, _registry(), app.get("app_name", ""))
+    return name
 
 
 def _rfc2822(date_str):
@@ -33,7 +50,7 @@ def _build_item_description(bundle_entry):
         lines.append("<ul>")
         for app in apps:
             bt = app.get("badge_type", "CHANGED")
-            name = app.get("app_name", app.get("package", "unknown"))
+            name = _display_app_name(app)
             lines.append(f"<li>[{bt}] {xml_escape(name)}</li>")
         lines.append("</ul>")
     return "".join(lines)
@@ -66,7 +83,7 @@ def generate_rss_feed():
             badge = bundle_entry.get("badge_type", "UPDATED")
             for app in apps:
                 bt = app.get("badge_type", "CHANGED")
-                app_name = app.get("app_name", app.get("package", "unknown"))
+                app_name = _display_app_name(app)
                 title = f"[{bt}] {app_name} in {bundle_name}"
                 desc = (
                     f"<p><strong>{bt}</strong> &mdash; {xml_escape(app_name)} "

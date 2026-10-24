@@ -3,7 +3,7 @@
  */
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
-import { renderAppIcon, groupAffectedBundles } from '../utils/misc.js'
+import { renderAppIcon, groupAffectedBundles, resolveAppName } from '../utils/misc.js'
 import { escHtml } from '../utils/html.js'
 import { TELEGRAM_ICON, ARROW_LEFT, ARROW_RIGHT } from '../utils/svg.js'
 
@@ -70,6 +70,7 @@ export function renderChangelog(container) {
     pagination.replaceChildren()
 
     const iconCache = store.get('iconCache') || {}
+  const nameCache = store.get('nameCache') || {}
     const start = currentPage * DAYS_PER_PAGE
     const end = Math.min(start + DAYS_PER_PAGE, changelog.length)
     const pageDays = changelog.slice(start, end)
@@ -91,7 +92,7 @@ export function renderChangelog(container) {
           appEl.innerHTML = `
             ${app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(app.badge_type)}</span>` : ''}
             ${iconHtml}
-            <span class="changelog-app-name">${escHtml(app.app_name || app.package)}</span>
+            <span class="changelog-app-name">${escHtml(resolveAppName(app, nameCache))}</span>
           `
           appEl.style.cursor = 'pointer'
           appEl.setAttribute('role', 'button')

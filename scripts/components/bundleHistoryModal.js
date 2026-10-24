@@ -4,7 +4,7 @@
 import { el } from '../ui.js'
 import { openModal } from './modal.js'
 import * as store from '../store.js'
-import { renderAppIcon, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml } from '../utils/misc.js'
+import { renderAppIcon, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml, resolveAppName } from '../utils/misc.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { VERSION_ARROW } from '../utils/svg.js'
@@ -104,7 +104,7 @@ export function openBundleHistoryModal(bundleName) {
               : ''
             const iconHtml = renderAppIcon(app, iconCache, 'sm')
             const appRow = el('div', { class: 'bundle-history-app' })
-            appRow.innerHTML = `${appBadge} ${iconHtml} <span>${escHtml(app.app_name || app.package)}</span>`
+            appRow.innerHTML = `${appBadge} ${iconHtml} <span>${escHtml(resolveAppName(app, nameCache))}</span>`
             appsList.appendChild(appRow)
           }
           bundleRow.appendChild(appsList)
