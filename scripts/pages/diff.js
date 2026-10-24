@@ -5,6 +5,7 @@
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
 import { buildAppIndex, resolveAppName, renderAppIcon, suggestFuzzy, copyToClipboard, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml } from '../utils/misc.js'
+import { ensureAppBundles } from '../services/bundleLoader.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { parseBundleKey } from '../utils/bundleKey.js'
@@ -222,7 +223,15 @@ export function renderDiff(container) {
     searchDropdown.classList.remove('open')
     searchDropdown.replaceChildren()
     suggestionsArea.style.display = 'none'
-    renderAppBundles(pkg)
+    // Patch lists live in the per-bundle files; warm ones resolve before the
+    // browser paints, so the loading state only ever shows on a real fetch.
+    resultArea.innerHTML = '<div class="loading-state">Loading patch data…</div>'
+    ensureAppBundles(pkg)
+      .then(() => renderAppBundles(pkg))
+      .catch((err) => {
+        console.error('[diff] patch data failed:', err)
+        renderAppBundles(pkg)
+      })
   }
 
   function renderAppBundles(pkg) {

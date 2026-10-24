@@ -45,7 +45,11 @@ import { showWorkToast } from './components/workToast.js'
 import { preloadAvatars } from './services/iconCache.js'
 import { initIconQueue, runIconQueue } from './services/iconFetchQueue.js'
 import { loadBundleState, saveBundleState } from './services/bundleCache.js'
-import { SITE_URL, GITHUB_REPO_URL } from './utils/url.js'
+import {
+  ensureAppBundles, ensureBundleChannels, onBundleDetailsLoaded,
+} from './services/bundleLoader.js'
+import { fetchJson } from './utils/http.js'
+import { SITE_URL, GITHUB_REPO_URL, shrinkPlayIconUrl, withAvatarSize } from './utils/url.js'
 import { parseBundleKey } from './utils/bundleKey.js'
 
 // ── Default State ──
@@ -101,7 +105,7 @@ function renderShell() {
       el('div', { class: 'header-top-row' }, [
         el('div', { class: 'header-title-group' }, [
           el('div', { class: 'header-title-row' }, [
-            el('img', { class: 'header-logo', src: 'public/tracker_logo.jpg', alt: '', width: '28', height: '28' }),
+            el('img', { class: 'header-logo', src: 'public/tracker_logo.webp', alt: '', width: '28', height: '28' }),
             el('h1', { id: 'main-title', class: 'header-title-clickable', title: 'Double-click to toggle reduced motion' }, ['MorpheTracker']),
           ]),
           el('span', { class: 'subtitle' }, ['Patch monitoring & changelog dashboard']),
@@ -215,8 +219,12 @@ function setupRoutes() {
   }, 'dashboard')
 
   router.addRoute('/bundle/:bundleName', async (params) => {
-    const { renderBundleDetail } = await pages.bundleDetail()
-    renderBundleDetail(document.getElementById('page-container'), params.bundleName)
+    try {
+      const { renderBundleDetail } = await pages.bundleDetail()
+      await renderBundleDetail(document.getElementById('page-container'), params.bundleName)
+    } catch (err) {
+      console.error('[router] bundle detail failed:', err)
+    }
   }, 'bundleDetail')
 
   router.addRoute('/changelog', async () => {
@@ -240,6 +248,10 @@ function setupRoutes() {
 // ── Data Loading ──
 let deferredPreloads = null
 
+// Index backing the current bundle map — kept so on-demand detail loads can
+// persist what they warm without threading it through every caller.
+let currentBundleIndex = null
+
 // Lazily fetch the 2.75 MB changelog (only /changelog + history modal need it)
 let changelogPromise = null
 function ensureChangelog() {
@@ -259,55 +271,6 @@ function ensureChangelog() {
 function setBootProgress(progress, status) {
   store.set('loadingProgress', progress)
   if (status) store.set('loadingStatus', status)
-}
-
-function bundleFileUrl(key) {
-  return `data/bundles/${key.replace(':', '_')}.json`
-}
-
-async function retryBundleFiles(failedKeys, bundles, toast, index) {
-  toast.setActions([])
-  toast.setDetail(`Retrying ${failedKeys.length} file${failedKeys.length !== 1 ? 's' : ''}…`)
-  const stillFailed = []
-  for (const key of failedKeys) {
-    try {
-      const data = await fetchJson(bundleFileUrl(key))
-      if (data) {
-        bundles[key] = { ...index[key], ...data }
-      } else {
-        stillFailed.push(key)
-      }
-    } catch {
-      stillFailed.push(key)
-    }
-  }
-  store.set('bundles', { ...bundles })
-
-  if (stillFailed.length === 0) {
-    saveBundleState(index, bundles)
-    toast.finish(`Recovered ${failedKeys.length} file${failedKeys.length !== 1 ? 's' : ''}`)
-    return
-  }
-  // Incomplete keys stay out of the cache index so they revalidate next boot
-  const stillFailedSet = new Set(stillFailed)
-  saveBundleState(
-    Object.fromEntries(Object.entries(index).filter(([key]) => !stillFailedSet.has(key))),
-    bundles,
-  )
-  // Retried once and still failing — auto-dismiss instead of offering again.
-  toast.finish(
-    `${stillFailed.length} file${stillFailed.length !== 1 ? 's' : ''} failed to load`,
-    { fillBar: false },
-  )
-}
-
-function offerBundleRetry(failedKeys, bundles, index) {
-  const toast = showWorkToast('Bundle data')
-  toast.setDetail(`${failedKeys.length} file${failedKeys.length !== 1 ? 's' : ''} failed to load`)
-  toast.setActions([
-    { label: 'Retry', primary: true, onClick: () => retryBundleFiles(failedKeys, bundles, toast, index) },
-    { label: 'Dismiss', onClick: () => toast.close() },
-  ])
 }
 
 function offerOfflineNotice() {
@@ -358,8 +321,9 @@ function offerImageRetry(failedCount, runPass, toast) {
   ])
 }
 
-// Background-warm the avatar cache, then the icon queue (viewport-first lane
-// + paced sweep), reporting through one progress toast with retry on failures.
+// Background-warm the icon queue first (the apps grid is the landing view and
+// its icons are the ones scrolled into view), then the avatars (bundles page).
+// One progress toast reports both phases, with retry on failures.
 async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMap) {
   const iconTotal = Object.values(iconMap).filter((v) => typeof v === 'string' && v.startsWith('http')).length
   const avatarUrls = [...new Set(
@@ -372,15 +336,15 @@ async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMa
 
   const runPass = async () => {
     let failed = 0
-    if (avatarUrls.length) {
-      toast.setTitle('Caching avatars')
-      const avRes = await preloadAvatars(avatarUrls, (loaded) => toast.setProgress(loaded, avatarUrls.length))
-      failed += avRes.failed
-    }
     if (iconTotal) {
       toast.setTitle('Caching icons')
       const iconRes = await runIconQueue((done, total) => toast.setProgress(done, total), { includeFailed: true })
       failed += iconRes.failed
+    }
+    if (avatarUrls.length) {
+      toast.setTitle('Caching avatars')
+      const avRes = await preloadAvatars(avatarUrls, (loaded) => toast.setProgress(loaded, avatarUrls.length))
+      failed += avRes.failed
     }
     return failed
   }
@@ -399,25 +363,79 @@ async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMa
   }
 }
 
+/**
+ * Index entries carry bare package names; the UI's app helpers expect
+ * `{package}` objects (per-app `patches` arrive later, on demand).
+ * @param {Object} entry - an _index.json record
+ * @returns {Object[]}
+ */
+function normalizeIndexApps(entry) {
+  const apps = entry.apps
+  if (!Array.isArray(apps)) return []
+  return apps.map((a) => (typeof a === 'string' ? { package: a } : a))
+}
+
+/**
+ * Assemble the store's bundle map from the network index alone: cached full
+ * records while their version still matches, otherwise an index-only entry
+ * (`_partial: true`) that services/bundleLoader.js fills in when read.
+ * @param {Object} index - _index.json
+ * @param {{index: Object, records: Object}|null} cachedState
+ * @returns {Object}
+ */
+function buildBundlesFromIndex(index, cachedState) {
+  const cachedRecords = cachedState?.records || null
+  const cachedIndex = cachedState?.index || null
+  const bundles = {}
+  let withoutApps = 0
+
+  for (const key of Object.keys(index)) {
+    const indexEntry = index[key]
+    const cachedRecord = cachedRecords?.[key]
+    const versionsMatch = cachedIndex?.[key]?.version === indexEntry.version
+
+    if (cachedRecord && versionsMatch && !cachedRecord._partial && Array.isArray(cachedRecord.apps)) {
+      // Full detail already local (and still current) — paint it as-is
+      bundles[key] = { ...indexEntry, ...cachedRecord, _partial: false }
+      continue
+    }
+    const apps = normalizeIndexApps(indexEntry)
+    if (!Array.isArray(indexEntry.apps)) withoutApps++
+    bundles[key] = { ...indexEntry, apps, _partial: true }
+  }
+
+  if (withoutApps) {
+    console.warn(`[app] ${withoutApps} index entries have no apps[] — regenerate data/bundles/_index.json`)
+  }
+  return bundles
+}
+
 async function loadData() {
   try {
     setBootProgress(5, 'Loading site data…')
 
-    // Local cache first — full paint with zero bundle fetches while revalidating
-    const cachedState = await loadBundleState()
+    // The cache read and the first network wave start together, so IndexedDB
+    // latency never sits in front of a request — and all six data files are
+    // requested in one round trip instead of four sequential waves.
+    const cachedStatePromise = loadBundleState()
+    const wavePromise = Promise.all([
+      fetchJson('data/core.json', undefined, { cache: 'no-cache' }),
+      fetchJson('data/stats.json', undefined, { cache: 'no-cache' }),
+      fetchJson('data/changes.json', undefined, { cache: 'no-cache' }),
+      fetchJson('data/state/app_cache.json', {}),
+      fetchJson('data/state/repo_cache.json', {}),
+      fetchJson('data/bundles/_index.json'),
+    ])
 
-    // Fetch core + stats + changes in parallel
-    const ts = Date.now()
-    let coreRes, statsRes, changesRes
+    // Instant paint from IndexedDB while the network wave is still in flight
+    const cachedState = await cachedStatePromise
+    if (cachedState) store.set('bundles', { ...cachedState.records })
+
+    let coreRes, statsRes, changesRes, cacheRes, repoCacheRes, index
     try {
-      ;[coreRes, statsRes, changesRes] = await Promise.all([
-        fetchJson(`data/core.json?_t=${ts}`),
-        fetchJson(`data/stats.json?_t=${ts}`),
-        fetchJson(`data/changes.json?_t=${ts}`),
-      ])
+      ;[coreRes, statsRes, changesRes, cacheRes, repoCacheRes, index] = await wavePromise
     } catch (err) {
       if (cachedState) {
-        store.set('bundles', { ...cachedState.records })
         deferredPreloads = null
         offerOfflineNotice()
         finishBoot('Offline — cached data')
@@ -432,33 +450,31 @@ async function loadData() {
       stats: statsRes,
       changes: changesRes,
     })
-    setBootProgress(25, 'Loading caches…')
-
-    // Instant full paint from cache while everything else loads
-    if (cachedState) store.set('bundles', { ...cachedState.records })
+    setBootProgress(65, 'Loading caches…')
 
     // Icon + name caches — degraded (fallback icons, resolved names) if missing
-    const cacheRes = await fetchJson('data/state/app_cache.json', {})
     const iconCache = {}
     const nameCache = {}
     for (const [pkg, entry] of Object.entries(cacheRes)) {
       if (entry && typeof entry === 'object') {
-        if (entry.icon_url) iconCache[pkg] = entry.icon_url
+        // Store the downsized CDN variant once here so display, the fetch
+        // queue and IndexedDB keys all agree on one canonical URL.
+        if (entry.icon_url) iconCache[pkg] = shrinkPlayIconUrl(entry.icon_url)
         if (entry.name) nameCache[pkg] = entry.name
       }
     }
     store.merge({ iconCache, nameCache })
     initIconQueue(iconCache)
-    setBootProgress(35, 'Loading caches…')
 
     // Repo owner avatars (repo_cache.json → repo_url → avatarUrl)
-    const repoCacheRes = await fetchJson('data/state/repo_cache.json', {})
     const repoAvatarMap = {}
     const repoBundleImageMap = {}
     if (repoCacheRes && typeof repoCacheRes === 'object') {
       for (const [repoUrl, entry] of Object.entries(repoCacheRes)) {
         if (entry && typeof entry === 'object' && entry.avatarUrl) {
-          repoAvatarMap[repoUrl] = entry.avatarUrl
+          // Same normalization rule as resolveAvatarUrl — the preload keys
+          // must match the URLs the display layer looks up.
+          repoAvatarMap[repoUrl] = withAvatarSize(entry.avatarUrl)
         }
         if (entry && typeof entry === 'object' && entry.bundleImageUrl) {
           repoBundleImageMap[repoUrl] = entry.bundleImageUrl
@@ -467,117 +483,36 @@ async function loadData() {
     }
     store.merge({ repoAvatarMap, repoBundleImageMap })
 
-    // Background-warm icon + avatar caches. Deferred until after the bundle
-    // fetch so they don't compete for connections.
+    // Background-warm icon + avatar caches. Deferred so they never compete
+    // with the boot requests above.
     deferredPreloads = () => {
       cacheImagesInBackground(iconCache, repoAvatarMap, repoBundleImageMap).catch((err) => {
         console.error('[app] Image caching failed:', err)
       })
     }
 
-    // Load bundle index (cached records were painted above)
-    if (cachedState) {
-      setBootProgress(45, 'Refreshing bundle index…')
-    } else {
-      setBootProgress(45, 'Loading bundle index…')
-    }
-
-    let index
-    try {
-      index = await fetchJson('data/bundles/_index.json')
-    } catch (err) {
-      if (cachedState) {
-        deferredPreloads = null
-        offerOfflineNotice()
-        finishBoot('Using cached data')
-        return
-      }
-      throw err
-    }
-
-    const keys = Object.keys(index)
-    if (keys.length === 0) {
+    if (!index || Object.keys(index).length === 0) {
       finishBoot()
       return
     }
 
-    // Revalidate per key: version match → trust cached file data; else fetch
-    const cachedRecords = cachedState?.records || null
-    const cachedIndex = cachedState?.index || null
-    const bundles = {}
-    const keysToFetch = []
-    for (const key of keys) {
-      const indexEntry = index[key]
-      const cachedRecord = cachedRecords?.[key]
-      if (cachedRecord && cachedIndex?.[key]?.version === indexEntry.version) {
-        bundles[key] = { ...cachedRecord, ...indexEntry }
-      } else {
-        // New or changed — paint now (stale beats empty), file streams in below
-        bundles[key] = cachedRecord ? { ...cachedRecord, ...indexEntry } : { ...indexEntry, apps: [] }
-        keysToFetch.push(key)
-      }
-    }
+    // Apps directory from the index alone — per-app patch detail is fetched
+    // on demand (services/bundleLoader.js), never as a 742-file boot loop.
+    setBootProgress(85, 'Building app directory…')
+    currentBundleIndex = index
+    const bundles = buildBundlesFromIndex(index, cachedState)
     store.set('bundles', { ...bundles })
-    setBootProgress(
-      keysToFetch.length ? 50 : 95,
-      keysToFetch.length ? `Loading bundles 0/${keysToFetch.length}` : 'Data up to date',
-    )
 
-    // Load changed bundles in batches — one bad file must not sink the page
-    const BATCH = 50
-    const failedKeys = []
-    for (let i = 0; i < keysToFetch.length; i += BATCH) {
-      const batch = keysToFetch.slice(i, i + BATCH)
-      const results = await Promise.all(
-        batch.map(async (key) => {
-          try {
-            const data = await fetchJson(bundleFileUrl(key))
-            return { key, data }
-          } catch {
-            return { key, data: null }
-          }
-        }),
-      )
-      for (const { key, data } of results) {
-        if (data) {
-          // Index carries card metadata files lack (stars, isArchived, …)
-          bundles[key] = { ...index[key], ...data }
-        } else {
-          failedKeys.push(key)
-          // Stale beats empty while the retry runs
-          if (cachedRecords?.[key]) {
-            bundles[key] = { ...cachedRecords[key], ...index[key] }
-          }
-        }
-      }
-      const done = Math.min(i + BATCH, keysToFetch.length)
-      setBootProgress(
-        50 + Math.round((45 * done) / keysToFetch.length),
-        `Loading bundles ${done}/${keysToFetch.length}`,
-      )
-      store.set('bundles', { ...bundles })
-    }
+    // No-op when the signature matches what is already cached
+    saveBundleState(index, bundles)
 
-    if (failedKeys.length) offerBundleRetry(failedKeys, bundles, index)
-
-    // Persist for next boot — incomplete keys excluded so they revalidate
-    if (failedKeys.length) {
-      const failedSet = new Set(failedKeys)
-      saveBundleState(
-        Object.fromEntries(Object.entries(index).filter(([key]) => !failedSet.has(key))),
-        bundles,
-      )
-    } else {
-      saveBundleState(index, bundles)
-    }
-
-    // Icon/avatar preloads now that the bundle fetch is done
+    // Icon/avatar preloads now that the boot requests are done
     if (deferredPreloads) {
       deferredPreloads()
       deferredPreloads = null
     }
 
-    finishBoot()
+    finishBoot('Data up to date')
   } catch (err) {
     console.error('[app] Data loading failed:', err)
     store.set('fetchErrors', [...store.get('fetchErrors'), err.message])
@@ -601,20 +536,6 @@ async function loadData() {
   }
 }
 
-async function fetchJson(url, fallback) {
-  try {
-    const resp = await fetch(url)
-    if (!resp.ok) {
-      if (fallback !== undefined) return fallback
-      throw new Error(`${url} returned ${resp.status}`)
-    }
-    return await resp.json()
-  } catch (err) {
-    if (fallback !== undefined) return fallback
-    throw err
-  }
-}
-
 // ── Active Nav State ──
 function updateActiveNav() {
   const hash = window.location.hash || '#/'
@@ -635,8 +556,42 @@ function applyReducedMotion() {
 store.subscribe('reducedMotion', applyReducedMotion)
 
 // ── Modal Event Listeners ──
+// Patches only exist in per-bundle files, so every entry point waits for the
+// records it needs (a single round trip, single-flighted and cached) before
+// the modal opens — otherwise the Patches tab renders empty.
+function hideDevChannels() {
+  return localStorage.getItem('morphe_hide_dev') === 'true' ? ['dev'] : []
+}
+
+async function handleOpenApp(detail) {
+  const pkg = detail?.app?.package
+  if (pkg) await ensureAppBundles(pkg, { excludeChannels: hideDevChannels() })
+  openAppDetailModal(detail)
+}
+
+async function handleOpenBundle(detail) {
+  if (detail?.bundleName) await ensureBundleChannels(detail.bundleName, detail.channels || [])
+  openBundleModal(detail)
+}
+
+// Persist bundle detail warmed by bundleLoader once the main thread is idle;
+// saveBundleState's signature check makes this a no-op when nothing changed.
+let persistTimer = null
+onBundleDetailsLoaded(() => {
+  if (persistTimer || !currentBundleIndex) return
+  const run = () => {
+    persistTimer = null
+    saveBundleState(currentBundleIndex, store.get('bundles') || {})
+  }
+  if (typeof requestIdleCallback === 'function') {
+    persistTimer = requestIdleCallback(run, { timeout: 4000 })
+  } else {
+    persistTimer = setTimeout(run, 2000)
+  }
+})
+
 window.addEventListener('open-app', (e) => {
-  openAppDetailModal(e.detail)
+  handleOpenApp(e.detail).catch((err) => console.error('[app] open-app failed:', err))
 })
 
 window.addEventListener('open-bundle-history', async (e) => {
@@ -645,26 +600,26 @@ window.addEventListener('open-bundle-history', async (e) => {
 })
 
 window.addEventListener('open-bundle', (e) => {
-  openBundleModal(e.detail)
+  handleOpenBundle(e.detail).catch((err) => console.error('[app] open-bundle failed:', err))
 })
 
 // ── URL Parameter Deep Linking ──
-function handleUrlParams() {
+async function handleUrlParams() {
   const params = new URLSearchParams(window.location.search)
   const openApp = params.get('open-app')
   const patchName = params.get('patch')
   if (openApp) {
+    // Deep links can land before loadData finishes; wait for the directory
+    await ensureAppBundles(openApp, { excludeChannels: hideDevChannels() })
     const bundles = store.get('bundles') || {}
-    const nameCache = store.get('nameCache') || {}
     // Find app by package across all bundles
-    for (const [, bundle] of Object.entries(bundles)) {
-      const appData = bundle.apps?.find((a) => a.package === openApp)
+    for (const [key, bundle] of Object.entries(bundles)) {
+      const appData = bundle.apps?.find((a) => (typeof a === 'string' ? a : a.package) === openApp)
       if (appData) {
-        const bKey = Object.keys(bundles).find((k) => bundles[k] === bundle)
-        const bundleName = bKey ? parseBundleKey(bKey).name : ''
+        const app = typeof appData === 'string' ? { package: appData } : appData
         openAppDetailModal({
-          app: appData,
-          bundleName,
+          app,
+          bundleName: parseBundleKey(key).name,
           channels: [bundle.channel || 'stable'],
           patchName,
         })
@@ -687,7 +642,7 @@ async function boot() {
   loadData().then(() => {
     router.rerender()
     updateActiveNav()
-    handleUrlParams()
+    handleUrlParams().catch((err) => console.error('[app] deep link failed:', err))
   })
 
   // Also start router immediately so hash routes work while data loads

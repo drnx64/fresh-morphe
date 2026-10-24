@@ -36,6 +36,31 @@ export function getAuthorLink(repoUrl) {
 }
 
 /**
+ * Ask the GitHub avatar proxy for the size we actually display (≤56px CSS,
+ * 112 = 2×) instead of the full-size original. Only GitHub-hosted avatars are
+ * touched — other hosts get the URL unchanged.
+ * @param {string} url
+ * @returns {string}
+ */
+export function withAvatarSize(url) {
+  if (!url || !url.includes('avatars.githubusercontent.com')) return url
+  if (/[?&](size|s)=\d+/.test(url)) return url
+  return `${url}${url.includes('?') ? '&' : '?'}size=112`
+}
+
+/**
+ * Play Store icon CDN: `=s0` serves the untouched 512px original (up to ~200 KB);
+ * `=s96` matches the cache's resize cap and cuts the transfer ~15×. Non-Play
+ * URLs and URLs without an `=s0` hint pass through unchanged.
+ * @param {string} url
+ * @returns {string}
+ */
+export function shrinkPlayIconUrl(url) {
+  if (typeof url !== 'string' || !url.includes('play-lh.googleusercontent.com')) return url
+  return url.replace(/=s0(?=-|$)/, '=s96')
+}
+
+/**
  * Resolve owner/repo avatar URL from repoAvatarMap (repo_cache) or bundle field.
  * @param {string} repoUrl
  * @param {string} [fallback] - bundle.avatarUrl when map has no entry
@@ -45,9 +70,9 @@ export function resolveAvatarUrl(repoUrl, fallback = '') {
   if (repoUrl) {
     const map = store.get('repoAvatarMap') || {}
     const fromMap = map[repoUrl]
-    if (fromMap) return fromMap
+    if (fromMap) return withAvatarSize(fromMap)
   }
-  return fallback || ''
+  return withAvatarSize(fallback || '')
 }
 
 /**

@@ -89,6 +89,8 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const RATE_BACKOFF_BASE_MS = 1000
 const RATE_BACKOFF_MAX_MS = 60000
+// A hung connection must not stall the single-threaded icon queue forever.
+const ICON_FETCH_TIMEOUT_MS = 12000
 
 /**
  * Shared backoff for 429/403 responses — icons and avatars both pass
@@ -136,44 +138,51 @@ async function loadImage(url, maxDim = ICON_MAX) {
   while (Date.now() < rateLimitedUntil) {
     await sleep(rateLimitedUntil - Date.now())
   }
-  let resp
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), ICON_FETCH_TIMEOUT_MS)
   try {
-    resp = await fetch(url)
-  } catch {
-    return null
-  }
-  if (resp.status === 429 || resp.status === 403) {
-    noteRateLimit()
-    const err = new Error(`Rate limited (${resp.status}) for ${url}`)
-    err.rateLimited = true
-    throw err
-  }
-  if (!resp.ok) return null
-  // A success only counts as "recovered" once an armed gate has expired —
-  // batch-mates succeeding during backoff must not clear it.
-  if (Date.now() >= rateLimitedUntil) {
-    rateAttempts = 0
-    rateLimitedUntil = 0
-  }
-  let blob
-  try {
-    blob = await resp.blob()
-  } catch {
-    return null
-  }
-  const objectUrl = URL.createObjectURL(blob)
-  try {
-    const img = await new Promise((resolve, reject) => {
-      const i = new Image()
-      i.onload = () => resolve(i)
-      i.onerror = () => reject(new Error('decode failed'))
-      i.src = objectUrl
-    })
-    return resizeToDataUrl(img, maxDim)
-  } catch {
-    return null
+    let resp
+    try {
+      resp = await fetch(url, { signal: ctrl.signal })
+    } catch {
+      // Network error or timeout abort — ordinary failure, not rate limiting.
+      return null
+    }
+    if (resp.status === 429 || resp.status === 403) {
+      noteRateLimit()
+      const err = new Error(`Rate limited (${resp.status}) for ${url}`)
+      err.rateLimited = true
+      throw err
+    }
+    if (!resp.ok) return null
+    // A success only counts as "recovered" once an armed gate has expired —
+    // batch-mates succeeding during backoff must not clear it.
+    if (Date.now() >= rateLimitedUntil) {
+      rateAttempts = 0
+      rateLimitedUntil = 0
+    }
+    let blob
+    try {
+      blob = await resp.blob()
+    } catch {
+      return null
+    }
+    const objectUrl = URL.createObjectURL(blob)
+    try {
+      const img = await new Promise((resolve, reject) => {
+        const i = new Image()
+        i.onload = () => resolve(i)
+        i.onerror = () => reject(new Error('decode failed'))
+        i.src = objectUrl
+      })
+      return resizeToDataUrl(img, maxDim)
+    } catch {
+      return null
+    } finally {
+      URL.revokeObjectURL(objectUrl)
+    }
   } finally {
-    URL.revokeObjectURL(objectUrl)
+    clearTimeout(timer)
   }
 }
 

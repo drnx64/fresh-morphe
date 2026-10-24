@@ -7,7 +7,7 @@
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { resolveAppName, sortBundleNames, getDisplayAvatar, getDisplayBundleImage } from '../utils/misc.js'
+import { resolveAppName, sortBundleNames, groupBundleCards } from '../utils/misc.js'
 import { renderBundleCard } from './bundleCard.js'
 
 const SORT_OPTIONS = [
@@ -62,53 +62,13 @@ export function renderBundleCardsInto(grid) {
   const filters = store.get('filters') || {}
   const nameCache = store.get('nameCache') || {}
 
-  // Group by bundle name
-  const grouped = {}
-  for (const b of Object.values(bundles)) {
-    if (filters.channel !== 'all' && b.channel !== filters.channel) continue
-    if (filters.hideArchived && b.isArchived) continue
-    if (filters.hidePreRelease && b.isPreRelease) continue
-
-    if (!grouped[b.bundle]) {
-      grouped[b.bundle] = {
-        bundle: b.bundle,
-        channels: [b.channel],
-        repo_url: b.repo_url,
-        patches_name: b.patches_name,
-        version: b.version || '',
-        created_at: b.created_at,
-        apps: [...(b.apps || [])],
-        appCount: b.app_count || 0,
-        stars: b.stars || 0,
-        avatarUrl: getDisplayAvatar(b.repo_url, b.avatarUrl),
-        bundleImageUrl: getDisplayBundleImage(b.repo_url, b.bundleImageUrl),
-        repoDescription: b.repoDescription || '',
-        isArchived: b.isArchived || false,
-        isPreRelease: b.isPreRelease || false,
-      }
-    } else {
-      const g = grouped[b.bundle]
-      if (b.version && !g.version) g.version = b.version
-      if (!g.channels.includes(b.channel)) g.channels.push(b.channel)
-      if (!g.patches_name && b.patches_name) g.patches_name = b.patches_name
-      if ((b.stars || 0) > (g.stars || 0)) g.stars = b.stars
-      if ((b.app_count || 0) > g.appCount) g.appCount = b.app_count || 0
-      const bAv = getDisplayAvatar(b.repo_url, b.avatarUrl)
-      if (bAv && !g.avatarUrl) g.avatarUrl = bAv
-      const bImg = getDisplayBundleImage(b.repo_url, b.bundleImageUrl)
-      if (bImg && !g.bundleImageUrl) g.bundleImageUrl = bImg
-      if (b.repoDescription && !g.repoDescription) g.repoDescription = b.repoDescription
-      if (b.isArchived) g.isArchived = true
-      if (b.isPreRelease) g.isPreRelease = true
-      const existingPkgs = new Set(g.apps.map((a) => a.package))
-      for (const app of b.apps || []) {
-        if (!existingPkgs.has(app.package)) {
-          g.apps.push(app)
-          existingPkgs.add(app.package)
-        }
-      }
-    }
-  }
+  // Group by bundle name (shared with bundleCard's on-demand re-grouping)
+  const grouped = groupBundleCards(bundles, (b) => {
+    if (filters.channel !== 'all' && b.channel !== filters.channel) return false
+    if (filters.hideArchived && b.isArchived) return false
+    if (filters.hidePreRelease && b.isPreRelease) return false
+    return true
+  })
 
   let list = Object.values(grouped)
 
