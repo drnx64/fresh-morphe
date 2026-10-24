@@ -12,6 +12,7 @@ import { getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { dateParts, dayHue, shortVersion, badgeLabel } from '../utils/format.js'
 import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
+import { renderColorGame } from '../components/colorGame.js'
 
 const HIERARCHY_ORDER = { 'NEW BUNDLE': 0, 'UPDATED': 1, 'REMOVED BUNDLE': 2 }
 const STORAGE_KEY = 'morphe_updates_collapsed'
@@ -56,11 +57,13 @@ export function renderTodayUpdates() {
     class: 'today-updates-toggle',
     'aria-label': 'Toggle today\'s updates',
     'aria-expanded': String(!isCollapsed),
+    'aria-controls': 'today-updates-body',
   })
   toggleBtn.innerHTML = `<span class="today-updates-toggle-icon">${CHEVRON_DOWN}</span>`
   headingRight.appendChild(toggleBtn)
   headingRow.appendChild(headingRight)
   section.appendChild(headingRow)
+  section.appendChild(renderColorGame())
 
   const body = el('div', { class: 'today-updates-body' })
 
@@ -116,8 +119,8 @@ export function renderTodayUpdates() {
   })
 
   if (!affectedBundles || affectedBundles.length === 0) {
-    applyCollapsed(section, body, summaryEl, isCollapsed)
-    setupToggle(section, body, summaryEl, toggleBtn)
+    applyCollapsed(section, summaryEl, isCollapsed)
+    setupToggle(section, summaryEl, toggleBtn)
     return section
   }
 
@@ -270,55 +273,27 @@ export function renderTodayUpdates() {
     }
   }
 
-  section.appendChild(body)
-  applyCollapsed(section, body, summaryEl, isCollapsed)
-  setupToggle(section, body, summaryEl, toggleBtn)
+  const bodyWrap = el('div', { class: 'today-updates-body-wrap', id: 'today-updates-body' })
+  bodyWrap.appendChild(body)
+  section.appendChild(bodyWrap)
+  applyCollapsed(section, summaryEl, isCollapsed)
+  setupToggle(section, summaryEl, toggleBtn)
 
   return section
 }
 
-function applyCollapsed(section, body, summaryEl, isCollapsed) {
-  if (isCollapsed) {
-    section.classList.add('collapsed')
-    body.style.maxHeight = '0'
-    body.style.overflow = 'hidden'
-    summaryEl.classList.remove('today-updates-summary--hidden')
-    summaryEl.style.maxHeight = summaryEl.scrollHeight + 'px'
-    summaryEl.style.overflow = ''
-  } else {
-    section.classList.remove('collapsed')
-    body.style.maxHeight = ''
-    body.style.overflow = ''
-    summaryEl.classList.add('today-updates-summary--hidden')
-  }
+function applyCollapsed(section, summaryEl, isCollapsed) {
+  // Class-only: CSS animates grid-template-rows, so nothing re-measures
+  // scrollHeight and rapid clicks simply retarget the running transition.
+  section.classList.toggle('collapsed', isCollapsed)
+  summaryEl.classList.toggle('today-updates-summary--hidden', !isCollapsed)
 }
 
-function setupToggle(section, body, summaryEl, toggleBtn) {
+function setupToggle(section, summaryEl, toggleBtn) {
   toggleBtn.addEventListener('click', () => {
-    const isNowCollapsed = section.classList.toggle('collapsed')
+    const isNowCollapsed = !section.classList.contains('collapsed')
+    applyCollapsed(section, summaryEl, isNowCollapsed)
     localStorage.setItem(STORAGE_KEY, String(isNowCollapsed))
     toggleBtn.setAttribute('aria-expanded', String(!isNowCollapsed))
-
-    if (isNowCollapsed) {
-      // Collapse body
-      body.style.maxHeight = body.scrollHeight + 'px'
-      requestAnimationFrame(() => {
-        body.style.maxHeight = '0'
-        body.style.overflow = 'hidden'
-      })
-      // Show summary
-      summaryEl.classList.remove('today-updates-summary--hidden')
-      summaryEl.style.maxHeight = summaryEl.scrollHeight + 'px'
-      summaryEl.style.overflow = ''
-    } else {
-      // Expand body
-      body.style.maxHeight = body.scrollHeight + 'px'
-      body.style.overflow = ''
-      setTimeout(() => {
-        body.style.maxHeight = ''
-      }, 300)
-      // Hide summary
-      summaryEl.classList.add('today-updates-summary--hidden')
-    }
   })
 }

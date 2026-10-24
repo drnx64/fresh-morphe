@@ -262,15 +262,26 @@
 .today-updates-summary--hidden {
   display: none !important;
 }
+.today-updates-body-wrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.28s var(--ease);
+}
+.today-updates-section.collapsed .today-updates-body-wrap {
+  grid-template-rows: 0fr;
+}
 .today-updates-body {
-  transition: max-height 0.3s ease;
+  min-height: 0;
+  overflow: hidden;
 }
 @media (min-width: 768px) {
+  .today-updates-body-wrap {
+    margin-top: 1.25rem;
+  }
   .today-updates-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
-    margin-top: 1.25rem;
   }
 }
 .today-column {
