@@ -56,6 +56,7 @@ export function renderGlobalSearch() {
   wrapper.appendChild(dropdown)
 
   let appIndex = null
+  let bundleList = null
   let selectedIndex = -1
   let currentResults = []
 
@@ -69,7 +70,9 @@ export function renderGlobalSearch() {
     return appIndex
   }
 
+  // Rebuilt only when the store's bundle map is replaced (boot), not per keystroke
   function getBundleList() {
+    if (bundleList) return bundleList
     const bundles = store.get('bundles') || {}
     const grouped = {}
     for (const [key, bundle] of Object.entries(bundles)) {
@@ -88,7 +91,8 @@ export function renderGlobalSearch() {
         if (bundle.version && !g.version) g.version = bundle.version
       }
     }
-    return Object.values(grouped)
+    bundleList = Object.values(grouped)
+    return bundleList
   }
 
   function search(query) {
@@ -282,10 +286,18 @@ export function renderGlobalSearch() {
     }
   }
 
+  // Debounced so a burst of keystrokes costs one search, not one per key —
+  // the empty state clears immediately so Backspace never feels laggy.
+  let searchTimer = null
   input.addEventListener('input', () => {
     const hasValue = input.value.length > 0
     clearBtn.classList.toggle('visible', hasValue)
-    search(input.value)
+    clearTimeout(searchTimer)
+    if (!hasValue) {
+      search('')
+      return
+    }
+    searchTimer = setTimeout(() => search(input.value), 150)
   })
 
   input.addEventListener('focus', () => {
@@ -334,6 +346,7 @@ export function renderGlobalSearch() {
 
   store.subscribe('bundles', () => {
     appIndex = null
+    bundleList = null
   })
 
   return wrapper

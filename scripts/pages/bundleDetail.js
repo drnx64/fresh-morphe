@@ -4,27 +4,43 @@
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
 import { resolveAppName, getAppIconUrl, getStaleness, renderAppIcon } from '../utils/misc.js'
+import { ensureBundleKey } from '../services/bundleLoader.js'
+import { makeBundleKey } from '../utils/bundleKey.js'
 import { getRepoInfo, getAddMorpheUrl, getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { GITHUB_SVG, GITLAB_SVG, ARROW_LEFT } from '../utils/svg.js'
 
-export function renderBundleDetail(container, bundleName) {
-  const page = el('div', { class: 'bundle-detail-page' })
+export async function renderBundleDetail(container, bundleName) {
   const bundles = store.get('bundles') || {}
   const nameCache = store.get('nameCache') || {}
   const iconCache = store.get('iconCache') || {}
 
   // Find all channel versions (stable is primary; latest-only bundles work too)
+  const primaryKeys = ['stable', 'latest', 'dev'].map((ch) => makeBundleKey(bundleName, ch))
+  const primaryKey = primaryKeys.find((key) => bundles[key])
+
+  if (!primaryKey) {
+    mount(container, el('div', { class: 'loading-state' }, [`Bundle "${bundleName}" not found.`]))
+    return
+  }
+
+  // Patch detail lives in the per-bundle file — the route paints its shell
+  // from the index first, then fills in once the file lands (usually cached,
+  // so this resolves before the browser paints the placeholder).
+  const skeleton = el('div', { class: 'bundle-detail-page' }, [
+    el('div', { class: 'loading-state' }, ['Loading bundle…']),
+  ])
+  mount(container, skeleton)
+  await ensureBundleKey(primaryKey)
+  if (!skeleton.isConnected) return // user navigated away while it loaded
+
   const stable = bundles[`${bundleName}:stable`]
   const latest = bundles[`${bundleName}:latest`]
   const dev = bundles[`${bundleName}:dev`]
   const bundle = stable || latest || dev
 
-  if (!bundle) {
-    mount(container, el('div', { class: 'loading-state' }, [`Bundle "${bundleName}" not found.`]))
-    return
-  }
+  const page = el('div', { class: 'bundle-detail-page' })
 
   // Back link
   const backLink = el('a', { href: '#/bundles', class: 'back-link' })

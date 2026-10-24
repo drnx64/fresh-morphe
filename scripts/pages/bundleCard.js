@@ -3,9 +3,11 @@
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { getStaleness, getStoredVersions, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml } from '../utils/misc.js'
+import { getStaleness, getStoredVersions, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml, groupBundleCards } from '../utils/misc.js'
 import { mountAppRows, sortAppsByName } from '../utils/appList.js'
+import { ensureBundleChannels, isBundlePartial } from '../services/bundleLoader.js'
 import { getRepoInfo, getAddMorpheUrl, getAuthorLink } from '../utils/url.js'
+import { makeBundleKey } from '../utils/bundleKey.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { GITHUB_SVG, GITLAB_SVG, HISTORY_ICON, CHEVRON_DOWN } from '../utils/svg.js'
@@ -110,11 +112,13 @@ export function renderBundleCard(bundle) {
     </div>
   `
 
-  row.addEventListener('click', () => toggleExpand(card, apps, nameCache, iconCache))
+  const toggle = () => toggleExpand(card, bundle, nameCache, iconCache)
+    .catch((err) => console.error('[bundleCard] expand failed:', err))
+  row.addEventListener('click', toggle)
   row.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      toggleExpand(card, apps, nameCache, iconCache)
+      toggle()
     }
   })
 
@@ -129,14 +133,31 @@ export function renderBundleCard(bundle) {
   return card
 }
 
-function toggleExpand(card, apps, nameCache, iconCache) {
-  const isExpanded = card.classList.contains('expanded')
+/**
+ * Expand/collapse a card's app rows. Patch counts live in the per-bundle
+ * files, so the card's channels are pulled in on first open (one round trip,
+ * single-flighted, usually already warm) and the rows are re-grouped from the
+ * store afterwards.
+ */
+async function toggleExpand(card, bundle, nameCache, iconCache) {
   card.classList.toggle('expanded')
 
   let appsContainer = card.querySelector('.bundle-card-apps')
   if (!appsContainer) {
     appsContainer = el('div', { class: 'bundle-card-apps' })
     card.appendChild(appsContainer)
+
+    const missing = bundle.channels.filter((ch) => isBundlePartial(makeBundleKey(bundle.bundle, ch)))
+    if (missing.length) {
+      appsContainer.innerHTML = '<div class="bundle-card-apps-loading">Loading apps…</div>'
+      await ensureBundleChannels(bundle.bundle, bundle.channels)
+    }
+
+    const fresh = groupBundleCards(store.get('bundles') || {}, (b) =>
+      b.bundle === bundle.bundle && bundle.channels.includes(b.channel))[bundle.bundle]
+    const apps = sortAppsByName(fresh?.apps || [], nameCache)
+
+    appsContainer.replaceChildren()
     mountAppRows(appsContainer, apps, {
       prefix: 'bundle-card-app',
       nameCache,
@@ -158,9 +179,8 @@ function toggleExpand(card, apps, nameCache, iconCache) {
     })
   }
 
-  if (!isExpanded) {
-    appsContainer.style.maxHeight = appsContainer.scrollHeight + 'px'
-  } else {
-    appsContainer.style.maxHeight = '0'
-  }
+  // Rows land on the next frame; onBatch keeps the height in sync while open
+  appsContainer.style.maxHeight = card.classList.contains('expanded')
+    ? `${appsContainer.scrollHeight}px`
+    : '0'
 }

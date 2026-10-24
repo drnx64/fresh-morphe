@@ -235,7 +235,19 @@ export function levenshteinDistance(a, b) {
 export function suggestFuzzy(query, appList, maxSuggestions = 3) {
   if (!query || appList.length === 0) return []
   const q = query.toLowerCase()
-  const scored = appList.map((app) => {
+  const threshold = Math.max(2, Math.floor(q.length * 0.4))
+  // An edit distance ≤ threshold implies the two strings' lengths differ by
+  // at most that much, so candidates outside the band can never make the cut —
+  // filtering first skips their (dominant) Levenshtein passes entirely.
+  const candidates = appList.filter((app) => {
+    const name = app.name || ''
+    const pkg = app.package || ''
+    return (
+      Math.abs(name.length - q.length) <= threshold ||
+      Math.abs(pkg.length - q.length) <= threshold
+    )
+  })
+  const scored = candidates.map((app) => {
     const name = app.name.toLowerCase()
     const pkg = app.package.toLowerCase()
     let distance = levenshteinDistance(q, name)
@@ -243,7 +255,6 @@ export function suggestFuzzy(query, appList, maxSuggestions = 3) {
     return { app, distance }
   })
   scored.sort((a, b) => a.distance - b.distance)
-  const threshold = Math.max(2, Math.floor(q.length * 0.4))
   return scored
     .filter((s) => s.distance <= threshold)
     .slice(0, maxSuggestions)
@@ -290,8 +301,66 @@ export function getStaleness(dateStr) {
   return { days: d, level: 'stale', label: `${d}d` }
 }
 
-// Cache keyed on the bundles/nameCache/iconCache object identities — all are
-// set once per session, so Apps/Diff/GlobalSearch visits reuse one index.
+/**
+ * Merge bundle records into one card group per bundle name — the shape
+ * BundleCards render from (channels, top version/stars/app count, deduped
+ * app union). Index-only records work: apps are `{package}` at minimum.
+ * @param {Object} bundles - store bundle map (key → record)
+ * @param {((record: Object) => boolean)|null} [include] - per-record filter
+ * @returns {Object} bundle name → card record
+ */
+export function groupBundleCards(bundles, include = null) {
+  const grouped = {}
+  for (const b of Object.values(bundles)) {
+    if (!b?.bundle || (include && !include(b))) continue
+
+    if (!grouped[b.bundle]) {
+      grouped[b.bundle] = {
+        bundle: b.bundle,
+        channels: [b.channel],
+        repo_url: b.repo_url,
+        patches_name: b.patches_name,
+        version: b.version || '',
+        created_at: b.created_at,
+        apps: [...(b.apps || [])],
+        appCount: b.app_count || 0,
+        stars: b.stars || 0,
+        avatarUrl: getDisplayAvatar(b.repo_url, b.avatarUrl),
+        bundleImageUrl: getDisplayBundleImage(b.repo_url, b.bundleImageUrl),
+        repoDescription: b.repoDescription || '',
+        isArchived: b.isArchived || false,
+        isPreRelease: b.isPreRelease || false,
+      }
+      continue
+    }
+
+    const g = grouped[b.bundle]
+    if (b.version && !g.version) g.version = b.version
+    if (!g.channels.includes(b.channel)) g.channels.push(b.channel)
+    if (!g.patches_name && b.patches_name) g.patches_name = b.patches_name
+    if ((b.stars || 0) > (g.stars || 0)) g.stars = b.stars
+    if ((b.app_count || 0) > g.appCount) g.appCount = b.app_count || 0
+    const bAv = getDisplayAvatar(b.repo_url, b.avatarUrl)
+    if (bAv && !g.avatarUrl) g.avatarUrl = bAv
+    const bImg = getDisplayBundleImage(b.repo_url, b.bundleImageUrl)
+    if (bImg && !g.bundleImageUrl) g.bundleImageUrl = bImg
+    if (b.repoDescription && !g.repoDescription) g.repoDescription = b.repoDescription
+    if (b.isArchived) g.isArchived = true
+    if (b.isPreRelease) g.isPreRelease = true
+    const existingPkgs = new Set(g.apps.map((a) => a.package))
+    for (const app of b.apps || []) {
+      if (!existingPkgs.has(app.package)) {
+        g.apps.push(app)
+        existingPkgs.add(app.package)
+      }
+    }
+  }
+  return grouped
+}
+
+// Cache keyed on the bundles/nameCache/iconCache object identities — bundles
+// is set twice at boot (cache paint, then index) and detail loads merge into
+// it in place, so Apps/Diff/GlobalSearch visits reuse one index per session.
 let appIndexCache = { bundles: null, nameCache: null, iconCache: null, value: null }
 
 export function buildAppIndex(bundlesData, nameCache, iconCache) {
