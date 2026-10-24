@@ -124,10 +124,40 @@ export function sortBundleNames(list) {
   })
 }
 
+const GENERIC_PACKAGE_SEGMENTS = new Set([
+  'android', 'app', 'apps', 'application', 'mobile', 'client', 'free', 'pro',
+  'lite', 'plus', 'hd', 'tv', 'beta', 'release', 'demo', 'premium',
+])
+
+/**
+ * Human-readable name derived from a package identifier, used only as a last
+ * resort when neither the name cache nor bundle metadata carries a name
+ * (index-only records for packages missing from app_cache). Never throws and
+ * never returns an empty string, so callers can sort/display without guards.
+ * `com.instagram.android` → `Instagram`.
+ * @param {string} pkg
+ * @returns {string}
+ */
+export function nameFromPackage(pkg) {
+  const raw = typeof pkg === 'string' ? pkg : ''
+  if (!raw) return 'Unknown app'
+  const parts = raw.split('.').filter(Boolean)
+  const candidates = (parts.length > 1 ? parts.slice(1) : parts)
+    .filter((seg) => !GENERIC_PACKAGE_SEGMENTS.has(seg.toLowerCase()))
+  const pick = candidates.length ? candidates[candidates.length - 1] : parts[parts.length - 1]
+  const pretty = pick
+    .split(/[_\-]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
+  return pretty || raw
+}
+
 export function resolveAppName(app, nameCache) {
-  const n = nameCache[app.package]
+  const n = app && app.package ? nameCache[app.package] : ''
   if (typeof n === 'string' && n) return n
-  return app.app_name
+  if (app && typeof app.app_name === 'string' && app.app_name) return app.app_name
+  return nameFromPackage(app && app.package)
 }
 
 export function scoreAppSearch(query, name, pkg) {
