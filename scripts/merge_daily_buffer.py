@@ -4,6 +4,7 @@ import re
 import subprocess
 from datetime import datetime, timezone
 from config import CHANGELOG_MAX_ENTRIES
+from app_metadata import derive_name_from_package
 from state_manager import (
     load_daily_buffer,
     save_daily_buffer,
@@ -195,12 +196,16 @@ def generate_markdown_changelog(date_str, affected_bundles_dict):
         else:
             lines.append(f"- **UPDATED** Bundle **{b_name}**")
 
-        sorted_apps = sorted(info["apps"], key=lambda x: x["app_name"].lower())
+        sorted_apps = sorted(
+            info["apps"],
+            key=lambda x: (x.get("app_name") or derive_name_from_package(x.get("package", ""))).lower(),
+        )
         for app in sorted_apps:
             status = app["badge_type"]
             is_pre = is_pre_release_app(b_name, app["package"])
             pre_str = " [PRE-RELEASE]" if is_pre else ""
-            lines.append(f"  - **{status}**{pre_str} {app['app_name']} (`{app['package']}`) in {b_name} patches")
+            app_name = app.get("app_name") or derive_name_from_package(app["package"])
+            lines.append(f"  - **{status}**{pre_str} {app_name} (`{app['package']}`) in {b_name} patches")
 
     lines.append("")
     return "\n".join(lines)

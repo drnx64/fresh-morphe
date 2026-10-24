@@ -7,23 +7,15 @@ from state_manager import (
     save_last_run, COMMON_PACKAGES, load_current_snapshot,
     rebuild_snapshot_from_bundles, load_claimed_keys, is_claimed,
 )
+from app_metadata import derive_name_from_package
+
 
 def get_app_name(package_name):
     """Normalize package names to a readable display name."""
-    pkg = package_name.lower().strip()
+    pkg = (package_name or "").lower().strip()
     if pkg in COMMON_PACKAGES:
         return COMMON_PACKAGES[pkg]
-        
-    # Fallback heuristic: com.example.app -> App
-    parts = pkg.split('.')
-    if len(parts) >= 1:
-        last = parts[-1]
-        if last in ["android", "app", "core", "client"] and len(parts) >= 2:
-            last = parts[-2]
-        # Capitalize and clean up dashes/underscores
-        name = last.replace('-', ' ').replace('_', ' ').title()
-        return name
-    return package_name
+    return derive_name_from_package(pkg)
 
 def _gitlab_project_path(url):
     """Extract the full project path from a GitLab URL, handling subgroups."""
@@ -374,6 +366,14 @@ def parse_all_bundles():
         enrich_parsed_bundles_with_names(parsed_bundles)
     except Exception as e:
         print(f"[-] Name enrichment failed (non-fatal): {e}")
+
+    # Fall back to F-Droid for packages Play Store could not resolve
+    print("\n--- Looking up unresolved apps on F-Droid ---")
+    try:
+        from icon_fetcher import enrich_parsed_bundles_with_store_fallbacks
+        enrich_parsed_bundles_with_store_fallbacks(parsed_bundles)
+    except Exception as e:
+        print(f"[-] F-Droid enrichment failed (non-fatal): {e}")
 
     # Save parsed bundles
     save_json(os.path.join(RAW_DIR, "parsed_bundles.json"), parsed_bundles)

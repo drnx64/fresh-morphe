@@ -8,6 +8,7 @@ import os
 import sys
 import json
 from datetime import datetime, timezone
+from html import escape as _esc
 from urllib.parse import quote
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -17,6 +18,7 @@ from state_manager import (
     load_json, ensure_dirs,
 )
 from icon_fetcher import APP_CACHE_PATH
+from app_metadata import resolve_name, store_link
 from config import SITE_URL
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "temp")
@@ -38,11 +40,10 @@ MORE_LABEL = "see full changelog"
 LINK_ROOM = 160  # headroom held back in the last message for the overflow link
 
 
-def _load_app_name(pkg, app_cache):
-    entry = app_cache.get(pkg, {})
-    if isinstance(entry, dict):
-        return entry.get("name", "") or pkg
-    return pkg
+def _load_app_name(pkg, app_cache, bundle_name=""):
+    """Best display name for a package — never the raw package id."""
+    name, _source = resolve_name(pkg, app_cache, bundle_name)
+    return name
 
 
 def _get_patches_for_app(bundle_name, pkg, parsed_bundles):
@@ -55,10 +56,11 @@ def _get_patches_for_app(bundle_name, pkg, parsed_bundles):
 
 
 def _patch_link(patch_name, pkg):
+    label = _esc(patch_name)
     if not pkg:
-        return patch_name
+        return label
     url = f"{SITE_URL}/?open-app={quote(pkg, safe='')}&patch={quote(patch_name, safe='')}"
-    return f'<a href="{url}">{patch_name}</a>'
+    return f'<a href="{url}">{label}</a>'
 
 
 def _build_sections(entries, app_cache, parsed_bundles):
@@ -74,7 +76,7 @@ def _build_sections(entries, app_cache, parsed_bundles):
             app_items = []
             for app in apps:
                 pkg = app.get("package", "")
-                app_name = _load_app_name(pkg, app_cache) or app.get("app_name", pkg)
+                app_name = _load_app_name(pkg, app_cache, app.get("app_name", ""))
                 pd = app.get("patch_diff", {})
                 added = pd.get("patches_added", [])
 
@@ -100,7 +102,7 @@ def _build_sections(entries, app_cache, parsed_bundles):
 
             for app in apps:
                 pkg = app.get("package", "")
-                app_name = _load_app_name(pkg, app_cache) or app.get("app_name", pkg)
+                app_name = _load_app_name(pkg, app_cache, app.get("app_name", ""))
                 app_badge = app.get("badge_type", "")
                 pd = app.get("patch_diff", {})
                 added = pd.get("patches_added", [])
@@ -140,12 +142,17 @@ def _build_sections(entries, app_cache, parsed_bundles):
             app_items = []
             for app in apps:
                 pkg = app.get("package", "")
-                app_name = app.get("app_name", pkg)
+                app_name = _load_app_name(pkg, app_cache, app.get("app_name", ""))
                 app_items.append({"name": app_name, "patches": [], "removed": True, "pkg": pkg})
             if app_items:
                 sections["updated_apps"].append({
                     "bundle_name": bundle_name, "patches_name": patches_name, "apps": app_items,
                 })
+
+    for items in sections.values():
+        for item in items:
+            for app in item.get("apps", []):
+                app["url"], app["store"] = store_link(app.get("pkg", ""), app_cache)
 
     return sections
 
@@ -161,23 +168,30 @@ def _dedup_sections(sections):
     return sections
 
 
+def _app_label(app):
+    """App name as a store-page link when one can be built."""
+    name = _esc(app["name"])
+    url = app.get("url", "")
+    return f'<a href="{_esc(url)}">{name}</a>' if url else name
+
+
 def _render_bundle(item):
     """Render a single bundle as a block of lines."""
     lines = []
-    lines.append(f'\u25b8 <b>{item["patches_name"]}</b>')
+    lines.append(f'\u25b8 <b>{_esc(item["patches_name"])}</b>')
 
     apps = item.get("apps", [])
     for app in apps:
         if app.get("removed"):
-            lines.append(f'    - <s>{app["name"]}</s>')
+            lines.append(f'    - <s>{_app_label(app)}</s>')
             continue
-        lines.append(f'    - <b>{app["name"]}</b>')
+        lines.append(f'    - <b>{_app_label(app)}</b>')
         for patch in app.get("patches", []):
             badge = patch["badge"]
             pkg = patch.get("pkg", "")
             name = patch["name"]
             if badge == "-":
-                lines.append(f'        {badge} {name}')
+                lines.append(f'        {badge} {_esc(name)}')
             else:
                 lines.append(f'        {badge} {_patch_link(name, pkg)}')
 
