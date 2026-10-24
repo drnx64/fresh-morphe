@@ -295,6 +295,7 @@ function finishBoot(status = 'Loading complete') {
 }
 
 function offerImageRetry(failedCount, runPass, toast) {
+  if (toast.isClosed()) toast = showWorkToast('Image caching')
   const retry = async () => {
     toast.setActions([])
     toast.setDetail('Retrying…')
@@ -333,6 +334,9 @@ async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMa
   if (!iconTotal && !avatarUrls.length) return
 
   const toast = showWorkToast('Caching images')
+  // Brief, non-nagging notice: the stack closes itself after 1.5s whether or
+  // not the sweep is done. Failures below re-open a fresh toast with Retry.
+  const autoHide = setTimeout(() => toast.close(), 1500)
 
   const runPass = async () => {
     let failed = 0
@@ -351,15 +355,18 @@ async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMa
 
   try {
     const failed = await runPass()
+    clearTimeout(autoHide)
     if (failed > 0) {
       offerImageRetry(failed, runPass, toast)
     } else {
-      toast.finish('Images cached')
+      toast.finish('Images cached', { autoCloseMs: 1500 })
     }
   } catch (err) {
+    clearTimeout(autoHide)
     console.error('[app] Image caching failed:', err)
-    toast.setDetail('Image caching failed')
-    toast.setActions([{ label: 'Dismiss', onClick: () => toast.close() }])
+    const failToast = toast.isClosed() ? showWorkToast('Image caching failed') : toast
+    failToast.setDetail('Image caching failed')
+    failToast.setActions([{ label: 'Dismiss', onClick: () => failToast.close() }])
   }
 }
 

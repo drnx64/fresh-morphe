@@ -10,7 +10,7 @@ import * as store from '../store.js'
 import { groupAffectedBundles, resolveAppName, getAppIconUrl, renderAppIcon } from '../utils/misc.js'
 import { getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { formatFriendlyDate, formatVersion } from '../utils/format.js'
+import { formatFriendlyDate, shortVersion, badgeLabel } from '../utils/format.js'
 import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
 
 const HIERARCHY_ORDER = { 'NEW BUNDLE': 0, 'UPDATED': 1, 'REMOVED BUNDLE': 2 }
@@ -134,7 +134,7 @@ export function renderTodayUpdates() {
     const bundleEl = el('div', { class: 'today-bundle-entry' })
 
     const headerParts = [
-      el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [entry.badge_type || 'UPDATED']),
+      el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [badgeLabel(entry.badge_type) || 'UPDATE']),
     ]
 
     const nameEl = el('span', {
@@ -159,15 +159,17 @@ export function renderTodayUpdates() {
     headerParts.push(nameEl)
     headerParts.push(el('span', { class: 'bundle-author', dangerouslySetInnerHTML: getAuthorLink(entry.repo_url) }))
 
-    const hasVersionTag = entry.previous_version && entry.new_version && entry.previous_version !== entry.new_version
-    if (entry.previous_version && entry.new_version && entry.previous_version !== entry.new_version) {
+    const prevVer = shortVersion(entry.previous_version)
+    const nextVer = shortVersion(entry.new_version)
+    const hasVersionTag = prevVer && nextVer && prevVer !== nextVer
+    if (hasVersionTag) {
       headerParts.push(el('span', { class: 'today-version-tag' }, [
-        formatVersion(entry.previous_version),
+        prevVer,
         el('span', { class: 'today-version-arrow', dangerouslySetInnerHTML: VERSION_ARROW }),
-        formatVersion(entry.new_version),
+        nextVer,
       ]))
-    } else if (entry.new_version) {
-      headerParts.push(el('span', { class: 'today-version-tag' }, [formatVersion(entry.new_version)]))
+    } else if (nextVer) {
+      headerParts.push(el('span', { class: 'today-version-tag' }, [nextVer]))
     }
 
     if (entry.extra_badges?.includes('VERSION BUMP') && !hasVersionTag && !entry.new_version) {
@@ -185,14 +187,16 @@ export function renderTodayUpdates() {
       const iconHtml = renderAppIcon(app, iconCache, 'sm')
 
       const badgeClass = app.badge_type ? `badge--${app.badge_type.toLowerCase().replace(/\s+/g, '-')}` : ''
-      const badgeHtml = app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(app.badge_type)}</span>` : ''
+      const badgeHtml = app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(badgeLabel(app.badge_type))}</span>` : ''
 
       const appName = resolveAppName(app, nameCache)
+      const appPrevVer = shortVersion(app.previous_version)
+      const appNextVer = shortVersion(app.new_version)
       let versionHtml = ''
-      if (app.previous_version && app.new_version && app.previous_version !== app.new_version) {
-        versionHtml = `<span class="today-app-version-diff">${escHtml(formatVersion(app.previous_version))} ${VERSION_ARROW} ${escHtml(formatVersion(app.new_version))}</span>`
-      } else if (app.new_version) {
-        versionHtml = `<span class="today-app-version-diff">${escHtml(formatVersion(app.new_version))}</span>`
+      if (appPrevVer && appNextVer && appPrevVer !== appNextVer) {
+        versionHtml = `<span class="today-app-version-diff">${escHtml(appPrevVer)} ${VERSION_ARROW} ${escHtml(appNextVer)}</span>`
+      } else if (appNextVer) {
+        versionHtml = `<span class="today-app-version-diff">${escHtml(appNextVer)}</span>`
       }
 
       appEl.innerHTML = `

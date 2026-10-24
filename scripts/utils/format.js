@@ -42,6 +42,49 @@ export function formatVersion(v) {
   return 'v' + s.replace(/^v+/i, '')
 }
 
+/**
+ * Reduce noisy CI-style version strings to the version itself.
+ * "privacy-tiktok-multi-v0.78.0-20261023-195538" -> "v0.78.0"
+ * "1.13.0-dev.1" -> "v1.13.0-dev.1" (alpha suffixes kept)
+ * @param {string} v
+ * @returns {string}
+ */
+export function shortVersion(v) {
+  if (!v) return ''
+  const s = String(v).trim()
+  if (!s) return ''
+  const match = s.match(/(\d+\.\d+\.\d+(?:-[a-z][\w.]*)?)/i)
+  return match ? 'v' + match[1] : formatVersion(s)
+}
+
+const BADGE_LABELS = {
+  UPDATED: 'UPDATE',
+  'UPDATED APP': 'PATCHED',
+}
+
+/**
+ * Short, human badge label for a pipeline badge_type.
+ * One word per badge; keeps the raw value for CSS classes.
+ * @param {string} type
+ * @returns {string}
+ */
+export function badgeLabel(type) {
+  if (!type) return ''
+  return BADGE_LABELS[type] || type
+}
+
+/**
+ * Stable hue per day of month (1-31), spread by the golden angle so
+ * neighbouring dates never look alike.
+ * @param {string} dateStr - ISO date (YYYY-MM-DD)
+ * @returns {number} 0-359
+ */
+export function dayHue(dateStr) {
+  const day = parseInt(String(dateStr || '').slice(8, 10), 10)
+  if (!day) return 28
+  return Math.round((day * 137.508) % 360)
+}
+
 export function formatTime(isoStr) {
   if (!isoStr) return '-'
   try {

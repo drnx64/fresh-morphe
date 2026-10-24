@@ -25,6 +25,7 @@ function ensureStack() {
  *   setActions: (actions: Array<{label: string, primary?: boolean, onClick: Function}>) => void,
  *   finish: (text?: string, opts?: {autoCloseMs?: number, fillBar?: boolean}) => void,
  *   close: () => void,
+ *   isClosed: () => boolean,
  * }}
  */
 export function showWorkToast(title) {
@@ -78,6 +79,9 @@ export function showWorkToast(title) {
       clearTimeout(autoCloseTimer)
       container.classList.remove('open')
       setTimeout(() => container.remove(), 250)
+    },
+    isClosed() {
+      return closed
     },
   }
 
