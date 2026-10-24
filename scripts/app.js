@@ -18,18 +18,27 @@ document.documentElement.setAttribute('data-theme', savedTheme)
 
 function updateThemeMeta(theme) {
   const meta = document.querySelector('meta[name="theme-color"]')
-  if (meta) meta.content = theme === 'dark' ? '#14120f' : '#f5f3f0'
+  if (meta) meta.content = theme === 'dark' ? '#1b1420' : '#fbf7f4'
 }
 
 function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme')
-  const next = current === 'dark' ? 'light' : 'dark'
-  document.documentElement.setAttribute('data-theme', next)
+  const root = document.documentElement
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+
+  // Freeze color transitions for the swap, then repaint once.
+  root.classList.add('theme-switching')
+  root.setAttribute('data-theme', next)
   localStorage.setItem('morphe_theme', next)
   updateThemeMeta(next)
-  window.dispatchEvent(new CustomEvent('theme-change'))
   const btn = document.querySelector('.theme-toggle')
   if (btn) btn.innerHTML = next === 'dark' ? MOON_ICON : SUN_ICON
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      root.classList.remove('theme-switching')
+      window.dispatchEvent(new CustomEvent('theme-change'))
+    })
+  })
 }
 
 const SUN_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'

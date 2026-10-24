@@ -240,8 +240,6 @@ export function syncColorGameChip() {
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') syncColorGameChip()
     })
-    window.matchMedia('(prefers-color-scheme: light)')
-      .addEventListener?.('change', syncColorGameChip)
     window.addEventListener('theme-change', syncColorGameChip)
   }
   const slot = document.getElementById(CHIP_SLOT_ID)
@@ -429,8 +427,8 @@ export function renderColorGame() {
     host.replaceChildren(buildCard(state, today, light))
   }
 
-  // Repaint when a tab left open overnight becomes visible, or when the OS
-  // switches between light and dark (the fixed S/L changes the hexes).
+  // Repaint when a tab left open overnight becomes visible, or when the theme
+  // flips (the fixed S/L changes the hexes).
   const onVisibility = () => {
     if (!host.isConnected) {
       document.removeEventListener('visibilitychange', onVisibility)
@@ -438,17 +436,14 @@ export function renderColorGame() {
     }
     if (document.visibilityState === 'visible' && localISODate() !== renderedDate) paint()
   }
-  const schemeQuery = window.matchMedia('(prefers-color-scheme: light)')
   const onScheme = () => {
     if (!host.isConnected) {
-      schemeQuery.removeEventListener?.('change', onScheme)
       window.removeEventListener('theme-change', onScheme)
       return
     }
     paint()
   }
   document.addEventListener('visibilitychange', onVisibility)
-  schemeQuery.addEventListener?.('change', onScheme)
   window.addEventListener('theme-change', onScheme)
 
   paint()

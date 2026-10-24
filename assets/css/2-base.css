@@ -61,6 +61,16 @@ img {
   transition-duration: 0.01ms !important;
 }
 
+/* Theme flips swap every token at once — animating each one queued a full
+   page of color transitions on low-end devices. Kill them for the swap. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

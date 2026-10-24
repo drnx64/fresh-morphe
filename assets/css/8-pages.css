@@ -95,17 +95,64 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius);
-  padding: 1rem;
+  overflow: hidden;
+  transition: border-color var(--transition-speed);
+}
+.changelog-day:hover {
+  border-color: var(--border-hairline-strong);
+}
+.changelog-day-heading {
+  margin: 0;
+}
+.changelog-day-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+.changelog-day-toggle:hover {
+  background: var(--surface-tint);
 }
 .changelog-date {
-  font-size: 2rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 1.85rem;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.03em;
   color: var(--text-secondary);
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-hairline);
+}
+.changelog-day-meta {
+  flex: 0 0 auto;
+  font-family: var(--font-stack);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.changelog-day-chevron {
+  display: flex;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  transition: transform 0.2s var(--ease);
+}
+.changelog-day.open .changelog-day-chevron {
+  transform: rotate(180deg);
+}
+.changelog-day-body {
+  padding: 0.9rem 1rem 1rem;
+  border-top: 1px solid var(--border-hairline);
+}
+.changelog-day-body[hidden] {
+  display: none;
 }
 .changelog-date-day {
   font-size: 1.2em;
@@ -144,42 +191,6 @@
 }
 .changelog-app-name {
   font-weight: 500;
-}
-.changelog-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 1rem 0;
-  flex-wrap: wrap;
-}
-.pagination-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hairline);
-  color: var(--text-primary);
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.4rem 0.9rem;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition:
-    background var(--transition-speed),
-    border-color var(--transition-speed);
-}
-.pagination-btn:hover:not(:disabled) {
-  background: var(--bg-surface-inner);
-  border-color: var(--border-hairline-strong);
-}
-.pagination-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-.pagination-info {
-  font-size: 0.78rem;
-  color: var(--text-muted);
 }
 
 /* ── Diff Page (app-centric) ──────────────────────────── */
