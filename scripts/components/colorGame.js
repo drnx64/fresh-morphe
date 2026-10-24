@@ -321,9 +321,10 @@ export function renderColorGame() {
 
   /** FLIP: lift the locked card into the header chip while it collapses. */
   function flyToChip(card, fromRect, chip) {
-    if (prefersReducedMotion()) return
     const toRect = chip.getBoundingClientRect()
     if (!fromRect.width || !fromRect.height || !toRect.width) return
+    const reduced = prefersReducedMotion()
+    const duration = reduced ? 200 : 560
 
     const clone = card.cloneNode(true)
     clone.classList.add('color-game--flying')
@@ -337,6 +338,7 @@ export function renderColorGame() {
       zIndex: '200',
       pointerEvents: 'none',
       transformOrigin: 'top left',
+      contain: 'layout paint',
     })
     document.body.appendChild(clone)
 
@@ -344,26 +346,40 @@ export function renderColorGame() {
     const dy = toRect.top - fromRect.top
     const sx = toRect.width / fromRect.width
     const sy = toRect.height / fromRect.height
-    const flight = clone.animate([
-      { transform: 'translate(0, 0) scale(1, 1)', opacity: 1, borderRadius: '14px' },
-      {
-        transform: `translate(${dx * 0.62}px, ${dy * 0.62 - 18}px) scale(${1 - (1 - sx) * 0.45}, ${1 - (1 - sy) * 0.45})`,
-        opacity: 0.92,
-        borderRadius: '12px',
-        offset: 0.55,
-      },
-      {
-        transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
-        opacity: 0,
-        borderRadius: `${Math.min(toRect.height / 2, 999)}px`,
-      },
-    ], { duration: 520, easing: 'cubic-bezier(.2, .75, .25, 1)' })
-    flight.onfinish = () => clone.remove()
+    const midX = dx * 0.62
+    const midY = dy * 0.62 - (reduced ? 0 : 18)
 
+    if (typeof clone.animate === 'function') {
+      const flight = clone.animate([
+        { transform: 'translate(0, 0) scale(1, 1)', opacity: 1, borderRadius: '14px' },
+        {
+          transform: `translate(${midX}px, ${midY}px) scale(${1 - (1 - sx) * 0.45}, ${1 - (1 - sy) * 0.45})`,
+          opacity: 0.95,
+          borderRadius: '12px',
+          offset: 0.55,
+        },
+        {
+          transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
+          opacity: 0,
+          borderRadius: '999px',
+        },
+      ], { duration, easing: reduced ? 'ease-out' : 'cubic-bezier(.2, .75, .25, 1)' })
+      flight.onfinish = () => clone.remove()
+    } else {
+      clone.remove()
+    }
+
+    // Arrive as a compact pill: a quick shrink into place (always runs, so the
+    // hand-off is visible even when the long flight is reduced).
     chip.animate([
-      { opacity: 0, transform: 'scale(.82)' },
+      { opacity: 0, transform: 'scale(1.4)' },
       { opacity: 1, transform: 'scale(1)' },
-    ], { duration: 240, delay: 280, easing: 'ease-out', fill: 'backwards' })
+    ], {
+      duration: reduced ? 140 : 300,
+      delay: reduced ? 0 : Math.round(duration * 0.55),
+      easing: 'cubic-bezier(.2, .8, .2, 1)',
+      fill: 'backwards',
+    })
   }
 
   function paint({ animate = false } = {}) {
@@ -382,11 +398,33 @@ export function renderColorGame() {
     if (state.pending) {
       const chip = buildChip(state, today, light)
       if (slot) slot.replaceChildren(chip)
-      host.replaceChildren()
+
+      // Collapse the inline slot so the page settles at the same pace as the
+      // card flying into the header, instead of jumping up in one frame.
+      if (oldRect) {
+        host.style.height = `${host.offsetHeight}px`
+        host.style.overflow = 'hidden'
+        host.replaceChildren()
+        requestAnimationFrame(() => {
+          host.style.transition = 'height 0.3s var(--ease)'
+          host.style.height = '0px'
+        })
+        setTimeout(() => {
+          host.style.transition = ''
+          host.style.height = ''
+          host.style.overflow = ''
+        }, 360)
+      } else {
+        host.replaceChildren()
+      }
+
       if (oldRect && slot && chip.isConnected) flyToChip(oldCard, oldRect, chip)
       return
     }
 
+    host.style.transition = ''
+    host.style.height = ''
+    host.style.overflow = ''
     if (slot) slot.replaceChildren()
     host.replaceChildren(buildCard(state, today, light))
   }

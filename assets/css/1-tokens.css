@@ -1,8 +1,9 @@
 /* ═══════════════════════════════════════════════════════════
    MorpheTracker — design tokens
    Plum-black base · tiger-orange signal · condensed display
-   Dark by default, light follows the OS. Link order defines
-   the cascade; this file must load first.
+   Dark by default; light is opt-in via html[data-theme="light"]
+   (set by the FOUC guard and the header toggle). Link order
+   defines the cascade; this file must load first.
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Self-hosted faces ──
@@ -105,42 +106,40 @@
   --nav-height: 56px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
+:root[data-theme="light"] {
+  color-scheme: light;
 
-    --bg-void: #fbf7f4;
-    --bg-surface: #ffffff;
-    --bg-surface-inner: rgba(27, 20, 32, 0.04);
-    --bg-header: rgba(251, 247, 244, 0.9);
-    --bg-nav: rgba(251, 247, 244, 0.96);
+  --bg-void: #fbf7f4;
+  --bg-surface: #ffffff;
+  --bg-surface-inner: rgba(27, 20, 32, 0.04);
+  --bg-header: rgba(251, 247, 244, 0.9);
+  --bg-nav: rgba(251, 247, 244, 0.96);
 
-    --surface-tint: rgba(27, 20, 32, 0.05);
-    --surface-tint-strong: rgba(27, 20, 32, 0.09);
+  --surface-tint: rgba(27, 20, 32, 0.05);
+  --surface-tint-strong: rgba(27, 20, 32, 0.09);
 
-    --border-hairline: rgba(27, 20, 32, 0.1);
-    --border-hairline-strong: rgba(27, 20, 32, 0.22);
+  --border-hairline: rgba(27, 20, 32, 0.1);
+  --border-hairline-strong: rgba(27, 20, 32, 0.22);
 
-    --text-primary: #1b1420;
-    --text-secondary: #3f3448;
-    --text-muted: #6f6379;
+  --text-primary: #1b1420;
+  --text-secondary: #3f3448;
+  --text-muted: #6f6379;
 
-    --accent: #b8430b;
-    --accent-strong: #9c3807;
-    --accent-ink: #fffaf6;
-    --accent-dim: rgba(184, 67, 11, 0.12);
-    --accent-soft: rgba(184, 67, 11, 0.08);
-    --gradient-primary: linear-gradient(135deg, #b8430b 0%, #e05a14 100%);
+  --accent: #b8430b;
+  --accent-strong: #9c3807;
+  --accent-ink: #fffaf6;
+  --accent-dim: rgba(184, 67, 11, 0.12);
+  --accent-soft: rgba(184, 67, 11, 0.08);
+  --gradient-primary: linear-gradient(135deg, #b8430b 0%, #e05a14 100%);
 
-    --state-stable: #3f7a4d;
-    --state-stable-dim: rgba(63, 122, 77, 0.12);
-    --state-dev: #8a5c12;
-    --state-dev-dim: rgba(138, 92, 18, 0.12);
-    --state-critical: #b33a4d;
-    --state-critical-dim: rgba(179, 58, 77, 0.1);
-    --state-plum: #7b57a0;
-    --state-plum-dim: rgba(123, 87, 160, 0.12);
-    --state-info: #2f6ba8;
-    --state-info-dim: rgba(47, 107, 168, 0.12);
-  }
+  --state-stable: #3f7a4d;
+  --state-stable-dim: rgba(63, 122, 77, 0.12);
+  --state-dev: #8a5c12;
+  --state-dev-dim: rgba(138, 92, 18, 0.12);
+  --state-critical: #b33a4d;
+  --state-critical-dim: rgba(179, 58, 77, 0.1);
+  --state-plum: #7b57a0;
+  --state-plum-dim: rgba(123, 87, 160, 0.12);
+  --state-info: #2f6ba8;
+  --state-info-dim: rgba(47, 107, 168, 0.12);
 }

@@ -645,6 +645,7 @@ async function handleUrlParams() {
 // ── Boot ──
 async function boot() {
   applyReducedMotion()
+  updateThemeMeta(savedTheme)
   renderShell()
   syncColorGameChip()
   setupRoutes()
