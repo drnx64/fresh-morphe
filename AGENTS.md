@@ -1,16 +1,14 @@
 # MorpheTracker — Agent Reference
 
-`ARCHITECTURE.md` at the root is stale (describes the pre-v5 architecture: Service Worker, separate changelog.html, different deps). Trust this file + the code.
-
 ## Commands
 
 | Task | Command | Notes |
 |------|---------|-------|
-| Dev server | `npm run dev` | `npx serve . -p 3000`. Never use `file://`. |
+| Dev server | `npm run dev` | `npx serve .` on port 3000. Never use `file://`. |
 | Build | `npm run build` | `node scripts/build.js` — copies to `docs/` (gitignored build output, pushed to `gh-pages` by CI). |
-| Preview | `npm run preview` | `npx serve docs -p 3000` — preview production build locally. |
-| Python tests | `python -m pytest tests/ -v` | `pip install -r requirements.txt` first (CI does this; locally you may already have pytest). |
-| Run pipeline | `python scripts/run_pipeline.py` | Needs `GITHUB_TOKEN` in `.env` (optional `GITLAB_TOKEN`, `TG_TOKEN`, `TG_CHAT`). |
+| Preview | `npm run preview` | `npx serve docs` — preview production build locally. |
+| Python tests | `python -m pytest tests/ -v` | Requires `pip install -r requirements.txt`. |
+| Run pipeline | `python scripts/run_pipeline.py` | Requires `GITHUB_TOKEN` env var. |
 | Manual finalization | `python scripts/merge_daily_buffer.py --finalize` | Force-flush daily buffer to changelog. |
 | Verify/purge phantoms | `python scripts/cleanup_phantoms.py` | Idempotent — re-run after changing REMOVED/claims logic. |
 
@@ -18,16 +16,14 @@
 
 `python -m pytest tests/ -v` → `npm run build`
 
-CI (`ci.yml`) runs both on every push/PR to `main`. Job names (`Python Tests`, `Production Build`) are the required status checks enforced by the branch ruleset — don't rename them casually.
-
-`requirements.txt` lists Pillow, but nothing in the codebase imports it — only `pytest` is actually needed; the pipeline itself is stdlib-only.
+CI runs both on every push/PR to `main`. Data updates (hourly) use `[skip ci]` and deploy to `gh-pages` directly from `update.yml`.
 
 ## Architecture
 
-- **Frontend:** Vanilla ES Modules (`scripts/`). No build step, no framework. Hash-based SPA routing (`/#/`, `/#/bundles`, `/#/bundle/:name`).
-- **Pipeline:** Python 3.11 scripts (`scripts/`). Crawls GitHub for `.mpp` patch bundles, parses, fingerprints, diffs, writes JSON to `data/`. stdlib only (`urllib`); no runtime pip deps beyond test tooling.
+- **Frontend:** Vanilla ES Modules (`scripts/`). No build step, no framework. Hash-based SPA routing (`/#/`, `/#/bundles`).
+- **Pipeline:** Python 3.11 scripts (`scripts/`). Crawls GitHub for `.mpp` patch bundles, parses, fingerprints, diffs, writes JSON to `data/`. Zero pip dependencies (stdlib `urllib` only; `Pillow` for image processing, `pytest` for tests).
 - **Data layer:** Pipeline outputs static JSON files (`data/core.json`, `data/changes.json`, `data/bundles/`, etc.). Build script copies them to `docs/`, which is pushed to the `gh-pages` branch for GitHub Pages.
-- **Hosting:** GitHub Pages serves the `gh-pages` branch (root). `update.yml` (hourly, cron `17 * * * *`) runs the pipeline, commits data changes to `main` (with `[skip ci]`), then builds and force-pushes the site to `gh-pages` itself. Code pushes to `main` trigger the same build+push via `deploy.yml`. The `gh-pages` branch is fully automated — never edit it manually.
+- **Hosting:** GitHub Pages serves the `gh-pages` branch (root). CI (GitHub Actions) runs pipeline every hour, commits data changes to `main`, then builds and force-pushes the site to `gh-pages`. Code pushes to `main` trigger the same build+push via `deploy.yml`. The `gh-pages` branch is fully automated — never edit it manually.
 
 ### Data flow
 
@@ -49,15 +45,14 @@ If no changes and no day rollover, pipeline exits silently after step 3. `write_
 
 - **`docs/` is the build output and is gitignored.** `npm run build` generates it. Never edit manually, never commit it. CI pushes it to the `gh-pages` branch.
 - **`data/raw/` and `data/output/` are gitignored.** Large generated files.
-- **`data/state/` is partially gitignored.** Only `current_snapshot.json` and `external_repos.json` are gitignored — the rest (`previous_snapshot.json`, `last_tg_msg.json`, `app_cache.json`, `icon_cache.json`, `name_cache.json`, `repo_cache.json`, `daily_buffer.json`, `file_shas.json`, `last_run.json`, `patches_names_cache.json`, `release_cache.json`) are tracked. Don't assume a state file is untracked — check `git ls-files data/state/` first.
+- **`data/state/` is partially gitignored.** `current_snapshot.json`, `previous_snapshot.json`, `external_repos.json`, `last_tg_msg.json` are gitignored. Caches (`app_cache.json`, `daily_buffer.json`, `last_run.json`, `patches_names_cache.json`, `release_cache.json`) are tracked.
 - **CSS is one monolithic file** (`assets/style.css`, ~4400 lines). No CSS modules.
 - **SVG icons** are inline strings exported from `scripts/utils/svg.js`. No icon font or library.
 - **Python imports** use `sys.path.append` — scripts must run from repo root.
 - **No node_modules.** Zero npm dependencies. `npx serve` used for dev/preview only.
 - **Bundle keys are `repo:channel` with channels `stable | latest | dev`.** Always go through `scripts/utils/bundleKey.js` (`parseBundleKey`, `makeBundleKey`, `pickChannel`, `findBundleRecord`) — never split on `:` ad hoc. `CHANNEL_PREFERENCE = ['dev','latest','stable']` for storage order; display picks `stable || latest || dev`. `morphe_hide_dev` hides dev only (`latest` stays visible); `.channel-badge.latest` uses `--state-plum`.
-- **The frontend never hangs on a bad fetch.** `fetchJson(url, fallback)` always resolves; boot paints from the IndexedDB bundle cache (`services/bundleCache.js`, 24h TTL, version-delta) when the network fails or is slow; background work reports via `components/workToast.js` with Retry/Dismiss. A failed retry auto-dismisses the toast (`finish(text, { fillBar: false })`). Every floating promise needs a `.catch` — `window.onunhandledrejection` in `index.html` renders the full error page.
-- **Icons warm lazily; display never waits on the cache.** `services/iconFetchQueue.js`: IntersectionObserver priority lane (icons scrolled into view) + paced sweep fetching **one image at a time** with 1–2s pauses (no batching), shared 429/403 exponential backoff in `iconCache.loadImage`, remaining queue persisted to localStorage. `preloadAvatars` is also strictly sequential. `renderAppIcon` serves warm WebP data URLs and tags cold icons `data-icon-url` for the observer.
-- **`scripts/services/fetchData.js` is dead code** — nothing imports it (the boot path fetches directly in `app.js`). Treat it as a deletion candidate, not the data layer.
+- **The frontend never hangs on a bad fetch.** `fetchJson(url, fallback)` always resolves; boot paints from the IndexedDB bundle cache (`services/bundleCache.js`, 24h TTL, version-delta) when the network fails or is slow; background work reports via `components/workToast.js` with Retry/Dismiss. Every floating promise needs a `.catch` — `window.onunhandledrejection` in `index.html` renders the full error page.
+- **Icons warm lazily; display never waits on the cache.** `services/iconFetchQueue.js`: IntersectionObserver priority lane (icons scrolled into view) + paced sweep (6 per batch, 1–2s pauses), shared 429/403 exponential backoff in `iconCache.loadImage`, remaining queue persisted to localStorage. `renderAppIcon` serves warm WebP data URLs and tags cold icons `data-icon-url` for the observer.
 - **`main` is PR-only (ruleset + required checks).** Never `git push` directly to `main` — rejected for everyone. Land changes: branch → `gh pr create` → `gh pr merge --auto --merge` (merge commit; waits for required checks `Python Tests` + `Production Build`). Never put `[skip ci]` in PR commits — required checks never report and auto-merge stalls. The sole direct pusher is `update.yml`, authenticating as the repo deploy key (secret `MORPHE_DEPLOY_KEY`, ruleset bypass actor `DeployKey` — the GitHub Actions app can't be a bypass actor on personal repos). Emergency direct push: `PUT /repos/{owner}/{repo}/rulesets/{id}` with `"enforcement": "disabled"` (resend the full definition — PUT replaces, it doesn't merge), push, re-enable.
 
 ## File structure
@@ -86,4 +81,3 @@ tests/                        — pytest suite (pipeline invariants)
 - State management: `store.js` pub/sub pattern (get/set/subscribe).
 - Routing: hash-based (`/#/path`), route matching with `:param` support.
 - Dark theme only. Color vars in `:root` in `assets/style.css`.
-- `.opencode/` is gitignored (user-local OpenCode config/skills) — don't commit it.
