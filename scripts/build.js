@@ -2,13 +2,25 @@
  * Build script — copies all needed files to docs/ for GitHub Pages.
  * Run: node scripts/build.js
  */
-import { cpSync, mkdirSync, existsSync, readdirSync, rmSync, writeFileSync } from 'fs'
+import { cpSync, mkdirSync, existsSync, readdirSync, rmSync, writeFileSync, readFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const DOCS = join(ROOT, 'docs')
+
+/**
+ * Copy a JSON file to docs/ with whitespace stripped. The pipeline writes
+ * indented JSON (readable git diffs), but these bytes are what visitors
+ * download — minifying cuts changelog.json ~43% before gzip even applies.
+ * Parse/stringify round-trips the value with identical semantics.
+ * @param {string} srcPath
+ * @param {string} destPath
+ */
+function writeJsonMinified(srcPath, destPath) {
+  writeFileSync(destPath, JSON.stringify(JSON.parse(readFileSync(srcPath, 'utf8'))))
+}
 
 console.log('[build] Starting build to docs/...')
 
@@ -79,36 +91,47 @@ const DOCS_DATA = join(DOCS, 'data')
 if (existsSync(DATA_DIR)) {
   mkdirSync(DOCS_DATA, { recursive: true })
 
-  // Essential root files
+  // Essential root files — everything the frontend actually fetches
+  // (scripts/app.js). repos_list.txt ships as-is for external consumers.
   const ESSENTIAL_FILES = ['core.json', 'stats.json', 'changes.json', 'changelog.json', 'repos_list.txt']
   for (const file of ESSENTIAL_FILES) {
     const src = join(DATA_DIR, file)
     if (existsSync(src)) {
-      cpSync(src, join(DOCS_DATA, file))
+      if (file.endsWith('.json')) writeJsonMinified(src, join(DOCS_DATA, file))
+      else cpSync(src, join(DOCS_DATA, file))
     }
   }
   console.log('[build] data/ (essential files)')
 
-  // state/ directory
+  // state/ directory — only the two caches the frontend loads. The rest
+  // (snapshots, daily buffer, run metadata) is pipeline-internal.
   const STATE_DIR = join(DATA_DIR, 'state')
   const DOCS_STATE = join(DOCS_DATA, 'state')
+  const STATE_FILES = ['app_cache.json', 'repo_cache.json']
   if (existsSync(STATE_DIR)) {
     mkdirSync(DOCS_STATE, { recursive: true })
-    for (const file of readdirSync(STATE_DIR)) {
-      cpSync(join(STATE_DIR, file), join(DOCS_STATE, file))
+    let stateCount = 0
+    for (const file of STATE_FILES) {
+      if (!existsSync(join(STATE_DIR, file))) continue
+      writeJsonMinified(join(STATE_DIR, file), join(DOCS_STATE, file))
+      stateCount++
     }
-    console.log(`[build] data/state/ (${readdirSync(STATE_DIR).length} files)`)
+    console.log(`[build] data/state/ (${stateCount} files)`)
   }
 
-  // bundles/ directory
+  // bundles/ directory — every bundle JSON is fetched on demand, so all of it
+  // ships, minified.
   const BUNDLES_DIR = join(DATA_DIR, 'bundles')
   const DOCS_BUNDLES = join(DOCS_DATA, 'bundles')
   if (existsSync(BUNDLES_DIR)) {
     mkdirSync(DOCS_BUNDLES, { recursive: true })
+    let bundleCount = 0
     for (const file of readdirSync(BUNDLES_DIR)) {
-      cpSync(join(BUNDLES_DIR, file), join(DOCS_BUNDLES, file))
+      if (!file.endsWith('.json')) continue
+      writeJsonMinified(join(BUNDLES_DIR, file), join(DOCS_BUNDLES, file))
+      bundleCount++
     }
-    console.log(`[build] data/bundles/ (${readdirSync(BUNDLES_DIR).length} files)`)
+    console.log(`[build] data/bundles/ (${bundleCount} files)`)
   }
 }
 
