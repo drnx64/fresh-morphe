@@ -1,18 +1,20 @@
 /**
  * Daily color game — guess tomorrow's date color.
  *
- * The site tints each day with a deterministic hue, so the game is fair and
- * fully local: guess a hue today, the card locks, and it is scored the next
- * day. State lives in localStorage; nothing leaves the browser.
+ * The site tints each day with a deterministic hue (day of year, golden
+ * angle), so the game is fair and fully local: pick a color today, the card
+ * locks it, and it is scored the next day. State lives in localStorage;
+ * nothing leaves the browser.
  */
 import { el } from '../ui.js'
 import { dateParts, dayHue } from '../utils/format.js'
 import {
-  addDays, closeness, dayHex, hueDistance, hueHex, localISODate,
+  addDays, closeness, dayHex, hexToRgb, hueDistance, hueFromHex, hueHex,
+  localISODate,
 } from '../utils/color.js'
 
 const STORAGE_KEY = 'morphe_daily_color'
-const WIN_DEGREES = 15
+const WIN_CLOSENESS = 90
 
 function readState() {
   try {
@@ -41,6 +43,20 @@ function prettyDate(isoStr) {
   return month && day ? `${month} ${day}` : isoStr
 }
 
+/** The hue a stored guess represents; null when it has no usable hue. */
+function guessHue(guess) {
+  if (typeof guess === 'number') return guess
+  if (!hexToRgb(guess)) return null
+  const { hue, saturation } = hueFromHex(guess)
+  return saturation < 8 ? null : hue
+}
+
+/** Swatch/readout hex for a stored guess (hex string or legacy hue number). */
+function guessHex(guess, light) {
+  if (typeof guess === 'string' && hexToRgb(guess)) return guess
+  return hueHex(Number(guess) || 0, light)
+}
+
 /**
  * Score a pending guess once its target date has arrived.
  * @returns {{state: Object, changed: boolean}}
@@ -50,16 +66,18 @@ function settleState(state, today) {
   if (!pending || !pending.date || pending.date > today) {
     return { state, changed: false }
   }
-  const diff = hueDistance(pending.guess, dayHue(pending.date))
+  const hue = guessHue(pending.guess)
+  const diff = hue == null ? 180 : hueDistance(hue, dayHue(pending.date))
+  const close = closeness(diff)
   const onTime = pending.date === today
-  const win = diff <= WIN_DEGREES
+  const win = close >= WIN_CLOSENESS
   const streak = win && onTime ? (state.streak || 0) + 1 : 0
   return {
     changed: true,
     state: {
       ...state,
       pending: null,
-      last: { date: pending.date, guess: pending.guess, diff, closeness: closeness(diff), win, onTime },
+      last: { date: pending.date, guess: pending.guess, diff, closeness: close, win, onTime },
       streak,
       best: Math.max(state.best || 0, streak),
     },
@@ -88,7 +106,7 @@ export function renderColorGame() {
   }
 
   function buildLocked(pending, light) {
-    const hex = hueHex(pending.guess, light)
+    const hex = guessHex(pending.guess, light)
     return el('div', { class: 'color-game-body' }, [
       el('div', { class: 'color-game-locked' }, [
         el('span', { class: 'color-game-swatch color-game-swatch--lg', style: { background: hex } }),
@@ -102,49 +120,42 @@ export function renderColorGame() {
   }
 
   function buildGuess(tomorrow, light) {
-    const slider = el('input', {
-      type: 'range',
-      class: 'color-game-slider',
-      id: 'color-game-hue',
-      min: '0',
-      max: '359',
-      step: '1',
-      value: String(dayHue(localISODate())),
-      'aria-label': "Tomorrow's hue",
+    const picker = el('input', {
+      type: 'color',
+      class: 'color-game-picker',
+      id: 'color-game-pick',
+      value: dayHex(localISODate(), light),
+      'aria-label': "Tomorrow's color",
     })
-    const preview = el('span', { class: 'color-game-swatch color-game-swatch--lg' })
     const hexEl = el('span', { class: 'color-game-hex color-game-hex--big' })
 
     const update = () => {
-      const hue = Number(slider.value)
-      const hex = hueHex(hue, light)
-      preview.style.background = hex
-      hexEl.textContent = hex
-      slider.setAttribute('aria-valuetext', `Hue ${hue}, ${hex}`)
+      hexEl.textContent = picker.value
     }
-    slider.addEventListener('input', update)
+    picker.addEventListener('input', update)
     update()
 
     const submit = el('button', { class: 'btn btn--primary btn--sm', type: 'button' }, ['Lock in'])
     submit.addEventListener('click', () => {
       const state = readState()
-      state.pending = { date: tomorrow, guess: Number(slider.value) }
+      state.pending = { date: tomorrow, hex: picker.value }
       writeState(state)
       paint()
     })
 
     return el('div', { class: 'color-game-body' }, [
-      el('span', { class: 'color-game-guess-label' }, [`Guess what ${prettyDate(tomorrow)} looks like`]),
-      el('div', { class: 'color-game-guess-row' }, [preview, hexEl, slider]),
-      el('div', { class: 'color-game-actions' }, [
-        submit,
-        el('span', { class: 'color-game-note' }, [`Within ${WIN_DEGREES}° keeps your streak.`]),
+      el('label', { class: 'color-game-guess-label', for: 'color-game-pick' }, [`Pick what ${prettyDate(tomorrow)} looks like`]),
+      el('div', { class: 'color-game-guess-row' }, [
+        picker,
+        hexEl,
+        el('span', { class: 'color-game-note' }, [`${WIN_CLOSENESS}%+ close keeps your streak.`]),
       ]),
+      el('div', { class: 'color-game-actions' }, [submit]),
     ])
   }
 
   function buildResult(last, light) {
-    const guessHex = hueHex(last.guess, light)
+    const pickedHex = guessHex(last.guess, light)
     const actualHex = dayHex(last.date, light)
     const won = last.win && last.onTime
     let message = `${last.closeness}% close · ${Math.round(last.diff)}° off`
@@ -153,9 +164,9 @@ export function renderColorGame() {
 
     const pair = el('div', { class: 'color-game-pair' }, [
       el('span', { class: 'color-game-pair-item' }, [
-        el('span', { class: 'color-game-note' }, ['Your guess']),
-        el('span', { class: 'color-game-swatch', style: { background: guessHex } }),
-        el('span', { class: 'color-game-hex' }, [guessHex]),
+        el('span', { class: 'color-game-note' }, ['Your pick']),
+        el('span', { class: 'color-game-swatch', style: { background: pickedHex } }),
+        el('span', { class: 'color-game-hex' }, [pickedHex]),
       ]),
       el('span', { class: 'color-game-pair-item' }, [
         el('span', { class: 'color-game-note' }, [prettyDate(last.date)]),

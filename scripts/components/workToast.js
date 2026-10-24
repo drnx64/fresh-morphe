@@ -78,7 +78,8 @@ export function showWorkToast(title) {
       closed = true
       clearTimeout(autoCloseTimer)
       container.classList.remove('open')
-      setTimeout(() => container.remove(), 250)
+      // Let the CSS fade/slide finish before detaching the node.
+      setTimeout(() => container.remove(), 320)
     },
     isClosed() {
       return closed

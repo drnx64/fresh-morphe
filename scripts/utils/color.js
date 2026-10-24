@@ -73,3 +73,32 @@ export function hueDistance(a, b) {
 export function closeness(diff) {
   return Math.round((1 - diff / 180) * 100)
 }
+
+/** Parse #RRGGBB into [r, g, b], or null. */
+export function hexToRgb(hex) {
+  const match = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim())
+  if (!match) return null
+  const value = parseInt(match[1], 16)
+  return [(value >> 16) & 255, (value >> 8) & 255, value & 255]
+}
+
+/** Hue and saturation of a hex color: {hue, saturation}. */
+export function hueFromHex(hex) {
+  const rgb = hexToRgb(hex)
+  if (!rgb) return { hue: 0, saturation: 0 }
+  const [r, g, b] = rgb.map((v) => v / 255)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const delta = max - min
+  if (delta === 0) return { hue: 0, saturation: 0 }
+
+  let hue
+  if (max === r) hue = ((g - b) / delta) % 6
+  else if (max === g) hue = (b - r) / delta + 2
+  else hue = (r - g) / delta + 4
+
+  return {
+    hue: Math.round(((hue * 60) + 360) % 360),
+    saturation: Math.round((delta / (1 - Math.abs(max + min - 1))) * 100),
+  }
+}

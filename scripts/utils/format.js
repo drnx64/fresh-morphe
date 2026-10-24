@@ -90,15 +90,19 @@ export function badgeLabel(type) {
 }
 
 /**
- * Stable hue per day of month (1-31), spread by the golden angle so
- * neighbouring dates never look alike.
+ * Stable hue per calendar day, spread by the golden angle. Uses the day of the
+ * year (not the day of the month) so the same number in two months never
+ * renders the same color.
  * @param {string} dateStr - ISO date (YYYY-MM-DD)
  * @returns {number} 0-359
  */
 export function dayHue(dateStr) {
-  const day = parseInt(String(dateStr || '').slice(8, 10), 10)
-  if (!day) return 28
-  return Math.round((day * 137.508) % 360)
+  const [year, month, day] = String(dateStr || '').split('-').map(Number)
+  if (!year || !month || !day) return 28
+  const dayOfYear = Math.round(
+    (Date.UTC(year, month - 1, day) - Date.UTC(year, 0, 0)) / 86400000,
+  )
+  return Math.round((dayOfYear * 137.508) % 360)
 }
 
 export function formatTime(isoStr) {
