@@ -24,6 +24,8 @@ const QUEUE_KEY = 'morphe_icon_queue_v1'
 const SWEEP_PAUSE_MIN_MS = 1000
 const SWEEP_PAUSE_JITTER_MS = 1000
 const PERSIST_THROTTLE_MS = 2000
+// How often a backgrounded tab re-checks whether it became visible again.
+const HIDDEN_POLL_MS = 2000
 
 /** @type {Set<string>} all http icon URLs from app_cache */
 let universe = new Set()
@@ -126,6 +128,13 @@ async function fetchOne(url) {
 
 async function workerLoop() {
   while (true) {
+    // Backgrounded tabs burn no network on the cache-warming sweep; the
+    // worker resumes within HIDDEN_POLL_MS of the tab becoming visible.
+    if (typeof document !== 'undefined' && document.hidden) {
+      if (!priorityQueue.length && !(sweepStarted && pending.length)) break
+      await sleep(HIDDEN_POLL_MS)
+      continue
+    }
     if (priorityQueue.length) {
       await fetchOne(priorityQueue.shift())
       continue
