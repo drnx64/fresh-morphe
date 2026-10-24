@@ -1,108 +1,123 @@
 /* ═══════════════════════════════════════════════════════════
-   MorpheTracker — CSS Redesign (Option D base)
-   Neutral warm dark · Timeline updates · Accordion bundles
-   Gradient CTA only · Responsive grid · Hybrid nav
+   MorpheTracker — design tokens
+   Plum-black base · burnt-orange signal · ledger typography
+   Dark by default, light follows the OS. Link order defines
+   the cascade; this file must load first.
    ═══════════════════════════════════════════════════════════ */
 
-/* ── Self-hosted Fredoka (variable, from Google Fonts) ──
-   Same files Google serves for Fredoka:wght@400;500;600;700 — fetched once at
-   build time so the page makes no third-party request and renders without the
-   extra round-trip. font-display:swap keeps text visible immediately. */
+/* ── Self-hosted Newsreader (600, latin + latin-ext) ──
+   Same files Google Fonts serves — fetched once at build time so the page
+   makes no third-party request. font-display:swap keeps text visible. */
 @font-face {
-  font-family: "Fredoka";
+  font-family: "Newsreader";
   font-style: normal;
-  font-weight: 400 700;
-  font-stretch: 100%;
+  font-weight: 600;
   font-display: swap;
-  src: url("../fonts/fredoka-latin.woff2") format("woff2");
+  src: url("../fonts/newsreader-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Fredoka";
+  font-family: "Newsreader";
   font-style: normal;
-  font-weight: 400 700;
-  font-stretch: 100%;
+  font-weight: 600;
   font-display: swap;
-  src: url("../fonts/fredoka-latin-ext.woff2") format("woff2");
+  src: url("../fonts/newsreader-latin-ext.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
     U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020-20A0,
     U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-@font-face {
-  font-family: "Fredoka";
-  font-style: normal;
-  font-weight: 400 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("../fonts/fredoka-hebrew.woff2") format("woff2");
-  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC,
-    U+FB1D-FB4F;
-}
 
 /* ── Design Tokens ────────────────────────────────────── */
-:root,
-[data-theme="dark"] {
-  --bg-void: #14120f;
-  --bg-surface: #1e1b17;
-  --bg-surface-inner: rgba(255, 255, 255, 0.035);
-  --bg-header: rgba(20, 18, 15, 0.88);
-  --bg-nav: rgba(20, 18, 15, 0.94);
-  --border-hairline: rgba(255, 255, 255, 0.08);
-  --border-hairline-strong: rgba(255, 255, 255, 0.16);
-  --text-primary: #f3ede4;
-  --text-muted: #948d81;
+:root {
+  color-scheme: dark;
 
-  --state-stable: #7fa876;
-  --state-stable-dim: rgba(127, 168, 118, 0.16);
-  --state-dev: #c98a5f;
-  --state-dev-dim: rgba(201, 138, 95, 0.16);
-  --state-critical: #b5533f;
-  --state-critical-dim: rgba(181, 83, 63, 0.14);
-  --state-plum: #a281ad;
-  --state-plum-dim: rgba(162, 129, 173, 0.16);
-  --state-info: #6b9fd4;
-  --state-info-dim: rgba(107, 159, 212, 0.16);
-  --accent: #3a8fd4;
-  --font-mono:
-    ui-monospace, "SF Mono", "SF Mono Menlo", "Cascadia Code", "Segoe UI Mono",
-    monospace;
-  --text-secondary: #c4bfb6;
+  --bg-void: #1b1420;
+  --bg-surface: #221926;
+  --bg-surface-inner: rgba(243, 236, 225, 0.035);
+  --bg-header: rgba(27, 20, 32, 0.88);
+  --bg-nav: rgba(27, 20, 32, 0.94);
 
-  --gradient-primary: linear-gradient(135deg, #4a7fc8 0%, #20cfce 100%);
+  --surface-tint: rgba(243, 236, 225, 0.06);
+  --surface-tint-strong: rgba(243, 236, 225, 0.1);
 
+  --border-hairline: rgba(243, 236, 225, 0.1);
+  --border-hairline-strong: rgba(243, 236, 225, 0.2);
+
+  --text-primary: #f3ece1;
+  --text-secondary: #d8cfe0;
+  --text-muted: #a99cb2;
+
+  --accent: #f2632a;
+  --accent-strong: #ff7a45;
+  --accent-ink: #1b1420;
+  --accent-dim: rgba(242, 99, 42, 0.16);
+  --accent-soft: rgba(242, 99, 42, 0.1);
+  --gradient-primary: linear-gradient(135deg, #f2632a 0%, #ff8a5c 100%);
+
+  --state-stable: #8ec99a;
+  --state-stable-dim: rgba(142, 201, 154, 0.14);
+  --state-dev: #e0a13f;
+  --state-dev-dim: rgba(224, 161, 63, 0.15);
+  --state-critical: #e2566b;
+  --state-critical-dim: rgba(226, 86, 107, 0.14);
+  --state-plum: #b493cf;
+  --state-plum-dim: rgba(180, 147, 207, 0.16);
+  --state-info: #7fa6d8;
+  --state-info-dim: rgba(127, 166, 216, 0.16);
+
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-stack:
-    "Fredoka", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono-stack:
     ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
-  --transition-speed: 0.2s;
+  --font-mono: var(--mono-stack);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --transition-speed: 0.18s;
   --radius: 14px;
   --radius-sm: 9px;
+  --radius-lg: 20px;
   --nav-height: 56px;
 }
 
-[data-theme="light"] {
-  --bg-void: #f5f3f0;
-  --bg-surface: #ffffff;
-  --bg-surface-inner: rgba(0, 0, 0, 0.04);
-  --bg-header: rgba(245, 243, 240, 0.92);
-  --bg-nav: rgba(245, 243, 240, 0.96);
-  --border-hairline: rgba(0, 0, 0, 0.08);
-  --border-hairline-strong: rgba(0, 0, 0, 0.16);
-  --text-primary: #1a1816;
-  --text-muted: #6b6560;
-  --text-secondary: #3d3a36;
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
 
-  --state-stable: #4a8c3f;
-  --state-stable-dim: rgba(74, 140, 63, 0.12);
-  --state-dev: #b06a2f;
-  --state-dev-dim: rgba(176, 106, 47, 0.12);
-  --state-critical: #c4432b;
-  --state-critical-dim: rgba(196, 67, 43, 0.1);
-  --state-plum: #8a5fa0;
-  --state-plum-dim: rgba(138, 95, 160, 0.12);
-  --state-info: #3a78b8;
-  --state-info-dim: rgba(58, 120, 184, 0.12);
-  --accent: #2a7dc8;
+    --bg-void: #fbf7f4;
+    --bg-surface: #ffffff;
+    --bg-surface-inner: rgba(27, 20, 32, 0.04);
+    --bg-header: rgba(251, 247, 244, 0.9);
+    --bg-nav: rgba(251, 247, 244, 0.96);
+
+    --surface-tint: rgba(27, 20, 32, 0.05);
+    --surface-tint-strong: rgba(27, 20, 32, 0.09);
+
+    --border-hairline: rgba(27, 20, 32, 0.1);
+    --border-hairline-strong: rgba(27, 20, 32, 0.22);
+
+    --text-primary: #1b1420;
+    --text-secondary: #3f3448;
+    --text-muted: #6f6379;
+
+    --accent: #c2410c;
+    --accent-strong: #a83608;
+    --accent-ink: #fffaf6;
+    --accent-dim: rgba(194, 65, 12, 0.12);
+    --accent-soft: rgba(194, 65, 12, 0.08);
+    --gradient-primary: linear-gradient(135deg, #d4530f 0%, #f2632a 100%);
+
+    --state-stable: #3f7a4d;
+    --state-stable-dim: rgba(63, 122, 77, 0.12);
+    --state-dev: #8a5c12;
+    --state-dev-dim: rgba(138, 92, 18, 0.12);
+    --state-critical: #b33a4d;
+    --state-critical-dim: rgba(179, 58, 77, 0.1);
+    --state-plum: #7b57a0;
+    --state-plum-dim: rgba(123, 87, 160, 0.12);
+    --state-info: #2f6ba8;
+    --state-info-dim: rgba(47, 107, 168, 0.12);
+  }
 }

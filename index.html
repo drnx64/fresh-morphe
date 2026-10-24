@@ -8,8 +8,8 @@
       name="description"
       content="Automated patch tracker for Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap." />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#f5f3f0" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#14120f" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#fbf7f4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1b1420" media="(prefers-color-scheme: dark)">
     <meta name="author" content="drnx64" />
     <meta name="google-site-verification" content="7YmvVgfw2TZntcB_0wiT1NEREuO9dtZTXgn2vED_lyQ" />
     <link rel="canonical" href="https://drnx64.github.io/morphe-track-patches/" />
@@ -80,7 +80,7 @@
     var name = _error ? _error.name || 'Error' : 'Error'
     var msg = _error ? _error.message || 'No message' : 'No message'
     var stack = _error ? _error.stack || 'No stack trace' : 'No stack trace'
-    var tech = ['Vanilla ES Modules (no framework)','Hash-based SPA routing','IndexedDB (MorpheTrackerCache)','CSS custom properties (dark theme)','Python 3 (backend crawl & diff pipeline)'].map(function(s){return '<li>'+s+'</li>'}).join('')
+    var tech = ['Vanilla ES Modules (no framework)','Hash-based SPA routing','IndexedDB (MorpheTrackerCache)','CSS custom properties (dark/light)','Python 3 (backend crawl & diff pipeline)'].map(function(s){return '<li>'+s+'</li>'}).join('')
     var html = '<div class="error-page-box"><div class="error-page-icon">!</div><h1 class="error-page-title">Something went wrong</h1><p class="error-page-subtitle">An unexpected error occurred. The application may not function correctly.</p><div class="error-page-details"><div class="error-page-section"><span class="error-page-label">Error</span><code class="error-page-value">'+esc(name)+'</code></div><div class="error-page-section"><span class="error-page-label">Message</span><code class="error-page-value error-page-message">'+esc(msg)+'</code></div>'+(stack?'<div class="error-page-section"><span class="error-page-label">Stack Trace</span><pre class="error-page-pre">'+esc(stack)+'</pre></div>':'')+'<div class="error-page-section"><span class="error-page-label">Tech Stack</span><ul class="error-page-tech-list">'+tech+'</ul></div></div><div class="error-page-actions"><button class="error-page-btn error-page-btn-primary" onclick="location.reload()">Retry</button><button class="error-page-btn error-page-btn-copy" id="mt-copy">Copy Error Details</button></div></div>'
     var div = document.createElement('div')
     div.id = 'mt-error-page'
@@ -88,7 +88,7 @@
     div.innerHTML = html
     document.body.appendChild(div)
     document.getElementById('mt-copy').onclick = function() {
-      var t = 'Error: '+name+'\nMessage: '+msg+'\nStack: '+stack+'\n\nTech Stack:\n- Vanilla ES Modules (no framework)\n- Hash-based SPA routing\n- IndexedDB (MorpheTrackerCache)\n- CSS custom properties (dark theme)\n- Python 3 (backend crawl & diff pipeline)\n\nURL: '+window.location.href+'\nUser Agent: '+navigator.userAgent+'\n\n--- How to fix ---\nPaste the above error details in your chat with opencode to get help fixing this issue.'
+      var t = 'Error: '+name+'\nMessage: '+msg+'\nStack: '+stack+'\n\nTech Stack:\n- Vanilla ES Modules (no framework)\n- Hash-based SPA routing\n- IndexedDB (MorpheTrackerCache)\n- CSS custom properties (dark/light)\n- Python 3 (backend crawl & diff pipeline)\n\nURL: '+window.location.href+'\nUser Agent: '+navigator.userAgent+'\n\n--- How to fix ---\nPaste the above error details in your chat with opencode to get help fixing this issue.'
       try { navigator.clipboard.writeText(t) } catch(e) {}
     }
   }

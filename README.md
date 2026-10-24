@@ -330,7 +330,7 @@ CI runs both on every push and pull request to `main`.
 - **No frameworks** — ES modules via `type="module"`, no transpiler, no JSX
 - **State** — `store.js` pub/sub (`get` / `set` / `subscribe`)
 - **Icons** — inline SVG strings from `scripts/utils/svg.js`; no icon font
-- **Dark theme only** — colour variables in `:root` in `assets/css/1-tokens.css`
+- **Theming** — tokens in `assets/css/1-tokens.css`; plum-black dark by default, light follows `prefers-color-scheme`
 - **Python** — script filenames stay `snake_case`; imports use `sys.path.append`, so run
   scripts from the repo root
 
