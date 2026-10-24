@@ -616,7 +616,7 @@ window.addEventListener('open-app', (e) => {
 
 window.addEventListener('open-bundle-history', async (e) => {
   await ensureChangelog()
-  openBundleHistoryModal(e.detail.bundleName)
+  openBundleHistoryModal(e.detail.bundleName, e.detail.bundleNames)
 })
 
 window.addEventListener('open-bundle', (e) => {

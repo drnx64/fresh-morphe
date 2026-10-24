@@ -4,8 +4,7 @@
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { buildAppIndex, suggestFuzzy, resolveAppName } from '../utils/misc.js'
-import { parseBundleKey } from '../utils/bundleKey.js'
+import { buildAppIndex, suggestFuzzy, resolveAppName, groupBundleCards } from '../utils/misc.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { SEARCH_ICON } from '../utils/svg.js'
@@ -156,24 +155,13 @@ export function renderGlobalSearch() {
   function getBundleList() {
     if (bundleList) return bundleList
     const bundles = store.get('bundles') || {}
-    const grouped = {}
-    for (const [key, bundle] of Object.entries(bundles)) {
-      const { name: bName } = parseBundleKey(key)
-      if (!grouped[bName]) {
-        grouped[bName] = {
-          name: bundle.patches_name || bName,
-          bundle: bName,
-          channels: [bundle.channel],
-          version: bundle.version || '',
-          appCount: (bundle.apps || []).length,
-        }
-      } else {
-        const g = grouped[bName]
-        if (!g.channels.includes(bundle.channel)) g.channels.push(bundle.channel)
-        if (bundle.version && !g.version) g.version = bundle.version
-      }
-    }
-    bundleList = Object.values(grouped)
+    bundleList = Object.values(groupBundleCards(bundles)).map((group) => ({
+      name: group.patches_name || group.bundle,
+      bundle: group.bundle,
+      channels: group.channels,
+      version: group.version || '',
+      appCount: Math.max(group.apps?.length || 0, group.appCount || 0),
+    }))
     return bundleList
   }
 

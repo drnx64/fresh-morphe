@@ -70,11 +70,14 @@ def _fetch_github_repo(repo):
         })
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode("utf-8"))
+            parent = data.get("parent") or {}
             return {
                 "stars": data.get("stargazers_count", 0),
                 "avatarUrl": (data.get("owner", {}).get("avatar_url") or ""),
                 "repoDescription": (data.get("description") or "")[:200],
                 "isArchived": bool(data.get("archived")),
+                "isFork": bool(data.get("fork")),
+                "forkParent": parent.get("full_name") or "",
                 "bundleImageUrl": _probe_bundle_image(f"https://github.com/{repo}"),
             }
     except urllib.error.HTTPError as e:
@@ -94,6 +97,9 @@ def _fetch_gitlab_repo(repo):
         archived
         starCount
         avatarUrl
+        forkedFrom {
+          fullPath
+        }
       }
     }
     """
@@ -109,11 +115,14 @@ def _fetch_gitlab_repo(repo):
             project = data.get("data", {}).get("project")
             if not project:
                 return {"isArchived": True, "error": "404 Not Found"}
+            forked_from = project.get("forkedFrom") or {}
             return {
                 "stars": project.get("starCount", 0),
                 "avatarUrl": (project.get("avatarUrl") or ""),
                 "repoDescription": (project.get("description") or "")[:200],
                 "isArchived": bool(project.get("archived")),
+                "isFork": bool(forked_from),
+                "forkParent": forked_from.get("fullPath") or "",
                 "bundleImageUrl": _probe_bundle_image(f"https://gitlab.com/{repo}"),
             }
     except Exception:
@@ -197,7 +206,7 @@ def update_bundle_files(repo_metadata):
 
         if os.path.exists(bundle_path):
             bundle_data = load_json(bundle_path, default={})
-            for field in ("stars", "avatarUrl", "repoDescription", "isArchived", "bundleImageUrl"):
+            for field in ("stars", "avatarUrl", "repoDescription", "isArchived", "isFork", "forkParent", "bundleImageUrl"):
                 if field in meta:
                     bundle_data[field] = meta[field]
             save_json(bundle_path, bundle_data)

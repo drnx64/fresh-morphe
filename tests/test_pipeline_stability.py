@@ -388,3 +388,38 @@ class TestDiffSuppression:
         badges = {a["badge_type"] for a in affected}
         assert "REMOVED BUNDLE" in badges
         assert "NEW BUNDLE" in badges
+
+
+class TestRepoMetadataOverlay:
+    def test_cached_metadata_survives_snapshot_rewrite(self, tmp_path, monkeypatch):
+        import merge_daily_buffer as mdb
+
+        cache = {
+            "https://github.com/up/repo": {
+                "stars": 1234,
+                "avatarUrl": "https://avatars.example/a.png",
+                "repoDescription": "Patches",
+                "isArchived": False,
+                "isFork": True,
+                "forkParent": "parent/repo",
+                "bundleImageUrl": "https://img.example/b.png",
+                "error": "HTTP 404",
+            }
+        }
+        cache_path = tmp_path / "repo_cache.json"
+        cache_path.write_text(json.dumps(cache), encoding="utf-8")
+        monkeypatch.setattr(mdb, "REPO_CACHE_PATH", str(cache_path))
+
+        bundles = {
+            "mybundle:stable": {"repo_url": "https://github.com/up/repo", "stars": 0},
+            "norepo:stable": {"repo_url": ""},
+        }
+        mdb.apply_repo_metadata(bundles)
+
+        record = bundles["mybundle:stable"]
+        assert record["stars"] == 1234
+        assert record["repoDescription"] == "Patches"
+        assert record["isFork"] is True
+        assert record["forkParent"] == "parent/repo"
+        assert "error" not in record
+        assert bundles["norepo:stable"] == {"repo_url": ""}

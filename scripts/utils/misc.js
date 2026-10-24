@@ -339,18 +339,61 @@ export function getStaleness(dateStr) {
  * @param {((record: Object) => boolean)|null} [include] - per-record filter
  * @returns {Object} bundle name → card record
  */
+/** Normalize a repo URL so the same repository groups consistently. */
+export function normalizeRepoUrl(url) {
+  if (!url || typeof url !== 'string') return ''
+  return url.trim().toLowerCase().replace(/\.git$/, '').replace(/\/+$/, '')
+}
+
+function versionRank(version) {
+  return String(version || '')
+    .replace(/^v/i, '')
+    .split(/[.\-+]/)
+    .map((part) => parseInt(part, 10))
+    .filter((n) => !Number.isNaN(n))
+}
+
+/** True when `candidate` is a newer release than `current` (date, then version). */
+function isNewerRelease(candidate, current) {
+  const candidateDate = Date.parse(candidate.release_date || candidate.releaseDate || '') || 0
+  const currentDate = Date.parse(current.release_date || current.releaseDate || '') || 0
+  if (candidateDate !== currentDate) return candidateDate > currentDate
+
+  const a = versionRank(candidate.version)
+  const b = versionRank(current.version)
+  for (let i = 0; i < Math.max(a.length, b.length); i++) {
+    const diff = (a[i] || 0) - (b[i] || 0)
+    if (diff !== 0) return diff > 0
+  }
+  return false
+}
+
+/**
+ * Merge bundle records into one card group per *repository* - the shape
+ * BundleCards render from. The same repo can appear under two names (tree
+ * crawler vs release crawler), so grouping by name alone produced duplicate
+ * cards; grouping by repo URL merges those into one entry (all channels kept)
+ * and surfaces the newest record's name/version.
+ *
+ * @param {Object} bundles - store bundle map (key → record)
+ * @param {((record: Object) => boolean)|null} [include] - per-record filter
+ * @returns {Object} repo key → card record
+ */
 export function groupBundleCards(bundles, include = null) {
   const grouped = {}
   for (const b of Object.values(bundles)) {
     if (!b?.bundle || (include && !include(b))) continue
+    const groupKey = normalizeRepoUrl(b.repo_url) || `name:${b.bundle.toLowerCase()}`
 
-    if (!grouped[b.bundle]) {
-      grouped[b.bundle] = {
+    if (!grouped[groupKey]) {
+      grouped[groupKey] = {
         bundle: b.bundle,
+        bundleNames: [b.bundle],
         channels: [b.channel],
         repo_url: b.repo_url,
         patches_name: b.patches_name,
         version: b.version || '',
+        releaseDate: b.release_date || '',
         created_at: b.created_at,
         apps: [...(b.apps || [])],
         appCount: b.app_count || 0,
@@ -360,14 +403,17 @@ export function groupBundleCards(bundles, include = null) {
         repoDescription: b.repoDescription || '',
         isArchived: b.isArchived || false,
         isPreRelease: b.isPreRelease || false,
+        isFork: b.isFork || false,
+        forkParent: b.forkParent || '',
       }
       continue
     }
 
-    const g = grouped[b.bundle]
-    if (b.version && !g.version) g.version = b.version
+    const g = grouped[groupKey]
+    if (!g.bundleNames.includes(b.bundle)) g.bundleNames.push(b.bundle)
     if (!g.channels.includes(b.channel)) g.channels.push(b.channel)
     if (!g.patches_name && b.patches_name) g.patches_name = b.patches_name
+    if (!g.repo_url && b.repo_url) g.repo_url = b.repo_url
     if ((b.stars || 0) > (g.stars || 0)) g.stars = b.stars
     if ((b.app_count || 0) > g.appCount) g.appCount = b.app_count || 0
     const bAv = getDisplayAvatar(b.repo_url, b.avatarUrl)
@@ -376,7 +422,20 @@ export function groupBundleCards(bundles, include = null) {
     if (bImg && !g.bundleImageUrl) g.bundleImageUrl = bImg
     if (b.repoDescription && !g.repoDescription) g.repoDescription = b.repoDescription
     if (b.isArchived) g.isArchived = true
-    if (b.isPreRelease) g.isPreRelease = true
+    if (b.isFork) {
+      g.isFork = true
+      if (!g.forkParent) g.forkParent = b.forkParent || ''
+    }
+
+    // One card, newest record's identity — never two cards per channel.
+    if (isNewerRelease(b, g)) {
+      g.bundle = b.bundle
+      g.version = b.version || ''
+      g.releaseDate = b.release_date || ''
+      g.isPreRelease = b.isPreRelease || false
+      if (b.patches_name) g.patches_name = b.patches_name
+    }
+
     const existingPkgs = new Set(g.apps.map((a) => a.package))
     for (const app of b.apps || []) {
       if (!existingPkgs.has(app.package)) {
@@ -384,6 +443,11 @@ export function groupBundleCards(bundles, include = null) {
         existingPkgs.add(app.package)
       }
     }
+  }
+
+  const channelOrder = ['stable', 'latest', 'dev']
+  for (const group of Object.values(grouped)) {
+    group.channels.sort((a, b) => channelOrder.indexOf(a) - channelOrder.indexOf(b))
   }
   return grouped
 }
