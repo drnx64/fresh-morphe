@@ -57,6 +57,11 @@ function guessHex(guess, light) {
   return hueHex(Number(guess) || 0, light)
 }
 
+/** The stored guess for a pending entry (new `guess` or legacy `hex`). */
+function pendingGuess(pending) {
+  return pending.guess ?? pending.hex
+}
+
 /**
  * Score a pending guess once its target date has arrived.
  * @returns {{state: Object, changed: boolean}}
@@ -66,7 +71,8 @@ function settleState(state, today) {
   if (!pending || !pending.date || pending.date > today) {
     return { state, changed: false }
   }
-  const hue = guessHue(pending.guess)
+  const guess = pendingGuess(pending)
+  const hue = guessHue(guess)
   const diff = hue == null ? 180 : hueDistance(hue, dayHue(pending.date))
   const close = closeness(diff)
   const onTime = pending.date === today
@@ -77,7 +83,7 @@ function settleState(state, today) {
     state: {
       ...state,
       pending: null,
-      last: { date: pending.date, guess: pending.guess, diff, closeness: close, win, onTime },
+      last: { date: pending.date, guess, diff, closeness: close, win, onTime },
       streak,
       best: Math.max(state.best || 0, streak),
     },
@@ -106,7 +112,7 @@ export function renderColorGame() {
   }
 
   function buildLocked(pending, light) {
-    const hex = guessHex(pending.guess, light)
+    const hex = guessHex(pendingGuess(pending), light)
     return el('div', { class: 'color-game-body' }, [
       el('div', { class: 'color-game-locked' }, [
         el('span', { class: 'color-game-swatch color-game-swatch--lg', style: { background: hex } }),
@@ -138,7 +144,7 @@ export function renderColorGame() {
     const submit = el('button', { class: 'btn btn--primary btn--sm', type: 'button' }, ['Lock in'])
     submit.addEventListener('click', () => {
       const state = readState()
-      state.pending = { date: tomorrow, hex: picker.value }
+      state.pending = { date: tomorrow, guess: picker.value }
       writeState(state)
       paint()
     })
