@@ -1,15 +1,40 @@
 /**
- * Bundle detail page — full bundle view with app list.
+ * Bundle detail page — hero, stats, channel versions, and app list.
  */
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
-import { resolveAppName, getAppIconUrl, getStaleness, renderAppIcon } from '../utils/misc.js'
+import {
+  resolveAppName,
+  getStaleness,
+  renderAppIcon,
+  getDisplayAvatar,
+  getDisplayBundleImage,
+  avatarStackHtml,
+} from '../utils/misc.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
 import { makeBundleKey } from '../utils/bundleKey.js'
 import { getRepoInfo, getAddMorpheUrl, getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { formatVersion } from '../utils/format.js'
+import { formatVersion, getTimeAgo } from '../utils/format.js'
 import { GITHUB_SVG, GITLAB_SVG, ARROW_LEFT } from '../utils/svg.js'
+
+const CHANNEL_LABEL = { stable: 'Stable', latest: 'Latest', dev: 'Dev' }
+
+function compactStars(stars) {
+  if (!stars) return '0'
+  return stars >= 1000 ? `${(stars / 1000).toFixed(1)}k` : String(stars)
+}
+
+function patchCount(record) {
+  return (record?.apps || []).reduce((n, app) => n + (app.patches?.length || 0), 0)
+}
+
+function fact(value, label, title = '') {
+  return el('div', { class: 'bundle-fact', title: title || null }, [
+    el('span', { class: 'bundle-fact-value' }, [String(value)]),
+    el('span', { class: 'bundle-fact-label' }, [label]),
+  ])
+}
 
 export async function renderBundleDetail(container, bundleName) {
   const bundles = store.get('bundles') || {}
@@ -35,35 +60,68 @@ export async function renderBundleDetail(container, bundleName) {
   await ensureBundleKey(primaryKey)
   if (!skeleton.isConnected) return // user navigated away while it loaded
 
-  const stable = bundles[`${bundleName}:stable`]
-  const latest = bundles[`${bundleName}:latest`]
-  const dev = bundles[`${bundleName}:dev`]
-  const bundle = stable || latest || dev
+  const channels = [
+    { channel: 'stable', record: bundles[`${bundleName}:stable`] },
+    { channel: 'latest', record: bundles[`${bundleName}:latest`] },
+    { channel: 'dev', record: bundles[`${bundleName}:dev`] },
+  ].filter((entry) => entry.record)
+
+  const bundle = channels.find((entry) => entry.channel === 'stable')?.record || channels[0].record
 
   const page = el('div', { class: 'bundle-detail-page' })
 
-  // Back link
   const backLink = el('a', { href: '#/bundles', class: 'back-link' })
   backLink.innerHTML = `${ARROW_LEFT} Back to Bundles`
   page.appendChild(backLink)
 
-  // Title
+  // ── Hero ────────────────────────────────────────────
   const repoInfo = getRepoInfo(bundle.repo_url)
   const iconSvg = repoInfo.isGitLab ? GITLAB_SVG : GITHUB_SVG
   const addMorpheUrl = getAddMorpheUrl(bundle.repo_url)
+  const displayName = bundle.patches_name || bundleName
+  const apps = [...(bundle.apps || [])].sort((x, y) =>
+    resolveAppName(x, nameCache).localeCompare(resolveAppName(y, nameCache)),
+  )
 
-  const titleSection = el('div', { class: 'bundle-detail-header' }, [
-    el('h1', { class: 'bundle-detail-title' }, [bundle.patches_name || bundleName]),
-    el('div', { class: 'bundle-detail-author', dangerouslySetInnerHTML: `by ${getAuthorLink(bundle.repo_url)}` }),
-    el('div', { class: 'bundle-detail-meta' }, [
-      el('span', { class: 'bundle-detail-version' }, [formatVersion(bundle.version) || 'unknown']),
-      el('span', { class: 'bundle-detail-channels' }, [
-        stable ? el('span', { class: 'channel-badge stable' }, ['stable']) : null,
-        dev ? el('span', { class: 'channel-badge dev' }, ['dev']) : null,
-        latest ? el('span', { class: 'channel-badge latest' }, ['latest']) : null,
-      ].filter(Boolean)),
-    ]),
-    el('div', { class: 'bundle-detail-actions' }, [
+  const avatarUrl = getDisplayAvatar(bundle.repo_url, bundle.avatarUrl)
+  const bundleImageUrl = getDisplayBundleImage(bundle.repo_url, bundle.bundleImageUrl)
+  const avatarHtml = avatarStackHtml(
+    bundleImageUrl,
+    avatarUrl,
+    `<span>${displayName.charAt(0).toUpperCase()}</span>`,
+    'bundle-hero-avatar-img',
+    'bundle-hero-avatar-ph',
+  )
+
+  const staleness = getStaleness(bundle.release_date)
+  const badges = el('div', { class: 'bundle-hero-badges' })
+  for (const { channel } of channels) {
+    badges.appendChild(el('span', { class: `channel-badge ${channel}` }, [channel]))
+  }
+  if (bundle.version) badges.appendChild(el('span', { class: 'bundle-version-tag' }, [formatVersion(bundle.version)]))
+  if (bundle.stars) {
+    badges.appendChild(el('span', { class: 'bundle-stars-badge', title: `${bundle.stars} stars` }, [`★ ${compactStars(bundle.stars)}`]))
+  }
+  if (bundle.isPreRelease) badges.appendChild(el('span', { class: 'bundle-pre-release-badge' }, ['Pre-release']))
+  if (bundle.isArchived) badges.appendChild(el('span', { class: 'bundle-archived-badge', title: 'This repository is archived' }, ['Archived']))
+  if (staleness) {
+    badges.appendChild(el('span', {
+      class: `staleness-badge staleness--${staleness.level}`,
+      title: `Released ${bundle.release_date || 'unknown'}`,
+    }, [`${staleness.label} old`]))
+  }
+
+  const hero = el('div', { class: 'bundle-hero' }, [
+    el('div', { class: 'bundle-hero-avatar', dangerouslySetInnerHTML: avatarHtml }),
+    el('div', { class: 'bundle-hero-info' }, [
+      el('h1', { class: 'bundle-hero-title' }, [displayName]),
+      el('div', { class: 'bundle-hero-author', dangerouslySetInnerHTML: `by ${getAuthorLink(bundle.repo_url)}` }),
+      bundle.repoDescription
+        ? el('p', { class: 'bundle-hero-desc' }, [bundle.repoDescription])
+        : null,
+      badges,
+    ].filter(Boolean)),
+    el('div', { class: 'bundle-hero-actions' }, [
       (() => {
         const btn = el('a', { href: bundle.repo_url, class: 'btn btn--secondary', target: '_blank', rel: 'noopener' })
         btn.innerHTML = `${iconSvg} View Source`
@@ -72,38 +130,72 @@ export async function renderBundleDetail(container, bundleName) {
       el('a', { href: addMorpheUrl, class: 'btn btn--primary', target: '_blank', rel: 'noopener' }, ['Add to Morphe']),
     ]),
   ])
-  page.appendChild(titleSection)
+  page.appendChild(hero)
 
-  // App list
-  const apps = [...(bundle.apps || [])].sort((x, y) =>
-    resolveAppName(x, nameCache).localeCompare(resolveAppName(y, nameCache)),
-  )
+  // ── Facts ───────────────────────────────────────────
+  const appCount = Math.max(apps.length, bundle.app_count || 0)
+  const patches = patchCount(bundle)
+  const facts = el('div', { class: 'bundle-facts' }, [
+    fact(appCount, appCount === 1 ? 'App' : 'Apps'),
+    fact(patches, patches === 1 ? 'Patch' : 'Patches'),
+    fact(compactStars(bundle.stars), bundle.stars === 1 ? 'Star' : 'Stars'),
+    fact(getTimeAgo(bundle.release_date), 'Last release', bundle.release_date || ''),
+  ])
+  page.appendChild(facts)
 
+  // ── Channels ────────────────────────────────────────
+  const channelRows = channels.map(({ channel, record }) => {
+    const recordApps = Math.max((record.apps || []).length, record.app_count || 0)
+    const flags = []
+    if (record.isPreRelease) flags.push(el('span', { class: 'bundle-pre-release-badge' }, ['Pre-release']))
+    if (record.isArchived) flags.push(el('span', { class: 'bundle-archived-badge' }, ['Archived']))
+    return el('div', { class: 'bundle-channel-row' }, [
+      el('span', { class: `channel-badge ${channel}` }, [CHANNEL_LABEL[channel]]),
+      el('div', { class: 'bundle-channel-main' }, [
+        el('span', { class: 'bundle-channel-version' }, [formatVersion(record.version) || 'unknown']),
+        ...flags,
+      ]),
+      el('span', { class: 'bundle-channel-sub' }, [
+        `${recordApps} app${recordApps === 1 ? '' : 's'}`,
+        record.release_date ? ` · ${getTimeAgo(record.release_date)}` : '',
+      ].join('')),
+    ])
+  })
+
+  const channelPanel = el('section', { class: 'bundle-panel' }, [
+    el('h2', { class: 'bundle-panel-title' }, ['Channels']),
+    el('div', { class: 'bundle-channel-list' }, channelRows),
+  ])
+  page.appendChild(channelPanel)
+
+  // ── Apps ────────────────────────────────────────────
   const appsSection = el('div', { class: 'bundle-detail-apps' }, [
-    el('h2', { class: 'section-title' }, [`${apps.length} Compatible App${apps.length !== 1 ? 's' : ''}`]),
+    el('div', { class: 'bundle-apps-heading' }, [
+      el('h2', { class: 'section-title' }, [`${appCount} Compatible App${appCount !== 1 ? 's' : ''}`]),
+      patches ? el('span', { class: 'bundle-apps-sub' }, [`${patches} patches in this bundle`]) : null,
+    ].filter(Boolean)),
   ])
 
   const appsGrid = el('div', { class: 'bundle-detail-apps-grid' })
   for (const app of apps) {
     const card = el('div', { class: 'app-card' })
-    const iconCache = store.get('iconCache') || {}
     const iconHtml = renderAppIcon(app, iconCache)
 
-    const patchCount = app.patches?.length || 0
+    const count = app.patches?.length || 0
     card.innerHTML = `
       <div class="app-card-main">
         ${iconHtml}
         <div class="app-card-info">
           <span class="app-card-name">${escHtml(resolveAppName(app, nameCache))}</span>
           <span class="app-card-pkg">${escHtml(app.package)}</span>
-          <span class="app-card-patches">${patchCount} patch${patchCount !== 1 ? 'es' : ''}</span>
+          <span class="app-card-patches">${count} patch${count !== 1 ? 'es' : ''}</span>
         </div>
       </div>
     `
     card.style.cursor = 'pointer'
     card.addEventListener('click', () => {
       window.dispatchEvent(new CustomEvent('open-app', {
-        detail: { app, bundleName, channels: bundle.channels || [bundle.channel] },
+        detail: { app, bundleName, channels: channels.map((entry) => entry.channel) },
       }))
     })
     appsGrid.appendChild(card)

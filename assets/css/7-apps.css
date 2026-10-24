@@ -142,42 +142,174 @@
 .back-link:hover {
   color: var(--text-primary);
 }
-.bundle-detail-header {
-  margin-bottom: 1.5rem;
+.bundle-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1.15rem;
+  padding: 1.25rem;
+  margin-bottom: 0.7rem;
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 55%),
+    var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
 }
-.bundle-detail-title {
-  font-size: clamp(1.2rem, 3.5vw, 1.5rem);
-  font-weight: 700;
-  margin-bottom: 0.2rem;
+.bundle-hero-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface-inner);
 }
-.bundle-detail-author {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 0.3rem;
+.bundle-hero-avatar-img,
+.bundle-hero-avatar-ph {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.bundle-detail-meta {
+.bundle-hero-avatar-ph {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.75rem;
-}
-.bundle-detail-version {
-  font-family: var(--mono-stack);
-  font-size: 0.82rem;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.1rem;
   color: var(--text-muted);
 }
-.bundle-detail-channels {
+.bundle-hero-info {
   display: flex;
+  flex-direction: column;
   gap: 0.3rem;
+  min-width: 0;
 }
-.bundle-detail-actions {
+.bundle-hero-title {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.bundle-hero-author {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.bundle-hero-desc {
+  margin: 0.1rem 0 0.25rem;
+  max-width: 68ch;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.bundle-hero-badges {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.4rem;
   flex-wrap: wrap;
 }
-.bundle-detail-apps-list {
+.bundle-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+.bundle-hero-actions .btn {
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.bundle-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: 0.65rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-bottom: 1.5rem;
+}
+.bundle-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+}
+.bundle-fact-value {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  line-height: 1;
+  color: var(--accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bundle-fact-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.bundle-panel {
+  margin-bottom: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.bundle-panel-title {
+  margin: 0;
+  padding: 0.65rem 0.95rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-surface-inner);
+  border-bottom: 1px solid var(--border-hairline);
+}
+.bundle-channel-row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.95rem;
+}
+.bundle-channel-row + .bundle-channel-row {
+  border-top: 1px solid var(--border-hairline);
+}
+.bundle-channel-row .channel-badge {
+  justify-self: start;
+}
+.bundle-channel-main {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.bundle-channel-version {
+  font-family: var(--mono-stack);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+.bundle-channel-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.bundle-apps-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.bundle-apps-heading .section-title {
+  margin: 0;
+}
+.bundle-apps-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
