@@ -341,6 +341,36 @@ function Test-StagedSecrets {
     }
 }
 
+function Get-CaseCollisionPaths {
+    # Windows cannot materialise two tracked paths that differ only by case, so
+    # one of each pair always looks modified. Hiding them lets git rebase run.
+    $paths = @(& git ls-files)
+    $groups = $paths | Group-Object { $_.ToLowerInvariant() } | Where-Object { $_.Count -gt 1 }
+    return @($groups | ForEach-Object { $_.Group })
+}
+
+function Invoke-Rebase {
+    param([string]$BaseBranch)
+    $collisions = Get-CaseCollisionPaths
+    $hidden = @()
+    if ($collisions.Count -gt 0) {
+        Write-Info "Hiding $($collisions.Count) case-colliding path(s) during the rebase"
+        foreach ($path in $collisions) {
+            $result = Invoke-Native git @('update-index', '--skip-worktree', '--', $path) -AllowFail
+            if ($result.ExitCode -eq 0) { $hidden += $path }
+        }
+    }
+    try {
+        # autostash keeps unrelated local edits (docs, data artifacts) safe
+        [void](Invoke-Native git @('-c', 'rebase.autoStash=true', 'pull', '--rebase', 'origin', $BaseBranch))
+    }
+    finally {
+        foreach ($path in $hidden) {
+            Invoke-Native git @('update-index', '--no-skip-worktree', '--', $path) -AllowFail | Out-Null
+        }
+    }
+}
+
 function Get-Head-Status {
     [void](Invoke-Native git @('fetch', 'origin', '--quiet'))
     $counts = (& git rev-list --left-right --count "origin/$Base...HEAD") -split '\s+'
@@ -499,8 +529,8 @@ try {
     if ($divergence.Behind -gt 0) {
         if ($Rebase) {
             Write-Step "Rebasing onto origin/$baseBranch"
-            # autostash keeps unrelated local edits (docs, data artifacts) safe
-            [void](Invoke-Native git @('-c', 'rebase.autoStash=true', 'pull', '--rebase', 'origin', $baseBranch))
+            Invoke-Rebase -BaseBranch $baseBranch
+            $divergence = Get-Head-Status
         }
         else {
             throw "Branch is $($divergence.Behind) commit(s) behind origin/$baseBranch. Re-run with -Rebase."
