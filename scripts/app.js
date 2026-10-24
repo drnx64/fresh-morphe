@@ -106,7 +106,7 @@ function renderShell() {
         el('div', { class: 'header-title-group' }, [
           el('div', { class: 'header-title-row' }, [
             el('img', { class: 'header-logo', src: 'public/tracker_logo.webp', alt: '', width: '28', height: '28' }),
-            el('h1', { id: 'main-title', class: 'header-title-clickable', title: 'Double-click to toggle reduced motion' }, ['MorpheTracker']),
+            el('h1', { id: 'main-title', class: 'header-title-clickable', title: 'Double-click to toggle reduced motion' }, ['Morphe Tracker']),
           ]),
           el('span', { class: 'subtitle' }, ['Patch monitoring & changelog dashboard']),
         ]),
