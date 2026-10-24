@@ -5,6 +5,9 @@
  * angle), so the game is fair and fully local: pick a color today, the card
  * locks it, and it is scored the next day. State lives in localStorage;
  * nothing leaves the browser.
+ *
+ * Once locked, the card flies into the header and collapses to a compact chip
+ * (today's color, the locked pick, and the streak flame).
  */
 import { el } from '../ui.js'
 import { dateParts, dayHue } from '../utils/format.js'
@@ -14,7 +17,11 @@ import {
 } from '../utils/color.js'
 
 const STORAGE_KEY = 'morphe_daily_color'
+const CHIP_SLOT_ID = 'color-game-slot'
 const WIN_CLOSENESS = 90
+
+// Filled flame (Material "local fire department").
+const FIRE_PATH = 'M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z'
 
 function readState() {
   try {
@@ -34,8 +41,16 @@ function writeState(state) {
   }
 }
 
+/** The site uses an explicit `data-theme`; the game tint must match it. */
 function schemeIsLight() {
+  const theme = document.documentElement.getAttribute('data-theme')
+  if (theme) return theme !== 'dark'
   return window.matchMedia('(prefers-color-scheme: light)').matches
+}
+
+function prefersReducedMotion() {
+  return document.documentElement.classList.contains('reduced-motion')
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 function prettyDate(isoStr) {
@@ -60,6 +75,18 @@ function guessHex(guess, light) {
 /** The stored guess for a pending entry (new `guess` or legacy `hex`). */
 function pendingGuess(pending) {
   return pending.guess ?? pending.hex
+}
+
+/** Flame intensity tiers — hotter flame every few streak days. */
+function fireTier(streak) {
+  if (streak >= 14) return 'inferno'
+  if (streak >= 7) return 'blaze'
+  if (streak >= 3) return 'flame'
+  return 'ember'
+}
+
+function fireSvg(streak) {
+  return `<svg class="color-game-fire color-game-fire--${fireTier(streak)}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="${FIRE_PATH}"/></svg>`
 }
 
 /**
@@ -90,8 +117,55 @@ function settleState(state, today) {
   }
 }
 
+/** Compact header chip: today's tint, the locked pick, and the streak flame. */
+function buildChip(state, today, light) {
+  const pending = state.pending
+  const pickedHex = guessHex(pendingGuess(pending), light)
+  const todayHex = dayHex(today, light)
+  const streak = state.streak || 0
+  return el('div', {
+    class: 'color-game-chip',
+    role: 'status',
+    title: `Today ${todayHex} · locked ${pickedHex} for ${prettyDate(pending.date)} · streak ${streak}`,
+    'aria-label': `Daily color locked for ${prettyDate(pending.date)}. Today ${todayHex}, your pick ${pickedHex}, streak ${streak}.`,
+  }, [
+    el('span', { class: 'color-game-chip-colors' }, [
+      el('span', { class: 'color-game-swatch', style: { background: todayHex } }),
+      el('span', { class: 'color-game-swatch', style: { background: pickedHex } }),
+    ]),
+    el('span', {
+      class: 'color-game-chip-count',
+      dangerouslySetInnerHTML: `${fireSvg(streak)}<span>${streak}</span>`,
+    }),
+  ])
+}
+
+let chipSyncBound = false
+
+/** Keep the header chip current across pages, midnight rollover, and themes. */
+export function syncColorGameChip() {
+  if (!chipSyncBound) {
+    chipSyncBound = true
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') syncColorGameChip()
+    })
+    window.matchMedia('(prefers-color-scheme: light)')
+      .addEventListener?.('change', syncColorGameChip)
+    window.addEventListener('theme-change', syncColorGameChip)
+  }
+  const slot = document.getElementById(CHIP_SLOT_ID)
+  if (!slot) return
+  let state = readState()
+  const today = localISODate()
+  const settled = settleState(state, today)
+  if (settled.changed) writeState(settled.state)
+  state = settled.state
+  if (state.pending) slot.replaceChildren(buildChip(state, today, schemeIsLight()))
+  else slot.replaceChildren()
+}
+
 export function renderColorGame() {
-  const game = el('section', { class: 'color-game', 'aria-labelledby': 'color-game-title' })
+  const host = el('div', { class: 'color-game-host' })
   let renderedDate = ''
 
   function buildHead(state, today, light) {
@@ -109,20 +183,6 @@ export function renderColorGame() {
       `Streak ${state.streak || 0} · Best ${state.best || 0}`,
     ])
     return el('div', { class: 'color-game-head' }, [todayWrap, streak])
-  }
-
-  function buildLocked(pending, light) {
-    const hex = guessHex(pendingGuess(pending), light)
-    return el('div', { class: 'color-game-body' }, [
-      el('div', { class: 'color-game-locked' }, [
-        el('span', { class: 'color-game-swatch color-game-swatch--lg', style: { background: hex } }),
-        el('span', { class: 'color-game-locked-text' }, [
-          el('span', { class: 'color-game-note' }, [`Locked for ${prettyDate(pending.date)}`]),
-          el('span', { class: 'color-game-hex color-game-hex--big' }, [hex]),
-        ]),
-      ]),
-      el('span', { class: 'color-game-note' }, ['Come back tomorrow to see how close you were.']),
-    ])
   }
 
   function buildGuess(tomorrow, light) {
@@ -146,7 +206,7 @@ export function renderColorGame() {
       const state = readState()
       state.pending = { date: tomorrow, guess: picker.value }
       writeState(state)
-      paint()
+      paint({ animate: true })
     })
 
     return el('div', { class: 'color-game-body' }, [
@@ -191,7 +251,62 @@ export function renderColorGame() {
     ])
   }
 
-  function paint() {
+  function buildCard(state, today, light) {
+    const card = el('section', { class: 'color-game', 'aria-labelledby': 'color-game-title' })
+    card.appendChild(buildHead(state, today, light))
+    card.appendChild(buildGuess(addDays(today, 1), light))
+    if (state.last) card.appendChild(buildResult(state.last, light))
+    return card
+  }
+
+  /** FLIP: lift the locked card into the header chip while it collapses. */
+  function flyToChip(card, fromRect, chip) {
+    if (prefersReducedMotion()) return
+    const toRect = chip.getBoundingClientRect()
+    if (!fromRect.width || !fromRect.height || !toRect.width) return
+
+    const clone = card.cloneNode(true)
+    clone.classList.add('color-game--flying')
+    Object.assign(clone.style, {
+      position: 'fixed',
+      top: `${fromRect.top}px`,
+      left: `${fromRect.left}px`,
+      width: `${fromRect.width}px`,
+      height: `${fromRect.height}px`,
+      margin: '0',
+      zIndex: '200',
+      pointerEvents: 'none',
+      transformOrigin: 'top left',
+    })
+    document.body.appendChild(clone)
+
+    const dx = toRect.left - fromRect.left
+    const dy = toRect.top - fromRect.top
+    const sx = toRect.width / fromRect.width
+    const sy = toRect.height / fromRect.height
+    const flight = clone.animate([
+      { transform: 'translate(0, 0) scale(1, 1)', opacity: 1, borderRadius: '14px' },
+      {
+        transform: `translate(${dx * 0.62}px, ${dy * 0.62 - 18}px) scale(${1 - (1 - sx) * 0.45}, ${1 - (1 - sy) * 0.45})`,
+        opacity: 0.92,
+        borderRadius: '12px',
+        offset: 0.55,
+      },
+      {
+        transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
+        opacity: 0,
+        borderRadius: `${Math.min(toRect.height / 2, 999)}px`,
+      },
+    ], { duration: 520, easing: 'cubic-bezier(.2, .75, .25, 1)' })
+    flight.onfinish = () => clone.remove()
+
+    chip.animate([
+      { opacity: 0, transform: 'scale(.82)' },
+      { opacity: 1, transform: 'scale(1)' },
+    ], { duration: 240, delay: 280, easing: 'ease-out', fill: 'backwards' })
+  }
+
+  function paint({ animate = false } = {}) {
     const today = localISODate()
     renderedDate = today
     const light = schemeIsLight()
@@ -200,21 +315,26 @@ export function renderColorGame() {
     if (settled.changed) writeState(settled.state)
     state = settled.state
 
-    game.replaceChildren()
-    game.appendChild(buildHead(state, today, light))
+    const slot = document.getElementById(CHIP_SLOT_ID)
+    const oldCard = animate ? host.querySelector('.color-game') : null
+    const oldRect = oldCard ? oldCard.getBoundingClientRect() : null
 
     if (state.pending) {
-      game.appendChild(buildLocked(state.pending, light))
+      const chip = buildChip(state, today, light)
+      if (slot) slot.replaceChildren(chip)
+      host.replaceChildren()
+      if (oldRect && slot && chip.isConnected) flyToChip(oldCard, oldRect, chip)
       return
     }
-    game.appendChild(buildGuess(addDays(today, 1), light))
-    if (state.last) game.appendChild(buildResult(state.last, light))
+
+    if (slot) slot.replaceChildren()
+    host.replaceChildren(buildCard(state, today, light))
   }
 
   // Repaint when a tab left open overnight becomes visible, or when the OS
   // switches between light and dark (the fixed S/L changes the hexes).
   const onVisibility = () => {
-    if (!game.isConnected) {
+    if (!host.isConnected) {
       document.removeEventListener('visibilitychange', onVisibility)
       return
     }
@@ -222,15 +342,17 @@ export function renderColorGame() {
   }
   const schemeQuery = window.matchMedia('(prefers-color-scheme: light)')
   const onScheme = () => {
-    if (!game.isConnected) {
+    if (!host.isConnected) {
       schemeQuery.removeEventListener?.('change', onScheme)
+      window.removeEventListener('theme-change', onScheme)
       return
     }
     paint()
   }
   document.addEventListener('visibilitychange', onVisibility)
   schemeQuery.addEventListener?.('change', onScheme)
+  window.addEventListener('theme-change', onScheme)
 
   paint()
-  return game
+  return host
 }

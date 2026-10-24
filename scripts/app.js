@@ -27,6 +27,7 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', next)
   localStorage.setItem('morphe_theme', next)
   updateThemeMeta(next)
+  window.dispatchEvent(new CustomEvent('theme-change'))
   const btn = document.querySelector('.theme-toggle')
   if (btn) btn.innerHTML = next === 'dark' ? MOON_ICON : SUN_ICON
 }
@@ -41,6 +42,7 @@ import { openAppDetailModal } from './components/appDetailModal.js'
 import { openBundleHistoryModal } from './components/bundleHistoryModal.js'
 import { openBundleModal } from './components/bundleModal.js'
 import { renderGlobalSearch } from './components/globalSearch.js'
+import { syncColorGameChip } from './components/colorGame.js'
 import { showWorkToast } from './components/workToast.js'
 import { preloadAvatars } from './services/iconCache.js'
 import { initIconQueue, runIconQueue } from './services/iconFetchQueue.js'
@@ -110,7 +112,9 @@ function renderShell() {
           ]),
           el('span', { class: 'subtitle' }, ['Patch monitoring & changelog dashboard']),
         ]),
-        el('div', { class: 'header-right-row', id: 'header-actions' }),
+        el('div', { class: 'header-right-row', id: 'header-actions' }, [
+          el('div', { class: 'header-color-slot', id: 'color-game-slot' }),
+        ]),
       ]),
       el('nav', { class: 'app-nav', id: 'app-nav', 'aria-label': 'Main navigation' }),
     ]),
@@ -642,6 +646,7 @@ async function handleUrlParams() {
 async function boot() {
   applyReducedMotion()
   renderShell()
+  syncColorGameChip()
   setupRoutes()
   updateActiveNav()
 

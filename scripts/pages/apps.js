@@ -144,22 +144,14 @@ export function renderApps(container) {
 
         card.addEventListener('click', () => {
           window.dispatchEvent(new CustomEvent('open-app', {
-            detail: {
-              app: { package: app.package, app_name: app.name },
-              bundleName: app.bundles[0]?.bundleName || '',
-              channels: app.bundles[0]?.channels || [],
-            },
+            detail: { app: { package: app.package, app_name: app.name } },
           }))
         })
         card.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
             window.dispatchEvent(new CustomEvent('open-app', {
-              detail: {
-                app: { package: app.package, app_name: app.name },
-                bundleName: app.bundles[0]?.bundleName || '',
-                channels: app.bundles[0]?.channels || [],
-              },
+              detail: { app: { package: app.package, app_name: app.name } },
             }))
           }
         })
