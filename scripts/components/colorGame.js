@@ -10,6 +10,7 @@
  * (today's color, the locked pick, and the streak flame).
  */
 import { el } from '../ui.js'
+import { openModal } from './modal.js'
 import { dateParts, dayHue } from '../utils/format.js'
 import {
   addDays, closeness, dayHex, hexToRgb, hueDistance, hueFromHex, hueHex,
@@ -117,17 +118,107 @@ function settleState(state, today) {
   }
 }
 
+/** Yesterday's outcome: your pick vs the real tint, plus the score line. */
+function buildResult(last, light) {
+  const pickedHex = guessHex(last.guess, light)
+  const actualHex = dayHex(last.date, light)
+  const won = last.win && last.onTime
+  let message = `${last.closeness}% close · ${Math.round(last.diff)}° off`
+  if (won) message = `Correct · ${message}`
+  else if (last.win && !last.onTime) message = `Right hue, but you missed the day · ${message}`
+
+  const pair = el('div', { class: 'color-game-pair' }, [
+    el('span', { class: 'color-game-pair-item' }, [
+      el('span', { class: 'color-game-note' }, ['Your pick']),
+      el('span', { class: 'color-game-swatch', style: { background: pickedHex } }),
+      el('span', { class: 'color-game-hex' }, [pickedHex]),
+    ]),
+    el('span', { class: 'color-game-pair-item' }, [
+      el('span', { class: 'color-game-note' }, [prettyDate(last.date)]),
+      el('span', { class: 'color-game-swatch', style: { background: actualHex } }),
+      el('span', { class: 'color-game-hex' }, [actualHex]),
+    ]),
+  ])
+
+  return el('div', { class: 'color-game-body color-game-result' }, [
+    pair,
+    el('span', {
+      class: `color-game-score ${won ? 'color-game-score--win' : 'color-game-score--miss'}`,
+      role: 'status',
+      'aria-live': 'polite',
+    }, [message]),
+  ])
+}
+
+/** Detail popover for the locked chip. */
+function openGameModal() {
+  const today = localISODate()
+  let state = readState()
+  const settled = settleState(state, today)
+  if (settled.changed) writeState(settled.state)
+  state = settled.state
+  if (!state.pending) {
+    syncColorGameChip()
+    return
+  }
+
+  const light = schemeIsLight()
+  const pending = state.pending
+  const todayHex = dayHex(today, light)
+  const pickedHex = guessHex(pendingGuess(pending), light)
+  const streak = state.streak || 0
+
+  const content = el('div', { class: 'color-game-detail' }, [
+    el('div', { class: 'color-game-detail-row' }, [
+      el('span', { class: 'color-game-swatch color-game-swatch--lg', style: { background: todayHex } }),
+      el('span', { class: 'color-game-detail-text' }, [
+        el('span', { class: 'color-game-detail-label' }, [`Today · ${prettyDate(today)}`]),
+        el('span', { class: 'color-game-hex color-game-hex--big' }, [todayHex]),
+      ]),
+    ]),
+    el('div', { class: 'color-game-detail-row' }, [
+      el('span', { class: 'color-game-swatch color-game-swatch--lg', style: { background: pickedHex } }),
+      el('span', { class: 'color-game-detail-text' }, [
+        el('span', { class: 'color-game-detail-label' }, [`Your pick · locked for ${prettyDate(pending.date)}`]),
+        el('span', { class: 'color-game-hex color-game-hex--big' }, [pickedHex]),
+      ]),
+    ]),
+    el('div', {
+      class: 'color-game-detail-streak',
+      dangerouslySetInnerHTML: `${fireSvg(streak)}<span class="color-game-detail-streak-num">${streak}</span><span class="color-game-note">day streak${state.best ? ` · best ${state.best}` : ''}</span>`,
+    }),
+  ])
+
+  if (state.last) {
+    content.appendChild(el('div', { class: 'color-game-detail-sep' }))
+    content.appendChild(el('span', { class: 'color-game-detail-label' }, [`Last result · ${prettyDate(state.last.date)}`]))
+    content.appendChild(buildResult(state.last, light))
+  }
+
+  content.appendChild(el('p', { class: 'color-game-note color-game-detail-foot' }, ['Come back tomorrow to see how close you were.']))
+
+  openModal({
+    title: 'Daily color',
+    content,
+    className: 'color-game-modal',
+    maxWidth: 400,
+  })
+}
+
 /** Compact header chip: today's tint, the locked pick, and the streak flame. */
 function buildChip(state, today, light) {
   const pending = state.pending
   const pickedHex = guessHex(pendingGuess(pending), light)
   const todayHex = dayHex(today, light)
   const streak = state.streak || 0
-  return el('div', {
+  const date = prettyDate(pending.date)
+  return el('button', {
+    type: 'button',
     class: 'color-game-chip',
-    role: 'status',
-    title: `Today ${todayHex} · locked ${pickedHex} for ${prettyDate(pending.date)} · streak ${streak}`,
-    'aria-label': `Daily color locked for ${prettyDate(pending.date)}. Today ${todayHex}, your pick ${pickedHex}, streak ${streak}.`,
+    'aria-haspopup': 'dialog',
+    title: `Today ${todayHex} · locked ${pickedHex} for ${date} · streak ${streak} — click for details`,
+    'aria-label': `Daily color. Today ${todayHex}, your pick ${pickedHex} for ${date}, streak ${streak}. Open details.`,
+    onclick: openGameModal,
   }, [
     el('span', { class: 'color-game-chip-colors' }, [
       el('span', { class: 'color-game-swatch', style: { background: todayHex } }),
@@ -217,37 +308,6 @@ export function renderColorGame() {
         el('span', { class: 'color-game-note' }, [`${WIN_CLOSENESS}%+ close keeps your streak.`]),
       ]),
       el('div', { class: 'color-game-actions' }, [submit]),
-    ])
-  }
-
-  function buildResult(last, light) {
-    const pickedHex = guessHex(last.guess, light)
-    const actualHex = dayHex(last.date, light)
-    const won = last.win && last.onTime
-    let message = `${last.closeness}% close · ${Math.round(last.diff)}° off`
-    if (won) message = `Correct · ${message}`
-    else if (last.win && !last.onTime) message = `Right hue, but you missed the day · ${message}`
-
-    const pair = el('div', { class: 'color-game-pair' }, [
-      el('span', { class: 'color-game-pair-item' }, [
-        el('span', { class: 'color-game-note' }, ['Your pick']),
-        el('span', { class: 'color-game-swatch', style: { background: pickedHex } }),
-        el('span', { class: 'color-game-hex' }, [pickedHex]),
-      ]),
-      el('span', { class: 'color-game-pair-item' }, [
-        el('span', { class: 'color-game-note' }, [prettyDate(last.date)]),
-        el('span', { class: 'color-game-swatch', style: { background: actualHex } }),
-        el('span', { class: 'color-game-hex' }, [actualHex]),
-      ]),
-    ])
-
-    return el('div', { class: 'color-game-body color-game-result' }, [
-      pair,
-      el('span', {
-        class: `color-game-score ${won ? 'color-game-score--win' : 'color-game-score--miss'}`,
-        role: 'status',
-        'aria-live': 'polite',
-      }, [message]),
     ])
   }
 

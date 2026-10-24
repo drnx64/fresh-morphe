@@ -258,10 +258,114 @@
 }
 
 /* ── Global Search ────────────────────────────────────── */
+.global-search-root {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  max-width: 280px;
+}
 .global-search {
   position: relative;
   flex: 1;
   max-width: 280px;
+}
+.global-search-open {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-inner);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.global-search-open:hover {
+  background: var(--surface-tint);
+  border-color: var(--border-hairline-strong);
+}
+.global-search-open:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Mobile search sheet */
+body.search-sheet-open {
+  overflow: hidden;
+}
+.search-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.search-sheet[hidden] {
+  display: none;
+}
+.search-sheet.open {
+  opacity: 1;
+}
+.search-sheet-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: max(0.75rem, env(safe-area-inset-top)) 0.75rem 0.75rem;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-hairline-strong);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-100%);
+  transition: transform 0.22s var(--ease);
+}
+.search-sheet.open .search-sheet-panel {
+  transform: translateY(0);
+}
+.search-sheet-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.search-sheet .global-search {
+  flex: 1;
+  max-width: none;
+  display: block;
+}
+.search-sheet .global-search-input {
+  font-size: 0.9rem;
+  padding: 0.55rem 0.75rem 0.55rem 2rem;
+}
+.search-sheet .global-search-dropdown {
+  position: static;
+  margin-top: 0.5rem;
+  max-height: min(60vh, 420px);
+  box-shadow: none;
+}
+.search-sheet-cancel {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 38px;
+  padding: 0 0.15rem;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-family: var(--font-stack);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.search-sheet-cancel:hover {
+  color: var(--text-primary);
+}
+.search-sheet-cancel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 .global-search-icon {
   position: absolute;
