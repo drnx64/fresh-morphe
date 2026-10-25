@@ -2,8 +2,8 @@
   "bundle": "madushas",
   "channel": "stable",
   "repo_url": "https://github.com/madushas/morphe-patches-custom",
-  "created_at": "2026-10-25T04:30:07Z",
-  "version": "0.5.1",
+  "created_at": "2026-10-25T15:06:06Z",
+  "version": "0.5.3",
   "description": "Custom Morphe patches for any app: currently Pdb (pdb.app) and MyDialog (net.omobio.dialogsc) - telemetry removal, security-check and SSL-pinning bypasses, ad removal, premium unlock, SIM access fix, stock-signature spoof, power-user menus and client-side limit extensions.",
   "apps": [
     {
@@ -92,8 +92,26 @@
           ]
         },
         {
+          "name": "Kill residual beacon traffic",
+          "description": "Silences the Facebook SDK's remaining phone-home: app-event uploads (/activities, /app) and the SDK config fetch (mobile_sdk_gk). The SDK class init stays alive (required by RN); only transmission dies.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
           "name": "Spoof stock signing cert hash",
           "description": "Makes NativeUtils.setAppToken() return the stock app's certificate hash instead of the patched build's, so the server-side device/app integrity verdict ('App Error: NO IMSI') is not tripped by the re-signed APK.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Unlock hidden feature flags",
+          "description": "Flips the server-sent feature flags showO2A/showO2AShop/showO2ABuy/showUber/showDeleteAccount to true in every API response before the JS sees it, revealing app screens the server hides.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -209,10 +227,10 @@
     }
   ],
   "patches_name": "Madusha's Morphe Patches",
-  "fingerprint": "a58775003352bc17cc030a21157368dbfb47db91c052e95c930444853fccf427",
-  "release_notes": "MyDialog: Spoof stock signing cert hash (fixes server integrity gate / NO IMSI on re-signed builds), SSL pinning fully off, plus all 0.5.0 patches. 27 patches, 2 apps.",
-  "release_tag": "v0.5.1",
-  "release_date": "2026-10-25T04:30:07Z",
+  "fingerprint": "ef2c27ac7194f8f341edefda26913b686744724b3b6c113ddaaac3c71a552078",
+  "release_notes": "**Full Changelog**: https://github.com/madushas/morphe-patches-custom/compare/v0.5.1...v0.5.3",
+  "release_tag": "v0.5.3",
+  "release_date": "2026-10-25T15:06:06Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/44031016?v=4",

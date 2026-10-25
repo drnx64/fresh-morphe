@@ -2,17 +2,84 @@
   "bundle": "pengusto",
   "channel": "stable",
   "repo_url": "https://github.com/pengusto/penguin-patches",
-  "created_at": "2026-10-12T22:34:48",
-  "version": "1.0.0-dev.1",
-  "description": "## 1.0.0-dev.1 (2026-10-12)\n\n### ✨ New Features\n\n* add native Calendar HTML description preview ([648a14a](https://github.com/pengusto/penguin-patches/commit/648a14ae0e191bd67f5969b16c7c42347fd33451))",
+  "created_at": "2026-10-25T18:15:24Z",
+  "version": "1.0.1",
+  "description": "## [1.0.1](https://github.com/pengusto/penguin-patches/compare/v1.0.0...v1.0.1) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* make compatibility guards work on Morphe Manager 2.x ([bf2355b](https://github.com/pengusto/penguin-patches/commit/bf2355b0f61eadee2b1a0f2bf0ebef203fbfd219))",
   "apps": [
+    {
+      "app_name": "Feeder",
+      "package": "com.nononsenseapps.feeder",
+      "patches": [
+        {
+          "name": "Zoom article images",
+          "description": "Open article images in a separate viewer with pinch, pan, double-tap and accessible zoom controls. Linked images offer View image or Open link. Uses Feeder's existing image loader and network policy. Official project F-Droid APK 2.25.0 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.25.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Kvaesitso",
+      "package": "de.mm20.launcher2.release",
+      "patches": [
+        {
+          "name": "Restore widget editing from the search menu",
+          "description": "Open the existing widget editor from the search bar menu when the Edit button is hidden, without changing the preference or stored widgets.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.41.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Infinity for Reddit+",
+      "package": "ml.docilealligator.infinityforreddit.plus",
+      "patches": [
+        {
+          "name": "Configure custom OAuth for Infinity+",
+          "description": "Use a configured Reddit OAuth client consistently through login and token exchange in Infinity+ 8.3.4, without the app subscription gate.",
+          "use": false,
+          "options": [
+            {
+              "key": "client-id",
+              "description": "Public Reddit installed-app client ID you are authorized to use. Never enter a password, client secret or login token."
+            },
+            {
+              "key": "redirect-uri",
+              "description": "Exact custom-scheme redirect registered for this OAuth client. No shared-client default."
+            },
+            {
+              "key": "user-agent",
+              "description": "Identifying user agent for the configured client; nonempty printable ASCII."
+            }
+          ],
+          "compatible_versions": [
+            "8.3.4"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Fossify Calendar",
       "package": "org.fossify.calendar",
       "patches": [
         {
           "name": "Readable Calendar descriptions",
-          "description": "Native Outlook/Exchange HTML preview with explicit source editing; preserves the original editor text.",
+          "description": "Readable day/agenda summaries and native Outlook/Exchange HTML preview with explicit source editing; preserves the original editor text.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.12.0"
+          ]
+        },
+        {
+          "name": "Separate all-day reminder defaults",
+          "description": "Choose three separate default reminders for new all-day events in Calendar settings. Keeps timed-event defaults, existing events and the use-last-reminders setting.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -20,17 +87,132 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "Fossify Clock Beta",
+      "package": "org.fossify.clock",
+      "patches": [
+        {
+          "name": "Choose upcoming alarm notification time",
+          "description": "Choose the advance notice in Morphe, with separate notifications and skip actions for each alarm occurrence. Keeps native ringing times and alarm definitions.",
+          "use": true,
+          "options": [
+            {
+              "key": "leadMinutes",
+              "description": "Minutes before each alarm, from 1 to 1440. Chosen when patching; patch the original APK again to change it."
+            }
+          ],
+          "compatible_versions": [
+            "1.6.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Fossify Contacts",
+      "package": "org.fossify.contacts",
+      "patches": [
+        {
+          "name": "Show emails and notes from merged contacts",
+          "description": "Include duplicate contact emails and notes in the detail view without changing stored contact records.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.6.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Fossify File Manager",
+      "package": "org.fossify.filemanager",
+      "patches": [
+        {
+          "name": "Keep favorites consistent after folder rename or removal",
+          "description": "Update nested favorite paths after successful single or multiple renames and remove nested favorites with their deleted parent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.6.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Fossify Messages",
+      "package": "org.fossify.messages",
+      "patches": [
+        {
+          "name": "Avoid notifications for visible conversations",
+          "description": "Check visible conversation on the main thread before posting an incoming-message notification.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.1"
+          ]
+        },
+        {
+          "name": "Dismiss notifications when marking conversations read",
+          "description": "Remove the selected conversation's notification after Mark as read in the conversation list.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.1"
+          ]
+        },
+        {
+          "name": "Keep background conversations unread",
+          "description": "Do not mark incoming messages read when their conversation is left in the background.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.10.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Fossify Music Player",
+      "package": "org.fossify.musicplayer",
+      "patches": [
+        {
+          "name": "Prefer each track's embedded cover",
+          "description": "Use file-specific cover artwork before shared album art, retaining the original fallback and worker callback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.8.4"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Tasks.org: to-do list & tasks",
+      "package": "org.tasks",
+      "patches": [
+        {
+          "name": "Navigate to the parent task",
+          "description": "Add a parent-task arrow to the existing editor. Keeps Back behavior and the current filter; asks whether to save, discard or cancel when the draft has changes. Official project F-Droid APK 15.13 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "15.13"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "Penguin Patches",
-  "fingerprint": "9dd78ca06e5901d49cd326f7ff0c99b6631d7117c53271a1ea502f6ab71f673c",
-  "release_notes": "## 1.0.0-dev.1 (2026-10-12)\n\n### ✨ New Features\n\n* add native Calendar HTML description preview ([648a14a](https://github.com/pengusto/penguin-patches/commit/648a14ae0e191bd67f5969b16c7c42347fd33451))\n",
-  "release_tag": "v1.0.0-dev.1",
-  "release_date": "2026-10-12T22:35:30Z",
-  "isPreRelease": true,
-  "stars": 0,
+  "fingerprint": "c04aa87699548aea7b5bbec818381d1fe7e5109f8ac776cc6bae2a398a74e0c4",
+  "release_notes": "## [1.0.1](https://github.com/pengusto/penguin-patches/compare/v1.0.0...v1.0.1) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* make compatibility guards work on Morphe Manager 2.x ([bf2355b](https://github.com/pengusto/penguin-patches/commit/bf2355b0f61eadee2b1a0f2bf0ebef203fbfd219))\n",
+  "release_tag": "v1.0.1",
+  "release_date": "2026-10-25T18:15:24Z",
+  "isPreRelease": false,
+  "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/106893073?v=4",
-  "repoDescription": "Penguin Patches: personal Android app fixes compatible with Morphe; Calendar first, in development",
+  "repoDescription": "Focused Android app patches compatible with Morphe. 12 patches for Fossify apps, Kvaesitso, Tasks.org and Feeder. Pre-release.",
   "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
   "bundleImageUrl": ""
 }
