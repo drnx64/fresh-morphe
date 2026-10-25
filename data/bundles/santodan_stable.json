@@ -2,12 +2,12 @@
   "bundle": "santodan",
   "channel": "stable",
   "repo_url": "https://github.com/Santodan/santodan-patches",
-  "created_at": "2026-10-08T13:06:41Z",
-  "version": "0.9.0",
-  "description": "## [0.13.0](https://github.com/Santodan/santodan-patches/compare/v0.12.0...v0.13.0) (2026-10-22)\n\n### 🐛 Bug Fixes\n\n* **nuviotv:** support beta8 and centralize native contracts [skip ci] ([7bc4157](https://github.com/Santodan/santodan-patches/commit/7bc4157e03df49d06e2325a1f31b99b6137b5d51))\n\n### ✨ New Features\n\n* **NuvioTV:** add native GitHub APK updates [skip ci] ([15bd85e](https://github.com/Santodan/santodan-patches/commit/15bd85ed1778e7e342088212bc2a0bfb195766a0))\n\n### Compatibility repair (2026-10-22)\n\n* **morphe:** rebuild v0.13.0 for Morphe Patcher 2.0.0 / Desktop 1.19.0, fixing bundle import errors.\n* **morphe:** migrate app compatibility constructors, add TV/mobile metadata and align smali dependencies.\n* **carscanner:** extract native files on demand before patching with Patcher 2.0.\n* **verification:** verify all 28 patches with the exact Desktop runtime, complete Nuvio DEX output and manifest-resource compilation.\n* Replace the existing v0.13.0 release assets without changing the tag or running the release workflow. Clients retaining the old cached bundle may need to reimport it.",
+  "created_at": "2026-10-24T15:05:19Z",
+  "version": "0.14.0",
+  "description": "## [0.14.0](https://github.com/Santodan/santodan-patches/compare/v0.13.0...v0.14.0) (2026-10-24)\n\n### 🐛 Bug Fixes\n\n* **NuvioTV:** correct update versions and installer fallback [skip ci] ([fafd816](https://github.com/Santodan/santodan-patches/commit/fafd816d0f2873069df5463c7459afe8d0a5bf03))\n* **nuviotv:** limit preferred add-ons to stream providers [skip ci] ([18bed6d](https://github.com/Santodan/santodan-patches/commit/18bed6dad9bd526d505db640df353ef5af5f6e4c))\n* **nuviotv:** reconcile cached progress and restore watched markers [skip ci] ([f38806f](https://github.com/Santodan/santodan-patches/commit/f38806f2b31668cc6db953494eefa93b7ac4804b))\n* **nuviotv:** respect native binge-group playback preferences [skip ci] ([d5e6524](https://github.com/Santodan/santodan-patches/commit/d5e65246ec5637d4d7695addc2b98d1193ffda93))\n* **nuviotv:** stabilize startup sync and remaining counts [skip ci] ([7a49ba6](https://github.com/Santodan/santodan-patches/commit/7a49ba6574ef2aa13d7dc2a50ba55d50ac98c8c8))\n* **nuviotv:** suspend standby during IntroDB segment review [skip ci] ([fc42f5e](https://github.com/Santodan/santodan-patches/commit/fc42f5ef97cd934b76a7877a15a173862c1a975f))\n* support Morphe Patcher 2.0 and repair v0.13.0 assets [skip ci] ([e0cd908](https://github.com/Santodan/santodan-patches/commit/e0cd90881dea3428d8b00889d21e0723787985d3))\n\n### ✨ New Features\n\n* **monet:** add 1.0.97 premium and experimental patches [skip ci] ([a16bb2b](https://github.com/Santodan/santodan-patches/commit/a16bb2b80bafe22d64ff66135cc7788a26a53b6c))\n* **nuviotv:** add startup track reselection guard [skip ci] ([0683d87](https://github.com/Santodan/santodan-patches/commit/0683d87f0cb6336f0fcffa2c12ea3a55f73e5cfd))\n\n### 🚀 Updated App Support\n\n* release pending patch updates ([4c9ac03](https://github.com/Santodan/santodan-patches/commit/4c9ac039d47ec86b7fcdda6ce53fba8c39499302))\n\n### NuvioTV update progress and installer fix (2026-10-24)\n\n* **nuviotv:** restore native download percentages using GitHub asset sizes when HTTP length is missing, and share background-transfer progress with foreground waiters.\n* **nuviotv:** use Android's normal APK installer for foreground installation progress, debounce repeated taps and retain native background/session fallback.\n* **nuviotv:** preserve automatic cleanup of private downloaded APKs after the matching release is installed; document the location and cleanup behavior.\n* **verification:** validate native DEX/register/branch contracts, runtime progress and installer behavior, Desktop import and standalone/combined APK output.\n* Update the existing v0.14.0 bundle and metadata assets manually, keeping the release version/tag unchanged and without running the workflow.",
   "apps": [
     {
-      "app_name": "MEO (Android TV)",
+      "app_name": "MEO",
       "package": "com.alticelabs.meo.androidtv",
       "patches": [
         {
@@ -40,7 +40,29 @@
       ]
     },
     {
-      "app_name": "TFD Companion",
+      "app_name": "Monet Launcher - Android TV",
+      "package": "com.klevico.monet",
+      "patches": [
+        {
+          "name": "Monet - Unlock premium",
+          "description": "Original premium unlock from Doom's Patches, updated here for Monet 1.0.97. Unlock local premium features. Select only one Monet premium patch.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.97"
+          ]
+        },
+        {
+          "name": "Monet - Unlock premium (Experimental, any version)",
+          "description": "Original premium unlock from Doom's Patches, updated here for Monet 1.0.97. Experimental variant with no version restriction; requires a matching native layout. Select only one Monet premium patch.",
+          "use": false,
+          "options": [],
+          "compatible_versions": []
+        }
+      ]
+    },
+    {
+      "app_name": "The First Descendant Companion",
       "package": "com.nexon.tfdc",
       "patches": [
         {
@@ -95,8 +117,17 @@
           ]
         },
         {
+          "name": "NuvioTV - Fix startup track reselection",
+          "description": "Prevents a startup ExoPlayer crash when track reselection requests a seek before a playing media period exists.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
+          ]
+        },
+        {
           "name": "NuvioTV - GitHub APK updates",
-          "description": "Checks Santodan GitHub releases for APK updates using NuvioTV's native download and installation flow. Set the installed release version when patching each APK.",
+          "description": "Checks GitHub APK releases, shares native download progress and opens Android's APK installer for foreground install progress. Defaults to this bundle's version.",
           "use": false,
           "options": [
             {
@@ -105,7 +136,7 @@
             },
             {
               "key": "releaseVersion",
-              "description": "Version of THIS patched APK, matching its GitHub release tag without v (for example 0.12.0). Increase for every APK release, including patch-only updates."
+              "description": "Version of THIS APK, matching its GitHub release tag without v. Defaults to the patch bundle version; override only if publishing the APK under a different version."
             }
           ],
           "compatible_versions": [
@@ -287,7 +318,7 @@
       ]
     },
     {
-      "app_name": "Pillo",
+      "app_name": "Pillo: Pill Reminder & Alarm",
       "package": "xyz.rtrvr.pillo",
       "patches": [
         {
@@ -331,9 +362,16 @@
     }
   ],
   "patches_name": "SantoDan Patches",
-  "fingerprint": "f6523674dc1b2157865d714472b8e7fe9a702fae8ee62504fb32f695572c654d",
-  "release_notes": "## [0.9.0](https://github.com/Santodan/santodan-patches/compare/v0.8.0...v0.9.0) (2026-10-08)\n\n### 🐛 Bug Fixes\n\n* **nuviotv:** reduce badge work and isolate badge composition [skip ci] ([8bcfc45](https://github.com/Santodan/santodan-patches/commit/8bcfc45cbfbd3984371a578dd296fea7cb16a6ee))\n\n### ✨ New Features\n\n* **nuvio:** label patch settings groups [skip ci] ([c434e81](https://github.com/Santodan/santodan-patches/commit/c434e81f568db2d2fbe19588dcfd3d0800111956))\n* **nuvio:** preload stream sources with diagnostics [skip ci] ([c645e4f](https://github.com/Santodan/santodan-patches/commit/c645e4fa65b743424a75908be15b2e07cc63a484))\n* **nuvio:** show upcoming movie dates in library and collections ([f8d6bd1](https://github.com/Santodan/santodan-patches/commit/f8d6bd1915a4412e0731a9ecb1aed805d9b6aa3f))\n\n### 🚀 Updated App Support\n\n* **nuviotv:** support 1.1.0-beta.5 across all patches [skip ci] ([dd7a8f4](https://github.com/Santodan/santodan-patches/commit/dd7a8f4b08fa71cf9b167e7c67f9e27dfa4bea41))\n\n\n## Detailed changes\n\n## NuvioTV features\r\n\r\n- Add **Upcoming movie dates in library and collections** for beta.4 and beta.5.\r\n  Two independent, disabled-by-default switches under **UI** show blue `dd-MMM-yy`\r\n  badges on unreleased movie posters. Exact poster metadata takes precedence;\r\n  missing dates use a bounded background catalog lookup with a six-hour cache.\r\n  Released movies and unknown dates have no badge. A past release year skips\r\n  unnecessary lookups; current/future years still require an exact date.\r\n- Add **Preload streams in Continue Watching** for playable movie/episode cards.\r\n- Add **Preload streams on detail page** for the current Play or Resume target,\r\n  following changes to the next episode. Both **Streams** switches are independent\r\n  and disabled by default. They reuse Nuvio's native source search, installed\r\n  addons/plugins, cache expiration, profile checks, and playback pause controls.\r\n  Background work is bounded, and playback starts only when Play is pressed.\r\n- Group the Santodan-Patches menu under **Continue Watching**, **UI**, and **Streams**\r\n  using native, non-focusable labels. Groups with no installed patches are omitted.\r\n\r\n## Compatibility and improvements\r\n\r\n- Support NuvioTV **1.1.0-beta.5** across all existing patches. Movie dates, finale\r\n  dates, airing series, and stream preloading support beta.4/beta.5. Merged progress,\r\n  remaining episodes, and side-by-side installation also support beta.2.\r\n- Reduce remaining-episode badge work by counting recently displayed cards in the\r\n  background, limiting catalog fallback work, and stopping new work when disabled.\r\n- Isolate badge Compose groups to preserve the host's remembered state. Movie and\r\n  series date badges can be selected independently or together.\r\n- Add stream diagnostics for preload starts, elapsed time, source counts, and\r\n  timeout/cancellation outcomes. Repeated composition hits stay silent; stream\r\n  URLs are omitted and custom video IDs are redacted.\r\n- Movie-date toggle diagnostics identify **library** or **collections**. Routine\r\n  settings-render logs are suppressed.\r\n\r\n## Diagnostics and validation\r\n\r\n- Add `\"SantodanStreams:V\"` and `\"SantodanMovieRelease:V\"` to logcat filters.\r\n- Movie dates use native release-time rules: date-only releases use UTC midnight,\r\n  zoned timestamps use their exact instant, and timestamp badges show the local date.\r\n  Release metadata does not guarantee an available streaming source.\r\n- Local checks cover date parsing, release boundaries, timezone handling,\r\n  independent settings, nested/restart card scopes, and all 128 menu selections.\r\n  Original beta.4/beta.5 DEX checks verify coexistence with the existing patches.\r\n  Real beta.5 APK application and final DEX verification cover the movie patch on\r\n  its own and with all Nuvio patches. Device logs confirm working date lookups and\r\n  successful stream preloads without badge-rendering errors.\r\n",
-  "release_tag": "v0.9.0",
-  "release_date": "2026-10-08T13:06:41Z",
-  "isPreRelease": false
+  "fingerprint": "1f40a117fd0ed176552e976cb2ea52f6f854eb6a856a3cf53d38261f75644853",
+  "release_notes": "## [0.14.0](https://github.com/Santodan/santodan-patches/compare/v0.13.0...v0.14.0) (2026-10-24)\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* **NuvioTV:**  show download and system install progress [skip ci] ([7247475](https://github.com/Santodan/santodan-patches/commit/724747529dff97dc1fce460d04b8c7bf9fc4438f))\r\n* **NuvioTV:** correct update versions and installer fallback [skip ci] ([fafd816](https://github.com/Santodan/santodan-patches/commit/fafd816d0f2873069df5463c7459afe8d0a5bf03))\r\n* **NuvioTV:** limit preferred add-ons to stream providers [skip ci] ([18bed6d](https://github.com/Santodan/santodan-patches/commit/18bed6dad9bd526d505db640df353ef5af5f6e4c))\r\n* **NuvioTV:** reconcile cached progress and restore watched markers [skip ci] ([f38806f](https://github.com/Santodan/santodan-patches/commit/f38806f2b31668cc6db953494eefa93b7ac4804b))\r\n* **NuvioTV:** respect native binge-group playback preferences [skip ci] ([d5e6524](https://github.com/Santodan/santodan-patches/commit/d5e65246ec5637d4d7695addc2b98d1193ffda93))\r\n* **NuvioTV:** stabilize startup sync and remaining counts [skip ci] ([7a49ba6](https://github.com/Santodan/santodan-patches/commit/7a49ba6574ef2aa13d7dc2a50ba55d50ac98c8c8))\r\n* **NuvioTV:** suspend standby during IntroDB segment review [skip ci] ([fc42f5e](https://github.com/Santodan/santodan-patches/commit/fc42f5ef97cd934b76a7877a15a173862c1a975f))\r\n* support Morphe Patcher 2.0 and repair v0.13.0 assets [skip ci] ([e0cd908](https://github.com/Santodan/santodan-patches/commit/e0cd90881dea3428d8b00889d21e0723787985d3))\r\n\r\n### ✨ New Features\r\n\r\n* **monet:** add 1.0.97 premium and experimental patches [skip ci] ([a16bb2b](https://github.com/Santodan/santodan-patches/commit/a16bb2b80bafe22d64ff66135cc7788a26a53b6c))\r\n* **NuvioTV:** add startup track reselection guard [skip ci] ([0683d87](https://github.com/Santodan/santodan-patches/commit/0683d87f0cb6336f0fcffa2c12ea3a55f73e5cfd))\r\n\r\n### 🚀 Updated App Support\r\n\r\n* release pending patch updates ([4c9ac03](https://github.com/Santodan/santodan-patches/commit/4c9ac039d47ec86b7fcdda6ce53fba8c39499302))\r\n\r\n\r\n### NuvioTV Downloader - 8632191",
+  "release_tag": "v0.14.0",
+  "release_date": "2026-10-24T15:05:19Z",
+  "isPreRelease": false,
+  "stars": 7,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/25581907?v=4",
+  "repoDescription": "Some patches made with AI for Morphe-Patches",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

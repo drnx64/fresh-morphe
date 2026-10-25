@@ -7,7 +7,7 @@
   "description": "## v1.3.0\n\n### Bug Fixes\n- **Fix .mpp DEX format (root cause of patches not loading):** build.gradle.kts now depends on `buildAndroid` instead of `build`, ensuring .mpp contains DEX files (`classes.dex`) instead of just .class files. The Morphe Manager validates for .dex entries and rejects .class-only bundles.\n- **Remove BypassPairipProtection:** It used `return-void` at index 0 of `Application.attachBaseContext()` which skipped `super.attachBaseContext()`, crashing the app if ever applied. `BypassSignatureVerification` + `BypassLicenseCheck` already cover the critical paths.\n\n### New Features\n- **Add processResponse patch (defense-in-depth paywall bypass):** New `ProcessResponseFingerprint` targets `LicenseClient.processResponse(int, Bundle)` — the decision point where response code 2 triggers the paywall. Making this return-void intercepts the paywall before it can be shown.\n- **Add Bypass License Activity patch:** New `LicenseActivityOnStartFingerprint` targets `LicenseActivity.onStart()` — if LicenseActivity is ever started by any code path, this prevents both the paywall and error dialog from showing.\n\n### Improvements\n- **Enhanced BypassLicensePaywall:** Now also patches `processResponse()` for defense-in-depth\n- **Cleaned up Fingerprints.kt:** Removed unused `ApplicationAttachBaseContextFingerprint`, added documentation verifying each fingerprint against smali\n\n### Patches (7 total)\n1. Bypass Signature Verification\n2. Bypass License Check\n3. Bypass License Paywall (enhanced with processResponse)\n4. Bypass License Activity (new)\n5. Force Safe Root Status\n6. Disable Blacklisting\n",
   "apps": [
     {
-      "app_name": "BHIM UPI",
+      "app_name": "BHIM Bharat's Own Payments App",
       "package": "in.org.npci.upiapp",
       "patches": [
         {
@@ -68,5 +68,7 @@
     }
   ],
   "patches_name": "kun-codes",
-  "fingerprint": "159097d3838480ecb7a3491d5ec025b84b329043ad12c9d7aed7c80ac3f19b9b"
+  "fingerprint": "299dbdab03022f98997d862cd60a6f1aab8ce95fcb5f42cf80dd51ec6c7a6e05",
+  "isArchived": true,
+  "bundleImageUrl": ""
 }

@@ -2,9 +2,9 @@
   "bundle": "madushas-pdb-patch",
   "channel": "stable",
   "repo_url": "https://github.com/madushas/morphe-patches-custom",
-  "created_at": "2026-10-23T19:51:25Z",
+  "created_at": "2026-10-25T04:30:07Z",
   "version": "0.5.1",
-  "description": "Custom Morphe patches for any app: currently Pdb (pdb.app) and MyDialog (net.omobio.dialogsc) - telemetry removal, security-check and SSL-pinning bypasses, ad removal, premium unlock, SIM access fix, power-user menus and client-side limit extensions.",
+  "description": "Custom Morphe patches for any app: currently Pdb (pdb.app) and MyDialog (net.omobio.dialogsc) - telemetry removal, security-check and SSL-pinning bypasses, ad removal, premium unlock, SIM access fix, stock-signature spoof, power-user menus and client-side limit extensions.",
   "apps": [
     {
       "app_name": "MyDialog",
@@ -72,11 +72,38 @@
           "compatible_versions": [
             "18.6.5"
           ]
+        },
+        {
+          "name": "Inspect HTTPS traffic (adb reverse proxy)",
+          "description": "Routes RN network traffic through 127.0.0.1:8080 on the device (adb reverse tunnel to mitmproxy). Off by default; needs the tunnel and a trusted CA.",
+          "use": false,
+          "options": [
+            {
+              "key": "Proxy host",
+              "description": ""
+            },
+            {
+              "key": "Proxy port",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "18.6.5"
+          ]
+        },
+        {
+          "name": "Spoof stock signing cert hash",
+          "description": "Makes NativeUtils.setAppToken() return the stock app's certificate hash instead of the patched build's, so the server-side device/app integrity verdict ('App Error: NO IMSI') is not tripped by the re-signed APK.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.5"
+          ]
         }
       ]
     },
     {
-      "app_name": "Pdb",
+      "app_name": "Pdb: Personality & Friends",
       "package": "pdb.app",
       "patches": [
         {
@@ -182,9 +209,14 @@
     }
   ],
   "patches_name": "Madusha's Morphe Patches",
-  "fingerprint": "ac6cc610bf84f7bf5559a42e3ab9be1164b9bb3b2db2a8960e609004a89da7ad",
-  "release_notes": "- Fix SIM identifier access (MyDialog): the pre-login flow dies with 'App Error: NO IMSI' on re-signed builds because Android 11+ requires carrier privileges (bound to the original signing cert) for getSubscriberId. Replaced with the public getSimOperator() call - same operator prefix the stock app sees, Dialog 41305 fallback on SIM-less devices. Default-on, replaces 'Mock SIM identifiers'.\n- Disable SSL pinning now strips the platform network-security-config pin-set and trusts user CAs (OkHttp pins were already removed) - enables HTTPS inspection with a user CA.\n- Bundle renamed to 'Madusha's Morphe Patches' (multi-app repo, more apps coming).",
+  "fingerprint": "daab856a322b3fe93080746a0b1fa0c9a70cbc4e60d71b8c8017b1c542f458f8",
+  "release_notes": "MyDialog: Spoof stock signing cert hash (fixes server integrity gate / NO IMSI on re-signed builds), SSL pinning fully off, plus all 0.5.0 patches. 27 patches, 2 apps.",
   "release_tag": "v0.5.1",
-  "release_date": "2026-10-23T19:51:25Z",
-  "isPreRelease": false
+  "release_date": "2026-10-25T04:30:07Z",
+  "isPreRelease": false,
+  "stars": 2,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/44031016?v=4",
+  "repoDescription": "Morphe patches for Pdb (pdb.app): premium unlock, ad removal, PairIP bypass and a power-user feature menu.",
+  "isArchived": false,
+  "bundleImageUrl": ""
 }

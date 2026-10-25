@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-22T22:50:38Z",
-  "version": "1.26.1",
-  "description": "## [1.26.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.26.0...v1.26.1) (2026-10-22)\n\n### Bug Fixes\n\n* **capcut:** update target to 19.9.0 ([88f462c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/88f462c9be2c187fa897f19b2b0014b545962ecc))\n* **hevy:** make billing stub fail loudly if Play library changes ([a1a4c41](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a1a4c418c139f924314a8789c4f837f6c06745f2))\n* **hevy:** update in-app billing connection hook for 3.2.2 ([ffa11b5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ffa11b59f9088853d0169e0f95b7405ac518c9b7))\n* **hevy:** update supported version to 3.2.2 ([0ab1635](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0ab163517f4c4a2d3335fae0966772410d8d4462))\n* **hevy:** update telemetry and tracking hooks for 3.2.2 ([7f86566](https://github.com/kveld9/kveld-extra-morphe-patches/commit/7f865661372850d91c9c916416c57dc6e84a9253))\n* **twitter:** support version 12.36.1-prod.01 ([4229ffb](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4229ffb2c614be97bb206c04385b976de2dff53d))",
+  "created_at": "2026-10-25T00:57:16Z",
+  "version": "1.27.1",
+  "description": "## [1.27.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.27.0...v1.27.1) (2026-10-25)\n\n### Bug Fixes\n\n* **moovit:** scope lint suppressions on signing-info reflection ([7e6a399](https://github.com/kveld9/kveld-extra-morphe-patches/commit/7e6a399ee2aab2fd91dffc8ed72847a94fac7f53))\n* **moovit:** trim whitespace from mapsApiKey before injection ([0f10a0a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0f10a0a044507585a8ef573eca707ef407853e10))\n\n### Code Refactoring\n\n* **moovit:** derive package name from Application in extension helper ([090e557](https://github.com/kveld9/kveld-extra-morphe-patches/commit/090e557a9449408514d508e47a8a43fd51129204))",
   "apps": [
     {
       "app_name": "Hevy - Gym Log Workout Tracker",
@@ -82,12 +82,12 @@
       ]
     },
     {
-      "app_name": "CapCut",
+      "app_name": "CapCut - Video Editor",
       "package": "com.lemon.lvoverseas",
       "patches": [
         {
           "name": "Block Telemetry & Trackers",
-          "description": "Neutralizes Google AppMeasurement, AppsFlyer, and ByteDance AppLog event dispatchers.",
+          "description": "Neutralizes Google AppMeasurement, AppsFlyer, ByteDance AppLog, APM/Slardar, Gecko, Pitaya, BDTuring, and UserGrowth event dispatchers.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -159,8 +159,17 @@
           ]
         },
         {
+          "name": "Redirect API to v2 Boot",
+          "description": "Loads effects, feeds and templates where default endpoints are blocked by using official alternate endpoints.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
           "name": "Remove Watermark",
-          "description": "Forces CapCut watermark-removal gates to allow export without watermark (WatermarkBusinessFunction).",
+          "description": "Forces CapCut watermark-removal gates and default ending gate to allow export without watermark or outro.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -302,7 +311,7 @@
       ]
     },
     {
-      "app_name": "Copilot",
+      "app_name": "Microsoft Copilot",
       "package": "com.microsoft.office.officehubrow",
       "patches": [
         {
@@ -340,7 +349,7 @@
       ]
     },
     {
-      "app_name": "PowerPoint",
+      "app_name": "Microsoft PowerPoint",
       "package": "com.microsoft.office.powerpoint",
       "patches": [
         {
@@ -400,7 +409,7 @@
       ]
     },
     {
-      "app_name": "NokoPrint - WiFi, Bluetooth, USB",
+      "app_name": "NokoPrint - Print from Phone",
       "package": "com.nokoprint",
       "patches": [
         {
@@ -520,7 +529,7 @@
       ]
     },
     {
-      "app_name": "Moovit",
+      "app_name": "Moovit: Bus & Public Transit",
       "package": "com.tranzmate",
       "patches": [
         {
@@ -539,7 +548,11 @@
           "options": [
             {
               "key": "mapsApiKey",
-              "description": "Optional custom Google Maps Platform key. When omitted, built-in keys work automatically via signature spoofing."
+              "description": "Personal Google Maps Platform API key. Required because the built-in key only works with the original signature."
+            },
+            {
+              "key": "forceGoogleMaps",
+              "description": "Always use Google Maps instead of the region default map."
             }
           ],
           "compatible_versions": [
@@ -605,7 +618,7 @@
       ]
     },
     {
-      "app_name": "SD Maid SE",
+      "app_name": "SD Maid 2/SE - System Cleaner",
       "package": "eu.darken.sdmse",
       "patches": [
         {
@@ -621,9 +634,14 @@
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "3249615cbf47900c7d9bf6c3113835e12ab6626fbfd2b6d6dbe197ae9047d0b0",
-  "release_notes": "## [1.26.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.26.0...v1.26.1) (2026-10-22)\n\n### Bug Fixes\n\n* **capcut:** update target to 19.9.0 ([88f462c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/88f462c9be2c187fa897f19b2b0014b545962ecc))\n* **hevy:** make billing stub fail loudly if Play library changes ([a1a4c41](https://github.com/kveld9/kveld-extra-morphe-patches/commit/a1a4c418c139f924314a8789c4f837f6c06745f2))\n* **hevy:** update in-app billing connection hook for 3.2.2 ([ffa11b5](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ffa11b59f9088853d0169e0f95b7405ac518c9b7))\n* **hevy:** update supported version to 3.2.2 ([0ab1635](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0ab163517f4c4a2d3335fae0966772410d8d4462))\n* **hevy:** update telemetry and tracking hooks for 3.2.2 ([7f86566](https://github.com/kveld9/kveld-extra-morphe-patches/commit/7f865661372850d91c9c916416c57dc6e84a9253))\n* **twitter:** support version 12.36.1-prod.01 ([4229ffb](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4229ffb2c614be97bb206c04385b976de2dff53d))\n",
-  "release_tag": "v1.26.1",
-  "release_date": "2026-10-22T22:50:38Z",
-  "isPreRelease": false
+  "fingerprint": "769f1216b44baccdec9105965d003e0bb6c44929adb907bd891019696c875fca",
+  "release_notes": "## [1.27.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.27.0...v1.27.1) (2026-10-25)\n\n### Bug Fixes\n\n* **moovit:** scope lint suppressions on signing-info reflection ([7e6a399](https://github.com/kveld9/kveld-extra-morphe-patches/commit/7e6a399ee2aab2fd91dffc8ed72847a94fac7f53))\n* **moovit:** trim whitespace from mapsApiKey before injection ([0f10a0a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0f10a0a044507585a8ef573eca707ef407853e10))\n\n### Code Refactoring\n\n* **moovit:** derive package name from Application in extension helper ([090e557](https://github.com/kveld9/kveld-extra-morphe-patches/commit/090e557a9449408514d508e47a8a43fd51129204))\n",
+  "release_tag": "v1.27.1",
+  "release_date": "2026-10-25T00:57:16Z",
+  "isPreRelease": false,
+  "stars": 4,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/179108235?v=4",
+  "repoDescription": "Standalone, app-specific patches for use with Morphe",
+  "isArchived": false,
+  "bundleImageUrl": ""
 }
