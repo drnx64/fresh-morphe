@@ -149,7 +149,7 @@ def run():
         from generate_site import generate_static_files, generate_rss_feed, generate_daily_feed
         generate_static_files()
         generate_rss_feed()
-    generate_daily_feed()
+        generate_daily_feed()
 
         # Telegram notification
         log.info("STEP 7: Telegram notification")
