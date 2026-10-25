@@ -423,3 +423,15 @@ class TestRepoMetadataOverlay:
         assert record["forkParent"] == "parent/repo"
         assert "error" not in record
         assert bundles["norepo:stable"] == {"repo_url": ""}
+
+
+def test_all_pipeline_scripts_parse():
+    """Guard against syntax errors that would only surface at pipeline import."""
+    scripts_dir = os.path.join(os.path.dirname(__file__), '..', 'scripts')
+    for root, _dirs, files in os.walk(scripts_dir):
+        for name in files:
+            if not name.endswith('.py'):
+                continue
+            path = os.path.join(root, name)
+            with open(path, 'r', encoding='utf-8') as fh:
+                compile(fh.read(), path, 'exec')

@@ -62,6 +62,7 @@ import {
 import { fetchJson } from './utils/http.js'
 import { SITE_URL, GITHUB_REPO_URL, shrinkPlayIconUrl, withAvatarSize } from './utils/url.js'
 import { parseBundleKey } from './utils/bundleKey.js'
+import { normalizeRepoUrl } from './utils/misc.js'
 
 // ── Default State ──
 store.init({
@@ -489,14 +490,17 @@ async function loadData() {
     // Repo owner avatars (repo_cache.json → repo_url → avatarUrl)
     const repoAvatarMap = {}
     const repoBundleImageMap = {}
+    const repoMetaByUrl = new Map()
     if (repoCacheRes && typeof repoCacheRes === 'object') {
       for (const [repoUrl, entry] of Object.entries(repoCacheRes)) {
-        if (entry && typeof entry === 'object' && entry.avatarUrl) {
+        if (!entry || typeof entry !== 'object') continue
+        repoMetaByUrl.set(normalizeRepoUrl(repoUrl), entry)
+        if (entry.avatarUrl) {
           // Same normalization rule as resolveAvatarUrl — the preload keys
           // must match the URLs the display layer looks up.
           repoAvatarMap[repoUrl] = withAvatarSize(entry.avatarUrl)
         }
-        if (entry && typeof entry === 'object' && entry.bundleImageUrl) {
+        if (entry.bundleImageUrl) {
           repoBundleImageMap[repoUrl] = entry.bundleImageUrl
         }
       }
@@ -521,6 +525,21 @@ async function loadData() {
     setBootProgress(85, 'Building app directory…')
     currentBundleIndex = index
     const bundles = buildBundlesFromIndex(index, cachedState)
+
+    // The index is rebuilt from parsing each run, so it can miss repo metadata
+    // (stars, description, archived/fork state) that repo_cache.json still has.
+    // Overlay it here so stars show even before the pipeline rewrites the index.
+    for (const record of Object.values(bundles)) {
+      const meta = repoMetaByUrl.get(normalizeRepoUrl(record.repo_url))
+      if (!meta) continue
+      if (typeof meta.stars === 'number') record.stars = meta.stars
+      if (meta.repoDescription) record.repoDescription = meta.repoDescription
+      if ('isArchived' in meta) record.isArchived = meta.isArchived
+      if ('isFork' in meta) {
+        record.isFork = meta.isFork
+        record.forkParent = meta.forkParent || ''
+      }
+    }
     store.set('bundles', { ...bundles })
 
     // No-op when the signature matches what is already cached
