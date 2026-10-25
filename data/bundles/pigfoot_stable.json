@@ -2,10 +2,76 @@
   "bundle": "pigfoot",
   "channel": "stable",
   "repo_url": "https://github.com/pigfoot/morphe-patches",
-  "created_at": "2026-10-06T15:41:17Z",
-  "version": "0.1.0",
-  "description": "## [0.1.0](https://github.com/pigfoot/morphe-patches/releases/tag/v0.1.0) (2026-10-06)\n\n### Changed\n\n- Package renaming is optional and unselected by default. Without it RailsGo retains its original package, provider authorities, permissions and link scheme.\n- Selecting Change package name uses the default .morphe or a custom package and applies complete parallel isolation without changing the app display name.\n- Sideload startup compatibility is required for supported standard and Shizuku installs; the bus patch depends on it, not package renaming. Root mount remains unqualified and unavailable.\n- Preserve the helper-only extension, loaded reward metadata, original fallback and callback deduplication.\n- Publish readable dependency names and clean preflight bundle outputs before future versioned releases.\n\n### Migration\n\nExisting .morphe or custom-package installs must select Change package name, keep the same package value and use the same local signing key to update. This release replaces the earlier 1.0.0 numbering; patch behavior is unchanged. Device startup and live bus updates still require phone validation.",
+  "created_at": "2026-10-25T12:46:42Z",
+  "version": "0.2.1",
+  "description": "## [0.2.1](https://github.com/pigfoot/morphe-patches/compare/v0.2.0...v0.2.1) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* **camscanner:** offer qualified targets without experimental opt-in ([#3](https://github.com/pigfoot/morphe-patches/issues/3)) ([9153280](https://github.com/pigfoot/morphe-patches/commit/9153280915d03e74eaa06707ec454bc2bada398b))",
   "apps": [
+    {
+      "app_name": "CamScanner- scanner, PDF maker",
+      "package": "com.intsig.camscanner",
+      "patches": [
+        {
+          "name": "CamScanner disable ads",
+          "description": "Suppress qualified ad entry points with reviewed manifest cleanup. Rewarded videos are blocked by default; an explicit 7.27.0-only lottery skip experiment can forward the original task/code flow without video. Server grants are not guaranteed or overridden.",
+          "use": false,
+          "options": [
+            {
+              "key": "rewardedVideos",
+              "description": "Block by default. The lottery-only skip experiment requires online 7.27.0; it preserves actual server results, not guaranteed rewards. Includes scoped initialization recovery without diagnostics or extra quota queries."
+            }
+          ],
+          "compatible_versions": [
+            "7.26.5.2609160000",
+            "7.27.0.2609220000"
+          ]
+        },
+        {
+          "name": "CamScanner local premium features",
+          "description": "Experimental local account-status features. Does not unlock server credits or cloud quotas.",
+          "use": true,
+          "options": [
+            {
+              "key": "folderLimit",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "7.26.5.2609160000",
+            "7.27.0.2609220000"
+          ]
+        },
+        {
+          "name": "CamScanner offline mode",
+          "description": "Revoke all app INTERNET declarations. Includes ad suppression; preserves real platform connectivity. External apps/services and offline error flows require device testing.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.26.5.2609160000",
+            "7.27.0.2609220000"
+          ]
+        },
+        {
+          "name": "CamScanner reduce telemetry and app logging",
+          "description": "Suppress qualified Firebase Analytics/Crashlytics/Performance/Sessions and app network/cache/local logging. Preserve unrelated Firebase services. Not a guarantee of zero telemetry.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.26.5.2609160000",
+            "7.27.0.2609220000"
+          ]
+        },
+        {
+          "name": "CamScanner restore trust on re-signed builds",
+          "description": "Required compatibility for supported re-signed standard/Shizuku installs: preserve original request signing and recover exact obsolete/error-only API Center caches. No diagnostic overlays. No forced host, global signature spoofing, authentication-result changes or INTERNET grant. Root mount is not qualified.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.26.5.2609160000",
+            "7.27.0.2609220000"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "RailsGo – TRA, THSR, MRT & Bus",
       "package": "com.waccliu.taiwanrail",
@@ -46,14 +112,16 @@
     }
   ],
   "patches_name": "Pigfoot Patches",
-  "fingerprint": "e81a1b90c73475897458cc4da68e391b91bd0afc46c6c3af67641ca53517f19f",
-  "release_notes": "## [0.1.0](https://github.com/pigfoot/morphe-patches/releases/tag/v0.1.0) (2026-10-06)\n\n### Changed\n\n- Package renaming is optional and unselected by default. Without it RailsGo retains its original package, provider authorities, permissions and link scheme.\n- Selecting Change package name uses the default .morphe or a custom package and applies complete parallel isolation without changing the app display name.\n- Sideload startup compatibility is required for supported standard and Shizuku installs; the bus patch depends on it, not package renaming. Root mount remains unqualified and unavailable.\n- Preserve the helper-only extension, loaded reward metadata, original fallback and callback deduplication.\n- Publish readable dependency names and clean preflight bundle outputs before future versioned releases.\n\n### Migration\n\nExisting .morphe or custom-package installs must select Change package name, keep the same package value and use the same local signing key to update. This release replaces the earlier 1.0.0 numbering; patch behavior is unchanged. Device startup and live bus updates still require phone validation.\n",
-  "release_tag": "v0.1.0",
-  "release_date": "2026-10-06T15:41:17Z",
+  "fingerprint": "2862d9406c00ead929f832ee8e31dfd68d0c1de59ae75d523196b82aa98b95c0",
+  "release_notes": "## [0.2.1](https://github.com/pigfoot/morphe-patches/compare/v0.2.0...v0.2.1) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* **camscanner:** offer qualified targets without experimental opt-in ([#3](https://github.com/pigfoot/morphe-patches/issues/3)) ([9153280](https://github.com/pigfoot/morphe-patches/commit/9153280915d03e74eaa06707ec454bc2bada398b))\n",
+  "release_tag": "v0.2.1",
+  "release_date": "2026-10-25T12:46:42Z",
   "isPreRelease": false,
-  "stars": 1,
+  "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/69261?v=4",
   "repoDescription": "App-scoped Morphe patches built with the official Gradle template",
   "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
   "bundleImageUrl": ""
 }
