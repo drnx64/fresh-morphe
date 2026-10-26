@@ -41175,10 +41175,43 @@
     "bundle": "0xtalos",
     "channel": "stable",
     "repo_url": "https://github.com/0xtalos/vibe-patches",
-    "created_at": "2026-10-23T09:59:01Z",
-    "version": "1.3.3",
-    "description": "Vibe Patches v1.3.2: Morphe patches for 365Scores - ad-free, analytics removal, MicroG sign-in and update blocking.",
+    "created_at": "2026-10-25T22:21:19Z",
+    "version": "1.4.0",
+    "description": "Vibe Patches v1.4.0: Morphe patches for 365Scores and HDO Box - ad removal, analytics removal, tracking permission cleanup, MicroG sign-in and update blocking.",
     "apps": [
+      {
+        "app_name": "Hdo Box",
+        "package": "com.hdoapp.hdo_box",
+        "patches": [
+          {
+            "name": "Disable analytics",
+            "description": "Disables Firebase Analytics collection, automatic screen reporting and advertising id collection, and prevents the app from re-enabling them.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          },
+          {
+            "name": "Remove ads",
+            "description": "Removes Unity Ads by answering the app's ad plugin locally, so no ad is ever initialized, loaded or displayed.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          },
+          {
+            "name": "Remove tracking permissions",
+            "description": "Removes the advertising id (AD_ID) and Privacy Sandbox (AdServices) permissions.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          }
+        ]
+      },
       {
         "app_name": "365Scores: Live Scores & Data",
         "package": "com.scores365",
@@ -41221,8 +41254,8 @@
           },
           {
             "name": "GmsCore support",
-            "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
-            "use": false,
+            "description": "Makes Google sign-in and Google APIs work by routing them to MicroG RE instead of Google Play services. Requires MicroG RE (app.revanced.android.gms) and a Google account added in it.",
+            "use": true,
             "options": [],
             "compatible_versions": [
               "14.9.7"
@@ -41250,10 +41283,10 @@
       }
     ],
     "patches_name": "Vibe Patches",
-    "fingerprint": "8e5ebd5e2f8692ff4f057498d6537068d39aa99d6a54dddc73027fd2c710e715",
-    "release_notes": "**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3",
-    "release_tag": "v1.3.3",
-    "release_date": "2026-10-23T09:59:01Z",
+    "fingerprint": "69b69e0846534f41a6848385df3373ff2e4e1a527e4594811cbe5420ac0a76d7",
+    "release_notes": "## 365Scores\n- **GmsCore support is now ON by default** - Google Sign-In works against MicroG RE with no extra toggles. Requires MicroG RE (`app.revanced.android.gms`) with a Google account added in it.\n- Automatically pulls in **Spoof signature** (original Play certificate) for Firebase / API-key checks.\n- Hardened patch: unavailable on MOUNT installs, required splash fingerprint, verified GmsCore check injection.\n- Smoke tests now cover the rewritten sign-in action/package and the spoofed certificate.\n\n## HDO Box (new)\n- **Remove ads** - neutralises the Unity Ads plugin.\n- **Disable analytics** - disables Firebase Analytics collection and blocks re-enabling it.\n- **Remove tracking permissions** - removes AD_ID and Privacy Sandbox (AdServices) permissions.\n\n> HDO premium is validated server-side and cannot be unlocked client-side; these patches only remove ads and tracking.\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.3...v1.4.0",
+    "release_tag": "v1.4.0",
+    "release_date": "2026-10-25T22:21:19Z",
     "isPreRelease": false,
     "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/42888660?v=4",
@@ -55264,8 +55297,8 @@
     "bundle": "hxreborn-morphe-patches",
     "channel": "dev",
     "repo_url": "https://github.com/hxreborn/morphe-patches",
-    "created_at": "2026-10-25T20:54:26Z",
-    "version": "1.62.0-dev.2",
+    "created_at": "2026-10-25T23:09:13Z",
+    "version": "1.62.0-dev.8",
     "description": "## [1.61.0](https://github.com/hxreborn/morphe-patches/compare/v1.60.0...v1.61.0) (2026-10-25)\n\n### Bug Fixes\n\n* **BetterSleep - Unlock premium:** record screen on and off events ([5a6b4c6](https://github.com/hxreborn/morphe-patches/commit/5a6b4c6d5a57280d3b914438afb888569151dee8))\n* **Hindu Calendar - Hide ads:** post event reminders ([a19c39b](https://github.com/hxreborn/morphe-patches/commit/a19c39b7b7598e2114c2ab90bf4898a4a726ca51))\n* **LingoDeer - Skip sign-in prompt:** allow armeabi-v7a installs ([7fc7d19](https://github.com/hxreborn/morphe-patches/commit/7fc7d19f584c45bf8532bff2fae43bb7487e97a0)), closes [#369](https://github.com/hxreborn/morphe-patches/issues/369)\n* **LingoDeer - Unlock premium:** allow armeabi-v7a installs ([b8f44b3](https://github.com/hxreborn/morphe-patches/commit/b8f44b3a38538a94b5a670010e5964b210efd382))\n* **LingoDeer:** allow signing in to an account ([cbec670](https://github.com/hxreborn/morphe-patches/commit/cbec67075702d2a200a3bb02fe3cd2c61ae6e793)), closes [#369](https://github.com/hxreborn/morphe-patches/issues/369)\n* **Proton Authenticator - Material 3 loading indicator:** grow to 48dp ([dda1dbe](https://github.com/hxreborn/morphe-patches/commit/dda1dbe995a22726d4c8433a8e824624e7a06ec0)), closes [#368](https://github.com/hxreborn/morphe-patches/issues/368)\n* **Proton Lumo - Unlock premium:** open Lumo from home screen widgets ([2c0b022](https://github.com/hxreborn/morphe-patches/commit/2c0b0229cb890b23bbb401a93cb11b9a5f323443))\n* **Proton Mail - Material 3 loading indicator:** shrink to 48dp ([070ae24](https://github.com/hxreborn/morphe-patches/commit/070ae246084e05f8b5ede6a6c53d3351f23ca5f9)), closes [#368](https://github.com/hxreborn/morphe-patches/issues/368)\n* **Proton Mail:** remove `7.10.4` to `7.11.10` app targets ([a364d60](https://github.com/hxreborn/morphe-patches/commit/a364d6052de57c3a131dbc10b53aa42fad295366))\n* **Proton Pass - Material 3 loading indicator:** grow to 48dp ([71236d9](https://github.com/hxreborn/morphe-patches/commit/71236d97bd16d8bc16314f92ab89372f3872f09c)), closes [#368](https://github.com/hxreborn/morphe-patches/issues/368)\n* **UPTCL - Hide launch promotion:** skip full-screen home screen offer ([2440877](https://github.com/hxreborn/morphe-patches/commit/2440877f068705acb6018a3d4fac63bb606772cb))\n\n### New Features\n\n* **Clip Studio Paint - Unlock premium:** unlock doodle mode saving ([58a44b1](https://github.com/hxreborn/morphe-patches/commit/58a44b19452396b9d160a69e30f86c9cab48b046))\n* **Clip Studio Paint - Unlock premium:** unlock full timelapse export ([475cf0f](https://github.com/hxreborn/morphe-patches/commit/475cf0f3d790d5cd47fe16353493076603d5676d))\n* **LingoDeer - GmsCore support:** allow signing in with Google ([94dc9e7](https://github.com/hxreborn/morphe-patches/commit/94dc9e72a769a5ebc6c6135a8205817144005966)), closes [#369](https://github.com/hxreborn/morphe-patches/issues/369)\n* **NEETprep - GmsCore support:** sign in with Google through GmsCore ([d341d92](https://github.com/hxreborn/morphe-patches/commit/d341d9287629b37f92819caad965ec76dad4a5fd))\n* **NEETprep - Unlock premium:** unlock explanations and Ask AI ([de5b600](https://github.com/hxreborn/morphe-patches/commit/de5b6004542618df4954c5cce57e80efdba61702))\n* **NEETprep Essential - Unlock premium:** unlock all chapters and tests ([3519972](https://github.com/hxreborn/morphe-patches/commit/3519972f51c8813ae3fb6549c30b379f6d892fa6))\n* **Proton Authenticator - Material 3 loading indicator:** morph spinner ([270fde1](https://github.com/hxreborn/morphe-patches/commit/270fde1b1a709d3adbf589dbd4d8e26608c84b91)), closes [#368](https://github.com/hxreborn/morphe-patches/issues/368)\n* **Proton Pass - Material 3 loading indicator:** morph refresh spinner ([86f2dd2](https://github.com/hxreborn/morphe-patches/commit/86f2dd2a2b685b51ceb2899cbbd4890b0f7c3817))\n* **UPTCL - Disable tracking:** stop analytics and event reporting ([6b33b62](https://github.com/hxreborn/morphe-patches/commit/6b33b624e9a5f2193988ee27eb87e21761a58e5a))\n* **UPTCL - Hide ads:** hide banner, native and full-screen ads ([26e2e4c](https://github.com/hxreborn/morphe-patches/commit/26e2e4ca7db5735c34f9c0eaa1de59fb9d737a37))\n* **UPTCL - Hide launch promotion:** hide splash promo banner and video ([6c13a73](https://github.com/hxreborn/morphe-patches/commit/6c13a735a956b8e9687cc944614a9816a8a2f1ed))\n* **UPTCL - Match system bar color:** make status and nav bars white ([9b876b7](https://github.com/hxreborn/morphe-patches/commit/9b876b7aae4f9741a9ffa3d5562aa0ab1e253b6a))\n* **UPTCL - Remove forced update:** skip update prompts at launch ([3978990](https://github.com/hxreborn/morphe-patches/commit/39789901df1167ece80780f2646bf42f4ff18aed))\n\n### Updated App Support\n\n* **AlpineQuest:** add support for `2.4.1` ([f014714](https://github.com/hxreborn/morphe-patches/commit/f014714665322b285b6c4501c73cad3a31b489aa))\n* **DepthPix:** add support for `1.0.21` ([87d5b04](https://github.com/hxreborn/morphe-patches/commit/87d5b04af6557d6f0fc5839365b9ca4ccbc0b2e8))\n* **Echo Equalizer:** add support for `9.7` ([3ed0ca4](https://github.com/hxreborn/morphe-patches/commit/3ed0ca4a9ff91af59dff8fb9c3dadbfd6eb03100))\n* **Fast STL Viewer:** add support for `2.92` ([8ba98dc](https://github.com/hxreborn/morphe-patches/commit/8ba98dc5ff8adae762dbcc194de92c0b0730914b))\n* **Joyn:** add support for `6.9.2-AOS-609282180` ([0f9e24f](https://github.com/hxreborn/morphe-patches/commit/0f9e24fac6ed1912cbb391abaafe1bf8bc4e4555))\n* **Keepa:** add support for `6.5.1` ([01d763d](https://github.com/hxreborn/morphe-patches/commit/01d763d27774c0f835ccc4553eee69ab84c518bb))\n* **MedicNEET:** add support for `1.5.138` ([322613c](https://github.com/hxreborn/morphe-patches/commit/322613cb612792b552feeae74fa5bf4ee52ee45f))\n* **Nara Baby:** add support for `2.8.3` ([b8c1d54](https://github.com/hxreborn/morphe-patches/commit/b8c1d5426b325883f5b4c102a8971118d9f69940))\n* **Notein:** add support for `v2.1.28.0` ([a3ba907](https://github.com/hxreborn/morphe-patches/commit/a3ba907fb7da8346ba8a870456e6f3dd0c3489af))\n* **One4Home Launcher:** add support for `0.5.93` ([1f95bb6](https://github.com/hxreborn/morphe-patches/commit/1f95bb6bf37a5b5f0e79001c60936d5e4d9903b3))\n* **Opal:** add support for `4.16.0` ([9991c79](https://github.com/hxreborn/morphe-patches/commit/9991c7985c38435dcb6212698e307021f583b9f9))\n* **Period Tracker and Calendar:** add support for `13.4.0` ([bf7bf68](https://github.com/hxreborn/morphe-patches/commit/bf7bf68b08ba71cb4b5056a1dee224c73d22f4bc))\n* **Proton Mail:** add support for `7.11.11` ([cb34f8e](https://github.com/hxreborn/morphe-patches/commit/cb34f8ee6866898a332250c8c877079cff722317)), closes [#361](https://github.com/hxreborn/morphe-patches/issues/361)\n* **Radio Javan:** add support for `11.22.1` ([4aa8788](https://github.com/hxreborn/morphe-patches/commit/4aa87884e07ef56db81ef086018159db84f4e7bb))\n* **RISE Sleep Tracker:** add support for `Android V1.79.3` ([fa0b0b2](https://github.com/hxreborn/morphe-patches/commit/fa0b0b2db8a7e9ab5a03b1ac30f4844f4eccf9cc))\n* **Rubber Bands:** add support for `3.14` ([d2ed6da](https://github.com/hxreborn/morphe-patches/commit/d2ed6da9a062a325da02b261aaa05967d7e1b40c))\n* **TeraBox:** add support for `4.27.5` ([f7516c6](https://github.com/hxreborn/morphe-patches/commit/f7516c63f31cb201a119a5bb35ea08a5c951436f))\n* **Trainline:** add support for `438.1.0.184284` ([12a830b](https://github.com/hxreborn/morphe-patches/commit/12a830b3eb3297282fee98abb7360521f4ae30a0))\n* **Wattpad:** add support for `11.42.0` ([71a1677](https://github.com/hxreborn/morphe-patches/commit/71a16770040b27c1a3846a128f08d1c0cc932290))\n* **Yi iot:** add support for `5.1.8_20261021` ([0b1cfd7](https://github.com/hxreborn/morphe-patches/commit/0b1cfd7443897a83ca182c44bf21eb8f6a765939))",
     "apps": [
       {
@@ -104557,8 +104590,8 @@
     "bundle": "wake-old-hyphen",
     "channel": "dev",
     "repo_url": "https://github.com/Wake-Old-Hyphen/hushfeed",
-    "created_at": "2026-10-25T19:38:03Z",
-    "version": "privacy-tiktok-multi-v0.79.0-20261025-193802",
+    "created_at": "2026-10-25T22:26:18Z",
+    "version": "privacy-tiktok-multi-v0.79.0-20261025-222617",
     "description": "Hushfeed v0.79.0 has 141 patches for global TikTok 47.5.3 (com.zhiliaoapp.musically) and PineDrama 47.5.3.\n\nTikTok stays on 47.5.3, so the TikTok APK you patched last time still works. PineDrama moves to 47.5.3, so grab that one first. Six more patches run on PineDrama, plus a new `Allow photo comments` switch. Imported fonts and every saved sticker work on it now too. On TikTok there's a filter for spam comments, a way to record a LIVE off the screen, a blur behind the glass bar and a switch that opens a LIVE creator's Story first, and Hide videos you have already seen keeps watched videos out of For You again. The release notes list every report this release changed something for.\n\nValidation: 5079 runtime tests passed and 1155 patch tests passed locally. Both Android lint checks passed. All 140 TikTok patches applied to the supported APK with resource and manifest checks. The attached release receipt identifies the exact source and bundle. This exact bundle was patched onto TikTok 47.5.3 and run on a signed-in emulator, and a walk through the whole app opened all 27 of its screens with no crash.\n\nNeeds Morphe Manager 2.0.0 or newer. Refresh the Hushfeed source to update. The .mpp is a patch bundle, not a TikTok APK. Keep the manager's existing signing key when updating.\n\n### Features and fixes\n\n* **TikTok:** On PineDrama, Hushfeed's settings now tell you to restart PineDrama instead of TikTok. That covers the note under each switch, the restart button that shows up once you flip one, the saved message and the Feature Gate Lab, in English and all nine translations. Other mentions of TikTok, like its servers or the TikTok Sans font, stay as they are (#156).\n* **TikTok:** New `Hide spam comments` switch in Hushfeed settings > Comments, off by default (#187). It hides bot comments that send you to their profile or a \"link in bio\", spell out a website, hand out a Telegram or WhatsApp contact, or offer free followers. It knows the common phrasings in English and the languages Hushfeed's settings come in, plus French. Your own comments stay, and so do the creator's and any they pinned or liked, so a \"part 2 in my bio\" from the creator still shows.\n* **TikTok:** `Hide videos you have already seen` takes watched videos out of For You again (#172). TikTok reads each new page once before handing it to the feed. The switch sits that first read out, as it does on lists you open yourself, but everything the read kept was then remembered as allowed and never checked again. Now the page gets checked against what you've watched once TikTok hands it over, and your watch record starts loading during that first read so it's ready in time.\n* **TikTok:** With AMOLED dark theme, the `Add comment...` bar under a photo post you open from search, a profile or a link is black now (#171). TikTok leaves that bar see-through, and a photo runs on underneath it, so the photo showed through where a video post shows black.\n* **TikTok:** `Use an imported font` now works on PineDrama (#243). PineDrama doesn't carry TikTok's own fonts, so its text fell back to your phone's font and the imported one never got used. It now draws in your font at the weight the app asked for, so bold text stays bold.\n* **TikTok:** Feature Gate Lab's `Scrolling comments on videos` preset tells you before you apply it that comments only scroll on videos TikTok has turned them on for. Each video carries its own flag from TikTok's server, so most videos look the same with the preset on (#98).\n* **TikTok:** New `Allow photo comments` patch for PineDrama, with its switch off by default (#156). PineDrama hides the gallery tab in the comment box for everyone, even though TikTok's server allows photo comments. Turn the switch on in Hushfeed settings > Comments and restart, and the comment box asks the server like TikTok does.\n* **TikTok:** PineDrama moves to 47.5.3 and 47.4.3 is dropped, so grab the new PineDrama from APKMirror before you patch it again. Six more patches run on it now: `Advanced downloads`, `Automatic video advance`, `Hide inbox items`, `Hide profile shortcuts`, `Open the comments at full height` and `Show the progress bar`. PineDrama 47.5.3 has no stories, HD upload choice or foldable comment panel, so `Story controls`, `Always upload in HD` and `Foldable split comment view` are TikTok only now. That makes 95 patches Morphe Manager offers for PineDrama. The rest lean on TikTok's LIVE rooms, feed buttons or resources that PineDrama doesn't have (#156).\n* **TikTok:** New `Report a newer phone to effects` switch, off by default (#176). Effects ask TikTok's server whether your phone can run them, and on some older phones the answer is \"This effect doesn't work on this device\". With the switch on, the effects server is told you have a Galaxy S24 Ultra. Sign-in and everything else still see your real phone. An effect your phone really can't run may still fail or look wrong.\n* **TikTok:** New `Load all saved stickers` patch, with no switch. PineDrama's sticker panel loaded only the first 100 stickers you saved and never asked for more, so the rest were missing from Saved. It now asks for all of them in one go. TikTok gets the same first request, and it still loads more by itself past that (#214).\n* **TikTok:** New `LIVE recording source` choice under `Record LIVEs you watch`. `Stream only` saves the room's own video like before. `Screen` records what your phone shows while you watch. Android asks to allow screen recording each time, and Stop saves it. The app's sound comes along when TikTok has the microphone permission, otherwise the recording is video only (#37).\n* **TikTok:** New `Blur the video behind the bar` switch under `Liquid glass look`. It frosts the glass pill with a soft blur of the video behind it, off by default, on Android 12 and up (#231).\n* **TikTok:** With `Dark LIVE panels in dark mode` on, the light pieces left in a LIVE room go dark too. The navigation bar under the menu a long press in a room opens stays dark now, even when TikTok turns it light again. The tiles in the host's profile card and the fan club's tab strip and card turn dark, and the text and icons on them turn light so they stay readable (#159).\n* **TikTok:** `Tag saved videos with their details` now tags the videos TikTok actually sends. Their files carry a short list of TikTok's own fields where the tags go, and the switch left those files alone, so every save came out with no title, creator, date or link. The tags go in now, and TikTok's fields stay in the file beside them.\n* **TikTok:** `Hide TikTok's Auto scroll button` also hides the Auto scroll switch that tablets and unfolded foldables show beside the avatar on each video, and it works with `Auto-advance videos` off now. Before, that switch stayed, and the hide only worked while Auto-advance was on (#234).\n* **TikTok:** The README's install steps now say which 47.5.3 file to get. Morphe Manager on a phone should patch the bundle (`.apkm`), because on a device with 3 GB Manager ran out of memory on the APK and patched the bundle in about a minute. A computer should patch the APK. The out of memory tip under Patching stalls partway points to the bundle too, and step 6 says to uninstall the Google Play TikTok first, which logs you out.\n* **TikTok:** With `Keep Clear display across videos` off, the tabs, the caption and the buttons now come back as your swipe lets go, so the next video arrives with them. Before, it settled full screen first and then jumped when they showed up again. A Clear display you turn on from TikTok's long-press menu also stays on now instead of switching itself off as the menu closes (#232).\n* **TikTok:** With `See-through bottom bar` on, the caption, the buttons and the search bar don't drop down over the tabs for a moment after each swipe anymore (#232).\n* **TikTok:** Long press set to `Save the frame on screen as a photo` works again on 47.5.3. TikTok's player now draws each video into a layer of its own under the feed, so the save only found an empty view and said the frame couldn't be read. It reads the player's layer now, and the photo comes out at the video's own size with no caption or buttons, on the feed and on videos opened from a profile.\n* **TikTok:** `Remove feed ads` also takes out the smaller Lemon8 card in For You, the one titled \"Your daily dose of inspiration\" with a Lemon8 post and Open Lemon8 under it. It's built differently from the full-screen Lemon8 card the switch already removed, so it slipped through on 47.5.3.\n* **TikTok:** The `Show how many were filtered` label and the `Show what is left of the budget` label stay off the Shop tab and the Nearby tab now. Both showed there because the Home tab stays selected on those tabs, and the filtered count sat right over their search boxes. They still show on For You and Following.\n* **TikTok:** With `Dark LIVE panels in dark mode` on, a room's viewer ranking opens dark again. A shop room's Top customers ranking still keeps TikTok's light look, because its tab titles came out dark on dark (#159).\n* **TikTok:** The README says how much memory morphe-desktop needs on a computer. With every patch picked on 47.5.3 it runs out at 1 GB, Java's default on a 4 GB machine, and finishes at 1.5 GB, so start it with `java -Xmx2g` (#220).\n* **TikTok:** With `Double tap` set to `Do nothing`, or every corner of `Double tap by corner` set to it, a tap on a video pauses or plays the moment your finger lifts. TikTok used to hold each tap for a beat in case a second one followed, and two quick taps counted as a double tap that did nothing. Now each one counts (#239).\n* **TikTok:** The build uses Gradle 9.8.2, up from 9.7.1. The build files now name the Guava advisory by its CVE number, CVE-2026-102554, because GitHub's global advisory database doesn't list its GHSA id.\n* **TikTok:** The README now lists the parts of Hushfeed's settings that an add-on bundle patched in beside it can count on, and a test fails if one of them changes. Anything else in the settings code can still move between releases.\n* **TikTok:** What's new now carries only the newest releases' notes, and its Full changelog button has the rest. Every release since 0.60.0 used to be built in, in all nine languages, and those notes alone were about 14% of the extension's size.\n* **TikTok:** `Glass lens on the current tab` slides to the next tab even after you've sat on one tab for a while, or when TikTok takes a moment to open a tab for the first time. Before, it only slid when you tapped quickly, and in both of those cases it jumped instead (#231).\n* **TikTok:** With `Automatic Clear display` on, a search result you open again from TikTok's own search clears again, even when you brought its buttons back by hand the last time you watched it. Before, it remembered that and stayed uncleared (#84).\n* **TikTok:** `LIVE recording quality` also offers the presets from a LIVE room's own quality menu: Original, 1080p, 720p, 540p and 360p. If the room doesn't have the one you picked, the recording takes the closest one below it, or the closest above when nothing lower is there. A room's 60 fps streams count as the quality they're in, so 1080p in a 1080p60 room records the 60 fps stream instead of falling back to 720p (#203).\n* **TikTok:** When the Download quality list stops below 720p, it now also offers the video's own H.264 or HEVC version if that one is taller. The diagnostic report has a new section for the last video you opened the list on, with each quality it offered and why any others were left out (#240).\n* **TikTok:** `Show where commenters are from` finds a country more often. It remembers someone's country from their earlier comments and from videos of theirs you scrolled past, and it reads one more of the country fields TikTok sends with an account (#201).\n* **TikTok:** `Latest first` on the Following tab now keeps everything below the video you're watching in date order as more posts load. A newer post that shows up late moves up right after your video, and nothing you've already scrolled past moves. It also asks TikTok for twice as many posts on the first load, so a newer post is less likely to turn up after the first video is already playing. When TikTok opens fresh, it no longer starts the Following tab on the post it saved from last time, which was usually older than everything loading under it. The first video now comes from the new, sorted list (#226).\n* **TikTok:** Sorting a profile or Liked grid now has Least viewed first and Least liked first. While an order is on, the grid keeps loading by itself (up to 300 videos) so the order covers more than the first screen, and a button in the grid's corner changes the order right there. When you open a video from a sorted grid, swiping up goes on in the grid's order too, where it used to follow TikTok's. On the Liked tab the button sits under TikTok's note about who can see your liked videos instead of covering it (#180).\n* **TikTok:** New switch under `Remove avatar rings`: `Open the Story when a creator is LIVE`. When someone who's LIVE also has a Story, tapping their picture on their profile or on your chat with them in the Inbox opens the Story, and tapping it again joins the LIVE. It starts off (#233).\n* **TikTok:** With `Record LIVEs you watch` on, a LIVE room's Share sheet has a `LIVE recording quality` row. Tap it to pick the quality the next recording uses without going to Hushfeed settings (#203).\n* **TikTok:** With `Offer LIVE quality in more rooms` on, Share > Video quality also shows in gaming and football LIVE rooms. TikTok left it out of LIVE Studio rooms and rooms that support low latency (#37).\n* **TikTok:** In dark mode, the newer Video quality picker in a LIVE room's menu is readable again. Its rows sit on a white card, and Original, 1080p and the rest came out light on it, so they were hard to make out. They turn dark on the card now (#57).\n* **TikTok:** With `Dark LIVE panels in dark mode` on, a LIVE room stays dark when your phone switches between light and dark while the room is open. Before, its Share sheet opened white until you left and came back (#159).\n* **TikTok:** New switch under Share sheet: `Allow Add to Story anyway`. When a creator turned off content reuse, it brings back Add to Story in the share sheet (the button in the row of actions and your story's bubble at the start of Send to) and on their stories, like `Allow Duet and Stitch` does for those two. TikTok may still refuse the post (#88).\n* **TikTok:** With Region spoof's `Match locale and timezone` on, chat date headers follow the preset's time zone now instead of the phone's clock (#184, #198).\n* **TikTok:** New `Turn on Thoughts` switch in Hushfeed settings > App. It shows Thoughts on profiles and in your inbox, plus the prompt to share one, for accounts TikTok left out. It starts off, and TikTok's servers can still refuse a post (#186).\n* **TikTok:** `Keep photos as TikTok sent them` now also covers stickers that don't move, and `Download original photos` keeps TikTok's own file when it's on (#229).\n* **TikTok:** `Keep the screen's brightness in the camera` now also covers the front flash and the fill light, which used to push the screen to full brightness on their own. The flash still turns the screen white, just at your own brightness (#200).",
     "apps": [
       {
@@ -137199,9 +137232,9 @@
     "bundle": "ajstrick81",
     "channel": "dev",
     "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-    "created_at": "2026-10-06T22:01:57Z",
-    "version": "test-212",
-    "description": "## [1.42.3](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.42.2...v1.42.3) (2026-10-23)\n\n\n### Bug Fixes\n\n* **tubi:** re-anchor Skip ads for 10.40.5000 + block new image pause-ad surface ([68a0747](https://github.com/ajstrick81/morphe-androidtv-patches/commit/68a07473273b4c29ac23db207dbdb27c296bf78e))",
+    "created_at": "2026-10-25T23:57:43Z",
+    "version": "pv-v15-fix-260",
+    "description": "# [1.44.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.43.0...v1.44.0) (2026-10-26)\n\n\n### Features\n\n* **fawesome:** disable the \"New version Available\" update prompt (19.7) ([64ffa83](https://github.com/ajstrick81/morphe-androidtv-patches/commit/64ffa830292cf75ce38e055e9430531d5c9a67f7)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257) [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n* **fawesome:** extend update-prompt disable to 20.1 (R8-obfuscated rewrite) ([57ebd6a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/57ebd6a8815eaa49165808c968467133d370c797)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)",
     "apps": [
       {
         "app_name": "Prime Video",
@@ -137413,6 +137446,16 @@
         "app_name": "Moviesbyfawesomeandroidtv",
         "package": "com.future.moviesbyfawesomeandroidtv",
         "patches": [
+          {
+            "name": "Disable update prompt",
+            "description": "Stops Fawesome Movies & TV (Android TV) from showing the \"New version Available\" dialog on every launch. The app reads the server's latest version code (Firebase remote-config key \"versioncode_androidtv_googletv\") and, when it is higher than the installed build, shows an update dialog before continuing into the app. This patch forces the app's own no-update path instead, so startup is unchanged and the nag is gone — nothing is added, the client just stops being told to update. On 19.7 the seam is SplashActivity.checkCurrentAppVersion() -> Utilities.updateAlert(); on 20.1 (R8-obfuscated, ViewModel rewrite) it is the splash view-model's version-check method, forced down its own proceed branch. Whichever matches the installed version is applied.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "19.7",
+              "20.1"
+            ]
+          },
           {
             "name": "Skip ads",
             "description": "Removes client-side ads in Fawesome Movies & TV (Android TV). The IMA pre/mid-roll video ad is suppressed by firing the app's own ad-complete transition (so content loads/resumes normally instead of waiting on an ad that never plays); the in-player VAST banner is removed; and the pause-screen bug ad is removed while the pause/focus behaviour is preserved. Ads are requested client-side, so this is a full removal with no server-stitched (SSAI) fallback to break.",
@@ -137720,10 +137763,10 @@
       }
     ],
     "patches_name": "ajstrick81 Patches",
-    "fingerprint": "418ebfc7a213ce4f85f621213930962d3baa7ef4c7a6779223d48370d5fde578",
-    "release_notes": "Test-only build for #212. Netflix 13.0.1 build 25028 received re-minified ad code; this recovers the ad-kill (V3) and scans the large memory region the code now often sits in. Patch with the same patches as usual, then: force-stop, relaunch, wait ~60s on home, play a title, and attach `adb logcat -d -s KILL > kill.txt`. Success = `PATCH V3-ADV … verify=OK` and `PATCH V3-MASTER … verify=OK`.",
-    "release_tag": "test-212",
-    "release_date": "2026-10-06T22:01:57Z",
+    "fingerprint": "a12884133d8521d83d0ef0d54ea91269bf4d85509c1a39a8e3b665c0f336bac1",
+    "release_notes": "**Field-test build for #260** (Prime Video `6.23.23+v15.5.0.70`, armeabi-v7a). Not a general release — for @Sapleexx and anyone in a heavy-ad region who hit the pre-roll hang.\n\nContains the cross-chunk reassembly fix from #263: when the regolith `playlist` splits across memcpy chunks, the hook now reassembles and empties the **whole** array once it closes, so no ghost tail ad period survives to hang the pre-roll.\n\n### Install\n- The hook `.so` is rebuilt from the #263 branch; everything else matches the current shipped native strip.\n- Signed with cert SHA-256 `49c04fa9…e3c8fc`. It will **not** update over a build you patched yourself with a different key — **uninstall your current Prime Video, then install this** (you'll need to sign in again).\n- `adb install -r pv-6.23.23-FIX-260.apk` (or sideload).\n\n### What to capture\nPlay a few titles that previously hung, then grab logcat (`adb logcat -s PVNativeHook`). The lines that confirm the fix fired:\n- `PVKILL path=tv-reassembled playlist emptied across chunks ...`\n- heartbeat `[hb] ... rego_trunc=N rego_trunc_salv=N rego_reasm=M` — **`rego_reasm` climbing** alongside `rego_trunc`, and **no** \"Something went wrong\".\n\nIf `rego_trunc` climbs but `rego_reasm` stays `0`, that's still useful — it means the finishing bytes don't arrive contiguously through the hooked copies, and we'll go another route.\n\n⚠️ Built and signature-verified; the on-device runtime confirmation is what this field test is for.",
+    "release_tag": "pv-v15-fix-260",
+    "release_date": "2026-10-25T23:57:43Z",
     "isPreRelease": true,
     "stars": 261,
     "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",
@@ -137737,9 +137780,9 @@
     "bundle": "ajstrick81",
     "channel": "stable",
     "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-    "created_at": "2026-10-23T03:26:30Z",
-    "version": "1.42.3",
-    "description": "## [1.42.3](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.42.2...v1.42.3) (2026-10-23)\n\n\n### Bug Fixes\n\n* **tubi:** re-anchor Skip ads for 10.40.5000 + block new image pause-ad surface ([68a0747](https://github.com/ajstrick81/morphe-androidtv-patches/commit/68a07473273b4c29ac23db207dbdb27c296bf78e))",
+    "created_at": "2026-10-26T00:25:08Z",
+    "version": "1.44.0",
+    "description": "# [1.44.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.43.0...v1.44.0) (2026-10-26)\n\n\n### Features\n\n* **fawesome:** disable the \"New version Available\" update prompt (19.7) ([64ffa83](https://github.com/ajstrick81/morphe-androidtv-patches/commit/64ffa830292cf75ce38e055e9430531d5c9a67f7)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257) [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n* **fawesome:** extend update-prompt disable to 20.1 (R8-obfuscated rewrite) ([57ebd6a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/57ebd6a8815eaa49165808c968467133d370c797)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)",
     "apps": [
       {
         "app_name": "Prime Video",
@@ -137951,6 +137994,16 @@
         "app_name": "Moviesbyfawesomeandroidtv",
         "package": "com.future.moviesbyfawesomeandroidtv",
         "patches": [
+          {
+            "name": "Disable update prompt",
+            "description": "Stops Fawesome Movies & TV (Android TV) from showing the \"New version Available\" dialog on every launch. The app reads the server's latest version code (Firebase remote-config key \"versioncode_androidtv_googletv\") and, when it is higher than the installed build, shows an update dialog before continuing into the app. This patch forces the app's own no-update path instead, so startup is unchanged and the nag is gone — nothing is added, the client just stops being told to update. On 19.7 the seam is SplashActivity.checkCurrentAppVersion() -> Utilities.updateAlert(); on 20.1 (R8-obfuscated, ViewModel rewrite) it is the splash view-model's version-check method, forced down its own proceed branch. Whichever matches the installed version is applied.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "19.7",
+              "20.1"
+            ]
+          },
           {
             "name": "Skip ads",
             "description": "Removes client-side ads in Fawesome Movies & TV (Android TV). The IMA pre/mid-roll video ad is suppressed by firing the app's own ad-complete transition (so content loads/resumes normally instead of waiting on an ad that never plays); the in-player VAST banner is removed; and the pause-screen bug ad is removed while the pause/focus behaviour is preserved. Ads are requested client-side, so this is a full removal with no server-stitched (SSAI) fallback to break.",
@@ -138258,10 +138311,10 @@
       }
     ],
     "patches_name": "ajstrick81 Patches",
-    "fingerprint": "ee02b3f0622142f7b46d331e2017257822f56b56bf3cf23359173e0320ed754a",
-    "release_notes": "## [1.42.3](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.42.2...v1.42.3) (2026-10-23)\n\n\n### Bug Fixes\n\n* **tubi:** re-anchor Skip ads for 10.40.5000 + block new image pause-ad surface ([68a0747](https://github.com/ajstrick81/morphe-androidtv-patches/commit/68a07473273b4c29ac23db207dbdb27c296bf78e))\n\n\n\n",
-    "release_tag": "v1.42.3",
-    "release_date": "2026-10-23T03:26:30Z",
+    "fingerprint": "230117f6297b778bde82182a427f755a3c4afa9ef2ef1b755fd2aaf794130b8a",
+    "release_notes": "# [1.44.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.43.0...v1.44.0) (2026-10-26)\n\n\n### Features\n\n* **fawesome:** disable the \"New version Available\" update prompt (19.7) ([64ffa83](https://github.com/ajstrick81/morphe-androidtv-patches/commit/64ffa830292cf75ce38e055e9430531d5c9a67f7)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257) [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n* **fawesome:** extend update-prompt disable to 20.1 (R8-obfuscated rewrite) ([57ebd6a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/57ebd6a8815eaa49165808c968467133d370c797)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n\n\n\n",
+    "release_tag": "v1.44.0",
+    "release_date": "2026-10-26T00:25:08Z",
     "isPreRelease": false,
     "stars": 261,
     "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",
@@ -166358,6 +166411,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/65970327?v=4",
     "repoDescription": "heinrich26's Morphe Patches",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "amitaisela:stable": {
@@ -166407,6 +166462,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/68296620?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "ihatenodejs:dev": {
@@ -167484,6 +167541,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/178358868?v=4",
     "repoDescription": "My Morphe patches; mainly focused on financial and productivity/utility apps",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png"
   },
   "ihatenodejs:stable": {
@@ -168561,6 +168620,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/178358868?v=4",
     "repoDescription": "My Morphe patches; mainly focused on financial and productivity/utility apps",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png"
   },
   "heval99-morphe-patches:dev": {
@@ -172984,6 +173045,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/109168580?v=4",
     "repoDescription": "Morphe Patches for Android apps by anxyis",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "crimera:dev": {
@@ -176066,10 +176129,12 @@
     "release_tag": "v1.16.1",
     "release_date": "2026-10-23T11:27:51Z",
     "isPreRelease": false,
-    "stars": 2,
+    "stars": 5,
     "avatarUrl": "https://avatars.githubusercontent.com/u/339125891?v=4",
     "repoDescription": "Patches for use with Morphe: danmaku comments for YouTube and Twitch, Twitch chat and player enhancements, and cleanup for Reddit, SmartNews, Pinterest, pixiv, Google News and Sankaku.",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "icysymmetra:dev": {
@@ -176471,10 +176536,12 @@
     "release_tag": "v0.8.0",
     "release_date": "2026-09-26T15:27:09Z",
     "isPreRelease": false,
-    "stars": 434,
+    "stars": 444,
     "avatarUrl": "https://avatars.githubusercontent.com/u/131003867?v=4",
     "repoDescription": "This repository is a Morphe patch source for TikTok.  It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer T",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png"
   },
   "icysymmetra:stable": {
@@ -176876,10 +176943,12 @@
     "release_tag": "v0.8.0",
     "release_date": "2026-09-26T15:27:09Z",
     "isPreRelease": false,
-    "stars": 434,
+    "stars": 444,
     "avatarUrl": "https://avatars.githubusercontent.com/u/131003867?v=4",
     "repoDescription": "This repository is a Morphe patch source for TikTok.  It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer T",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png"
   },
   "arhcos:stable": {
@@ -176917,6 +176986,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/72146549?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "akzzy:dev": {
@@ -176983,10 +177054,12 @@
     "release_tag": "v1.2.0-dev.1",
     "release_date": "2026-07-05T14:39:12Z",
     "isPreRelease": true,
-    "stars": 1,
+    "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/29403137?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "akzzy:stable": {
@@ -177053,10 +177126,12 @@
     "release_tag": "v1.2.0",
     "release_date": "2026-07-05T14:40:04Z",
     "isPreRelease": false,
-    "stars": 1,
+    "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/29403137?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "jackblk:dev": {
@@ -177093,6 +177168,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/12843654?v=4",
     "repoDescription": "just my personal morphe patches",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "jackblk:stable": {
@@ -177129,6 +177206,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/12843654?v=4",
     "repoDescription": "just my personal morphe patches",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "goldrift:dev": {
@@ -177178,6 +177257,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/69951941?v=4",
     "repoDescription": "Strong (fitness tracker) and HiPaint patches",
     "isArchived": false,
+    "isFork": true,
+    "forkParent": "MorpheApp/morphe-patches-template",
     "bundleImageUrl": ""
   },
   "goldrift:stable": {
@@ -177227,6 +177308,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/69951941?v=4",
     "repoDescription": "Strong (fitness tracker) and HiPaint patches",
     "isArchived": false,
+    "isFork": true,
+    "forkParent": "MorpheApp/morphe-patches-template",
     "bundleImageUrl": ""
   },
   "shahriar-0:dev": {
@@ -177263,6 +177346,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/77535132?v=4",
     "repoDescription": "morphe patch for telegram x, fuck ads",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "shahriar-0:stable": {
@@ -177299,6 +177384,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/77535132?v=4",
     "repoDescription": "morphe patch for telegram x, fuck ads",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "akash-sriram:stable": {
@@ -177399,10 +177486,12 @@
     "release_tag": "v1.16.0",
     "release_date": "2026-10-25T17:37:58Z",
     "isPreRelease": false,
-    "stars": 82,
+    "stars": 86,
     "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
     "repoDescription": "Morphe Patches for Google Photos and Android Apps",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
   },
   "pseudofractal:dev": {
@@ -177440,6 +177529,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/54537673?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "pseudofractal:stable": {
@@ -177477,6 +177568,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/54537673?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "roundsalmon4:stable": {
@@ -177520,6 +177613,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/209016228?v=4",
     "repoDescription": "Personal repo for creating and releasing custom Morphe patches.",
     "isArchived": false,
+    "isFork": true,
+    "forkParent": "MorpheApp/morphe-patches-template",
     "bundleImageUrl": ""
   },
   "angeldark92:dev": {
@@ -180573,6 +180668,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/45492894?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "kontsevoye:dev": {
@@ -180609,6 +180706,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/1519510?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "kontsevoye:stable": {
@@ -180645,6 +180744,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/1519510?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "seobject:dev": {
@@ -180699,6 +180800,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/245246866?v=4",
     "repoDescription": "Random QoL Patches",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "seobject:stable": {
@@ -180753,6 +180856,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/245246866?v=4",
     "repoDescription": "Random QoL Patches",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "jancerny2001:stable": {
@@ -180789,6 +180894,8 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/11784537?v=4",
     "repoDescription": "Morphe patch for ISIC Alive App",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "vladon:stable": {
@@ -180839,10 +180946,12 @@
     "release_tag": "v1.0.6",
     "release_date": "2026-04-20T14:53:42Z",
     "isPreRelease": false,
-    "stars": 3,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/477109?v=4",
     "repoDescription": "Morphe bytecode patches for Yandex Navigator (28.6.5)",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "sahilwasgood:dev": {
@@ -181008,11 +181117,13 @@
     "release_tag": "v1.3.0-dev.1",
     "release_date": "2026-10-18T21:13:14Z",
     "isPreRelease": true,
-    "stars": 2,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/341977773?v=4",
-    "repoDescription": "Patches for apps I use: branding presets, button styles and more for YouTube / YT Music. Compatible with Morphe.",
+    "repoDescription": "Preset icon packs, headers and button styles for YouTube and YT Music",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "isFork": false,
+    "forkParent": "",
+    "bundleImageUrl": "https://github.com/sahilwasgood/patches/raw/HEAD/patches-bundle.png"
   },
   "sahilwasgood:stable": {
     "bundle": "sahilwasgood",
@@ -181177,11 +181288,13 @@
     "release_tag": "v1.3.0",
     "release_date": "2026-10-18T21:17:09Z",
     "isPreRelease": false,
-    "stars": 2,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/341977773?v=4",
-    "repoDescription": "Patches for apps I use: branding presets, button styles and more for YouTube / YT Music. Compatible with Morphe.",
+    "repoDescription": "Preset icon packs, headers and button styles for YouTube and YT Music",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "isFork": false,
+    "forkParent": "",
+    "bundleImageUrl": "https://github.com/sahilwasgood/patches/raw/HEAD/patches-bundle.png"
   },
   "quantro100:stable": {
     "bundle": "quantro100",
@@ -181294,10 +181407,12 @@
     "release_tag": "v1.0.7",
     "release_date": "2026-06-02T20:22:14Z",
     "isPreRelease": false,
-    "stars": 21,
+    "stars": 22,
     "avatarUrl": "https://avatars.githubusercontent.com/u/57402341?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "dieroboter:dev": {
@@ -181738,10 +181853,12 @@
     "release_tag": "v1.5.2-dev.2",
     "release_date": "2026-10-23T23:24:32Z",
     "isPreRelease": true,
-    "stars": 5,
+    "stars": 6,
     "avatarUrl": "https://avatars.githubusercontent.com/u/87614015?v=4",
     "repoDescription": "Personal patch bundle for Morphe",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "dieroboter:stable": {
@@ -182182,10 +182299,12 @@
     "release_tag": "v1.5.2",
     "release_date": "2026-10-24T00:38:30Z",
     "isPreRelease": false,
-    "stars": 5,
+    "stars": 6,
     "avatarUrl": "https://avatars.githubusercontent.com/u/87614015?v=4",
     "repoDescription": "Personal patch bundle for Morphe",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "jaredcat:dev": {
@@ -182287,10 +182406,12 @@
     "release_tag": "v1.1.0-dev.1",
     "release_date": "2026-08-28T22:08:19Z",
     "isPreRelease": true,
-    "stars": 3,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/3268576?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "jaredcat:stable": {
@@ -182392,10 +182513,12 @@
     "release_tag": "v1.3.0",
     "release_date": "2026-09-24T03:19:00Z",
     "isPreRelease": false,
-    "stars": 3,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/3268576?v=4",
     "repoDescription": "",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "bigyank:dev": {
@@ -182455,10 +182578,12 @@
     "release_tag": "v1.4.0-dev.2",
     "release_date": "2026-10-15T18:31:48Z",
     "isPreRelease": true,
-    "stars": 19,
+    "stars": 21,
     "avatarUrl": "https://avatars.githubusercontent.com/u/43530486?v=4",
     "repoDescription": "Morphe patches for Samsung Health on Knox-tripped Galaxy devices",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "bigyank:stable": {
@@ -182518,10 +182643,12 @@
     "release_tag": "v1.4.0",
     "release_date": "2026-10-15T18:39:06Z",
     "isPreRelease": false,
-    "stars": 19,
+    "stars": 21,
     "avatarUrl": "https://avatars.githubusercontent.com/u/43530486?v=4",
     "repoDescription": "Morphe patches for Samsung Health on Knox-tripped Galaxy devices",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "dh6k:dev": {
@@ -182899,10 +183026,12 @@
     "release_tag": "v1.9.0-dev.9",
     "release_date": "2026-10-14T15:25:36Z",
     "isPreRelease": true,
-    "stars": 73,
+    "stars": 77,
     "avatarUrl": "https://avatars.githubusercontent.com/u/87336618?v=4",
     "repoDescription": "Open-source Morphe patch source for Android browsers (Brave, Quetta, Titanium): privacy, performance, and user-control patches. ~28k release downloads.",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "dh6k:stable": {
@@ -183280,10 +183409,12 @@
     "release_tag": "v1.9.0",
     "release_date": "2026-10-22T16:40:51Z",
     "isPreRelease": false,
-    "stars": 73,
+    "stars": 77,
     "avatarUrl": "https://avatars.githubusercontent.com/u/87336618?v=4",
     "repoDescription": "Open-source Morphe patch source for Android browsers (Brave, Quetta, Titanium): privacy, performance, and user-control patches. ~28k release downloads.",
     "isArchived": false,
+    "isFork": false,
+    "forkParent": "",
     "bundleImageUrl": ""
   },
   "canic:stable": {
@@ -191978,10 +192109,43 @@
     "bundle": "non7043",
     "channel": "stable",
     "repo_url": "https://github.com/0xtalos/vibe-patches",
-    "created_at": "2026-10-23T09:59:01Z",
-    "version": "1.3.3",
-    "description": "Vibe Patches v1.3.2: Morphe patches for 365Scores - ad-free, analytics removal, MicroG sign-in and update blocking.",
+    "created_at": "2026-10-25T22:21:19Z",
+    "version": "1.4.0",
+    "description": "Vibe Patches v1.4.0: Morphe patches for 365Scores and HDO Box - ad removal, analytics removal, tracking permission cleanup, MicroG sign-in and update blocking.",
     "apps": [
+      {
+        "app_name": "Hdo Box",
+        "package": "com.hdoapp.hdo_box",
+        "patches": [
+          {
+            "name": "Disable analytics",
+            "description": "Disables Firebase Analytics collection, automatic screen reporting and advertising id collection, and prevents the app from re-enabling them.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          },
+          {
+            "name": "Remove ads",
+            "description": "Removes Unity Ads by answering the app's ad plugin locally, so no ad is ever initialized, loaded or displayed.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          },
+          {
+            "name": "Remove tracking permissions",
+            "description": "Removes the advertising id (AD_ID) and Privacy Sandbox (AdServices) permissions.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          }
+        ]
+      },
       {
         "app_name": "365Scores: Live Scores & Data",
         "package": "com.scores365",
@@ -192024,8 +192188,8 @@
           },
           {
             "name": "GmsCore support",
-            "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
-            "use": false,
+            "description": "Makes Google sign-in and Google APIs work by routing them to MicroG RE instead of Google Play services. Requires MicroG RE (app.revanced.android.gms) and a Google account added in it.",
+            "use": true,
             "options": [],
             "compatible_versions": [
               "14.9.7"
@@ -192053,10 +192217,10 @@
       }
     ],
     "patches_name": "Vibe Patches",
-    "fingerprint": "6a1a230773a58749c44a8134f244181c5a9d6ed53accc0c7762e9b07e951d75d",
-    "release_notes": "**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3",
-    "release_tag": "v1.3.3",
-    "release_date": "2026-10-23T09:59:01Z",
+    "fingerprint": "647a1ba05e586d87ad654422bb833b92d851efe8c2eb6668ae10724dfb3f286f",
+    "release_notes": "## 365Scores\n- **GmsCore support is now ON by default** - Google Sign-In works against MicroG RE with no extra toggles. Requires MicroG RE (`app.revanced.android.gms`) with a Google account added in it.\n- Automatically pulls in **Spoof signature** (original Play certificate) for Firebase / API-key checks.\n- Hardened patch: unavailable on MOUNT installs, required splash fingerprint, verified GmsCore check injection.\n- Smoke tests now cover the rewritten sign-in action/package and the spoofed certificate.\n\n## HDO Box (new)\n- **Remove ads** - neutralises the Unity Ads plugin.\n- **Disable analytics** - disables Firebase Analytics collection and blocks re-enabling it.\n- **Remove tracking permissions** - removes AD_ID and Privacy Sandbox (AdServices) permissions.\n\n> HDO premium is validated server-side and cannot be unlocked client-side; these patches only remove ads and tracking.\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.3...v1.4.0",
+    "release_tag": "v1.4.0",
+    "release_date": "2026-10-25T22:21:19Z",
     "isPreRelease": false,
     "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/42888660?v=4",
@@ -195386,10 +195550,43 @@
     "bundle": "0xtalos-vibe-patches",
     "channel": "stable",
     "repo_url": "https://github.com/0xtalos/vibe-patches",
-    "created_at": "2026-10-23T09:59:01Z",
-    "version": "1.3.3",
-    "description": "Vibe Patches v1.3.2: Morphe patches for 365Scores - ad-free, analytics removal, MicroG sign-in and update blocking.",
+    "created_at": "2026-10-25T22:21:19Z",
+    "version": "1.4.0",
+    "description": "Vibe Patches v1.4.0: Morphe patches for 365Scores and HDO Box - ad removal, analytics removal, tracking permission cleanup, MicroG sign-in and update blocking.",
     "apps": [
+      {
+        "app_name": "Hdo Box",
+        "package": "com.hdoapp.hdo_box",
+        "patches": [
+          {
+            "name": "Disable analytics",
+            "description": "Disables Firebase Analytics collection, automatic screen reporting and advertising id collection, and prevents the app from re-enabling them.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          },
+          {
+            "name": "Remove ads",
+            "description": "Removes Unity Ads by answering the app's ad plugin locally, so no ad is ever initialized, loaded or displayed.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          },
+          {
+            "name": "Remove tracking permissions",
+            "description": "Removes the advertising id (AD_ID) and Privacy Sandbox (AdServices) permissions.",
+            "use": true,
+            "options": [],
+            "compatible_versions": [
+              "4.4.7"
+            ]
+          }
+        ]
+      },
       {
         "app_name": "365Scores: Live Scores & Data",
         "package": "com.scores365",
@@ -195432,8 +195629,8 @@
           },
           {
             "name": "GmsCore support",
-            "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
-            "use": false,
+            "description": "Makes Google sign-in and Google APIs work by routing them to MicroG RE instead of Google Play services. Requires MicroG RE (app.revanced.android.gms) and a Google account added in it.",
+            "use": true,
             "options": [],
             "compatible_versions": [
               "14.9.7"
@@ -195461,10 +195658,10 @@
       }
     ],
     "patches_name": "Vibe Patches",
-    "fingerprint": "426b3debfe5d62bcdf946d426e6542b878bf105516201c8d3fa426d012e7cc82",
-    "release_notes": "**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3",
-    "release_tag": "v1.3.3",
-    "release_date": "2026-10-23T09:59:01Z",
+    "fingerprint": "7a34c2c1f31d9e8c164a8a625ec9219e430d6c7637c01987aba459b14ef64438",
+    "release_notes": "## 365Scores\n- **GmsCore support is now ON by default** - Google Sign-In works against MicroG RE with no extra toggles. Requires MicroG RE (`app.revanced.android.gms`) with a Google account added in it.\n- Automatically pulls in **Spoof signature** (original Play certificate) for Firebase / API-key checks.\n- Hardened patch: unavailable on MOUNT installs, required splash fingerprint, verified GmsCore check injection.\n- Smoke tests now cover the rewritten sign-in action/package and the spoofed certificate.\n\n## HDO Box (new)\n- **Remove ads** - neutralises the Unity Ads plugin.\n- **Disable analytics** - disables Firebase Analytics collection and blocks re-enabling it.\n- **Remove tracking permissions** - removes AD_ID and Privacy Sandbox (AdServices) permissions.\n\n> HDO premium is validated server-side and cannot be unlocked client-side; these patches only remove ads and tracking.\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.3...v1.4.0",
+    "release_tag": "v1.4.0",
+    "release_date": "2026-10-25T22:21:19Z",
     "isPreRelease": false,
     "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/42888660?v=4",
@@ -200012,11 +200209,13 @@
     "release_tag": "v1.16.0",
     "release_date": "2026-10-25T17:37:58Z",
     "isPreRelease": false,
-    "stars": 82,
+    "stars": 86,
     "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
     "repoDescription": "Morphe Patches for Google Photos and Android Apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "blazko381:stable": {
     "bundle": "blazko381",
@@ -229462,11 +229661,13 @@
     "release_tag": "v1.16.0",
     "release_date": "2026-10-25T17:37:58Z",
     "isPreRelease": false,
-    "stars": 82,
+    "stars": 86,
     "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
     "repoDescription": "Morphe Patches for Google Photos and Android Apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "de-vanced:stable": {
     "bundle": "de-vanced",
@@ -229584,11 +229785,13 @@
     "release_tag": "v1.16.0",
     "release_date": "2026-10-25T17:37:58Z",
     "isPreRelease": false,
-    "stars": 82,
+    "stars": 86,
     "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
     "repoDescription": "Morphe Patches for Google Photos and Android Apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "ahmedyarub:latest": {
     "bundle": "ahmedyarub",
@@ -267929,7 +268132,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/68296620?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "travian:stable": {
     "bundle": "travian",
@@ -267978,7 +268183,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/68296620?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "365score:latest": {
     "bundle": "365score",
@@ -297151,11 +297358,13 @@
     "release_tag": "v0.8.0",
     "release_date": "2026-09-26T15:27:09Z",
     "isPreRelease": false,
-    "stars": 434,
+    "stars": 444,
     "avatarUrl": "https://avatars.githubusercontent.com/u/131003867?v=4",
     "repoDescription": "This repository is a Morphe patch source for TikTok.  It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer T",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "icysymmetra-tiktok:dev": {
     "bundle": "icysymmetra-tiktok",
@@ -297556,11 +297765,13 @@
     "release_tag": "v0.8.0-dev.12",
     "release_date": "2026-09-25T21:33:08Z",
     "isPreRelease": true,
-    "stars": 434,
+    "stars": 444,
     "avatarUrl": "https://avatars.githubusercontent.com/u/131003867?v=4",
     "repoDescription": "This repository is a Morphe patch source for TikTok.  It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer T",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "icysymmetra-tiktok:stable": {
     "bundle": "icysymmetra-tiktok",
@@ -297961,11 +298172,13 @@
     "release_tag": "v0.8.0",
     "release_date": "2026-09-26T15:27:09Z",
     "isPreRelease": false,
-    "stars": 434,
+    "stars": 444,
     "avatarUrl": "https://avatars.githubusercontent.com/u/131003867?v=4",
     "repoDescription": "This repository is a Morphe patch source for TikTok.  It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer T",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/icysymmetra/tiktok-patches-for-morphe/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "paresh-maheshwari:latest": {
     "bundle": "paresh-maheshwari",
@@ -305043,11 +305256,13 @@
     "release_tag": "v1.14.3",
     "release_date": "2026-10-09T05:51:17Z",
     "isPreRelease": false,
-    "stars": 82,
+    "stars": 86,
     "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
     "repoDescription": "Morphe Patches for Google Photos and Android Apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "morphe-google-photos:stable": {
     "bundle": "morphe-google-photos",
@@ -305187,11 +305402,13 @@
     "release_tag": "v1.14.3",
     "release_date": "2026-10-09T05:51:17Z",
     "isPreRelease": false,
-    "stars": 82,
+    "stars": 86,
     "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
     "repoDescription": "Morphe Patches for Google Photos and Android Apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "watch-later:latest": {
     "bundle": "watch-later",
@@ -310555,7 +310772,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/109168580?v=4",
     "repoDescription": "Morphe Patches for Android apps by anxyis",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "anxy:dev": {
     "bundle": "anxy",
@@ -310738,7 +310957,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/109168580?v=4",
     "repoDescription": "Morphe Patches for Android apps by anxyis",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "anxy:stable": {
     "bundle": "anxy",
@@ -310925,7 +311146,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/109168580?v=4",
     "repoDescription": "Morphe Patches for Android apps by anxyis",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "jeff:latest": {
     "bundle": "jeff",
@@ -327624,11 +327847,13 @@
     "release_tag": "v1.2.1",
     "release_date": "2026-06-30T13:25:55Z",
     "isPreRelease": false,
-    "stars": 19,
+    "stars": 21,
     "avatarUrl": "https://avatars.githubusercontent.com/u/43530486?v=4",
     "repoDescription": "Morphe patches for Samsung Health on Knox-tripped Galaxy devices",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "samsung-morphe:dev": {
     "bundle": "samsung-morphe",
@@ -327671,11 +327896,13 @@
     "release_tag": "v1.4.0",
     "release_date": "2026-10-15T18:39:06Z",
     "isPreRelease": false,
-    "stars": 19,
+    "stars": 21,
     "avatarUrl": "https://avatars.githubusercontent.com/u/43530486?v=4",
     "repoDescription": "Morphe patches for Samsung Health on Knox-tripped Galaxy devices",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "samsung-morphe:stable": {
     "bundle": "samsung-morphe",
@@ -327720,11 +327947,13 @@
     "release_tag": "v1.2.1",
     "release_date": "2026-06-30T13:25:55Z",
     "isPreRelease": false,
-    "stars": 19,
+    "stars": 21,
     "avatarUrl": "https://avatars.githubusercontent.com/u/43530486?v=4",
     "repoDescription": "Morphe patches for Samsung Health on Knox-tripped Galaxy devices",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "brosssh:latest": {
     "bundle": "brosssh",
@@ -346662,7 +346891,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/178358868?v=4",
     "repoDescription": "My Morphe patches; mainly focused on financial and productivity/utility apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "aidans:dev": {
     "bundle": "aidans",
@@ -347523,7 +347754,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/178358868?v=4",
     "repoDescription": "My Morphe patches; mainly focused on financial and productivity/utility apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "aidans:stable": {
     "bundle": "aidans",
@@ -348257,7 +348490,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/178358868?v=4",
     "repoDescription": "My Morphe patches; mainly focused on financial and productivity/utility apps",
     "isArchived": false,
-    "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png"
+    "bundleImageUrl": "https://github.com/ihatenodejs/aidans-patches/raw/HEAD/patches-bundle.png",
+    "isFork": false,
+    "forkParent": ""
   },
   "pixelpusher247:latest": {
     "bundle": "pixelpusher247",
@@ -356902,7 +357137,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/12843654?v=4",
     "repoDescription": "just my personal morphe patches",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "goldrift:latest": {
     "bundle": "goldrift",
@@ -356938,7 +357175,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/69951941?v=4",
     "repoDescription": "Strong (fitness tracker) and HiPaint patches",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": true,
+    "forkParent": "MorpheApp/morphe-patches-template"
   },
   "ysamjo-youtubetv:latest": {
     "bundle": "ysamjo-youtubetv",
@@ -357209,7 +357448,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/209016228?v=4",
     "repoDescription": "Personal repo for creating and releasing custom Morphe patches.",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": true,
+    "forkParent": "MorpheApp/morphe-patches-template"
   },
   "michii:latest": {
     "bundle": "michii",
@@ -357677,7 +357918,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/45492894?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "seobject:latest": {
     "bundle": "seobject",
@@ -357731,7 +357974,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/245246866?v=4",
     "repoDescription": "Random QoL Patches",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "jancerny2001:latest": {
     "bundle": "jancerny2001",
@@ -357767,7 +358012,9 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/11784537?v=4",
     "repoDescription": "Morphe patch for ISIC Alive App",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "vladon:latest": {
     "bundle": "vladon",
@@ -357817,11 +358064,13 @@
     "release_tag": "v1.0.6",
     "release_date": "2026-04-20T14:53:42Z",
     "isPreRelease": false,
-    "stars": 3,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/477109?v=4",
     "repoDescription": "Morphe bytecode patches for Yandex Navigator (28.6.5)",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "redgifs-audio:latest": {
     "bundle": "redgifs-audio",
@@ -358112,11 +358361,13 @@
     "release_tag": "v1.3.0",
     "release_date": "2026-09-24T03:19:00Z",
     "isPreRelease": false,
-    "stars": 3,
+    "stars": 4,
     "avatarUrl": "https://avatars.githubusercontent.com/u/3268576?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "dh6k:latest": {
     "bundle": "dh6k",
@@ -358493,11 +358744,13 @@
     "release_tag": "v1.9.0-dev.4",
     "release_date": "2026-10-05T19:15:22Z",
     "isPreRelease": true,
-    "stars": 73,
+    "stars": 77,
     "avatarUrl": "https://avatars.githubusercontent.com/u/87336618?v=4",
     "repoDescription": "Open-source Morphe patch source for Android browsers (Brave, Quetta, Titanium): privacy, performance, and user-control patches. ~28k release downloads.",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "alastor-kaneki:latest": {
     "bundle": "alastor-kaneki",
@@ -364817,11 +365070,13 @@
     "release_tag": "v1.2.0",
     "release_date": "2026-07-05T14:40:04Z",
     "isPreRelease": false,
-    "stars": 1,
+    "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/29403137?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "morphi-patcho:dev": {
     "bundle": "morphi-patcho",
@@ -364887,11 +365142,13 @@
     "release_tag": "v1.2.0-dev.1",
     "release_date": "2026-07-05T14:39:12Z",
     "isPreRelease": true,
-    "stars": 1,
+    "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/29403137?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "morphi-patcho:stable": {
     "bundle": "morphi-patcho",
@@ -364957,11 +365214,13 @@
     "release_tag": "v1.2.0",
     "release_date": "2026-07-05T14:40:04Z",
     "isPreRelease": false,
-    "stars": 1,
+    "stars": 2,
     "avatarUrl": "https://avatars.githubusercontent.com/u/29403137?v=4",
     "repoDescription": "",
     "isArchived": false,
-    "bundleImageUrl": ""
+    "bundleImageUrl": "",
+    "isFork": false,
+    "forkParent": ""
   },
   "hellvetica:latest": {
     "bundle": "hellvetica",

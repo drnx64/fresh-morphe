@@ -2,9 +2,9 @@
   "bundle": "ajstrick81",
   "channel": "dev",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-10-06T22:01:57Z",
-  "version": "test-212",
-  "description": "## [1.42.3](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.42.2...v1.42.3) (2026-10-23)\n\n\n### Bug Fixes\n\n* **tubi:** re-anchor Skip ads for 10.40.5000 + block new image pause-ad surface ([68a0747](https://github.com/ajstrick81/morphe-androidtv-patches/commit/68a07473273b4c29ac23db207dbdb27c296bf78e))",
+  "created_at": "2026-10-25T23:57:43Z",
+  "version": "pv-v15-fix-260",
+  "description": "# [1.44.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.43.0...v1.44.0) (2026-10-26)\n\n\n### Features\n\n* **fawesome:** disable the \"New version Available\" update prompt (19.7) ([64ffa83](https://github.com/ajstrick81/morphe-androidtv-patches/commit/64ffa830292cf75ce38e055e9430531d5c9a67f7)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257) [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n* **fawesome:** extend update-prompt disable to 20.1 (R8-obfuscated rewrite) ([57ebd6a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/57ebd6a8815eaa49165808c968467133d370c797)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -216,6 +216,16 @@
       "app_name": "Moviesbyfawesomeandroidtv",
       "package": "com.future.moviesbyfawesomeandroidtv",
       "patches": [
+        {
+          "name": "Disable update prompt",
+          "description": "Stops Fawesome Movies & TV (Android TV) from showing the \"New version Available\" dialog on every launch. The app reads the server's latest version code (Firebase remote-config key \"versioncode_androidtv_googletv\") and, when it is higher than the installed build, shows an update dialog before continuing into the app. This patch forces the app's own no-update path instead, so startup is unchanged and the nag is gone — nothing is added, the client just stops being told to update. On 19.7 the seam is SplashActivity.checkCurrentAppVersion() -> Utilities.updateAlert(); on 20.1 (R8-obfuscated, ViewModel rewrite) it is the splash view-model's version-check method, forced down its own proceed branch. Whichever matches the installed version is applied.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7",
+            "20.1"
+          ]
+        },
         {
           "name": "Skip ads",
           "description": "Removes client-side ads in Fawesome Movies & TV (Android TV). The IMA pre/mid-roll video ad is suppressed by firing the app's own ad-complete transition (so content loads/resumes normally instead of waiting on an ad that never plays); the in-player VAST banner is removed; and the pause-screen bug ad is removed while the pause/focus behaviour is preserved. Ads are requested client-side, so this is a full removal with no server-stitched (SSAI) fallback to break.",
@@ -523,10 +533,10 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "418ebfc7a213ce4f85f621213930962d3baa7ef4c7a6779223d48370d5fde578",
-  "release_notes": "Test-only build for #212. Netflix 13.0.1 build 25028 received re-minified ad code; this recovers the ad-kill (V3) and scans the large memory region the code now often sits in. Patch with the same patches as usual, then: force-stop, relaunch, wait ~60s on home, play a title, and attach `adb logcat -d -s KILL > kill.txt`. Success = `PATCH V3-ADV … verify=OK` and `PATCH V3-MASTER … verify=OK`.",
-  "release_tag": "test-212",
-  "release_date": "2026-10-06T22:01:57Z",
+  "fingerprint": "a12884133d8521d83d0ef0d54ea91269bf4d85509c1a39a8e3b665c0f336bac1",
+  "release_notes": "**Field-test build for #260** (Prime Video `6.23.23+v15.5.0.70`, armeabi-v7a). Not a general release — for @Sapleexx and anyone in a heavy-ad region who hit the pre-roll hang.\n\nContains the cross-chunk reassembly fix from #263: when the regolith `playlist` splits across memcpy chunks, the hook now reassembles and empties the **whole** array once it closes, so no ghost tail ad period survives to hang the pre-roll.\n\n### Install\n- The hook `.so` is rebuilt from the #263 branch; everything else matches the current shipped native strip.\n- Signed with cert SHA-256 `49c04fa9…e3c8fc`. It will **not** update over a build you patched yourself with a different key — **uninstall your current Prime Video, then install this** (you'll need to sign in again).\n- `adb install -r pv-6.23.23-FIX-260.apk` (or sideload).\n\n### What to capture\nPlay a few titles that previously hung, then grab logcat (`adb logcat -s PVNativeHook`). The lines that confirm the fix fired:\n- `PVKILL path=tv-reassembled playlist emptied across chunks ...`\n- heartbeat `[hb] ... rego_trunc=N rego_trunc_salv=N rego_reasm=M` — **`rego_reasm` climbing** alongside `rego_trunc`, and **no** \"Something went wrong\".\n\nIf `rego_trunc` climbs but `rego_reasm` stays `0`, that's still useful — it means the finishing bytes don't arrive contiguously through the hooked copies, and we'll go another route.\n\n⚠️ Built and signature-verified; the on-device runtime confirmation is what this field test is for.",
+  "release_tag": "pv-v15-fix-260",
+  "release_date": "2026-10-25T23:57:43Z",
   "isPreRelease": true,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",

@@ -2,9 +2,9 @@
   "bundle": "ajstrick81",
   "channel": "stable",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-10-23T03:26:30Z",
-  "version": "1.42.3",
-  "description": "## [1.42.3](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.42.2...v1.42.3) (2026-10-23)\n\n\n### Bug Fixes\n\n* **tubi:** re-anchor Skip ads for 10.40.5000 + block new image pause-ad surface ([68a0747](https://github.com/ajstrick81/morphe-androidtv-patches/commit/68a07473273b4c29ac23db207dbdb27c296bf78e))",
+  "created_at": "2026-10-26T00:25:08Z",
+  "version": "1.44.0",
+  "description": "# [1.44.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.43.0...v1.44.0) (2026-10-26)\n\n\n### Features\n\n* **fawesome:** disable the \"New version Available\" update prompt (19.7) ([64ffa83](https://github.com/ajstrick81/morphe-androidtv-patches/commit/64ffa830292cf75ce38e055e9430531d5c9a67f7)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257) [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n* **fawesome:** extend update-prompt disable to 20.1 (R8-obfuscated rewrite) ([57ebd6a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/57ebd6a8815eaa49165808c968467133d370c797)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -216,6 +216,16 @@
       "app_name": "Moviesbyfawesomeandroidtv",
       "package": "com.future.moviesbyfawesomeandroidtv",
       "patches": [
+        {
+          "name": "Disable update prompt",
+          "description": "Stops Fawesome Movies & TV (Android TV) from showing the \"New version Available\" dialog on every launch. The app reads the server's latest version code (Firebase remote-config key \"versioncode_androidtv_googletv\") and, when it is higher than the installed build, shows an update dialog before continuing into the app. This patch forces the app's own no-update path instead, so startup is unchanged and the nag is gone — nothing is added, the client just stops being told to update. On 19.7 the seam is SplashActivity.checkCurrentAppVersion() -> Utilities.updateAlert(); on 20.1 (R8-obfuscated, ViewModel rewrite) it is the splash view-model's version-check method, forced down its own proceed branch. Whichever matches the installed version is applied.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7",
+            "20.1"
+          ]
+        },
         {
           "name": "Skip ads",
           "description": "Removes client-side ads in Fawesome Movies & TV (Android TV). The IMA pre/mid-roll video ad is suppressed by firing the app's own ad-complete transition (so content loads/resumes normally instead of waiting on an ad that never plays); the in-player VAST banner is removed; and the pause-screen bug ad is removed while the pause/focus behaviour is preserved. Ads are requested client-side, so this is a full removal with no server-stitched (SSAI) fallback to break.",
@@ -523,10 +533,10 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "ee02b3f0622142f7b46d331e2017257822f56b56bf3cf23359173e0320ed754a",
-  "release_notes": "## [1.42.3](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.42.2...v1.42.3) (2026-10-23)\n\n\n### Bug Fixes\n\n* **tubi:** re-anchor Skip ads for 10.40.5000 + block new image pause-ad surface ([68a0747](https://github.com/ajstrick81/morphe-androidtv-patches/commit/68a07473273b4c29ac23db207dbdb27c296bf78e))\n\n\n\n",
-  "release_tag": "v1.42.3",
-  "release_date": "2026-10-23T03:26:30Z",
+  "fingerprint": "230117f6297b778bde82182a427f755a3c4afa9ef2ef1b755fd2aaf794130b8a",
+  "release_notes": "# [1.44.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.43.0...v1.44.0) (2026-10-26)\n\n\n### Features\n\n* **fawesome:** disable the \"New version Available\" update prompt (19.7) ([64ffa83](https://github.com/ajstrick81/morphe-androidtv-patches/commit/64ffa830292cf75ce38e055e9430531d5c9a67f7)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257) [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n* **fawesome:** extend update-prompt disable to 20.1 (R8-obfuscated rewrite) ([57ebd6a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/57ebd6a8815eaa49165808c968467133d370c797)), closes [#257](https://github.com/ajstrick81/morphe-androidtv-patches/issues/257)\n\n\n\n",
+  "release_tag": "v1.44.0",
+  "release_date": "2026-10-26T00:25:08Z",
   "isPreRelease": false,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",

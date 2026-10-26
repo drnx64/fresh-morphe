@@ -2,10 +2,43 @@
   "bundle": "non7043",
   "channel": "stable",
   "repo_url": "https://github.com/0xtalos/vibe-patches",
-  "created_at": "2026-10-23T09:59:01Z",
-  "version": "1.3.3",
-  "description": "Vibe Patches v1.3.2: Morphe patches for 365Scores - ad-free, analytics removal, MicroG sign-in and update blocking.",
+  "created_at": "2026-10-25T22:21:19Z",
+  "version": "1.4.0",
+  "description": "Vibe Patches v1.4.0: Morphe patches for 365Scores and HDO Box - ad removal, analytics removal, tracking permission cleanup, MicroG sign-in and update blocking.",
   "apps": [
+    {
+      "app_name": "Hdo Box",
+      "package": "com.hdoapp.hdo_box",
+      "patches": [
+        {
+          "name": "Disable analytics",
+          "description": "Disables Firebase Analytics collection, automatic screen reporting and advertising id collection, and prevents the app from re-enabling them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.7"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Removes Unity Ads by answering the app's ad plugin locally, so no ad is ever initialized, loaded or displayed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.7"
+          ]
+        },
+        {
+          "name": "Remove tracking permissions",
+          "description": "Removes the advertising id (AD_ID) and Privacy Sandbox (AdServices) permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.7"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "365Scores: Live Scores & Data",
       "package": "com.scores365",
@@ -48,8 +81,8 @@
         },
         {
           "name": "GmsCore support",
-          "description": "Makes Google sign-in and Google APIs work in the patched app by using MicroG RE instead of Google Play services. Requires MicroG RE to be installed.",
-          "use": false,
+          "description": "Makes Google sign-in and Google APIs work by routing them to MicroG RE instead of Google Play services. Requires MicroG RE (app.revanced.android.gms) and a Google account added in it.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "14.9.7"
@@ -77,10 +110,10 @@
     }
   ],
   "patches_name": "Vibe Patches",
-  "fingerprint": "6a1a230773a58749c44a8134f244181c5a9d6ed53accc0c7762e9b07e951d75d",
-  "release_notes": "**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.2...v1.3.3",
-  "release_tag": "v1.3.3",
-  "release_date": "2026-10-23T09:59:01Z",
+  "fingerprint": "647a1ba05e586d87ad654422bb833b92d851efe8c2eb6668ae10724dfb3f286f",
+  "release_notes": "## 365Scores\n- **GmsCore support is now ON by default** - Google Sign-In works against MicroG RE with no extra toggles. Requires MicroG RE (`app.revanced.android.gms`) with a Google account added in it.\n- Automatically pulls in **Spoof signature** (original Play certificate) for Firebase / API-key checks.\n- Hardened patch: unavailable on MOUNT installs, required splash fingerprint, verified GmsCore check injection.\n- Smoke tests now cover the rewritten sign-in action/package and the spoofed certificate.\n\n## HDO Box (new)\n- **Remove ads** - neutralises the Unity Ads plugin.\n- **Disable analytics** - disables Firebase Analytics collection and blocks re-enabling it.\n- **Remove tracking permissions** - removes AD_ID and Privacy Sandbox (AdServices) permissions.\n\n> HDO premium is validated server-side and cannot be unlocked client-side; these patches only remove ads and tracking.\n\n**Full Changelog**: https://github.com/0xtalos/vibe-patches/compare/v1.3.3...v1.4.0",
+  "release_tag": "v1.4.0",
+  "release_date": "2026-10-25T22:21:19Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/42888660?v=4",
