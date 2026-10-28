@@ -1,26 +1,20 @@
 /**
- * Bundle card — horizontal row layout, expandable apps list.
+ * Bundle card - horizontal row layout. Clicking the row opens the bundle page.
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { getStaleness, getStoredVersions, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml, groupBundleCards, normalizeRepoUrl } from '../utils/misc.js'
-import { mountAppRows, sortAppsByName } from '../utils/appList.js'
-import { ensureBundleChannels, isBundlePartial } from '../services/bundleLoader.js'
-import { getRepoInfo, getAddMorpheUrl, getAuthorLink } from '../utils/url.js'
-import { makeBundleKey } from '../utils/bundleKey.js'
+import * as router from '../router.js'
+import { getStaleness, getStoredVersions, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml } from '../utils/misc.js'
+import { getRepoInfo, getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
-import { GITHUB_SVG, GITLAB_SVG, HISTORY_ICON, CHEVRON_DOWN } from '../utils/svg.js'
+import { GITHUB_SVG, GITLAB_SVG, HISTORY_ICON, CHEVRON_RIGHT } from '../utils/svg.js'
 
 export function renderBundleCard(bundle) {
-  const nameCache = store.get('nameCache') || {}
-  const iconCache = store.get('iconCache') || {}
-
   const repoInfo = getRepoInfo(bundle.repo_url)
-  const addMorpheUrl = getAddMorpheUrl(bundle.repo_url)
   const iconSvg = repoInfo.isGitLab ? GITLAB_SVG : GITHUB_SVG
 
-  const apps = sortAppsByName(bundle.apps || [], nameCache)
+  const apps = bundle.apps || []
   // While bundle files stream in, cards render from the index first — use its app_count
   const count = Math.max(apps.length, bundle.appCount || 0)
 
@@ -111,17 +105,16 @@ export function renderBundleCard(bundle) {
         <a href="${escHtml(bundle.repo_url)}" class="bundle-card-row-icon-link" target="_blank" rel="noopener" title="View Source Repository" onclick="event.stopPropagation()">${iconSvg}</a>
         <button class="bundle-card-row-icon-link history-btn" data-bundle="${escHtml(bundle.bundle)}" title="View changelog history" onclick="event.stopPropagation()">${HISTORY_ICON}</button>
       </div>
-      <span class="bundle-card-row-chevron">${CHEVRON_DOWN}</span>
+      <span class="bundle-card-row-chevron">${CHEVRON_RIGHT}</span>
     </div>
   `
 
-  const toggle = () => toggleExpand(card, bundle, nameCache, iconCache)
-    .catch((err) => console.error('[bundleCard] expand failed:', err))
-  row.addEventListener('click', toggle)
+  const open = () => router.navigate(`/bundle/${encodeURIComponent(bundle.bundle)}`)
+  row.addEventListener('click', open)
   row.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      toggle()
+      open()
     }
   })
 
@@ -136,68 +129,4 @@ export function renderBundleCard(bundle) {
   card.appendChild(row)
 
   return card
-}
-
-/**
- * Expand/collapse a card's app rows. Patch counts live in the per-bundle
- * files, so the card's channels are pulled in on first open (one round trip,
- * single-flighted, usually already warm) and the rows are re-grouped from the
- * store afterwards.
- */
-async function toggleExpand(card, bundle, nameCache, iconCache) {
-  card.classList.toggle('expanded')
-
-  let appsContainer = card.querySelector('.bundle-card-apps')
-  if (!appsContainer) {
-    appsContainer = el('div', { class: 'bundle-card-apps' })
-    card.appendChild(appsContainer)
-
-    // A repo can be represented by more than one bundle name (tree vs release
-    // crawler). Pull every alias' channels before re-grouping by repository.
-    const names = bundle.bundleNames?.length ? bundle.bundleNames : [bundle.bundle]
-    const repoKey = normalizeRepoUrl(bundle.repo_url)
-    const missing = []
-    for (const name of names) {
-      for (const ch of bundle.channels) {
-        if (isBundlePartial(makeBundleKey(name, ch))) missing.push(makeBundleKey(name, ch))
-      }
-    }
-    if (missing.length) {
-      appsContainer.innerHTML = '<div class="bundle-card-apps-loading">Loading apps…</div>'
-      await Promise.all(names.map((name) => ensureBundleChannels(name, bundle.channels)))
-    }
-
-    const fresh = Object.values(groupBundleCards(store.get('bundles') || {}, (b) =>
-      names.includes(b.bundle) && bundle.channels.includes(b.channel),
-    )).find((g) => (repoKey
-      ? normalizeRepoUrl(g.repo_url) === repoKey
-      : g.bundleNames.some((name) => names.includes(name))))
-    const apps = sortAppsByName(fresh?.apps || [], nameCache)
-
-    appsContainer.replaceChildren()
-    mountAppRows(appsContainer, apps, {
-      prefix: 'bundle-card-app',
-      nameCache,
-      iconCache,
-      onBatch: () => {
-        if (card.classList.contains('expanded')) {
-          appsContainer.style.maxHeight = appsContainer.scrollHeight + 'px'
-        }
-      },
-      onOpen: (app) => {
-        window.dispatchEvent(new CustomEvent('open-app', {
-          detail: {
-            app: { package: app.package, app_name: app.app_name, patches: app.patches },
-            bundleName: '',
-            channels: [],
-          },
-        }))
-      },
-    })
-  }
-
-  // Rows land on the next frame; onBatch keeps the height in sync while open
-  appsContainer.style.maxHeight = card.classList.contains('expanded')
-    ? `${appsContainer.scrollHeight}px`
-    : '0'
 }

@@ -59,8 +59,10 @@ import { loadBundleState, saveBundleState } from './services/bundleCache.js'
 import {
   ensureAppBundles, ensureBundleChannels, onBundleDetailsLoaded,
 } from './services/bundleLoader.js'
-import { fetchJson } from './utils/http.js'
+import { loadChangelog, loadSiteData } from './services/siteData.js'
 import { SITE_URL, GITHUB_REPO_URL, shrinkPlayIconUrl, withAvatarSize } from './utils/url.js'
+import { API_BASE, FALLBACK_BASE } from './config.js'
+import { devLog, devTime } from './utils/devLog.js'
 import { parseBundleKey } from './utils/bundleKey.js'
 import { normalizeRepoUrl } from './utils/misc.js'
 
@@ -74,6 +76,7 @@ store.init({
   changelog: [],
   liveDataDate: '',
   lastChecked: '',
+  dataSource: '',
   stats: null,
   changes: null,
   loading: true,
@@ -270,7 +273,7 @@ let currentBundleIndex = null
 let changelogPromise = null
 function ensureChangelog() {
   if (!changelogPromise) {
-    changelogPromise = fetchJson('data/changelog.json')
+    changelogPromise = loadChangelog()
       .then((data) => {
         store.set('changelog', Array.isArray(data) ? data : [])
       })
@@ -432,44 +435,58 @@ function buildBundlesFromIndex(index, cachedState) {
 }
 
 async function loadData() {
+  const bootTimer = devTime('boot data')
+  devLog('boot data start', { api: API_BASE || '(static only)', fallback: FALLBACK_BASE })
   try {
     setBootProgress(5, 'Loading site data…')
 
     // The cache read and the first network wave start together, so IndexedDB
-    // latency never sits in front of a request — and all six data files are
-    // requested in one round trip instead of four sequential waves.
+    // latency never sits in front of a request. loadSiteData tries the phone
+    // API first and falls back to the static snapshot if it is unreachable.
     const cachedStatePromise = loadBundleState()
-    const wavePromise = Promise.all([
-      fetchJson('data/core.json', undefined, { cache: 'no-cache' }),
-      fetchJson('data/stats.json', undefined, { cache: 'no-cache' }),
-      fetchJson('data/changes.json', undefined, { cache: 'no-cache' }),
-      fetchJson('data/state/app_cache.json', {}),
-      fetchJson('data/state/repo_cache.json', {}),
-      fetchJson('data/bundles/_index.json'),
-    ])
+    const siteDataPromise = loadSiteData()
 
     // Instant paint from IndexedDB while the network wave is still in flight
     const cachedState = await cachedStatePromise
+    devLog('bundle cache', cachedState
+      ? `${Object.keys(cachedState.records || {}).length} records`
+      : 'empty')
     if (cachedState) store.set('bundles', { ...cachedState.records })
 
-    let coreRes, statsRes, changesRes, cacheRes, repoCacheRes, index
+    let site
     try {
-      ;[coreRes, statsRes, changesRes, cacheRes, repoCacheRes, index] = await wavePromise
+      site = await siteDataPromise
     } catch (err) {
       if (cachedState) {
         deferredPreloads = null
         offerOfflineNotice()
-        finishBoot('Offline — cached data')
+        finishBoot('Offline - cached data')
         return
       }
       throw err
     }
+    const {
+      core: coreRes,
+      stats: statsRes,
+      changes: changesRes,
+      appCache: cacheRes,
+      repoCache: repoCacheRes,
+      index,
+    } = site
 
+    devLog('boot data received', {
+      source: site.source,
+      bundles: Object.keys(index || {}).length,
+      apps: Object.keys(cacheRes || {}).length,
+      repos: Object.keys(repoCacheRes || {}).length,
+      date: coreRes.date || '',
+    })
     store.merge({
       liveDataDate: coreRes.date || '',
       lastChecked: coreRes.last_run || '',
       stats: statsRes,
       changes: changesRes,
+      dataSource: site.source,
     })
     setBootProgress(65, 'Loading caches…')
 
@@ -484,6 +501,11 @@ async function loadData() {
         if (entry.name) nameCache[pkg] = entry.name
       }
     }
+    devLog('cache maps', {
+      icons: Object.keys(iconCache).length,
+      names: Object.keys(nameCache).length,
+      missingIcons: Object.keys(cacheRes || {}).length - Object.keys(iconCache).length,
+    })
     store.merge({ iconCache, nameCache })
     initIconQueue(iconCache)
 
@@ -551,6 +573,7 @@ async function loadData() {
       deferredPreloads = null
     }
 
+    bootTimer({ bundles: Object.keys(bundles).length })
     finishBoot('Data up to date')
   } catch (err) {
     console.error('[app] Data loading failed:', err)
@@ -635,7 +658,7 @@ window.addEventListener('open-app', (e) => {
 
 window.addEventListener('open-bundle-history', async (e) => {
   await ensureChangelog()
-  openBundleHistoryModal(e.detail.bundleName, e.detail.bundleNames)
+  await openBundleHistoryModal(e.detail.bundleName, e.detail.bundleNames)
 })
 
 window.addEventListener('open-bundle', (e) => {
@@ -672,6 +695,7 @@ async function handleUrlParams() {
 
 // ── Boot ──
 async function boot() {
+  devLog('boot start', { host: location.hostname, path: location.hash || '#/' })
   applyReducedMotion()
   updateThemeMeta(savedTheme)
   renderShell()

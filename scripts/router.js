@@ -2,6 +2,7 @@
  * Hash-based router for GitHub Pages compatibility.
  * Supports parameterized routes: /bundle/:name
  */
+import { devLog } from './utils/devLog.js'
 
 /** @type {Array<{pattern: RegExp, handler: Function, name: string}>} */
 const routes = []
@@ -63,6 +64,7 @@ export function getCurrentPath() {
 function handleHashChange() {
   const path = getCurrentPath()
   if (path === currentRoute) return
+  devLog('route', path)
   currentRoute = path
 
   for (const route of routes) {

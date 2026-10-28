@@ -6,6 +6,8 @@
  * instead of GitHub Pages' `max-age=600`.
  */
 
+import { devLog } from './devLog.js'
+
 const DEFAULT_TIMEOUT_MS = 15000
 
 /**
@@ -32,28 +34,40 @@ export async function fetchWithTimeout(url, init = {}, timeoutMs = DEFAULT_TIMEO
  * Fetch and parse JSON.
  * @param {string} url
  * @param {*} [fallback] returned instead of throwing when the fetch fails
- * @param {{ timeoutMs?: number, cache?: RequestCache }} [opts]
- *   `cache: 'no-cache'` forces a conditional revalidation (ETag → 304) so the
+ * @param {{ timeoutMs?: number, cache?: RequestCache, headers?: Object }} [opts]
+ *   `cache: 'no-cache'` forces a conditional revalidation (ETag  304) so the
  *   always-fresh site data stays fresh without `?_t=` cache busting.
  * @returns {Promise<*>}
  */
-export async function fetchJson(url, fallback, { timeoutMs = DEFAULT_TIMEOUT_MS, cache } = {}) {
+export async function fetchJson(url, fallback, { timeoutMs = DEFAULT_TIMEOUT_MS, cache, headers } = {}) {
   const controller = new AbortController()
+  const started = performance.now()
+  devLog('fetch start', url, { timeoutMs, cache: cache || 'default' })
   try {
     const timer = setTimeout(() => controller.abort(), timeoutMs)
     try {
       const resp = await fetch(url, {
         ...(cache ? { cache } : {}),
+        ...(headers ? { headers } : {}),
         signal: controller.signal,
       })
       if (!resp.ok) throw new Error(`${url} returned ${resp.status}`)
-      return await resp.json()
+      const data = await resp.json()
+      devLog('fetch ok', url, resp.status, `${Math.round(performance.now() - started)}ms`)
+      return data
     } finally {
       clearTimeout(timer)
     }
   } catch (err) {
-    if (controller.signal.aborted) throw new Error(`Request timed out: ${url}`)
-    if (fallback !== undefined) return fallback
+    if (controller.signal.aborted) {
+      devLog('fetch timeout', url, `${Math.round(performance.now() - started)}ms`)
+      throw new Error(`Request timed out: ${url}`)
+    }
+    if (fallback !== undefined) {
+      devLog('fetch fallback', url, err.message, `${Math.round(performance.now() - started)}ms`)
+      return fallback
+    }
+    devLog('fetch failed', url, err.message, `${Math.round(performance.now() - started)}ms`)
     throw err
   }
 }
