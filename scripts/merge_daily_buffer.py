@@ -400,13 +400,12 @@ def update_data_files(today_str, buffer_data, snapshot):
         existing_core = load_core_json()
         existing_stats = load_stats_json()
         existing_changes = load_changes_json()
-        if existing_changes and "affected_bundles" in existing_changes:
+        same_day = existing_core.get("date") == today_str
+        if same_day and existing_changes and "affected_bundles" in existing_changes:
             changes_to_save = existing_changes
-            date_to_save = existing_core.get("date", today_str)
             new_apps_today = existing_stats.get("new_apps_today", 0)
             new_bundles_today = existing_stats.get("new_bundles_today", 0)
         else:
-            date_to_save = today_str
             changes_to_save = {"affected_bundles": []}
             new_apps_today = 0
             new_bundles_today = 0
@@ -417,12 +416,11 @@ def update_data_files(today_str, buffer_data, snapshot):
         changes_to_save = {
             "affected_bundles": affected_bundles_list
         }
-        date_to_save = today_str
         new_apps_today = len(set(a["package"] for a in all_apps if a.get("badge_type") == "NEW APP"))
         new_bundles_today = len(set(b["bundle"] for b in buffer_data.get("affected_bundles", {}).values() if b.get("badge_type") == "NEW BUNDLE"))
 
     core = {
-        "date": date_to_save,
+        "date": today_str,
         "last_run": now_utc_iso(),
         "lastChecked": now_utc_iso()
     }
@@ -446,7 +444,8 @@ def update_data_files(today_str, buffer_data, snapshot):
 def write_data_files(has_changes=True, preserve_changes_json=False):
     """Read current snapshot and write all 4 data files. Safe to call anytime.
 
-    If preserve_changes_json is True, changes.json is not overwritten.
+    If preserve_changes_json is True, changes.json is not overwritten unless
+    the UTC date has changed, in which case the new day starts empty.
     Used on silent runs to keep the previously-written accumulated changes.
     """
     # Load snapshot directly — do NOT rotate snapshots here
@@ -466,22 +465,25 @@ def write_data_files(has_changes=True, preserve_changes_json=False):
     existing_stats = load_stats_json()
 
     now = now_utc_iso()
+    today_str = now.split("T")[0]
+    date_changed = existing_core.get("date") != today_str
+    new_apps_today = existing_stats.get("new_apps_today", 0)
+    new_bundles_today = existing_stats.get("new_bundles_today", 0)
     core = {
-        "date": existing_core.get("date") or now.split("T")[0],
+        "date": today_str,
         "last_run": existing_core.get("last_run") or now,
         "lastChecked": existing_core.get("lastChecked") or now
-    }
-    stats = {
-        "total_bundles": total_bundles,
-        "total_apps": total_apps,
-        "new_apps_today": existing_stats.get("new_apps_today", 0),
-        "new_bundles_today": existing_stats.get("new_bundles_today", 0)
     }
 
     # Write changes.json: empty when no changes, otherwise keep existing historical data
     # If preserve_changes_json is True (silent run), skip writing changes.json entirely
     changes_to_save = None
-    if not preserve_changes_json:
+    if date_changed:
+        # A new UTC day always starts with an empty public changes payload.
+        changes_to_save = {"affected_bundles": []}
+        new_apps_today = 0
+        new_bundles_today = 0
+    elif not preserve_changes_json:
         if has_changes:
             existing_changes = load_changes_json()
             # Clean patches_name in historical changes entries
@@ -496,6 +498,13 @@ def write_data_files(has_changes=True, preserve_changes_json=False):
         else:
             changes_to_save = {"affected_bundles": []}
 
+    stats = {
+        "total_bundles": total_bundles,
+        "total_apps": total_apps,
+        "new_apps_today": new_apps_today,
+        "new_bundles_today": new_bundles_today
+    }
+
     bundles = dict(snapshot)
     merge_release_notes(bundles)
     apply_repo_metadata(bundles)
@@ -508,7 +517,7 @@ def write_data_files(has_changes=True, preserve_changes_json=False):
     print(f"[*] Data files synced: {total_bundles} bundles, {total_apps} apps.")
 
 
-def update_daily_buffer_run():
+def update_daily_buffer_run(publish=True):
     today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     buffer_data = load_daily_buffer()
 
@@ -575,9 +584,12 @@ def update_daily_buffer_run():
 
     # If we finalized a previous day, trigger site generation and notification
     if finalized:
-        print("[*] Running site generator...")
-        gen_script = os.path.join(os.path.dirname(__file__), "generate_site.py")
-        subprocess.run([sys.executable, gen_script], check=True)
+        if publish:
+            print("[*] Running site generator...")
+            gen_script = os.path.join(os.path.dirname(__file__), "generate_site.py")
+            subprocess.run([sys.executable, gen_script], check=True)
+        else:
+            print("[*] DB-only mode: skipping site generator.")
 
     # If --finalize argument is passed, force finalization of the current day
     elif len(sys.argv) > 1 and sys.argv[1] == "--finalize":
@@ -591,9 +603,12 @@ def update_daily_buffer_run():
             }
             save_daily_buffer(buffer_data)
 
-            print("[*] Running site generator (forced finalization)...")
-            gen_script = os.path.join(os.path.dirname(__file__), "generate_site.py")
-            subprocess.run([sys.executable, gen_script], check=True)
+            if publish:
+                print("[*] Running site generator (forced finalization)...")
+                gen_script = os.path.join(os.path.dirname(__file__), "generate_site.py")
+                subprocess.run([sys.executable, gen_script], check=True)
+            else:
+                print("[*] DB-only mode: skipping site generator.")
 
             print("[*] Today's changelog saved to output directory.")
         else:

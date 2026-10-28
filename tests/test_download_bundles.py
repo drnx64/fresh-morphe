@@ -57,3 +57,13 @@ def test_dev_channel():
     result = group_tree_files(tree)
     assert "my-bundle" in result
     assert "dev" in result["my-bundle"]
+
+def test_group_tree_preserves_registry_metadata():
+    registry = {"bundle_id": "abc", "download_url": "https://example.com/a.mpp"}
+    tree = [
+        {"path": "patch-bundles/my-bundle/stable/patches-bundle.json", "registry": registry, "legacy_keys": ["old:stable"]},
+        {"path": "patch-bundles/my-bundle/stable/patches-list.json", "registry": registry, "legacy_keys": ["old:stable"]},
+    ]
+    result = group_tree_files(tree)
+    assert result["my-bundle"]["stable"]["registry"]["bundle_id"] == "abc"
+    assert result["my-bundle"]["stable"]["legacy_keys"] == ["old:stable"]

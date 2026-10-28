@@ -11,6 +11,7 @@ from state_manager import (
     CUSTOM_REPO_PATH, IGNORE_REPO_PATH,
     load_repo_list, save_repo_list
 )
+from discovery.runner import load_verified_repos, split_repo_target
 
 REPOS_TXT_URL = "https://raw.githubusercontent.com/rushiforai/morphe-archive/main/repos.txt"
 REPOS_LIST_PATH = os.path.join(DATA_DIR, "repos_list.txt")
@@ -163,14 +164,12 @@ def is_repo_tracked(owner, repo, known_urls):
     return False
 
 
-def try_fetch_source_file(owner, repo, filename, platform="github"):
+def try_fetch_source_file(owner, repo, filename, platform="github", branches=None):
     """Try to fetch a file from the repo's default branch.
 
-    For GitHub: tries raw.githubusercontent.com with 'main' then 'master'.
-    For GitLab: tries gitlab.com raw with 'main' then 'master'.
     Returns (content, branch) or (None, None).
     """
-    for branch in ("main", "master"):
+    for branch in branches or ("main", "master", "dev"):
         if platform == "gitlab":
             raw_url = f"https://gitlab.com/{owner}/{repo}/-/raw/{branch}/{filename}"
         else:
@@ -246,12 +245,16 @@ def _make_bundle_slug(owner, repo):
     bundle directory on disk, appends the repo name.
     """
     slug = owner.lower().replace("_", "-")
+    if "/" in repo:
+        slug = f"{slug}-{repo}".lower().replace("_", "-").replace("/", "-")
     if os.path.exists(os.path.join(BUNDLES_RAW_DIR, slug)):
-        slug = f"{slug}-{repo.lower().replace('_', '-')}"
+        slug = f"{slug}-{repo.lower().replace('_', '-').replace('/', '-')}"
     return slug
 
 
-def process_external_repo(owner, repo, platform="github"):
+def process_external_repo(
+    owner, repo, platform="github", branch=None, requested_channels=None
+):
     """Attempt to fetch and save a Morphe bundle from an external repo.
 
     Returns a dict describing what was done, or None on skip.
@@ -261,13 +264,18 @@ def process_external_repo(owner, repo, platform="github"):
     platform_label = "GitLab" if platform == "gitlab" else "GitHub"
     print(f"  Processing {owner}/{repo} [{platform_label}] -> bundle name: {bundle_slug}")
 
+    branches = (branch,) if branch else None
     # 1. Fetch patches-bundle.json and patches-list.json from source
-    bundle_content, branch = try_fetch_source_file(owner, repo, "patches-bundle.json", platform)
+    bundle_content, branch = try_fetch_source_file(
+        owner, repo, "patches-bundle.json", platform, branches
+    )
     if not bundle_content:
-        print(f"    SKIP — no patches-bundle.json found in source")
+        print(f"    SKIP - no patches-bundle.json found in source")
         return None
 
-    list_content, _ = try_fetch_source_file(owner, repo, "patches-list.json", platform)
+    list_content, _ = try_fetch_source_file(
+        owner, repo, "patches-list.json", platform, (branch,)
+    )
     if not list_content:
         print(f"    SKIP — no patches-list.json found in source")
         return None
@@ -309,7 +317,7 @@ def process_external_repo(owner, repo, platform="github"):
     else:
         channels_to_create.append(("stable", None))
 
-    if latest_dev:
+    if latest_dev or "dev" in (requested_channels or ()):
         channels_to_create.append(("dev", latest_dev))
 
     # 4. Save files for each channel
@@ -377,11 +385,33 @@ def fetch_external_repos():
     if ignore_repos:
         print(f"  Ignored repos (will skip): {len(ignore_repos)}")
 
-    # 0c. Build known repo URLs from currently-downloaded Jman bundles
+    # 0c. Load verified discovery candidates
+    discovered_targets = []
+    discovered_keys = set()
+    try:
+        for entry in load_verified_repos():
+            target = split_repo_target(entry)
+            if not target:
+                continue
+            key = f"{target['owner']}/{target['name']}".lower()
+            if key in custom_keys or key in ignore_keys or key in discovered_keys:
+                continue
+            channels = target.get("channels", {})
+            primary = channels.get("stable") or channels.get("dev") or {}
+            target["branch"] = primary.get("branch", "")
+            target["requested_channels"] = list(channels.keys())
+            discovered_targets.append(target)
+            discovered_keys.add(key)
+    except Exception as e:
+        print(f"  Discovery state unavailable: {e}")
+    if discovered_targets:
+        print(f"  Verified discovery candidates: {len(discovered_targets)}")
+
+    # 0d. Build known repo URLs from currently-downloaded Jman bundles
     known_urls = build_known_repo_urls()
     print(f"  Found {len(known_urls)} known repo URLs from downloaded bundles")
 
-    # 0d. Already-tracked filter helper
+    # 0e. Already-tracked filter helper
     def is_already_tracked(owner, repo):
         key = f"{owner}/{repo}".lower()
         if key in custom_keys:
@@ -419,6 +449,38 @@ def fetch_external_repos():
                 url = f"https://{'gitlab' if platform == 'gitlab' else 'github'}.com/{owner}/{repo}"
                 known_urls.add(_normalize_url(url))
 
+    # 1b. Process verified discovery candidates
+    discovered_results = []
+    discovered_errors = []
+    for target in discovered_targets:
+        owner = target["owner"]
+        repo = target["name"]
+        platform = target["platform"]
+        key = f"{owner}/{repo}".lower()
+        if key in custom_success_keys or is_repo_tracked(owner, repo, known_urls):
+            continue
+        try:
+            result = process_external_repo(
+                owner,
+                repo,
+                platform,
+                branch=target.get("branch"),
+                requested_channels=target.get("requested_channels"),
+            )
+            if result:
+                discovered_results.append(result)
+                known_urls.add(_normalize_url(result["repo_url"]))
+                print(f"    [OK] Discovered repo added: {owner}/{repo}")
+            else:
+                discovered_errors.append({
+                    "repo": f"{owner}/{repo}",
+                    "error": "No viable bundle data",
+                })
+        except Exception as e:
+            print(f"    [ERR] Error processing discovered repo {owner}/{repo}: {e}")
+            discovered_errors.append({"repo": f"{owner}/{repo}", "error": str(e)})
+        time.sleep(0.3)
+
     # 2. Fetch repos.txt
     repos_text = fetch_repos_txt()
     if not repos_text:
@@ -427,11 +489,13 @@ def fetch_external_repos():
         save_json(EXTERNAL_INDEX_PATH, {
             "last_run": datetime.now(timezone.utc).isoformat(),
             "archive_available": False,
-            "added": custom_results,
-            "errors": custom_errors,
+            "added": custom_results + discovered_results,
+            "errors": custom_errors + discovered_errors,
             "custom_fetched": len(custom_results),
-            "total_added": len(custom_results),
-            "total_errors": len(custom_errors),
+            "discovered_fetched": len(discovered_results),
+            "discovery_verified": len(discovered_targets),
+            "total_added": len(custom_results) + len(discovered_results),
+            "total_errors": len(custom_errors) + len(discovered_errors),
         })
         # Still save custom repos to repos_list.txt
         custom_repo_list = [(o, r) for o, r, p in custom_repos if f"{o}/{r}".lower() in custom_success_keys]
@@ -458,6 +522,8 @@ def fetch_external_repos():
     # 4. Filter out repos that are already tracked (in Jman, custom, or ignored)
     missing_repos = []
     for owner, repo in all_repos:
+        if f"{owner}/{repo}".lower() in discovered_keys:
+            continue
         if not is_already_tracked(owner, repo):
             missing_repos.append((owner, repo))
 
@@ -480,8 +546,8 @@ def fetch_external_repos():
     missing_repos = filtered
 
     # 6. Process each missing repo
-    results = list(custom_results)
-    errors = list(custom_errors)
+    results = list(custom_results) + list(discovered_results)
+    errors = list(custom_errors) + list(discovered_errors)
     for owner, repo in missing_repos:
         try:
             result = process_external_repo(owner, repo)
@@ -502,6 +568,8 @@ def fetch_external_repos():
         "added": results,
         "errors": errors,
         "custom_fetched": len(custom_results),
+        "discovered_fetched": len(discovered_results),
+        "discovery_verified": len(discovered_targets),
         "total_added": len(results),
         "total_errors": len(errors),
     })
@@ -509,6 +577,8 @@ def fetch_external_repos():
     print(f"  Added {len(results)} external repos ({len(errors)} errors)")
     if custom_results:
         print(f"    Custom: {len(custom_results)}")
+    if discovered_results:
+        print(f"    Discovered: {len(discovered_results)}")
     if results:
         for r in results:
             print(f"    - {r['owner']}/{r['repo']} -> {r['bundle_slug']} ({', '.join(r['channels'])})")

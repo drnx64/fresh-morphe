@@ -2,6 +2,7 @@
 
 FETCH → PARSE → DIFF → ACCUMULATE → PUBLISH
 """
+import argparse
 import os
 import sys
 import time
@@ -9,6 +10,8 @@ import traceback
 from datetime import datetime, timezone
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ROOT_DIR)
 
 # Load .env before any other imports so GITHUB_TOKEN/TG_TOKEN/TG_CHAT are available
 from config import _load_dotenv
@@ -54,10 +57,25 @@ def _update_last_run_success(start_time: datetime):
         pass
 
 
-def run():
+def _sync_db(db_path=None):
+    """Import the fresh JSON data into the phone SQLite database."""
+    from server.config import DATA_DIR, DB_PATH
+    from server.import_legacy import import_data
+
+    result = import_data(db_path or DB_PATH, DATA_DIR, reset=False)
+    log.info(
+        f"DB sync complete: {result['counts']['bundles']} bundles, "
+        f"{result['counts']['changes']} change days, version {result['data_version']}"
+    )
+    return result
+
+
+def run(db_only=False, db_path=None):
     start_time = datetime.now()
     log.info("=== STARTING MORPHE PATCH TRACKER PIPELINE ===")
     log.info(f"Current local time: {start_time.isoformat()}")
+    if db_only:
+        log.info("Phone mode: DB-only (static publish + notifications disabled)")
 
     try:
         ensure_dirs()
@@ -68,6 +86,13 @@ def run():
 
         log.info("STEP 2: Downloading bundles")
         download_all_bundles()
+
+        log.info("STEP 2a: Discovering bundle sources")
+        try:
+            from discovery.runner import run as run_discovery
+            run_discovery(search=True, limit=400, quiet=True)
+        except Exception as e:
+            log.warning(f"  Discovery failed (non-fatal): {e}")
 
         log.info("STEP 2b: Fetching external repos")
         fetch_external_repos()
@@ -114,6 +139,14 @@ def run():
         log.info("STEP 4: Fingerprinting + diffing")
         generate_bundle_fingerprints()
         has_changes = diff_snapshots()
+        try:
+            from discovery.state import (
+                baseline_has_unchecked, baseline_pending, clear_baseline_pending,
+            )
+            if baseline_pending() and not baseline_has_unchecked():
+                clear_baseline_pending()
+        except Exception:
+            pass
 
         today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         buffer_data = load_daily_buffer()
@@ -137,39 +170,45 @@ def run():
             new_snapshot = load_json(os.path.join(RAW_DIR, "parsed_bundles.json"), default={})
             if new_snapshot:
                 save_new_snapshot(new_snapshot)
-            _publish_silent()
+            if not db_only:
+                _publish_silent()
             _update_last_run_success(start_time)
+            if db_only:
+                _sync_db(db_path)
             return
 
         log.info("STEP 5: Accumulating daily buffer")
-        update_daily_buffer_run()
+        update_daily_buffer_run(publish=not db_only)
 
         # ── PUBLISH ──
-        log.info("STEP 6: Generating static files + RSS")
-        from generate_site import generate_static_files, generate_rss_feed, generate_daily_feed
-        generate_static_files()
-        generate_rss_feed()
-        generate_daily_feed()
+        if not db_only:
+            log.info("STEP 6: Generating static files + RSS")
+            from generate_site import generate_static_files, generate_rss_feed, generate_daily_feed
+            generate_static_files()
+            generate_rss_feed()
+            generate_daily_feed()
 
-        # Telegram notification
-        log.info("STEP 7: Telegram notification")
-        try:
-            from whats_new import generate_whats_new
-            from telegram import send_or_edit
-            tg_token = os.environ.get("TG_TOKEN", "")
-            tg_chat = os.environ.get("TG_CHAT", "")
-            if tg_token and tg_chat:
-                text = generate_whats_new()
-                if text:
-                    send_or_edit(text)
+            # Telegram notification
+            log.info("STEP 7: Telegram notification")
+            try:
+                from whats_new import generate_whats_new
+                from telegram import send_or_edit
+                tg_token = os.environ.get("TG_TOKEN", "")
+                tg_chat = os.environ.get("TG_CHAT", "")
+                if tg_token and tg_chat:
+                    text = generate_whats_new()
+                    if text:
+                        send_or_edit(text)
+                    else:
+                        log.info("  No changes to notify")
                 else:
-                    log.info("  No changes to notify")
-            else:
-                log.info("  TG_TOKEN/TG_CHAT not set, skipping")
-        except Exception as e:
-            log.warning(f"  Telegram failed: {e}")
+                    log.info("  TG_TOKEN/TG_CHAT not set, skipping")
+            except Exception as e:
+                log.warning(f"  Telegram failed: {e}")
 
         _update_last_run_success(start_time)
+        if db_only:
+            _sync_db(db_path)
         log.info("=== PIPELINE RUN COMPLETE ===")
 
     except Exception as e:
@@ -197,5 +236,18 @@ def _publish_silent():
     log.info("SILENT RUN COMPLETE")
 
 
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Run the MorpheTracker pipeline")
+    parser.add_argument(
+        "--db-only",
+        action="store_true",
+        help="skip static site/RSS/Telegram and import the result into SQLite",
+    )
+    parser.add_argument("--db", default=None, help="override the SQLite database path")
+    args = parser.parse_args(argv)
+    run(db_only=args.db_only, db_path=args.db)
+    return 0
+
+
 if __name__ == "__main__":
-    run()
+    raise SystemExit(main())

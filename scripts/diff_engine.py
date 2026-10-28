@@ -210,6 +210,13 @@ def diff_snapshots():
 
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+    baseline_suppression = False
+    try:
+        from discovery.state import baseline_pending
+        baseline_suppression = baseline_pending()
+    except Exception:
+        pass
+
     old_repo_keys = _repo_key_map(old_snapshot)
     new_repo_keys = _repo_key_map(new_snapshot)
 
@@ -233,6 +240,9 @@ def diff_snapshots():
             )
             if migrated:
                 print(f"[*] Diff: {bundle_key} is an identity migration, not a new bundle")
+                continue
+            if baseline_suppression:
+                print(f"[*] Diff: {bundle_key} discovered during baseline - suppressing new-bundle event")
                 continue
             # Scenario B: New Bundle — include all its apps
             print(f"[+] Diff: Found new bundle {bundle_key}")
