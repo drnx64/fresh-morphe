@@ -1,53 +1,53 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Morphe Patch Tracker" width="100%">
+  <img src="assets/banner.png" alt="Morphe Tracker" width="100%">
 </p>
 
-<h1 align="center">Morphe Patch Tracker</h1>
+<h1 align="center">Morphe Tracker</h1>
 
 <p align="center">
-  <em>Automated patch discovery, compatibility tracking & change monitoring for the Morphe ecosystem</em>
+  <em>Patch discovery, compatibility tracking & change monitoring for the Morphe ecosystem</em>
 </p>
 
 <p align="center">
   <a href="https://drnx64.github.io/morphe-track-patches/">
-    <img src="https://img.shields.io/badge/Live_Dashboard-drnx64.github.io-6366f1?style=for-the-badge&logo=githubpages&logoColor=white" alt="Live Dashboard">
+    <img src="https://img.shields.io/badge/Live_Dashboard-drnx64.github.io-fc6a03?style=for-the-badge&logo=githubpages&logoColor=white" alt="Live Dashboard">
   </a>
   <br>
-  <img src="https://img.shields.io/github/actions/workflow/status/drnx64/morphe-track-patches/ci.yml?branch=main&style=flat-square&logo=github&label=CI&color=6366f1" alt="CI">
+  <img src="https://img.shields.io/github/actions/workflow/status/drnx64/morphe-track-patches/ci.yml?branch=main&style=flat-square&logo=github&label=CI&color=fc6a03" alt="CI">
   <img src="https://img.shields.io/github/license/drnx64/morphe-track-patches?style=flat-square&color=22c55e" alt="MIT License">
   <img src="https://img.shields.io/github/stars/drnx64/morphe-track-patches?style=flat-square&logo=github&color=eab308" alt="Stars">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs welcome">
   <img src="https://img.shields.io/badge/python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/dependencies-zero-111827?style=flat-square&logo=npm&logoColor=white" alt="Zero runtime dependencies">
+  <img src="https://img.shields.io/badge/dependencies-zero-1b1420?style=flat-square&logo=npm&logoColor=white" alt="Zero runtime dependencies">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/301-patch_source_repos-8b5cf6?style=for-the-badge&logo=github&logoColor=white" alt="Patch source repos">
-  <img src="https://img.shields.io/badge/234-bundles_stable_%2B_dev-06b6d4?style=for-the-badge&logo=github&logoColor=white" alt="Bundles">
-  <img src="https://img.shields.io/badge/903-tracked_apps-22c55e?style=for-the-badge&logo=googleplay&logoColor=white" alt="Tracked apps">
-  <img src="https://img.shields.io/badge/Auto_Scan-hourly-1e293b?style=for-the-badge&logo=githubactions&logoColor=white" alt="Hourly auto scan">
+  <img src="https://img.shields.io/badge/456-patch_source_repos-b493cf?style=for-the-badge&logo=github&logoColor=white" alt="Patch source repos">
+  <img src="https://img.shields.io/badge/1380-bundle_channels-fc6a03?style=for-the-badge&logo=github&logoColor=white" alt="Bundles">
+  <img src="https://img.shields.io/badge/1367-tracked_apps-8ec99a?style=for-the-badge&logo=googleplay&logoColor=white" alt="Tracked apps">
+  <img src="https://img.shields.io/badge/Auto_Scan-hourly-2d1f34?style=for-the-badge&logo=githubactions&logoColor=white" alt="Hourly auto scan">
 </p>
 
 ---
 
 ## What is this?
 
-Morphe Patch Tracker watches public **Morphe** patch bundle repositories and turns
+Morphe Tracker watches public **Morphe** patch bundle repositories and turns
 them into one searchable, comparable dashboard. It crawls the ecosystem, discovers new
 patch authors automatically, parses every bundle's compatible apps and patches,
 detects exactly what changed using SHA-256 fingerprinting, and publishes the result as
-a fully static site.
+a fully static site with a phone-hosted API.
 
 | Metric | Detail |
 |---|---|
-| **301** patch source repos | auto-discovered from community lists (GitHub + GitLab) |
-| **275** distinct authors | every source links back to its owner below |
-| **234** bundle channels | `stable` + `dev` |
-| **903** tracked apps | with Play Store icons, versions and patch descriptions |
-| **Hourly** runs | GitHub Actions → commit data → build → GitHub Pages |
+| **456** patch source repos | auto-discovered from the registry and community lists (GitHub + GitLab) |
+| **411** distinct authors | every source links back to its owner below |
+| **1380** bundle channels | `stable` + `latest` + `dev` |
+| **1367** tracked apps | with Play Store icons, versions and patch descriptions |
+| **Hourly** runs | phone pipeline → SQLite API → static fallback build |
 
-Everything is transparent: the pipeline runs in CI, commits its own state back to
-`main`, and the site is rebuilt from `docs/` on every push.
+Everything is transparent: the phone pipeline refreshes its SQLite database hourly,
+and GitHub Actions keeps the static fallback in sync.
 
 ---
 
@@ -59,14 +59,14 @@ Everything is transparent: the pipeline runs in CI, commits its own state back t
 
 ### Pipeline
 
-- **Registry crawl** — discovers `.mpp` bundles via the GitHub Git Trees API
-- **Community discovery** — pulls the `repos.txt` list to find untracked sources
+- **Registry crawl** - resolves .mpp bundles from the Jman Patch Bundle Registry
+- **Community discovery** - searches GitHub/GitLab and follows known source lists
 - **GitHub + GitLab** — both platforms parsed, including subgroup paths
-- **Multi-channel** — separate `stable` and `dev` release tracking
+- **Multi-channel** - separate stable, latest and dev release tracking
 - **Release cache** — GitHub releases resolved only for bundles that changed
 - **Fingerprinting** — SHA-256 per patch, so only real changes surface
 - **Daily changelog** — changes accumulate per UTC day, then roll over
-- **Telegram notify** — same-day summary that gets *edited* instead of spamming
+- **Telegram + Discord** - one same-day summary, edited in place on both
 
 </td>
 <td width="50%">
@@ -107,7 +107,7 @@ No framework, no bundler, no dependency manager.
 <td align="center" width="16%">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg" width="40"><br>
   <strong>GitHub Actions</strong><br>
-  <sub>CI + hourly runs</sub>
+  <sub>CI + static fallback</sub>
 </td>
 <td align="center" width="16%">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubpages/githubpages-original.svg" width="40"><br>
@@ -122,7 +122,7 @@ No framework, no bundler, no dependency manager.
 <td align="center" width="16%">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytest/pytest-original.svg" width="40"><br>
   <strong>pytest</strong><br>
-  <sub>30 tests</sub>
+  <sub>288 tests</sub>
 </td>
 </tr>
 </table>

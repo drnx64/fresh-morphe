@@ -338,7 +338,7 @@ def finalize_buffer(buffer_data):
             except Exception as e:
                 print(f"Error reading changelog.md: {e}")
 
-        header = "# Morphe Patch Tracker Changelog\n\n"
+        header = "# Morphe Tracker Changelog\n\n"
         if existing_md.startswith(header):
             content_body = existing_md[len(header):]
         else:

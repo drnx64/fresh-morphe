@@ -48,7 +48,7 @@ def parse_repos_txt(text):
 def save_repos_list(repos):
     """Write all known repos (owner/repo -> URL) to repos_list.txt."""
     lines = [
-        "# Morphe Patch Tracker - All Known Repositories",
+        "# Morphe Tracker - All Known Repositories",
         "# Each line: owner/repo -> full GitHub URL",
         f"# Last updated: {datetime.now(timezone.utc).isoformat()}",
         f"# Total: {len(repos)} repos",

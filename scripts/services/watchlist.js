@@ -59,7 +59,7 @@ export function notifyWatchedUpdates(changes) {
   }
   if (updated.length === 0) return
   try {
-    new Notification('Morphe Patch Tracker', {
+    new Notification('Morphe Tracker', {
       body: `${updated.length} watched app${updated.length !== 1 ? 's' : ''} updated: ${updated.slice(0, 3).join(', ')}${updated.length > 3 ? '…' : ''}`,
       tag: 'morphe-watch-updates',
     })
