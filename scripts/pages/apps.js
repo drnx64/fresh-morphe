@@ -65,8 +65,8 @@ export function renderApps(container) {
     const gen = ++listGeneration
     grid.replaceChildren()
 
-    // Booting: bundle files still streaming in — show skeletons, not "no apps"
-    if (store.get('loading') && appIndex.length === 0) {
+    // Booting: the app index is still being built — show skeletons, not "no apps"
+    if (store.get('booting') && appIndex.length === 0) {
       grid.appendChild(skeletonGrid(8))
       return
     }

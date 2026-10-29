@@ -18,6 +18,9 @@
 }
 .boot-progress-track {
   height: 3px;
+  /* The indeterminate segment travels past the right edge; clip it so it cannot
+     add a horizontal scrollbar. */
+  overflow: hidden;
   background: var(--border-hairline);
 }
 .boot-progress-fill {
@@ -26,6 +29,35 @@
   background: var(--gradient-primary);
   border-radius: 0 2px 2px 0;
   transition: width 0.3s ease;
+}
+/* Indeterminate: a job with no byte counter (the 2.75 MB changelog fetch) gets
+   a travelling segment instead of a percentage. The registry clears the inline
+   width for this state, so the animation owns it. */
+.boot-progress--indeterminate .boot-progress-fill {
+  width: 35%;
+  animation: boot-progress-sweep 1.3s ease-in-out infinite;
+}
+@keyframes boot-progress-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(285%);
+  }
+}
+/* A looping animation survives the global reduced-motion duration override
+   (it still repeats, just instantly), so stop it and show a solid bar. */
+@media (prefers-reduced-motion: reduce) {
+  .boot-progress--indeterminate .boot-progress-fill {
+    animation: none;
+    width: 100%;
+    opacity: 0.55;
+  }
+}
+.reduced-motion .boot-progress--indeterminate .boot-progress-fill {
+  animation: none;
+  width: 100%;
+  opacity: 0.55;
 }
 .boot-progress-status {
   width: max-content;

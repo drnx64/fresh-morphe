@@ -64,6 +64,7 @@ import {
   ensureAppBundles, ensureBundleChannels, onBundleDetailsLoaded,
 } from './services/bundleLoader.js'
 import { loadChangelog, loadSiteData } from './services/siteData.js'
+import { beginJob, endJob, progressJob } from './services/loadingBar.js'
 import { SITE_URL, GITHUB_REPO_URL, shrinkPlayIconUrl, withAvatarSize } from './utils/url.js'
 import { API_BASE, FALLBACK_BASE } from './config.js'
 import { devLog, devTime } from './utils/devLog.js'
@@ -86,6 +87,8 @@ store.init({
   loading: true,
   loadingProgress: 0,
   loadingStatus: 'Initializing...',
+  loadingIndeterminate: false,
+  booting: true,
   filters: { search: '', channel: 'all', hideArchived: false, hidePreRelease: false },
   viewMode: storageGet('view', 'grid'),
   changelogViewMode: storageGet('changelog_view', 'grid'),
@@ -211,20 +214,33 @@ function renderShell() {
 
   mount(root, [header, bootProgress, pageContainer, footer, bottomNav])
 
-  // Drive the progress bar from store state (shell renders once — no leak)
+  // Paint the bar from store state (shell renders once — no leak). The job
+  // registry in services/loadingBar.js owns the values; this only draws them,
+  // and re-arms the bar when work starts again after boot.
   const progressFill = bootProgress.querySelector('#boot-progress-fill')
   const progressStatus = bootProgress.querySelector('#boot-progress-status')
-  store.subscribe('loadingProgress', (progress) => {
-    const clamped = Math.max(0, Math.min(100, progress))
-    progressFill.style.width = `${clamped}%`
-    bootProgress.setAttribute('aria-valuenow', String(Math.round(clamped)))
-  })
-  store.subscribe('loadingStatus', (status) => {
-    progressStatus.textContent = status
-  })
-  store.subscribe('loading', (loading) => {
-    if (!loading) bootProgress.classList.add('done')
-  })
+  function renderLoadingBar() {
+    const loading = store.get('loading')
+    const indeterminate = !!store.get('loadingIndeterminate')
+    bootProgress.classList.toggle('done', !loading)
+    bootProgress.classList.toggle('boot-progress--indeterminate', indeterminate)
+    bootProgress.setAttribute('aria-busy', loading ? 'true' : 'false')
+    if (indeterminate) {
+      // The sweep animation owns the width; an inline width would beat the CSS.
+      progressFill.style.width = ''
+      bootProgress.removeAttribute('aria-valuenow')
+    } else {
+      const clamped = Math.max(0, Math.min(100, store.get('loadingProgress') || 0))
+      progressFill.style.width = `${clamped}%`
+      bootProgress.setAttribute('aria-valuenow', String(Math.round(clamped)))
+    }
+    progressStatus.hidden = !store.get('loadingStatus')
+    progressStatus.textContent = store.get('loadingStatus') || ''
+  }
+  for (const key of ['loading', 'loadingProgress', 'loadingStatus', 'loadingIndeterminate']) {
+    store.subscribe(key, renderLoadingBar)
+  }
+  renderLoadingBar()
 }
 
 // ── Routes ──
@@ -277,6 +293,9 @@ let currentBundleIndex = null
 let changelogPromise = null
 function ensureChangelog() {
   if (!changelogPromise) {
+    // No byte progress from fetchJson, so the bar goes indeterminate — two
+    // seconds of "something is happening" beats a still page.
+    beginJob('changelog', 'Loading changelog…')
     changelogPromise = loadChangelog()
       .then((data) => {
         store.set('changelog', Array.isArray(data) ? data : [])
@@ -285,13 +304,13 @@ function ensureChangelog() {
         console.error('[app] Changelog load failed:', err)
         changelogPromise = null
       })
+      .finally(() => endJob('changelog'))
   }
   return changelogPromise
 }
 
 function setBootProgress(progress, status) {
-  store.set('loadingProgress', progress)
-  if (status) store.set('loadingStatus', status)
+  progressJob('boot', progress, 100, status)
 }
 
 function offerOfflineNotice() {
@@ -305,7 +324,14 @@ function offerOfflineNotice() {
 
 function finishBoot(status = 'Loading complete') {
   setBootProgress(100, status)
-  store.set('loading', false)
+  // `loading` now means "the bar is busy", which a background job can keep true
+  // long after boot, so boot state gets its own flag (the apps grid keys its
+  // skeletons off it).
+  store.set('booting', false)
+  // Hold boot's final status through the bar's 0.35s fade instead of clearing
+  // it in the same tick, so "Data up to date" is still readable. Any background
+  // job keeps the bar (and therefore the pill's container) alive on its own.
+  setTimeout(() => endJob('boot'), 350)
 
   // Record last visit for "new scan" detection
   const today = new Date().toISOString().split('T')[0]
@@ -363,13 +389,37 @@ async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMa
     let failed = 0
     if (iconTotal) {
       toast.setTitle('Caching icons')
-      const iconRes = await runIconQueue((done, total) => toast.setProgress(done, total), { includeFailed: true })
-      failed += iconRes.failed
+      // The queue reports cumulative progress against the whole icon universe,
+      // so a partly warm cache starts the bar where it actually is.
+      beginJob('icons', 'Caching icons', { counts: true })
+      try {
+        const iconRes = await runIconQueue(
+          (done, total) => {
+            toast.setProgress(done, total)
+            progressJob('icons', done, total)
+          },
+          { includeFailed: true },
+        )
+        failed += iconRes.failed
+      } finally {
+        endJob('icons')
+      }
     }
     if (avatarUrls.length) {
       toast.setTitle('Caching avatars')
-      const avRes = await preloadAvatars(avatarUrls, (loaded) => toast.setProgress(loaded, avatarUrls.length))
-      failed += avRes.failed
+      beginJob('avatars', 'Caching avatars', { counts: true })
+      try {
+        const avRes = await preloadAvatars(
+          avatarUrls,
+          (loaded) => {
+            toast.setProgress(loaded, avatarUrls.length)
+            progressJob('avatars', loaded, avatarUrls.length)
+          },
+        )
+        failed += avRes.failed
+      } finally {
+        endJob('avatars')
+      }
     }
     return failed
   }
@@ -441,6 +491,9 @@ function buildBundlesFromIndex(index, cachedState) {
 async function loadData() {
   const bootTimer = devTime('boot data')
   devLog('boot data start', { api: API_BASE || '(static only)', fallback: FALLBACK_BASE })
+  // Boot is a job like any other, so a background job that outlives it keeps
+  // the bar up instead of finishing into silence.
+  beginJob('boot', 'Loading site data…', { announce: true })
   try {
     setBootProgress(5, 'Loading site data…')
 
@@ -582,7 +635,8 @@ async function loadData() {
   } catch (err) {
     console.error('[app] Data loading failed:', err)
     store.set('fetchErrors', [...store.get('fetchErrors'), err.message])
-    store.set('loading', false)
+    store.set('booting', false)
+    endJob('boot')
     // Show error state in page container
     const container = document.getElementById('page-container')
     if (container) {
