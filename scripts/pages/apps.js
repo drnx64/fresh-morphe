@@ -1,6 +1,7 @@
 /**
- * Apps page — today's updates + directory of all apps across bundles.
+ * Apps page - what's new + directory of all apps across bundles.
  */
+
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
 import { buildAppIndex, resolveAppName, getAppIconUrl, renderAppIcon, suggestFuzzy } from '../utils/misc.js'
@@ -14,7 +15,7 @@ let unsubscribeBundles = null
 export function renderApps(container) {
   const page = el('div', { class: 'apps-page' })
 
-  // Today's updates (hero section on apps page)
+  // What's New (hero section on apps page)
   page.appendChild(renderTodayUpdates())
 
   // Apps directory

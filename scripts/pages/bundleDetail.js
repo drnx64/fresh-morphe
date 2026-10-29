@@ -13,6 +13,7 @@ import {
   normalizeRepoUrl,
 } from '../utils/misc.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
+import { releaseNotesHtml } from '../components/releaseNotes.js'
 import { makeBundleKey, parseBundleKey } from '../utils/bundleKey.js'
 import { getRepoInfo, getAddMorpheUrl, getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
@@ -199,6 +200,17 @@ export async function renderBundleDetail(container, bundleName) {
     el('div', { class: 'bundle-channel-list' }, channelRows),
   ])
   page.appendChild(channelPanel)
+
+  // Release notes for the current version.
+  const notesHtml = releaseNotesHtml(bundle.release_notes)
+  if (notesHtml) {
+    const notes = el('div', { class: 'bundle-release-notes' })
+    notes.innerHTML = notesHtml
+    page.appendChild(el('section', { class: 'bundle-panel' }, [
+      el('h2', { class: 'bundle-panel-title' }, ['Release notes']),
+      notes,
+    ]))
+  }
 
   // ── Apps ────────────────────────────────────────────
   const appsSection = el('div', { class: 'bundle-detail-apps' }, [

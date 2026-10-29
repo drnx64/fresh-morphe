@@ -120,6 +120,13 @@ def load_claimed_keys():
         for channel in channels:
             keys.add(f"{name}:{channel}")
 
+    # Registry entries can preserve historical keys that were merged/renamed
+    # upstream. Keep those claimed so reconciliation carries them forward
+    # instead of reporting a false removal.
+    for item in tree_files:
+        for legacy_key in item.get("legacy_keys") or []:
+            keys.add(legacy_key)
+
     repos = set()
     for entry in ext.get("added", []):
         owner = str(entry.get("owner", "")).lower()

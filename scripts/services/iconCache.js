@@ -3,6 +3,7 @@
  */
 
 import { idbGet, idbGetMany, idbSetMany, idbKeys, idbDeleteMany } from './indexedDB.js'
+import { devLog } from '../utils/devLog.js'
 
 /** @type {Object<string, string>} */
 const imageCache = {}
@@ -43,7 +44,10 @@ export async function pruneStoredImages() {
     const keys = await idbKeys('icon_')
     const hashKeys = await idbKeys('img_')
     const allKeys = [...keys, ...hashKeys]
-    if (allKeys.length <= MAX_STORED_IMAGES) return
+    if (allKeys.length <= MAX_STORED_IMAGES) {
+      devLog('icon cache prune', `${allKeys.length}/${MAX_STORED_IMAGES} stored`)
+      return
+    }
     const inUse = new Set()
     for (const url of Object.keys(imageCache)) inUse.add(resolveIdbKey(url))
     let toDelete = allKeys.length - MAX_STORED_IMAGES
@@ -58,8 +62,9 @@ export async function pruneStoredImages() {
     if (del.length) {
       await idbDeleteMany(del)
     }
-  } catch {
-    /* ignore */
+    devLog('icon cache prune', `deleted ${del.length}, kept ${MAX_STORED_IMAGES}`)
+  } catch (err) {
+    devLog('icon cache prune failed', err.message)
   }
 }
 
@@ -103,6 +108,7 @@ let rateAttempts = 0
 function noteRateLimit() {
   rateAttempts++
   rateLimitedUntil = Date.now() + Math.min(RATE_BACKOFF_MAX_MS, RATE_BACKOFF_BASE_MS * 2 ** Math.min(rateAttempts - 1, 6))
+  devLog('icon rate limit', { attempt: rateAttempts, backoffMs: rateLimitedUntil - Date.now() })
 }
 
 function resizeToDataUrl(img, maxDim) {

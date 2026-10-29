@@ -19,6 +19,7 @@ import {
   registerIconUrls,
   pruneStoredImages,
 } from './iconCache.js'
+import { devLog } from '../utils/devLog.js'
 
 const QUEUE_KEY = 'morphe_icon_queue_v1'
 const SWEEP_PAUSE_MIN_MS = 1000
@@ -152,6 +153,7 @@ async function workerLoop() {
 
 function onIdle() {
   persistNow()
+  devLog('icon queue idle', { done: done.size, pending: pending.length, failed: failed.length })
   pruneStoredImages().catch(() => {})
   const waiters = idleWaiters
   idleWaiters = []
@@ -223,6 +225,11 @@ export function initIconQueue(iconMap) {
     else pending.push(val)
   }
   restore()
+  devLog('icon queue init', {
+    universe: universe.size,
+    warm: done.size,
+    pending: pending.length,
+  })
   if (typeof window !== 'undefined') window.addEventListener('beforeunload', persistNow)
   startObservers()
 }
@@ -243,6 +250,7 @@ export function runIconQueue(onProgress, { includeFailed = false } = {}) {
     pending.push(...requeue)
   }
   sweepStarted = true
+  devLog('icon queue start', { pending: pending.length, priority: priorityQueue.length, failed: failed.length })
   report()
   ensureWorker()
   return new Promise((resolve) => {

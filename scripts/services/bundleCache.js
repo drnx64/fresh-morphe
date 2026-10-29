@@ -10,6 +10,7 @@
  * index-sized entry (the payload only gained a `signature` field).
  */
 import { idbGet, idbSet } from './indexedDB.js'
+import { devLog } from '../utils/devLog.js'
 
 const CACHE_KEY = 'bundle_state_v1'
 // Guards against files rewritten without a version bump (e.g. pipeline fixes)
@@ -40,12 +41,23 @@ export function stateSignature(index, records) {
 export async function loadBundleState() {
   try {
     const cached = await idbGet(CACHE_KEY)
-    if (!cached || typeof cached !== 'object') return null
-    if (!cached.index || !cached.records) return null
-    if (Date.now() - (cached.savedAt || 0) > MAX_AGE_MS) return null
+    if (!cached || typeof cached !== 'object') {
+      devLog('bundle cache read', 'empty')
+      return null
+    }
+    if (!cached.index || !cached.records) {
+      devLog('bundle cache read', 'invalid')
+      return null
+    }
+    if (Date.now() - (cached.savedAt || 0) > MAX_AGE_MS) {
+      devLog('bundle cache read', 'expired')
+      return null
+    }
     lastSignature = cached.signature || null
+    devLog('bundle cache read', 'hit', Object.keys(cached.records).length, 'records')
     return { index: cached.index, records: cached.records }
-  } catch {
+  } catch (err) {
+    devLog('bundle cache read failed', err.message)
     return null
   }
 }
@@ -60,13 +72,17 @@ export async function loadBundleState() {
  */
 export async function saveBundleState(index, records) {
   const signature = stateSignature(index, records)
-  if (signature === lastSignature) return false
+  if (signature === lastSignature) {
+    devLog('bundle cache write', 'unchanged')
+    return false
+  }
   try {
     await idbSet(CACHE_KEY, { savedAt: Date.now(), index, records, signature })
     lastSignature = signature
+    devLog('bundle cache write', 'saved', Object.keys(records || {}).length, 'records')
     return true
-  } catch {
-    /* cache is best-effort */
+  } catch (err) {
+    devLog('bundle cache write failed', err.message)
     return false
   }
 }

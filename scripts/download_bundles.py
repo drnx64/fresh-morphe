@@ -2,11 +2,14 @@ import os
 import shutil
 import json
 import time
+import urllib.error
+import urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from state_manager import load_json, save_json, ensure_dirs, RAW_DIR, STATE_DIR, CUSTOM_REPO_PATH, IGNORE_REPO_PATH, load_repo_list, load_last_run, save_last_run
 from config import SKIP_CACHE_TTL_DAYS
 from http_utils import fetch_url
+from registry_api import fetch_catalog_patches
 from file_sha_store import load_file_shas, save_file_shas, get_changed_files, update_file_shas, prune_stale_shas
 
 def group_tree_files(tree_files):
@@ -70,23 +73,198 @@ def group_tree_files(tree_files):
                 
             if bundle_name not in bundles:
                 bundles[bundle_name] = {}
-            if channel not in bundles[bundle_name]:
-                bundles[bundle_name][channel] = {}
-                
-            bundles[bundle_name][channel][f"{file_type}_path"] = path
+            channel_entry = bundles[bundle_name].setdefault(channel, {})
+            channel_entry[f"{file_type}_path"] = path
+            if item.get("registry"):
+                channel_entry["registry"] = item["registry"]
+            if item.get("legacy_keys"):
+                channel_entry["legacy_keys"] = item["legacy_keys"]
 
     return bundles
 
-def download_file_with_retry(path, max_retries=3):
-    raw_url = f"https://raw.githubusercontent.com/Jman-Github/ReVanced-Patch-Bundles/bundles/{path}"
+def download_file_with_retry(url, max_retries=3, timeout=20):
     for attempt in range(1, max_retries + 1):
         try:
-            return fetch_url(raw_url, timeout=20)
+            return fetch_url(url, timeout=timeout)
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return None
+            print(f"Error fetching {url}: HTTP {e.code}")
         except Exception as e:
-            print(f"Error fetching {path}: {e}")
+            print(f"Error fetching {url}: {e}")
 
         if attempt < max_retries:
             time.sleep(2 ** attempt)
+
+    return None
+
+
+_RELEASE_ASSET_CACHE = {}
+
+
+def _release_repo_and_tag(download_url):
+    """Return ``(asset_base_url, tag, 'owner/repo')`` for a release URL.
+
+    Handles GitHub ``/releases/download/<tag>/`` and GitLab
+    ``/-/releases/<tag>/downloads/`` URLs, plus generic package URLs.
+    """
+    parsed = urllib.parse.urlsplit(download_url)
+    path = parsed.path
+
+    marker = "/releases/download/"
+    if marker in path:
+        prefix, rest = path.split(marker, 1)
+        tag = rest.split("/", 1)[0]
+        base_path = prefix + marker + tag + "/"
+        repo_path = prefix.strip("/")
+        repo = repo_path if repo_path.count("/") == 1 else None
+        base_url = urllib.parse.urlunsplit(
+            (parsed.scheme, parsed.netloc, base_path, "", "")
+        )
+        return base_url, tag, repo
+
+    gitlab_marker = "/-/releases/"
+    if gitlab_marker in path:
+        prefix, rest = path.split(gitlab_marker, 1)
+        tag = rest.split("/", 1)[0]
+        base_path = path.rsplit("/", 1)[0] + "/"
+        base_url = urllib.parse.urlunsplit(
+            (parsed.scheme, parsed.netloc, base_path, "", "")
+        )
+        repo_path = prefix.strip("/")
+        repo = repo_path if repo_path.count("/") == 1 else None
+        return base_url, tag, repo
+
+    # GitLab generic packages and other direct asset hosts: assume siblings
+    # live next to the bundle artifact.
+    if "/" in path:
+        base_path = path.rsplit("/", 1)[0] + "/"
+        base_url = urllib.parse.urlunsplit(
+            (parsed.scheme, parsed.netloc, base_path, "", "")
+        )
+        return base_url, None, None
+
+    return None, None, None
+
+
+def _github_release_assets(download_url):
+    """Map release asset names to download URLs (GitHub only, cached)."""
+    base_url, tag, repo = _release_repo_and_tag(download_url)
+    if not base_url or not tag or not repo or "github.com" not in base_url:
+        return {}
+
+    cache_key = f"{repo}@{tag}"
+    if cache_key in _RELEASE_ASSET_CACHE:
+        return _RELEASE_ASSET_CACHE[cache_key]
+
+    api_url = f"https://api.github.com/repos/{repo}/releases/tags/{urllib.parse.quote(tag)}"
+    assets = {}
+    try:
+        release = fetch_url(api_url, timeout=20, as_json=True)
+        for asset in release.get("assets") or []:
+            name = asset.get("name", "")
+            url = asset.get("browser_download_url", "")
+            if name and url:
+                assets[name] = url
+    except Exception as e:
+        print(f"  Release asset lookup failed for {repo}@{tag}: {e}")
+
+    _RELEASE_ASSET_CACHE[cache_key] = assets
+    return assets
+
+
+def _synthesize_bundle_json(registry):
+    version = registry.get("version", "")
+    if version.startswith("v") and len(version) > 1 and version[1].isdigit():
+        version = version[1:]
+    source_url = registry.get("source_url", "")
+    data = {
+        "created_at": registry.get("created_at", ""),
+        "description": registry.get("description", ""),
+        "download_url": registry.get("download_url", ""),
+        "signature_download_url": registry.get("signature_download_url", ""),
+        "version": version,
+    }
+    if source_url:
+        # Normally parsed from download_url; the explicit hint also covers
+        # GitLab package URLs that do not contain the project path.
+        data["source_url"] = source_url
+        data["patches"] = {"url": source_url}
+    return json.dumps(data, indent=2, ensure_ascii=False)
+
+
+def _synthesize_patch_list(registry):
+    bundle_id = registry.get("bundle_id", "")
+    if not bundle_id:
+        return None
+    rows = fetch_catalog_patches(bundle_id)
+    if not rows:
+        return None
+
+    patches = []
+    for row in rows:
+        compatible = []
+        for package in row.get("compatiblePackages") or row.get("packages") or []:
+            name = package.get("name") or package.get("packageName")
+            if not name:
+                continue
+            versions = package.get("versions")
+            compatible.append({
+                "packageName": name,
+                "versions": versions if isinstance(versions, list) else [],
+            })
+        patches.append({
+            "name": row.get("name") or "",
+            "description": row.get("description") or "",
+            "use": row.get("use", True),
+            "options": row.get("options") or [],
+            "compatiblePackages": compatible,
+        })
+
+    return json.dumps({
+        "NOTE": "Synthesized from the Patch Bundle Registry catalog.",
+        "version": registry.get("version", ""),
+        "patches": patches,
+    }, indent=2, ensure_ascii=False)
+
+
+def _download_registry_asset(registry, filename):
+    """Download a metadata file from a registry bundle's release assets.
+
+    Falls back to synthesizing JSON from registry metadata when a release does
+    not publish ``patches-bundle.json`` / ``patches-list.json`` (notably
+    GitLab package releases).
+    """
+    download_url = registry.get("download_url", "")
+    if not download_url:
+        return None
+
+    candidates = []
+    base_url, tag, repo = _release_repo_and_tag(download_url)
+    if base_url:
+        candidates.append(base_url + filename)
+    if repo and "github.com" in (base_url or ""):
+        candidates.append(f"https://raw.githubusercontent.com/{repo}/HEAD/{filename}")
+
+    seen = set()
+    for url in candidates:
+        if url in seen:
+            continue
+        seen.add(url)
+        content = download_file_with_retry(url)
+        if content:
+            return content
+
+    asset_url = _github_release_assets(download_url).get(filename)
+    if asset_url:
+        content = download_file_with_retry(asset_url)
+        if content:
+            return content
+
+    if filename == "patches-bundle.json":
+        return _synthesize_bundle_json(registry)
+    if filename == "patches-list.json":
+        return _synthesize_patch_list(registry)
 
     return None
 
@@ -217,7 +395,8 @@ def download_all_bundles():
     if os.path.exists(temp_dir):
         shutil.rmtree(temp_dir, ignore_errors=True)
         
-    # Build work items: list of (bundle_key, bundle_path, list_path) to download
+    # Build work items: each item carries the synthetic tree paths plus the
+    # registry record needed to resolve release assets.
     work_items = []
     errors = []
     
@@ -245,33 +424,64 @@ def download_all_bundles():
             if cached and _is_cache_fresh(cached):
                 continue
                 
-            work_items.append((bundle_key, bundle_path, list_path))
+            work_items.append({
+                "bundle_key": bundle_key,
+                "bundle_name": bundle_name,
+                "channel": channel,
+                "bundle_path": bundle_path,
+                "list_path": list_path,
+                "registry": paths.get("registry") or {},
+            })
 
     print(f"Downloading {len(work_items)} bundle+channel pairs with 3 workers...")
 
     def _download_one(item):
         """Download a single bundle+channel pair. Returns (bundle_key, result_dict)."""
-        bundle_key, bundle_path, list_path = item
-        bundle_name, channel = bundle_key.split(":", 1)
-        
-        # Download patches-bundle.json
-        bundle_content = download_file_with_retry(bundle_path)
-        if not bundle_content:
-            return (bundle_key, {"error": "Failed to download patches-bundle.json"})
+        bundle_key = item["bundle_key"]
+        bundle_name = item["bundle_name"]
+        channel = item["channel"]
+        registry = item.get("registry") or {}
+
+        if registry:
+            bundle_content = _download_registry_asset(registry, "patches-bundle.json")
+            if not bundle_content:
+                return (bundle_key, {"error": "Failed to download patches-bundle.json"})
+            list_content = _download_registry_asset(registry, "patches-list.json")
+            if not list_content:
+                return (bundle_key, {"error": "Failed to download patches-list.json"})
+        else:
+            # Backward compatibility for an old tree.json left on disk.
+            prefix = "https://raw.githubusercontent.com/Jman-Github/ReVanced-Patch-Bundles/bundles/"
+            bundle_content = download_file_with_retry(prefix + item["bundle_path"])
+            if not bundle_content:
+                return (bundle_key, {"error": "Failed to download patches-bundle.json"})
+            list_content = download_file_with_retry(prefix + item["list_path"])
+            if not list_content:
+                return (bundle_key, {"error": "Failed to download patches-list.json"})
             
         # Parse and validate as Morphe bundle
         try:
             bundle_json = json.loads(bundle_content)
         except Exception as e:
             return (bundle_key, {"error": f"Failed to parse patches-bundle.json as JSON: {e}"})
-            
+
+        if registry:
+            # Registry metadata is authoritative for identity; some upstream
+            # patches-bundle.json files are stale or omit fields entirely.
+            if registry.get("download_url"):
+                bundle_json["download_url"] = registry["download_url"]
+            if registry.get("source_url"):
+                bundle_json["source_url"] = registry["source_url"]
+            if not bundle_json.get("version"):
+                bundle_json["version"] = registry.get("version", "")
+            if not bundle_json.get("created_at"):
+                bundle_json["created_at"] = registry.get("created_at", "")
+            if not bundle_json.get("description"):
+                bundle_json["description"] = registry.get("description", "")
+            bundle_content = json.dumps(bundle_json, indent=2, ensure_ascii=False)
+
         if not is_morphe_bundle(bundle_json):
             return (bundle_key, {"error": "Not a Morphe bundle"})
-            
-        # Download patches-list.json
-        list_content = download_file_with_retry(list_path)
-        if not list_content:
-            return (bundle_key, {"error": "Failed to download patches-list.json"})
             
         return (bundle_key, {
             "bundle_content": bundle_content,

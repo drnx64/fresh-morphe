@@ -129,7 +129,7 @@ def build_changelog_feed(changelog, site_url):
                     "link": f"{site_url}/index.html#bundle={bundle_name}",
                 })
     return _feed_document(
-        site_url, "feed.xml", "Morphe Patch Tracker — Changelog",
+        site_url, "feed.xml", "Morphe Tracker — Changelog",
         "Automated changelog tracking Morphe patch bundle updates across stable and dev channels.",
         items,
     )
@@ -266,7 +266,7 @@ def _daily_items(changelog, buffer, site_url):
 def build_daily_feed(changelog, buffer, site_url):
     """Build the one-item-per-day digest feed."""
     return _feed_document(
-        site_url, "feed-daily.xml", "Morphe Patch Tracker — Daily Updates",
+        site_url, "feed-daily.xml", "Morphe Tracker — Daily Updates",
         "One entry per day listing the Morphe patch bundles and apps that changed.",
         _daily_items(changelog, buffer, site_url),
     )

@@ -82,6 +82,20 @@ class TestLoadClaimedKeys:
         assert "ext/repo" in claims["repos"]
         assert "err/repo" in claims["repos"]
 
+    def test_registry_legacy_keys_claimed(self, claims_env):
+        tree = _tree("new-name")
+        for item in tree:
+            item["legacy_keys"] = ["old-name:stable", "duplicate:stable"]
+        _write_json(str(claims_env / "raw" / "tree.json"), tree)
+        _write_json(str(claims_env / "state" / "external_repos.json"),
+                    {"archive_available": True, "added": [], "errors": []})
+
+        claims = load_claimed_keys()
+
+        assert "new-name:stable" in claims["keys"]
+        assert "old-name:stable" in claims["keys"]
+        assert "duplicate:stable" in claims["keys"]
+
     def test_ignore_repo_skipped(self, claims_env):
         _write_json(str(claims_env / "raw" / "tree.json"), _tree("foo", "ignored"))
         _write_json(str(claims_env / "state" / "external_repos.json"),

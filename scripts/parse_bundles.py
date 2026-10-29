@@ -62,8 +62,15 @@ def _scan_url_for_repo(url, bundle_name):
 def extract_repo_url(bundle_json, bundle_name):
     """
     Extract github/gitlab repository URL from patches-bundle.json.
-    First checks download_url, then falls back to patches.url, integrations.url, description, etc.
+    Prefers an explicit source_url from the registry, then checks download_url,
+    then falls back to patches.url, integrations.url, description, etc.
     """
+    source_url = bundle_json.get("source_url")
+    if isinstance(source_url, str) and source_url:
+        result = _scan_url_for_repo(source_url, bundle_name)
+        if result:
+            return result
+
     download_url = bundle_json.get("download_url")
     if isinstance(download_url, str) and download_url:
         result = _scan_url_for_repo(download_url, bundle_name)

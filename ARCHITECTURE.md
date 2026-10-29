@@ -1,8 +1,8 @@
-# Morphe Patch Tracker — Architecture Reference
+# Morphe Tracker — Architecture Reference
 
 ## Overview
 
-Morphe Patch Tracker is a fully automated monitoring system that crawls the
+Morphe Tracker is a fully automated monitoring system that crawls the
 [Jman-Github/ReVanced-Patch-Bundles](https://github.com/Jman-Github/ReVanced-Patch-Bundles)
 registry, discovers Morphe `.mpp` patch bundles, parses their compatible apps and patches,
 detects changes via SHA-256 fingerprinting, accumulates daily changelogs, enriches app data

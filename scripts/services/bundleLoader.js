@@ -10,7 +10,10 @@
  */
 import * as store from '../store.js'
 import { fetchWithTimeout } from '../utils/http.js'
+import { devLog } from '../utils/devLog.js'
 import { CHANNELS, makeBundleKey, parseBundleKey } from '../utils/bundleKey.js'
+import { API_ENABLED, API_HEADERS, apiUrl, fallbackUrl } from '../config.js'
+import { isApiAvailable } from './apiState.js'
 
 const DETAIL_TIMEOUT_MS = 10000
 
@@ -38,25 +41,44 @@ export function isBundlePartial(key) {
 }
 
 function bundleFileUrl(key) {
-  return `data/bundles/${key.replace(':', '_')}.json`
+  return fallbackUrl(`bundles/${key.replace(':', '_')}.json`)
+}
+
+function bundleApiUrl(key) {
+  const { name, channel } = parseBundleKey(key)
+  return apiUrl(`/v1/bundles/${encodeURIComponent(name)}/${encodeURIComponent(channel)}`)
 }
 
 async function loadKey(key) {
   const bundles = store.get('bundles') || {}
-  try {
-    const resp = await fetchWithTimeout(bundleFileUrl(key), {}, DETAIL_TIMEOUT_MS)
-    if (!resp.ok) throw new Error(`${resp.status}`)
-    const data = await resp.json()
-    if (data && typeof data === 'object' && data.apps) {
-      // Index carries card metadata the file lacks (stars, isArchived, …)
-      const merged = { ...(bundles[key] || {}), ...data, _partial: false }
-      bundles[key] = merged
-      detailsLoadedListener?.(key)
-      return merged
+  const sources = API_ENABLED && isApiAvailable()
+    ? [{ url: bundleApiUrl(key), headers: API_HEADERS }, { url: bundleFileUrl(key) }]
+    : [{ url: bundleFileUrl(key) }]
+  let lastError = null
+  devLog('bundle detail load', key, sources.length, 'sources')
+
+  for (const source of sources) {
+    try {
+      const init = source.headers ? { headers: source.headers } : {}
+      const resp = await fetchWithTimeout(source.url, init, DETAIL_TIMEOUT_MS)
+      if (!resp.ok) throw new Error(`${resp.status}`)
+      const data = await resp.json()
+      if (data && typeof data === 'object' && data.apps) {
+        // Index carries card metadata the file lacks (stars, isArchived, …)
+        const merged = { ...(bundles[key] || {}), ...data, _partial: false }
+        bundles[key] = merged
+        devLog('bundle detail loaded', key, data.apps.length, 'apps')
+        detailsLoadedListener?.(key)
+        return merged
+      }
+      throw new Error('unexpected payload')
+    } catch (err) {
+      lastError = err
+      devLog('bundle detail source failed', source.url, err.message)
     }
-  } catch (err) {
-    console.warn('[bundleLoader] failed to load', key, err.message)
   }
+
+  console.warn('[bundleLoader] failed to load', key, lastError?.message || 'unknown error')
   // Best effort: index-only (or previously cached) record keeps the UI usable
   return bundles[key] || null
 }

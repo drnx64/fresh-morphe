@@ -1,5 +1,5 @@
 /**
- * Today's Updates section — collapsible, shows affected bundles from today's changes.
+ * What's New section — collapsible, shows affected bundles from today's changes.
  * Hierarchy: NEW BUNDLE → bundles with NEW APPs → bundles with UPDATED APPs.
  * Shows version comparison tags (v1.0.1 → v1.0.2).
  * Collapse state persisted in localStorage.
@@ -29,7 +29,7 @@ export function renderTodayUpdates() {
 
   const headingRow = el('div', { class: 'today-updates-heading-row' })
   const headingLeft = el('div', { class: 'today-updates-heading-left' })
-  headingLeft.appendChild(el('h2', { class: 'section-title', id: 'today-heading' }, ["Today's Updates"]))
+  headingLeft.appendChild(el('h2', { class: 'section-title', id: 'today-heading' }, ["What's New"]))
 
   const liveDate = store.get('liveDataDate') || ''
   if (liveDate) {
@@ -55,7 +55,7 @@ export function renderTodayUpdates() {
 
   const toggleBtn = el('button', {
     class: 'today-updates-toggle',
-    'aria-label': 'Toggle today\'s updates',
+    'aria-label': 'Toggle what\'s new',
     'aria-expanded': String(!isCollapsed),
     'aria-controls': 'today-updates-body',
   })

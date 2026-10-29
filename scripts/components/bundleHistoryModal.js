@@ -8,8 +8,10 @@ import { renderAppIcon, getDisplayAvatar, getDisplayBundleImage, avatarStackHtml
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { VERSION_ARROW } from '../utils/svg.js'
+import { loadReleases } from '../services/releases.js'
+import { releaseDateLabel, releaseNotesHtml } from './releaseNotes.js'
 
-export function openBundleHistoryModal(bundleName, bundleNames = []) {
+export async function openBundleHistoryModal(bundleName, bundleNames = []) {
   if (!bundleName) return
 
   const changelog = store.get('changelog') || []
@@ -39,9 +41,14 @@ export function openBundleHistoryModal(bundleName, bundleNames = []) {
   }
   entries.sort((a, b) => (b.date || '').localeCompare(a.date || ''))
 
+  const releaseChannels = ['stable', 'latest', 'dev'].filter((channel) =>
+    names.some((name) => bundles[`${name}:${channel}`]),
+  )
+  const releases = await loadReleases(bundleName, releaseChannels)
+
   const content = el('div', { class: 'bundle-history-content' })
 
-  if (entries.length === 0) {
+  if (entries.length === 0 && releases.length === 0) {
     content.innerHTML = `<div class="empty-state">No version history available for ${escHtml(displayName)}.</div>`
   } else {
     const headerRow = el('div', { class: 'bundle-history-header' })
@@ -61,6 +68,26 @@ export function openBundleHistoryModal(bundleName, bundleNames = []) {
       </div>
     `
     content.appendChild(headerRow)
+
+    if (releases.length) {
+      const releasesSection = el('div', { class: 'bundle-history-releases' }, [
+        el('div', { class: 'bundle-history-section-title' }, ['Releases']),
+      ])
+      for (const release of releases) {
+        const item = el('details', { class: 'bundle-history-release' })
+        const summary = el('summary', { class: 'bundle-history-release-summary' })
+        summary.innerHTML = `
+          <span class="bundle-history-release-tag">${escHtml(release.tag || release.name || 'release')}</span>
+          <span class="bundle-history-release-name">${escHtml(release.name || '')}</span>
+          <span class="bundle-history-release-date">${escHtml(releaseDateLabel(release.dateReleased))}</span>
+        `
+        const body = el('div', { class: 'release-notes' })
+        body.innerHTML = releaseNotesHtml(release.body)
+        item.append(summary, body)
+        releasesSection.appendChild(item)
+      }
+      content.appendChild(releasesSection)
+    }
 
     const timeline = el('div', { class: 'bundle-history-timeline' })
     for (const entry of entries) {
