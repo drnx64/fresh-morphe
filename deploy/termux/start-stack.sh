@@ -35,6 +35,10 @@ if [ "${FRESH_WORKER_DISABLED:-${MORPHE_WORKER_DISABLED:-0}}" != "1" ] && { [ -f
   nohup sh bin/worker-loop.sh >/dev/null 2>&1 &
 fi
 
+if [ "${FRESH_DISCOVERY_DISABLED:-0}" != "1" ] && [ -f bin/discovery-loop.sh ]; then
+  nohup sh bin/discovery-loop.sh >/dev/null 2>&1 &
+fi
+
 domain_file="$FRESH_HOME/ngrok-domain.txt"
 if [ -s "$domain_file" ] && [ -x "$FRESH_HOME/bin/ngrok" ]; then
   domain=$(head -1 "$domain_file" | tr -d '[:space:]')
