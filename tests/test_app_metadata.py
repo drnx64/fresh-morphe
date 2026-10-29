@@ -214,6 +214,90 @@ class TestFetchIconCache:
         assert m.load_cache(str(path))["com.x"]["icon_url"] == "https://i/x.png"
 
 
+class TestIconFetchBudget:
+    """Guards against the 2026-10-29 CI stall: 404s were retried forever."""
+
+    def test_play_404_is_not_retried(self, monkeypatch):
+        import urllib.error
+
+        calls = []
+
+        def fake_urlopen(request, timeout=15):
+            calls.append(request.full_url)
+            raise urllib.error.HTTPError(request.full_url, 404, "Not Found", None, None)
+
+        monkeypatch.setattr(icons.urllib.request, "urlopen", fake_urlopen)
+        monkeypatch.setattr(icons.time, "sleep", lambda seconds: None)
+
+        assert icons._fetch_page_with_retry("https://play.google.com/store/x") is None
+        assert len(calls) == 1
+
+    def test_transient_error_is_retried(self, monkeypatch):
+        import urllib.error
+
+        calls = []
+
+        def fake_urlopen(request, timeout=15):
+            calls.append(request.full_url)
+            raise urllib.error.HTTPError(request.full_url, 500, "Server Error", None, None)
+
+        monkeypatch.setattr(icons.urllib.request, "urlopen", fake_urlopen)
+        monkeypatch.setattr(icons.time, "sleep", lambda seconds: None)
+
+        assert icons._fetch_page_with_retry("https://play.google.com/store/x") is None
+        assert len(calls) == icons.MAX_RETRIES
+
+    def test_recent_miss_is_skipped(self, tmp_path, monkeypatch):
+        import json
+        import time
+
+        path = tmp_path / "app_cache.json"
+        path.write_text(json.dumps({
+            "com.gone": {"icon_url": "", "last_icon_attempt": int(time.time())},
+            "com.fresh": {"icon_url": ""},
+        }), encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        fetched = []
+        monkeypatch.setattr(
+            icons, "fetch_app_icon", lambda pkg, skip_cache=False: fetched.append(pkg) or ""
+        )
+
+        parsed = {"bundle": {"apps": [{"package": "com.gone"}, {"package": "com.fresh"}]}}
+        icons.enrich_parsed_bundles_with_icons(parsed)
+
+        assert fetched == ["com.fresh"]
+
+    def test_fetch_is_capped_per_run(self, tmp_path, monkeypatch):
+        import json
+
+        monkeypatch.setenv("ICON_FETCH_LIMIT", "2")
+        path = tmp_path / "app_cache.json"
+        path.write_text("{}", encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        fetched = []
+        monkeypatch.setattr(
+            icons, "fetch_app_icon", lambda pkg, skip_cache=False: fetched.append(pkg) or ""
+        )
+
+        packages = [f"com.app{index}" for index in range(5)]
+        parsed = {"bundle": {"apps": [{"package": pkg} for pkg in packages]}}
+        icons.enrich_parsed_bundles_with_icons(parsed)
+
+        assert len(fetched) == 2
+        assert set(fetched) <= set(packages)
+
+    def test_failed_lookup_records_attempt_timestamp(self, tmp_path, monkeypatch):
+        path = tmp_path / "app_cache.json"
+        path.write_text("{}", encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        monkeypatch.setattr(icons, "_fetch_app_details", lambda pkg: ("", ""))
+
+        assert icons.fetch_app_icon("com.missing") == ""
+        entry = m.load_cache(str(path))["com.missing"]
+        assert entry["icon_url"] == ""
+        assert entry["last_icon_attempt"] > 0
+
+
 class TestIsUnresolved:
     def test_fully_resolved(self):
         cache = {"com.x": {"name": "X", "icon_url": "https://i/x.png"}}
