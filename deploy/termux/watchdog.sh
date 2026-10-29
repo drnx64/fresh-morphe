@@ -26,6 +26,10 @@ worker_loop_alive() {
   ps -eo args | grep -q '[w]orker-loop\.sh'
 }
 
+discovery_loop_alive() {
+  ps -eo args | grep -q '[d]iscovery-loop\.sh'
+}
+
 restart=0
 
 if ! api_alive; then
@@ -42,6 +46,18 @@ if ! worker_loop_alive; then
   log "worker loop down"
   # A dead loop leaves its lock behind and would block the restart.
   lock="$FRESH_HOME/.worker.lock"
+  if [ -d "$lock" ]; then
+    pid=$(cat "$lock/pid" 2>/dev/null || true)
+    if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then
+      rm -rf "$lock"
+    fi
+  fi
+  restart=1
+fi
+
+if [ -f bin/discovery-loop.sh ] && ! discovery_loop_alive; then
+  log "discovery loop down"
+  lock="$FRESH_HOME/.discovery.lock"
   if [ -d "$lock" ]; then
     pid=$(cat "$lock/pid" 2>/dev/null || true)
     if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then
