@@ -10,6 +10,7 @@ from discovery.providers import (
     ProviderUnavailable,
     github_search,
     ignored_repo_keys,
+    known_repo_keys,
     run_fast_provider,
 )
 from discovery.state import (
@@ -152,14 +153,28 @@ def _apply_verification(entry, result, now):
         entry["reason"] = result.get("reason", "verification failed")
 
 
-def _verify_entries(entries, limit, force, scanned=None, checkpoint=None):
+def _verify_entries(entries, limit, force, scanned=None, checkpoint=None, skip_keys=None):
     """Verify due entries, checkpointing progress and the scan cache as it goes.
 
     ``scanned`` is the append-only ``scanned_repos.txt`` cache. When a previous
     run was killed before ``discovered_repos.json`` was saved, its timestamp is
     used as ``last_checked`` so the repo is not scanned again immediately.
+
+    ``skip_keys`` holds repos already tracked in ``data/repos_list.txt``. They
+    stay in discovery state (so the fetch step keeps its channels) but are
+    never re-verified: the pipeline already fetches them from the archive list.
     """
     scanned = scanned or {}
+    skipped_known = 0
+    if skip_keys:
+        kept = []
+        for entry in entries:
+            if repo_key(entry.get("platform"), entry.get("repo")) in skip_keys:
+                skipped_known += 1
+                continue
+            kept.append(entry)
+        entries = kept
+
     now = utc_now()
 
     for entry in entries:
@@ -176,7 +191,7 @@ def _verify_entries(entries, limit, force, scanned=None, checkpoint=None):
         candidates = candidates[:limit]
 
     if not candidates:
-        return {"checked": 0, "newly_verified": []}
+        return {"checked": 0, "newly_verified": [], "skipped_known": skipped_known}
 
     newly_verified = []
     pending_scan = []
@@ -205,7 +220,11 @@ def _verify_entries(entries, limit, force, scanned=None, checkpoint=None):
 
     if pending_scan:
         append_scanned(pending_scan)
-    return {"checked": len(candidates), "newly_verified": newly_verified}
+    return {
+        "checked": len(candidates),
+        "newly_verified": newly_verified,
+        "skipped_known": skipped_known,
+    }
 
 
 def _found_summary(entry):
@@ -240,6 +259,7 @@ def run(force=False, limit=None, search=True, dry_run=False, quiet=False):
         "errors": [],
         "found": [],
         "scanned": len(scanned),
+        "known_skipped": 0,
     }
 
     def checkpoint():
@@ -253,6 +273,14 @@ def run(force=False, limit=None, search=True, dry_run=False, quiet=False):
         ignored = ignored_repo_keys()
     except Exception:
         ignored = set()
+
+    # Repos the pipeline already fetches from the morphe-archive list. They stay
+    # in discovery state but are never re-verified, so a run only spends its
+    # request budget on repos we do not track yet.
+    try:
+        known = known_repo_keys()
+    except Exception:
+        known = set()
 
     def merge(candidates):
         added = 0
@@ -313,9 +341,11 @@ def run(force=False, limit=None, search=True, dry_run=False, quiet=False):
         force=force,
         scanned=scanned,
         checkpoint=checkpoint,
+        skip_keys=known,
     )
     checked_count = verify_result["checked"]
     started["found"] = verify_result["newly_verified"]
+    started["known_skipped"] = verify_result.get("skipped_known", 0)
 
     if not was_baseline:
         state["baseline_done"] = True
@@ -356,6 +386,7 @@ def run(force=False, limit=None, search=True, dry_run=False, quiet=False):
             f"{started['verified']} verified, "
             f"{started['review']} review, "
             f"{checked_count} checked this run, "
+            f"{started['known_skipped']} skipped (already tracked), "
             f"{len(started['found'])} new"
         )
     return started
