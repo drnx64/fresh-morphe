@@ -2,9 +2,9 @@
   "bundle": "chiggi",
   "channel": "stable",
   "repo_url": "https://github.com/durgesh0505/chiggi_morphe_patches",
-  "created_at": "2026-09-22T01:01:04",
-  "version": "v1.23.1",
-  "description": "## [1.23.1](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.23.0...v1.23.1) (2026-09-22)\n\n### 🐛 Bug Fixes\n\n* **bighunter:** drive full purchase flow for free IAP (process lock) ([6831196](https://github.com/durgesh0505/chiggi_morphe_patches/commit/6831196e7154dcc41441331b867442ba57bdaf4b))\n",
+  "created_at": "2026-10-18T13:48:15",
+  "version": "1.25.0",
+  "description": "## [1.25.0](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.24.0...v1.25.0) (2026-10-18)\n\n### ✨ New Features\n\n* **zombiecatcher:** add unlimited coins and plutonium ([5828697](https://github.com/durgesh0505/chiggi_morphe_patches/commit/58286973bdf786979bc9a6c37d8b5866a5181f58))",
   "apps": [
     {
       "app_name": "CrazyGames: Play 2500+ Games",
@@ -558,6 +558,62 @@
       ]
     },
     {
+      "app_name": "Zombie Catchers : Hunt & sell",
+      "package": "fi.twomenandadog.zombiecatchers",
+      "patches": [
+        {
+          "name": "Bypass license check",
+          "description": "Bypasses PairIP signature and Google Play license checks. It also bypasses PairIP's encrypted-key import bootstrap, neutralizes its protected native logger, restores the game library's PairIP-encrypted native data, disables broken AndroidX startup and Firebase anonymous auth, and reconstructs the critical application, activity, and notification-service lifecycle methods so a re-signed build can start without encrypted VM bytecode. Third-party SDK VM stubs remain a runtime risk.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.69.16"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Changes the manifest package and package-derived authorities/permissions so Zombie Catchers Morphe can install beside the original. Play Games, Firebase auth, store updates, and server checks can still reject the renamed and re-signed build.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "New package name for side-by-side installation."
+            }
+          ],
+          "compatible_versions": [
+            "1.69.16"
+          ]
+        },
+        {
+          "name": "Free in-app purchases",
+          "description": "Skips Google Play Billing and exposes the app's product list at zero price. Buying an item sends a synthetic purchase receipt through Zombie Catchers' own native purchaseResult success callback, and the native server receipt check is forced off so the grant never depends on the developer's verification endpoint. No payment reaches Google. The developer's own event log still records each purchase; use a throwaway account.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.69.16"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Disables AppLovin MAX initialization, banners, and real ad playback. Interstitial requests complete immediately. Rewarded requests call the game's native successful completion callback so reward-gated actions can still grant their reward. Runtime confirmation is required because the final reward logic is native C++.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.69.16"
+          ]
+        },
+        {
+          "name": "Unlimited coins and plutonium",
+          "description": "Makes the game always read 1,342,177,279 coins and plutonium. Both are 32-bit values, so this is near the maximum while leaving room for rewards to be added without overflowing. Spending never lowers the balance. Use a throwaway account.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.69.16"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "JioHotstar",
       "package": "in.startv.hotstar",
       "patches": [
@@ -790,16 +846,16 @@
     }
   ],
   "patches_name": "Chiggi Patches",
-  "fingerprint": "3777bd942e299d3e247bf21c205351006a87918141f5814443475635fde320c5",
-  "release_notes": "## [1.23.1](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.23.0...v1.23.1) (2026-09-22)\n\n### 🐛 Bug Fixes\n\n* **bighunter:** drive full purchase flow for free IAP (process lock) ([6831196](https://github.com/durgesh0505/chiggi_morphe_patches/commit/6831196e7154dcc41441331b867442ba57bdaf4b))\n",
-  "release_tag": "v1.23.1",
-  "release_date": "2026-09-22T01:01:04Z",
+  "fingerprint": "cbe6eddadc2dce77e90cdfb9336c54ae2d66545dfa9f6a7cfb600663ed493802",
+  "release_notes": "## [1.25.0](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.24.0...v1.25.0) (2026-10-18)\n\n### ✨ New Features\n\n* **zombiecatcher:** add unlimited coins and plutonium ([5828697](https://github.com/durgesh0505/chiggi_morphe_patches/commit/58286973bdf786979bc9a6c37d8b5866a5181f58))\n",
+  "release_tag": "v1.25.0",
+  "release_date": "2026-10-18T13:48:32Z",
   "isPreRelease": false,
   "stars": 51,
   "avatarUrl": "https://avatars.githubusercontent.com/u/60478892?v=4",
   "repoDescription": "",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

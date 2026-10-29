@@ -2,9 +2,9 @@
   "bundle": "aapam",
   "channel": "dev",
   "repo_url": "https://github.com/WZSE/aapam-patches",
-  "created_at": "2026-09-26T09:27:53",
-  "version": "v1.3.1-dev.1",
-  "description": "## [1.3.1-dev.1](https://github.com/WZSE/aapam-patches/compare/v1.3.0...v1.3.1-dev.1) (2026-09-26)\n\n### 🐛 Bug Fixes\n\n* stream continuation for truncated Prime Video ad playlists and 6.24.8 support ([af7c528](https://github.com/WZSE/aapam-patches/commit/af7c528ef76a7560a8a60532b8cb8ff3f216033b))\n",
+  "created_at": "2026-10-26T04:29:09",
+  "version": "1.5.0",
+  "description": "## [1.5.0](https://github.com/WZSE/aapam-patches/compare/v1.4.0...v1.5.0) (2026-10-26)\n\n### 🐛 Bug Fixes\n\n* **cred:** generically neutralize DexGuard Activity tamper traps without hardcoded method names ([372d3a9](https://github.com/WZSE/aapam-patches/commit/372d3a92b3686a6d215cd82b5e307193ae3970d3))\n* **cred:** handle non-RuntimeException tamper traps and add 6.1.6.170 support ([6d133ed](https://github.com/WZSE/aapam-patches/commit/6d133ed24b7c5f4d98a3b23c9d76ae0f42d0f93c))\n\n### ✨ New Features\n\n* add CRED patch to disable security checks, telemetry, and background crashes ([d445ead](https://github.com/WZSE/aapam-patches/commit/d445ead3733b590bfaaf6e0f1f956715e155eb7c))",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -104,9 +104,44 @@
       ]
     },
     {
+      "app_name": "CRED: Credit Cards, Bills, UPI",
+      "package": "com.dreamplug.androidapp",
+      "patches": [
+        {
+          "name": "Disable Spying & Security Checks",
+          "description": "Suppresses background watchdog crashes, stubs app inventory harvesters, bypasses device profiling & root checks, and neutralizes OEM task-killer service flags.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.6.170",
+            "6.1.4.157",
+            "6.1.2.144"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Zee 5",
       "package": "com.graymatrix.did",
       "patches": [
+        {
+          "name": "Disable CleverTap",
+          "description": "Prevents the CleverTap analytics SDK from initializing, stopping behavioral tracking and advertising-id (GAID) collection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.83.2"
+          ]
+        },
+        {
+          "name": "Disable Firebase analytics",
+          "description": "Prevents Firebase Analytics from initializing, stopping event and user-property reporting to Google.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.83.2"
+          ]
+        },
         {
           "name": "Disable ads",
           "description": "Removes Google IMA ad insertion (client-side and server-side DAI) from the ZEE5 player. The media source factory is returned DRM-configured but with ad-insertion components never attached, so content and DRM playback are unaffected.",
@@ -124,23 +159,31 @@
           "compatible_versions": [
             "5.83.2"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "app_name": "mygate",
+      "package": "com.mygate.user",
+      "patches": [
         {
-          "name": "Disable CleverTap",
-          "description": "Prevents the CleverTap analytics SDK from initializing, stopping behavioral tracking and advertising-id (GAID) collection.",
+          "name": "Block Flutter Ads",
+          "description": "Removes home feed advertisements and sponsored community notice cards.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.83.2"
+            "7.37.0",
+            "7.38.2"
           ]
         },
         {
-          "name": "Disable Firebase analytics",
-          "description": "Prevents Firebase Analytics from initializing, stopping event and user-property reporting to Google.",
+          "name": "Unlock Premium Plan",
+          "description": "Enables premium resident status and removes promotional banners.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.83.2"
+            "7.37.0",
+            "7.38.2"
           ]
         }
       ]
@@ -187,16 +230,16 @@
     }
   ],
   "patches_name": "aapam Patches",
-  "fingerprint": "f5bc3e32e25d9b95c2120eac48f27c69f8eea9eaff762cb5269c6263d1fa053a",
-  "release_notes": "## [1.3.1-dev.1](https://github.com/WZSE/aapam-patches/compare/v1.3.0...v1.3.1-dev.1) (2026-09-26)\n\n### 🐛 Bug Fixes\n\n* stream continuation for truncated Prime Video ad playlists and 6.24.8 support ([af7c528](https://github.com/WZSE/aapam-patches/commit/af7c528ef76a7560a8a60532b8cb8ff3f216033b))\n",
-  "release_tag": "v1.3.1-dev.1",
-  "release_date": "2026-09-26T09:27:53Z",
-  "isPreRelease": true,
+  "fingerprint": "b5dfa21cb965a4dfbc7556be6062c404e1f68caf8da8aac86a0e1352905c30b7",
+  "release_notes": "## [1.5.0](https://github.com/WZSE/aapam-patches/compare/v1.4.0...v1.5.0) (2026-10-26)\n\n### 🐛 Bug Fixes\n\n* **cred:** generically neutralize DexGuard Activity tamper traps without hardcoded method names ([372d3a9](https://github.com/WZSE/aapam-patches/commit/372d3a92b3686a6d215cd82b5e307193ae3970d3))\n* **cred:** handle non-RuntimeException tamper traps and add 6.1.6.170 support ([6d133ed](https://github.com/WZSE/aapam-patches/commit/6d133ed24b7c5f4d98a3b23c9d76ae0f42d0f93c))\n\n### ✨ New Features\n\n* add CRED patch to disable security checks, telemetry, and background crashes ([d445ead](https://github.com/WZSE/aapam-patches/commit/d445ead3733b590bfaaf6e0f1f956715e155eb7c))\n",
+  "release_tag": "v1.5.0",
+  "release_date": "2026-10-26T04:29:43Z",
+  "isPreRelease": false,
   "stars": 10,
   "avatarUrl": "https://avatars.githubusercontent.com/u/9087102?v=4",
   "repoDescription": "",
   "isArchived": false,
-  "bundleImageUrl": "https://github.com/WZSE/aapam-patches/raw/HEAD/patches-bundle.png",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": "https://github.com/WZSE/aapam-patches/raw/HEAD/patches-bundle.png"
 }

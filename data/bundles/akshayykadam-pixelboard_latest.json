@@ -1,0 +1,86 @@
+{
+  "bundle": "akshayykadam-pixelboard",
+  "channel": "latest",
+  "repo_url": "https://github.com/Akshayykadam/PixelBoard",
+  "created_at": "2026-10-27T22:55:00",
+  "version": "1.3.3",
+  "description": "### PixelBoard Patches (v1.3.3)\n\n* **Restore Voice Toolbar Minimize Key**: Restored the voice toolbar minimize action key in Rambler dictation to minimize the expanded toolbar to the end slot or floating widget (#108)\n* **TalkBack Accessibility for Voice Typing Keys**: Added proper accessibility content descriptions for TalkBack screen reader support on the Rambler voice toolbar minimize key (\"Minimize keyboard\") and floating widget key (\"Back to keyboard\") (#108)\n* **AI Writing Tools Stability Safeguards**: Re-aligned stylization and proofread model configurations to 202504090000_writing_tools_config on Google's Gboard server backend, restoring reliable Rephrase, Professional, and tone rewrite operations\n* **Writing Tools Cooperative Mode Safeguard**: Disabled unstable cooperative mode and selection helper flags to prevent model timeout and request drops\n* **Unrestricted Proofread App Support**: Broadened proofread supported applications allowlist across all text inputs\n* **Pre-Activated Google Sans Flex & Undo Actions**: Google Sans Flex typography and Undo action key are pre-enabled and enforced by default\n* **Fast Access Bar & Emojify Activation**: Pre-enabled Fast Access Bar and Emojify preferences with all-app allowlists and optimized pattern sequences\n* **Personal Dictionary & Physical Keyboard Preservation**: Fixed a settings cleanup regression where shifting resource IDs in Gboard 18.5+ caused native Dictionary and Physical Keyboard entries to be removed (#91, #94)\n* **Voice Dictation Contextual Commands**: Fixed voice editing commands (e.g. Translate to, Fix grammar, Clear, Undo) being overwritten by verbatim speech by restricting verbatim restoration strictly to compose intents (#90)\n* **Agentic Dictation Latency Optimization**: Eliminated the deactivation delay (0ms) and removed legacy toolbar positioning flags for instantaneous speech dictation\n* **Material You Settings Polish**: Streamlined What's New card and settings UI layout with cleaner typography, padding, and subtle divider styling\n* **In-App Updates**: Dedicated PixelBoard updates section directly in Gboard settings with GitHub release checks, formatted changelogs, and direct APK download\n* **Features Menu Accessibility**: Fixed TalkBack focus navigation and window state announcement when expanding keyboard access points\n* **Dictation JNI Readiness for Fused APKs**: Direct JNI library loading verification for fused APKs without Play split markers\n* **Clipboard & Screenshot Auto-Sync**: Instant clipboard and screenshot paste suggestions via foreground observer sync and XML preference defaults\n* **Clipboard History Retention Slider**: Discrete retention duration choices (1h, 24h, 7d, 30d, Never)\n* **Smart Auto-Correction & Dynamic Revert**: Pre-enabled auto-correction with primary-key revert and fine-tuned word learning threshold\n* **Updated High-Resolution App Icon**: Official high-resolution Material You adaptive app icon and monochrome vector theme drawable across all densities\n* **Gemini Rambler Voice Dictation**: Fixed official selector hooks, standalone APK default (enable_jetson), verbatim transcript restore, and suppressed compliance feedback access point icon\n* **Super Insert Android 16 Crash Fix**: Guarded against unsupported PersonalContext hint APIs on Android 16 (API 36)\n* **Modern Spell Checker Suggestion Chips & Grammar Checking**: Enforced Android 12+ inline spell checker suggestion chips and add-to-dictionary UI across all devices\n* **Scan Text / Camera OCR**: Unlocked Gboard Scan Text camera OCR feature and camera permission for real-time text recognition across all languages\n* **Screenshot / Floating Image Banner**: Unlocked floating screenshot chip and media paste flow with image permissions\n* **Emoji Palette V2 & Dedicated Tabs**: Modern emoji drawer layout with frequent emoji recent tabs and customizable grid density\n* **Super Insert & Smart Compose**: Unlocked rich multi-view super insert, contact results, and in-line ghost autocompletion\n* **Contextual Emoji Suggestions**: Activated Delight5 concept prediction engine and emoji shortcut candidates\n* **Material 3 Expressive Rounded Keys**: Material 3 Belka rounded pill keycaps (#14)\n* **Samsung & Vivo Clipboard History Sync**: Foreground clipboard sync fix (#17)\n* **Standalone Coexistence**: Side-by-side installation with stock Gboard\n\nSupports Gboard v18.5.3 (Release), v18.4.1 (Release), and v18.3.1 (Release / Beta).",
+  "apps": [
+    {
+      "app_name": "Gboard - the Google Keyboard",
+      "package": "com.google.android.inputmethod.latin",
+      "patches": [
+        {
+          "name": "AI Writing Tools",
+          "description": "Enable AI writing tools with support for all languages.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.3.1.977415014-beta-arm64-v8a",
+            "18.3.1.977415014-release-arm64-v8a",
+            "18.4.1.985164140-release-arm64-v8a",
+            "18.5.3.993608717-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Add Gboard Signature Bypass",
+          "description": "Bypass Gboard signature whitelist checks and force them to pass.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.3.1.977415014-beta-arm64-v8a",
+            "18.3.1.977415014-release-arm64-v8a",
+            "18.4.1.985164140-release-arm64-v8a",
+            "18.5.3.993608717-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Advanced Voice Typing",
+          "description": "Enable Advanced Voice Typing with automatic punctuation and rambler mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.3.1.977415014-beta-arm64-v8a",
+            "18.3.1.977415014-release-arm64-v8a",
+            "18.4.1.985164140-release-arm64-v8a",
+            "18.5.3.993608717-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Package Rename",
+          "description": "Rename the package to com.akshaykadam.pixelboard and allow a custom app name so it can be installed alongside the official Gboard.",
+          "use": true,
+          "options": [
+            {
+              "key": "app_display_name",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "18.0.3.954559732-release-arm64-v8a",
+            "18.3.1.977415014-beta-arm64-v8a",
+            "18.3.1.977415014-release-arm64-v8a",
+            "18.4.1.985164140-release-arm64-v8a",
+            "18.5.3.993608717-release-arm64-v8a"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Akshayykadam",
+  "fingerprint": "e3f3482896c39fb6c6105fe68d190bdd3e2951c2a2d13e931e9a8b0266806ca2",
+  "release_notes": "# PixelBoard Stable Release v1.3.1\r\n\r\nPixelBoard v18.5.3-V1 updates the base Google Keyboard to the official **Gboard v18.5.3 Release**, introduces a built-in **in-app update checker** positioned conveniently right on the main Gboard settings screen.\r\n\r\n---\r\n\r\n## What's New in v18.5.3\r\n\r\n- **In-App Update Checker**: Easily check for new versions and download updates directly from GitHub inside the app.\r\n- **Emoji Recents & Frequent Toggle**: Restored the Recently Used emojis tab by default on Gboard 18.5+ with a setting to switch between Recent and Frequent emojis.\r\n- **Extended Clipboard History**: Save copied text and images for 1 hour, 24 hours, 7 days, 30 days, or permanently (Never).\r\n- **Crash Fixes & Stability**: Resolved clipboard slider crashes, fixed settings layout issues, and improved battery efficiency.\r\n\r\n---\r\n\r\n## Detailed Improvements\r\n\r\n### Extended Clipboard History\r\n  - **Customizable Retention**: Choose to keep copied items for 1 hour, 24 hours, 7 days, 30 days, or Never (permanent).\r\n  - **Easy Access**: Configure your retention preference in native Gboard Settings > Clipboard or under PixelBoard Settings.\r\n  - **Safe Migration**: Automatically migrates previous clipboard settings without crashes or resetting your history.\r\n\r\n### Emoji Drawer Recents & Frequently Used Toggle\r\n  - **Recent Emoji Tab by Default**: Restored the recently used emoji tab on Gboard 18.5+, replacing the forced frequent emoji drawer.\r\n  - **Customizable Preference**: Switch between Recently used emojis and Frequently used emojis directly from PixelBoard Settings > Features.\r\n\r\n### Stability & Under-the-Hood Fixes\r\n  - **Gboard 18.5.3 Release**: Upgraded to base build `18.5.3.993608717-release-arm64-v8a`.\r\n  - **Slider Out-of-Bounds Fix**: Eliminated crashes caused by out-of-range slider preference values.\r\n  - **Battery Drain Resolution**: Fixed background `GoogleAsrService` persistence to conserve battery.\r\n  - **Autofill Compatibility**: Fixed inline password manager suggestion chips in keyboard text fields.\r\n\r\n---\r\n\r\n## Release Assets\r\n\r\n| Package | Type | Size | Description |\r\n| :--- | :--- | :--- | :--- |\r\n| [**PixelBoard-1.3.1.apk**](https://github.com/Akshayykadam/PixelBoard/releases/download/1.3.1/PixelBoard-1.3.1.apk) | **Signed APK** *(Recommended)* | ~79 MB | **Ready to install.** Signed stable APK (v18.5.3 base, side-by-side coexistence). |\r\n| [**patches-1.3.1.mpp**](https://github.com/Akshayykadam/PixelBoard/releases/download/1.3.1/patches-1.3.1.mpp) | **Morphe Patch Bundle** | ~1.6 MB | Standalone patch file (v1.3.1) for Morphe Manager to patch your own base APK. |\r\n| [**Stock Gboard v18.5.3**](https://www.apkmirror.com/apk/google-inc/gboard/gboard-the-google-keyboard-18-5-3-993608717-release/) | **Base APK** | ~67 MB | Official unmodified base APK from APKMirror *(only needed if patching manually)*. |\r\n\r\n---\r\n\r\n## Installation\r\n\r\n### Option 1: Direct APK Installation (Recommended)\r\n1. Download [**PixelBoard-1.3.1.apk**](https://github.com/Akshayykadam/PixelBoard/releases/download/1.3.1/PixelBoard-1.3.1.apk) directly to your Android device.\r\n2. Tap the downloaded APK in your file manager or browser downloads.\r\n3. Allow installation from unknown sources if prompted, and complete installation.\r\n4. Enable PixelBoard in **Settings > System > Languages & input > On-screen keyboard**.\r\n\r\n### Option 2: ADB Sideload\r\n```bash\r\nadb install -r PixelBoard-1.3.1.apk\r\nadb shell am force-stop com.akshaykadam.pixelboard\r\n```\r\n\r\n### Option 3: Patch via Morphe Manager\r\nAdd the custom patch source in Morphe Manager:\r\n```text\r\nhttps://raw.githubusercontent.com/Akshayykadam/PixelBoard/main/patches-bundle.json\r\n```\r\nSelect stock Gboard [**v18.5.3.993608717-release-arm64-v8a**](https://www.apkmirror.com/apk/google-inc/gboard/gboard-the-google-keyboard-18-5-3-993608717-release/) and apply patches.\r\n\r\n---\r\n\r\n## Compatibility\r\n\r\n| Specification | Details |\r\n| :--- | :--- |\r\n| **Base App** | Google Keyboard (`com.google.android.inputmethod.latin`) |\r\n| **Recommended Base Version** | `18.5.3.993608717-release-arm64-v8a` (APKMirror) |\r\n| **Also Supported** | `18.4.1`, `18.3.1`, `18.0.3` |\r\n| **Architecture** | `arm64-v8a` |\r\n| **Minimum Android Version** | Android 10 (API 29) or higher |\r\n| **Standalone Coexistence** | Supported (package `com.akshaykadam.pixelboard` installs alongside factory Gboard) |\r\n",
+  "release_tag": "1.3.1",
+  "release_date": "2026-10-24T20:13:32Z",
+  "isPreRelease": false,
+  "stars": 1176,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/97009989?v=4",
+  "repoDescription": "Unlock Google 11's Gemini \"Rambler\" Natural Voice Dictation & AI Writing Tools on ANY Android phone. No root required.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}

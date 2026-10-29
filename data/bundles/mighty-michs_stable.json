@@ -2,9 +2,9 @@
   "bundle": "mighty-michs",
   "channel": "stable",
   "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
-  "created_at": "2026-10-09T09:53:24",
-  "version": "v1.10.0",
-  "description": "## [1.10.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.9.0...v1.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* fixed camera opus error [skip ci] ([f042b75](https://github.com/mich111discord/MightyMichs-Patches/commit/f042b75059602159f1772ed76f3ce72ff365f658))\n\n### ✨ New Features\n\n* added suport for photex companion ([ff2fb5a](https://github.com/mich111discord/MightyMichs-Patches/commit/ff2fb5ad1a8df0413e00ce07382da7100063d0b1))\n",
+  "created_at": "2026-10-25T13:28:50",
+  "version": "1.12.0",
+  "description": "## [1.12.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.11.1...v1.12.0) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* Enhance UnlockPremium patch for MagoVideo [skip ci] ([d894129](https://github.com/mich111discord/MightyMichs-Patches/commit/d894129d440480078b6340d95739a79ad857e692))\n* fixed InShot Patch error ([d7a8949](https://github.com/mich111discord/MightyMichs-Patches/commit/d7a8949400bb5ce6c9ad99ecb10451f47816a267))\n* InShot unlock Pro via SubscribeProOfHw / DebugPro gate ([7199bde](https://github.com/mich111discord/MightyMichs-Patches/commit/7199bde8ba49a2a5e71613644245d69455bc0329))\n\n### ✨ New Features\n\n* Add patch to disable CCleaner telemetry tracking [skip ci] ([14a9e5d](https://github.com/mich111discord/MightyMichs-Patches/commit/14a9e5d18f84e0d7e180d90211a3ac97f2fd3f27))\n* Add UnlockPremium patch for CCleaner [skip ci] ([7fd2df3](https://github.com/mich111discord/MightyMichs-Patches/commit/7fd2df3a41d83ff417c1a0be7dd495e7ed8628eb))\n* added new patches and fixed the old ones ([aea3ecd](https://github.com/mich111discord/MightyMichs-Patches/commit/aea3ecd5424896a606e250793316e9f5234834fc))",
   "apps": [
     {
       "app_name": "Audio Editor & Music Editor",
@@ -97,11 +97,12 @@
       "package": "com.camerasideas.instashot",
       "patches": [
         {
-          "name": "Unlock Premium ",
-          "description": "Unlocks InShot premium by forcing billing methods to return true.",
+          "name": "Unlock Premium",
+          "description": "Unlocks InShot Pro: no export watermark, no ads, paid filters/effects/HD. On-device AI tools may still require original signing key.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "2.214.1539",
             "2.243.1555"
           ]
         }
@@ -138,6 +139,21 @@
       ]
     },
     {
+      "app_name": "ESET Mobile Security Antivirus",
+      "package": "com.eset.ems2.gp",
+      "patches": [
+        {
+          "name": "Enable premium license",
+          "description": "Best-effort unlock of ESET premium UI / client-side license flags. Native libems + server checks may still limit some features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.0.17.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Huanxiu Sleep",
       "package": "com.huanxiu.hxaweme",
       "patches": [
@@ -168,7 +184,7 @@
       ]
     },
     {
-      "app_name": "MX Player Pro",
+      "app_name": "VideoPlayer (Wear OS)",
       "package": "com.mxtech.videoplayer.pro",
       "patches": [
         {
@@ -177,7 +193,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2.2.4"
+            "1.93.4"
           ]
         }
       ]
@@ -187,12 +203,37 @@
       "package": "com.newleaf.app.android.victor",
       "patches": [
         {
-          "name": "Unlock Premium Features (Experimental)",
-          "description": "Unlocks ReelShort premium by forcing getVip_status and isVipFreeAdvUnlock to return true. WARNING: May cause crashes.",
+          "name": "Unlock Premium Features",
+          "description": "Unlocks ReelShort VIP (vip_status=1) and unlocks ad-gated episodes.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "4.2.20",
             "4.2.00"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CCleaner – Phone Cleaner",
+      "package": "com.piriform.ccleaner",
+      "patches": [
+        {
+          "name": "Disable Telemetry",
+          "description": "Disables analytics and telemetry event tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Unlocks CCleaner Premium / Pro features (Ultimate Multi + Lifetime style).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.0"
           ]
         }
       ]
@@ -262,7 +303,9 @@
           "options": [],
           "compatible_versions": [
             "7.5.00112",
-            "v7.5.00112"
+            "v7.5.00112",
+            "7.3.10123",
+            "v7.3.10123"
           ]
         }
       ]
@@ -287,21 +330,25 @@
       "package": "com.teslacoilsw.launcher",
       "patches": [
         {
-          "name": "Enable Prime (Experimental)",
-          "description": "Enables Nova Launcher Prime WARNING: May cause crashes. ",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "8.8.9"
-          ]
-        },
-        {
           "name": "Remove Internet permission (Nova)",
           "description": "Removes INTERNET permission from Nova Launcher and disables network-only entry points so Nova does not crash.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "8.8.9"
+            "7.0.58",
+            "8.0.8",
+            "8.8.8"
+          ]
+        },
+        {
+          "name": "Unlock Prime",
+          "description": "Unlocks Nova Launcher Prime by bypassing the static (isPrime) gate. WARNING: May cause crashes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.58",
+            "8.0.8",
+            "8.8.8"
           ]
         }
       ]
@@ -316,7 +363,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.2.9.3"
+            "1.3.4"
           ]
         }
       ]
@@ -337,16 +384,30 @@
       ]
     },
     {
-      "app_name": "Guitar Tuner",
-      "package": "com.yaunquan.guitartuna",
+      "app_name": "TikTok",
+      "package": "com.zhiliaoapp.musically",
       "patches": [
         {
-          "name": "Unlock Premium Features",
-          "description": "Unlocks Guitar Tuner premium.",
+          "name": "Force region",
+          "description": "Forces TikTok store_region-related getters to a chosen ISO country code.",
+          "use": true,
+          "options": [
+            {
+              "key": "region",
+              "description": "ISO-3166-1 alpha-2 country code to spoof (e.g. US, GB, JP, KR, PL)."
+            }
+          ],
+          "compatible_versions": [
+            "47.4.3"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Disables common TikTok ad load/show methods (best-effort).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "null"
+            "47.4.3"
           ]
         }
       ]
@@ -380,9 +441,9 @@
       "package": "mobi.charmer.magovideo",
       "patches": [
         {
-          "name": "Unlock Premium (Experimental)",
-          "description": "Unlocks MagoVideo premium by forcing the premium check method h0 to return true. WARNING: May cause crashes.",
-          "use": false,
+          "name": "Unlock Premium",
+          "description": "Unlocks MagoVideo premium / VIP (no watermark, pro features).",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "5.7.1"
@@ -511,21 +572,6 @@
       ]
     },
     {
-      "app_name": "ZArchiver",
-      "package": "ru.zdevs.zarchiver",
-      "patches": [
-        {
-          "name": "Unlock Premium Features",
-          "description": "Unlocks ZArchiver premium and bypasses login.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.10"
-          ]
-        }
-      ]
-    },
-    {
       "app_name": "Todoery: To Do List & Planner",
       "package": "todolist.scheduleplanner.dailyplanner.todo.reminders",
       "patches": [
@@ -574,16 +620,16 @@
     }
   ],
   "patches_name": "MightyMich's Patches",
-  "fingerprint": "ed3f4bc5328f66b68cde3a8ec56efac60b53b821364b296341b437ba05eabd43",
-  "release_notes": "## [1.10.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.9.0...v1.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* fixed camera opus error [skip ci] ([f042b75](https://github.com/mich111discord/MightyMichs-Patches/commit/f042b75059602159f1772ed76f3ce72ff365f658))\n\n### ✨ New Features\n\n* added suport for photex companion ([ff2fb5a](https://github.com/mich111discord/MightyMichs-Patches/commit/ff2fb5ad1a8df0413e00ce07382da7100063d0b1))\n",
-  "release_tag": "v1.10.0",
-  "release_date": "2026-10-09T09:53:24Z",
+  "fingerprint": "394f0702f187b8749aa290dc41cffd6806ac55b72a08fce3d3df417e6f96cd51",
+  "release_notes": "## [1.12.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.11.1...v1.12.0) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* Enhance UnlockPremium patch for MagoVideo [skip ci] ([d894129](https://github.com/mich111discord/MightyMichs-Patches/commit/d894129d440480078b6340d95739a79ad857e692))\n* fixed InShot Patch error ([d7a8949](https://github.com/mich111discord/MightyMichs-Patches/commit/d7a8949400bb5ce6c9ad99ecb10451f47816a267))\n* InShot unlock Pro via SubscribeProOfHw / DebugPro gate ([7199bde](https://github.com/mich111discord/MightyMichs-Patches/commit/7199bde8ba49a2a5e71613644245d69455bc0329))\n\n### ✨ New Features\n\n* Add patch to disable CCleaner telemetry tracking [skip ci] ([14a9e5d](https://github.com/mich111discord/MightyMichs-Patches/commit/14a9e5d18f84e0d7e180d90211a3ac97f2fd3f27))\n* Add UnlockPremium patch for CCleaner [skip ci] ([7fd2df3](https://github.com/mich111discord/MightyMichs-Patches/commit/7fd2df3a41d83ff417c1a0be7dd495e7ed8628eb))\n* added new patches and fixed the old ones ([aea3ecd](https://github.com/mich111discord/MightyMichs-Patches/commit/aea3ecd5424896a606e250793316e9f5234834fc))\n",
+  "release_tag": "v1.12.0",
+  "release_date": "2026-10-25T13:29:39Z",
   "isPreRelease": false,
   "stars": 16,
   "avatarUrl": "https://avatars.githubusercontent.com/u/141028293?v=4",
   "repoDescription": "",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

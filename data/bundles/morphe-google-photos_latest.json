@@ -2,39 +2,21 @@
   "bundle": "morphe-google-photos",
   "channel": "latest",
   "repo_url": "https://github.com/Akash-Sriram/morphe-google-photos",
-  "created_at": "2026-10-09T05:51:17",
-  "version": "v1.14.3",
-  "description": "## [1.14.3](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.2...v1.14.3) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **LocalCreationDownloader:** Samsung specific optimization for local story and creation downloads ([aae1dc0](https://github.com/Akash-Sriram/morphe-google-photos/commit/aae1dc092c5d1b135290c646c621030904d008fc))\n",
+  "created_at": "2026-10-26T06:17:07",
+  "version": "1.16.1",
+  "description": "## [1.16.1](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.16.0...v1.16.1) (2026-10-26)\n\n### 🐛 Bug Fixes\n\n* **Google Photos - Seeder:** exclude non-ML promo assets and prevent model health revert ([#44](https://github.com/Akash-Sriram/morphe-google-photos/issues/44)) ([28214c4](https://github.com/Akash-Sriram/morphe-google-photos/commit/28214c4c349282794ae0f8e2a42c8f18cb086ff8))\n* **Google Photos - Theme:** ensure translucent expander windows retain transparent background in night mode ([#45](https://github.com/Akash-Sriram/morphe-google-photos/issues/45)) ([4c45121](https://github.com/Akash-Sriram/morphe-google-photos/commit/4c45121b7743ec570b1c7fda142c25263e460c79))\n* **Google Photos - Theme:** preserve transparent window background on bottom sheet and translucent dialogs ([#45](https://github.com/Akash-Sriram/morphe-google-photos/issues/45)) ([856db4d](https://github.com/Akash-Sriram/morphe-google-photos/commit/856db4d9893081e715a483f8ecaf241338d38579))",
   "apps": [
     {
       "app_name": "Google Photos",
       "package": "com.google.android.apps.photos",
       "patches": [
         {
-          "name": "Account avatar",
-          "description": "Loads and displays account profile avatars across the top toolbar, Bento menu, and account switcher.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
           "name": "AMOLED dark theme",
           "description": "Makes Google Photos dark surfaces true black while keeping light mode untouched.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Change to official package name",
-          "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos. This is an exceptional option strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM (such as custom ROMs or de-Googled devices). Root users do not need this (simply deselect GmsCore support instead). When selecting this, also enable 'Disable Play Store updates'.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
@@ -43,43 +25,30 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
-          "name": "Disable Play Store updates",
-          "description": "Disables Play Store updates by setting the version code to the maximum allowed (Int.MAX_VALUE). Prevents Google Play from automatically overwriting the patched app when using the official package name on devices without preinstalled Photos.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Enable DCIM folders backup control",
-          "description": "Disables always on backup for the Camera and other DCIM folders, allowing you to control backup for each folder individually. This will make the app default to having no folders backed up.",
+          "name": "DCIM & backup control",
+          "description": "Disables always on backup for the Camera and other DCIM folders, allowing individual folder control, and exports memory collages and creations to DCIM/Google Photos for quota-free backup.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
-          "name": "Enable Phenotype flag manager",
-          "description": "Enables an in-app flag manager in Photos Settings to toggle curated experimental UI redesigns, video editor tools, and feature flags.",
+          "name": "Flag manager & Toolkit",
+          "description": "Enables an in-app flag manager and Morphe toolkit in Photos Settings to toggle experimental UI redesigns, video editor tools, and feature flags.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "components",
+              "description": "Choose which components to show: Flag Manager, Morphe Toolkit, or Both."
+            }
+          ],
           "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Fix memory style font loading",
-          "description": "Redirects font loading across Stories and UI to authentic Google Fonts with local caching and CDN downloading, fixing fallback fonts and blank text in Memories.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
@@ -88,34 +57,25 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
-          "name": "Google One Bento Badge",
-          "description": "Restores the genuine Google One subscription badge in the Google Photos Bento account menu.",
+          "name": "Media engine & AI fixes",
+          "description": "Bypasses the 0MB Mobile Data Download check for AI models and fixes font loading across Stories and UI to prevent blank text and fallback fonts.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
-          "name": "Local creation downloader",
-          "description": "Intercepts saving memory collages and creations, exporting them to the device Google Photos folder (DCIM/Google Photos) for quota-free backup instead of direct cloud library commits.",
-          "use": true,
+          "name": "Official package name",
+          "description": "Retains the official package name (com.google.android.apps.photos) instead of renaming to app.morphe.android.apps.photos and disables Play Store updates by setting the version code to maximum to prevent automatic overwriting. This is strictly for non-root users whose devices do not have Google Photos preinstalled by the OEM.",
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
-          ]
-        },
-        {
-          "name": "Model Readiness Gates",
-          "description": "Bypasses the 0MB Mobile Data Download check for AI models and reports them as loaded.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         },
         {
@@ -124,23 +84,23 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.96.0.993165104"
+            "7.98.0.1001971222"
           ]
         }
       ]
     }
   ],
   "patches_name": "Morphe Google Photos Patches",
-  "fingerprint": "6730d52bcc5b8e3e898e6c47ad58cfb417c3385ebfa99bcec354dd6ca17fc94c",
-  "release_notes": "## [1.14.3](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.14.2...v1.14.3) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **LocalCreationDownloader:** Samsung specific optimization for local story and creation downloads ([aae1dc0](https://github.com/Akash-Sriram/morphe-google-photos/commit/aae1dc092c5d1b135290c646c621030904d008fc))\n",
-  "release_tag": "v1.14.3",
-  "release_date": "2026-10-09T05:51:17Z",
+  "fingerprint": "2ab8a8a58040fd83f9085a71157372913e9f74adeb8136b9ee4b4c1e683d01e8",
+  "release_notes": "## [1.16.1](https://github.com/Akash-Sriram/morphe-google-photos/compare/v1.16.0...v1.16.1) (2026-10-26)\n\n### 🐛 Bug Fixes\n\n* **seeder:** exclude non-ML promo assets and prevent model health revert ([#44](https://github.com/Akash-Sriram/morphe-google-photos/issues/44)) ([28214c4](https://github.com/Akash-Sriram/morphe-google-photos/commit/28214c4c349282794ae0f8e2a42c8f18cb086ff8))\n* **theme:** ensure translucent expander windows retain transparent background in night mode ([#45](https://github.com/Akash-Sriram/morphe-google-photos/issues/45)) ([4c45121](https://github.com/Akash-Sriram/morphe-google-photos/commit/4c45121b7743ec570b1c7fda142c25263e460c79))\n* **theme:** preserve transparent window background on bottom sheet and translucent dialogs ([#45](https://github.com/Akash-Sriram/morphe-google-photos/issues/45)) ([856db4d](https://github.com/Akash-Sriram/morphe-google-photos/commit/856db4d9893081e715a483f8ecaf241338d38579))\n",
+  "release_tag": "v1.16.1",
+  "release_date": "2026-10-26T06:17:22Z",
   "isPreRelease": false,
   "stars": 86,
   "avatarUrl": "https://avatars.githubusercontent.com/u/39720035?v=4",
   "repoDescription": "Morphe Patches for Google Photos and Android Apps",
   "isArchived": false,
-  "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": "https://github.com/Akash-Sriram/morphe-google-photos/raw/HEAD/patches-bundle.png"
 }

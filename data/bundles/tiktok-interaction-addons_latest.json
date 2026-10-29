@@ -1,0 +1,40 @@
+{
+  "bundle": "tiktok-interaction-addons",
+  "channel": "latest",
+  "repo_url": "https://github.com/BDCrusher/tiktok-interaction-addons",
+  "created_at": "2026-10-28T10:45:44",
+  "version": "0.7.1-beta.1",
+  "description": "Fixes translucent orange Favorites and Sound popup backgrounds; preserves opaque AMOLED black, custom dark colors and light mode. Original TikTok 47.5.3 / 2024705030 with HushFeed 0.79.0 Settings. Requires Manager/patcher 2.0.0. Enable Pre-release patches and Experimental app versions. Repatch TikTok; phone acceptance pending.",
+  "apps": [
+    {
+      "app_name": "TikTok",
+      "package": "com.zhiliaoapp.musically",
+      "patches": [
+        {
+          "name": "Enhanced collection popup",
+          "description": "Adjust collections before More, with bounded scrolling and host-theme colors. Configure under BDCrusher's Settings. Requires compatible HushFeed Settings in the same run.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "47.5.3"
+          ]
+        },
+        {
+          "name": "Sound button actions",
+          "description": "Hold the music disc for native sound saving and eligible music-app destinations. Configure under BDCrusher's Settings. Requires compatible HushFeed Settings. Experimental; device validation pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "47.5.3"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "TikTok Interaction Add-ons",
+  "fingerprint": "fa766adf777be77ab24a56be01095237a8c68577190ac6a1ea6b9a86611d6f4c",
+  "release_notes": "# TikTok Interaction Add-ons 0.7.1-beta.1\n\nFixes the **translucent orange Favorites and Sound popup backgrounds** reported on 0.7.0. Both now use the inspected opaque sheet background: pure black when HushFeed AMOLED is black, the selected custom dark color when applicable, and white in light mode. No new toggle is needed.\n\nTarget: original global **TikTok 47.5.3 / 2024705030**, external **HushFeed 0.79.0 Settings**, **Manager 2.0.0+ / patcher 2.0.0**. Enhanced collection popup and Sound button actions remain separately selectable. Existing preferences, gestures, native authenticated actions and providers, haptics and geometry are retained.\n\n## Get the repair in Morphe\n\nRefresh the TikTok Interaction Add-ons remote source with **Pre-release patches** enabled. Enable **Experimental app versions** as required and confirm **0.7.1-beta.1**. Repatch the **original unmodified APK** with HushFeed 0.79.0 Settings, either/both personal add-ons and your desired AMOLED option in the same Expert-mode run. Keep your existing signing key. Remove/disable any older local personal source so two copies are not selected together.\n\nSettings remain **HushFeed > Your feed > BDCrusher's Settings**, with Personal add-ons fallback. Sound remains opt-in at patch selection.\n\n## Verification and limits\n\nThe old reader used a24, which the original 47.5.3 resources resolve to translucent orange. The corrected shared reader uses **a27 / UISheetFlat1** and rejects translucent surface colors. Four regression scenarios reproduce exact orange with the old reader and pass after the fix.\n\n**87 unit/simulated tests**, seven helper tests, three Android API lint tasks, eight HushFeed 0.79 combination/negative checks and three nine-role Sound native audits passed locally. All 140 global TikTok patches were checked in both source orders; each personal feature was checked alone. The compiled resource APKs contain opaque black dark sheets and white light sheets in both orders. Delivered bytecode was inspected for the corrected token and alpha validation. Payload remains 78 isolated own classes without duplicate, foreign, host-stub or test classes. The included verification report captures the prepublication test phase; publication state is established by this release and its feed.\n\n**Phone appearance acceptance remains pending.** Confirm black/custom/light surfaces and retained tap/hold/scroll/cancel/save behavior. Provider/account, ART and accessibility limitations remain; a dedicated accessible sound-disc long-click action is not implemented. Static success does not prove native saves or every runtime setting combination.\n\nNo TikTok APK is distributed, signed or installed here. Refreshing the source does not automatically repatch the installed app.\n\nBundle SHA-256: `7fcf12041e61c1bff39a81bae424c4471812b97691625dbb84350b458e390489`.\n\nRelease uses the exact locally verified bundle, not substituted CI rebuild bytes. Public source archive matches Git commit `17a385334094995137916d0162467f0140ec3704`.\n",
+  "release_tag": "v0.7.1-beta.1",
+  "release_date": "2026-10-28T10:46:10Z",
+  "isPreRelease": true
+}

@@ -2,9 +2,9 @@
   "bundle": "santodan",
   "channel": "latest",
   "repo_url": "https://github.com/Santodan/santodan-patches",
-  "created_at": "2026-10-09T13:32:12",
-  "version": "v0.10.0",
-  "description": "## [0.10.0](https://github.com/Santodan/santodan-patches/compare/v0.9.0...v0.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **build:** resolve Android test SDK on CI runners ([957501c](https://github.com/Santodan/santodan-patches/commit/957501ca771aa5f64a71c62c1aced6bd7676d20f))\n* **nuvio:** defer merged progress work during playback [skip ci] ([e69eff2](https://github.com/Santodan/santodan-patches/commit/e69eff25705851433c7ac7e6b6e4a675b82dd66f))\n\n### ✨ New Features\n\n* **nuvio:** show merged provider icons and refresh seeds [skip ci] ([7512085](https://github.com/Santodan/santodan-patches/commit/7512085bd6a7d9bad2fc32d32e4bf94517f3b18f))\n* **pillo:** add weight change summaries and selectable comparison date ([9a723a4](https://github.com/Santodan/santodan-patches/commit/9a723a4bbd3e0feec3a3dc4619b1d6282284ef28))\n* **pillo:** import weight history from JSON [skip ci] ([8079226](https://github.com/Santodan/santodan-patches/commit/807922648b4aee39659263ef712f586ac6546dd8))\n",
+  "created_at": "2026-10-26T11:01:17",
+  "version": "0.15.0",
+  "description": "## [0.15.0](https://github.com/Santodan/santodan-patches/compare/v0.14.0...v0.15.0) (2026-10-26)\n\n### 🐛 Bug Fixes\n\n* **build:** require verified Android DEX in release bundles ([2340ff8](https://github.com/Santodan/santodan-patches/commit/2340ff884f3251b7c2395fac55eeeb87473edf07))\n* **nuviotv:** apply local playback changes immediately to merged progress [skip ci] ([7d1b912](https://github.com/Santodan/santodan-patches/commit/7d1b912b224713ee1172e4ca49b5b640bfb6eb26))\n* **nuviotv:** show download and system install progress [skip ci] ([7247475](https://github.com/Santodan/santodan-patches/commit/724747529dff97dc1fce460d04b8c7bf9fc4438f))\n\n### ✨ New Features\n\n* **monet:** add individual Nuvio catalog rows [skip ci] ([a8cc3b2](https://github.com/Santodan/santodan-patches/commit/a8cc3b2abe6156a577b3e8d4b1d27e1b194e72b0))\n* **monet:** extend native displayed cards controls [skip ci] ([1c5e8e1](https://github.com/Santodan/santodan-patches/commit/1c5e8e17462c6fb91d57d50ac68427bf0006d1f9))",
   "apps": [
     {
       "app_name": "MEO",
@@ -40,17 +40,134 @@
       ]
     },
     {
+      "app_name": "Monet Launcher - Android TV",
+      "package": "com.klevico.monet",
+      "patches": [
+        {
+          "name": "Monet - Individual Nuvio catalog rows",
+          "description": "Select individual NuvioTV catalogs in the app's content picker, with Nuvio icons and refresh independent of Recommendations.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.97"
+          ]
+        },
+        {
+          "name": "Monet - Unlimited displayed cards",
+          "description": "Remove the 20-card limit from Displayed Cards. Add -10, +10 and Max to the original themed picker, preserving its layout and single-card steps.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.97"
+          ]
+        },
+        {
+          "name": "Monet - Unlock premium",
+          "description": "Original premium unlock from Doom's Patches, updated here for Monet 1.0.97. Unlock local premium features. Select only one Monet premium patch.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.97"
+          ]
+        },
+        {
+          "name": "Monet - Unlock premium (Experimental, any version)",
+          "description": "Original premium unlock from Doom's Patches, updated here for Monet 1.0.97. Experimental variant with no version restriction; requires a matching native layout. Select only one Monet premium patch.",
+          "use": false,
+          "options": [],
+          "compatible_versions": []
+        }
+      ]
+    },
+    {
+      "app_name": "The First Descendant Companion",
+      "package": "com.nexon.tfdc",
+      "patches": [
+        {
+          "name": "TFD Companion - NGSM validation diagnostics - Troubleshooting purpose",
+          "description": "Logs NGSM token-result codes and failed validation values under TFD-NGSM. Does not log tokens or change authentication results.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.5"
+          ]
+        },
+        {
+          "name": "TFD Companion - Remove illegal apps detection",
+          "description": "Removes broad MAIN/VIEW package queries while preserving specific app integrations. For Android 11+. Leaves NGSM and authentication unchanged; other detections may still occur.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.5"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "NuvioTV",
       "package": "com.nuvio.tv",
       "patches": [
+        {
+          "name": "NuvioTV - Android TV launcher channels",
+          "description": "Choose individual catalogs and tracking lists, Library, and Upcoming to publish as Android TV launcher channels.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - Customize playback buttons",
+          "description": "Adds optional playback button visibility, ordering and placement in the main row or More actions, with saved settings and reset.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
+          ]
+        },
         {
           "name": "NuvioTV - Finale dates in library and collections",
           "description": "Adds separate disabled-by-default settings to show the latest scheduled episode date in library and collection posters.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - Fix startup track reselection",
+          "description": "Prevents a startup ExoPlayer crash when track reselection requests a seek before a playing media period exists.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - GitHub APK updates",
+          "description": "Checks GitHub APK releases, shares native download progress and opens Android's APK installer for foreground install progress. Defaults to this bundle's version.",
+          "use": false,
+          "options": [
+            {
+              "key": "repository",
+              "description": "Public repository in owner/name format containing APK release assets."
+            },
+            {
+              "key": "releaseVersion",
+              "description": "Version of THIS APK, matching its GitHub release tag without v. Defaults to the patch bundle version; override only if publishing the APK under a different version."
+            }
+          ],
+          "compatible_versions": [
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - Indicate current stream",
+          "description": "Labels the current stream with [Playing], with an enabled-by-default toggle in Santodan-Patches > Streams.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
           ]
         },
         {
@@ -59,8 +176,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
           ]
         },
         {
@@ -69,9 +185,25 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.2",
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - Preferred source add-on",
+          "description": "Choose a per-profile add-on to refresh and display first, with optional automatic playback of its first playable stream.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - Preload streams for next episode",
+          "description": "Adds an opt-in Streams setting to fetch the next episode's source list after 30 seconds of playback, reusing Nuvio's native search cache.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
           ]
         },
         {
@@ -80,8 +212,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
           ]
         },
         {
@@ -90,19 +221,16 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
           ]
         },
         {
           "name": "NuvioTV - Remaining episodes in Continue Watching",
-          "description": "Adds a disabled-by-default setting that displays aired, unwatched episode counts for every tracking integration. Controlled by Layout > Santodan-Patches on beta4 and beta5.",
+          "description": "Adds a disabled-by-default setting that displays aired, unwatched episode counts for every tracking integration. Controlled by Settings > Layout > Santodan-Patches.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.2",
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
           ]
         },
         {
@@ -120,9 +248,16 @@
             }
           ],
           "compatible_versions": [
-            "1.1.0-beta.2",
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
+          ]
+        },
+        {
+          "name": "NuvioTV - Submit segments to IntroDB",
+          "description": "Adds an optional playback button that captures segment start/end times and opens a native NuvioTV submission dialog. Enable it and enter your IntroDB API key in Settings.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0-beta.8"
           ]
         },
         {
@@ -131,8 +266,23 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.1.0-beta.4",
-            "1.1.0-beta.5"
+            "1.1.0-beta.8"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Car Scanner ELM OBD2",
+      "package": "com.ovz.carscanner",
+      "patches": [
+        {
+          "name": "Car Scanner - Premium status",
+          "description": "Enables premium status in Car Scanner 2.1.50 and 2.2.21; preserves profile decoding and ECU initialization and prevents the repackaging exit in 2.2.21.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.1.50",
+            "2.2.21"
           ]
         }
       ]
@@ -230,10 +380,10 @@
     }
   ],
   "patches_name": "SantoDan Patches",
-  "fingerprint": "6fa612699426da180fec746f72850fdf005505d3d9b41b2199fec0218b4c586c",
-  "release_notes": "## [0.10.0](https://github.com/Santodan/santodan-patches/compare/v0.9.0...v0.10.0) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* **build:** resolve Android test SDK on CI runners ([957501c](https://github.com/Santodan/santodan-patches/commit/957501ca771aa5f64a71c62c1aced6bd7676d20f))\n* **nuvio:** defer merged progress work during playback [skip ci] ([e69eff2](https://github.com/Santodan/santodan-patches/commit/e69eff25705851433c7ac7e6b6e4a675b82dd66f))\n\n### ✨ New Features\n\n* **nuvio:** show merged provider icons and refresh seeds [skip ci] ([7512085](https://github.com/Santodan/santodan-patches/commit/7512085bd6a7d9bad2fc32d32e4bf94517f3b18f))\n* **pillo:** add weight change summaries and selectable comparison date ([9a723a4](https://github.com/Santodan/santodan-patches/commit/9a723a4bbd3e0feec3a3dc4619b1d6282284ef28))\n* **pillo:** import weight history from JSON [skip ci] ([8079226](https://github.com/Santodan/santodan-patches/commit/807922648b4aee39659263ef712f586ac6546dd8))\n",
-  "release_tag": "v0.10.0",
-  "release_date": "2026-10-09T13:32:12Z",
+  "fingerprint": "152b354a885cb0175b6f728bba935ce65c7f6b429b11a0d8e1b3b1961f0cc44b",
+  "release_notes": "## [0.15.0](https://github.com/Santodan/santodan-patches/compare/v0.14.0...v0.15.0) (2026-10-26)\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* **build:** require verified Android DEX in release bundles ([2340ff8](https://github.com/Santodan/santodan-patches/commit/2340ff884f3251b7c2395fac55eeeb87473edf07))\r\n* **nuviotv:** apply local playback changes immediately to merged progress [skip ci] ([7d1b912](https://github.com/Santodan/santodan-patches/commit/7d1b912b224713ee1172e4ca49b5b640bfb6eb26))\r\n* **nuviotv:** show download and system install progress [skip ci] ([7247475](https://github.com/Santodan/santodan-patches/commit/724747529dff97dc1fce460d04b8c7bf9fc4438f))\r\n\r\n### ✨ New Features\r\n\r\n* **monet:** add individual Nuvio catalog rows [skip ci] ([a8cc3b2](https://github.com/Santodan/santodan-patches/commit/a8cc3b2abe6156a577b3e8d4b1d27e1b194e72b0))\r\n* **monet:** extend native displayed cards controls [skip ci] ([1c5e8e1](https://github.com/Santodan/santodan-patches/commit/1c5e8e17462c6fb91d57d50ac68427bf0006d1f9))\r\n\r\n\r\n### NuvioTV Downloader - 9927680",
+  "release_tag": "v0.15.0",
+  "release_date": "2026-10-26T11:02:44Z",
   "isPreRelease": false,
   "stars": 7,
   "avatarUrl": "https://avatars.githubusercontent.com/u/25581907?v=4",

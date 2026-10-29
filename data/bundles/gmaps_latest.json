@@ -2,18 +2,37 @@
   "bundle": "gmaps",
   "channel": "latest",
   "repo_url": "https://github.com/fangkampanat/gmaps-patches",
-  "created_at": "2026-10-09T10:45:21",
-  "version": "v1.2.3",
-  "description": "- Reuse Morphe Patches Library 1.4.1 helpers and share invoke-register handling between Maps and TTS hooks.\n- Add method, opcode, register and branch details to navigation TTS layout errors.\n",
+  "created_at": "2026-10-28T10:20:38",
+  "version": "1.4.2",
+  "description": "Use official MicroG-RE 7.2.2 for Google Maps and synthesized navigation speech, start Google TTS before guidance, skip the uncertified-device screen and avoid a crash when a location-settings dialog cannot open. Includes an opt-in Picture-in-picture setting in Maps Settings and an opt-in native EV model experiment that sends BYD battery data and estimated road-load coefficients to Google. Arrival forecasts and navigation display remain experimental. Requires Morphe Desktop 1.19.0 or newer.",
   "apps": [
     {
       "app_name": "Google Maps",
       "package": "com.google.android.apps.maps",
       "patches": [
         {
+          "name": "BYD native battery experiment",
+          "description": "Experimental: sends this BYD's battery and road-load model to Google through Maps' native EV route requests. Starts from the car's own average consumption, learns slowly from BMS energy/distance, and adds in-app vehicle settings. Native hooks inspected on Maps 26.41 and 26.42. Targets BYD DiLink 3; DiLink 5 unverified.",
+          "use": false,
+          "options": [
+            {
+              "key": "guidanceBattery",
+              "description": "Experimental: shows an inline battery icon and Google's arrival percentage after ETA."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
           "name": "Google Maps for MicroG-RE",
-          "description": "Connects supported Google Maps builds to MicroG-RE 7.2.1 and prefers synthesized navigation speech with the existing audio fallback.",
+          "description": "Connects supported Google Maps builds to MicroG-RE 7.2.2, skips the uncertified-device screen, avoids a crash when a location-settings dialog cannot open, and prefers synthesized navigation speech with early Google TTS startup and the existing audio fallback.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Picture-in-picture setting",
+          "description": "Adds a Picture-in-picture On/Off setting to Maps Settings. Turn it off so navigation does not open a small window when you leave Maps; it starts on, as in Maps. Hooks inspected on Maps 26.41 and 26.42.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         }
@@ -21,10 +40,10 @@
     }
   ],
   "patches_name": "Maps Patches",
-  "fingerprint": "3b66f41dd251d959ad8205716ae00350eef94bef8158231cedb096dcdb2c0b65",
-  "release_notes": "- Reuse Morphe Patches Library 1.4.1 helpers and share invoke-register handling between Maps and TTS hooks.\n- Add method, opcode, register and branch details to navigation TTS layout errors.\n",
-  "release_tag": "v1.2.3",
-  "release_date": "2026-10-09T10:45:21Z",
+  "fingerprint": "3f217f0e8277058611034455dbce5e14586df1e87bf54c956261c655e294beea",
+  "release_notes": "- Adds an optional **Picture-in-picture setting** patch: Maps → Settings → Picture-in-picture, On or Off. With Off, leaving Maps during navigation no longer opens the small window (#20).\n- Supports Google Maps `26.42.02.997557324`.\n- Uses official MicroG-RE 7.2.2.\n- Requires Morphe Desktop 1.19.0 or newer. Restart Desktop before patching another APK.\n\nTested on Maps `26.42.02.997557324` on an Android 16 phone and in a BYD Dolphin (DiLink 3.0), including the BYD battery experiment's arrival battery, with a pre-release build that has the same patch code.\n\n`patches-1.4.2.mpp` SHA-256: `ea3bb346d08ba94fd3052c0365c05b93512ebe4b70118dbcdd2a6ff861102b21`\n",
+  "release_tag": "v1.4.2",
+  "release_date": "2026-10-28T10:21:12Z",
   "isPreRelease": false,
   "stars": 29,
   "avatarUrl": "https://avatars.githubusercontent.com/u/11970624?v=4",

@@ -2,9 +2,9 @@
   "bundle": "zeldrisho",
   "channel": "latest",
   "repo_url": "https://github.com/zeldrisho/morphe-patches",
-  "created_at": "2026-10-07T16:06:50",
-  "version": "v1.9.0",
-  "description": "### ✨ New Features\n* **Zalo - Hide chat list ads:** Removes dedicated Zinstant ad cards from the message list; server-inserted promotions or other ad surfaces may remain.\n* **Zalo - Hide Media Box:** Hides the Media Box row without deleting its content.\n",
+  "created_at": "2026-10-07T12:36:30",
+  "version": "1.9.0",
+  "description": "### ✨ New Features\n* **Zalo - Hide chat list ads:** Removes dedicated Zinstant ad cards from the message list; server-inserted promotions or other ad surfaces may remain.\n* **Zalo - Hide Media Box:** Hides the Media Box row without deleting its content.",
   "apps": [
     {
       "app_name": "Threads",
@@ -82,8 +82,8 @@
       "package": "com.zing.zalo",
       "patches": [
         {
-          "name": "Bypass native startup tamper check",
-          "description": "Preserves native key initialization and NOPs only the JNI System.exit dispatch in the pinned arm64 26.08.01 build.",
+          "name": "Bypass Zalo Drive Contacts permission gate",
+          "description": "Uses Android's account picker for Drive photo restore without requesting Contacts/account-list permission. Contacts remain protected by Android and are not read by this bypass.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -91,8 +91,8 @@
           ]
         },
         {
-          "name": "Bypass Zalo Drive Contacts permission gate",
-          "description": "Uses Android's account picker for Drive photo restore without requesting Contacts/account-list permission. Contacts remain protected by Android and are not read by this bypass.",
+          "name": "Bypass native startup tamper check",
+          "description": "Preserves native key initialization and NOPs only the JNI System.exit dispatch in the pinned arm64 26.08.01 build.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -169,18 +169,18 @@
           ]
         },
         {
-          "name": "Enable avatar saving",
-          "description": "Restores the “Save photo” action for avatars opened from a profile and allows screenshots. Other Zalo screenshot protections are unchanged.",
-          "use": true,
+          "name": "Enable Google Drive photo backup",
+          "description": "Forces Zalo's media-backup feature flag on and bypasses its local Drive-account eligibility check to expose the existing photo-backup option. This optional patch does not bypass Google authorization, server retention, encryption, or media exclusions.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "26.08.01"
           ]
         },
         {
-          "name": "Enable Google Drive photo backup",
-          "description": "Forces Zalo's media-backup feature flag on and bypasses its local Drive-account eligibility check to expose the existing photo-backup option. This optional patch does not bypass Google authorization, server retention, encryption, or media exclusions.",
-          "use": false,
+          "name": "Enable avatar saving",
+          "description": "Restores the “Save photo” action for avatars opened from a profile and allows screenshots. Other Zalo screenshot protections are unchanged.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "26.08.01"
@@ -214,15 +214,6 @@
           ]
         },
         {
-          "name": "Hide chat list ads",
-          "description": "Removes dedicated Zinstant ad cards from the message list. Server-inserted promotions or other ad surfaces may remain.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.08.01"
-          ]
-        },
-        {
           "name": "Hide Media Box",
           "description": "Hides Zalo's Media Box row from the conversation list; Media Box content and data are not deleted.",
           "use": true,
@@ -232,8 +223,8 @@
           ]
         },
         {
-          "name": "Keep expired media accessible",
-          "description": "Keeps locally stored large chat media usable after Zalo's client-side expiry window by bypassing the expired/subscription state. It does not restore missing files or bypass server download authorization.",
+          "name": "Hide chat list ads",
+          "description": "Removes dedicated Zinstant ad cards from the message list. Server-inserted promotions or other ad surfaces may remain.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -241,8 +232,8 @@
           ]
         },
         {
-          "name": "microG Drive support",
-          "description": "Adds Zalo launch/provider checks and redirects Google Drive account selection and token binding to microG-RE (app.revanced / app.revanced.android.gms). Preserves the clone's actual caller identity; MicroG manifest metadata supplies the upstream Zalo identity.",
+          "name": "Keep expired media accessible",
+          "description": "Keeps locally stored large chat media usable after Zalo's client-side expiry window by bypassing the expired/subscription state. It does not restore missing files or bypass server download authorization.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -293,6 +284,15 @@
           "compatible_versions": [
             "26.08.01"
           ]
+        },
+        {
+          "name": "microG Drive support",
+          "description": "Adds Zalo launch/provider checks and redirects Google Drive account selection and token binding to microG-RE (app.revanced / app.revanced.android.gms). Preserves the clone's actual caller identity; MicroG manifest metadata supplies the upstream Zalo identity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.01"
+          ]
         }
       ]
     }
@@ -307,7 +307,7 @@
   "avatarUrl": "https://avatars.githubusercontent.com/u/80939130?v=4",
   "repoDescription": "Yet another Morphe Patches",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

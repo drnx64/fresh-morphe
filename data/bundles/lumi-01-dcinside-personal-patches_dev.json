@@ -1,0 +1,66 @@
+{
+  "bundle": "lumi-01-dcinside-personal-patches",
+  "channel": "dev",
+  "repo_url": "https://github.com/Lumi-01/dcinside-personal-patches",
+  "created_at": "2026-10-26T16:46:01Z",
+  "version": "1.2.4",
+  "description": "Experimental DC Inside: cached runtime preference snapshot; version-number gate removed with instruction guards; no quantified new CPU claim",
+  "apps": [
+    {
+      "app_name": "디시인사이드 - 대한민국 대표 커뮤니티",
+      "package": "com.dcinside.app.android",
+      "patches": [
+        {
+          "name": "DC Inside personal clean-up",
+          "description": "Disable app ad loaders and keep the locally signed build usable.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.3.6",
+            "5.3.18",
+            "5.3.20"
+          ]
+        },
+        {
+          "name": "글 목록 페이지 표시 설정",
+          "description": "앱의 Morphe 설정에서 글 목록과 검색 결과의 Page N 표시를 숨길 수 있습니다.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.3.6",
+            "5.3.18",
+            "5.3.20"
+          ]
+        },
+        {
+          "name": "앱 안에서 홈 화면 설정",
+          "description": "앱의 Morphe 설정에서 홈 화면 영역을 각각 숨길 수 있습니다.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.3.6",
+            "5.3.18",
+            "5.3.20"
+          ]
+        },
+        {
+          "name": "작성자 아이디·IP 정보",
+          "description": "앱의 Morphe 설정에서 계정 아이디와 내장 IP 대역표의 추정 정보를 표시합니다.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.3.6",
+            "5.3.18",
+            "5.3.20"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Lumi DC Inside patches",
+  "fingerprint": "2dfa098686b6f6b1119636d885a654f74cb2875c594691ffb5a5d61df72fda96",
+  "release_notes": "Reduce runtime settings-query overhead in post/comment/list rendering. Cache the 14 known Morphe boolean options in one volatile snapshot; home filtering reads its six flags together. Keep defaults, persistence, immediate toggles, external preference changes/clear and unknown-key fallback.\r\n\r\nValidation: bundle built and all four patches applied to original DC Inside 5.3.20; Android 15 emulator signed installation, launch and post load checked without crash. Host regression checked 60,000 known-option/home-mask reads with zero SharedPreferences API reads, plus defaults, toggles and reset. No new whole-app CPU percentage or battery saving has been measured. Version-number-free guarded compatibility remains included.\r\n",
+  "release_tag": "v1.2.4",
+  "release_date": "2026-10-26T16:46:01Z",
+  "isPreRelease": true
+}

@@ -2,9 +2,9 @@
   "bundle": "kveld9",
   "channel": "stable",
   "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
-  "created_at": "2026-10-25T00:57:16Z",
-  "version": "1.27.1",
-  "description": "## [1.27.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.27.0...v1.27.1) (2026-10-25)\n\n### Bug Fixes\n\n* **moovit:** scope lint suppressions on signing-info reflection ([7e6a399](https://github.com/kveld9/kveld-extra-morphe-patches/commit/7e6a399ee2aab2fd91dffc8ed72847a94fac7f53))\n* **moovit:** trim whitespace from mapsApiKey before injection ([0f10a0a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0f10a0a044507585a8ef573eca707ef407853e10))\n\n### Code Refactoring\n\n* **moovit:** derive package name from Application in extension helper ([090e557](https://github.com/kveld9/kveld-extra-morphe-patches/commit/090e557a9449408514d508e47a8a43fd51129204))",
+  "created_at": "2026-10-28T16:32:30",
+  "version": "1.30.1",
+  "description": "## [1.30.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.30.0...v1.30.1) (2026-10-28)\n\n### Bug Fixes\n\n* **capcut:** align embedded EnvGuard certificate hash with repack signing key ([32ed60c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/32ed60cf0ba4977a907d2eb0bc1f800aeccd2863))\n* **capcut:** block unsafe-modal verdict by replacing cracking interceptor at registration ([0280683](https://github.com/kveld9/kveld-extra-morphe-patches/commit/028068392ef6c6bb9f8b7872dc8715ec1a358a24))\n* **capcut:** restore published behavior that showed no unsafe modal ([74a1d6d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/74a1d6d812dce922ad53956e7fba5d54f495e282))\n* **capcut:** revert cracking-interceptor swap that triggered the unsafe modal ([4c6b523](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4c6b523b8c2b4d55b22f812914114cceaf2e845e))\n* **capcut:** use a per-install effects ID to avoid shared throttling ([ee43df4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ee43df4af289e79493b4604e74f93fb82f22bde4))\n* **word:** neutralize Office early-telemetry dispatch to prevent native null-deref crashes ([721ae2a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/721ae2af515583bd3a3b17a0f45502d5b88b26ab))\n* **word:** restore aggregation timer to keep native timer callback consistent ([d6b2e05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d6b2e0512f4b6f8573c6470a0b147cafd495fc77))",
   "apps": [
     {
       "app_name": "Hevy - Gym Log Workout Tracker",
@@ -154,6 +154,15 @@
               "description": "WARNING: Stripping speech recognition and synthesis engines (libspeechengine.so, libspeechepg.so, libspeechsdk.so) breaks voice effects, text-to-speech, and automatic captions."
             }
           ],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Neutralize Play Billing",
+          "description": "Stubs Google Play Billing client calls and disables billing manifest components for graceful degradation on devices without GMS.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "19.9.0"
           ]
@@ -311,44 +320,6 @@
       ]
     },
     {
-      "app_name": "Microsoft Copilot",
-      "package": "com.microsoft.office.officehubrow",
-      "patches": [
-        {
-          "name": "Block Telemetry & Trackers",
-          "description": "Neutralizes Microsoft OneDS/Aria aggregated-metric and failure-logging dispatch methods, stubs Singular attribution SDK initializers and dispatchers, nullifies ad measurement platform identifiers (AIFA, AppSetId), rewrites default telemetry endpoints inside telemetry packages and custom blocked hosts unscoped to 0.0.0.0, disables cross-sell, Floodgate, HockeyApp and DataTransport components, and strips advertising and preinstall attribution permissions.",
-          "use": true,
-          "options": [
-            {
-              "key": "custom-blocked-hosts",
-              "description": "Comma-separated list of additional telemetry hostnames or domains to redirect to 0.0.0.0. Single-label, credentialed-URL, and IPv6 entries are skipped."
-            }
-          ],
-          "compatible_versions": [
-            "16.0.20604.20012"
-          ]
-        },
-        {
-          "name": "Bypass Code Transparency",
-          "description": "Skips the code-transparency failure dialog and reports local verification success, unblocking sideloaded installs.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "16.0.20604.20012"
-          ]
-        },
-        {
-          "name": "Copilot Companion Native Slimmer",
-          "description": "Strips optional companion native binaries (React Native, Hermes, SlimCV) via in-situ zeroing. WARNING: Hermes and React Native are load-bearing for React Native initialization - enabling this WILL crash Copilot React Native surfaces (Copilot chat host) with UnsatisfiedLinkError. The HockeyApp native exception handler (proven UnsatisfiedLinkError in OfficeApplication.onMAMCreate) and voice/dictation SDKs (libofficevoicesdk, libofficevoicetranscriptionsdk; proven dlopen FATAL on boot path) are load-bearing at startup and are therefore never stripped.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "16.0.20604.20012"
-          ]
-        }
-      ]
-    },
-    {
       "app_name": "Microsoft PowerPoint",
       "package": "com.microsoft.office.powerpoint",
       "patches": [
@@ -383,6 +354,57 @@
           "name": "PowerPoint Companion Native Slimmer",
           "description": "Strips optional companion native binaries (React Native and Hermes JavaScript runtime stack) via in-situ zeroing. WARNING: stripped libraries are load-bearing for React Native initialization - enabling this WILL crash the app with UnsatisfiedLinkError when Copilot or other React Native surfaces start, not merely hide those features.",
           "use": false,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Remove Shared User ID",
+          "description": "Removes the sharedUserId attribute from the manifest to prevent installation conflicts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Unlock 365 Family",
+          "description": "Unlocks Microsoft 365 Family subscription features locally.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Microsoft Word: Edit Documents",
+      "package": "com.microsoft.office.word",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Microsoft OneDS/Aria lifecycle, aggregated-metric and failure-logging dispatch methods, nullifies ad measurement platform identifiers (AIFA, AppSetId), disables HockeyApp and DataTransport components, strips advertising permissions, and neutralizes Office early-telemetry dispatch (TelemetryHelper).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Bypass Code Transparency",
+          "description": "Bypasses the code transparency checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Disable Login Requirement",
+          "description": "Removes login requirement and FTUX paywall screens.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "16.0.20527.20034"
@@ -538,7 +560,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.201.1.1809"
+            "5.203.0.1812"
           ]
         },
         {
@@ -556,7 +578,7 @@
             }
           ],
           "compatible_versions": [
-            "5.201.1.1809"
+            "5.203.0.1812"
           ]
         },
         {
@@ -565,7 +587,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.201.1.1809"
+            "5.203.0.1812"
           ]
         },
         {
@@ -574,7 +596,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.201.1.1809"
+            "5.203.0.1812"
           ]
         },
         {
@@ -583,7 +605,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.201.1.1809"
+            "5.203.0.1812"
+          ]
+        },
+        {
+          "name": "Use Places API (New)",
+          "description": "Switches search autocomplete from Places API (Legacy) to Places API (New). Legacy Places is not available in new Cloud projects. Requires Places API (New) to be enabled for the API key.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.203.0.1812"
           ]
         }
       ]
@@ -598,7 +629,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.36.1-prod.01"
+            "12.37.2-prod.01"
           ]
         },
         {
@@ -612,7 +643,7 @@
             }
           ],
           "compatible_versions": [
-            "12.36.1-prod.01"
+            "12.37.2-prod.01"
           ]
         }
       ]
@@ -631,13 +662,28 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "ibis Paint X",
+      "package": "jp.ne.ibis.ibispaintx.app",
+      "patches": [
+        {
+          "name": "Enable Prime membership",
+          "description": "Enables app features locked behind the subscription paywall.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.1.2"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "kveld9 Extra Patches",
-  "fingerprint": "769f1216b44baccdec9105965d003e0bb6c44929adb907bd891019696c875fca",
-  "release_notes": "## [1.27.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.27.0...v1.27.1) (2026-10-25)\n\n### Bug Fixes\n\n* **moovit:** scope lint suppressions on signing-info reflection ([7e6a399](https://github.com/kveld9/kveld-extra-morphe-patches/commit/7e6a399ee2aab2fd91dffc8ed72847a94fac7f53))\n* **moovit:** trim whitespace from mapsApiKey before injection ([0f10a0a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/0f10a0a044507585a8ef573eca707ef407853e10))\n\n### Code Refactoring\n\n* **moovit:** derive package name from Application in extension helper ([090e557](https://github.com/kveld9/kveld-extra-morphe-patches/commit/090e557a9449408514d508e47a8a43fd51129204))\n",
-  "release_tag": "v1.27.1",
-  "release_date": "2026-10-25T00:57:16Z",
+  "fingerprint": "58a9972f16fc0084d8fe02180ae9f5e5c9699d79610ba0f3613c4efb36e46d2d",
+  "release_notes": "## [1.30.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.30.0...v1.30.1) (2026-10-28)\n\n### Bug Fixes\n\n* **capcut:** align embedded EnvGuard certificate hash with repack signing key ([32ed60c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/32ed60cf0ba4977a907d2eb0bc1f800aeccd2863))\n* **capcut:** block unsafe-modal verdict by replacing cracking interceptor at registration ([0280683](https://github.com/kveld9/kveld-extra-morphe-patches/commit/028068392ef6c6bb9f8b7872dc8715ec1a358a24))\n* **capcut:** restore published behavior that showed no unsafe modal ([74a1d6d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/74a1d6d812dce922ad53956e7fba5d54f495e282))\n* **capcut:** revert cracking-interceptor swap that triggered the unsafe modal ([4c6b523](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4c6b523b8c2b4d55b22f812914114cceaf2e845e))\n* **capcut:** use a per-install effects ID to avoid shared throttling ([ee43df4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ee43df4af289e79493b4604e74f93fb82f22bde4))\n* **word:** neutralize Office early-telemetry dispatch to prevent native null-deref crashes ([721ae2a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/721ae2af515583bd3a3b17a0f45502d5b88b26ab))\n* **word:** restore aggregation timer to keep native timer callback consistent ([d6b2e05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d6b2e0512f4b6f8573c6470a0b147cafd495fc77))\n",
+  "release_tag": "v1.30.1",
+  "release_date": "2026-10-28T16:33:42Z",
   "isPreRelease": false,
   "stars": 33,
   "avatarUrl": "https://avatars.githubusercontent.com/u/179108235?v=4",

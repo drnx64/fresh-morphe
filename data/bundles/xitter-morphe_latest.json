@@ -1,0 +1,66 @@
+{
+  "bundle": "xitter-morphe",
+  "channel": "latest",
+  "repo_url": "https://github.com/Xittered/xitter-morphe",
+  "created_at": "2026-10-19T09:38:23",
+  "version": "1.0.0",
+  "description": "## 1.0.0 (2026-10-19)\n\n### 🐛 Bug Fixes\n\n* add patch list markers to README for releases ([14f4acb](https://github.com/jakeayy/xitter-morphe/commit/14f4acb8ee968e2ab3cd002863b585a1ed31861d))\n* make gradlew executable for CI ([f13f673](https://github.com/jakeayy/xitter-morphe/commit/f13f6739b5a8ea4e7babac49c6c7280e4c6230bf))\n\n### ✨ New Features\n\n* Xitter patches for X 12.19.1 ([d6f5188](https://github.com/jakeayy/xitter-morphe/commit/d6f5188b50b903dc5f59a6f5190cb8eb2219f300))",
+  "apps": [
+    {
+      "app_name": "X",
+      "package": "com.twitter.android",
+      "patches": [
+        {
+          "name": "Change package name",
+          "description": "Changes the app's package name, account type and name, so the patched app installs next to the original X app instead of replacing it. Do not also select Morphe's own \"Change package name\" patch.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The patched app's package name. It must differ from the original app's to install both."
+            },
+            {
+              "key": "appName",
+              "description": "The name under the launcher icon. Leave empty to keep \"X\"."
+            }
+          ],
+          "compatible_versions": [
+            "12.19.1-release.0"
+          ]
+        },
+        {
+          "name": "Xitter",
+          "description": "Makes the app a client of a Xitter instance. Every address of X (x.com, twitter.com, twimg.com, t.co...) is sent to the instance instead, signed in with the instance's sessions, and the app's sign-in screens sign in to the instance. Nothing is sent to X.",
+          "use": true,
+          "options": [
+            {
+              "key": "serverUrl",
+              "description": "The address of the Xitter instance, as you open it in a browser (for example https://xitter.example or http://192.168.1.5:3000)."
+            },
+            {
+              "key": "clientToken",
+              "description": "Optional. A token from the instance's Admin > Client apps (xitter_...). Posts made from the app are then labelled with that app's name, such as \"Xitter for Android\"."
+            },
+            {
+              "key": "blockThirdParty",
+              "description": "Also refuse connections to hosts that are neither X's nor the instance's (analytics, ads, crash reporting, payment and identity SDKs). X's own hosts are always refused."
+            },
+            {
+              "key": "allowedHosts",
+              "description": "Optional. Comma separated hosts the app may still reach while third-party services are blocked, e.g. a separate media domain of the instance."
+            }
+          ],
+          "compatible_versions": [
+            "12.19.1-release.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Xitter Patches",
+  "fingerprint": "4ab60bae063b99b74f1f6450c42f0fd182e8b19fb01803d022c9c55bc4dd07d7",
+  "release_notes": "## 1.0.0 (2026-10-19)\n\n### 🐛 Bug Fixes\n\n* add patch list markers to README for releases ([14f4acb](https://github.com/jakeayy/xitter-morphe/commit/14f4acb8ee968e2ab3cd002863b585a1ed31861d))\n* make gradlew executable for CI ([f13f673](https://github.com/jakeayy/xitter-morphe/commit/f13f6739b5a8ea4e7babac49c6c7280e4c6230bf))\n\n### ✨ New Features\n\n* Xitter patches for X 12.19.1 ([d6f5188](https://github.com/jakeayy/xitter-morphe/commit/d6f5188b50b903dc5f59a6f5190cb8eb2219f300))\n",
+  "release_tag": "v1.0.0",
+  "release_date": "2026-10-19T09:38:58Z",
+  "isPreRelease": false
+}

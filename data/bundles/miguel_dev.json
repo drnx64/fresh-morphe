@@ -2,9 +2,9 @@
   "bundle": "miguel",
   "channel": "dev",
   "repo_url": "https://github.com/MiguelNinja19/miguel-morphe-patches",
-  "created_at": "2026-09-13T20:45:34",
-  "version": "v1.14.0-dev.14",
-  "description": "## [1.14.0-dev.14](https://github.com/MiguelNinja19/miguel-morphe-patches/compare/v1.14.0-dev.13...v1.14.0-dev.14) (2026-09-13)\n\n### ✨ New Features\n\n* **Lara Croft: Guardian of Light:** add load game data from storage patch ([8f4a990](https://github.com/MiguelNinja19/miguel-morphe-patches/commit/8f4a990448e06a1983354540673d5786ff2f81f8))\n",
+  "created_at": "2026-08-16T12:34:43",
+  "version": "1.13.6",
+  "description": "## [1.13.6](https://github.com/MiguelNinja19/miguel-morphe-patches/compare/v1.13.5...v1.13.6) (2026-08-16)\n\n### 🐛 Bug Fixes\n\n* **cubesolver:** remove ([d69291c](https://github.com/MiguelNinja19/miguel-morphe-patches/commit/d69291c49da4c7868bc026af2d4cd74408b061af))",
   "apps": [
     {
       "app_name": "The Battle of Polytopia",
@@ -64,32 +64,6 @@
       ]
     },
     {
-      "app_name": "Lara Croft: Guardian of Light",
-      "package": "com.feralinteractive.laracroftgol_android",
-      "patches": [
-        {
-          "name": "Load game data from device storage",
-          "description": "Fixes the infinite loading screen after the license bypass: the game's 1.3 GB data pack (data_core) normally ships as a Play Asset Delivery split that cannot be installed next to a re-signed APK, and Feral's FDR servers do not host the Android data (404). This patch makes the game load the data from a file YOU provide: extract data_core.apk from the full XAPK and copy it to Android/data/com.feralinteractive.laracroftgol_android/files/packs/data_core.apk. With the file in place the game boots the full data; without it this patch changes nothing. Use together with 'Unlock full game (TBYB bypass + license)'. Replaces the old 'Force FDR data download' patch (FDR cannot deliver the Android pack).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.2.6RC1",
-            "1.2.7RC2"
-          ]
-        },
-        {
-          "name": "Unlock full game (TBYB bypass + license)",
-          "description": "Unlocks the full game (all levels + DLC) of the try-before-you-buy version and bypasses the Google Play Licensing (LVL) startup check that blocks re-signed APKs. Injects 'Demo.FullGame' and 'Demo.FullGamePlusDLC' as already purchased into the Feral billing bridge, so the native game marks the full game as owned without contacting Google Play. Also patches every LVL Policy.allowAccess() to return true and the LicenseCheckerCallback failure callbacks to behave as licensed. Note: this game does NOT use PairIP (verified against the manifest and all split APKs).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.2.6RC1",
-            "1.2.7RC2"
-          ]
-        }
-      ]
-    },
-    {
       "app_name": "Climb!",
       "package": "com.ivanaf.climbamiypfree",
       "patches": [
@@ -116,55 +90,6 @@
       ]
     },
     {
-      "app_name": "Duck Life 4",
-      "package": "com.mad.ducklife",
-      "patches": [
-        {
-          "name": "Bypass PairIP license check",
-          "description": "No-ops LicenseClient.checkLicense(Context) and LicenseClient.initializeLicenseCheck() so the PairIP license verification never runs. Duck Life 4 ships the PairIP V2 client (Java only, no libpairipcore.so VM): the LicenseContentProvider starts the check before the Application class and shows a paywall / closes the app when it fails. Required for the app to start when installed via Morphe/SAI (not from the Play Store).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.5.12",
-            "2026.4.30",
-            "2026.1.6",
-            "2025.3.21",
-            "2025.2.24"
-          ]
-        },
-        {
-          "name": "Unlock full game (IAP entitlements)",
-          "description": "Unlocks everything the paid/legacy version and the in-app purchases give in Duck Life 4: injects the four store product ids (full_game, ad_block, super_ad_block, upgrade_ad_block) as already-purchased into the Google Play Billing queryPurchases response, so the game's own entitlement pipeline marks the full version as bought and ads as blocked without contacting Google Play. Receipts are accepted because the game performs no signature validation. Requires the 'Bypass PairIP license check' patch to be enabled so the license screen doesn't block the app when installed outside the Play Store.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.5.12",
-            "2026.4.30",
-            "2026.1.6",
-            "2025.3.21",
-            "2025.2.24"
-          ]
-        }
-      ]
-    },
-    {
-      "app_name": "Duck Life 6: Space",
-      "package": "com.mad.ducklifespace",
-      "patches": [
-        {
-          "name": "Unlock full game (IAP entitlements)",
-          "description": "Unlocks everything the paid/legacy version and the in-app purchases give in Duck Life 6: Space: injects the three store product ids (ad_block_dl6, super_ad_block_dl6, upgrade_ad_block_dl6) as already-purchased into the Google Play Billing queryPurchases response, so the game's own entitlement pipeline marks ads as blocked (adBlock + superAdBlock) without contacting Google Play. Receipts are accepted because the game performs no signature validation and ships no license check. Note: this game does NOT use PairIP (verified against the manifest and all split APKs).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.729.2",
-            "2025.11.30",
-            "2024.5.27"
-          ]
-        }
-      ]
-    },
-    {
       "app_name": "Oddmar",
       "package": "com.mobge.oddmar",
       "patches": [
@@ -184,62 +109,6 @@
           "options": [],
           "compatible_versions": [
             "0.111"
-          ]
-        }
-      ]
-    },
-    {
-      "app_name": "Supreme Duelist Stickman",
-      "package": "com.neurononfire.supremeduelist",
-      "patches": [
-        {
-          "name": "Bypass PairIP license check",
-          "description": "No-ops LicenseClient.checkLicense(Context) and LicenseClient.initializeLicenseCheck() to prevent the PairIP license verification from running. Required for the app to start when installed via Morphe/SAI (not from Play Store).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.0.5",
-            "4.0.4"
-          ]
-        },
-        {
-          "name": "Free ads rewards (skip ad, grant unlock)",
-          "description": "Patches ShowRewardedWeaponAd (and similar ad-reward methods) to skip the ad display and immediately grant the reward (weapon/skin/map unlock). Searches for the pattern 'ldr w9, [x8, #0xec]; cmp w9, #7; b.eq; cmp w9, #9; b.ne' and NOPs both conditional branches. This makes the code always fall through to the unlock branch regardless of ad state. Default OFF — enable only if you want all ad-rewarded content unlocked for free.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "4.0.5",
-            "4.0.4"
-          ]
-        },
-        {
-          "name": "Free in-app purchases (optional)",
-          "description": "Skips Google Play Billing and credits IAP items (Remove Ads) directly. OPTIONAL: The other patches already give you unlimited coins and no ads.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "4.0.5",
-            "4.0.4"
-          ]
-        },
-        {
-          "name": "Unlimited coins (real - patches coin deduction + branch)",
-          "description": "Real unlimited coins patch. Searches libil2cpp.so for the coin-deduction pattern (sub w8, w8, w21; ...; str w8, [xN, #0x18]; b.le/b.lt) and NOPs BOTH the str instruction AND the conditional branch that follows it. Previous version only NOPed the str, but the b.le still canceled purchases because the subs instruction set the 'less than' flag.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.0.5",
-            "4.0.4"
-          ]
-        },
-        {
-          "name": "Unlock all (weapons, skins, colors, modes, no ads + level bypass)",
-          "description": "Hex patches libil2cpp.so to: (1) NOP level checks in AchatWeapon (pattern-based: searches for cmp w9, #51 + b.lt and cmp w9, #499 + b.lt). (2) NOP coin checks in AchatWeapon, AchatSkin, AchatColor (3x) (offset-based, verified on 67MB lib). (3) Patch RemoveAds.get_AdsRemoved to always return true. buyMiniGames is NOT patched (breaks mode init — use UnlimitedCoinsPatch to buy modes with infinite coins). Combined: unlimited coins + all weapons (no level req!) + all skins/colors + no ads.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.0.5",
-            "4.0.4"
           ]
         }
       ]
@@ -301,16 +170,16 @@
     }
   ],
   "patches_name": "Miguel's Patches",
-  "fingerprint": "fd2890360d00eb48525fe9fde0720039d4bb761c3e12b2804a967945d954959e",
-  "release_notes": "## [1.14.0-dev.14](https://github.com/MiguelNinja19/miguel-morphe-patches/compare/v1.14.0-dev.13...v1.14.0-dev.14) (2026-09-13)\n\n### ✨ New Features\n\n* **Lara Croft: Guardian of Light:** add load game data from storage patch ([8f4a990](https://github.com/MiguelNinja19/miguel-morphe-patches/commit/8f4a990448e06a1983354540673d5786ff2f81f8))\n",
-  "release_tag": "v1.14.0-dev.14",
-  "release_date": "2026-09-13T20:45:34Z",
-  "isPreRelease": true,
+  "fingerprint": "c21087ce6d01c4ded4f2381055bb18dfa6128a85f8eccd9536ada1ecc01444fc",
+  "release_notes": "## [1.13.6](https://github.com/MiguelNinja19/miguel-morphe-patches/compare/v1.13.5...v1.13.6) (2026-08-16)\n\n### 🐛 Bug Fixes\n\n* **cubesolver:** remove ([d69291c](https://github.com/MiguelNinja19/miguel-morphe-patches/commit/d69291c49da4c7868bc026af2d4cd74408b061af))\n",
+  "release_tag": "v1.13.6",
+  "release_date": "2026-08-16T12:35:21Z",
+  "isPreRelease": false,
   "stars": 38,
   "avatarUrl": "https://avatars.githubusercontent.com/u/212266985?v=4",
   "repoDescription": "🧩Patches for Morphe, made with AI",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

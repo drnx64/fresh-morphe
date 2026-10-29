@@ -1,0 +1,58 @@
+{
+  "bundle": "youtube-thread-ripper",
+  "channel": "stable",
+  "repo_url": "https://github.com/bennytsai1234/youtube-thread-ripper",
+  "created_at": "2026-10-10T08:30:00",
+  "version": "0.3.0",
+  "description": "## 0.3.0 (2026-10-10)\n\n### ✨ New Features\n\n* **Cloudflare WARP while open** (off by default): while YouTube is in the foreground it uses its own per-app VPN through Cloudflare WARP, and goes back to the normal connection in the background. A free WARP device is registered on first use; Android asks for VPN permission once. Useful when the direct connection to YouTube is slow at peak hours.\n\n### Changes\n\n* **Settings screen:** the Thread Ripper entry now looks like the official Morphe entries (icon, title only), and its texts are in Traditional Chinese.\n\nBuilt for YouTube 21.16.256 with Morphe Patches 1.45.0 and Spoof video streams = visionOS. WARP was checked on the phone: VPN up 0.3–0.4 s after a cold start, 40–116 Mbps per range, down on Home and up again on return.",
+  "apps": [
+    {
+      "app_name": "YouTube",
+      "package": "com.google.android.youtube",
+      "patches": [
+        {
+          "name": "Cloudflare WARP while open",
+          "description": "Adds an option (off by default) to route YouTube, and only YouTube, through Cloudflare WARP while it is in the foreground, and back to the normal connection in the background.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.16.256"
+          ]
+        },
+        {
+          "name": "Multi-connection video download",
+          "description": "Downloads each video byte range over several concurrent connections, like a download manager, to work around per-connection throttling of spoofed video streams. Only affects non-SABR streams (for example Spoof video streams set to visionOS or Android VR Downgraded).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.16.256"
+          ]
+        },
+        {
+          "name": "Stall recovery",
+          "description": "Adds an option (off by default) to resume playback after a stall once a shorter amount of video is buffered than the app's 5 seconds.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.16.256"
+          ]
+        },
+        {
+          "name": "Video buffer preload",
+          "description": "Lets the player keep loading until a target amount of video is buffered, within a memory limit, instead of stopping at the app's byte and time limits.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.16.256"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Thread Ripper patches",
+  "fingerprint": "78a67c6f7ef4b0b788cf130b71547a66903ac7ee1c19da7ec93b4ea256827a89",
+  "release_notes": "## 0.3.0 (2026-10-10)\r\n\r\n### ✨ New Features\r\n\r\n* **Cloudflare WARP while open** (off by default): while YouTube is in the foreground it uses its own per-app VPN through Cloudflare WARP, and goes back to the normal connection in the background. A free WARP device is registered on first use; Android asks for VPN permission once. Useful when the direct connection to YouTube is slow at peak hours.\r\n\r\n### Changes\r\n\r\n* **Settings screen:** the Thread Ripper entry now looks like the official Morphe entries (icon, title only), and its texts are in Traditional Chinese.\r\n\r\nBuilt for YouTube 21.16.256 with Morphe Patches 1.45.0 and Spoof video streams = visionOS. WARP was checked on the phone: VPN up 0.3–0.4 s after a cold start, 40–116 Mbps per range, down on Home and up again on return.",
+  "release_tag": "v0.3.0",
+  "release_date": "2026-10-10T00:29:53Z",
+  "isPreRelease": false
+}

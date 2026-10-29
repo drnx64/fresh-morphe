@@ -2,38 +2,178 @@
   "bundle": "haiagaru",
   "channel": "stable",
   "repo_url": "https://github.com/areteruhiro/Haiagaru-Morphe",
-  "created_at": "2026-10-06T14:05:09",
-  "version": "1.7.1",
-  "description": "# Haiagaru 1.7.1\n\n1.7.0からの互換性修正を含む正式リリースです。配布MPPはAndroid版Morphe向けです。\n\n## 主な変更点\n\n- 専用必死チェッカービュワーをOFFにした場合、必死チェッカーURLをChMate内WebViewへ固定せず、Androidの通常のURL処理に戻すよう修正しました。\n- ChMate 0.8.10.191 devで、Talkの旧形式スレURLから書き込みフォームを開けない問題を修正しました。\n- Talkの読み込み処理中だけ通信種別を一時的に変更し、読み込み後に元の種別へ戻すことで、書き込み先判定への副作用を防ぎます。\n- エッヂの記者IDや記号を含むスレタイの表示・編集処理を修正しました。\n\n## 対応するChMate\n\n- 0.8.10.191 dev\n- 0.8.10.226 dev\n- 0.8.10.241\n- 0.8.10.242 dev\n- 0.8.10.243 devは一部機能未実装のため非推奨です。\n\n## 配布物\n\n- `haiagaru_patches-1.7.1.mpp` と `patches-1.7.1.mpp` は同一のAndroid向けMPPです。\n- パッチ適用時は元のChMate APKを使用し、事前に必要なデータをバックアップしてください。\n",
+  "created_at": "2026-10-27T14:38:08",
+  "version": "1.15.0",
+  "description": "# Haiagaru 1.15.0\n\nXのGIFと通常GIFの自動再生を、使い方に合わせて設定できるようにしました。\n\n## 変更内容\n\n- 「X MP4 GIFを自動再生する（開いた後）」を追加しました。通常のGIF・動画の自動再生とは別に切り替えられます。初期値はオンです。\n- XのGIFを代替プレーヤーへ切り替えると、自動再生が止まってしまう問題を修正しました。\n- 「GIFを開かずにスレ内で自動再生する」を追加しました。通常のGIFリンク、X投稿のGIF、XのGIF動画への直接リンクが対象です。初期値はオフです。\n- スレ内の同時再生数を1〜8件、通常GIFの取得サイズ上限を1〜64MiBから指定できます。初期値は2件・8MiBです。\n- スレ内再生はレスごとに最初のGIFが対象です。画面外や他のアプリへ移動した場合は停止し、設定をオフにすると再生処理を解放します。\n- 新しい設定はHaiagaru設定の共有・バックアップにも含まれます。\n\n設定は「Haiagaru設定 → 画像・動画 → 画像・GIF・動画ビューアの操作設定」から変更できます。スレ内再生は通信量や電池消費が増えます。長時間・多数同時再生時の性能や、スクロール中の表示位置には引き続き改善の余地があります。\n\n通常GIFとXのGIFで再生・非表示時の停止・設定オフ時の解放を確認しています。\n\n## 追加ファイルについて\n\nImage NG・画像取得専用VPNをパッチ時に選ぶ場合は、**追加ファイルのダウンロードが必要です**。このページのAssetsから取得してください。\n\n- Image NG：`haiagaru-image-ng.zip`\n- 画像取得専用VPN：`haiagaru-image-vpn-v2.zip`\n\nそれぞれZIPを展開せず、そのままMorpheのファイル選択で指定してください。これらのパッチを使わない場合、追加ファイルは不要です。\n\n## 謝辞\n\nご支援いただいている皆様、ありがとうございます。README掲載の支援者の皆様へ感謝申し上げます。\n\n- yujirox 様\n- ﾜｯﾁｮｲ 8f01-uDul 様\n- toya0717 様\n- MUMEI 様\n- タケヨシキ 様\n- 無名 様\n\n今回のご報告・動作確認・連携へのご協力にも感謝します。\n\n- ｵｲｺﾗﾐﾈｵ 様\n- Red Frame X 様\n- ﾜｯﾁｮｲ 3f3c-gNc7 様\n- chikuwadon 様（外部チェッカーとの連携をご快諾いただき、ありがとうございます）\n- rikunode 様（226／242のDroid＋ツールバー対応）\n\n## 開発継続へのご支援のお願い\n\n開発の継続を応援していただける場合は、よろしければ[GitHubのStar](https://github.com/areteruhiro/Haiagaru-Morphe)だけでもお願いします。励みになります。さらにご支援いただける場合は、以下から寄付を受け付けています。\n\n- [Amazon Gift Card](https://www.amazon.co.jp/gp/product/B004N3APGO) Send to (areteruhiro@gmail.com)\n- [PayPay](https://qr.paypay.ne.jp/p2p01_FSEj08sDQx0enogO)\n\n皆様からのご報告・検証・ご支援が開発の励みになっています。\n\n### ✨ New Features\n\n* add independent X GIF autoplay and configurable inline animation limits ([d010a24](https://github.com/areteruhiro/Haiagaru-Morphe/commit/d010a2431a82110b8c76e7abc38b2887484428c1))",
   "apps": [
     {
-      "app_name": "ChMate",
+      "app_name": "A2chmate",
       "package": "jp.co.airfront.android.a2chmate",
       "patches": [
         {
+          "name": "Change ChMate package name",
+          "description": "Change ChMate's package name, app name, icon, and version code.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Choose a valid Android package name. ChMate's package-dependent startup values are adjusted during patching."
+            },
+            {
+              "key": "appName",
+              "description": "Launcher name for the separately installed app. Leave empty to keep the original name."
+            },
+            {
+              "key": "appIcon",
+              "description": "PNG or WebP launcher icon file path (not a folder). Leave empty to keep the original icon."
+            },
+            {
+              "key": "versionCode",
+              "description": "Defaults to the maximum Android distribution version code (2100000000). Allows switching between supported ChMate versions when package and signing key match. A lower-code APK cannot normally overwrite it. Clear to keep the original version code. Does not add support for unsupported versions."
+            }
+          ],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
           "name": "Haiagaru",
-          "description": "Ports the Haiagaru ChMate module, including its in-app settings.",
+          "description": "Haiagaruの機能と設定を追加します。対応:191／226／242 dev。基本機能は追加ダウンロード不要です。絵文字フォント・191画像判定修正・VPNは必要なものだけGitHubから保存し、各オプションのファイル選択で指定してください。未選択なら端末標準の絵文字と本体の画像判定を維持します。初めての方向け手順・配布元: https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md",
+          "use": true,
+          "options": [
+            {
+              "key": "additionalOpenUrls",
+              "description": "http(s)://から始まるURLをカンマ区切りで指定。末尾/*は配下も対象です。ChMateが解析できる板・スレURLに使用してください。"
+            },
+            {
+              "key": "emojiMode",
+              "description": "missing=端末にない絵文字だけ（推奨）、all=全絵文字、off=無効。"
+            },
+            {
+              "key": "emojiFontPath",
+              "description": "GitHubからNotoColorEmoji.ttfを保存して選択: https://raw.githubusercontent.com/areteruhiro/Haiagaru-Morphe/79759fb0ab0fa30a6755be13a53546b06d2cdf8d/patches/src/main/resources/chmate/emoji/NotoColorEmoji.ttf 空欄は端末標準の絵文字を使用。手順・ライセンス: https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md"
+            },
+            {
+              "key": "dedicatedCheckerViewer",
+              "description": "true=ChMate内の専用ビュワーを有効化、false=ChMate本来の外部ブラウザ動作。"
+            },
+            {
+              "key": "edgeArchiveToolbarIconPath",
+              "description": "PNG/WebP画像ファイルの絶対パス（file path）。フォルダではなくファイルを選択してください。空欄なら内蔵アイコンを使用します。"
+            },
+            {
+              "key": "imageNgTfliteFix",
+              "description": "191 devのみ。trueと下の修正ファイル選択の両方で適用します。ファイル未選択またはfalseなら本体のライブラリを維持します。自動NG画像判定でクラッシュする方は導入手順を確認してください。https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md"
+            },
+            {
+              "key": "imageNgLibraryFile",
+              "description": "Image NG専用: GitHubからhaiagaru-image-ng.zipを保存して選択: https://raw.githubusercontent.com/areteruhiro/Haiagaru-Morphe/dev/optional-assets/haiagaru-image-ng.zip ZIPは展開不要。VPN用ファイルとは別です。226／242には不要です。手順・ソース: https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md"
+            }
+          ],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "Haiagaru 広告だけの超軽量構成（検証用）",
+          "description": "Haiagaru本体を外して選択してください。広告・広告枠除去、5ch.net→5ch.io変換、板一覧の初期URL、起動・投稿・画像アップロード・UPLIFTの再署名によるクラッシュ対策を適用します。検索・追加設定・フィルター等は組み込みません。検証中です。",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "Imgurログインアップロード（開発中）",
+          "description": "アプリ内でImgurにログインし、既存の画像アップロードからアカウントへ送信します。初期状態は未選択。導入後もログインと有効化が必要です。非公式Web方式で動作保証はなく、利用規約・利用制限が適用されます。失敗時に匿名送信へ切り替えません。",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "MEGAバックアップ・同期",
+          "description": "MEGAアカウントへのバックアップ・復元・起動時同期を追加します。注意：Android 7.0以降が必要です。初期状態は未選択で、自動同期も初期OFFです。このパッチを選択しなくてもローカルバックアップ・復元は利用できます。",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "Migrate ChMate data with Shizuku",
+          "description": "Optionally copy shared data from the original ChMate package using Shizuku.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "Save ChMate crash logs",
+          "description": "Save uncaught ChMate crash logs to Download/Haiagaru.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "0.8.10.191 dev",
-            "0.8.10.241",
-            "0.8.10.242 dev",
-            "0.8.10.243 dev"
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "動画専用ビューア",
+          "description": "対応する動画をChMate内で再生します。初期状態は未選択。導入後もHaiagaru設定でオン／オフできます。未選択の場合は従来の動画表示・外部アプリ起動を維持します。",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
+          ]
+        },
+        {
+          "name": "画像取得専用VPN（実験用・検証中）",
+          "description": "必要な方だけ選択してください。Releaseのhaiagaru-image-vpn-v2.zipを保存: https://github.com/areteruhiro/Haiagaru-Morphe/releases/download/1.12.0-dev.4/haiagaru-image-vpn-v2.zip → 下のオプションで選択 → パッチ適用後にHaiagaru設定でVPNを有効化。Image NG用ZIPとは別です。展開不要。導入・ソース: https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md",
+          "use": false,
+          "options": [
+            {
+              "key": "imageVpnLibraryFile",
+              "description": "VPN専用ファイル: https://github.com/areteruhiro/Haiagaru-Morphe/releases/download/1.12.0-dev.4/haiagaru-image-vpn-v2.zip Image NG用haiagaru-image-ng.zipは選択しないでください。従来AARも利用可能: https://raw.githubusercontent.com/areteruhiro/Haiagaru-Morphe/79759fb0ab0fa30a6755be13a53546b06d2cdf8d/vpn/image-stack/prebuilt/image-stack.aar 展開不要。https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md"
+            }
+          ],
+          "compatible_versions": [
+            "0.8.10.191 dev",
+            "0.8.10.226 dev",
+            "0.8.10.242 dev"
           ]
         }
       ]
     }
   ],
   "patches_name": "Haiagaru",
-  "fingerprint": "724427478307a60b58f2164fc01ebed04701571563059ff3127f4d094f4e0627",
-  "release_notes": "## Haiagaru 1.5.2\n\nMorphe Manager で 1.5.1 から更新できるようにした正式版です。パッチの機能は 1.5.1 と同じです。\n\n### 修正内容\n\n- Android 向け `:patches:buildAndroid` で生成した MPP を配布します。\n- MPP に `classes.dex` を含め、`Patch bundle is missing dex entries` による読み込み失敗を解消します。\n- 通常版・プレリリース版の配布用 JSON を 1.5.2 に更新します。\n\n### 確認\n\n- `:patches:buildAndroid --no-daemon --max-workers=1` 成功\n- MPP 内の `classes.dex` と Android 拡張 2 点を確認\n- `git diff --check` 成功\n\n対応する ChMate: `0.8.10.191 dev`、`0.8.10.226 dev`、`0.8.10.241`、`0.8.10.243 dev`。\r\n",
-  "release_tag": "1.5.2",
-  "release_date": "2026-09-27T11:40:55Z",
+  "fingerprint": "75583aa005195756b31e0f52e12cf91621712b7c64cd2d568419e5f25453a54f",
+  "release_notes": "# Haiagaru 1.15.0\n\nXのGIFと通常GIFの自動再生を、使い方に合わせて設定できるようにしました。\n\n## 変更内容\n\n- 「X MP4 GIFを自動再生する（開いた後）」を追加しました。通常のGIF・動画の自動再生とは別に切り替えられます。初期値はオンです。\n- XのGIFを代替プレーヤーへ切り替えると、自動再生が止まってしまう問題を修正しました。\n- 「GIFを開かずにスレ内で自動再生する」を追加しました。通常のGIFリンク、X投稿のGIF、XのGIF動画への直接リンクが対象です。初期値はオフです。\n- スレ内の同時再生数を1〜8件、通常GIFの取得サイズ上限を1〜64MiBから指定できます。初期値は2件・8MiBです。\n- スレ内再生はレスごとに最初のGIFが対象です。画面外や他のアプリへ移動した場合は停止し、設定をオフにすると再生処理を解放します。\n- 新しい設定はHaiagaru設定の共有・バックアップにも含まれます。\n\n設定は「Haiagaru設定 → 画像・動画 → 画像・GIF・動画ビューアの操作設定」から変更できます。スレ内再生は通信量や電池消費が増えます。長時間・多数同時再生時の性能や、スクロール中の表示位置には引き続き改善の余地があります。\n\n通常GIFとXのGIFで再生・非表示時の停止・設定オフ時の解放を確認しています。\n\n## 追加ファイルについて\n\nImage NG・画像取得専用VPNをパッチ時に選ぶ場合は、**追加ファイルのダウンロードが必要です**。このページのAssetsから取得してください。\n\n- Image NG：`haiagaru-image-ng.zip`\n- 画像取得専用VPN：`haiagaru-image-vpn-v2.zip`\n\nそれぞれZIPを展開せず、そのままMorpheのファイル選択で指定してください。これらのパッチを使わない場合、追加ファイルは不要です。\n\n## 謝辞\n\nご支援いただいている皆様、ありがとうございます。README掲載の支援者の皆様へ感謝申し上げます。\n\n- yujirox 様\n- ﾜｯﾁｮｲ 8f01-uDul 様\n- toya0717 様\n- MUMEI 様\n- タケヨシキ 様\n- 無名 様\n\n今回のご報告・動作確認・連携へのご協力にも感謝します。\n\n- ｵｲｺﾗﾐﾈｵ 様\n- Red Frame X 様\n- ﾜｯﾁｮｲ 3f3c-gNc7 様\n- chikuwadon 様（外部チェッカーとの連携をご快諾いただき、ありがとうございます）\n- rikunode 様（226／242のDroid＋ツールバー対応）\n\n## 開発継続へのご支援のお願い\n\n開発の継続を応援していただける場合は、よろしければ[GitHubのStar](https://github.com/areteruhiro/Haiagaru-Morphe)だけでもお願いします。励みになります。さらにご支援いただける場合は、以下から寄付を受け付けています。\n\n- [Amazon Gift Card](https://www.amazon.co.jp/gp/product/B004N3APGO) Send to (areteruhiro@gmail.com)\n- [PayPay](https://qr.paypay.ne.jp/p2p01_FSEj08sDQx0enogO)\n\n皆様からのご報告・検証・ご支援が開発の励みになっています。\n\n### ✨ New Features\n\n* add independent X GIF autoplay and configurable inline animation limits ([d010a24](https://github.com/areteruhiro/Haiagaru-Morphe/commit/d010a2431a82110b8c76e7abc38b2887484428c1))\n",
+  "release_tag": "1.15.0",
+  "release_date": "2026-10-27T14:41:41Z",
   "isPreRelease": false,
-  "stars": 53,
-  "avatarUrl": "https://avatars.githubusercontent.com/u/108941410?v=4",
+  "stars": 57,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/108941410?v=4&s=128",
   "repoDescription": "Haiagaru Morphe patch for ChMate 0.8.10.191-242",
   "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
   "bundleImageUrl": ""
 }

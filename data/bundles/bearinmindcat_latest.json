@@ -2,10 +2,93 @@
   "bundle": "bearinmindcat",
   "channel": "latest",
   "repo_url": "https://github.com/bearinmindcat/morphe-patches",
-  "created_at": "2026-10-09T22:36:47",
-  "version": "v1.7.13",
-  "description": "## [1.7.13](https://github.com/bearinmindcat/morphe-patches/compare/v1.7.12...v1.7.13) (2026-10-09)\n\n### 🐛 Bug Fixes\n\n* directions to Home, Work and your own labels; issue [#36](https://github.com/bearinmindcat/morphe-patches/issues/36) ([9827770](https://github.com/bearinmindcat/morphe-patches/commit/98277703504fd6bccbc62f91555115407cad2528))\n* show local saved places on the map with a hide switch per list; issue [#36](https://github.com/bearinmindcat/morphe-patches/issues/36) ([7b82e80](https://github.com/bearinmindcat/morphe-patches/commit/7b82e807c3af4bf5aa6be636dd2118427a53efe7))\n",
+  "created_at": "2026-10-28T14:33:31",
+  "version": "2.7.4",
+  "description": "## [2.7.4](https://github.com/bearinmindcat/morphe-patches/compare/v2.7.3...v2.7.4) (2026-10-28)\n\n### 🐛 Bug Fixes\n\n* add samsung sound assistant non-one ui support (individual app volumes); issue [#84](https://github.com/bearinmindcat/morphe-patches/issues/84) ([be3a4d1](https://github.com/bearinmindcat/morphe-patches/commit/be3a4d1588effe90e4ea07d4da2c171f83dbaba9))\n* Hide AI hides every Ask Maps button, also after Maps reloads its layout; issue [#82](https://github.com/bearinmindcat/morphe-patches/issues/82) ([f4d8845](https://github.com/bearinmindcat/morphe-patches/commit/f4d8845009a1c507bbfb12ff4da7fa0a7ddc8431))",
   "apps": [
+    {
+      "app_name": "AllTrails: Hike, Bike & Run",
+      "package": "com.alltrails.alltrails",
+      "patches": [
+        {
+          "name": "2D / 3D compass",
+          "description": "Adds a 2D / 3D compass switch to the Experimental screen. With it on, tapping the compass in navigate mode switches the map between the tilted 3D view and a flat, north-up 2D map the way Google Maps' does, from any state (following you, panned away, paused), and brings the map back to you. The compass shows a single north arrow in 2D, and the next navigation starts in the mode you used last.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Better filters",
+          "description": "Adds a Better filters switch to the Experimental screen. With it on, the trail filter's sliders move in finer steps over the same ranges: Rating in 0.1 stars (instead of Any, 3.5, 4 and 4.5), Length in 0.1 mi, Elevation gain in 10 ft, Highest point in 100 ft and Distance away in 1 mi (metric: 0.1 km, 5 m, 50 m, 1 km).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Better tracking",
+          "description": "Adds a Better tracking switch to the Experimental screen. With it on, recordings work the way Gaia GPS records: the phone's GPS directly with every fix delivered live (no Play services batching), fixes worse than 65 m or physically impossible dropped, points kept 3 m apart, no trail-biased smoothing, and elevation converted to sea level and counted in 2 m steps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Black icon",
+          "description": "Uses a white AllTrails logo on black for the launcher icon and the splash screen, instead of green on dark green, so this build is easy to tell apart from the stock app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Installs alongside stock AllTrails under its own package name.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to install under. Must be a valid Android package name."
+            }
+          ],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Experimental screen",
+          "description": "Adds an Experimental row to your profile's menu, under Edit profile and Share profile, that opens an Experimental screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Remember filters",
+          "description": "Adds a Remember filter states switch to the Experimental screen. With it on, the trail filters you set (length, elevation, rating, difficulty, activities, features and the rest, but not Distance away) stay set when you go back to the home screen and after the app restarts, instead of resetting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        },
+        {
+          "name": "Theme",
+          "description": "Adds a Theme choice to the Experimental screen: Follow phone, Light, Dark or AMOLED black (dark with pure black backgrounds). AllTrails itself only follows the phone.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.3.20"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Google Maps",
       "package": "com.google.android.apps.maps",
@@ -29,8 +112,17 @@
           ]
         },
         {
-          "name": "Add microG support",
-          "description": "Builds microG Maps, a separate app (org.ungoogled.android.apps.maps.microg) that signs in to your Google account through microG: saved places and lists, Timeline, location sharing, contributions and push messages. Remove sign-in prompts, Trim account menu and Remove permissions are left out of this build, Offline saved places keeps only its Local saved screen, which copies your account's saved lists to the phone (Pull from Google account), and its icon carries microG's C. Needs microG: MicroG-RE or ReVanced GmsCore. Not for root (mount) installs.",
+          "name": "Add microG-RE support",
+          "description": "Builds microG Maps, a separate app that signs in to your Google account through microG-RE (MicroG-RE or ReVanced GmsCore). Not for root installs; for original microG, use Add original microG support.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
+          "name": "Add original microG support",
+          "description": "Signs in through original microG on ROMs with signature spoofing. Keeps Maps' own package name; allow signature spoofing for it.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -39,7 +131,16 @@
         },
         {
           "name": "Any media app",
-          "description": "Navigation's Default media app (Settings > Navigation) offers every music and podcast app that works with Android Auto, such as Poweramp, not only Spotify, YouTube Music and Pandora.",
+          "description": "Navigation's Default media app (Settings > Navigation) offers every music and podcast app that works with Android Auto, such as Poweramp, also where Google switches media controls off. YouTube Music and Spotify only connect to Google's own Maps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
+          "name": "Avoid Flock cameras",
+          "description": "Steers driving directions around Flock cameras: when Google's route passes one, a camera-free way is worked out with BRouter, an OpenStreetMap router, and Maps asks Google again for a route through it, so Google still times and navigates the trip, and keeps it through reroutes. A detour longer than half again the distance is dropped. Off until turned on in Waze & external data source, with Flock cameras; your route's start and end go to brouter.de. Trips with stops are left as they are.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -75,7 +176,7 @@
         },
         {
           "name": "Bypass Play Services checks",
-          "description": "Makes Maps' bundled Play services signature and availability checks always pass, so it runs re-signed and with Play services disabled or absent, and lets it load tiles, search and routing by sending Google's own package and certificate in the identity headers the Maps backend checks. Where Play services rejects the re-signed app, Maps degrades instead of crashing.",
+          "description": "Makes Maps' bundled Play services signature and availability checks always pass, so it runs re-signed and with Play services disabled or absent, and lets it load tiles, search and routing by sending Google's own package and certificate in the identity headers the Maps backend checks. Where Play services rejects the re-signed app, Maps degrades instead of crashing. Also skips Google's \"isn't Play Protect certified\" page, and with no Play services at all uses Android's own Cronet so the map still loads.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -89,7 +190,7 @@
           "options": [
             {
               "key": "appName",
-              "description": "The name shown under the launcher icon and in the app switcher. Left at Ungoogled Maps, Add microG support names the app microG Maps instead."
+              "description": "The name shown under the launcher icon and in the app switcher. Left at Ungoogled Maps, Add microG-RE support names the app microG Maps instead."
             }
           ],
           "compatible_versions": [
@@ -103,7 +204,7 @@
           "options": [
             {
               "key": "packageName",
-              "description": "The package name to install under. Must be a valid Android package name. Left at org.ungoogled.android.apps.maps, Add microG support installs under org.ungoogled.android.apps.maps.microg instead."
+              "description": "The package name to install under. Must be a valid Android package name. Left at org.ungoogled.android.apps.maps, Add microG-RE support installs under org.ungoogled.android.apps.maps.microg instead and Add original microG support keeps com.google.android.apps.maps."
             }
           ],
           "compatible_versions": [
@@ -120,8 +221,17 @@
           ]
         },
         {
+          "name": "Flock cameras",
+          "description": "Puts Flock and other license plate reader cameras on the map, from OpenStreetMap -- the cameras DeFlock's volunteers map -- and chimes and shows a note when one is coming up ahead. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the ones near you from an OpenStreetMap server, over the same area as the speed cameras.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
           "name": "Hide ads and clutter",
-          "description": "Hides promoted map pins and \"Sponsored\" search results, Gemini's AI summaries (\"Know before you go\" and the review summary), the row of businesses under an address on its place sheet, the home tab's Explore feed and the Explore / Contribute / You tabs. Each can be switched back on on the Customization screen.",
+          "description": "Hides promoted map pins (on the map, in search results and along a route) and \"Sponsored\" search results, Gemini's AI summaries (\"Know before you go\" and the review summary), the row of businesses under an address on its place sheet, the home tab's Explore feed and the Explore / Contribute / You tabs. Each can be switched back on on the Customization screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -130,7 +240,7 @@
         },
         {
           "name": "Legacy icon",
-          "description": "Uses the flat multicolour pin Maps had before the 2025 gradient icon as the launcher icon and on the screen Maps opens with. With Add microG support, microG's C sits in the pin's circle.",
+          "description": "Uses the flat multicolour pin Maps had before the 2025 gradient icon as the launcher icon and on the screen Maps opens with. With Add microG-RE support, microG's C sits in the pin's circle.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -139,12 +249,12 @@
         },
         {
           "name": "Location provider toggle",
-          "description": "Adds a Location source choice to the Customization screen: Android's own location providers, microG's (microg Services) or Google Play services' fused provider. With Android, neither is ever asked for a location. A source that is missing or disabled is never used, so location keeps working without it. Also keeps the network (Wi-Fi/cell) provider registered when no fused provider answers, instead of GPS only, so a fix does not go stale indoors.",
+          "description": "Adds a Location source choice to the Customization screen: Android's own location providers, microG-RE's or Google Play services' fused provider. With Android, neither is ever asked for a location. A source that is missing or disabled is never used, so location keeps working without it. Also keeps the network (Wi-Fi/cell) provider registered when no fused provider answers, instead of GPS only, so a fix does not go stale indoors.",
           "use": true,
           "options": [
             {
               "key": "useFusedProvider",
-              "description": "The location source Maps starts with. On: the fused provider -- Google Play services', or microG's in microG Maps -- whenever it is installed and enabled, Android's own providers otherwise. Off: Android's own providers. Can be changed later on the Customization screen."
+              "description": "The location source Maps starts with. On: the fused provider -- Google Play services', or microG-RE's in microG Maps -- whenever it is installed and enabled, Android's own providers otherwise. Off: Android's own providers. Can be changed later on the Customization screen."
             }
           ],
           "compatible_versions": [
@@ -153,7 +263,7 @@
         },
         {
           "name": "Offline saved places",
-          "description": "Save places without a Google account, kept only on the phone: Save opens Maps' own \"Place saved\" sheet (Want to go, Travel plans, Starred places, Favorites, your own lists, a note), and a \"Local saved\" row on the account sheet rebuilds Maps' You tab -- your recent places, your lists and labels (Home, Work, your own) -- with export and import (backup file, KML, Google Takeout's saved lists and Saved Places.json, several files or the whole Takeout .zip at once). It also has a Timeline: where the phone has been, grouped into days and visits, kept only on the phone, with GPX export. Recording is off until switched on there; it shows a notification while it runs. With Add microG support, Maps' own Save keeps syncing to your account and Local saved instead copies the account's saved lists to the phone (Pull from Google account).",
+          "description": "Save places without a Google account, kept only on the phone: Save opens Maps' own \"Place saved\" sheet (Want to go, Travel plans, Starred places, Favorites, your own lists, a note), and a \"Local saved\" row on the account sheet rebuilds Maps' You tab -- your recent places, your lists and labels (Home, Work, your own) -- with export and import (backup file, KML, Google Takeout's saved lists and Saved Places.json, several files or the whole Takeout .zip at once). It also has a Timeline: where the phone has been, grouped into days and visits, kept only on the phone, with GPX export. Recording is off until switched on there; it shows a notification while it runs. With Add microG-RE support, Maps' own Save keeps syncing to your account and Local saved instead copies the account's saved lists to the phone (Pull from Google account).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -189,7 +299,7 @@
         },
         {
           "name": "Remove permissions",
-          "description": "Removes permissions that only serve Google-account features or Google's data collection: background location, physical activity, contacts, microphone (voice search stops working), camera (Lens and Live View stop working), car speed, advertising ID, push messages and Google services settings. Left out with Add microG support, whose account features need them.",
+          "description": "Removes permissions that only serve Google-account features or Google's data collection: background location, physical activity, contacts, microphone (voice search stops working), camera (Lens and Live View stop working), car speed, advertising ID, push messages and Google services settings. Left out with Add microG-RE support, whose account features need them.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -198,7 +308,7 @@
         },
         {
           "name": "Remove sign-in prompts",
-          "description": "Removes Google's sign-in prompts: the first-launch \"Make it your map\" page, the search screen's \"Tired of typing?\" card and the account sheet's \"Sign in\" pill. Tapping \"Your profile\" (or the pill, where it still shows) answers with a \"Can't sign in\" toast instead of nothing. Left out with Add microG support, which signs in.",
+          "description": "Removes Google's sign-in prompts: the first-launch \"Make it your map\" page, the search screen's \"Tired of typing?\" card and the account sheet's \"Sign in\" pill. Tapping \"Your profile\" (or the pill, where it still shows) answers with a \"Can't sign in\" toast instead of nothing. With Add microG-RE support, which signs in, only the first-launch page and the card go.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -207,7 +317,25 @@
         },
         {
           "name": "Remove telemetry",
-          "description": "Points the Firebase Installations and Play services compliance check-ins at an unresolvable host, stops every ad impression and click ping from being sent, and deregisters Google's logging, performance-monitoring, survey and Location History libraries and the on-device federated-learning services. With Add microG support, Firebase Installations and Location History are left alone, so Timeline, account sync and push messages keep working.",
+          "description": "Points the Firebase Installations and Play services compliance check-ins at an unresolvable host, stops every ad impression and click ping from being sent, and deregisters Google's logging, performance-monitoring, survey and Location History libraries and the on-device federated-learning services. With Add microG-RE support, Firebase Installations and Location History are left alone, so Timeline, account sync and push messages keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
+          "name": "Speed cameras",
+          "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server -- an area you choose there, about 25 to 175 km across.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
+          "name": "Speeding chime",
+          "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze & external data source, a row on the account sheet.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -216,7 +344,16 @@
         },
         {
           "name": "Trim account menu",
-          "description": "Removes Your Timeline, Location sharing, Your data in Maps and Help & feedback from the account sheet. Left out with Add microG support, whose account features need them.",
+          "description": "Removes Your Timeline, Location sharing, Your data in Maps and Help & feedback from the account sheet. Left out with Add microG-RE support, whose account features need them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.36.04.973607363"
+          ]
+        },
+        {
+          "name": "Waze alerts",
+          "description": "Shows the alerts a Waze on the same phone is tracking -- police to begin with, and any of crashes, hazards, traffic jams, closures and speed cameras -- as pins on the map, with a chime and a note as one comes up ahead. Off until turned on in Waze & external data source. Waze has to be patched with Share alerts with Maps, signed in and open; in the background is enough.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -233,13 +370,467 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "Samsung Notes",
+      "package": "com.samsung.android.app.notes",
+      "patches": [
+        {
+          "name": "Enable non-One UI ROM support",
+          "description": "Makes Samsung Notes installable and usable on non-One UI ROMs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.48.15"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Samsung Keyboard",
+      "package": "com.samsung.android.honeyboard",
+      "patches": [
+        {
+          "name": "Always incognito",
+          "description": "Never learns from what you type.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Renames Samsung Keyboard, so the two keyboards can be told apart.",
+          "use": true,
+          "options": [
+            {
+              "key": "appName",
+              "description": "Shown in the keyboard list and App info."
+            }
+          ],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Installs next to the system Samsung Keyboard under its own package name.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Must be a valid Android package name."
+            }
+          ],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Turns off Samsung Analytics, crash reports and typed-text collection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        },
+        {
+          "name": "No GIF tracking",
+          "description": "Stops GIPHY and Tenor view and share pings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        },
+        {
+          "name": "Remove internet permission",
+          "description": "Keeps the keyboard offline. GIFs, stickers, translation, AI tools and language downloads stop working.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        },
+        {
+          "name": "Stop remote updates",
+          "description": "Ignores keyboard policies pushed from Samsung's servers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.9.40.75"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Sound Assistant",
+      "package": "com.samsung.android.soundassistant",
+      "patches": [
+        {
+          "name": "Enable non-One UI ROM support",
+          "description": "Runs Sound Assistant on non-One UI ROMs, where only Individual app volumes work.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.1.00.6"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Samsung Gallery",
+      "package": "com.sec.android.gallery3d",
+      "patches": [
+        {
+          "name": "Enable non-One UI ROM support",
+          "description": "Makes Samsung Gallery installable and usable on non-One UI ROMs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "15.9.01.7"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Waze Navigation & Live Traffic",
+      "package": "com.waze",
+      "patches": [
+        {
+          "name": "Alert distances",
+          "description": "How early each alert is announced.",
+          "use": true,
+          "options": [
+            {
+              "key": "police",
+              "description": "Waze: 600 m."
+            },
+            {
+              "key": "hazard",
+              "description": "Waze: 600 to 900 m."
+            },
+            {
+              "key": "accident",
+              "description": "Waze: 600 m."
+            },
+            {
+              "key": "traffic",
+              "description": "Waze: 600 m."
+            },
+            {
+              "key": "streets",
+              "description": "Waze: 500 m."
+            },
+            {
+              "key": "highways",
+              "description": "Waze: 1000 m."
+            },
+            {
+              "key": "freeways",
+              "description": "Waze: 2000 m."
+            },
+            {
+              "key": "blockedLane",
+              "description": "Waze: 400 m."
+            },
+            {
+              "key": "between",
+              "description": "Waze: 300 m."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "All moods",
+          "description": "Unlocks every mood, beta ones too.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Average speed zone bar",
+          "description": "Bar with progress and your average speed in an average speed zone. Off until switched on.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Bigger alert pins",
+          "description": "Bigger alert pins on the map.",
+          "use": false,
+          "options": [
+            {
+              "key": "size",
+              "description": "50–300. Waze: 100."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Bigger speedometer",
+          "description": "Bigger speedometer and speed limit digits.",
+          "use": true,
+          "options": [
+            {
+              "key": "speed",
+              "description": "Waze: 26."
+            },
+            {
+              "key": "units",
+              "description": "The mph or km/h label. Waze: 12."
+            },
+            {
+              "key": "limit",
+              "description": "Limits under 100. Waze: 20."
+            },
+            {
+              "key": "limitThreeDigits",
+              "description": "Waze: 13."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Renames Waze.",
+          "use": true,
+          "options": [
+            {
+              "key": "appName",
+              "description": "Shown on the home screen and Android Auto."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Flock cameras",
+          "description": "Chime when a Flock camera is ahead, from OpenStreetMap. No map pins or routing. Off until switched on.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Full black",
+          "description": "True black dark mode for AMOLED screens.",
+          "use": true,
+          "options": [
+            {
+              "key": "blackMap",
+              "description": "The night map in black too."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes sponsored pins, stop ads and ad tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Map skin",
+          "description": "Bigger map labels, a wider arrow and a warm day background.",
+          "use": true,
+          "options": [
+            {
+              "key": "fontHuge",
+              "description": "Waze: 14."
+            },
+            {
+              "key": "fontBig",
+              "description": "Waze: 12."
+            },
+            {
+              "key": "fontMedium",
+              "description": "Waze: 10."
+            },
+            {
+              "key": "fontSmall",
+              "description": "Waze: 8."
+            },
+            {
+              "key": "arrowHead",
+              "description": "Times the tail width. Waze: 3.0."
+            },
+            {
+              "key": "dayBackground",
+              "description": "Waze: fafcfa."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Navigation distances",
+          "description": "Android Auto heads-up distances and the traffic bar threshold.",
+          "use": false,
+          "options": [
+            {
+              "key": "headsUp",
+              "description": "Waze: 200 m."
+            },
+            {
+              "key": "headsUpFreeway",
+              "description": "Waze: 500 m."
+            },
+            {
+              "key": "trafficBar",
+              "description": "Waze: 360 s."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "No AI reporting",
+          "description": "Turns off Gemini voice reporting.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "No Google Assistant",
+          "description": "Removes Google Assistant from Waze.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Open without device location",
+          "description": "Opens Waze with location off and uses it once it is on. Still needs the location permission.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Remove permissions",
+          "description": "Removes contacts, calendar, phone, camera and advertising ID access.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Remove sign-in prompts",
+          "description": "Stops Waze's own reminder to register your account.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "No crash reports, usage stats or performance data. Traffic reporting stays.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Report speed limit",
+          "description": "Lets you correct speed limits from the speedometer (unverified).",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Share alerts with Maps",
+          "description": "Shows Waze alerts in Ungoogled Maps on this phone. Waze must be signed in and open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Speed camera sound at any speed",
+          "description": "Plays the camera sound even when you are not speeding.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Speed cameras everywhere",
+          "description": "Camera and police alerts in every country. Camera warnings are illegal in some.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Speed limit sign",
+          "description": "One speed limit sign style in every country.",
+          "use": false,
+          "options": [
+            {
+              "key": "style",
+              "description": "Waze picks by country."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        },
+        {
+          "name": "Stay awake in the background",
+          "description": "Keeps Waze running without a route so its alerts keep reaching Maps. Uses more battery.",
+          "use": false,
+          "options": [
+            {
+              "key": "minutes",
+              "description": "Waze: 10."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.5.0"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "bearinmind patches",
-  "fingerprint": "7e1af535a550e87ba529d43a8d3513c2e4129a38f07f4ee3ef2e1ae22c561c2c",
-  "release_notes": "## [2.6.0](https://github.com/bearinmindcat/morphe-patches/compare/v2.5.7...v2.6.0) (2026-10-25)\n\n### ✨ New Features\n\n* bigger alert pins, alert distances on by default and shorter waze texts; issue [#59](https://github.com/bearinmindcat/morphe-patches/issues/59) ([cd6c399](https://github.com/bearinmindcat/morphe-patches/commit/cd6c399f64ede634d26b39f5f5400c87506ab29c))\n",
-  "release_tag": "v2.6.0",
-  "release_date": "2026-10-25T16:25:34Z",
+  "fingerprint": "9e7efde52b16baad2802c8398e77153c98fdfa06185f16f5b00af1ef68655629",
+  "release_notes": "## [2.7.4](https://github.com/bearinmindcat/morphe-patches/compare/v2.7.3...v2.7.4) (2026-10-28)\n\n### 🐛 Bug Fixes\n\n* add samsung sound assistant non-one ui support (individual app volumes); issue [#84](https://github.com/bearinmindcat/morphe-patches/issues/84) ([be3a4d1](https://github.com/bearinmindcat/morphe-patches/commit/be3a4d1588effe90e4ea07d4da2c171f83dbaba9))\n* Hide AI hides every Ask Maps button, also after Maps reloads its layout; issue [#82](https://github.com/bearinmindcat/morphe-patches/issues/82) ([f4d8845](https://github.com/bearinmindcat/morphe-patches/commit/f4d8845009a1c507bbfb12ff4da7fa0a7ddc8431))\n",
+  "release_tag": "v2.7.4",
+  "release_date": "2026-10-28T14:34:45Z",
   "isPreRelease": false,
   "stars": 212,
   "avatarUrl": "https://avatars.githubusercontent.com/u/217530752?v=4",

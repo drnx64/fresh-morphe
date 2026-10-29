@@ -2,10 +2,34 @@
   "bundle": "franticg33k",
   "channel": "latest",
   "repo_url": "https://github.com/franticg33k/morphe-patches",
-  "created_at": "2026-09-29T16:39:00",
-  "version": "v1.4.2",
-  "description": "## [1.4.2](https://github.com/franticg33k/morphe-patches/compare/v1.4.1...v1.4.2) (2026-09-29)\n\n### 🐛 Bug Fixes\n\n* Fricam Edge - take the first Boolean.valueOf, do not assert there is one ([126dbc8](https://github.com/franticg33k/morphe-patches/commit/126dbc885a70634aac36b6a6d822eb2c83383655))\n* pin Fricam to 1.6.5, and cross-check every app's AppTarget list ([ca05fea](https://github.com/franticg33k/morphe-patches/commit/ca05fea9dd5ae248e15b4b51e04395e046b72b6f))\n\n### 🚀 Updated App Support\n\n* re-verify Fricam 1.6.5 and JellyWatch TV 1.0.REV-0570; record JellyWatch Admin drift ([0610e0f](https://github.com/franticg33k/morphe-patches/commit/0610e0f36b7fc30125558d7bde06c54d2c707430))\n",
+  "created_at": "2026-10-21T03:39:41",
+  "version": "1.6.0",
+  "description": "## [1.6.0](https://github.com/franticg33k/morphe-patches/compare/v1.5.1...v1.6.0) (2026-10-21)\n\n### ✨ New Features\n\n* **marriage:** skip hourly gift cooldown and pay out on ad-load failure ([7811ecb](https://github.com/franticg33k/morphe-patches/commit/7811ecb1079f0f26731adfb0ad8f1eb71c42d8cb))",
   "apps": [
+    {
+      "app_name": "Marriage Card Game by Bhoos",
+      "package": "com.bhoos.marriage",
+      "patches": [
+        {
+          "name": "Reward when the ad fails to load",
+          "description": "The reward for a rewarded ad is granted by one branch of the ad listener, and the redemption call it makes (a/redeemAdReward) never checks that an ad was actually shown. This routes the ad-load-failure branch into that same reward call, so pressing \"Watch ad\" with no ad available pays out instead of showing \"Ad Error\".",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.45"
+          ]
+        },
+        {
+          "name": "Skip hourly gift cooldown",
+          "description": "Removes the one-hour countdown gate on the lobby gift button, so the gift screen opens on every press instead of after the timer. The window is computed on the device (account.giftTimeStamp + 1 h) - this only removes that gate; whether the server accepts a claim inside the hour is up to the server.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.45"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Bolpatra Nepal",
       "package": "com.bolpatranepal.axios",
@@ -28,14 +52,27 @@
           "description": "Experimental companion patch that keeps byAir's online Pro gates open without forcing the crash-prone global entitlement refresh path.",
           "use": false,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "2.41.0"
+          ]
         },
         {
           "name": "Enable Pro",
           "description": "Suppresses the main byAir paywall, unlock banners, local user gating, and the notifications preferences \"All\" gate.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "2.41.0"
+          ]
+        },
+        {
+          "name": "Remove Update Prompt",
+          "description": "Removes byAir's forced-update screen (\"Pack up for Update! 🚀\" / \"Update Now\") by pinning its version gate to \"no update required\". byAir fetches a server-side minimum version code on launch and, if your build is older, blocks the whole app behind a non-dismissible screen whose only action opens Google Play. With the gate closed a patched older build keeps running and never calls the min-version endpoint, so you no longer have to re-patch every time byAir ships a release.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.41.0"
+          ]
         }
       ]
     },
@@ -231,7 +268,8 @@
           "options": [],
           "compatible_versions": [
             "1.4",
-            "1.4.2"
+            "1.4.2",
+            "1.4.4"
           ]
         }
       ]
@@ -246,7 +284,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.6.5"
+            "1.6.5",
+            "1.7.0"
           ]
         },
         {
@@ -255,7 +294,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.6.5"
+            "1.6.5",
+            "1.7.0"
           ]
         },
         {
@@ -264,7 +304,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.6.5"
+            "1.6.5",
+            "1.7.0"
           ]
         }
       ]
@@ -275,7 +316,7 @@
       "patches": [
         {
           "name": "Block Ad Server",
-          "description": "Stops Nepali Patro's interstitial ads. Two edits to libapp.so: the ad-only host ads-delivery.nepalipatro.com.np is rewritten to an unresolvable .xx domain of the same length, and AdsBloc::featureInterstitialAdWithHtmlPopup - the single callee behind all 24 interstitial call sites - is forced down its existing 'popup blocked' return, so the full-screen ad page and its countdown never open. The host rewrite alone is not enough: the ad URLs are also cached in SharedPreferences under PREF_SLIDER_DATA, and whether to show the page at all comes from remote config, which the app rewrites on every launch. Pairs with Remove Ads, which stops the ad content itself and the AdMob interstitials.",
+          "description": "Stops Nepali Patro's ads. Eight byte-asserted edits to libapp.so plus an in-place host rewrite: the ad-only host ads-delivery.nepalipatro.com.np is rewritten to an unresolvable .xx domain of the same length; the interstitial_html dispatch in the ad-queue callback is retargeted so the full-screen page is never pushed; showHtmlInterstitialAdDialog - the single function that raises the HTML interstitial roadblock - is stubbed out; the popup/popup_html branch is forced down the app's own 'blocked' return; and the five raster formats (slider, banner, popup, card_view, circular) are dropped to the build's own empty-widget tail, so the image creatives Remove Ads cannot see - they are fetched by Dart through CachedNetworkImage, not by a WebView - are never requested at all. The host rewrite alone is not enough: the ad URLs are also cached in SharedPreferences under PREF_SLIDER_DATA, and whether to present the shell at all comes from remote config, which the app rewrites on every launch. Pairs with Remove Ads, which stops the HTML creatives and the AdMob interstitials.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -291,16 +332,16 @@
     }
   ],
   "patches_name": "franticg33k's Morphe Patches",
-  "fingerprint": "0a0db3230f4b73a3805d51a1fc35b0e93178f5b40fd390bddbce2c1c75771878",
-  "release_notes": "## [1.4.2](https://github.com/franticg33k/morphe-patches/compare/v1.4.1...v1.4.2) (2026-09-29)\n\n### 🐛 Bug Fixes\n\n* Fricam Edge - take the first Boolean.valueOf, do not assert there is one ([126dbc8](https://github.com/franticg33k/morphe-patches/commit/126dbc885a70634aac36b6a6d822eb2c83383655))\n* pin Fricam to 1.6.5, and cross-check every app's AppTarget list ([ca05fea](https://github.com/franticg33k/morphe-patches/commit/ca05fea9dd5ae248e15b4b51e04395e046b72b6f))\n\n### 🚀 Updated App Support\n\n* re-verify Fricam 1.6.5 and JellyWatch TV 1.0.REV-0570; record JellyWatch Admin drift ([0610e0f](https://github.com/franticg33k/morphe-patches/commit/0610e0f36b7fc30125558d7bde06c54d2c707430))\n",
-  "release_tag": "v1.4.2",
-  "release_date": "2026-09-29T16:39:00Z",
+  "fingerprint": "53ffc911adcaff5ac8d668e0e80e65db24d713718417bfb1103459b202485a80",
+  "release_notes": "## [1.6.0](https://github.com/franticg33k/morphe-patches/compare/v1.5.1...v1.6.0) (2026-10-21)\n\n### ✨ New Features\n\n* **marriage:** skip hourly gift cooldown and pay out on ad-load failure ([7811ecb](https://github.com/franticg33k/morphe-patches/commit/7811ecb1079f0f26731adfb0ad8f1eb71c42d8cb))\n",
+  "release_tag": "v1.6.0",
+  "release_date": "2026-10-21T03:39:51Z",
   "isPreRelease": false,
   "stars": 27,
   "avatarUrl": "https://avatars.githubusercontent.com/u/300474278?v=4",
   "repoDescription": "",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

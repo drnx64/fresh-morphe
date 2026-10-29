@@ -1,0 +1,259 @@
+{
+  "bundle": "ginarena-patch",
+  "channel": "stable",
+  "repo_url": "https://github.com/sagarkhansau19-svg/GinArena-patch",
+  "created_at": "2026-10-28T15:06:40",
+  "version": "2.5.0",
+  "description": "## [2.5.0](https://github.com/ginDoki19/GinArena-patch/compare/v2.4.2...v2.5.0) (2026-10-28)\n\n### 🐛 Bug Fixes\n\n* **1dm:** auto-hydrate cloud Hosts & filters UI, speed up local rebuild, and keep task in Recents on Back ([87ebd7c](https://github.com/ginDoki19/GinArena-patch/commit/87ebd7ca98defa4a431ceb613e3cdd2190bc1673))\n* **onedm:** fix VerifyError crash in AdBlock j12 and harden startup lifecycle ([70f96ab](https://github.com/ginDoki19/GinArena-patch/commit/70f96abfe82b5869cca951ebc35baed8d3c19ea6))\n\n### ✨ New Features\n\n* **onedm:** add 1DM 20.0 cold-start, battery, cloud adblocker & userscript suite ([0cdb0c9](https://github.com/ginDoki19/GinArena-patch/commit/0cdb0c9154b42218a2d2209032d980f707017e4f))\n* **sktech:** add SK Tech TV 2.7 clean-experience patch ([87bc9fb](https://github.com/ginDoki19/GinArena-patch/commit/87bc9fb9b46205fff1c0f12cb0080b36e04086ca))",
+  "apps": [
+    {
+      "app_name": "Sportsnet (Android TV)",
+      "package": "com.cricfytv.sports",
+      "patches": [
+        {
+          "name": "Remove ads, proxy & restrictions",
+          "description": "Removes CashRaven background bandwidth sharing, all ads and sponsor/unlock gates, external browser redirects, the startup Telegram join dialog, promo marquee banners, forced-update lockouts, and promo push notifications. Optional clone/sniffer-check bypass and native-library stripping are off by default.",
+          "use": true,
+          "options": [
+            {
+              "key": "hidePromoMarquee",
+              "description": "Hides the scrolling announcement/redirect marquee bar on Home and Player screens."
+            },
+            {
+              "key": "bypassUpdateGate",
+              "description": "Skips optional and forced update prompts on Splash startup."
+            },
+            {
+              "key": "blockPromoPushNotifications",
+              "description": "Suppresses promotional/browser-redirect FCM notifications and skips the startup notification permission prompt while preserving silent RemoteConfig API updates."
+            },
+            {
+              "key": "bypassEnvironmentChecks",
+              "description": "Allows running inside work profiles, app cloners, or alongside HTTP debugging tools."
+            },
+            {
+              "key": "stripNativeBloat",
+              "description": "Removes ~7.7 MB of unused CashRaven residential-proxy (libcr_android.so, libjnidispatch.so), Unity Coherence (libunitycoherencenative.so), legacy MIPS/armeabi folders, and WebView ad-viewer assets."
+            }
+          ],
+          "compatible_versions": [
+            "7.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SK Tech TV",
+      "package": "com.live.sktechtv",
+      "patches": [
+        {
+          "name": "Remove ads, telemetry & restrictions",
+          "description": "Replaces native signature-locked config decryption in pure Java so encrypted channel and event feeds keep loading after Morphe re-signs the APK, removes all banner/start/support/external ads, optionally disables the in-app web view, suppresses update lockouts, and optionally bypasses root/sniffer/proxy-cert checks. Strips Firebase telemetry and push notifications.",
+          "use": true,
+          "options": [
+            {
+              "key": "removePushNotifications",
+              "description": "Disables PushService and Firebase Cloud Messaging, skips Android 13+ notification permission prompts, and removes notification permissions and receivers."
+            },
+            {
+              "key": "bypassUpdateGate",
+              "description": "Skips forced and optional update lockouts on Splash startup and Player exit, and removes the REQUEST_INSTALL_PACKAGES permission used by the in-app self-updater."
+            },
+            {
+              "key": "bypassEnvironmentChecks",
+              "description": "Neutralizes RootBeer/su root lockouts, Frida/sniffer package checks, and proxy-certificate lockouts. Not needed on ordinary phones/TVs; MainActivity startup tamper crash-bombs are always neutralized separately."
+            },
+            {
+              "key": "stripNativeAndTelemetryBloat",
+              "description": "Removes libnative-lib.so across all ABIs (plus libtoolChecker.so when the root bypass is enabled) plus Firebase Analytics, Crashlytics, Sessions, DataTransport, and AdServices manifest entries. Purely a size saving; the libraries are never loaded once their Java entry points are removed."
+            },
+            {
+              "key": "disableWebActivity",
+              "description": "Stubs WebActivity.onCreate to immediately finish() the activity. SK Tech TV's WebActivity is a generic in-app WebView that could be repurposed for ad landing pages via remote app.txt config; disabling it ensures no remote-config-driven WebView ad can ever render. Off by default: WebActivity also opens legitimate in-app links, and the config sanitizer already blanks the ad sponsor URLs."
+            }
+          ],
+          "compatible_versions": [
+            "2.7"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "MX Player",
+      "package": "com.mxtech.videoplayer.ad",
+      "patches": [
+        {
+          "name": "Clean Me page",
+          "description": "Removes the Status Saver, Legal, and Help sections from the Me page while keeping the 8-item local tools grid, App Theme, Settings, and Custom Pop-up Play.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.4.1"
+          ]
+        },
+        {
+          "name": "Custom codec",
+          "description": "Bundles an MX Player v3.1.0 custom codec (aio-v3.1.0_r1.zip, architecture ZIP, or libffmpeg.mx.so*) directly into the app for out-of-the-box E-AC-3, TrueHD, MLP, DTS, and AC-3 software audio decoding.",
+          "use": false,
+          "options": [
+            {
+              "key": "codecFilePath",
+              "description": "Select an MX Player Custom Codec v3.1.0 file — recommended: aio-v3.1.0_r1.zip (all CPU types), or neon64-3.1.0-build_1.zip (ARMv8 NEON), neon-3.1.0-build_1.zip (ARMv7 NEON), or a raw libffmpeg.mx.so* binary."
+            }
+          ],
+          "compatible_versions": [
+            "3.4.1"
+          ]
+        },
+        {
+          "name": "Remove ads & bloat",
+          "description": "Removes banner, folder, player, interstitial, rewarded, app-open, exit, and Me-page ads, removes the Home horizontal shortcut strip and online Zodiac App Themes, and disables Live TV, mxplay OTT streaming, MX Tube, Shorts, and Games while keeping Local Music, All-Files-Access setup, and 1-tap Classic Themes working offline and online.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.4.1"
+          ]
+        },
+        {
+          "name": "Remove bottom navigation bar",
+          "description": "Removes the bottom navigation bar from the UI and moves Me to the upper-right corner of the Home toolbar. Leave unchecked to keep the bottom navigation bar.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.4.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Playz",
+      "package": "com.playz.tv",
+      "patches": [
+        {
+          "name": "Remove ads, popups & restrictions",
+          "description": "Replaces the native signature-locked decryption in pure Java so encrypted channel and event feeds keep loading after Morphe re-signs the APK, and removes start/player/support/external ads plus the automatic Telegram promo dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.3.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CricZ TV",
+      "package": "com.pro.cricztv",
+      "patches": [
+        {
+          "name": "Remove ads, telemetry & restrictions",
+          "description": "Replaces native signature-locked config decryption in pure Java, removes all banner/popunder/timer ads and the local NanoHTTPD ad server, suppresses the startup Telegram popup and player watermarks, strips Firebase telemetry and push notifications, and bypasses update lockouts. Optional root/sniffer bypass and native/telemetry stripping are off by default.",
+          "use": true,
+          "options": [
+            {
+              "key": "hidePromoMarquee",
+              "description": "Hides the scrolling promo announcement card on the Events and Player screens."
+            },
+            {
+              "key": "removePushNotifications",
+              "description": "Disables PushService and Firebase Cloud Messaging, skips Android 13+ notification permission prompts, and removes notification permissions and receivers."
+            },
+            {
+              "key": "bypassUpdateGate",
+              "description": "Skips forced and optional update lockouts on Splash startup and Player exit."
+            },
+            {
+              "key": "bypassEnvironmentChecks",
+              "description": "Neutralizes RootBeer/su root lockouts, Frida/sniffer package checks, and proxy-certificate lockouts. Not needed on ordinary phones/TVs; MainActivity startup tamper crash-bombs are always neutralized separately."
+            },
+            {
+              "key": "stripNativeAndTelemetryBloat",
+              "description": "Removes libnative-lib.so across all ABIs (plus libtoolChecker.so when the root bypass is enabled) plus Firebase Analytics, Crashlytics, Sessions, DataTransport, and AdServices manifest entries. Purely a size saving; the libraries are never loaded once their Java entry points are removed."
+            }
+          ],
+          "compatible_versions": [
+            "7.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "1DM: Browser & Video Download",
+      "package": "idm.internet.download.manager",
+      "patches": [
+        {
+          "name": "AdBlocker turbo & userscript bundle",
+          "description": "Syncs SHA-256-verified pre-compiled AdBlocker binary engines + per-list filter archives (28 default lists, ~1.22M active rules) automatically in the background with instant Hosts & filters hydration, accelerates on-device filter compilation via 64 KB write buffering + foreground thread scheduling, and optionally seeds and auto-updates the mobile-adapted Bypass All Shortlinks userscript.",
+          "use": true,
+          "options": [
+            {
+              "key": "adblockerMode",
+              "description": "Cloud Pre-Built downloads SHA-256-verified pre-compiled binary filter engines and per-list archives from GitHub automatically in the background (zero on-device compilation lag and full Hosts & filters counts/sizes/dates), falling back automatically to Local Turbo if you customize filter lists. Local Turbo keeps all compilation on-device with 64 KB buffered I/O, foreground CPU scheduling, and 7-day auto-update."
+            },
+            {
+              "key": "bundleBypassShortlinks",
+              "description": "Seeds and auto-updates the mobile-adapted Bypass All Shortlinks Debloated userscript (.1dmus with offline-cached MonkeyConfig, explicit @connect hosts, and zero warnings). Preserves your enabled/disabled state and never re-installs if deleted."
+            }
+          ],
+          "compatible_versions": [
+            "20.0"
+          ]
+        },
+        {
+          "name": "Browser setup prompts only once",
+          "description": "Shows the default-browser, accessibility, shortcut-menu-strip, and adblocker setup prompts once, recording each as shown as soon as it appears so closing the browser before dismissing cannot make it repeat.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "20.0"
+          ]
+        },
+        {
+          "name": "Optimize cold start and battery",
+          "description": "Eliminates cold-start Chromium WebView initialization in Download Manager and background services, defers Browser AdBlock filter parsing until Browser launch, defers the CheckAppVersion subprocess past startup, pauses MainActivity's 1 Hz background wakeup loop when minimized, and keeps 1DM alive in Android Recents on Back press without killing background downloads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0"
+          ]
+        },
+        {
+          "name": "Preset browser settings",
+          "description": "Sets fresh-install browser fallbacks for normal and incognito modes: Brave search, matching suggestions, and Google search by image by default. Saved or imported choices are preserved and can be changed later in 1DM.",
+          "use": false,
+          "options": [
+            {
+              "key": "searchEngine",
+              "description": "Fresh-install fallback for normal and incognito browsing. Saved or imported choices are not overwritten."
+            },
+            {
+              "key": "searchSuggestions",
+              "description": "Fresh-install fallback for normal and incognito browsing. Match uses the selected provider when 1DM supports it, otherwise None."
+            },
+            {
+              "key": "reverseImageSearch",
+              "description": "Fresh-install fallback for normal and incognito browsing. Brave and DuckDuckGo are not supported by 1DM for reverse image search."
+            }
+          ],
+          "compatible_versions": [
+            "20.0"
+          ]
+        },
+        {
+          "name": "Remove ads and promotions",
+          "description": "Removes banner, interstitial, fallback, and Amazon ads, 1DM+ sale/VPN/drawer/rate promotions, sponsored browser tiles, promo FCM topics, and 17 ad/telemetry SDK initializers and native/asset payloads from free 1DM 20.0 (30257).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "GinArena Patch",
+  "fingerprint": "8f2bf7cdf1e467b4cae764cdaf3489723e5eb8cf34e57212e48850bfe1792c33",
+  "release_notes": "## [2.5.0](https://github.com/ginDoki19/GinArena-patch/compare/v2.4.2...v2.5.0) (2026-10-28)\r\n\r\nThis release introduces a ground-up overhaul for **1DM (`20.0`, build `30257`)** — powered by a first-of-its-kind **headless Cloud AdBlocker & Userscript CI pipeline**, zero-WebView cold-start tuning, zero idle battery drain, and deep ad/SDK debloat — while keeping the entire multi-app `patches-2.5.0.mpp` bundle lightweight (`~640 KB`).\r\n\r\n---\r\n\r\n### ☁️ Highlight — Zero-Wait Cloud AdBlocker & Auto-Synced Shortlink Bypass (`1DM 20.0`)\r\n\r\nStock 1DM forces every phone to download and compile massive filter lists locally — pinning the CPU, hammering flash storage with millions of tiny writes, and sitting on *\"Rebuilding filters...\"* for ~4 minutes (especially painful on budget/eMMC devices). Stuffing pre-built rules inside `.mpp` would bloat every patch download by 30+ MB and go stale immediately.\r\n\r\n**`v2.5.0` solves both problems with an automated Cloud Release architecture (`onedm-cache`):**\r\n\r\n- **Headless Weekly Cloud Compiler (GitHub Actions):** Every Sunday, CI slices 1DM `20.0`'s actual filter compiler into a headless JVM runner, mounts 1DM's embedded `+js` scriptlets & `$redirect` resources, fetches all **28 default filter lists** live (EasyList, EasyPrivacy, uBlock Origin, AdGuard, OISD Full, HaGeZi Pro, Peter Lowe, regional & anti-adblock lists), compiles format-`20` binary engines (`abnfp.bin`, `abnhp.bin`, `abcfp.bin`), and publishes a SHA-256-signed `schema: 2` pack.\r\n- **`< 2s` Background Sync & Full `Hosts & filters` Hydration (`~1,224,500+` active rules):**\r\n  - Patched 1DM quietly fetches, SHA-256-verifies, and atomically swaps the pre-built engines in the background — zero CPU heat, zero manual setup, and zero *\"Enable filter lists auto-update?\"* nag.\r\n  - Automatically hydrates 1DM's filter database and `.adblocker_1dm` per-list `.zip` archives so opening **Hosts & filters** immediately shows all **`~1.22M` active filters** with every list's rule count, file size, and last-updated date populated.\r\n  - **Smart Hybrid Handoff:** Custom **My Filter** rules work out of the box. Tapping **Update** on the default 28-list set runs a fast ~1–2s Cloud sync, while enabling extra lists or adding custom filter URLs seamlessly hands compilation over to **Local Turbo**.\r\n- **⚡ Local Turbo Compiler (~4,000,000 Fewer Syscalls):** Prefer 100% on-device compilation (`local_turbo` option) or custom filter lists? 1DM's unbuffered `RandomAccessFile` writer was replaced with a `64 KB` buffered binary writer + in-memory index patching (100% byte-identical output) and foreground big-core scheduling (`priority = 1`), cutting local rebuild times dramatically without UI stutter.\r\n- **🔗 Auto-Synced Mobile `Bypass All Shortlinks` `.1dmus` Bundle (optional, default: on):**\r\n  - Pre-built weekly in the Cloud cache from **Bypass All Shortlinks Debloated** — patched specifically for 1DM Android with pre-authorized `@connect` redirect/XHR domains (preventing silent background failures), `window.close` grant support, and offline `MonkeyConfig` resized cleanly for mobile screens.\r\n  - Respects your **enabled / disabled** toggle across updates, keeps manual *Check for update* safe from raw desktop JS, and **stays gone** if you delete it.\r\n\r\n---\r\n\r\n### 🚀 Cold Start, Battery, Recents & Debloat (`1DM 20.0`)\r\n\r\n- **Instant Cold Start (Zero `120+ MB` Chromium WebView Spin-Up):** Stopped 1DM from booting the Android System WebView / Trichrome engine on the main UI thread when you only open the Download Manager or run a background download. WebView and Browser AdBlock now load strictly when you open the Browser, and the `:CheckAppVersion` subprocess is deferred past launch.\r\n- **Zero Idle Battery Drain (86,400 Daily Wakeups Eliminated):** Paused `MainActivity`'s 1-second background `TimerTask` and `ActivityManager` Binder IPC polling whenever 1DM is minimized, with instant live progress updates the moment you return to the app.\r\n- **Fixed Back Press Vanishing from Android Recents & Killing Downloads:** Replaced `MainActivity`'s destructive `finishAndRemoveTask()` + `Process.killProcess` Back-press exit with standard Android `moveTaskToBack(true)` — pressing **Back** now keeps 1DM in Recent Apps and keeps active downloads running uninterrupted (drawer **Exit** still closes everything completely).\r\n- **Deep Ad, Nag & ~10.5 MB SDK Bloat Removal:** Stripped **17** startup ad/telemetry `ContentProvider`s, **16** ad/FCM services, **7** wakeup receivers, **11** third-party ad `.so` libraries per ABI, **64** ad SDK assets, Appodeal/Amazon/SQLite fallback banners, *\"Rate 1DM\"* popups, *\"Upgrade to 1DM+\"* / *\"1DM+ on sale\"* / VPN promos, and sponsored browser tiles — while keeping torrents (`libjlibtorrent`), FFmpeg, browser, and userscripts 100% intact.\r\n\r\n---\r\n\r\n### 📺 New App — SK Tech TV (`2.7`, build `17`)\r\n\r\n**SK Tech TV (`com.live.sktechtv`) joins the GinArena family** with the single **Remove ads, telemetry & restrictions** patch, built for phones, tablets, and Android TV:\r\n\r\n- **Streams Keep Working After Re-Signing (Pure-Java Decryption):** Stock SK Tech locks its encrypted feeds (`app.txt` config, Live event feeds, and Live TV channel resolution) to the developer's signing certificate inside a native library — a re-signed build would open to dead feeds. `v2.5.0` replaces that native decryption with a pure-Java, signature-independent implementation that mirrors both of the native decode paths, so configs decrypt, categories load, and **Live events + Live TV channels play exactly like stock** — with the native library never loaded and bad payloads failing soft instead of crashing.\r\n- **Zero Ads, Zero \"Watch-an-Ad-to-Play\" Gate:** Banner/start ads are switched off at the single remote-config choke point, the promo marquee is blanked, the Chrome CustomTabs popunder is disabled, and the timed **support sponsor gate** (open an ad page and wait before every stream) is bypassed — channels and events now open straight in the player. Stock `MainActivity` anti-tamper crash-bombs are neutralized so the re-signed build starts cleanly on phones and TVs.\r\n- **Five Granular Options:**\r\n  - *Remove push notifications* (**default: on**) — FCM promo push service, manifest entries, and Android 13+ notification prompts removed.\r\n  - *Bypass update & force-update screen* (**default: on**) — no forced/optional update lockouts at startup or on player exit, and the self-updater's install permission is stripped (update by re-patching a newer audited stock build).\r\n  - *Bypass root & sniffer checks* (optional) — neutralizes RootBeer root lockout, Frida/sniffer-app detection, and the proxy-certificate lockout for devices the stock app refuses to run on; certificate validation itself still goes through the system trust manager.\r\n  - *Strip native & telemetry bloat* (optional) — deletes the now-unused native library across all ABIs and strips Firebase Analytics/Crashlytics/Sessions/DataTransport + AdServices entries (pure size saving; playback libraries untouched).\r\n  - *Disable WebActivity* (optional) — the in-app WebView closes instantly so remote config can never open ad landing pages.\r\n- **Exact-Version Safety:** Supports **only** the official stock **`2.7` (`17`)** universal APK from [sktech.site](https://sktech.site/) — always patch a fresh stock APK (never re-patch a patched one).\r\n\r\n---\r\n\r\n> **Who should re-patch?**\r\n> - **1DM users:** Grab the official stock **1DM `20.0` (`30257`) universal `.apkm`** and patch it from scratch (do not re-patch an already-patched APK, and do not use the `20257` variant).\r\n> - **SK Tech TV users (new in `v2.5.0`):** Grab the official stock **SK Tech TV `2.7` (`17`)** APK from [sktech.site](https://sktech.site/) and patch it fresh.\r\n> - **MX Player (`3.4.1`), CRICFy TV (`7.3`), CricZ TV (`7.3`) & PlayZ TV (`2.3.1`) users:** Nothing changed for these apps since `v2.4.2` — no need to re-patch if you're already up to date.\r\n\r\n### ✨ Commits\r\n\r\n* **onedm:** add 1DM 20.0 cold-start, battery, cloud adblocker & userscript suite ([0cdb0c9](https://github.com/ginDoki19/GinArena-patch/commit/0cdb0c9154b42218a2d2209032d980f707017e4f))\r\n* **onedm:** fix VerifyError crash in AdBlock j12 and harden startup lifecycle ([70f96ab](https://github.com/ginDoki19/GinArena-patch/commit/70f96abfe82b5869cca951ebc35baed8d3c19ea6))\r\n* **1dm:** auto-hydrate cloud Hosts & filters UI, speed up local rebuild, and keep task in Recents on Back ([87ebd7c](https://github.com/ginDoki19/GinArena-patch/commit/87ebd7ca98defa4a431ceb613e3cdd2190bc1673))\r\n* **sktech:** add SK Tech TV 2.7 clean-experience patch ([87bc9fb](https://github.com/ginDoki19/GinArena-patch/commit/87bc9fb9b46205fff1c0f12cb0080b36e04086ca))\r\n",
+  "release_tag": "v2.5.0",
+  "release_date": "2026-10-28T15:07:30Z",
+  "isPreRelease": false
+}

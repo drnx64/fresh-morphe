@@ -2,9 +2,9 @@
   "bundle": "ajstrick81-androidtv",
   "channel": "latest",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-10-06T22:01:57",
-  "version": "test-212",
-  "description": "Test-only build for #212. Netflix 13.0.1 build 25028 received re-minified ad code; this recovers the ad-kill (V3) and scans the large memory region the code now often sits in. Patch with the same patches as usual, then: force-stop, relaunch, wait ~60s on home, play a title, and attach `adb logcat -d -s KILL > kill.txt`. Success = `PATCH V3-ADV … verify=OK` and `PATCH V3-MASTER … verify=OK`.",
+  "created_at": "2026-10-29T02:25:57",
+  "version": "1.46.0",
+  "description": "# [1.46.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.45.0...v1.46.0) (2026-10-29)\n\n\n### Bug Fixes\n\n* **pluto:** add v17 VOD Skip ads (AVIA stack) + strip click-tracked ad clips ([#251](https://github.com/ajstrick81/morphe-androidtv-patches/issues/251)) ([8a37071](https://github.com/ajstrick81/morphe-androidtv-patches/commit/8a370719230c32fe4c824080e848c4db947b79ae))\n\n\n### Features\n\n* **hbomax:** add opt-in playback-speed control ([#258](https://github.com/ajstrick81/morphe-androidtv-patches/issues/258)) ([8b48916](https://github.com/ajstrick81/morphe-androidtv-patches/commit/8b489160493e38725277fc43b8e10adcb0e97024))\n* **xumo:** add Skip ads for Xumo Play Android TV ([#247](https://github.com/ajstrick81/morphe-androidtv-patches/issues/247)) ([115d5cf](https://github.com/ajstrick81/morphe-androidtv-patches/commit/115d5cf65f098085882a9bf9d29fabaf98484c4b))",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -183,6 +183,21 @@
       ]
     },
     {
+      "app_name": "F1 TV",
+      "package": "com.formulaone.production",
+      "patches": [
+        {
+          "name": "Unlock UHD (4K)",
+          "description": "Unlocks the 2160p/4K streaming tier for F1 TV on all Android TV hardware by removing the client-side device-capability gates and advertising HDR support to the F1 backend, while routing each device to the render path its GPU can actually drive. Requires a paid F1 TV Premium subscription — this changes no entitlement, only which video tier the app's own capability checks allow.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0.49.4-SP166.4.1-release-R54.2-tv"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "FOX One: Live News, Sports, TV",
       "package": "com.fox.foxone",
       "patches": [
@@ -193,6 +208,31 @@
           "options": [],
           "compatible_versions": [
             "1.9.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Moviesbyfawesomeandroidtv",
+      "package": "com.future.moviesbyfawesomeandroidtv",
+      "patches": [
+        {
+          "name": "Disable update prompt",
+          "description": "Stops Fawesome Movies & TV (Android TV) from showing the \"New version Available\" dialog on every launch. The app reads the server's latest version code (Firebase remote-config key \"versioncode_androidtv_googletv\") and, when it is higher than the installed build, shows an update dialog before continuing into the app. This patch forces the app's own no-update path instead, so startup is unchanged and the nag is gone — nothing is added, the client just stops being told to update. On 19.7 the seam is SplashActivity.checkCurrentAppVersion() -> Utilities.updateAlert(); on 20.1 (R8-obfuscated, ViewModel rewrite) it is the splash view-model's version-check method, forced down its own proceed branch. Whichever matches the installed version is applied.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7",
+            "20.1"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes client-side ads in Fawesome Movies & TV (Android TV). The IMA pre/mid-roll video ad is suppressed by firing the app's own ad-complete transition (so content loads/resumes normally instead of waiting on an ad that never plays); the in-player VAST banner is removed; and the pause-screen bug ad is removed while the pause/focus behaviour is preserved. Ads are requested client-side, so this is a full removal with no server-stitched (SSAI) fallback to break.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.7"
           ]
         }
       ]
@@ -309,7 +349,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "10.36.5000"
+            "10.40.5000"
           ]
         },
         {
@@ -318,7 +358,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.36.5000"
+            "10.40.5000"
           ]
         }
       ]
@@ -349,17 +389,21 @@
           "options": [],
           "compatible_versions": [
             "4.46.0_tv",
-            "4.47.2_tv"
+            "4.47.2_tv",
+            "4.50.1_tv",
+            "4.51.0_tv"
           ]
         },
         {
           "name": "Skip ads",
-          "description": "Suppresses ViX ad delivery by stopping the LuraPlayer linear ad-break scheduler (client-side VAST) and preventing the Innovid SSAI ad overlay from mounting.",
+          "description": "Suppresses ViX ad delivery by emptying the LuraPlayer ad-break schedule — both the client-side VMAP breaks (third-party ads) and the first-party house / cross-promo breaks — so no ad-periods are inserted into the timeline, and by preventing the Innovid SSAI ad overlay from mounting.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "4.46.0_tv",
-            "4.47.2_tv"
+            "4.47.2_tv",
+            "4.50.1_tv",
+            "4.51.0_tv"
           ]
         }
       ]
@@ -393,6 +437,18 @@
           ]
         },
         {
+          "name": "HBO Max - Playback Speed",
+          "description": "Adds a remote-navigable on-screen speed control (0.5x–2.0x) to the HBO Max player. Opt-in; touches no DRM, ad, or network code. Not device-verified yet.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.9.0.61",
+            "7.7.0.78",
+            "7.5.0.73",
+            "7.2.0.41"
+          ]
+        },
+        {
           "name": "HBO Max - Prefer Ad-Free Stream",
           "description": "Loads HBO's own ad-free FALLBACK manifest instead of the ad-stitched PRIMARY one by remapping the stream selection in getStreamInfo (only when a FALLBACK stream exists). Ad-free on fresh start and resume with no markers, no timeline gaps, and no 'Couldn't Play Content' (39999) error — and loads faster since no ads are stitched. On by default; field-verified on 7.9.0.61.",
           "use": true,
@@ -407,15 +463,51 @@
       ]
     },
     {
+      "app_name": "Xumo Play",
+      "package": "com.xumo.xumo.tv",
+      "patches": [
+        {
+          "name": "Skip ads",
+          "description": "Removes Xumo Play's client-inserted (CSAI) VOD ads by no-opping the player's ad-play step (playAmsOrImaAd) so fetched VAST/AMS/IMA ads are never played and content continues. Applies to both the VOD and Live TV players. FreeWheel SSAI ads that are server-stitched into the stream are not removable client-side and may remain; Xumo is migrating toward SSAI, so coverage can vary by title and region. Not yet device-verified on 4.9.147.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.9.147"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "RaiPlay per Android TV",
       "package": "it.rainet.androidtv",
       "patches": [
+        {
+          "name": "Enable WebView debugging",
+          "description": "Debug only: enables chrome://inspect on the RaiPlay WebView so the SPA console and native-bridge traffic can be inspected. Do not leave enabled.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.0.1",
+            "5.0.0"
+          ]
+        },
+        {
+          "name": "Fix live HLS variant 404",
+          "description": "Fixes live channels (e.g. Rai 2) that fail with an error toast because the relinker hands the Android TV app the bitrate-capped HLS variant playlist_ma_1800-3600.m3u8, which does not exist on the Akamai origin (HTTP 404). The URL is rewritten to the full master playlist_ma.m3u8; the hdnea token (acl=/*) stays valid. Other URLs are left untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.0.1",
+            "5.0.0"
+          ]
+        },
         {
           "name": "Skip ads",
           "description": "Suppresses Smartclip VOD ads in the RaiPlay Android TV app by forcing the native ad-context parser to return null, so every title takes RaiPlay's own ad-free playback path — no Smartclip session, no VMAP ad slot, no pre/mid/post-roll breaks. Live-channel server-side ads (if any) are not affected.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "5.0.1",
             "5.0.0"
           ]
         }
@@ -469,6 +561,15 @@
           "compatible_versions": [
             "5.66.0-leanback"
           ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes Pluto TV's on-demand (VOD) ads on the v17.x rebuild (the Paramount+/AVIA player stack). Four layers: (1+2) force AVIA's DAI and IMA shouldPlayAd() gates to false so the pre-roll ad pods are skipped natively; (3) drop the ad <Period>s from the stitched multi-period DASH manifest at AVIA's own DashParser and re-base the content periods into a contiguous timeline, so the mid-roll ad VIDEO is never played AND the seekbar tracks correctly; (4) suppress the ID3/CLID3-driven CSAI ad call on static VOD manifests. Fail-open: a manifest it can't rewrite is passed through unchanged (ads remain, playback never breaks). LIVE TV ads are real broadcast time in the linear feed and are not removable. Validated on-device, 17.2.0.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.2.0"
+          ]
         }
       ]
     },
@@ -484,21 +585,30 @@
           "compatible_versions": [
             "13.0.0.2"
           ]
+        },
+        {
+          "name": "Playback speed controls",
+          "description": "Adds playback-speed controls to the Twitch Android TV (Starshot) WebView player. Press the blue colour key to open a 0.5x-2x list, pick with the D-pad, OK applies (hold OK also works on remotes without colour keys). The chosen speed stays until it is picked again - nothing changes it automatically. No button is added and no existing control is modified: the page only ever gets <video>.playbackRate written, so Twitch's own controls and gear/quality menu keep working exactly as before. Uses the same WebView hook as Block TV ads (selecting this also installs that hook). Opt-in.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "13.0.0.2"
+          ]
         }
       ]
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "05fb4926c1ae5738e64f1582e78e153ef7a3edfe558309377708432734e42cc8",
-  "release_notes": "Test-only build for #212. Netflix 13.0.1 build 25028 received re-minified ad code; this recovers the ad-kill (V3) and scans the large memory region the code now often sits in. Patch with the same patches as usual, then: force-stop, relaunch, wait ~60s on home, play a title, and attach `adb logcat -d -s KILL > kill.txt`. Success = `PATCH V3-ADV … verify=OK` and `PATCH V3-MASTER … verify=OK`.",
-  "release_tag": "test-212",
-  "release_date": "2026-10-06T22:01:57Z",
-  "isPreRelease": true,
+  "fingerprint": "a6162466c2e4d5e7f1ba6f60a57699d146b3f9ba68bbcd4696ce5d0b4cf39666",
+  "release_notes": "# [1.46.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.45.0...v1.46.0) (2026-10-29)\n\n\n### Bug Fixes\n\n* **pluto:** add v17 VOD Skip ads (AVIA stack) + strip click-tracked ad clips ([#251](https://github.com/ajstrick81/morphe-androidtv-patches/issues/251)) ([8a37071](https://github.com/ajstrick81/morphe-androidtv-patches/commit/8a370719230c32fe4c824080e848c4db947b79ae))\n\n\n### Features\n\n* **hbomax:** add opt-in playback-speed control ([#258](https://github.com/ajstrick81/morphe-androidtv-patches/issues/258)) ([8b48916](https://github.com/ajstrick81/morphe-androidtv-patches/commit/8b489160493e38725277fc43b8e10adcb0e97024))\n* **xumo:** add Skip ads for Xumo Play Android TV ([#247](https://github.com/ajstrick81/morphe-androidtv-patches/issues/247)) ([115d5cf](https://github.com/ajstrick81/morphe-androidtv-patches/commit/115d5cf65f098085882a9bf9d29fabaf98484c4b))\n\n\n\n",
+  "release_tag": "v1.46.0",
+  "release_date": "2026-10-29T02:26:12Z",
+  "isPreRelease": false,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",
   "repoDescription": "Patches for Android TV apks",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

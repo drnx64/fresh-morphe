@@ -2,9 +2,9 @@
   "bundle": "gemini-microg",
   "channel": "latest",
   "repo_url": "https://github.com/ryuya0124/gemini-microg-patches",
-  "created_at": "2026-09-06T14:22:28",
-  "version": "v0.1.1",
-  "description": "# Gemini microG patches 0.1.1\n\nバージョンごとのフック定義を導入しました。\n\n## 変更内容\n\n- Google 17.54.18.ve.arm64 / Gemini 1.0.958859967のフック情報を別ファイルで管理。\n- クラス・メソッド・フィールド・探索文字列・レジスタ条件・期待する変更数・APKハッシュ・検証結果を記録。\n- パッチとDEX検証コードが同じ定義を参照。閲覧用JSONとの整合性をCIで検証。\n- 未登録のversionNameや異なるversionCodeへの適用を停止。\n- 古いトランポリンの記録を実際のaiwk.fへ修正。新バージョンの追加手順を整備。\n\n## 検証\n\nGoogleの15 DEX、Geminiの4 DEXと各AndroidManifestが変更前とバイト単位で一致しました。全APK再ビルド、MPP構造・読み込み、未登録版拒否、定義とJSONの整合性、GitHub CIを確認済みです。\n\n## インストール\n\nMorpheのSourcesからこのリポジトリを更新するか、Assetsの `gemini-microg-patches-0.1.1.mpp` をLocal sourceとして追加してください。\n\n対象はGoogle 17.54.18.ve.arm64 / Gemini 1.0.958859967、microG 7.0.0。新しいGoogleバージョンへの対応を追加したリリースではありません。\n\n従来どおり公式Morphe patches 1.41.0のClone appと `updatePermissions=true`、`updateProviders=true` が必要です。Googleのxxhdpi splitの変換と同一キー署名はREADMEのローカルスクリプトを参照してください。Android版Managerでの一連のAPK作成操作は未確認です。\n",
+  "created_at": "2026-09-06T14:21:38",
+  "version": "0.1.1",
+  "description": "Gemini login and Samsung Secure Folder support with microG",
   "apps": [
     {
       "app_name": "Google Gemini",
@@ -120,7 +120,7 @@
   "avatarUrl": "https://avatars.githubusercontent.com/u/79310875?v=4",
   "repoDescription": "Morphe patches for Gemini with microG and Samsung Secure Folder support",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

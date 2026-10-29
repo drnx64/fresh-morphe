@@ -1,0 +1,695 @@
+{
+  "bundle": "kveld9",
+  "channel": "latest",
+  "repo_url": "https://github.com/kveld9/kveld-extra-morphe-patches",
+  "created_at": "2026-10-28T16:32:30",
+  "version": "1.30.1",
+  "description": "## [1.30.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.30.0...v1.30.1) (2026-10-28)\n\n### Bug Fixes\n\n* **capcut:** align embedded EnvGuard certificate hash with repack signing key ([32ed60c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/32ed60cf0ba4977a907d2eb0bc1f800aeccd2863))\n* **capcut:** block unsafe-modal verdict by replacing cracking interceptor at registration ([0280683](https://github.com/kveld9/kveld-extra-morphe-patches/commit/028068392ef6c6bb9f8b7872dc8715ec1a358a24))\n* **capcut:** restore published behavior that showed no unsafe modal ([74a1d6d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/74a1d6d812dce922ad53956e7fba5d54f495e282))\n* **capcut:** revert cracking-interceptor swap that triggered the unsafe modal ([4c6b523](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4c6b523b8c2b4d55b22f812914114cceaf2e845e))\n* **capcut:** use a per-install effects ID to avoid shared throttling ([ee43df4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ee43df4af289e79493b4604e74f93fb82f22bde4))\n* **word:** neutralize Office early-telemetry dispatch to prevent native null-deref crashes ([721ae2a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/721ae2af515583bd3a3b17a0f45502d5b88b26ab))\n* **word:** restore aggregation timer to keep native timer callback consistent ([d6b2e05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d6b2e0512f4b6f8573c6470a0b147cafd495fc77))",
+  "apps": [
+    {
+      "app_name": "Hevy - Gym Log Workout Tracker",
+      "package": "com.hevy",
+      "patches": [
+        {
+          "name": "Block Trackers",
+          "description": "Blocks crash reporting, ad attribution and referral tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.2"
+          ]
+        },
+        {
+          "name": "Remove Extra Files",
+          "description": "Deletes tutorial videos, editor stickers and junk to shrink the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.2"
+          ]
+        },
+        {
+          "name": "Stop Background Sync",
+          "description": "Stops background sync tasks and alarms that drain the battery.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.2"
+          ]
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks Pro features stored on the device (routines, folders, charts). Server-limited items may still need a subscription.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.2"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Instagram",
+      "package": "com.instagram.android",
+      "patches": [
+        {
+          "name": "AR Effects Slimmer",
+          "description": "Strips ARCore native binaries (libarcore_sdk_c.so, libarcore_sdk_jni.so) and AR effect/face tracking asset models. WARNING: Disables camera AR filters, 3D face effects, and body/face tracking.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "447.0.0.55.81"
+          ]
+        },
+        {
+          "name": "Block Crash & Diagnostics",
+          "description": "Neutralizes crash-dump uploaders, Lacrima detector broadcasts, debug diagnostics, carrier preload trackers, and lead-ads entrypoints.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "447.0.0.55.81"
+          ]
+        },
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Facebook Analytics2, DataTransport, FDID/PhoneId providers, and strips AD_ID permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "447.0.0.55.81"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CapCut - Video Editor",
+      "package": "com.lemon.lvoverseas",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Google AppMeasurement, AppsFlyer, ByteDance AppLog, APM/Slardar, Gecko, Pitaya, BDTuring, and UserGrowth event dispatchers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Bypass Effects Region Restriction",
+          "description": "Fixes effects, transitions, and templates failing to load (ByteDance Shark WAF block) by spoofing device_platform to 'windows' and resetting deviceId in effect requests.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Bypass GeoBlock Region Restriction",
+          "description": "Forces CapCut GeoBlock config lists (cert, dock, entrance, page, scheme) to empty so region-blocked surfaces stay enabled. Server-refused content may still fail to load.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Bypass Signature Check",
+          "description": "Spoofs the official APK signature (SHA-256) for tamper telemetry, drops the server-driven signature blacklist, silences the abnormal-source toast, and disables the Godzilla inject-detect gate so re-signed builds are not blocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Bypass Unsafe Package Modal",
+          "description": "Replaces the unsafe-package modal fallback URL in the Lynx schema defaults with the real template portal URL so region-blocked or untrusted-client fallbacks open templates instead of the blocking security notice.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Locale Assets Slimmer",
+          "description": "Strips unselected CapCut asset locale bundles (assets/locales/*.json) from the APK. English is always preserved. For res/values-* string tables use the canonical universal Remove Extra Languages patch.",
+          "use": false,
+          "options": [
+            {
+              "key": "locales",
+              "description": "Comma-separated language codes to preserve (e.g. 'en, es, pt, fr, de'). Base fallback and English are always retained."
+            }
+          ],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Native Bloat Slimmer",
+          "description": "Strips non-essential companion native libraries by zeroing bytes in-situ. Always zeroes AppLovin ad crash reporter. WARNING: Stripping speech recognition and synthesis engines (libspeech*.so) disables voice recognition, voiceover captions, and speech-to-text features.",
+          "use": false,
+          "options": [
+            {
+              "key": "trimSpeechEngines",
+              "description": "WARNING: Stripping speech recognition and synthesis engines (libspeechengine.so, libspeechepg.so, libspeechsdk.so) breaks voice effects, text-to-speech, and automatic captions."
+            }
+          ],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Neutralize Play Billing",
+          "description": "Stubs Google Play Billing client calls and disables billing manifest components for graceful degradation on devices without GMS.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Redirect API to v2 Boot",
+          "description": "Loads effects, feeds and templates where default endpoints are blocked by using official alternate endpoints.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Remove Watermark",
+          "description": "Forces CapCut watermark-removal gates and default ending gate to allow export without watermark or outro.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Forces CapCut VIP gates to return true (SubscribeImpl, PayVipImpl, UserVipInfo, UserDetailInfo, VipUserServiceImpl, SubscribeCloudImpl) plus central account status flags (BusinessManager). Cloud-gated assets may still fail.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium Templates",
+          "description": "Marks premium template styles as available so locked template features stay usable.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        },
+        {
+          "name": "Unlock Ultra HD Export",
+          "description": "Forces CapCut Ultra HD / high-resolution export gates to unlocked so 4K export options stay available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "19.9.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Xiaomi Earbuds",
+      "package": "com.mi.earphone",
+      "patches": [
+        {
+          "name": "Block Trackers",
+          "description": "Stops analytics and usage reporting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Device Privacy Guard",
+          "description": "Hides hardware IDs and lets Bluetooth work without location.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Offline Only",
+          "description": "Fully disconnects the app from the internet. Pair your earbuds first.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Run on Rooted Devices",
+          "description": "Lets the app run on rooted phones and network tools without crashing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Safer Connections",
+          "description": "Blocks unencrypted traffic and disables certificate pinning.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Show All Models",
+          "description": "Shows every earbud model for pairing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Skip Popups & Tutorials",
+          "description": "Skips startup agreements, tutorials, and promo banners.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Stop Background Activity",
+          "description": "Stops persistent notifications and background battery drain.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Unlock Sound Features",
+          "description": "Enables spatial audio and hearing features on all devices.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Unlock for Other Phones",
+          "description": "Enables full features on Samsung, Pixel, and other non-Xiaomi phones.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        },
+        {
+          "name": "Update Without Account",
+          "description": "Lets guests check and install earbud firmware updates.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.38.0i"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Microsoft PowerPoint",
+      "package": "com.microsoft.office.powerpoint",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Microsoft OneDS/Aria lifecycle, aggregated-metric and failure-logging dispatch methods, nullifies ad measurement platform identifiers (AIFA, AppSetId), disables HockeyApp activities and DataTransport components, and strips advertising permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Bypass Code Transparency",
+          "description": "Bypasses the code transparency checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Disable Login Requirement",
+          "description": "Removes login requirement and FTUX paywall screens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "PowerPoint Companion Native Slimmer",
+          "description": "Strips optional companion native binaries (React Native and Hermes JavaScript runtime stack) via in-situ zeroing. WARNING: stripped libraries are load-bearing for React Native initialization - enabling this WILL crash the app with UnsatisfiedLinkError when Copilot or other React Native surfaces start, not merely hide those features.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Remove Shared User ID",
+          "description": "Removes the sharedUserId attribute from the manifest to prevent installation conflicts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Unlock 365 Family",
+          "description": "Unlocks Microsoft 365 Family subscription features locally.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Microsoft Word: Edit Documents",
+      "package": "com.microsoft.office.word",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Microsoft OneDS/Aria lifecycle, aggregated-metric and failure-logging dispatch methods, nullifies ad measurement platform identifiers (AIFA, AppSetId), disables HockeyApp and DataTransport components, strips advertising permissions, and neutralizes Office early-telemetry dispatch (TelemetryHelper).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Bypass Code Transparency",
+          "description": "Bypasses the code transparency checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Disable Login Requirement",
+          "description": "Removes login requirement and FTUX paywall screens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Remove Shared User ID",
+          "description": "Removes the sharedUserId attribute from the manifest to prevent installation conflicts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        },
+        {
+          "name": "Unlock 365 Family",
+          "description": "Unlocks Microsoft 365 Family subscription features locally.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.0.20527.20034"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "NokoPrint - Print from Phone",
+      "package": "com.nokoprint",
+      "patches": [
+        {
+          "name": "Block Ads",
+          "description": "Blocks ad loaders and unlocks ad-free status.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
+          "name": "Block Trackers",
+          "description": "Blocks analytics and ad tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
+          "name": "Printer-Compatible Connections",
+          "description": "Keeps HTTP cleartext for LAN printers and driver downloads and trusts user certificates. Less strict than stock; on by default because some printers need it, disable for maximum strictness.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
+          "name": "Remove Extra Files",
+          "description": "Deletes hidden ad files and trackers to shrink the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
+          "name": "Remove Extra Stores",
+          "description": "Disables payment components for other app stores you do not use.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
+          "name": "Skip Welcome Screen",
+          "description": "Skips the first-launch popup (the About menu still works).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        },
+        {
+          "name": "Stop Background Sync",
+          "description": "Stops background tasks that drain the battery.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.28.6"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SUBE",
+      "package": "com.sube.app",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Google AppMeasurement, Firebase Analytics, and Firebase Crashlytics event dispatchers at bytecode entrypoints.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "Bypass SUBE NFC antenna check",
+          "description": "Bypasses the com.nxp.mifare system feature check in SUBE so the app runs on devices whose ROM does not declare NXP Mifare support.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "Cut Firebase Entirely",
+          "description": "Rewrites the Firebase Installations API endpoint (firebaseinstallations.googleapis.com) to 0.0.0.0 in DEX bytecode across all classes, severing background FID registration and installation auth tokens. WARNING: Breaks push notifications (FCM) and cloud messaging.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "Cut Firebase Manifest",
+          "description": "Disables Firebase Cloud Messaging services and instance ID receivers in AndroidManifest.xml. Breaks push notifications and FCM background delivery.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        },
+        {
+          "name": "SUBE Telemetry Manifest Purge",
+          "description": "Strips advertising permissions, disables measurement services, providers, and install receivers, and injects opt-out metadata flags in AndroidManifest.xml.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.7.25"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Moovit: Bus & Public Transit",
+      "package": "com.tranzmate",
+      "patches": [
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes AppsFlyer, Braze, and Inneractive DEX dispatchers, disables analytics services/providers, and strips advertising permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.203.0.1812"
+          ]
+        },
+        {
+          "name": "Fix Google Maps",
+          "description": "Restores Google Maps rendering by spoofing the original package signature to Google Play Services.",
+          "use": true,
+          "options": [
+            {
+              "key": "mapsApiKey",
+              "description": "Personal Google Maps Platform API key. Required because the built-in key only works with the original signature."
+            },
+            {
+              "key": "forceGoogleMaps",
+              "description": "Always use Google Maps instead of the region default map."
+            }
+          ],
+          "compatible_versions": [
+            "5.203.0.1812"
+          ]
+        },
+        {
+          "name": "Remove Ads",
+          "description": "Hides banner and inline ads and neutralizes ad unit ID lookups.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.203.0.1812"
+          ]
+        },
+        {
+          "name": "Suppress Paywalls",
+          "description": "Suppresses subscription paywalls, onboarding upgrade dialogs, and promotional cards.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.203.0.1812"
+          ]
+        },
+        {
+          "name": "Unlock Moovit+",
+          "description": "Unlocks Moovit+ premium subscription features locally, including Safe Ride and address search in favorites.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.203.0.1812"
+          ]
+        },
+        {
+          "name": "Use Places API (New)",
+          "description": "Switches search autocomplete from Places API (Legacy) to Places API (New). Legacy Places is not available in new Cloud projects. Requires Places API (New) to be enabled for the API key.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.203.0.1812"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "X",
+      "package": "com.twitter.android",
+      "patches": [
+        {
+          "name": "Background Slimmer",
+          "description": "Disables background periodic jobs, home screen widgets, and companion services to reduce resource usage.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "12.37.2-prod.01"
+          ]
+        },
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Blocks tracking services, analytics collection, and advertising identifiers, redirects Braze and Sentry endpoints to 0.0.0.0, and purges Sentry manifest metadata.",
+          "use": true,
+          "options": [
+            {
+              "key": "blockPaymentsTelemetry",
+              "description": "Redirects Plaid, ScribeUp, and financial anti-fraud telemetry endpoints to 0.0.0.0. WARNING: Enabling this disables X Payments and banking verification features."
+            }
+          ],
+          "compatible_versions": [
+            "12.37.2-prod.01"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SD Maid 2/SE - System Cleaner",
+      "package": "eu.darken.sdmse",
+      "patches": [
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks SD Maid SE Pro features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.2.2-rc0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "ibis Paint X",
+      "package": "jp.ne.ibis.ibispaintx.app",
+      "patches": [
+        {
+          "name": "Enable Prime membership",
+          "description": "Enables app features locked behind the subscription paywall.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.1.2"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "kveld9 Extra Patches",
+  "fingerprint": "5d4b71959d9efe4ae0122dd28fd47c7ca6934513ace669e3f10bb53cbf8d042a",
+  "release_notes": "## [1.30.1](https://github.com/kveld9/kveld-extra-morphe-patches/compare/v1.30.0...v1.30.1) (2026-10-28)\n\n### Bug Fixes\n\n* **capcut:** align embedded EnvGuard certificate hash with repack signing key ([32ed60c](https://github.com/kveld9/kveld-extra-morphe-patches/commit/32ed60cf0ba4977a907d2eb0bc1f800aeccd2863))\n* **capcut:** block unsafe-modal verdict by replacing cracking interceptor at registration ([0280683](https://github.com/kveld9/kveld-extra-morphe-patches/commit/028068392ef6c6bb9f8b7872dc8715ec1a358a24))\n* **capcut:** restore published behavior that showed no unsafe modal ([74a1d6d](https://github.com/kveld9/kveld-extra-morphe-patches/commit/74a1d6d812dce922ad53956e7fba5d54f495e282))\n* **capcut:** revert cracking-interceptor swap that triggered the unsafe modal ([4c6b523](https://github.com/kveld9/kveld-extra-morphe-patches/commit/4c6b523b8c2b4d55b22f812914114cceaf2e845e))\n* **capcut:** use a per-install effects ID to avoid shared throttling ([ee43df4](https://github.com/kveld9/kveld-extra-morphe-patches/commit/ee43df4af289e79493b4604e74f93fb82f22bde4))\n* **word:** neutralize Office early-telemetry dispatch to prevent native null-deref crashes ([721ae2a](https://github.com/kveld9/kveld-extra-morphe-patches/commit/721ae2af515583bd3a3b17a0f45502d5b88b26ab))\n* **word:** restore aggregation timer to keep native timer callback consistent ([d6b2e05](https://github.com/kveld9/kveld-extra-morphe-patches/commit/d6b2e0512f4b6f8573c6470a0b147cafd495fc77))\n",
+  "release_tag": "v1.30.1",
+  "release_date": "2026-10-28T16:33:42Z",
+  "isPreRelease": false,
+  "stars": 33,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/179108235?v=4",
+  "repoDescription": "Standalone, app-specific patches for use with Morphe",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}

@@ -2,9 +2,9 @@
   "bundle": "pengusto",
   "channel": "stable",
   "repo_url": "https://github.com/pengusto/penguin-patches",
-  "created_at": "2026-10-25T18:15:24Z",
-  "version": "1.0.1",
-  "description": "## [1.0.1](https://github.com/pengusto/penguin-patches/compare/v1.0.0...v1.0.1) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* make compatibility guards work on Morphe Manager 2.x ([bf2355b](https://github.com/pengusto/penguin-patches/commit/bf2355b0f61eadee2b1a0f2bf0ebef203fbfd219))",
+  "created_at": "2026-10-29T01:27:15",
+  "version": "1.3.0",
+  "description": "## [1.3.0](https://github.com/pengusto/penguin-patches/compare/v1.2.0...v1.3.0) (2026-10-29)\n\n### ✨ New Features\n\n* **Finamp:** keep output controls reachable and correct banner contrast ([f70e392](https://github.com/pengusto/penguin-patches/commit/f70e392614b1abb2ff2ac3da262849098ca4ee9f))",
   "apps": [
     {
       "app_name": "Feeder",
@@ -17,6 +17,75 @@
           "options": [],
           "compatible_versions": [
             "2.25.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Finamp",
+      "package": "com.unicornsonlsd.finamp",
+      "patches": [
+        {
+          "name": "Fix offline artist tracks",
+          "description": "Exclude unrelated songs from shared albums on offline performing-artist pages (#1689). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
+          ]
+        },
+        {
+          "name": "Fix quick settings banner contrast",
+          "description": "Use the banner's matching foreground color so its text stays readable with custom accents (#1756). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
+          ]
+        },
+        {
+          "name": "Fix section title validation",
+          "description": "Update validation and enable Save when a custom home-section title is entered (#1830). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
+          ]
+        },
+        {
+          "name": "Fix track alphabet navigation",
+          "description": "Compare song names and target letters consistently when jumping through the Tracks alphabet (#1790). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
+          ]
+        },
+        {
+          "name": "Keep player output controls accessible",
+          "description": "Open the existing output controls from the player menu even when bottom actions are hidden (#1355). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
+          ]
+        },
+        {
+          "name": "Load artist pages faster",
+          "description": "Load artist previews and track counts without downloading the full discography (#1832). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
+          ]
+        },
+        {
+          "name": "Song artist order",
+          "description": "Choose song-credit display order, including album artists first, metadata order and alphabetical (#1831). Requires the original official Finamp 1.0.1 APK. Produces ARM64-only output; other native architectures are removed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.0.1"
           ]
         }
       ]
@@ -203,10 +272,10 @@
     }
   ],
   "patches_name": "Penguin Patches",
-  "fingerprint": "c04aa87699548aea7b5bbec818381d1fe7e5109f8ac776cc6bae2a398a74e0c4",
-  "release_notes": "## [1.0.1](https://github.com/pengusto/penguin-patches/compare/v1.0.0...v1.0.1) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* make compatibility guards work on Morphe Manager 2.x ([bf2355b](https://github.com/pengusto/penguin-patches/commit/bf2355b0f61eadee2b1a0f2bf0ebef203fbfd219))\n",
-  "release_tag": "v1.0.1",
-  "release_date": "2026-10-25T18:15:24Z",
+  "fingerprint": "af831bd174ea32963e351205c35c7c50e688bb8d5d4bb0e0ba479b2d20536097",
+  "release_notes": "## [1.3.0](https://github.com/pengusto/penguin-patches/compare/v1.2.0...v1.3.0) (2026-10-29)\n\n### ✨ New Features\n\n* **Finamp:** keep output controls reachable and correct banner contrast ([f70e392](https://github.com/pengusto/penguin-patches/commit/f70e392614b1abb2ff2ac3da262849098ca4ee9f))\n\n\n## Finamp verification\n\nBoth new patches are optional and individually selectable for the original Finamp 1.0.1 universal APK (ARM64 output). The README embeds matched, unedited installed-APK before/after pairs.\n\nAll 127 published native payloads replay correctly. The complete candidate passes 127 real Desktop selections, six Manager JVM/ART cases, selected-patch failure/recovery and same-key data retention. The normal published Manager source additionally passes output-only, banner-only and all-seven ART apply/export; its all-seven APK is installed and retains login, downloads and appearance/preferences.\n\n[Acceptance report](https://github.com/pengusto/penguin-patches/releases/download/v1.3.0/finamp-1.3.0-acceptance.json) · [Raw evidence ZIP](https://github.com/pengusto/penguin-patches/releases/download/v1.3.0/finamp-1.3.0-evidence.zip) · [README before/after pairs](https://github.com/pengusto/penguin-patches/blob/v1.3.0/README.md#every-patch-before--after). Tested on Android 15/API35 ARM64 emulator with synthetic Jellyfin data; physical/OEM devices and RAM usage are outside this run.\n",
+  "release_tag": "v1.3.0",
+  "release_date": "2026-10-29T01:35:06Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/106893073?v=4",

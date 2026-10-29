@@ -1,36 +1,18 @@
 {
   "bundle": "hushfacebook",
   "channel": "stable",
-  "repo_url": "https://github.com/SysAdminDoc/HushFacebook",
-  "created_at": "2026-10-10T06:30:12",
-  "version": "v0.9.0",
-  "description": "This release gathers everything since v0.8.0 and brings 86 patches for Facebook 582.0.0.50.54, up from 85. The new one is `Share sheet items`, which takes the items you pick off Facebook's share sheet. Morphe Manager's default selection now holds every patch but three, and after an update the settings page tells you which switches start off now. New switches hide the share sheet's Send to group buttons, share a post's own link instead of a /share/ link, play reels once and hide the Follow link on posts. Morphe Manager 1.34.0 or newer is required.\n\nNew in this release\n\n- `Comment sheet options` has a fourth switch under Comments, `Hide related groups`. It takes the Related groups list and its Join buttons out from under a group post's comments, and the comments themselves stay. It starts off, and the diagnostic report counts each list it keeps out.\n\n- `Share sheet items` is a new patch. It lets you hide items from Facebook's share sheet, such as WhatsApp, Meta AI or Copy link. Nothing is hidden until you tap `Share sheet items to hide` under Links and tick what you don't want. The list starts with the items Facebook has offered on your phone and then common ones. The rest keep Facebook's order, and pausing Hushfacebook brings everything back. It shares one hook with the Threads switch in `Hide Meta upsells`, so both can be in the same build. The idea comes from icysymmetra's TikTok patches.\n\n- After an update, the settings page names the switches that now start off, so you can turn back on the ones you used.\n\n- Export settings now carries your Share sheet items picks, including item types this version doesn't name, and the import preview says how many it will hide.\n\n- The settings home page ends with Support Hushfacebook, which opens the Ko-fi page in your browser.\n\n- Privacy now ends with a map of where ads and tracking are blocked. Each line takes you to its switch, says it was set when you patched, or names the patch to add, and the blocks that cost something say what they cost.\n\n- `Share sheet items` has a new switch under Links, `Hide group buttons in the share sheet`, off to start. It takes away Send to group when you pick two or more people, and the share sheet's own ways to start a new group, so nothing you share turns into a group chat by accident. Send separately stays (#104).\n\n- `Sanitize sharing links` has a new switch under Links, `Share the post's own link`, off to start. Copy link and the share sheet's other link shares give the post's own facebook.com address instead of a facebook.com/share/ link made for that one share (#98).\n\n- `Clean up Reels` has a new switch under Reels, `Play reels once`, off to start. A reel stops on its last frame instead of starting over. Tap it to watch again, or swipe on. Feed videos and stories don't change.\n\n- `Hide post prompts` has a new switch under Feed, `Hide the Follow link on posts`, off to start. It takes the \"Follow\" link off the name on posts from Pages and people you don't follow, so it can't be tapped by accident. Tapping the name still opens the profile (#107).\n\nFixes\n\n- `Open on a chosen tab` set to Feeds opens the Feeds page over Home when your tab bar has no Feeds tab, on the filter `Feeds opens on` picks. Back goes to Home.\n\n- `Open links in external browser` sends out links written in capitals, like a Page post's HTTPS://SHOP.EXAMPLE. Android reads the start of a link letter for letter, so your browser didn't recognize it, and the link opened in Facebook's own browser with a \"No external browser took the link\" message. Links that an app on your phone claims, a video site's for example, now reach that app even when they're written in capitals.\n\n- `Offer to download copied links` saves reels and videos from copied share links again, the facebook.com/share/r/ and /share/v/ kind that Facebook's Copy link gives you. Facebook answered Android's own way of asking with a page instead of the video's address, so every share link said \"Couldn't find the video in that link\" and opened in Facebook.\n\nOther changes\n\n- Picking a comment order or a playback quality now turns its switch on, so the pick takes effect right away.\n\n- Morphe Manager's default selection now holds every patch but three, so you don't need Expert mode to get `Hide the Reels tab`, `Tap to play`, `Download any video` and the rest. The 32 patches that joined it start with their switches off, and a fresh patch looks like the Facebook you know until you turn things on in Hushfacebook settings. `AMOLED black theme` and `Material You theme` stay out because their colors go in when you patch and there's no switch to take them back out. `Disable Play Store updates` stays out because it raises the version number Android sees, so a later build without it can't install over yours, and it doesn't work on a root mount. Turn on Expert mode to pick those three.\n\n- If you'd picked one of those patches before and never changed its switch, the switch starts off after you update. Hushfacebook keeps no record of the build you came from, so it can't tell you meant it on. Look these over in Hushfacebook settings and turn back on the ones you want: Hide Reels in the feed, Keep feed position on return, Hide the Stories tray, Hide Stories between posts, Stop Story auto-advance, View stories anonymously, Hide prompts and promos under reels, Hide the Follow button on reels, Hide comment and reaction previews, Don't send reel watch history, Turn off double tap to like, Hold a reel for 2x, Default comment order, Tag suggestions only after @, Tap to play, Default playback quality, Picture-in-picture, Turn off HDR brightness, Use the system font, Use the phone's emoji, Turn off haptics, Turn off screen transitions, Download feed and Watch videos, Hide the Reels tab, Hold back analytics uploads, Allow screenshots, Block screenshot detection, Hide typing in chats, Hide typing in comments and Hide read receipts. A switch you'd already turned off, or a list you'd filled in, stays as you left it.\n\n- Expert mode's patch list comes in smaller groups. Interface held 42 patches, so it's split into Theme, Navigation, Playback, Reels, Stories, Comments and Chats, and no group has more than a dozen now.\n\n- Every patch description in Morphe Manager is rewritten in plain English for people patching for the first time. Each one says what changes and why you might want it, then ends the same way, with how its switch starts and where to find it, like \"Starts off. Turn it on in Hushfacebook settings > Reels and Watch.\" Patches with no switch say they work as soon as you patch them in.\n\n- The text in Hushfacebook settings is rewritten in plain English. Each row now says what it does and why you'd turn it on, and the rows that need a restart say \"Restart Facebook to see the change.\" The German, Spanish, Indonesian, Brazilian Portuguese and Turkish text is updated to match.\n\n- Messages from Hushfacebook are plainer too. Failed downloads, settings import and export, update checks, font files and link settings now say what went wrong and what to try next, without terms like \"package name\" or \"kana\". The translations are updated to match.\n\n- The Background color option on `AMOLED black theme` explains itself better. It asks for a six-digit color code like #0D1117, and the message shown for a color it can't use says the same.\n\n- The `AMOLED black theme` option is now called Background color, and when it refuses a color, the message says what to type instead.\n\n- `Allow screenshots` also clears a secure mark a page already had, from before you turned the switch on or from a path the patch doesn't reach, the next time Facebook changes anything about that page's window. Before, that page stayed black in screenshots until you opened it again. The idea comes from icysymmetra's TikTok patches.\n\n- `Restore screens on re-signed builds` says photos and posts need it too, in its description and in the warning settings show when a re-signed build doesn't have it. Leaving it out stops photos and posts from opening, not only profiles, so the old wording made it look safe to skip.\n\nRemoved\n\n- Hushfacebook now targets Facebook 582.0.0.50.54 only, the newest stable release, in its arm64-v8a and 32-bit builds. If you're still on 581.0.0.45.58, 580.0.0.51.74 or 577.0.0.50.72, update Facebook to 582 before you patch. From here on each release moves to the newest stable Facebook and drops the one before.\n\nBehind the scenes\n\n- The contributor guide maps patch sources, runtime extensions, and the patch workflow. The Facebook 581 audit traces ad delivery and tracking controls, records the signed-in stock screens, and measures foreground, background and screen-off activity. It includes network metadata, two settings screenshots and code search targets for browser history, camera-roll processing and the Facebook Plus icon screen in #109. It separates observed behavior from paths that still need a device check.\n\n- `scripts/phone-smoke.ps1` walks a patched Facebook on a phone through the feed, Watch, Reels, notifications and Marketplace, saves a full diagnostic report from Hushfacebook settings and pulls it. It fails when a hook family reports anything missing, ambiguous or thrown, when a family you name with `-ExpectInvoked` never ran, or when Facebook crashed during the walk. A crash the report kept from before the walk doesn't count. `scripts/test-phone-smoke.ps1` checks the report reading without a phone.\n\n- Settings tests now match the current patch list, switch defaults and supported-link explanation. Story privacy tests clear shared diagnostic counters before each case so an earlier test can't change their results.\n\n- The desktop CLI runs, bundle merges and the resource, register and fingerprint checks now wait for a slot of the machine's build queue when `BUILD_QUEUE_SCRIPT` names one, and run straight away when it doesn't. Before, they started beside whatever builds were running and the queue never saw them.\n\n- The patch tests that read the Facebook fixtures run as their own Gradle task, `:patches:fixtureTest`, with each fixture's path and SHA-256 as its inputs. A change to the fixtures reruns only those tests, and a fixture swapped for another of the same size and date still counts as a change. Each fixture's dex is now read and parsed once per test run rather than once per lookup. `:patches:test` still runs every test, and refuses a run where a fixture test skipped with the fixture folder set.\n\n- The pre-push gate runs Gradle twice. Everything but the fixture tests goes first, so a failing quick test or lint stops the push in minutes, and the full run with the fixture tests comes second. `scripts/release/release.ps1 -Stage preflight` runs the quick checks a release needs in about five minutes: the script contracts, that same quick patch run, the translation and release-check tests, both lints and the release facts.\n\n- `tools/release_text.py` writes a release's text. `cut` turns Unreleased into the dated section with a Facebook summary first, `bump` moves the version and the README badge, `check-translations` holds every table to the same strings and `L10nTranslations.java` to the tables, `github-notes` writes the notes with every bullet kept and checks that the app's update check reads the newest declared build from them, and `index` writes `patches-bundle.json`, the README's latest-release sentence and the bug form. Its tests run with `py -3.13 -I -m unittest discover -s tools -p \"test_*.py\"`.\n\n- A release patches each Facebook fixture once instead of twice. The pre-push gate now patches the fixtures with the release bundle from `build/release` when the patch sources or the version change, and keeps each passing run with a stamp naming the bundle, APK, patch list and CLI. `build-release-receipt.ps1 -AppliedDir` reads a kept run whose stamp matches and runs every check on it, and patches any other fixture as before.\n\n- `scripts/release/release.ps1` runs the whole release in five stages, each refusing to start until the one before it is done. `source` cuts the CHANGELOG, bumps the version, writes the patch list and checks the translations, and puts the tree back if a step fails. `preflight` adds the release text tests, the translation check and a draft of the GitHub notes to its quick checks. `bundle` builds from the pushed source commit and writes the receipt from the gate's kept runs plus `SHA256SUMS.txt`. `publish` tags, creates the release and downloads every asset back to compare it. `index` writes `patches-bundle.json`, the README and the bug form from the published release and the gate's test counts, then updates the repository description. The pre-push gate now runs the release text tests and the script contract tests when only `tools/` changes, and the phone smoke report checks when `phone-smoke.ps1` changes.\n\n- The marketing script no longer writes `assets/readme-hero.png`, which has been separate artwork since the quieter hero. The social preview it still builds says \"Safe mode built in\" in place of \"Recovery built in\", which people read as a promise about Messenger's chat backup PIN.\n\n- Every patch finds its places in Facebook 582. That build moves more text into lookup lists, reads its config flags through new helpers or straight from the config, and folds some classes into their parents or into one shared object, so the patches and their fixture checks now accept each of those forms.\n\nThe [changelog](https://github.com/SysAdminDoc/Hushfacebook/blob/main/CHANGELOG.md) has every earlier release too.\n\nHow to update\n\n1. Update Morphe Manager to 1.34.0 or newer, then refresh the Hushfacebook source.\n2. Patch Facebook `582.0.0.50.54`. On most phones that's build `475417104`, the arm64-v8a one. Phones with a 32-bit processor take build `475417036`, the armeabi-v7a one.\n3. Install over your current patched Facebook with the manager's existing signing key. Keep that key so updates keep working.\n\nThe `.mpp` download is a patch bundle, not a Facebook APK. [Installation instructions](https://github.com/SysAdminDoc/Hushfacebook#install).\n\nLook over a diagnostic report before you share it. The filter can still miss private text it doesn't recognize.\n\nWhat was checked\n\nLocal checks passed: 2331 runtime tests and 842 patch tests with no failures, plus both Android lints and the release-script checks. All 86 patches applied without forcing to both Facebook 582.0.0.50.54 builds (arm64-v8a and 32-bit), and the only manifest changes are the four permission renames that let it install beside Meta's apps. I also patched 582 with every patch on an arm64 phone. Facebook opened signed in with no crash, and a walk through the feed, Watch, Reels, notifications and Marketplace ran 53 of the 55 hook families with none missing its target. The Hushfacebook row sat at the end of Settings and privacy and opened the settings, and reels showed the Download button.\n",
+  "repo_url": "https://github.com/SysAdminDoc/Hushfacebook",
+  "created_at": "2026-10-28T04:37:09",
+  "version": "0.19.0",
+  "description": "Hushfacebook v0.19.0 targets Facebook 584.0.0.51.56 (com.facebook.katana), the newest release.\n\nThis one has 105 patches and needs Morphe Manager 2.2.0 or newer, so update Manager first. Posts can get Save and Download buttons under them, and new switches take Like, Comment, Share or Send off posts and reels, hide posts from Pages or drop the dislike on comments. Feed videos can get a cast button, downloads can go to an SD card, and 32-bit phones are supported now.\n\nValidation: 3928 runtime tests passed locally. All 1204 patch tests passed too, along with both Android lints. All 105 patches applied to Facebook 584.0.0.51.56, and the resource and injected-code checks passed.\n\nReview diagnostic reports for private data before sharing them.\n\nNeeds Morphe Manager 2.2.0 or newer. Patch the arm64-v8a bundle of Facebook 584.0.0.51.56, build 475817393, or its 32-bit build 475817404. The .mpp is a patch bundle, not a Facebook APK. Keep the manager's existing signing key when updating.\n\n### Added\n\n* **Facebook:** New `Badge and logo colors` lets you pick your own color for the red count badges on the tabs and for the blue Facebook logo at the top of Home. Type a color code like #2ECC71 in `Badge color` or `Logo color` under Appearance and restart Facebook. Left blank, both keep Facebook's colors, and settings backups carry them (Refs #263).\n* **Facebook:** Facebook 584.0.0.51.56 now works on 32-bit phones too. The armeabi-v7a Android 11+ bundle, build 475817404, is declared next to the arm64 build 475817393, and every patch applies to it. Contributed by toidicakhia (Refs #254).\n* **Facebook:** `Hide the Create button` under Tabs and navigation takes the + button for new posts, reels and stories out of the top bar, on both versions of the bar Facebook hands out. It starts off and shows after a restart (Refs #257).\n* **Facebook:** A reel's More menu has `Copy caption` now. It copies the whole caption, including the part hidden behind See more, so there's no more screenshotting a long caption to get its text. It's on by default, and `Copy reel captions` under Reels and Watch turns it off (Refs #240).\n* **Facebook:** You can pick a plain home screen icon when you patch. The `Icon style` option of Hushfacebook settings in Morphe draws Facebook's \"f\" white on black or black on white, and `Facebook colors` (the default) leaves the icon alone. Themed icons on Android 13 and up still work with either one (Refs #278).\n* **Facebook:** New `Show full post text` puts a long post's whole text in the feed, so there's no See more to tap. It starts off. Turn it on under News feed in Hushfacebook's settings, and the diagnostic report counts each post it kept whole (Refs #268).\n* **Facebook:** Downloads can go to an SD card. Pick it in `Save on`, right above `Save to` under Downloads, and videos and photos land on the card in the same folders they'd use on the phone. The phone's storage stays the default. If the card is out of the phone, saves go to the phone's storage until you put it back, so a save never fails over a missing card (Refs #274).\n* **Facebook:** Reels can pause while you read their comments. Turn on `Pause reels while comments are open` under Comments and writing, and a playing reel stops when its comments open and picks up from the same spot when you close them. A reel you start yourself under the comments keeps playing (Refs #266).\n* **Facebook:** `Words to hide` and `Words that keep a post` have a test box under the list now. Paste a post's text and it says whether that post would hide or stay, and which list decided, using the list as you've typed it so far, before you tap Save. Nothing you paste gets saved, and only its first 16,384 characters are checked.\n* **Facebook:** `Newest reels first` is called `Sort loaded reels` now, and a `Reels order` row right under it picks how: `Newest` (the old behavior and still the default) or `Most liked`. It still only reorders the reels Facebook has already loaded for you. A reel without the count it's sorted by keeps Facebook's spot for it. Search finds the switch by its old name too, and settings backups carry the order (Refs #134).\n* **Facebook:** Feed videos can get a cast button. Facebook took its own casting out, so `Cast button on feed videos` under Video and audio puts a button in the video's top right corner that hands it to a casting app you already have, like Web Video Caster, and that app sends it to your TV. It starts off and needs a build with the video download patch. If the video hasn't loaded a file yet, it says so and asks you to play it for a moment first (Refs #182).\n* **Facebook:** Posts can have Save and Download buttons under them now, next to Like, Comment and Share. `Save button under posts` adds Facebook's own Save button, filled bookmark and all. `Download button under posts` adds a Download button to posts with a video or photos, and it saves them the same way the post's menu does (an album saves every photo). Both are under News feed and start off. Download needs a build with the video or photo download patch, and posts with nothing to save don't get the button. Right below them, `Hide Like under posts`, `Hide Comment under posts`, `Hide Share under posts` and `Hide Send under posts` each take one button out of that row in the feed. Reels get the same under Reels and Watch: `Hide Like on reels`, `Hide Comment on reels` and `Hide Share on reels` take that button off the side of a reel, next to the Save and WhatsApp switches that were already there (Refs #151, Refs #265).\n* **Facebook:** `Hide dislike on comments` under Comments and writing takes the thumbs-down off comments, the one Facebook puts next to Like on reels and videos. Like and Reply stay. It starts off (Refs #241).\n* **Facebook:** `Hide posts from Pages` under News feed takes posts written by Pages out of the feed, the Pages you follow included. Friends' and group posts stay, and so does a friend's share of a Page's post. It starts off (Refs #262).\n\n### Changed\n\n* **Facebook:** You need Morphe Manager 2.2.0 or newer now. The patches are built on Morphe patcher 2.0.1, which uses less memory while patching, and older Managers refuse a bundle built on it, so update Manager first. Desktop patching needs morphe-desktop 1.19.1 or newer.\n* **Facebook:** Hush titles are drawn in Facebook's blues now, shifting slowly with a light sheen moving across. That covers the settings bar and search, Hush dialogs, the screen shown when settings can't open, and the lock cover. Every color stays readable on its background in every theme, and the titles keep moving even with Android's animations off.\n* **Facebook:** Long sections are easier to scan. News feed, Reels and Watch, Video and audio, Appearance and Pause, backup and diagnostics group their rows under small headings like `Content filters`, `Video quality` and `Troubleshooting`, still right on the main page. Where the tab bar sits, what it does while you scroll, which tabs hide and their dots all moved to a new Tabs and navigation section. `Tab bar position` and `Tab bar while scrolling` are each one pick from three now, with Facebook's own behavior first, so the two old switches can't fight each other.\n* **Facebook:** A few names got clearer. Playback is Video and audio, Links is Links and sharing, Chats is Chats and Messenger, and Set when you patched is Built-in changes. Writing joined Comments, and the quality row reads `Default quality`. Search still finds everything by its old name. `Save crashes to Downloads` moved from Privacy to Troubleshooting, right above Pause, and Support keeps help and restart apart from supporting the project.\n* **Facebook:** `Hide posts with words you choose` now reads a shared link's headline and the line under it too, so a news post whose only mention of a word is in its link preview hides. That includes the newer cards Facebook draws from its own layout, where the headline isn't a plain field. A keep word on the preview still keeps the post (Refs #255).\n* **Facebook:** The `Only from a reel's More menu` description says which reels get the Picture-in-picture row. Upright reels do, wide ones never did, and the old wording made a missing row look like a bug (Refs #252).\n* **Facebook:** Patching with `Material You theme` on is faster. Its scans now skip the parts of Facebook they can't change, and the patched app comes out the same as before (Refs #236).\n* **Facebook:** The README now explains how to go back to an earlier release that lists your Facebook version. You add its bundle as a local source in Manager, patch with the same key and install over your copy. Sign-in and settings stay, and the README lists what `Export settings` leaves out. The steps follow Manager 2.2's own screens and cover what to do when Manager reports a Package conflict instead of installing.\n* **Facebook:** `Accent color` works with the Material You theme now. It used to sit greyed out whenever Material You was patched in. Now the color you pick replaces your wallpaper's accent and the wallpaper's greys stay, while the first choice, `Wallpaper accent`, keeps the phone's own. It's picked in Hushfacebook's settings under Appearance with no repatch, and Facebook picks it up after a restart (Refs #272).\n\n### Fixed\n\n* **Facebook:** With `See-through bars` on, a blurred strip no longer hangs above the bottom tab bar while it slides away or comes back. The blur used to spread past the bar's edge whenever the bar was partly faded (Refs #250, #124).\n* **Facebook:** With `Picture-in-picture` off, reels no longer shrink into a floating window when you leave Facebook. Some accounts get Facebook's own version of that window, switched on from Facebook's side or from its Media settings, and it used to slip past the switch (Refs #252, #256).\n* **Facebook:** With `Open feed videos on their own` on, a regular video post in your feed (one that isn't a reel) starts as fast as it does with the switch off. That now includes video posts you open from inside a group. Their full screen viewer used to sit on a blank loading screen first, for up to a second on the home feed and two seconds or more in a group. Reels you open from the feed still play alone with nothing after them (Refs #237).\n* **Tooling:** A device walk no longer fails a page because something an earlier step left open is sitting on top of it. On the S22 the long press on a reel left a comment sheet over the next page, and the Notifications step failed on two walks in a row. When a page can't be confirmed, the walk now presses Back once and opens the link again. Checked in the audit's tests.\n* **Tooling:** The device walk reads the phone's screen text as UTF-8. Started from Git Bash, it read it in the console's old code page, so the curly apostrophe in a notification's settings button never matched and the Notifications step failed on a page that was right there. Checked in the audit's tests.\n* **Facebook:** With `Tap to play` on, a video you open from a comment plays in Facebook's full screen player again. It used to sit paused there until you left Facebook and came back (Refs #242).\n* **Tooling:** Device audits read their settings snapshots in Windows PowerShell too, so the push check no longer fails every restore case where git can't find pwsh.\n* **Tooling:** The source audit reads the Morphe Patch Tracker in Windows PowerShell too. The tracker now lists two bundles whose names differ only by capital letters, and when git couldn't find pwsh the push check stopped on it.",
   "apps": [
     {
       "app_name": "Facebook",
       "package": "com.facebook.katana",
       "patches": [
         {
-          "name": "Accent color",
-          "description": "Swaps Facebook's blue on links, buttons, switches and the selected tab for a color you like better. Nothing changes until you pick one. Pick a color in Hushfacebook settings > Appearance.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Allow screenshots",
-          "description": "Lets you take screenshots and screen recordings on the pages where Facebook blocks them, so you can keep a copy of what's on screen. Starts off. Turn it on in Hushfacebook settings > Privacy.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
           "name": "AMOLED black theme",
-          "description": "Makes Facebook's dark mode black, or a dark color you pick, instead of dark gray, which can save battery on OLED screens. Turn on dark mode in Facebook first. It isn't selected by default because undoing it means patching again. Turn on Expert mode in Manager to pick it.",
+          "description": "Makes Facebook's dark mode black, or a dark color you pick, instead of dark gray, which can save battery on OLED screens. Cards and menus stay a shade lighter than the page. Turn on Black cards in Hushfacebook settings > Appearance to make them black too, and Lines between posts there for a thin gray line between posts in the feed. Light background color there gives light mode a soft color in place of white. Turn on dark mode in Facebook first. It isn't selected by default because undoing it means patching again. Turn on Expert mode in Manager to pick it.",
           "use": false,
           "options": [
             {
@@ -39,34 +21,34 @@
             }
           ],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
-          "name": "Block ad telemetry",
-          "description": "Stops Facebook watching for screenshots of ads and reporting which apps you install after seeing ads, so less of what you do feeds its ad tracking. Works as soon as you patch it in, with no switch.",
+          "name": "Accent color",
+          "description": "Swaps Facebook's blue on links, buttons, switches and the selected tab for a color you like better. Nothing changes until you pick one. Pick a color in Hushfacebook settings > Appearance.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
-          "name": "Block background ad prefetch",
-          "description": "Stops Facebook downloading ads and ad data in the background before you ever see them, which saves mobile data and battery. Works as soon as you patch it in, with no switch.",
+          "name": "Allow screenshots",
+          "description": "Lets you take screenshots and screen recordings on the pages where Facebook blocks them, so you can keep a copy of what's on screen. Starts off. Turn it on in Hushfacebook settings > Privacy.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
-          "name": "Block background-return feed refresh",
-          "description": "Keeps your place in the feed when you come back to Facebook within ten minutes, or any time with No time limit on, so you don't lose what you were reading. Starts off. Turn it on in Hushfacebook settings > News feed.",
+          "name": "Badge and logo colors",
+          "description": "Paints the count badges on the tabs and the Facebook logo at the top of Home in colors you pick. Nothing changes until you type a color. Set them in Hushfacebook settings > Appearance.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -75,7 +57,34 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Block ad telemetry",
+          "description": "Stops Facebook watching for screenshots of ads and reporting which apps you install after seeing ads, and stops several of the ways it sends your phone's advertising ID, so less of what you do feeds its ad tracking. Works as soon as you patch it in, with no switch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Block background ad prefetch",
+          "description": "Stops the jobs Facebook runs in the background to download ads, and the model it ranks them with, before you ever see them. Works as soon as you patch it in, with no switch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Block background-return feed refresh",
+          "description": "Keeps your place in the feed when you come back to Facebook within ten minutes, or any time with No time limit on, so you don't lose what you were reading. Starts off. Turn it on in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -84,7 +93,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -93,52 +102,52 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Clean up Facebook's chat list",
-          "description": "Tidies Chats inside Facebook. One switch empties the row of notes and who's active above your chats, and another removes promotional banners like the one asking you to turn on notifications. Your chats stay. Starts off. Turn on the parts you want in Hushfacebook settings > Chats.",
+          "description": "Tidies Chats inside Facebook. One switch empties the row of notes and who's active above your chats, and another removes promotional banners like the one asking you to turn on notifications. A third takes the Meta AI button off the search row and the search screen. Your chats stay. Starts off. Turn on the parts you want in Hushfacebook settings > Chats and Messenger.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Clean up Reels",
-          "description": "Hides clutter on reels, such as the Follow button, comment previews, Remix and Use template buttons and Threads cards between reels, so more of the video shows, and can play each reel once instead of over and over. Starts off. Turn on the parts you want in Hushfacebook settings > Reels and Watch.",
+          "description": "Hides clutter on reels, such as the Follow button, comment previews, Remix and Use template buttons and Threads cards between reels, so more of the video shows, and can play each reel once instead of over and over, keep its original audio instead of a Meta AI dub, drop the search suggestions under the caption, over the comments and at the top of a profile's reels, or hide the like, comment and share counts, the Like, Comment, Share, Save or speaker button, or the line naming the reel's sound. It can also open a video you tap in the feed on its own, with no reels after it, stop the \"This is taking a while\" message when a video is slow to load, and play whole reels in the feed's Reels row instead of the same second over and over. Starts off. Turn on the parts you want in Hushfacebook settings > Reels and Watch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Comment sheet options",
-          "description": "Small fixes for comments. Stop a long press on Like from opening reactions, hide the GIF and sticker buttons, show every reply without tapping View replies, and hide Related groups under group posts. Starts off. Turn on the parts you want in Hushfacebook settings > Comments.",
+          "description": "Small fixes for comments. Stop a long press on Like from opening reactions, hide the GIF and sticker buttons, show every reply without tapping View replies, load a whole reply thread as you scroll, open more replies with a tap anywhere on their row, hide the comments under feed posts or the thumbs-down on comments, hide Related groups under group posts, hide comments with shop links or your words, hide who is typing and the new comments pop-up, and hide the comment box under full-screen videos. Starts off. Turn on the parts you want in Hushfacebook settings > Comments and writing.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Default comment order",
-          "description": "Opens comments in the order you choose, Most relevant, Newest or All comments, instead of the one Facebook picks. Handy if you always want the newest first. Starts off. Turn it on and pick an order in Hushfacebook settings > Comments.",
+          "description": "Opens comments in the order you choose, Most relevant, Newest or All comments, instead of the one Facebook picks. Handy if you always want the newest first. Starts off. Turn it on and pick an order in Hushfacebook settings > Comments and writing.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Default playback quality",
-          "description": "Plays videos, reels and video stories at the quality you choose, such as Data saver or up to 720p, instead of what Facebook picks. Lower saves data, higher looks sharper. Starts off. Turn it on and pick a quality in Hushfacebook settings > Playback.",
+          "description": "Plays videos, reels and video stories at the quality you choose, such as Data saver or up to 720p, instead of what Facebook picks. Lower saves data, higher looks sharper. Starts off. Turn it on and pick a quality in Hushfacebook settings > Video and audio.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -147,7 +156,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -156,7 +165,16 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Don't save search history",
+          "description": "Stops Facebook from adding what you search for, and the pages and profiles you open from a search, to your search history, so there's nothing to clear by hand. Searches already there stay until you delete them. Starts off. Turn it on in Hushfacebook settings > Search.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -165,25 +183,34 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Double tap to skip",
+          "description": "A double tap on the left or right edge of a reel or video skips back or forward 10 seconds, or 5 on one under 30 seconds. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Download any photo",
-          "description": "Shows Save photo on every photo you open, even where the poster turned saving off, and saves the largest size so you get the best copy. On by default. Turn it off in Hushfacebook settings > Downloads.",
+          "description": "Shows Save photo on every photo you open, even where the poster turned saving off, and saves the largest size so you get the best copy. A GIF comment gets Save GIF when you long-press it. On by default. Turn it off in Hushfacebook settings > Downloads.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Download any reel",
-          "description": "Adds a Download button beside every reel and a Download row to its More menu, so you can keep reels on your phone. Videos save at the quality you set, best by default. On by default. Turn it off in Hushfacebook settings > Reels and Watch.",
+          "description": "Adds a Download button beside every reel and a Download row to its More menu, so you can keep reels on your phone. Videos save at the quality you set, best by default. The More menu also gets Copy caption, which copies the reel's whole caption. On by default. Turn either off in Hushfacebook settings > Reels and Watch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -192,7 +219,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -201,16 +228,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Following feed on Home",
-          "description": "Makes Home show the newest posts from the friends, groups and Pages you follow instead of Facebook's ranked feed, so you see what they posted rather than what Facebook picks. Starts off. Turn it on in Hushfacebook settings > Opening Facebook.",
+          "description": "Makes Home show the newest posts from the friends, groups and Pages you follow instead of Facebook's ranked feed, so you see what they posted rather than what Facebook picks. Home shows, right below it, asks Facebook for one of the Feeds tab's filters (Friends, Favorites, Groups or Pages) instead. When that filter has nothing new, Facebook can fill Home with suggested posts and reels, so pair it with Hide \"Suggested for you\" posts and Hide Reels in the feed. Starts off. Turn it on in Hushfacebook settings > Opening Facebook.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -219,16 +246,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
-          "name": "Hide affiliate product links",
-          "description": "Removes the shopping cards that affiliate links add to reels, feed posts and comments, plus Shop now cards on reels, so you see fewer sales pitches while you scroll. On by default. Turn it off in Hushfacebook settings > News feed.",
+          "name": "Frame step",
+          "description": "With a reel or video paused, a tap on its right side steps one frame forward and a tap on its left side one frame back, so you can stop on the exact moment you want. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -237,25 +264,25 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hide Menu promotions",
-          "description": "Hides the Upgrades and Also from Meta sections and the Muse card in Facebook's Menu, so the Menu has fewer ads for Meta's products. Settings, Help and your shortcuts stay. On by default. Turn it off in Hushfacebook settings > Menu.",
+          "description": "Hides the Upgrades and Also from Meta sections and the Muse card in Facebook's Menu, so the Menu has fewer ads for Meta's products. Settings, Help and your shortcuts stay. On by default. Turn it off in Hushfacebook settings > Menu. Switches there, off by default, also hide the Meta AI shortcut or the whole Help and support section and keep Settings and privacy open, and a list there hides the Menu tiles and Help and Settings rows you pick, such as Gaming or Orders and payments.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hide Meta AI comment summaries",
-          "description": "Removes Meta AI's summary of the comments from the top of the comment sheet and from under posts, so you read what people actually wrote. Starts off. Turn it on in Hushfacebook settings > Comments.",
+          "description": "Removes Meta AI's summary of the comments from the top of the comment sheet and from under posts, so you read what people actually wrote. Starts off. Turn it on in Hushfacebook settings > Comments and writing.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -264,7 +291,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -273,7 +300,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -282,43 +309,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide post prompts",
-          "description": "Removes the strip Facebook adds to some posts, like \"Are you interested in this post?\", \"Show less\" or follow suggestions, so posts look less cluttered. No gap is left. On by default. Turn it off in Hushfacebook settings > News feed. A second switch there, Hide the Follow link on posts, starts off.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide posts by words",
-          "description": "Hides feed posts with words you list, or from people, Pages or sites you list, so you skip topics you're tired of. Photo, video, link and colored background posts can go too. Starts off. Turn it on in Hushfacebook settings > News feed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide read receipts",
-          "description": "People you chat with in chats that open inside Facebook don't see that you've read their messages, so you can read now and reply later. Replying may still show you've read it. Starts off. Turn it on in Hushfacebook settings > Privacy.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide reel interest prompts",
-          "description": "Removes the \"Are you interested in this reel?\" prompt, so reels play without the interruption. On by default. Turn it off in Hushfacebook settings > Reels and Watch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -327,70 +318,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide seen posts",
-          "description": "Keeps posts you've already scrolled past out of the feed when it loads again, for 1, 3, 7 or 30 days, so you see something new. The list stays on your phone. Starts off. Turn it on in Hushfacebook settings > News feed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide sponsored Marketplace listings",
-          "description": "Removes ads and boosted listings from Marketplace's feed and search results, so you see more of what people are selling. Listings people post stay. On by default. Turn it off in Hushfacebook settings > Marketplace.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide sponsored posts",
-          "description": "Removes sponsored and promoted posts from the news feed, with no gap left behind, so you see fewer ads. It also keeps the floating ad button off an ad's comments. On by default. Turn it off in Hushfacebook settings > News feed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide sponsored profile posts",
-          "description": "Removes the ads between posts on someone's profile or a Page, so you only see what they posted. On by default. Turn it off in Hushfacebook settings > News feed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide sponsored reels",
-          "description": "Removes ads from Reels and Watch, including product banners over reels and ads in the middle of videos, so you can watch without interruptions. On by default. Turn it off in Hushfacebook settings > Reels and Watch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide sponsored search results",
-          "description": "Removes the ads from Facebook's search results, so you see the people, Pages and posts you searched for. On by default. Turn it off in Hushfacebook settings > Search.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Hide sponsored stories",
-          "description": "Removes ad cards from the story viewer, so swiping through stories shows only what people posted. On by default. Turn it off in Hushfacebook settings > Stories.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -399,7 +327,133 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide affiliate product links",
+          "description": "Removes the shopping cards that affiliate links add to reels, feed posts and comments, plus Shop now cards on reels, so you see fewer sales pitches while you scroll. On by default. Turn it off in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide carrier data banners",
+          "description": "On carriers with Facebook Flex, hides the Data mode bar with its buy mobile data button, or the purple Free mode bar, so the feed gets that space back. Both switches start off. Turn them on in Hushfacebook settings > Appearance.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide post prompts",
+          "description": "Removes the strip Facebook adds to some posts, like \"Are you interested in this post?\", \"Show less\" or follow suggestions, so posts look less cluttered. No gap is left. On by default. Turn it off in Hushfacebook settings > News feed. Three more switches there, Hide the Follow link on posts, Hide counts on posts and Hide the reaction preview on posts, start off.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide posts by words",
+          "description": "Hides feed posts with words you list, or from people, Pages or sites you list, so you skip topics you're tired of. Photo, video, link and colored background posts, or every post a Page wrote, can go too. Starts off. Turn it on in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide profile notes",
+          "description": "Hides the note bubble on profile pictures, the Drop a thought prompt on your own profile included. Starts off. Turn it on in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide read receipts",
+          "description": "People you chat with in chats that open inside Facebook don't see that you've read their messages, so you can read now and reply later. Replying may still show you've read it. Starts off. Turn it on in Hushfacebook settings > Privacy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide reel interest prompts",
+          "description": "Removes the \"Are you interested in this reel?\" prompt, so reels play without the interruption. On by default. Turn it off in Hushfacebook settings > Reels and Watch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide seen posts",
+          "description": "Keeps posts you've already scrolled past out of the feed when it loads again, for 1, 3, 7 or 30 days, so you see something new. The list stays on your phone. Starts off. Turn it on in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide sponsored Marketplace listings",
+          "description": "Removes ads and boosted listings from Marketplace's feed and search results, so you see more of what people are selling. Listings people post stay. On by default. Turn it off in Hushfacebook settings > Marketplace.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide sponsored posts",
+          "description": "Removes sponsored and promoted posts from the news feed, with no gap left behind, so you see fewer ads. It also keeps the floating ad button off an ad's comments. On by default. Turn it off in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide sponsored profile posts",
+          "description": "Removes the ads between posts on someone's profile or a Page, so you only see what they posted. On by default. Turn it off in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide sponsored reels",
+          "description": "Removes ads from Reels and Watch, including product banners over reels and ads in the middle of videos, so you can watch without interruptions. On by default. Turn it off in Hushfacebook settings > Reels and Watch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide sponsored search results",
+          "description": "Removes the ads from Facebook's search results, so you see the people, Pages and posts you searched for. On by default. Turn it off in Hushfacebook settings > Search.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Hide sponsored stories",
+          "description": "Removes ad cards from the story viewer, so swiping through stories shows only what people posted. On by default. Turn it off in Hushfacebook settings > Stories.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -408,7 +462,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -417,25 +471,25 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hide tab badges",
-          "description": "Takes the dot and count off the tabs you pick, and Facebook's count off its app icon, so the app nags you less. Notifications still arrive and still show in the Notifications tab. Starts off. Turn on the ones you want in Hushfacebook settings > Appearance.",
+          "description": "Takes the dot and count off the tabs you pick, and Facebook's count off its app icon, so the app nags you less. Notifications still arrive and still show in the Notifications tab. Starts off. Turn on the ones you want in Hushfacebook settings > Tabs and navigation.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hide tabs",
-          "description": "Takes the tabs you pick off the tab bar, such as Friends, Marketplace, Groups, Gaming or Events, so the bar only has what you use. Each page stays in the Menu. Starts off. Turn on the ones you want in Hushfacebook settings > Appearance, then restart Facebook.",
+          "description": "Takes the tabs you pick off the tab bar, such as Friends, Marketplace, Groups, Gaming or Events, so the bar only has what you use. Each page stays in the Menu. Starts off. Turn on the ones you want in Hushfacebook settings > Tabs and navigation, then restart Facebook.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -444,16 +498,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hide the Get Messenger card",
-          "description": "Hides the \"Get the Messenger app\" card at the top of Chats when Messenger is already installed. A patched Facebook may not see that Messenger is there, so it keeps showing the card. On by default. Turn it off in Hushfacebook settings > Chats.",
+          "description": "Hides the \"Get the Messenger app\" card at the top of Chats when Messenger is already installed. A patched Facebook may not see that Messenger is there, so it keeps showing the card. On by default. Turn it off in Hushfacebook settings > Chats and Messenger.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -462,7 +516,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -471,7 +525,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -480,43 +534,61 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hold a reel for 2x",
-          "description": "Hold a reel to play it at double speed, and let go to go back to normal. Handy for skimming. The reel's more button still opens Facebook's long-press menu. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
+          "description": "Hold a reel to play it at double speed, and let go to go back to normal. Handy for skimming. The reel's more button still opens Facebook's long-press menu. A second switch does the same for videos playing in the feed and in Watch. Both start off. Turn them on in Hushfacebook settings > Reels and Watch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hold back analytics uploads",
-          "description": "Stops Facebook sending its usage reports in the background and skips the learning jobs it runs on your phone, so less about how you use the app leaves it. Starts off. Turn it on in Hushfacebook settings > Privacy, then restart Facebook.",
+          "description": "Stops Facebook sending its usage reports in the background and skips the learning jobs it runs on your phone, so less about how you use the app leaves it. A second switch holds back the camera roll processing that uploads your photos and details about them for sharing suggestions. Both start off. Turn them on in Hushfacebook settings > Privacy, then restart Facebook.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Home header text",
+          "description": "Shows your own words or picture at the top of Home instead of the Facebook logo. Words take Facebook's own colors for light and dark mode. Type them in Hushfacebook settings > Appearance > Home header text, or pick a picture under Home header picture. Blank keeps Facebook's logo.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hushfacebook in the Menu",
-          "description": "Adds a Hushfacebook settings row to Facebook's Menu, at the end of Settings and privacy, so the settings are easy to find. A Saved row joins it while the Saved shortcut switch is on. Works as soon as you patch it in, with no switch.",
+          "description": "Adds a Hushfacebook settings row to Facebook's Menu, at the end of Settings and privacy, so the settings are easy to find. A Saved row joins it while the Saved shortcut switch is on, a Watch history row while the Watch history shortcut switch is, and a Free stuff row, Marketplace's free listings, while the Free stuff shortcut switch under Marketplace is. On by default. Turn it off with Settings row in Menu in Hushfacebook settings > Menu, unless it's the last way into the settings still on.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Hushfacebook settings",
-          "description": "Adds Hushfacebook settings to Facebook, where you turn features on or off, pause Hushfacebook and back up your choices. To open them, long-press the Facebook logo at the top of your feed or Facebook's app icon. Other patches need it, so keep it selected.",
+          "description": "Adds Hushfacebook settings to Facebook, where you turn features on or off, pause Hushfacebook and back up your choices. To open them, long-press the Facebook logo at the top of your feed or Facebook's app icon. Its App name option shows a name you pick under the icon, and Icon style can make the icon white on black or black on white. Other patches need it, so keep it selected.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "appName",
+              "description": "A name to show under the app icon, in App info and in recent apps instead of Facebook, up to 50 characters, so this copy is easy to tell apart. Leave it empty to keep Facebook's name. It only changes the name. Clone app is what lets a copy install next to the official Facebook."
+            },
+            {
+              "key": "iconStyle",
+              "description": "Facebook colors keeps the home screen icon as it is. White on black and Black on white draw Facebook's \"f\" in one color on a plain icon. Themed icons on Android 13 and up still work."
+            }
+          ],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -525,7 +597,16 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Keep feed videos muted",
+          "description": "Feed videos start with the sound off every time you open Facebook, and only a tap on a video's speaker or the volume up key turns it on. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -534,61 +615,97 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Keep the progress bar",
-          "description": "Keeps a reel's progress bar full size, so you can drag it without tapping first, and keeps a full-screen video's controls on screen until you tap. Starts off. Turn it on in Hushfacebook settings > Playback.",
+          "description": "Keeps every reel's progress bar full size and moving smoothly, with the time above it, so you can drag it without tapping first. Also keeps a full-screen video's controls on screen until you tap, and another switch lets a tap anywhere on the bar jump there. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Keep the reel speed",
-          "description": "A speed you pick in a reel's menu stays for the next reels until Facebook restarts, so you don't set it every time. On by default. A second switch for feed and Watch videos starts off. Both are in Hushfacebook settings > Reels and Watch.",
+          "description": "A speed you pick in a reel's menu stays for the next reels, even after Facebook restarts, so you don't set it every time. Pick normal speed to go back. On by default. A second switch for feed and Watch videos starts off. Both are in Hushfacebook settings > Reels and Watch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Longer music on photo stories",
+          "description": "A song you add to a photo for your Story plays for up to 30 seconds instead of 15. Starts off. Turn it on in Hushfacebook settings > Stories.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Marketplace only",
-          "description": "Turns Facebook into a Marketplace app for buying and selling without the feed. The tab bar keeps only Marketplace, Notifications and your profile or Menu, and Facebook opens on Marketplace. Starts off. Turn it on in Hushfacebook settings > Opening Facebook, then restart Facebook.",
+          "description": "Turns Facebook into a Marketplace app for buying and selling without the feed. The tab bar keeps only Marketplace, Notifications and your profile or Menu, and Facebook opens on Marketplace. The Events only switch does the same for Events once you pin Events in Facebook's Customize the bar. Both start off. Turn one on in Hushfacebook settings > Opening Facebook, then restart Facebook.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Material You theme",
-          "description": "Gives Facebook's dark mode the colors of your wallpaper on Android 12 and newer, so it matches your phone. Turn on dark mode in Facebook first. It isn't selected by default because undoing it means patching again. Turn on Expert mode in Manager to pick it.",
+          "description": "Gives Facebook the colors of your wallpaper on Android 12 and newer, so it matches your phone. Dark mode takes them everywhere, and light mode on its grays, blues and selected tab. It isn't selected by default because undoing it means patching again. Turn on Expert mode in Manager to pick it.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
-          "name": "Open links in external browser",
-          "description": "Opens web links in your own browser instead of Facebook's built-in one, without Facebook tracking the click. Facebook pages still open in the app. On by default. Turn it off in Hushfacebook settings > Links.",
+          "name": "Newest reels first",
+          "description": "Plays the newest posted of the reels Facebook has loaded for you first in the Reels tab, instead of Facebook's own pick. It can't fetch newer reels. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Open Messenger from the top bar",
-          "description": "Makes the Messenger icon at the top of Facebook open the Messenger app instead of Facebook's own Chats, if you'd rather chat in Messenger. Without Messenger installed, Chats opens as before. Starts off. Turn it on in Hushfacebook settings > Chats.",
+          "description": "Makes the Messenger icon at the top of Facebook open the Messenger app instead of Facebook's own Chats, if you'd rather chat in Messenger. Without Messenger installed, Chats opens as before. Starts off. Turn it on in Hushfacebook settings > Chats and Messenger. Also carries Leave calls and chats to Messenger, a separate switch that starts off and leaves calls and chat notifications to Messenger while it's installed and enabled. Restart Facebook after changing the switch or whether Messenger is installed or enabled, so call routing updates.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Open comments at full height",
+          "description": "Opens the comment sheet at the full height of the screen instead of part way up, on posts, videos, reels and stories. On reels and videos, Comment opens that sheet instead of the split view. A second switch pauses a reel while its comments are open. Both start off. Turn them on in Hushfacebook settings > Comments and writing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Open comments with a gesture",
+          "description": "Open a reel's comments with a double tap or a long press, on the sheet the Comment button opens, instead of liking or holding, and a feed post's with a long press on its photo or name line. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Open links in external browser",
+          "description": "Opens web links in your own browser instead of Facebook's built-in one, without Facebook tracking the click. Facebook pages still open in the app. On by default. Turn it off in Hushfacebook settings > Links and sharing. A second switch, on by default under Privacy, stops Facebook's browser keeping a history of the links you open in it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -597,16 +714,34 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Picture-in-picture",
-          "description": "Keeps reels and videos from the Reels and Video tabs, or full screen, playing in a small window when you leave Facebook, so you can watch while using another app. Needs Android 12 or later. Starts off. Turn it on in Hushfacebook settings > Playback.",
+          "description": "Keeps reels and videos from the Reels and Video tabs, or full screen, playing in a small window when you leave Facebook, so you can watch while using another app. Needs Android 12 or later. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Pinch to zoom",
+          "description": "Pinch a story or a photo on someone's profile to zoom in, like you can on photos in the feed. It goes back when you let go, unless you turn on Stay zoomed under it, which keeps the zoom until you tap or press Back. Starts off. Turn it on in Hushfacebook settings > Stories.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Post action buttons",
+          "description": "Adds Facebook's own Save button next to Like, Comment and Share under posts, and a Download button on posts with a video or photos that saves them the way the post's menu does. It can also take Like, Comment, Share or Send out of that row. Each has its own switch, and they all start off. Find them in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -615,43 +750,43 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Resume long videos",
-          "description": "A video longer than two minutes picks up where you left off the next time it plays, in the feed or full screen, so you don't lose your place. Reels, live videos and ads start as usual. Starts off. Turn it on in Hushfacebook settings > Playback.",
+          "description": "A video longer than two minutes picks up where you left off the next time it plays, in the feed or full screen, so you don't lose your place. Reels, live videos and ads start as usual. Remember what you watch, a second switch, keeps a list on your phone of the reels, videos and stories you watched, under Recently watched. Both start off. Turn them on in Hushfacebook settings > Video and audio.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Sanitize sharing links",
-          "description": "Takes Facebook's tracking tags off links you share or copy, so you share a clean link. A facebook.com/share/ link is made for one share, so Facebook can still trace that kind back to you, and a switch that starts off shares the post's own link in its place. On by default. Both are in Hushfacebook settings > Links.",
+          "description": "Takes Facebook's tracking tags off links you share or copy, so you share a clean link. A facebook.com/share/ link is made for one share, so Facebook can still trace that kind back to you, and a switch that starts off shares the post's own link in its place. On by default. Both are in Hushfacebook settings > Links and sharing.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Send chat photos and videos at original quality",
-          "description": "Photos and videos you send from chats that open inside Facebook go out as the originals instead of smaller copies, so they arrive sharp. Very large files are still shrunk. Starts off. Turn it on in Hushfacebook settings > Chats.",
+          "description": "Photos and videos you send from chats that open inside Facebook go out as the originals instead of smaller copies, so they arrive sharp. Very large files are still shrunk. Starts off. Turn it on in Hushfacebook settings > Chats and Messenger.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Share sheet items",
-          "description": "Lets you hide items you never use from Facebook's share sheet, such as WhatsApp, Meta AI or Copy link, so the ones you want are easier to reach. Nothing is hidden until you pick. Choose them in Hushfacebook settings > Links, where a switch that starts off also takes away the buttons that send to the people you picked as a new group chat.",
+          "description": "Lets you hide items you never use from Facebook's share sheet, such as WhatsApp, Meta AI or Copy link, so the ones you want are easier to reach. Nothing is hidden until you pick. Choose them in Hushfacebook settings > Links and sharing, where two switches that start off also take away the buttons that send to the people you picked as a new group chat and the row of people Facebook suggests sending to.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -660,7 +795,25 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Show full post text",
+          "description": "Shows all of a post's text in the feed, so you don't have to tap See more. Starts off. Turn it on in Hushfacebook settings > News feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Skip silent parts",
+          "description": "Plays videos, reels and stories past the silent stretches in their sound, so talks and how-tos get to the point sooner. Starts off. Turn it on in Hushfacebook settings > Video and audio. With Resume long videos patched too, a video's menu can keep the silent parts in that one video.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -669,7 +822,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -678,7 +831,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -687,34 +840,52 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Tab bar at the bottom",
-          "description": "Moves Facebook's tab bar to the bottom of the screen on accounts that have it at the top, where it's easier to reach. A second switch lets it slide away as you scroll. Starts off. Turn it on in Hushfacebook settings > Appearance, then restart Facebook.",
+          "description": "Moves Facebook's tab bar to the bottom of the screen on accounts that have it at the top, where it's easier to reach. `Tab bar position` can also put it at the top, as older Facebook had it, or leave it where Facebook puts it. `Tab bar while scrolling` lets it slide away as you scroll or keeps it on screen, and another switch keeps the top bar on screen. One gives tablets and unfolded phones the phone layout so the bar can move there too, and one makes the top bar and the tab bar see-through. Another hides the phone's status bar on the main screen until you swipe down from the top. Three more take the Messenger button, its unread count or the Facebook logo out of the top bar. Starts off. Pick it in Hushfacebook settings > Tabs and navigation, then restart Facebook. The see-through and status bar switches sit under Appearance.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Tag suggestions only after @",
-          "description": "Stops Facebook offering people to tag while you type ordinary words in posts and comments, so names don't pop up in your way. Typing @ still brings up the list. Starts off. Turn it on in Hushfacebook settings > Writing.",
+          "description": "Stops Facebook offering people to tag while you type ordinary words in posts and comments, so names don't pop up in your way. Typing @ still brings up the list. Starts off. Turn it on in Hushfacebook settings > Comments and writing.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Tap shows the controls",
+          "description": "A tap on a playing reel shows its controls and lets it keep playing, so you can skip or mute without stopping it. The button in the middle still pauses. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Tap to play",
-          "description": "Videos, reels, stories and music wait for your tap instead of starting by themselves, so nothing plays until you want it to. Starts off. Turn it on in Hushfacebook settings > Playback.",
+          "description": "Videos, reels, stories and music wait for your tap instead of starting by themselves, so nothing plays until you want it to. A separate switch adds a play/pause button to feed videos. The switches start off in Hushfacebook settings > Video and audio.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Turn off HDR brightness",
+          "description": "Stops HDR videos and photos from turning your screen up to full brightness, which can be harsh in the dark. They keep their resolution. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -723,7 +894,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -732,7 +903,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -741,25 +912,34 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
-          ]
-        },
-        {
-          "name": "Turn off HDR brightness",
-          "description": "Stops HDR videos and photos from turning your screen up to full brightness, which can be harsh in the dark. They keep their resolution. Starts off. Turn it on in Hushfacebook settings > Playback.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "Turn off screen transitions",
-          "description": "Shows Facebook's tabs, Menu and new screens at once, without the slide between them, so the app feels quicker. Swipes and animations inside a page stay. Starts off. Turn it on in Hushfacebook settings > Appearance.",
+          "description": "Shows Facebook's tabs, Menu, photos and new screens at once, without the slide or zoom between them, so the app feels quicker. Swipes and animations inside a page stay. Starts off. Turn it on in Hushfacebook settings > Appearance.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Unlock app icons",
+          "description": "Lets you pick the app icons Facebook keeps for Facebook Plus on its App icon page (Menu > Settings and privacy > App icon), so your home screen icon can be any of them. A second switch, Use the icon at the top of Home, puts your pick at the top of Home too. Both start off. Turn them on in Hushfacebook settings > Appearance.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
+          ]
+        },
+        {
+          "name": "Upload Stories in HD",
+          "description": "Videos you post to your Story ask Facebook for its high upload quality instead of standard, so they can come out sharper. Starts off. Turn it on in Hushfacebook settings > Stories.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "584.0.0.51.56"
           ]
         },
         {
@@ -768,7 +948,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
@@ -777,32 +957,30 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         },
         {
           "name": "View stories anonymously",
-          "description": "Keeps you off the viewer list of stories you watch, because Facebook isn't told which ones you've seen. Replying or reacting still shows you, and watched stories still look new. Starts off. Turn it on in Hushfacebook settings > Stories.",
+          "description": "Keeps you off the viewer list of stories you watch, because Facebook isn't told which ones you've seen. Replying or reacting still shows you. Stories you watch to the end show as watched on this phone only, until that person posts a new one. Starts off. Turn it on in Hushfacebook settings > Stories.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "582.0.0.50.54"
+            "584.0.0.51.56"
           ]
         }
       ]
     }
   ],
   "patches_name": "Hushfacebook",
-  "fingerprint": "23af3e1ca78abff7a4fbd6783a6bda440134de716643d3adfbea67b278a3f33a",
-  "release_notes": "This release gathers everything since v0.8.0 and brings 86 patches for Facebook 582.0.0.50.54, up from 85. The new one is `Share sheet items`, which takes the items you pick off Facebook's share sheet. Morphe Manager's default selection now holds every patch but three, and after an update the settings page tells you which switches start off now. New switches hide the share sheet's Send to group buttons, share a post's own link instead of a /share/ link, play reels once and hide the Follow link on posts. Morphe Manager 1.34.0 or newer is required.\n\nNew in this release\n\n- `Comment sheet options` has a fourth switch under Comments, `Hide related groups`. It takes the Related groups list and its Join buttons out from under a group post's comments, and the comments themselves stay. It starts off, and the diagnostic report counts each list it keeps out.\n\n- `Share sheet items` is a new patch. It lets you hide items from Facebook's share sheet, such as WhatsApp, Meta AI or Copy link. Nothing is hidden until you tap `Share sheet items to hide` under Links and tick what you don't want. The list starts with the items Facebook has offered on your phone and then common ones. The rest keep Facebook's order, and pausing Hushfacebook brings everything back. It shares one hook with the Threads switch in `Hide Meta upsells`, so both can be in the same build. The idea comes from icysymmetra's TikTok patches.\n\n- After an update, the settings page names the switches that now start off, so you can turn back on the ones you used.\n\n- Export settings now carries your Share sheet items picks, including item types this version doesn't name, and the import preview says how many it will hide.\n\n- The settings home page ends with Support Hushfacebook, which opens the Ko-fi page in your browser.\n\n- Privacy now ends with a map of where ads and tracking are blocked. Each line takes you to its switch, says it was set when you patched, or names the patch to add, and the blocks that cost something say what they cost.\n\n- `Share sheet items` has a new switch under Links, `Hide group buttons in the share sheet`, off to start. It takes away Send to group when you pick two or more people, and the share sheet's own ways to start a new group, so nothing you share turns into a group chat by accident. Send separately stays (#104).\n\n- `Sanitize sharing links` has a new switch under Links, `Share the post's own link`, off to start. Copy link and the share sheet's other link shares give the post's own facebook.com address instead of a facebook.com/share/ link made for that one share (#98).\n\n- `Clean up Reels` has a new switch under Reels, `Play reels once`, off to start. A reel stops on its last frame instead of starting over. Tap it to watch again, or swipe on. Feed videos and stories don't change.\n\n- `Hide post prompts` has a new switch under Feed, `Hide the Follow link on posts`, off to start. It takes the \"Follow\" link off the name on posts from Pages and people you don't follow, so it can't be tapped by accident. Tapping the name still opens the profile (#107).\n\nFixes\n\n- `Open on a chosen tab` set to Feeds opens the Feeds page over Home when your tab bar has no Feeds tab, on the filter `Feeds opens on` picks. Back goes to Home.\n\n- `Open links in external browser` sends out links written in capitals, like a Page post's HTTPS://SHOP.EXAMPLE. Android reads the start of a link letter for letter, so your browser didn't recognize it, and the link opened in Facebook's own browser with a \"No external browser took the link\" message. Links that an app on your phone claims, a video site's for example, now reach that app even when they're written in capitals.\n\n- `Offer to download copied links` saves reels and videos from copied share links again, the facebook.com/share/r/ and /share/v/ kind that Facebook's Copy link gives you. Facebook answered Android's own way of asking with a page instead of the video's address, so every share link said \"Couldn't find the video in that link\" and opened in Facebook.\n\nOther changes\n\n- Picking a comment order or a playback quality now turns its switch on, so the pick takes effect right away.\n\n- Morphe Manager's default selection now holds every patch but three, so you don't need Expert mode to get `Hide the Reels tab`, `Tap to play`, `Download any video` and the rest. The 32 patches that joined it start with their switches off, and a fresh patch looks like the Facebook you know until you turn things on in Hushfacebook settings. `AMOLED black theme` and `Material You theme` stay out because their colors go in when you patch and there's no switch to take them back out. `Disable Play Store updates` stays out because it raises the version number Android sees, so a later build without it can't install over yours, and it doesn't work on a root mount. Turn on Expert mode to pick those three.\n\n- If you'd picked one of those patches before and never changed its switch, the switch starts off after you update. Hushfacebook keeps no record of the build you came from, so it can't tell you meant it on. Look these over in Hushfacebook settings and turn back on the ones you want: Hide Reels in the feed, Keep feed position on return, Hide the Stories tray, Hide Stories between posts, Stop Story auto-advance, View stories anonymously, Hide prompts and promos under reels, Hide the Follow button on reels, Hide comment and reaction previews, Don't send reel watch history, Turn off double tap to like, Hold a reel for 2x, Default comment order, Tag suggestions only after @, Tap to play, Default playback quality, Picture-in-picture, Turn off HDR brightness, Use the system font, Use the phone's emoji, Turn off haptics, Turn off screen transitions, Download feed and Watch videos, Hide the Reels tab, Hold back analytics uploads, Allow screenshots, Block screenshot detection, Hide typing in chats, Hide typing in comments and Hide read receipts. A switch you'd already turned off, or a list you'd filled in, stays as you left it.\n\n- Expert mode's patch list comes in smaller groups. Interface held 42 patches, so it's split into Theme, Navigation, Playback, Reels, Stories, Comments and Chats, and no group has more than a dozen now.\n\n- Every patch description in Morphe Manager is rewritten in plain English for people patching for the first time. Each one says what changes and why you might want it, then ends the same way, with how its switch starts and where to find it, like \"Starts off. Turn it on in Hushfacebook settings > Reels and Watch.\" Patches with no switch say they work as soon as you patch them in.\n\n- The text in Hushfacebook settings is rewritten in plain English. Each row now says what it does and why you'd turn it on, and the rows that need a restart say \"Restart Facebook to see the change.\" The German, Spanish, Indonesian, Brazilian Portuguese and Turkish text is updated to match.\n\n- Messages from Hushfacebook are plainer too. Failed downloads, settings import and export, update checks, font files and link settings now say what went wrong and what to try next, without terms like \"package name\" or \"kana\". The translations are updated to match.\n\n- The Background color option on `AMOLED black theme` explains itself better. It asks for a six-digit color code like #0D1117, and the message shown for a color it can't use says the same.\n\n- The `AMOLED black theme` option is now called Background color, and when it refuses a color, the message says what to type instead.\n\n- `Allow screenshots` also clears a secure mark a page already had, from before you turned the switch on or from a path the patch doesn't reach, the next time Facebook changes anything about that page's window. Before, that page stayed black in screenshots until you opened it again. The idea comes from icysymmetra's TikTok patches.\n\n- `Restore screens on re-signed builds` says photos and posts need it too, in its description and in the warning settings show when a re-signed build doesn't have it. Leaving it out stops photos and posts from opening, not only profiles, so the old wording made it look safe to skip.\n\nRemoved\n\n- Hushfacebook now targets Facebook 582.0.0.50.54 only, the newest stable release, in its arm64-v8a and 32-bit builds. If you're still on 581.0.0.45.58, 580.0.0.51.74 or 577.0.0.50.72, update Facebook to 582 before you patch. From here on each release moves to the newest stable Facebook and drops the one before.\n\nBehind the scenes\n\n- The contributor guide maps patch sources, runtime extensions, and the patch workflow. The Facebook 581 audit traces ad delivery and tracking controls, records the signed-in stock screens, and measures foreground, background and screen-off activity. It includes network metadata, two settings screenshots and code search targets for browser history, camera-roll processing and the Facebook Plus icon screen in #109. It separates observed behavior from paths that still need a device check.\n\n- `scripts/phone-smoke.ps1` walks a patched Facebook on a phone through the feed, Watch, Reels, notifications and Marketplace, saves a full diagnostic report from Hushfacebook settings and pulls it. It fails when a hook family reports anything missing, ambiguous or thrown, when a family you name with `-ExpectInvoked` never ran, or when Facebook crashed during the walk. A crash the report kept from before the walk doesn't count. `scripts/test-phone-smoke.ps1` checks the report reading without a phone.\n\n- Settings tests now match the current patch list, switch defaults and supported-link explanation. Story privacy tests clear shared diagnostic counters before each case so an earlier test can't change their results.\n\n- The desktop CLI runs, bundle merges and the resource, register and fingerprint checks now wait for a slot of the machine's build queue when `BUILD_QUEUE_SCRIPT` names one, and run straight away when it doesn't. Before, they started beside whatever builds were running and the queue never saw them.\n\n- The patch tests that read the Facebook fixtures run as their own Gradle task, `:patches:fixtureTest`, with each fixture's path and SHA-256 as its inputs. A change to the fixtures reruns only those tests, and a fixture swapped for another of the same size and date still counts as a change. Each fixture's dex is now read and parsed once per test run rather than once per lookup. `:patches:test` still runs every test, and refuses a run where a fixture test skipped with the fixture folder set.\n\n- The pre-push gate runs Gradle twice. Everything but the fixture tests goes first, so a failing quick test or lint stops the push in minutes, and the full run with the fixture tests comes second. `scripts/release/release.ps1 -Stage preflight` runs the quick checks a release needs in about five minutes: the script contracts, that same quick patch run, the translation and release-check tests, both lints and the release facts.\n\n- `tools/release_text.py` writes a release's text. `cut` turns Unreleased into the dated section with a Facebook summary first, `bump` moves the version and the README badge, `check-translations` holds every table to the same strings and `L10nTranslations.java` to the tables, `github-notes` writes the notes with every bullet kept and checks that the app's update check reads the newest declared build from them, and `index` writes `patches-bundle.json`, the README's latest-release sentence and the bug form. Its tests run with `py -3.13 -I -m unittest discover -s tools -p \"test_*.py\"`.\n\n- A release patches each Facebook fixture once instead of twice. The pre-push gate now patches the fixtures with the release bundle from `build/release` when the patch sources or the version change, and keeps each passing run with a stamp naming the bundle, APK, patch list and CLI. `build-release-receipt.ps1 -AppliedDir` reads a kept run whose stamp matches and runs every check on it, and patches any other fixture as before.\n\n- `scripts/release/release.ps1` runs the whole release in five stages, each refusing to start until the one before it is done. `source` cuts the CHANGELOG, bumps the version, writes the patch list and checks the translations, and puts the tree back if a step fails. `preflight` adds the release text tests, the translation check and a draft of the GitHub notes to its quick checks. `bundle` builds from the pushed source commit and writes the receipt from the gate's kept runs plus `SHA256SUMS.txt`. `publish` tags, creates the release and downloads every asset back to compare it. `index` writes `patches-bundle.json`, the README and the bug form from the published release and the gate's test counts, then updates the repository description. The pre-push gate now runs the release text tests and the script contract tests when only `tools/` changes, and the phone smoke report checks when `phone-smoke.ps1` changes.\n\n- The marketing script no longer writes `assets/readme-hero.png`, which has been separate artwork since the quieter hero. The social preview it still builds says \"Safe mode built in\" in place of \"Recovery built in\", which people read as a promise about Messenger's chat backup PIN.\n\n- Every patch finds its places in Facebook 582. That build moves more text into lookup lists, reads its config flags through new helpers or straight from the config, and folds some classes into their parents or into one shared object, so the patches and their fixture checks now accept each of those forms.\n\nThe [changelog](https://github.com/SysAdminDoc/Hushfacebook/blob/main/CHANGELOG.md) has every earlier release too.\n\nHow to update\n\n1. Update Morphe Manager to 1.34.0 or newer, then refresh the Hushfacebook source.\n2. Patch Facebook `582.0.0.50.54`. On most phones that's build `475417104`, the arm64-v8a one. Phones with a 32-bit processor take build `475417036`, the armeabi-v7a one.\n3. Install over your current patched Facebook with the manager's existing signing key. Keep that key so updates keep working.\n\nThe `.mpp` download is a patch bundle, not a Facebook APK. [Installation instructions](https://github.com/SysAdminDoc/Hushfacebook#install).\n\nLook over a diagnostic report before you share it. The filter can still miss private text it doesn't recognize.\n\nWhat was checked\n\nLocal checks passed: 2331 runtime tests and 842 patch tests with no failures, plus both Android lints and the release-script checks. All 86 patches applied without forcing to both Facebook 582.0.0.50.54 builds (arm64-v8a and 32-bit), and the only manifest changes are the four permission renames that let it install beside Meta's apps. I also patched 582 with every patch on an arm64 phone. Facebook opened signed in with no crash, and a walk through the feed, Watch, Reels, notifications and Marketplace ran 53 of the 55 hook families with none missing its target. The Hushfacebook row sat at the end of Settings and privacy and opened the settings, and reels showed the Download button.\n",
-  "release_tag": "v0.9.0",
-  "release_date": "2026-10-10T06:30:12Z",
+  "fingerprint": "e8f8e36343cd664e4f365ce2f808b887242c598a89e1f3371ce9a710f9fe9398",
+  "release_notes": "This one needs Morphe Manager 2.2.0 or newer, so update Manager before you patch. Posts can get Save and Download buttons under them, and new switches take Like, Comment, Share or Send off posts and reels, hide posts from Pages or drop the dislike on comments. Feed videos can get a cast button, downloads can go to an SD card, and 32-bit phones work now. You can also pick your own badge and logo colors, sort reels by most liked and copy a reel's whole caption.\n\nNew in this release\n\n- New `Badge and logo colors` lets you pick your own color for the red count badges on the tabs and for the blue Facebook logo at the top of Home. Type a color code like #2ECC71 in `Badge color` or `Logo color` under Appearance and restart Facebook. Left blank, both keep Facebook's colors, and settings backups carry them (Refs #263).\n\n- Facebook 584.0.0.51.56 now works on 32-bit phones too. The armeabi-v7a Android 11+ bundle, build 475817404, is declared next to the arm64 build 475817393, and every patch applies to it. Contributed by toidicakhia (Refs #254).\n\n- `Hide the Create button` under Tabs and navigation takes the + button for new posts, reels and stories out of the top bar, on both versions of the bar Facebook hands out. It starts off and shows after a restart (Refs #257).\n\n- A reel's More menu has `Copy caption` now. It copies the whole caption, including the part hidden behind See more, so there's no more screenshotting a long caption to get its text. It's on by default, and `Copy reel captions` under Reels and Watch turns it off (Refs #240).\n\n- You can pick a plain home screen icon when you patch. The `Icon style` option of Hushfacebook settings in Morphe draws Facebook's \"f\" white on black or black on white, and `Facebook colors` (the default) leaves the icon alone. Themed icons on Android 13 and up still work with either one (Refs #278).\n\n- New `Show full post text` puts a long post's whole text in the feed, so there's no See more to tap. It starts off. Turn it on under News feed in Hushfacebook's settings, and the diagnostic report counts each post it kept whole (Refs #268).\n\n- Downloads can go to an SD card. Pick it in `Save on`, right above `Save to` under Downloads, and videos and photos land on the card in the same folders they'd use on the phone. The phone's storage stays the default. If the card is out of the phone, saves go to the phone's storage until you put it back, so a save never fails over a missing card (Refs #274).\n\n- Reels can pause while you read their comments. Turn on `Pause reels while comments are open` under Comments and writing, and a playing reel stops when its comments open and picks up from the same spot when you close them. A reel you start yourself under the comments keeps playing (Refs #266).\n\n- `Words to hide` and `Words that keep a post` have a test box under the list now. Paste a post's text and it says whether that post would hide or stay, and which list decided, using the list as you've typed it so far, before you tap Save. Nothing you paste gets saved, and only its first 16,384 characters are checked.\n\n- `Newest reels first` is called `Sort loaded reels` now, and a `Reels order` row right under it picks how: `Newest` (the old behavior and still the default) or `Most liked`. It still only reorders the reels Facebook has already loaded for you. A reel without the count it's sorted by keeps Facebook's spot for it. Search finds the switch by its old name too, and settings backups carry the order (Refs #134).\n\n- Feed videos can get a cast button. Facebook took its own casting out, so `Cast button on feed videos` under Video and audio puts a button in the video's top right corner that hands it to a casting app you already have, like Web Video Caster, and that app sends it to your TV. It starts off and needs a build with the video download patch. If the video hasn't loaded a file yet, it says so and asks you to play it for a moment first (Refs #182).\n\n- Posts can have Save and Download buttons under them now, next to Like, Comment and Share. `Save button under posts` adds Facebook's own Save button, filled bookmark and all. `Download button under posts` adds a Download button to posts with a video or photos, and it saves them the same way the post's menu does (an album saves every photo). Both are under News feed and start off. Download needs a build with the video or photo download patch, and posts with nothing to save don't get the button. Right below them, `Hide Like under posts`, `Hide Comment under posts`, `Hide Share under posts` and `Hide Send under posts` each take one button out of that row in the feed. Reels get the same under Reels and Watch: `Hide Like on reels`, `Hide Comment on reels` and `Hide Share on reels` take that button off the side of a reel, next to the Save and WhatsApp switches that were already there (Refs #151, Refs #265).\n\n- `Hide dislike on comments` under Comments and writing takes the thumbs-down off comments, the one Facebook puts next to Like on reels and videos. Like and Reply stay. It starts off (Refs #241).\n\n- `Hide posts from Pages` under News feed takes posts written by Pages out of the feed, the Pages you follow included. Friends' and group posts stay, and so does a friend's share of a Page's post. It starts off (Refs #262).\n\nFixes\n\n- With `See-through bars` on, a blurred strip no longer hangs above the bottom tab bar while it slides away or comes back. The blur used to spread past the bar's edge whenever the bar was partly faded (Refs #250, #124).\n\n- With `Picture-in-picture` off, reels no longer shrink into a floating window when you leave Facebook. Some accounts get Facebook's own version of that window, switched on from Facebook's side or from its Media settings, and it used to slip past the switch (Refs #252, #256).\n\n- With `Open feed videos on their own` on, a regular video post in your feed (one that isn't a reel) starts as fast as it does with the switch off. That now includes video posts you open from inside a group. Their full screen viewer used to sit on a blank loading screen first, for up to a second on the home feed and two seconds or more in a group. Reels you open from the feed still play alone with nothing after them (Refs #237).\n\n- With `Tap to play` on, a video you open from a comment plays in Facebook's full screen player again. It used to sit paused there until you left Facebook and came back (Refs #242).\n\nOther changes\n\n- You need Morphe Manager 2.2.0 or newer now. The patches are built on Morphe patcher 2.0.1, which uses less memory while patching, and older Managers refuse a bundle built on it, so update Manager first. Desktop patching needs morphe-desktop 1.19.1 or newer.\n\n- Hush titles are drawn in Facebook's blues now, shifting slowly with a light sheen moving across. That covers the settings bar and search, Hush dialogs, the screen shown when settings can't open, and the lock cover. Every color stays readable on its background in every theme, and the titles keep moving even with Android's animations off.\n\n- Long sections are easier to scan. News feed, Reels and Watch, Video and audio, Appearance and Pause, backup and diagnostics group their rows under small headings like `Content filters`, `Video quality` and `Troubleshooting`, still right on the main page. Where the tab bar sits, what it does while you scroll, which tabs hide and their dots all moved to a new Tabs and navigation section. `Tab bar position` and `Tab bar while scrolling` are each one pick from three now, with Facebook's own behavior first, so the two old switches can't fight each other.\n\n- A few names got clearer. Playback is Video and audio, Links is Links and sharing, Chats is Chats and Messenger, and Set when you patched is Built-in changes. Writing joined Comments, and the quality row reads `Default quality`. Search still finds everything by its old name. `Save crashes to Downloads` moved from Privacy to Troubleshooting, right above Pause, and Support keeps help and restart apart from supporting the project.\n\n- `Hide posts with words you choose` now reads a shared link's headline and the line under it too, so a news post whose only mention of a word is in its link preview hides. That includes the newer cards Facebook draws from its own layout, where the headline isn't a plain field. A keep word on the preview still keeps the post (Refs #255).\n\n- The `Only from a reel's More menu` description says which reels get the Picture-in-picture row. Upright reels do, wide ones never did, and the old wording made a missing row look like a bug (Refs #252).\n\n- Patching with `Material You theme` on is faster. Its scans now skip the parts of Facebook they can't change, and the patched app comes out the same as before (Refs #236).\n\n- The README now explains how to go back to an earlier release that lists your Facebook version. You add its bundle as a local source in Manager, patch with the same key and install over your copy. Sign-in and settings stay, and the README lists what `Export settings` leaves out. The steps follow Manager 2.2's own screens and cover what to do when Manager reports a Package conflict instead of installing.\n\n- `Accent color` works with the Material You theme now. It used to sit greyed out whenever Material You was patched in. Now the color you pick replaces your wallpaper's accent and the wallpaper's greys stay, while the first choice, `Wallpaper accent`, keeps the phone's own. It's picked in Hushfacebook's settings under Appearance with no repatch, and Facebook picks it up after a restart (Refs #272).\n\nBehind the scenes\n\n- A device walk no longer fails a page because something an earlier step left open is sitting on top of it. On the S22 the long press on a reel left a comment sheet over the next page, and the Notifications step failed on two walks in a row. When a page can't be confirmed, the walk now presses Back once and opens the link again. Checked in the audit's tests.\n\n- The device walk reads the phone's screen text as UTF-8. Started from Git Bash, it read it in the console's old code page, so the curly apostrophe in a notification's settings button never matched and the Notifications step failed on a page that was right there. Checked in the audit's tests.\n\n- Device audits read their settings snapshots in Windows PowerShell too, so the push check no longer fails every restore case where git can't find pwsh.\n\n- The source audit reads the Morphe Patch Tracker in Windows PowerShell too. The tracker now lists two bundles whose names differ only by capital letters, and when git couldn't find pwsh the push check stopped on it.\n\nThe [changelog](https://github.com/SysAdminDoc/Hushfacebook/blob/main/CHANGELOG.md) has every earlier release too.\n\nHow to update\n\n1. Update Morphe Manager to 2.2.0 or newer, then refresh the Hushfacebook source.\n2. Patch Facebook `584.0.0.51.56`. On most phones that's build `475817393`, the arm64-v8a one. Phones with a 32-bit processor take build `475817404`, the armeabi-v7a one.\n3. Install over your current patched Facebook with the manager's existing signing key. Keep that key so updates keep working.\n\nThe `.mpp` download is a patch bundle, not a Facebook APK. [Installation instructions](https://github.com/SysAdminDoc/Hushfacebook#install).\n\nLook over a diagnostic report before you share it. The filter can still miss private text it doesn't recognize.\n\nWhat was checked\n\nLocal checks passed: 3928 tests with no failures, plus both Android lints and the release-script checks. All 105 patches applied without forcing to Facebook 584.0.0.51.56, both the 64-bit and the 32-bit build, and a second build of the same commit matched this bundle entry for entry (820 entries). I patched Facebook with this exact bundle and walked the whole app with every switch on, on an emulator signed in to a full account. 79 of 106 hook families ran there, `Hide the Create button`, `Tap to play` and `Don't save search history` among them, all 23 settings pages opened in dark and in light, and Facebook didn't crash once. Android's verifier raised nothing on the patched build, the same as on Meta's own. The walk doesn't reach downloads, chats or the story viewer, so those are covered by the patch tests alone this time, and the 32-bit build was checked by its patch tests rather than on a device.\n",
+  "release_tag": "v0.19.0",
+  "release_date": "2026-10-28T04:37:09Z",
   "isPreRelease": false,
-  "stars": 390,
+  "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/54586742?v=4",
-  "repoDescription": "Hushfacebook Morphe patches for Facebook. Hide ads, suggested posts, save videos and photos, tune playback and Reels, and use a focused Marketplace mode, and much more.",
+  "repoDescription": "Hushfacebook v0.1.2: 13 patches for Facebook 580.0.0.51.74 with Morphe. Quiet the feed, cut tracking, save media, and keep recovery controls close.",
   "isArchived": false,
-  "bundleImageUrl": "https://github.com/SysAdminDoc/HushFacebook/raw/HEAD/patches-bundle.png",
-  "isFork": false,
-  "forkParent": ""
+  "bundleImageUrl": ""
 }

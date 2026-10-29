@@ -2,9 +2,9 @@
   "bundle": "xperia-1v-camera",
   "channel": "stable",
   "repo_url": "https://github.com/alalloush/xperia-1v-camera-patches",
-  "created_at": "2026-09-14T17:08:33",
-  "version": "v1.3.1",
-  "description": "## [1.3.1](https://github.com/alalloush/xperia-1v-camera-patches/compare/v1.3.0...v1.3.1) (2026-09-14)\n\n### 🐛 Bug Fixes\n\n* Mark the streaming patches [WIP] and off by default; document them ([cd96718](https://github.com/alalloush/xperia-1v-camera-patches/commit/cd96718f7ecb013867d6839e1162494ef8429c5a))\n",
+  "created_at": "2026-09-14T17:07:47",
+  "version": "1.3.1",
+  "description": "## [1.3.1](https://github.com/alalloush/xperia-1v-camera-patches/compare/v1.3.0...v1.3.1) (2026-09-14)\n\n### 🐛 Bug Fixes\n\n* Mark the streaming patches [WIP] and off by default; document them ([cd96718](https://github.com/alalloush/xperia-1v-camera-patches/commit/cd96718f7ecb013867d6839e1162494ef8429c5a))",
   "apps": [
     {
       "app_name": "Photography Pro",
@@ -25,6 +25,36 @@
       "app_name": "Sony Camera",
       "package": "jp.co.sony.mc.cameraapp",
       "patches": [
+        {
+          "name": "Camera common visibility",
+          "description": "Lets the camera app see and use com.sonymobile.cameracommon (camera status provider, gyro calibration) when both are sideloaded: adds the <queries> entry and declares the CAMERA_STATUS_PROVIDER and CAMERA_ADDON permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.2.A.0.8",
+            "1.0.2.A.0.6"
+          ]
+        },
+        {
+          "name": "Storage fallback",
+          "description": "Fixes \"Memory unavailable\" on ROMs that cannot create Android/data/<pkg>/files (LineageOS on the Xperia 1 V): the storage probe falls back to the app's internal storage. Photos still go to DCIM through MediaStore.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.2.A.0.8",
+            "1.0.2.A.0.6"
+          ]
+        },
+        {
+          "name": "Xperia 1 V camera HAL compatibility",
+          "description": "Makes the Xperia 1 VI camera app work on the Xperia 1 V camera HAL: truncates objectSelectTriggerArea to the 4 ints the 1 V HAL defines and sends conditionDetectMode alongside sceneDetectMode, which the 1 V HAL validates together.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.0.2.A.0.8",
+            "1.0.2.A.0.6"
+          ]
+        },
         {
           "name": "[WIP] Raw H.264 stream",
           "description": "Low-latency transport for Live streaming: the encoded H.264 is sent to the PC as a plain TCP stream instead of RTMP (~0.2 s glass-to-glass with Standard stabilization). Receive with gst-launch-1.0 tcpserversrc port=6970 ! h264parse ! avdec_h264 ! ... Video only.",
@@ -63,36 +93,6 @@
             "1.0.2.A.0.8",
             "1.0.2.A.0.6"
           ]
-        },
-        {
-          "name": "Camera common visibility",
-          "description": "Lets the camera app see and use com.sonymobile.cameracommon (camera status provider, gyro calibration) when both are sideloaded: adds the <queries> entry and declares the CAMERA_STATUS_PROVIDER and CAMERA_ADDON permissions.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.2.A.0.8",
-            "1.0.2.A.0.6"
-          ]
-        },
-        {
-          "name": "Storage fallback",
-          "description": "Fixes \"Memory unavailable\" on ROMs that cannot create Android/data/<pkg>/files (LineageOS on the Xperia 1 V): the storage probe falls back to the app's internal storage. Photos still go to DCIM through MediaStore.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.2.A.0.8",
-            "1.0.2.A.0.6"
-          ]
-        },
-        {
-          "name": "Xperia 1 V camera HAL compatibility",
-          "description": "Makes the Xperia 1 VI camera app work on the Xperia 1 V camera HAL: truncates objectSelectTriggerArea to the 4 ints the 1 V HAL defines and sends conditionDetectMode alongside sceneDetectMode, which the 1 V HAL validates together.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.2.A.0.8",
-            "1.0.2.A.0.6"
-          ]
         }
       ]
     }
@@ -107,7 +107,7 @@
   "avatarUrl": "https://avatars.githubusercontent.com/u/54959118?v=4",
   "repoDescription": "Morphe patches: Sony Xperia 1 VI camera app on the Xperia 1 V",
   "isArchived": false,
-  "bundleImageUrl": "",
   "isFork": false,
-  "forkParent": ""
+  "forkParent": "",
+  "bundleImageUrl": ""
 }
