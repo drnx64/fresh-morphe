@@ -76,7 +76,6 @@ fresh-morphe/
     |-- diff_engine.py            # Step 6: compare old vs new fingerprints
     |-- merge_daily_buffer.py     # Step 7-8: buffer, finalize day, update data files
     |-- generate_site.py          # Step 9: sync static files to docs root
-    |-- inspect_data.py           # Dev utility to inspect bundles.json
 ```
 
 ---
@@ -548,12 +547,6 @@ Then open `http://localhost:8080` (required for Service Worker, which does not w
 | `GITHUB_TOKEN` | Yes | GitHub API auth for fetching tree |
 | `TG_TOKEN` | No (optional) | Telegram bot token for notifications |
 | `TG_CHAT` | No (optional) | Telegram chat ID for notifications |
-
-### Inspecting Data
-
-```bash
-python scripts/inspect_data.py
-```
 
 ### Manual Finalization
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.jpg" alt="Fresh Morphe" width="100%">
+  <img src="public/fresh-logo.webp" alt="Fresh Morphe" width="128" height="128">
 </p>
 
 <h1 align="center">Fresh Morphe</h1>
