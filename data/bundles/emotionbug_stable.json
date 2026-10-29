@@ -2,9 +2,9 @@
   "bundle": "emotionbug",
   "channel": "stable",
   "repo_url": "https://github.com/emotionbug/EBPatcher-patches",
-  "created_at": "2026-10-28T05:20:02Z",
-  "version": "0.5.5",
-  "description": "EBPatcher patches for Morphe: nine Adot patches and 49 editable YouTube Music patches based on Morphe v1.48.0. Existing Whisper turbo and Gemma E4B models use CPU while interactive and prefer GPU otherwise. Screen wake reschedules GPU work on CPU while preserving completed transcription chunks; no idle-only restriction or model redownload. Native API speaker publication protection, five terminal histories and silent progress remain. Device responsiveness is unverified; CPU still uses battery and memory. Requires Morphe 2.1.0+ (patcher 2.0.0). Independent EB branding; see release notes and notices.",
+  "created_at": "2026-10-29T02:51:56Z",
+  "version": "0.5.6",
+  "description": "EBPatcher patches for Morphe: nine ACall 14.4.0 (14409) patches and 49 editable YouTube Music patches based on Morphe v1.48.0. Recording, native call-history summary persistence, Compose settings entry, banner and privacy hooks match the original APK. Existing Whisper turbo and Gemma E4B models and interactive CPU/noninteractive GPU policy are unchanged. Requires Morphe 2.1.0+ (patcher 2.0.0). Device calls and server acceptance are unverified. Independent EB branding; see release notes and notices.",
   "apps": [
     {
       "app_name": "YouTube Music",
@@ -677,98 +677,105 @@
       "package": "com.skt.prod.dialer",
       "patches": [
         {
-          "name": "에이닷 Galaxy device profile",
+          "name": "ACall Galaxy device profile",
           "description": "Report the scoped Galaxy metadata profile without changing OS, IDs, fingerprint, hardware, product or device.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 disable USB debugging detection",
+          "name": "ACall disable USB debugging detection",
           "description": "Disable local USB debugging detection without changing device settings.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 disable debugger detection",
+          "name": "ACall disable debugger detection",
           "description": "Disable only the guarded Java and native debugger detectors; retain authentication and certificate verification.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 embedded Shizuku recording",
+          "name": "ACall embedded Shizuku recording",
           "description": "Use the original recording controls with an authorized Shizuku recorder; retain failure callbacks and show failure reasons.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 local Gemma summaries",
+          "name": "ACall local Gemma summaries",
           "description": "Use Korean Whisper turbo and Gemma after exact TICKET_ALL_USED or in Always mode. Persist the selected API/local result in the original call-history database, with silent processing notifications and five local histories. Download or update models in settings; preserve the API original.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 manufacturer compatibility",
+          "name": "ACall manufacturer compatibility",
           "description": "Retain capability, account and permission checks while removing the manufacturer restriction.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 original AppProtect hashes",
+          "name": "ACall original AppProtect hashes",
           "description": "Bind an explicit original APK/APKM to this input and preserve original APK and central-directory hashes without bypassing verification.",
           "use": false,
           "options": [
             {
               "key": "originalApk",
-              "description": "Exact original, signed 에이닷 14.3.0 (14309) APK or APKM. Select a local filesystem path, not a rebuilt APK."
+              "description": "Exact original, signed ACall 14.4.0 (14409) APK or APKM. Select a local filesystem path, not a rebuilt APK."
             }
           ],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 remove banner ads",
-          "description": "Remove commercial Google, Kakao and ASUM banner requests and their reserved space; retain caller information and safety notices.",
+          "name": "ACall remove banner ads",
+          "description": "Remove commercial Google and Kakao banner requests and their reserved space; retain caller information and safety notices.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         },
         {
-          "name": "에이닷 suppress nonessential analytics",
+          "name": "ACall suppress nonessential analytics",
           "description": "Deactivate Firebase Analytics and keep AppsFlyer stopped-tracking paths active; preserve Messaging, Crashlytics, authentication and phone services.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "14.3.0"
+            "14.4.0"
           ]
         }
       ]
     }
   ],
   "patches_name": "EBPatcher patches",
-  "fingerprint": "0c1e0eb17fa3518bcb6cb6acfdce6f3d87111968977c8c31479dc5d48ccd3d8e",
+  "fingerprint": "b003a9fbf3466a53b433516c9cfb3cff057659694947facc90722682ecc0cffe",
   "release_notes": "## ACall 14.4.0 (14409)\n\n- Ports all nine ACall patches to the current original APK, including recording, local summaries, manufacturer compatibility, original AppProtect hashes, scoped debugger/USB detection changes, device metadata, banner removal, and optional analytics suppression.\n- Updates recording, Room database, cloud upload, notification, and coroutine boundaries. Preserves original API results and speaker-publication safeguards.\n- Adds the extension settings entry inside the original Compose settings list, using the existing row resources and new-item badge rather than a screen overlay.\n- Keeps the existing Whisper and Gemma models and execution policy: CPU while interactive, GPU preferred otherwise. No model redownload is required by this update.\n- Includes 49 editable YouTube Music patches based on Morphe stable v1.48.0.\n- Uses ACall terminology in English public documentation, patch metadata, and extension settings.\n\n### Install\n\nRefresh the EB source in Morphe Manager 2.1.0 or later, then patch the untouched **ACall 14.4.0 (14409)** input. Refreshing the source does not update an installed APK. Select optional patches explicitly.\n\nThe optional original AppProtect hash patch requires a local filesystem path to the exact untouched, signed original APK/APKM. The base APK must contain both arm64-v8a and armeabi-v7a native libraries. Vendor APKs, patched APKs, model weights, recordings, and private keys are not distributed.\n\n### Validation and limitations\n\n- 264 tests passed with no failures or skips: runtime 128, summary engine 36, patches 100.\n- A separate Morphe 2.0.0 consumer loaded the release MPP's 58 exports, applied all nine ACall patches to the original APK, and rebuilt an APK.\n- Checks cover original-code preservation, recording/summary/database/upload boundaries, APKM original binding, settings resources, and host-side Android widget interaction.\n- **Real device calls, original Compose rendering/recomposition, server acceptance, YouTube Music APK execution, and device model performance remain unverified for this release.**\n\n### Assets\n\nUse `patches-0.5.6.mpp`. Its SHA-256 is published in `patches-0.5.6.mpp.sha256`.\n\nThis is an independent EB derivative distribution, not an official Morphe release. Preserved licenses and third-party notices apply.\n",
   "release_tag": "v0.5.6",
   "release_date": "2026-10-29T02:51:56Z",
-  "isPreRelease": false
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/58318746?v=4&s=128",
+  "repoDescription": "ACall and YouTube Music patches for Morphe. Independent EB distribution.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

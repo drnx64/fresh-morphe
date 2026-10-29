@@ -45,5 +45,12 @@
   "release_notes": "게시글 본문을 같은 HTML 문자열로 두 번 만들던 중복 작업을 한 번으로 줄이고, 필요하지 않은 이미지 펼치기 버튼의 문자열 생성을 생략했습니다.\n\n본문 표시 최적화를 켜면 응답 전 빈 본문 처리를 생략하고, 실제 HTML 준비를 원래 Compose remember 그룹에 묶인 작업자 한 개에서 수행합니다. 화면을 나가면 대기 작업을 취소·제거하고, 작업자는 10초 유휴 후 종료합니다. 첫 본문 뷰 생성은 원래 resumed-state에 맞춥니다. 이미 표시한 본문은 퇴장 애니메이션 중에도 유지합니다. 설정 → Morphe 설정에서 끄면 다음 글부터 동기 준비와 원래 뷰 생성 시점으로 돌아갑니다.\n\n기존 앱 광고 제어, 분석·백그라운드 작업 축소, 미디어 저장 스트리밍과 원래 방향의 스프링 이동은 유지합니다. 이용자 광고는 유지합니다. 대상은 아카라이브 플러스 0.9.32768입니다.\n\n검증: 테마·이미지 접기 상태를 포함한 고정 입력 20개에서 순정 처리와 출력 길이·해시가 일치했습니다. 세 기본 패치 적용·빌드·서명이 성공했고, Android 15 / 120Hz 에뮬레이터에서 두 글의 본문·댓글, 이미지 확대, 앱 복귀와 옵션 저장을 확인했습니다. 진단 코드와 테스트 패치는 배포 번들에서 제거했습니다.\n\nHTML formatter CPU 시간 합계는 짧은 반복 3회에서 1.34–1.70ms에서 0.85–1.11ms로 줄었습니다. 실제 본문 하나의 처리 시간은 일관되게 감소하지 않았고, 프레임 지연도 남습니다. 이 구간에 앱의 나머지 작업은 포함되지 않았습니다. 휴대폰 부드러움과 배터리 절감률은 검증하지 않았습니다. 자세한 범위와 한계는 docs/article-rendering.md를 참고하세요.\n\n이후 앱과 본문 renderer의 모든 스레드를 합산해 각 버전을 두 번씩 비교했습니다. 120Hz / 4코어 에뮬레이터에서 같은 글을 24초 동안 6회씩 왕복한 평균 CPU 사용률은 순정 10.37%, v0.3.6 8.76%, v0.3.7 8.82%였습니다(4코어 전체 용량을 100%로 계산). 순정 대비 약 15% 낮았지만, 직전 v0.3.6 대비 추가 CPU 감소는 입증하지 못했습니다. 정지한 글과 목록에서도 뚜렷한 감소는 없었습니다. 이는 휴대폰이나 배터리 절감률 측정이 아닙니다. 전체 패치 효과와 이번 추가 변경의 효과를 구분한 상세 결과는 docs/cpu-comparison.md를 참고하세요.\n\nMPP SHA-256: `C5D8CC1524D67DB7C8761A8199D4FEBD884783F0859443E3EE7C60DAFF0E0CFE`\n\n원본 앱 APK와 개인 서명키는 저장소/릴리스에 포함하지 않습니다. Morphe로 본인이 보유한 APK를 패치하세요.\n",
   "release_tag": "v0.3.7",
   "release_date": "2026-10-09T04:27:32Z",
-  "isPreRelease": false
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/235821756?v=4&s=128",
+  "repoDescription": "Experimental Morphe patches for Arca Live app ads, tracker reduction, and streaming image downloads",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }
