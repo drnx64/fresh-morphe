@@ -164,6 +164,13 @@ def test_discovery_payload_without_found_repos():
     assert embed["color"] == 0xE0A84B
 
 
+def test_discovery_payload_condenses_baseline_scan():
+    embed = build_discovery_payload(discovery_summary(baseline=True))["embeds"][0]
+    assert embed["title"] == "Baseline scan — 1 repos indexed"
+    assert "First scan — 1 repos catalogued in scanned_repos.txt." in embed["description"]
+    assert "**X Patches**" not in embed["description"]
+
+
 def test_discovery_payload_caps_long_lists():
     found = [
         {

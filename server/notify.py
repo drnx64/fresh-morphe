@@ -208,6 +208,12 @@ def build_finished_payload(summary, error=None):
 
 def _found_lines(summary):
     found = summary.get("found") or []
+    if summary.get("baseline"):
+        return (
+            f"First scan — {len(found)} repos catalogued in {SCANNED_CACHE_LABEL}."
+            if found
+            else "First scan — no new repositories found."
+        )
     if not found:
         return "No new repositories found."
     lines = []
@@ -257,9 +263,13 @@ def build_discovery_payload(summary, error=None):
     if error is not None:
         errors.append(f"discovery: {error}")
     found = summary.get("found") or []
+    baseline = bool(summary.get("baseline"))
     if error is not None:
         title = "Discovery failed"
         color = COLOR_ERROR
+    elif baseline and found:
+        title = f"Baseline scan — {len(found)} repos indexed"
+        color = COLOR_OK
     elif found:
         title = f"Found {len(found)} bundle{'s' if len(found) != 1 else ''}"
         color = COLOR_OK

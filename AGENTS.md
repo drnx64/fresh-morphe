@@ -19,7 +19,7 @@
 | Test Discord | `python -m server.notify --test` | Posts and edits one test message using `DISCORD_WEBHOOK_URL`. |
 | Worker loop | `sh deploy/termux/worker-loop.sh` | Phone hourly loop; lock at `.worker.lock`, logs to `logs/worker.log`. |
 | Discovery loop | `sh deploy/termux/discovery-loop.sh` | Phone discovery loop every 6h (`DISCOVERY_INTERVAL_SECONDS`); lock at `.discovery.lock`, logs to `logs/discovery.log`. |
-| Phone watchdog | `sh deploy/termux/watchdog.sh` | Cron every 10 min; revives a dead API, ngrok, or worker loop. Silent when healthy, logs to `logs/watchdog.log`. |
+| Phone watchdog | `sh deploy/termux/watchdog.sh` | Cron every 2 min; revives a dead API, ngrok, worker loop, or discovery loop. Silent when healthy, logs to `logs/watchdog.log`. |
 | Import legacy data | `python -m server.import_legacy --reset` | Rebuild `data/fresh.db` from `data/` (falls back to `data/morphe.db` until migrated). |
 | Export static API | `python -m server.static_export` | Writes `data/exports/v1/` for GitHub Pages fallback. |
 
