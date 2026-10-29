@@ -13,11 +13,17 @@ if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 
+@pytest.fixture(autouse=True)
+def _no_outbound_notifications(monkeypatch):
+    """Keep tests off Discord/Telegram even when a local .env has real tokens."""
+    for key in ("TG_TOKEN", "TG_CHAT", "DISCORD_WEBHOOK_URL"):
+        monkeypatch.delenv(key, raising=False)
+
+
 @pytest.fixture(scope="session")
 def source_index():
     with open(os.path.join(DATA_DIR, "bundles", "_index.json"), encoding="utf-8") as fh:
         return json.load(fh)
-
 
 @pytest.fixture(scope="session")
 def canonical_bundles(source_index):
