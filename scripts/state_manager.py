@@ -55,9 +55,10 @@ def save_json(filepath, data):
     try:
         with open(temp_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        if os.path.exists(filepath):
-            os.remove(filepath)
-        os.rename(temp_path, filepath)
+        # os.replace is atomic on POSIX and Windows. Removing first would leave a
+        # window where a killed process (Termux/Android OOM, CI timeout) leaves no
+        # state file at all.
+        os.replace(temp_path, filepath)
         return True
     except Exception as e:
         print(f"Error saving to {filepath}: {e}")

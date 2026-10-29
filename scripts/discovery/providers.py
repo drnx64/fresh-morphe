@@ -2,6 +2,7 @@
 
 import os
 import re
+import time
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -30,6 +31,15 @@ GITHUB_SEARCH_QUERIES = (
     "topic:morphe",
     '"patches-bundle.json" morphe',
 )
+
+# GitHub search allows 30 requests/minute authenticated and returns at most 1000
+# results per query, so 10 pages of 100 is the hard ceiling.
+GITHUB_SEARCH_PAGES_ENV = "DISCOVERY_SEARCH_PAGES"
+GITHUB_SEARCH_PAGES_DEFAULT = 3
+GITHUB_SEARCH_PAGES_MAX = 10
+GITHUB_SEARCH_DELAY_ENV = "DISCOVERY_SEARCH_DELAY"
+GITHUB_SEARCH_DELAY_DEFAULT = 2.1
+
 
 FAST_PROVIDERS = (
     ("official", "official_bundles"),
@@ -199,38 +209,74 @@ def ignored_repo_keys():
     return keys
 
 
-def github_search(queries=GITHUB_SEARCH_QUERIES, per_page=100):
+def search_page_limit():
+    """How many result pages to read per query (env-tunable, hard-capped)."""
+    try:
+        value = int(os.environ.get(GITHUB_SEARCH_PAGES_ENV, GITHUB_SEARCH_PAGES_DEFAULT))
+    except (TypeError, ValueError):
+        value = GITHUB_SEARCH_PAGES_DEFAULT
+    return max(1, min(GITHUB_SEARCH_PAGES_MAX, value))
+
+
+def _search_delay():
+    try:
+        value = float(os.environ.get(GITHUB_SEARCH_DELAY_ENV, GITHUB_SEARCH_DELAY_DEFAULT))
+    except (TypeError, ValueError):
+        value = GITHUB_SEARCH_DELAY_DEFAULT
+    return max(0.0, value)
+
+
+def github_search(queries=GITHUB_SEARCH_QUERIES, per_page=100, pages=None, delay=None):
     if not os.environ.get("GITHUB_TOKEN"):
         raise ProviderUnavailable("GITHUB_TOKEN is not set")
 
+    pages = search_page_limit() if pages is None else max(
+        1, min(GITHUB_SEARCH_PAGES_MAX, int(pages))
+    )
+    delay = _search_delay() if delay is None else max(0.0, float(delay))
+
     candidates = []
+    seen_keys = set()
+    first_request = True
     for query in queries:
         encoded = urllib.parse.quote(query, safe="")
-        url = (
-            "https://api.github.com/search/repositories"
-            f"?q={encoded}&sort=updated&order=desc&per_page={per_page}"
-        )
-        payload = fetch_json(url)
-        for item in payload.get("items", []):
-            if not isinstance(item, dict):
-                continue
-            if item.get("archived") or item.get("fork"):
-                continue
-            platform, repo = parse_repo_url(item.get("html_url", ""))
-            if not platform or not repo:
-                continue
-            candidate = _candidate(
-                platform,
-                repo,
-                "github-search",
-                default_branch=item.get("default_branch", ""),
-                description=item.get("description", ""),
-                topics=item.get("topics", []),
-                pushed_at=item.get("pushed_at", ""),
-                stars=item.get("stargazers_count", 0),
+        for page in range(1, pages + 1):
+            if not first_request and delay:
+                # 30 searches/minute authenticated — pace every request after the first.
+                time.sleep(delay)
+            first_request = False
+            url = (
+                "https://api.github.com/search/repositories"
+                f"?q={encoded}&sort=updated&order=desc&per_page={per_page}&page={page}"
             )
-            if candidate:
-                candidates.append(candidate)
+            payload = fetch_json(url)
+            items = payload.get("items") or []
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                if item.get("archived") or item.get("fork"):
+                    continue
+                platform, repo = parse_repo_url(item.get("html_url", ""))
+                if not platform or not repo:
+                    continue
+                key = repo_key(platform, repo)
+                if key in seen_keys:
+                    continue
+                seen_keys.add(key)
+                candidate = _candidate(
+                    platform,
+                    repo,
+                    "github-search",
+                    default_branch=item.get("default_branch", ""),
+                    description=item.get("description", ""),
+                    topics=item.get("topics", []),
+                    pushed_at=item.get("pushed_at", ""),
+                    stars=item.get("stargazers_count", 0),
+                )
+                if candidate:
+                    candidates.append(candidate)
+            if len(items) < per_page:
+                break
     return candidates
 
 

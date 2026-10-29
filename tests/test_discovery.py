@@ -5,10 +5,12 @@ import os
 import sys
 import urllib.error
 
+import pytest
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
 
 import state_manager
-from discovery import runner, state, verify
+from discovery import providers, runner, state, verify
 
 
 BUNDLE = {
@@ -207,3 +209,168 @@ def test_runner_keeps_verified_repo_on_transient(monkeypatch, tmp_path):
     entry = saved["repos"]["github:acme/patches"]
     assert entry["status"] == "verified"
     assert entry["last_error"] == "HTTP 403"
+
+
+def _search_item(index):
+    return {
+        "html_url": f"https://github.com/acme/repo{index}",
+        "default_branch": "main",
+        "archived": False,
+        "fork": False,
+        "description": f"repo {index}",
+        "topics": ["morphe"],
+        "pushed_at": "2026-10-01T00:00:00Z",
+        "stargazers_count": 1,
+    }
+
+
+def test_github_search_paginates_until_short_page(monkeypatch):
+    monkeypatch.setenv("GITHUB_TOKEN", "test-token")
+    calls = []
+
+    def fake(url, headers=None, timeout=20):
+        calls.append(url)
+        page = 1 if "&page=1" in url else 2
+        count = 100 if page == 1 else 3
+        return {"items": [_search_item(page * 1000 + i) for i in range(count)]}
+
+    monkeypatch.setattr(providers, "fetch_json", fake)
+    result = providers.github_search(queries=("q",), pages=3, delay=0)
+
+    assert len(calls) == 2
+    assert "&page=1" in calls[0]
+    assert "&page=2" in calls[1]
+    assert len(result) == 103
+
+
+def test_github_search_stops_at_page_cap(monkeypatch):
+    monkeypatch.setenv("GITHUB_TOKEN", "test-token")
+    monkeypatch.setenv("DISCOVERY_SEARCH_PAGES", "99")
+    assert providers.search_page_limit() == providers.GITHUB_SEARCH_PAGES_MAX
+
+    calls = []
+
+    def fake(url, headers=None, timeout=20):
+        calls.append(url)
+        page = int(url.rsplit("&page=", 1)[1])
+        return {"items": [_search_item(page * 1000 + i) for i in range(100)]}
+
+    monkeypatch.setattr(providers, "fetch_json", fake)
+    result = providers.github_search(queries=("q",), delay=0)
+
+    assert len(calls) == providers.GITHUB_SEARCH_PAGES_MAX
+    assert len(result) == providers.GITHUB_SEARCH_PAGES_MAX * 100
+
+
+def test_github_search_dedupes_across_queries(monkeypatch):
+    monkeypatch.setenv("GITHUB_TOKEN", "test-token")
+    monkeypatch.setattr(
+        providers,
+        "fetch_json",
+        lambda url, **kwargs: {"items": [_search_item(1)]},
+    )
+    result = providers.github_search(queries=("a", "b"), pages=1, delay=0)
+    assert len(result) == 1
+
+
+def test_github_search_requires_token(monkeypatch):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    with pytest.raises(providers.ProviderUnavailable):
+        providers.github_search()
+
+
+def test_scanned_cache_roundtrip(tmp_path, monkeypatch):
+    monkeypatch.setattr(state_manager, "STATE_DIR", str(tmp_path))
+
+    assert state.load_scanned() == {}
+    assert state.append_scanned([("github:acme/patch", "2026-10-29T00:00:00Z")]) == [
+        "github:acme/patch"
+    ]
+    assert state.load_scanned() == {"github:acme/patch": "2026-10-29T00:00:00Z"}
+
+    # Already cached entries are never rewritten.
+    assert state.append_scanned([("github:acme/patch", "2026-10-30T00:00:00Z")]) == []
+    assert state.load_scanned()["github:acme/patch"] == "2026-10-29T00:00:00Z"
+
+
+def test_scanned_cache_skips_rescan_when_state_lost(tmp_path, monkeypatch):
+    monkeypatch.setattr(state_manager, "STATE_DIR", str(tmp_path))
+    state.append_scanned([("github:acme/patches", state.utc_now())])
+    state.save_state({
+        "baseline_done": True,
+        "repos": {
+            "github:acme/patches": {
+                "platform": "github",
+                "repo": "acme/patches",
+                "url": "https://github.com/acme/patches",
+                "status": "review",
+                "sources": ["custom"],
+            }
+        },
+    })
+    monkeypatch.setattr(runner, "FAST_PROVIDERS", ())
+    monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    calls = []
+    monkeypatch.setattr(
+        runner,
+        "verify_repo",
+        lambda entry: calls.append(entry) or {"status": "review", "reason": "x"},
+    )
+
+    summary = runner.run(force=False, search=False, quiet=True)
+
+    assert calls == []
+    assert summary["checked_this_run"] == 0
+
+
+def test_runner_checkpoints_state_per_provider(tmp_path, monkeypatch):
+    monkeypatch.setattr(state_manager, "STATE_DIR", str(tmp_path))
+    monkeypatch.setattr(runner, "FAST_PROVIDERS", (("custom", "custom_repos"),))
+    monkeypatch.setattr(runner, "run_fast_provider", lambda name: [])
+    monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    saved = []
+    real_save = runner.save_state
+    monkeypatch.setattr(
+        runner, "save_state", lambda snapshot: saved.append(1) or real_save(snapshot)
+    )
+
+    runner.run(force=True, search=False, quiet=True)
+
+    # One checkpoint after the provider loop plus the final save.
+    assert len(saved) >= 2
+    assert (tmp_path / "discovered_repos.json").exists()
+
+
+def test_runner_reports_newly_verified_repos(monkeypatch, tmp_path):
+    monkeypatch.setattr(state_manager, "STATE_DIR", str(tmp_path))
+    monkeypatch.setattr(runner, "FAST_PROVIDERS", (("custom", "custom_repos"),))
+    monkeypatch.setattr(
+        runner,
+        "run_fast_provider",
+        lambda name: [{
+            "platform": "github",
+            "repo": "acme/patches",
+            "url": "https://github.com/acme/patches",
+            "source": "custom",
+        }],
+    )
+    monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(
+        runner,
+        "verify_repo",
+        lambda entry: {
+            "status": "verified",
+            "channels": {"stable": {"branch": "main", "patch_count": 2}},
+            "evidence": {"branch": "main", "patch_count": 2, "name": "X Patches"},
+        },
+    )
+
+    summary = runner.run(force=True, search=False, quiet=True)
+
+    assert summary["found"] == [{
+        "repo": "acme/patches",
+        "url": "https://github.com/acme/patches",
+        "name": "X Patches",
+        "channels": ["stable"],
+    }]
+    assert "github:acme/patches" in state.load_scanned()

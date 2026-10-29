@@ -28,6 +28,73 @@ def review_path():
     return os.path.join(state_manager.STATE_DIR, "discovery_review.json")
 
 
+def scanned_repos_path():
+    return os.path.join(state_manager.STATE_DIR, "scanned_repos.txt")
+
+
+SCANNED_HEADER = "# Fresh Morphe discovery scan cache: <platform>:<owner/repo>\\t<utc-timestamp>"
+
+
+def load_scanned():
+    """Read the append-only scan cache as ``{key: timestamp}``.
+
+    The cache survives a kill mid-run because it is appended to as each repo is
+    verified, while ``discovered_repos.json`` is only rewritten at checkpoints.
+    """
+    path = scanned_repos_path()
+    scanned = {}
+    if not os.path.exists(path):
+        return scanned
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                key, _, stamp = line.partition("\t")
+                key = key.strip()
+                if key and key not in scanned:
+                    scanned[key] = stamp.strip()
+    except OSError:
+        return {}
+    return scanned
+
+
+def append_scanned(entries):
+    """Append unseen ``(key, timestamp)`` pairs to the scan cache.
+
+    Returns the keys that were newly written. Never raises: the cache is an
+    optimisation, not a source of truth.
+    """
+    candidates = {}
+    for key, stamp in entries:
+        key = str(key or "").strip()
+        if key and key not in candidates:
+            candidates[key] = stamp or utc_now()
+    if not candidates:
+        return []
+
+    known = load_scanned()
+    fresh = {key: stamp for key, stamp in candidates.items() if key not in known}
+    if not fresh:
+        return []
+
+    path = scanned_repos_path()
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        new_file = not os.path.exists(path)
+        with open(path, "a", encoding="utf-8") as handle:
+            if new_file:
+                handle.write(SCANNED_HEADER + "\n")
+            for key, stamp in fresh.items():
+                handle.write(f"{key}\t{stamp}\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+    except OSError:
+        return []
+    return list(fresh)
+
+
 LEGACY_PROVIDER = "awesome"
 PROVIDER = "fresh"
 
