@@ -1,8 +1,9 @@
 /**
- * IndexedDB wrapper — MorpheTrackerCache database.
+ * IndexedDB wrapper — FreshMorpheCache database.
  */
 
-const DB_NAME = 'MorpheTrackerCache'
+const DB_NAME = 'FreshMorpheCache'
+const LEGACY_DB_NAME = 'MorpheTrackerCache'
 const STORE_NAME = 'store'
 const DB_VERSION = 1
 
@@ -149,6 +150,7 @@ export async function clearAllCaches() {
     db.close()
     dbPromise = null
     indexedDB.deleteDatabase(DB_NAME)
+    indexedDB.deleteDatabase(LEGACY_DB_NAME)
   } catch (err) {
     console.error('[indexedDB] clearAllCaches error:', err)
   }

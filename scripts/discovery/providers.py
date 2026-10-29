@@ -1,4 +1,4 @@
-"""Discovery providers for Morphe patch bundle repositories."""
+"""Discovery providers for Fresh Morphe patch bundle repositories."""
 
 import os
 import re
@@ -16,13 +16,13 @@ JMAN_SOURCES_URL = (
 ARCHIVE_REPOS_URL = (
     "https://raw.githubusercontent.com/rushiforai/morphe-archive/main/repos.txt"
 )
-AWESOME_REPOS_URL = (
+FRESH_REPOS_URL = (
     "https://raw.githubusercontent.com/nvbangg/awesome-morphe/main/data/repos.json"
 )
-AWESOME_TREE_URL = (
+FRESH_TREE_URL = (
     "https://api.github.com/repos/nvbangg/awesome-morphe/git/trees/main?recursive=1"
 )
-AWESOME_BUNDLE_SOURCE_PREFIX = "data/bundle-sources/"
+FRESH_BUNDLE_SOURCE_PREFIX = "data/bundle-sources/"
 
 GITHUB_SEARCH_QUERIES = (
     '"morphe patches" in:name,description,readme',
@@ -34,7 +34,7 @@ GITHUB_SEARCH_QUERIES = (
 FAST_PROVIDERS = (
     ("official", "official_bundles"),
     ("jman", "jman_registry"),
-    ("awesome", "awesome_morphe"),
+    ("fresh", "fresh_morphe"),
     ("archive", "archive_repos"),
     ("custom", "custom_repos"),
 )
@@ -113,14 +113,14 @@ def jman_registry():
     return candidates or _from_payload(payload, "jman")
 
 
-def _awesome_bundle_sources():
-    tree = fetch_json(AWESOME_TREE_URL)
+def _fresh_bundle_sources():
+    tree = fetch_json(FRESH_TREE_URL)
     paths = [
         item["path"]
         for item in tree.get("tree", [])
         if isinstance(item, dict)
         and item.get("type") == "blob"
-        and str(item.get("path", "")).startswith(AWESOME_BUNDLE_SOURCE_PREFIX)
+        and str(item.get("path", "")).startswith(FRESH_BUNDLE_SOURCE_PREFIX)
         and str(item.get("path", "")).endswith(".json")
     ]
     if not paths:
@@ -137,16 +137,16 @@ def _awesome_bundle_sources():
         }
         for future in as_completed(future_to_path):
             try:
-                candidates.extend(_from_payload(future.result(), "awesome"))
+                candidates.extend(_from_payload(future.result(), "fresh"))
             except Exception:
                 continue
     return candidates
 
 
-def awesome_morphe():
-    candidates = _from_json_url(AWESOME_REPOS_URL, "awesome")
+def fresh_morphe():
+    candidates = _from_json_url(FRESH_REPOS_URL, "fresh")
     try:
-        candidates.extend(_awesome_bundle_sources())
+        candidates.extend(_fresh_bundle_sources())
     except Exception:
         pass
     return candidates
@@ -238,7 +238,7 @@ def run_fast_provider(name):
     functions = {
         "official_bundles": official_bundles,
         "jman_registry": jman_registry,
-        "awesome_morphe": awesome_morphe,
+        "fresh_morphe": fresh_morphe,
         "archive_repos": archive_repos,
         "custom_repos": custom_repos,
     }

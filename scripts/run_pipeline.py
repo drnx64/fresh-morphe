@@ -1,4 +1,4 @@
-"""MorpheTracker pipeline — 5-step flow.
+"""Fresh Morphe pipeline — 5-step flow.
 
 FETCH → PARSE → DIFF → ACCUMULATE → PUBLISH
 """
@@ -150,6 +150,7 @@ def run(db_only=False, db_path=None):
 
         today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         buffer_data = load_daily_buffer()
+        previous_buffer = buffer_data
         is_rollover = buffer_data.get("date") and buffer_data["date"] != today_str
 
         # Release cache (only when relevant)
@@ -196,6 +197,17 @@ def run(db_only=False, db_path=None):
                 tg_token = os.environ.get("TG_TOKEN", "")
                 tg_chat = os.environ.get("TG_CHAT", "")
                 if tg_token and tg_chat:
+                    if is_rollover and previous_buffer.get("date") and previous_buffer.get("affected_bundles"):
+                        final_chunks = generate_whats_new(
+                            entries=previous_buffer["affected_bundles"],
+                            date=previous_buffer["date"],
+                        )
+                        if final_chunks:
+                            send_or_edit(
+                                final_chunks,
+                                date=previous_buffer["date"],
+                                final=True,
+                            )
                     text = generate_whats_new()
                     if text:
                         send_or_edit(text)
@@ -237,7 +249,7 @@ def _publish_silent():
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Run the MorpheTracker pipeline")
+    parser = argparse.ArgumentParser(description="Run the Fresh Morphe pipeline")
     parser.add_argument(
         "--db-only",
         action="store_true",

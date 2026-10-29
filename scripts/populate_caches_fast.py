@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from state_manager import ROOT_DATA_DIR, STATE_DIR, load_json, save_json, ensure_dirs
 from icon_fetcher import APP_CACHE_PATH
+from app_metadata import valid_icon_url
 
 BUNDLES_DIR = os.path.join(ROOT_DATA_DIR, "bundles")
 
@@ -51,7 +52,7 @@ def main():
     print(f"Found {len(packages)} unique packages.")
 
     cache = load_json(APP_CACHE_PATH, default={})
-    uncached = [p for p in packages if p not in cache or not cache[p].get("icon_url")]
+    uncached = [p for p in packages if not valid_icon_url((cache.get(p) or {}).get("icon_url"))]
     print(f"Cached: {len(cache)}, to fetch: {len(uncached)}")
 
     if uncached:
@@ -65,7 +66,7 @@ def main():
             time.sleep(1)
 
     cache = load_json(APP_CACHE_PATH, default={})
-    with_icon = sum(1 for v in cache.values() if isinstance(v, dict) and v.get("icon_url"))
+    with_icon = sum(1 for v in cache.values() if isinstance(v, dict) and valid_icon_url(v.get("icon_url")))
     with_name = sum(1 for v in cache.values() if isinstance(v, dict) and v.get("name"))
     print(f"\nFinal: {with_icon} icons, {with_name} names")
     print(f"  app_cache.json: {os.path.getsize(APP_CACHE_PATH) / 1024:.0f} KB")

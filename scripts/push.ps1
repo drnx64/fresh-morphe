@@ -211,7 +211,7 @@ function Assert-Pat {
     $headers = @{
         Authorization          = "Bearer $script:Pat"
         Accept                 = 'application/vnd.github+json'
-        'User-Agent'           = 'MorpheTracker-push'
+        'User-Agent'           = 'FreshMorphe-push'
         'X-GitHub-Api-Version' = '2022-11-28'
     }
     if ($DryRun) {
@@ -462,7 +462,7 @@ function Open-Or-Get-Pr {
         }
     }
 
-    $bodyFile = Join-Path ([System.IO.Path]::GetTempPath()) ("morphe-pr-{0}.md" -f ([guid]::NewGuid()))
+    $bodyFile = Join-Path ([System.IO.Path]::GetTempPath()) ("fresh-pr-{0}.md" -f ([guid]::NewGuid()))
     try {
         (New-PrBody -Subject $Subject) | Set-Content -LiteralPath $bodyFile -Encoding utf8
         $created = Invoke-Native gh @('pr', 'create', '--base', $Base, '--head', $Branch,
@@ -491,7 +491,7 @@ try {
     if (-not $NoLog) {
         $logDir = Join-Path ([System.IO.Path]::GetTempPath()) 'opencode'
         New-Item -ItemType Directory -Path $logDir -Force | Out-Null
-        $script:LogPath = Join-Path $logDir ("morphe-push-{0}.log" -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
+        $script:LogPath = Join-Path $logDir ("fresh-push-{0}.log" -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
         try { Start-Transcript -LiteralPath $script:LogPath -Force | Out-Null; $script:TranscriptStarted = $true }
         catch { Write-Warn "Could not start transcript: $($_.Exception.Message)" }
     }
@@ -565,7 +565,7 @@ try {
             if ($answer -notmatch '^[Yy]') { throw 'Aborted by user.' }
         }
         Write-Step 'Committing'
-        $msgFile = Join-Path ([System.IO.Path]::GetTempPath()) ("morphe-msg-{0}.txt" -f ([guid]::NewGuid()))
+        $msgFile = Join-Path ([System.IO.Path]::GetTempPath()) ("fresh-msg-{0}.txt" -f ([guid]::NewGuid()))
         try {
             Set-Content -LiteralPath $msgFile -Value $commitMessage -Encoding utf8
             [void](Invoke-Native git @('commit', '-F', $msgFile))

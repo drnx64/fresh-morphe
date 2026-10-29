@@ -26,7 +26,7 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
   const pkg = app.package
   const appName = resolveAppName(app, nameCache)
   const iconUrl = getAppIconUrl({ package: pkg }, iconCache)
-  const hideDev = localStorage.getItem('morphe_hide_dev') === 'true'
+  const hideDev = localStorage.getItem('fresh_hide_dev') === 'true'
 
   // One bundle only: the source the app was opened from, or a random bundle
   // that supports it when opened from the directory. Never list every bundle.

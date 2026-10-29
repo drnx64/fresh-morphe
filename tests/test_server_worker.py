@@ -217,7 +217,11 @@ def test_worker_bootstraps_incrementally_and_merges_changelog(tmp_path):
         assert detail["apps"][0]["package"] == APP
         assert conn.execute("SELECT COUNT(*) FROM patch_targets").fetchone()[0] == 6
         assert conn.execute("SELECT COUNT(*) FROM changes").fetchone()[0] == 0
-        assert get_snapshot(conn, "changes") == {"affected_bundles": []}
+        # Bootstrap runs emit no changelog items, but the snapshot still carries
+        # the UTC day so the frontend can label an empty "What's New".
+        snapshot = get_snapshot(conn, "changes")
+        assert snapshot["affected_bundles"] == []
+        assert snapshot["date"] == get_meta(conn, "last_success_at")[:10]
         assert get_snapshot(conn, "core")["date"]
         assert get_snapshot(conn, "stats")["total_apps"] == 1
     finally:
@@ -371,3 +375,28 @@ def test_worker_calls_notifier_for_one_start_and_finish(tmp_path):
     assert error is None
     assert summary["finished_at"]
     assert summary["changed_bundles"] == []
+
+
+def test_telegram_entries_adapts_the_change_list():
+    from server.worker import telegram_entries
+
+    entry = {"bundle": "foo", "channel": "stable", "badge_type": "UPDATED", "apps": []}
+    payload = {"date": "2026-10-29", "affected_bundles": [entry, "not-a-dict", None]}
+    assert telegram_entries(payload) == {"foo:stable": entry}
+
+
+def test_notify_telegram_needs_credentials(monkeypatch):
+    from server.worker import notify_telegram
+
+    monkeypatch.delenv("TG_TOKEN", raising=False)
+    monkeypatch.delenv("TG_CHAT", raising=False)
+    payload = {"date": "2026-10-29", "affected_bundles": [{"bundle": "foo"}]}
+    assert notify_telegram(payload) is False
+
+
+def test_notify_telegram_ignores_empty_days(monkeypatch):
+    from server.worker import notify_telegram
+
+    monkeypatch.setenv("TG_TOKEN", "token")
+    monkeypatch.setenv("TG_CHAT", "chat")
+    assert notify_telegram({"date": "2026-10-29", "affected_bundles": []}) is False

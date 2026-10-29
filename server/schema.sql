@@ -1,4 +1,4 @@
--- MorpheTracker phone database. SQLite 3.35+ (FTS5 enabled).
+-- Fresh Morphe phone database. SQLite 3.35+ (FTS5 enabled).
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS meta (

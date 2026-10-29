@@ -37,7 +37,7 @@ BASE_DELAY = 0.6  # seconds between page requests, plus jitter
 REQUEST_TIMEOUT = 12
 
 HEADERS = {
-    "User-Agent": "MorpheTracker/1.0 (+https://github.com/drnx64/morphe-track-patches)",
+    "User-Agent": "FreshMorphe/1.0 (+https://github.com/drnx64/fresh-morphe)",
     "Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
 }
 

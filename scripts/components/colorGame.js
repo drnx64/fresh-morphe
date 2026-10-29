@@ -14,10 +14,10 @@ import { openModal } from './modal.js'
 import { dateParts, dayHue } from '../utils/format.js'
 import {
   addDays, closeness, dayHex, hexToRgb, hueDistance, hueFromHex, hueHex,
-  localISODate,
+  msUntilNextUtcMidnight, utcISODate,
 } from '../utils/color.js'
 
-const STORAGE_KEY = 'morphe_daily_color'
+const STORAGE_KEY = 'fresh_daily_color'
 const CHIP_SLOT_ID = 'color-game-slot'
 const WIN_CLOSENESS = 90
 
@@ -152,7 +152,7 @@ function buildResult(last, light) {
 
 /** Detail popover for the locked chip. */
 function openGameModal() {
-  const today = localISODate()
+  const today = utcISODate()
   let state = readState()
   const settled = settleState(state, today)
   if (settled.changed) writeState(settled.state)
@@ -232,8 +232,17 @@ function buildChip(state, today, light) {
 }
 
 let chipSyncBound = false
+let utcDayTimer = null
 
-/** Keep the header chip current across pages, midnight rollover, and themes. */
+function scheduleUtcDayChange() {
+  if (utcDayTimer) clearTimeout(utcDayTimer)
+  utcDayTimer = setTimeout(() => {
+    window.dispatchEvent(new Event('color-day-change'))
+    scheduleUtcDayChange()
+  }, msUntilNextUtcMidnight())
+}
+
+/** Keep the header chip current across pages, UTC midnight, and themes. */
 export function syncColorGameChip() {
   if (!chipSyncBound) {
     chipSyncBound = true
@@ -241,11 +250,13 @@ export function syncColorGameChip() {
       if (document.visibilityState === 'visible') syncColorGameChip()
     })
     window.addEventListener('theme-change', syncColorGameChip)
+    window.addEventListener('color-day-change', syncColorGameChip)
   }
+  scheduleUtcDayChange()
   const slot = document.getElementById(CHIP_SLOT_ID)
   if (!slot) return
   let state = readState()
-  const today = localISODate()
+  const today = utcISODate()
   const settled = settleState(state, today)
   if (settled.changed) writeState(settled.state)
   state = settled.state
@@ -279,7 +290,7 @@ export function renderColorGame() {
       type: 'color',
       class: 'color-game-picker',
       id: 'color-game-pick',
-      value: dayHex(localISODate(), light),
+      value: dayHex(utcISODate(), light),
       'aria-label': "Tomorrow's color",
     })
     const hexEl = el('span', { class: 'color-game-hex color-game-hex--big' })
@@ -381,8 +392,9 @@ export function renderColorGame() {
   }
 
   function paint({ animate = false } = {}) {
-    const today = localISODate()
+    const today = utcISODate()
     renderedDate = today
+    scheduleUtcDayChange()
     const light = schemeIsLight()
     let state = readState()
     const settled = settleState(state, today)
@@ -434,7 +446,7 @@ export function renderColorGame() {
       document.removeEventListener('visibilitychange', onVisibility)
       return
     }
-    if (document.visibilityState === 'visible' && localISODate() !== renderedDate) paint()
+    if (document.visibilityState === 'visible' && utcISODate() !== renderedDate) paint()
   }
   const onScheme = () => {
     if (!host.isConnected) {
@@ -443,8 +455,16 @@ export function renderColorGame() {
     }
     paint()
   }
+  const onDayChange = () => {
+    if (!host.isConnected) {
+      window.removeEventListener('color-day-change', onDayChange)
+      return
+    }
+    paint()
+  }
   document.addEventListener('visibilitychange', onVisibility)
   window.addEventListener('theme-change', onScheme)
+  window.addEventListener('color-day-change', onDayChange)
 
   paint()
   return host

@@ -1,4 +1,4 @@
-"""Centralized configuration for MorpheTracker pipeline.
+"""Centralized configuration for Fresh Morphe pipeline.
 
 All tuneable values in one place. Override via environment variables.
 """
@@ -54,4 +54,4 @@ ANNOUNCEMENT_EXPIRY_MS = int(os.environ.get("ANNOUNCEMENT_EXPIRY_MS", "86400000"
 SKIP_CACHE_TTL_DAYS = int(os.environ.get("SKIP_CACHE_TTL_DAYS", "30"))
 
 # Website base URL (used in Telegram deep links)
-SITE_URL = os.environ.get("SITE_URL", "https://drnx64.github.io/morphe-track-patches")
+SITE_URL = os.environ.get("SITE_URL", "https://drnx64.github.io/fresh-morphe")

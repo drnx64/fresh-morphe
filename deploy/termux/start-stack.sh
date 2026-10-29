@@ -1,6 +1,10 @@
 #!/data/data/com.termux/files/usr/bin/sh
 set -u
-cd "$HOME/morphe" || exit 1
+FRESH_HOME=${FRESH_HOME:-$HOME/fresh-morphe}
+if [ ! -d "$FRESH_HOME" ] && [ -d "$HOME/morphe" ]; then
+  FRESH_HOME="$HOME/morphe"
+fi
+cd "$FRESH_HOME" || exit 1
 mkdir -p logs bin
 termux-wake-lock
 
@@ -27,18 +31,18 @@ while [ "$i" -lt 30 ]; do
   i=$((i + 1))
 done
 
-if [ "${MORPHE_WORKER_DISABLED:-0}" != "1" ] && [ -f data/morphe.db ]; then
+if [ "${FRESH_WORKER_DISABLED:-${MORPHE_WORKER_DISABLED:-0}}" != "1" ] && { [ -f data/fresh.db ] || [ -f data/morphe.db ]; }; then
   nohup sh bin/worker-loop.sh >/dev/null 2>&1 &
 fi
 
-domain_file="$HOME/morphe/ngrok-domain.txt"
-if [ -s "$domain_file" ] && [ -x "$HOME/morphe/bin/ngrok" ]; then
+domain_file="$FRESH_HOME/ngrok-domain.txt"
+if [ -s "$domain_file" ] && [ -x "$FRESH_HOME/bin/ngrok" ]; then
   domain=$(head -1 "$domain_file" | tr -d '[:space:]')
   if [ -n "$domain" ]; then
     for pid in $(cloudflared_pids); do kill "$pid" 2>/dev/null || true; done
     if [ -z "$(ngrok_pids)" ]; then
       : > logs/ngrok.log
-      nohup "$HOME/morphe/bin/ngrok" http 8090 --url "https://$domain" --log=stdout --log-format=logfmt >>logs/ngrok.log 2>&1 &
+      nohup "$FRESH_HOME/bin/ngrok" http 8090 --url "https://$domain" --log=stdout --log-format=logfmt >>logs/ngrok.log 2>&1 &
     fi
     printf 'https://%s\n' "$domain" > api-url.txt
     exit 0

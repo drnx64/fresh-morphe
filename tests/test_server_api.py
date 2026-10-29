@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import threading
+import time
 from http.server import ThreadingHTTPServer
 
 import pytest
@@ -169,6 +170,21 @@ def test_dev_logging_host_detection_and_overrides(monkeypatch):
     assert dev_logging_enabled("localhost:8090") is False
 
 
+def _drain_dev_log(capsys, expected, timeout=2.0):
+    """Collect dev-log output until ``expected`` lines arrive or ``timeout`` ends.
+
+    The handler prints after the response is written, so the client can return
+    before the line reaches stdout.
+    """
+    deadline = time.monotonic() + timeout
+    output = ""
+    while True:
+        output += capsys.readouterr().out
+        if output.count("[api:dev]") >= expected or time.monotonic() >= deadline:
+            return output
+        time.sleep(0.02)
+
+
 def test_api_logs_local_requests_only(api_server, capsys):
     host, port = api_server
     status, _, _ = request(host, port, "/healthz", {"Host": "localhost:8090"})
@@ -176,7 +192,9 @@ def test_api_logs_local_requests_only(api_server, capsys):
     status, _, _ = request(host, port, "/healthz", {"Host": "example.test"})
     assert status == 200
 
-    output = capsys.readouterr().out
+    output = _drain_dev_log(capsys, 1)
+    time.sleep(0.1)  # give the suppressed request a chance to prove itself silent
+    output += capsys.readouterr().out
     assert output.count("[api:dev]") == 1
     assert "GET /healthz 200" in output
     assert "host=localhost:8090" in output
@@ -187,9 +205,10 @@ def test_api_dev_logging_env_override(api_server, capsys, monkeypatch):
     monkeypatch.setenv("MORPHE_DEBUG", "1")
     status, _, _ = request(host, port, "/healthz", {"Host": "example.test"})
     assert status == 200
-    assert "[api:dev]" in capsys.readouterr().out
+    assert "[api:dev]" in _drain_dev_log(capsys, 1)
 
     monkeypatch.setenv("MORPHE_DEBUG", "0")
     status, _, _ = request(host, port, "/healthz", {"Host": "localhost:8090"})
     assert status == 200
+    time.sleep(0.1)
     assert "[api:dev]" not in capsys.readouterr().out

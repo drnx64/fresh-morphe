@@ -41,7 +41,7 @@ def summary(**overrides):
 def test_running_payload_has_seconds_utc():
     embed = build_running_payload(summary())["embeds"][0]
     assert "2026-10-26 09:25:48 UTC" in embed["description"]
-    assert embed["title"] == "Morphe worker running"
+    assert embed["title"] == "Fresh Morphe worker running"
 
 
 def test_finished_payload_includes_duration_summary_and_bundle_changes():
@@ -60,7 +60,7 @@ def test_finished_payload_marks_errors():
         "error": "boom",
     }]))
     embed = payload["embeds"][0]
-    assert embed["title"] == "Morphe worker finished with errors"
+    assert embed["title"] == "Fresh Morphe worker finished with errors"
     assert embed["color"] == 0xE0A84B
     assert any(field["name"] == "Errors" for field in embed["fields"])
 

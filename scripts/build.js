@@ -65,7 +65,7 @@ const scriptFileCount = copyJsModules(join(ROOT, 'scripts'), join(DOCS, 'scripts
 console.log(`[build] scripts/ (${scriptFileCount} .js files)`)
 
 // 4. Copy public files (favicon, feed, msg.txt)
-for (const file of ['favicon.svg', 'feed.xml', 'feed-daily.xml']) {
+for (const file of ['feed.xml', 'feed-daily.xml']) {
   const src = join(ROOT, file)
   if (existsSync(src)) {
     cpSync(src, join(DOCS, file))

@@ -217,8 +217,13 @@ def _sans_bold(text):
     return "".join(out)
 
 
-def _render_header():
+def _render_header(date=None):
     today = datetime.now(timezone.utc)
+    if date:
+        try:
+            today = datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        except ValueError:
+            pass
     return "\n".join([
         _sans_bold("TODAY'S UPDATES"),
         f"Date: {today.strftime('%B %d, %Y')}",
@@ -226,9 +231,9 @@ def _render_header():
     ])
 
 
-def _render_blocks(sections):
+def _render_blocks(sections, date=None):
     """Render the digest as an ordered list of blocks (highest priority first)."""
-    blocks = [_render_header()]
+    blocks = [_render_header(date)]
 
     for key in SECTION_ORDER:
         items = sections.get(key, [])
@@ -332,14 +337,21 @@ def _pack_blocks(blocks, budget=PACK_BUDGET, max_messages=MAX_MESSAGES, link_roo
     return _pack_lines(kept, budget, max_messages, reserve=0) or [blocks[0]]
 
 
-def generate_whats_new():
-    """Generate the changelog diff from daily buffer.
+def generate_whats_new(entries=None, date=None):
+    """Generate the changelog diff from a daily buffer or supplied entries.
 
-    Returns list[str] — one chunk per Telegram message.
+    Args:
+        entries: optional ``{bundle_key: entry}`` mapping. Defaults to today's
+            daily buffer.
+        date: optional UTC day (YYYY-MM-DD) for the banner.
+
+    Returns list[str] - one chunk per Telegram message.
     """
     ensure_dirs()
     buffer = load_json(DAILY_BUFFER_PATH, default={})
-    entries = buffer.get("affected_bundles", {})
+    if entries is None:
+        entries = buffer.get("affected_bundles", {})
+    day = date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if not entries:
         print("[-] No daily buffer entries")
         return None
@@ -365,7 +377,7 @@ def generate_whats_new():
                     app["patches"] = app["patches"][:MAX_PATCHES]
                     app["patches"].append({"name": f"+{remaining} more", "badge": "*", "pkg": ""})
 
-    chunks = _pack_blocks(_render_blocks(sections))
+    chunks = _pack_blocks(_render_blocks(sections, day))
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     md_path = os.path.join(OUTPUT_DIR, "whats-new.md")
@@ -378,7 +390,7 @@ def generate_whats_new():
         json.dump({
             "chunks": chunks,
             "total_chunks": len(chunks),
-            "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "date": day,
         }, f, indent=2)
 
     return chunks

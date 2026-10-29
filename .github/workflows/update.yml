@@ -1,4 +1,4 @@
-name: Update Morphe Patch Data
+name: Update Fresh Morphe Data
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: morphe-patch-tracker
+  group: fresh-morphe
   cancel-in-progress: false
 
 permissions:
@@ -15,14 +15,16 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # The full crawl + parse + diff cycle needs headroom: a 2026-10-26 run
+    # took 14m22s, so the old 15m cap cancelled every scheduled run after it.
+    timeout-minutes: 30
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-          ssh-key: ${{ secrets.MORPHE_DEPLOY_KEY }}
+          ssh-key: ${{ secrets.FRESH_DEPLOY_KEY || secrets.MORPHE_DEPLOY_KEY }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -64,7 +66,7 @@ jobs:
           git add data/ public/msg.txt
           if ! git diff --cached --quiet; then
             git diff --cached --stat
-            git commit -m "chore(data): auto-update Morphe patch tracking state [skip ci]"
+            git commit -m "chore(data): auto-update Fresh Morphe patch tracking state [skip ci]"
             git push origin main
           else
             echo "No changes detected. Skipping commit to main."

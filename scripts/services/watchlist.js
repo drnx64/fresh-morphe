@@ -2,7 +2,7 @@
  * Watchlist — localStorage-based app tracking + browser notifications.
  */
 
-const KEY = 'morphe_watchlist'
+const KEY = 'fresh_watchlist'
 
 export function getWatchlist() {
   try {
@@ -59,9 +59,9 @@ export function notifyWatchedUpdates(changes) {
   }
   if (updated.length === 0) return
   try {
-    new Notification('Morphe Tracker', {
+    new Notification('Fresh Morphe', {
       body: `${updated.length} watched app${updated.length !== 1 ? 's' : ''} updated: ${updated.slice(0, 3).join(', ')}${updated.length > 3 ? '…' : ''}`,
-      tag: 'morphe-watch-updates',
+      tag: 'fresh-watch-updates',
     })
   } catch {
     /* ignore */

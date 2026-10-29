@@ -42,6 +42,9 @@ PLAY_SOURCE = "play"
 FDROID_SOURCE = "fdroid"
 BUNDLE_SOURCE = "bundle"
 DERIVED_SOURCE = "derived"
+MANUAL_SOURCE = "manual"
+
+ICON_OVERRIDES_PATH = os.path.join(STATE_DIR, "icon_overrides.json")
 
 # Package segments that describe the platform or a distribution flavour rather
 # than the app itself. Dropped before picking the most specific segment.
@@ -140,12 +143,21 @@ def resolve_name(package_name, cache=None, bundle_name=""):
     return derive_name_from_package(pkg), DERIVED_SOURCE
 
 
+def valid_icon_url(value):
+    """Return a usable HTTP(S) icon URL, or "" for malformed cache values."""
+    if isinstance(value, str):
+        value = value.strip()
+        if value.startswith(("http://", "https://")):
+            return value
+    return ""
+
+
 def resolve_icon(package_name, cache=None):
     """Return `(icon_url, source)`; the URL may be "" (frontend fallback tile)."""
     pkg = (package_name or "").lower().strip()
     entry = _entry_parts(cache, pkg) if isinstance(cache, dict) else {}
-    url = entry.get("icon_url", "")
-    if isinstance(url, str) and url.startswith(("http://", "https://")):
+    url = valid_icon_url(entry.get("icon_url"))
+    if url:
         return url, entry.get("icon_source") or PLAY_SOURCE
     return "", ""
 
@@ -170,15 +182,40 @@ def store_link(package_name, cache=None):
         return PLAY_APP_URL.format(quoted), STORE_PLAY
     if FDROID_SOURCE in sources:
         return FDROID_PAGE_URL.format(quoted), STORE_FDROID
+    if STORE_APKMIRROR in sources:
+        return APKMIRROR_SEARCH_URL.format(quoted), STORE_APKMIRROR
     if entry.get("name") or entry.get("icon_url"):
         return PLAY_APP_URL.format(quoted), STORE_PLAY
     return APKMIRROR_SEARCH_URL.format(quoted), STORE_APKMIRROR
 
 
+def normalize_cache(cache):
+    """Repair malformed entries in place and return the number changed."""
+    if not isinstance(cache, dict):
+        return 0
+    changed = 0
+    for pkg, entry in list(cache.items()):
+        entry_changed = False
+        if not isinstance(entry, dict):
+            cache[pkg] = {}
+            entry = cache[pkg]
+            entry_changed = True
+        clean = valid_icon_url(entry.get("icon_url"))
+        if entry.get("icon_url") != clean or "icon_url" not in entry:
+            entry["icon_url"] = clean
+            entry_changed = True
+        if entry_changed:
+            changed += 1
+    return changed
+
+
 def load_cache(path=APP_CACHE_PATH):
-    """Load the registry, tolerating a missing or malformed file."""
+    """Load the registry, repairing malformed icon values in memory."""
     data = load_json(path, default={})
-    return data if isinstance(data, dict) else {}
+    if not isinstance(data, dict):
+        return {}
+    normalize_cache(data)
+    return data
 
 
 def upsert(package_name, cache, name="", name_source="", icon_url="", icon_source=""):
@@ -202,7 +239,8 @@ def upsert(package_name, cache, name="", name_source="", icon_url="", icon_sourc
         entry["name"] = clean_name
         entry["name_source"] = name_source or entry.get("name_source", "")
         changed = True
-    if isinstance(icon_url, str) and icon_url.startswith(("http://", "https://")):
+    icon_url = valid_icon_url(icon_url)
+    if icon_url:
         if icon_url != entry.get("icon_url"):
             entry["icon_url"] = icon_url
             entry["icon_source"] = icon_source or entry.get("icon_source", "")
@@ -215,7 +253,38 @@ def upsert(package_name, cache, name="", name_source="", icon_url="", icon_sourc
 
 
 def save_cache(cache, path=APP_CACHE_PATH):
+    normalize_cache(cache)
     save_json(path, cache)
+
+
+def load_overrides(path=ICON_OVERRIDES_PATH):
+    """Load manual icon/name overrides keyed by package."""
+    data = load_json(path, default={})
+    return data if isinstance(data, dict) else {}
+
+
+def apply_icon_overrides(cache, path=ICON_OVERRIDES_PATH):
+    """Apply manual overrides on top of every store source (mutates cache)."""
+    overrides = load_overrides(path)
+    applied = 0
+    for pkg, value in overrides.items():
+        if not isinstance(pkg, str) or not pkg.strip():
+            continue
+        if isinstance(value, str):
+            value = {"icon_url": value}
+        if not isinstance(value, dict):
+            continue
+        icon_url = valid_icon_url(value.get("icon_url"))
+        name = value.get("name", "")
+        if not icon_url and not name:
+            continue
+        upsert(
+            pkg, cache,
+            name=name, name_source=MANUAL_SOURCE if name else "",
+            icon_url=icon_url, icon_source=MANUAL_SOURCE if icon_url else "",
+        )
+        applied += 1
+    return applied
 
 
 def is_unresolved(cache, package_name):
@@ -223,5 +292,5 @@ def is_unresolved(cache, package_name):
     pkg = (package_name or "").lower().strip()
     entry = _entry_parts(cache, pkg)
     name_ok = is_real_name(clean_app_name(entry.get("name", "")), pkg)
-    icon_ok = isinstance(entry.get("icon_url"), str) and entry["icon_url"].startswith("http")
+    icon_ok = bool(valid_icon_url(entry.get("icon_url")))
     return not (name_ok and icon_ok)

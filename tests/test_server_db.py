@@ -12,7 +12,7 @@ from server_helpers import deduped_bundles, expected_counts, load_source_index
 
 from server.api import app_detail, build_detail, build_index, build_releases, search_apps
 from server.config import DATA_DIR
-from server.db import connect, init_db, table_counts
+from server.db import connect, get_snapshot, init_db, set_snapshot, table_counts
 from server.import_legacy import import_data
 
 
@@ -196,7 +196,66 @@ def test_today_changes_are_stored(migrated):
         snapshot = conn.execute(
             "SELECT json FROM snapshots WHERE name = 'changes'"
         ).fetchone()
-        assert json.loads(snapshot["json"]) == changes
+        payload = json.loads(snapshot["json"])
+        # The snapshot mirrors changes.json plus a `date` key, and falls back to
+        # the newest finalized day when today has no entries yet.
+        assert payload["affected_bundles"] == changes.get("affected_bundles", [])
+        if changes.get("date"):
+            assert payload["date"] == changes["date"]
+        else:
+            assert payload["date"] == core.get("date")
+        if not changes.get("affected_bundles"):
+            assert payload.get("latest"), "quiet day should expose the newest real day"
+    finally:
+        conn.close()
+
+
+def test_quiet_scan_keeps_the_days_changes(tmp_path):
+    """A scan that finds nothing new must not blank "What's New".
+
+    The worker used to snapshot only the current run's delta, so every quiet
+    hourly run replaced the day's payload with an empty list.
+    """
+    from server.worker import merge_changes, today_change_payload
+
+    path = tmp_path / "worker.db"
+    init_db(str(path))
+    conn = connect(str(path))
+    try:
+        first_scan = "2026-10-29T01:00:00Z"
+        delta = [{"bundle": "alpha", "channel": "stable", "badge_type": "UPDATED", "apps": []}]
+        with conn:
+            merge_changes(conn, delta, first_scan)
+            set_snapshot(conn, "changes", today_change_payload(conn, first_scan))
+        assert get_snapshot(conn, "changes")["affected_bundles"] == delta
+
+        quiet_scan = "2026-10-29T02:00:00Z"
+        with conn:
+            set_snapshot(conn, "changes", today_change_payload(conn, quiet_scan))
+
+        payload = get_snapshot(conn, "changes")
+        assert payload["date"] == "2026-10-29"
+        assert [entry["bundle"] for entry in payload["affected_bundles"]] == ["alpha"]
+    finally:
+        conn.close()
+
+
+def test_new_utc_day_starts_with_an_empty_payload(tmp_path):
+    """The day key is UTC, matching the pipeline's rollover boundary."""
+    from server.worker import merge_changes, today_change_payload
+
+    path = tmp_path / "rollover.db"
+    init_db(str(path))
+    conn = connect(str(path))
+    try:
+        with conn:
+            merge_changes(
+                conn,
+                [{"bundle": "alpha", "channel": "stable", "badge_type": "UPDATED", "apps": []}],
+                "2026-10-29T23:59:00Z",
+            )
+        next_day = today_change_payload(conn, "2026-10-30T00:05:00Z")
+        assert next_day == {"date": "2026-10-30", "affected_bundles": []}
     finally:
         conn.close()
 

@@ -28,6 +28,7 @@ def state(monkeypatch):
     monkeypatch.setattr(mdb, "save_bundles_json", lambda value: data.__setitem__("bundles", value))
     monkeypatch.setattr(mdb, "merge_release_notes", lambda value: None)
     monkeypatch.setattr(mdb, "apply_repo_metadata", lambda value: None)
+    monkeypatch.setattr(mdb, "_latest_changelog_day", lambda exclude_date=None: None)
     return data
 
 
@@ -48,7 +49,10 @@ def test_same_day_no_changes_preserves_aggregate(state):
 
     mdb.update_data_files("2026-10-26", {"affected_bundles": {}}, SNAPSHOT)
 
-    assert state["changes"]["affected_bundles"] == [{"bundle": "foo", "channel": "stable"}]
+    assert state["changes"] == {
+        "date": "2026-10-26",
+        "affected_bundles": [{"bundle": "foo", "channel": "stable"}],
+    }
     assert state["stats"]["new_apps_today"] == 2
     assert state["stats"]["new_bundles_today"] == 1
     assert state["core"]["date"] == "2026-10-26"
@@ -61,7 +65,7 @@ def test_next_day_no_changes_resets_aggregate(state):
 
     mdb.update_data_files("2026-10-27", {"affected_bundles": {}}, SNAPSHOT)
 
-    assert state["changes"] == {"affected_bundles": []}
+    assert state["changes"] == {"date": "2026-10-27", "affected_bundles": []}
     assert state["stats"]["new_apps_today"] == 0
     assert state["stats"]["new_bundles_today"] == 0
     assert state["core"]["date"] == "2026-10-27"
@@ -102,7 +106,7 @@ def test_silent_write_resets_on_new_day(state, monkeypatch):
     mdb.write_data_files(has_changes=False, preserve_changes_json=True)
 
     assert state["core"]["date"] == "2026-10-27"
-    assert state["changes"] == {"affected_bundles": []}
+    assert state["changes"] == {"date": "2026-10-27", "affected_bundles": []}
     assert state["stats"]["new_apps_today"] == 0
     assert state["stats"]["new_bundles_today"] == 0
 

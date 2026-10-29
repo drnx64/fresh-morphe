@@ -48,7 +48,7 @@ def _fetch_gradle_kts(owner, repo, platform="github"):
             raw_url = f"https://gitlab.com/{owner}/{repo}/-/raw/{branch}/patches/build.gradle.kts"
         else:
             raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/patches/build.gradle.kts"
-        req = urllib.request.Request(raw_url, headers={"User-Agent": "MorpheTracker/1.0"})
+        req = urllib.request.Request(raw_url, headers={"User-Agent": "FreshMorphe/1.0"})
         try:
             with urllib.request.urlopen(req, timeout=10) as resp:
                 return resp.read().decode("utf-8")

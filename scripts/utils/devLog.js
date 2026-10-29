@@ -3,14 +3,21 @@
  *
  * Verbose logs are enabled when the page is served from a loopback host.
  * Production remains limited to the existing warn/error output. Use
- * `?debug=1` / `?debug=0` or localStorage `morphe_debug` to override for a
+ * `?debug=1` / `?debug=0` or localStorage `fresh_debug` to override for a
  * single browser without rebuilding.
  */
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '0.0.0.0', '::1', '[::1]'])
 
 function readStored() {
   try {
-    return localStorage.getItem('morphe_debug')
+    const value =
+      localStorage.getItem('fresh_debug') ??
+      localStorage.getItem('morphe_debug')
+    if (value !== null) {
+      localStorage.setItem('fresh_debug', value)
+      localStorage.removeItem('morphe_debug')
+    }
+    return value
   } catch {
     return null
   }

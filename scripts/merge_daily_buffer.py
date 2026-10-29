@@ -31,6 +31,7 @@ from state_manager import (
 
 RELEASE_CACHE_PATH = os.path.join(STATE_DIR, "release_cache.json")
 REPO_CACHE_PATH = os.path.join(STATE_DIR, "repo_cache.json")
+CHANGELOG_JSON_PATH = os.path.join(ROOT_DATA_DIR, "changelog.json")
 REPO_META_FIELDS = (
     "stars",
     "avatarUrl",
@@ -47,6 +48,32 @@ BUNDLE_PRECEDENCE = {"NEW BUNDLE": 0, "UPDATED": 1, "REMOVED BUNDLE": 2}
 
 def now_utc_iso():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _latest_changelog_day(exclude_date=None):
+    """Newest finalized changelog day that actually has affected bundles."""
+    changelog = load_json(CHANGELOG_JSON_PATH, default=[])
+    if not isinstance(changelog, list):
+        return None
+    for day in changelog:
+        if not isinstance(day, dict) or not day.get("date"):
+            continue
+        if exclude_date and day.get("date") == exclude_date:
+            continue
+        affected = day.get("affected_bundles")
+        if affected:
+            return {"date": day["date"], "affected_bundles": affected}
+    return None
+
+
+def _changes_payload(date_str, affected, include_latest=True):
+    """Public changes payload: today's aggregate plus a previous-day fallback."""
+    payload = {"date": date_str, "affected_bundles": affected}
+    if include_latest and not affected:
+        latest = _latest_changelog_day(exclude_date=date_str)
+        if latest:
+            payload["latest"] = latest
+    return payload
 
 
 def _compute_snapshot_stats(snapshot):
@@ -338,7 +365,7 @@ def finalize_buffer(buffer_data):
             except Exception as e:
                 print(f"Error reading changelog.md: {e}")
 
-        header = "# Morphe Tracker Changelog\n\n"
+        header = "# Fresh Morphe Changelog\n\n"
         if existing_md.startswith(header):
             content_body = existing_md[len(header):]
         else:
@@ -371,9 +398,11 @@ def finalize_buffer(buffer_data):
             "new_apps_today": len(set(a["package"] for a in all_apps if a.get("badge_type") == "NEW APP")),
             "new_bundles_today": len(set(b["bundle"] for b in affected_bundles_dict.values() if b.get("badge_type") == "NEW BUNDLE"))
         }
-        changes = {
-            "affected_bundles": list(affected_bundles_dict.values())
-        }
+        changes = _changes_payload(
+            date_str,
+            list(affected_bundles_dict.values()),
+            include_latest=False,
+        )
         bundles = dict(snapshot)
         merge_release_notes(bundles)
         apply_repo_metadata(bundles)
@@ -401,21 +430,22 @@ def update_data_files(today_str, buffer_data, snapshot):
         existing_stats = load_stats_json()
         existing_changes = load_changes_json()
         same_day = existing_core.get("date") == today_str
-        if same_day and existing_changes and "affected_bundles" in existing_changes:
-            changes_to_save = existing_changes
+        existing_list = existing_changes.get("affected_bundles") if isinstance(existing_changes, dict) else None
+        if same_day and existing_list:
+            changes_to_save = dict(existing_changes)
+            changes_to_save["date"] = today_str
+            changes_to_save.pop("latest", None)
             new_apps_today = existing_stats.get("new_apps_today", 0)
             new_bundles_today = existing_stats.get("new_bundles_today", 0)
         else:
-            changes_to_save = {"affected_bundles": []}
+            changes_to_save = _changes_payload(today_str, [])
             new_apps_today = 0
             new_bundles_today = 0
     else:
         all_apps = []
         for b_info in buffer_data.get("affected_bundles", {}).values():
             all_apps.extend(b_info.get("apps", []))
-        changes_to_save = {
-            "affected_bundles": affected_bundles_list
-        }
+        changes_to_save = _changes_payload(today_str, affected_bundles_list)
         new_apps_today = len(set(a["package"] for a in all_apps if a.get("badge_type") == "NEW APP"))
         new_bundles_today = len(set(b["bundle"] for b in buffer_data.get("affected_bundles", {}).values() if b.get("badge_type") == "NEW BUNDLE"))
 
@@ -479,24 +509,29 @@ def write_data_files(has_changes=True, preserve_changes_json=False):
     # If preserve_changes_json is True (silent run), skip writing changes.json entirely
     changes_to_save = None
     if date_changed:
-        # A new UTC day always starts with an empty public changes payload.
-        changes_to_save = {"affected_bundles": []}
+        # A new UTC day starts empty, with the latest finalized day as fallback.
+        changes_to_save = _changes_payload(today_str, [])
         new_apps_today = 0
         new_bundles_today = 0
     elif not preserve_changes_json:
         if has_changes:
             existing_changes = load_changes_json()
+            existing_list = existing_changes.get("affected_bundles") if isinstance(existing_changes, dict) else None
             # Clean patches_name in historical changes entries
-            if existing_changes and "affected_bundles" in existing_changes:
+            if existing_list:
                 _clean_re = re.compile(r'\s+for use with\s+Morphe', re.IGNORECASE)
                 _clean_re2 = re.compile(r'\s+for\s+Morphe', re.IGNORECASE)
-                for ab in existing_changes["affected_bundles"]:
+                for ab in existing_list:
                     if ab.get("patches_name"):
                         ab["patches_name"] = _clean_re.sub('', ab["patches_name"]).strip()
                         ab["patches_name"] = _clean_re2.sub('', ab["patches_name"]).strip()
-            changes_to_save = existing_changes if existing_changes and "affected_bundles" in existing_changes else {"affected_bundles": []}
+                changes_to_save = dict(existing_changes)
+                changes_to_save["date"] = today_str
+                changes_to_save.pop("latest", None)
+            else:
+                changes_to_save = _changes_payload(today_str, [])
         else:
-            changes_to_save = {"affected_bundles": []}
+            changes_to_save = _changes_payload(today_str, [])
 
     stats = {
         "total_bundles": total_bundles,
@@ -602,6 +637,7 @@ def update_daily_buffer_run(publish=True):
                 "affected_bundles": {}
             }
             save_daily_buffer(buffer_data)
+            write_data_files(has_changes=False, preserve_changes_json=False)
 
             if publish:
                 print("[*] Running site generator (forced finalization)...")

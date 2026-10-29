@@ -296,7 +296,7 @@ let versionsCache = null
 export function getStoredVersions() {
   if (!versionsCache) {
     try {
-      versionsCache = JSON.parse(localStorage.getItem('morphe_versions') || '{}')
+      versionsCache = JSON.parse(localStorage.getItem('fresh_versions') || '{}')
     } catch {
       versionsCache = {}
     }
@@ -309,7 +309,7 @@ export function setStoredVersion(bundle, version) {
   if (stored[bundle] === version) return
   stored[bundle] = version
   try {
-    localStorage.setItem('morphe_versions', JSON.stringify(stored))
+    localStorage.setItem('fresh_versions', JSON.stringify(stored))
   } catch {
     // ignore
   }

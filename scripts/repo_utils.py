@@ -135,7 +135,7 @@ def get_auth_headers(url, headers=None):
         ".githubusercontent.com"
     )
     if "User-Agent" not in result:
-        result["User-Agent"] = "MorpheTracker/1.0"
+        result["User-Agent"] = "FreshMorphe/1.0"
 
     token = os.environ.get("GITHUB_TOKEN", "")
     is_release_download = (

@@ -9,6 +9,7 @@ Usage:
     python scripts/telegram.py                          # auto-generated from temp/whats-new.json
     python scripts/telegram.py "path/to/file.md"       # custom file (single chunk)
 """
+import hashlib
 import json
 import os
 import sys
@@ -72,6 +73,18 @@ def _utc_stamp():
     return datetime.now(timezone.utc).strftime("%I:%M %p").lstrip("0") + " UTC"
 
 
+def _utc_now_iso():
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _content_hash(chunks):
+    digest = hashlib.sha256()
+    for chunk in chunks:
+        digest.update(chunk.encode("utf-8"))
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
 def _truncate(text, limit=4096):
     if len(text) <= limit:
         return text
@@ -116,16 +129,19 @@ def _delete_message(chat_id, message_id, token):
         return False
 
 
-def send_or_edit(chunks, token=None, chat_id=None):
+def send_or_edit(chunks, token=None, chat_id=None, date=None, final=False, force=False):
     """Send or edit a multi-message changelog.
 
     Args:
-        chunks: list[str] — each chunk is one Telegram message.
+        chunks: list[str] - each chunk is one Telegram message.
         token: Telegram bot token (or env TG_TOKEN).
         chat_id: Telegram chat ID (or env TG_CHAT).
+        date: UTC day (YYYY-MM-DD); defaults to today.
+        final: mark the day's digest as final without rewriting unchanged content.
+        force: rewrite even when the content hash matches.
 
     Returns:
-        True on success, False on failure.
+        True when every chunk is delivered, False otherwise.
     """
     token = token or os.environ.get("TG_TOKEN", "")
     chat_id = chat_id or os.environ.get("TG_CHAT", "")
@@ -136,14 +152,29 @@ def send_or_edit(chunks, token=None, chat_id=None):
 
     if isinstance(chunks, str):
         chunks = [chunks]
+    if not chunks:
+        return False
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    day = date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    content_hash = _content_hash(chunks)
     stamp = _utc_stamp()
     last = _load_last_msg()
-    existing = last.get("messages", []) if last.get("date") == today else []
+    same_day = last.get("date") == day
+    existing = last.get("messages", []) if same_day else []
     remaining_existing = list(existing)
 
+    if same_day and not force and last.get("content_hash") == content_hash:
+        if final and not last.get("finalized"):
+            last["finalized"] = True
+            last["updated_at"] = _utc_now_iso()
+            _save_last_msg(last)
+            print("[*] Digest already current; marked final")
+        else:
+            print("[*] Digest unchanged; skipping Telegram API")
+        return True
+
     result_messages = []
+    all_ok = True
 
     for i, chunk in enumerate(chunks):
         is_last = i == len(chunks) - 1
@@ -165,6 +196,7 @@ def send_or_edit(chunks, token=None, chat_id=None):
             if outcome == "retry":
                 print(f"[-] Transient edit failure for {msg_entry['message_id']}, will retry")
                 result_messages.append({"message_id": msg_entry["message_id"], "chunk": i})
+                all_ok = False
                 continue
             print(f"[-] Message {msg_entry['message_id']} is gone, resending chunk {i}")
 
@@ -174,6 +206,7 @@ def send_or_edit(chunks, token=None, chat_id=None):
             result_messages.append({"message_id": msg_id, "chunk": i})
         except Exception as e:
             print(f"[-] Send failed for chunk {i}: {e}")
+            all_ok = False
 
     # Delete leftover messages that are no longer needed
     for msg_entry in remaining_existing:
@@ -182,12 +215,17 @@ def send_or_edit(chunks, token=None, chat_id=None):
 
     # chat_id is deliberately not persisted: this file is tracked in git and
     # copied verbatim into the public site build.
+    prior_hash = last.get("content_hash", "") if same_day else ""
+    prior_final = bool(last.get("finalized")) if same_day else False
     _save_last_msg({
-        "date": today,
+        "date": day,
         "messages": result_messages,
+        "content_hash": content_hash if all_ok else prior_hash,
+        "finalized": (final if all_ok else prior_final),
+        "updated_at": _utc_now_iso(),
     })
 
-    return True
+    return all_ok
 
 
 def main():

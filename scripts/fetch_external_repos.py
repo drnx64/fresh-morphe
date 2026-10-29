@@ -22,7 +22,7 @@ BUNDLES_RAW_DIR = os.path.join(RAW_DIR, "bundles")
 def fetch_repos_txt():
     """Fetch the repos.txt file from morphe-archive."""
     print("  Fetching repos.txt from morphe-archive...")
-    req = urllib.request.Request(REPOS_TXT_URL, headers={"User-Agent": "MorpheTracker/1.0"})
+    req = urllib.request.Request(REPOS_TXT_URL, headers={"User-Agent": "FreshMorphe/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             text = resp.read().decode("utf-8")
@@ -48,7 +48,7 @@ def parse_repos_txt(text):
 def save_repos_list(repos):
     """Write all known repos (owner/repo -> URL) to repos_list.txt."""
     lines = [
-        "# Morphe Tracker - All Known Repositories",
+        "# Fresh Morphe - All Known Repositories",
         "# Each line: owner/repo -> full GitHub URL",
         f"# Last updated: {datetime.now(timezone.utc).isoformat()}",
         f"# Total: {len(repos)} repos",
@@ -174,7 +174,7 @@ def try_fetch_source_file(owner, repo, filename, platform="github", branches=Non
             raw_url = f"https://gitlab.com/{owner}/{repo}/-/raw/{branch}/{filename}"
         else:
             raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{filename}"
-        req = urllib.request.Request(raw_url, headers={"User-Agent": "MorpheTracker/1.0"})
+        req = urllib.request.Request(raw_url, headers={"User-Agent": "FreshMorphe/1.0"})
         try:
             with urllib.request.urlopen(req, timeout=10) as resp:
                 content = resp.read().decode("utf-8")
@@ -197,7 +197,7 @@ def fetch_github_releases(owner, repo, max_retries=3):
     for attempt in range(max_retries):
         req = urllib.request.Request(url, headers={
             "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "MorpheTracker/1.0",
+            "User-Agent": "FreshMorphe/1.0",
         })
         if token:
             req.add_header("Authorization", f"Bearer {token}")

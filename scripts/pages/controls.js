@@ -68,7 +68,7 @@ export function renderControls() {
 
 function setView(mode) {
   store.set('viewMode', mode)
-  localStorage.setItem('morphe_view', mode)
+  localStorage.setItem('fresh_view', mode)
   document.querySelectorAll('.view-toggle-opt').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.view === mode)
   })

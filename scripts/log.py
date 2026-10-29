@@ -1,4 +1,4 @@
-"""Structured logging utility for MorpheTracker pipeline scripts.
+"""Structured logging utility for Fresh Morphe pipeline scripts.
 
 Usage:
     from log import log

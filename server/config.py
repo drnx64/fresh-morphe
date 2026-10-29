@@ -1,4 +1,4 @@
-"""Configuration for the phone-hosted MorpheTracker API and worker."""
+"""Configuration for the phone-hosted Fresh Morphe API and worker."""
 import os
 import re
 
@@ -29,18 +29,30 @@ _load_dotenv()
 
 DATA_DIR = os.path.join(BASE_DIR, "data")
 STATE_DIR = os.path.join(DATA_DIR, "state")
-DB_PATH = os.environ.get("MORPHE_DB_PATH", os.path.join(DATA_DIR, "morphe.db"))
-SCHEMA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "schema.sql")
-EXPORT_DIR = os.environ.get("MORPHE_EXPORT_DIR", os.path.join(DATA_DIR, "exports"))
 
-API_HOST = os.environ.get("MORPHE_API_HOST", "127.0.0.1")
-API_PORT = int(os.environ.get("MORPHE_API_PORT", "8080"))
-ADMIN_TOKEN = os.environ.get("MORPHE_ADMIN_TOKEN", "")
+
+def _env(name, legacy, default=""):
+    """Read a Fresh env var, falling back to the pre-rebrand name."""
+    return os.environ.get(name) or os.environ.get(legacy) or default
+
+
+_DEFAULT_DB = os.path.join(DATA_DIR, "fresh.db")
+_LEGACY_DB = os.path.join(DATA_DIR, "morphe.db")
+DB_PATH = _env("FRESH_DB_PATH", "MORPHE_DB_PATH", _DEFAULT_DB)
+if DB_PATH == _DEFAULT_DB and not os.path.exists(_DEFAULT_DB) and os.path.exists(_LEGACY_DB):
+    DB_PATH = _LEGACY_DB
+
+SCHEMA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "schema.sql")
+EXPORT_DIR = _env("FRESH_EXPORT_DIR", "MORPHE_EXPORT_DIR", os.path.join(DATA_DIR, "exports"))
+
+API_HOST = _env("FRESH_API_HOST", "MORPHE_API_HOST", "127.0.0.1")
+API_PORT = int(_env("FRESH_API_PORT", "MORPHE_API_PORT", "8080"))
+ADMIN_TOKEN = _env("FRESH_ADMIN_TOKEN", "MORPHE_ADMIN_TOKEN", "")
 
 # Keep response bodies below this before deciding to gzip. Cloudflare handles
 # the larger edge cache; this only avoids compressing tiny JSON payloads.
-GZIP_MIN_BYTES = int(os.environ.get("MORPHE_GZIP_MIN_BYTES", "1024"))
+GZIP_MIN_BYTES = int(_env("FRESH_GZIP_MIN_BYTES", "MORPHE_GZIP_MIN_BYTES", "1024"))
 
 # Normal public cache lifetime. Detail/release endpoints can be cached longer
 # by Cloudflare; the API still revalidates with ETags on every request.
-PUBLIC_MAX_AGE = int(os.environ.get("MORPHE_PUBLIC_MAX_AGE", "60"))
+PUBLIC_MAX_AGE = int(_env("FRESH_PUBLIC_MAX_AGE", "MORPHE_PUBLIC_MAX_AGE", "60"))

@@ -48,7 +48,7 @@ def test_sync_changes_inserts_today_and_snapshot(tmp_path):
         today = json.loads(rows[1]["payload_json"])
         assert today["date"] == "2026-10-26"
         assert today["affected_bundles"] == changed
-        assert get_snapshot(conn, "changes") == {"affected_bundles": changed}
+        assert get_snapshot(conn, "changes") == {"date": "2026-10-26", "affected_bundles": changed}
         assert get_meta(conn, "last_checked") == "2026-10-26T12:00:00Z"
         assert get_meta(conn, "last_success_at") == "2026-10-26T12:00:00Z"
     finally:
@@ -77,7 +77,7 @@ def test_sync_changes_same_day_upserts(tmp_path):
         rows = conn.execute("SELECT payload_json FROM changes WHERE date = '2026-10-26'").fetchall()
         assert len(rows) == 1
         assert len(json.loads(rows[0]["payload_json"])["affected_bundles"]) == 2
-        assert get_snapshot(conn, "changes") == {"affected_bundles": second}
+        assert get_snapshot(conn, "changes") == {"date": "2026-10-26", "affected_bundles": second}
         assert get_meta(conn, "last_checked") == "2026-10-26T13:00:00Z"
     finally:
         conn.close()
@@ -101,7 +101,7 @@ def test_sync_changes_new_day_resets_snapshot(tmp_path):
         sync_changes(conn, str(data_dir), "2026-10-27T00:31:00Z")
         conn.commit()
 
-        assert get_snapshot(conn, "changes") == {"affected_bundles": []}
+        assert get_snapshot(conn, "changes") == {"date": "2026-10-27", "affected_bundles": []}
         assert conn.execute("SELECT COUNT(*) FROM changes WHERE date = '2026-10-27'").fetchone()[0] == 0
         assert conn.execute("SELECT COUNT(*) FROM changes WHERE date = '2026-10-26'").fetchone()[0] == 1
         assert get_meta(conn, "last_checked") == "2026-10-27T00:30:00Z"

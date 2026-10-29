@@ -15,7 +15,7 @@ def fetch_github_releases(owner, repo, retry=3):
         if token:
             req.add_header("Authorization", f"Bearer {token}")
         req.add_header("Accept", "application/vnd.github.v3+json")
-        req.add_header("User-Agent", "MorpheTracker/1.0")
+        req.add_header("User-Agent", "FreshMorphe/1.0")
         try:
             with urllib.request.urlopen(req, timeout=15) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
@@ -52,7 +52,7 @@ def fetch_gitlab_releases(project_path, retry=3):
         req = urllib.request.Request(url)
         if token:
             req.add_header("Authorization", f"Bearer {token}")
-        req.add_header("User-Agent", "MorpheTracker/1.0")
+        req.add_header("User-Agent", "FreshMorphe/1.0")
         try:
             with urllib.request.urlopen(req, timeout=15) as resp:
                 data = json.loads(resp.read().decode("utf-8"))

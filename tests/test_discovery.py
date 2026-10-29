@@ -29,6 +29,27 @@ def _fake_fetch(branch_manifests):
     return fake
 
 
+def test_state_migrates_legacy_provider_labels(tmp_path, monkeypatch):
+    discovered = tmp_path / "discovered_repos.json"
+    discovered.write_text(json.dumps({
+        "repos": {"github:acme/patches": {"sources": ["awesome", "github-search"]}},
+    }), encoding="utf-8")
+    monkeypatch.setattr(state, "discovered_repos_path", lambda: str(discovered))
+    assert state.load_state()["repos"]["github:acme/patches"]["sources"] == [
+        "fresh",
+        "github-search",
+    ]
+
+
+def test_provider_runs_migrates_legacy_key(tmp_path, monkeypatch):
+    runs = tmp_path / "provider_runs.json"
+    runs.write_text(json.dumps({"awesome": {"count": 2}, "fresh": {"count": 3}}), encoding="utf-8")
+    monkeypatch.setattr(state, "provider_runs_path", lambda: str(runs))
+    loaded = state.load_provider_runs()
+    assert "awesome" not in loaded
+    assert loaded["fresh"]["count"] == 3
+
+
 def test_verify_accepts_both_manifests(monkeypatch):
     monkeypatch.setattr(
         verify, "fetch", _fake_fetch({"main": {"bundle": BUNDLE, "list": PATCH_LIST}})

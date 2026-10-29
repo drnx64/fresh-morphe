@@ -129,7 +129,7 @@ def build_changelog_feed(changelog, site_url):
                     "link": f"{site_url}/index.html#bundle={bundle_name}",
                 })
     return _feed_document(
-        site_url, "feed.xml", "Morphe Tracker — Changelog",
+        site_url, "feed.xml", "Fresh Morphe — Changelog",
         "Automated changelog tracking Morphe patch bundle updates across stable and dev channels.",
         items,
     )
@@ -147,7 +147,7 @@ def generate_rss_feed():
         print("Changelog is empty, skipping RSS generation.")
         return
 
-    site_url = os.environ.get("SITE_URL", "https://drnx64.github.io/morphe-track-patches")
+    site_url = os.environ.get("SITE_URL", "https://drnx64.github.io/fresh-morphe")
     rss_xml = build_changelog_feed(changelog, site_url)
     rss_path = os.path.join(ROOT_DIR, "feed.xml")
     with open(rss_path, "w", encoding="utf-8") as f:
@@ -266,7 +266,7 @@ def _daily_items(changelog, buffer, site_url):
 def build_daily_feed(changelog, buffer, site_url):
     """Build the one-item-per-day digest feed."""
     return _feed_document(
-        site_url, "feed-daily.xml", "Morphe Tracker — Daily Updates",
+        site_url, "feed-daily.xml", "Fresh Morphe — Daily Updates",
         "One entry per day listing the Morphe patch bundles and apps that changed.",
         _daily_items(changelog, buffer, site_url),
     )
@@ -276,7 +276,7 @@ def generate_daily_feed():
     """Write the daily digest feed to feed-daily.xml."""
     changelog = load_json(os.path.join(ROOT_DATA_DIR, "changelog.json"), default=[])
     buffer = load_json(os.path.join(ROOT_DATA_DIR, "state", "daily_buffer.json"), default={})
-    site_url = os.environ.get("SITE_URL", "https://drnx64.github.io/morphe-track-patches")
+    site_url = os.environ.get("SITE_URL", "https://drnx64.github.io/fresh-morphe")
 
     rss_xml = build_daily_feed(changelog, buffer, site_url)
     feed_path = os.path.join(ROOT_DIR, "feed-daily.xml")
