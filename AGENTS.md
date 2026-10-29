@@ -22,6 +22,7 @@
 | Phone watchdog | `sh deploy/termux/watchdog.sh` | Cron every 2 min; revives a dead API, ngrok, worker loop, or discovery loop. Silent when healthy, logs to `logs/watchdog.log`. |
 | Import legacy data | `python -m server.import_legacy --reset` | Rebuild `data/fresh.db` from `data/` (falls back to `data/morphe.db` until migrated). |
 | Export static API | `python -m server.static_export` | Writes `data/exports/v1/` for GitHub Pages fallback. |
+| Push work | `.\gh-tool.ps1 -m "add chips" -t f -s u --pr --auto-merge` | Branch → commit → PR → auto-merge in one call. `-t`/`-s` expand commit shortcuts (`f`=feat, `fx`=fix, `u`=ui); `--dry-run -v` prints every command. |
 
 ### Verification order
 
