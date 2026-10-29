@@ -778,6 +778,61 @@ def today_change_payload(conn, now):
     return payload
 
 
+TG_SCRIPTS_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"
+)
+
+
+def telegram_entries(payload):
+    """Adapt the SQLite change list to the digest builder's keyed mapping."""
+    entries = {}
+    for entry in payload.get("affected_bundles") or []:
+        if not isinstance(entry, dict):
+            continue
+        key = f'{entry.get("bundle")}:{entry.get("channel")}'
+        entries[key] = entry
+    return entries
+
+
+def notify_telegram(payload):
+    """Post or edit the UTC day's Telegram digest from the worker's own data.
+
+    ``scripts.telegram.send_or_edit`` keys on the UTC day and skips identical
+    content via ``data/state/last_tg_msg.json``, so the phone worker and the
+    hourly Actions pipeline keep one message instead of posting twice.
+    """
+    token = os.environ.get("TG_TOKEN", "")
+    chat = os.environ.get("TG_CHAT", "")
+    if not token or not chat:
+        return False
+    entries = telegram_entries(payload)
+    if not entries:
+        return False
+    if TG_SCRIPTS_DIR not in sys.path:
+        sys.path.insert(0, TG_SCRIPTS_DIR)
+    try:
+        from whats_new import generate_whats_new
+        from telegram import send_or_edit
+    except Exception as exc:
+        print(f"[worker] telegram unavailable: {exc}", flush=True)
+        return False
+    try:
+        chunks = generate_whats_new(entries=entries, date=payload.get("date"))
+        if not chunks:
+            return False
+        return bool(
+            send_or_edit(
+                chunks,
+                token=token,
+                chat_id=chat,
+                date=payload.get("date"),
+            )
+        )
+    except Exception as exc:
+        print(f"[worker] telegram failed: {exc}", flush=True)
+        return False
+
+
 def make_snapshots(conn, now):
     counts = table_counts(conn)
     today = now[:10]
@@ -1021,7 +1076,7 @@ class Worker:
             "change": change,
         }
 
-    def run(self, force=False, limit=None, workers=4, dry_run=False, notifier=None):
+    def run(self, force=False, limit=None, workers=4, dry_run=False, notifier=None, telegram=True):
         init_db(self.db_path)
         conn = connect(self.db_path)
         started_at = utc_now()
@@ -1115,7 +1170,8 @@ class Worker:
                     merge_changes(conn, changes, now)
                 # Snapshot the day's accumulated entries, never just this run's
                 # delta — otherwise a quiet scan blanks "What's New".
-                set_snapshot(conn, "changes", today_change_payload(conn, now))
+                day_payload = today_change_payload(conn, now)
+                set_snapshot(conn, "changes", day_payload)
                 data_version, counts = make_snapshots(conn, now)
                 if bootstrap and not summary["errors"] and limit is None:
                     set_meta(conn, BOOTSTRAP_META, "1")
@@ -1136,6 +1192,10 @@ class Worker:
                             job_id,
                         ),
                     )
+            # Discord covers every run; the Telegram digest tracks the UTC day,
+            # so bootstrap and partial (--limit) scans stay out of it.
+            if telegram and not bootstrap and limit is None:
+                summary["telegram"] = notify_telegram(day_payload)
             notify_safely(notifier, "finish", summary, message_id=message_id)
             return summary
         except Exception as exc:
@@ -1165,7 +1225,8 @@ def main(argv=None):
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--json", action="store_true")
-    parser.add_argument("--no-notify", action="store_true", help="skip Discord notifications for this run")
+    parser.add_argument("--no-notify", action="store_true", help="skip Discord and Telegram notifications for this run")
+    parser.add_argument("--no-telegram", action="store_true", help="skip only the Telegram digest for this run")
     args = parser.parse_args(argv)
 
     notifier = None
@@ -1181,6 +1242,7 @@ def main(argv=None):
         workers=args.workers,
         dry_run=args.dry_run,
         notifier=notifier,
+        telegram=not args.no_notify and not args.no_telegram,
     )
     if args.json:
         print(json.dumps(result, indent=2, ensure_ascii=False))

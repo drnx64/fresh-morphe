@@ -375,3 +375,28 @@ def test_worker_calls_notifier_for_one_start_and_finish(tmp_path):
     assert error is None
     assert summary["finished_at"]
     assert summary["changed_bundles"] == []
+
+
+def test_telegram_entries_adapts_the_change_list():
+    from server.worker import telegram_entries
+
+    entry = {"bundle": "foo", "channel": "stable", "badge_type": "UPDATED", "apps": []}
+    payload = {"date": "2026-10-29", "affected_bundles": [entry, "not-a-dict", None]}
+    assert telegram_entries(payload) == {"foo:stable": entry}
+
+
+def test_notify_telegram_needs_credentials(monkeypatch):
+    from server.worker import notify_telegram
+
+    monkeypatch.delenv("TG_TOKEN", raising=False)
+    monkeypatch.delenv("TG_CHAT", raising=False)
+    payload = {"date": "2026-10-29", "affected_bundles": [{"bundle": "foo"}]}
+    assert notify_telegram(payload) is False
+
+
+def test_notify_telegram_ignores_empty_days(monkeypatch):
+    from server.worker import notify_telegram
+
+    monkeypatch.setenv("TG_TOKEN", "token")
+    monkeypatch.setenv("TG_CHAT", "chat")
+    assert notify_telegram({"date": "2026-10-29", "affected_bundles": []}) is False
