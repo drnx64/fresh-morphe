@@ -20,7 +20,7 @@ _load_dotenv()
 from log import log
 from state_manager import (
     ensure_dirs, load_last_run, save_last_run, save_json, load_json,
-    save_new_snapshot, load_daily_buffer, STATE_DIR, RAW_DIR,
+    save_new_snapshot, load_daily_buffer, STATE_DIR, RAW_DIR, ROOT_DATA_DIR,
 )
 from config import SCANNER_COOLDOWN_HOURS
 
@@ -70,12 +70,61 @@ def _sync_db(db_path=None):
     return result
 
 
-def run(db_only=False, db_path=None):
+def _pipeline_totals():
+    """Bundle count and change count for the Discord finish message."""
+    parsed = load_json(os.path.join(RAW_DIR, "parsed_bundles.json"), default={})
+    changes = load_json(os.path.join(ROOT_DATA_DIR, "changes.json"), default={})
+    affected = changes.get("affected_bundles") if isinstance(changes, dict) else []
+    return len(parsed or {}), len(affected or [])
+
+
+def run(db_only=False, db_path=None, notify=True):
     start_time = datetime.now()
     log.info("=== STARTING FRESH MORPHE PIPELINE ===")
     log.info(f"Current local time: {start_time.isoformat()}")
     if db_only:
         log.info("Phone mode: DB-only (static publish + notifications disabled)")
+
+    summary = {
+        "started_at": start_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "db_only": db_only,
+        "changes": 0,
+        "bundles": 0,
+        "errors": [],
+        "silent": False,
+    }
+    notifier = None
+    message_id = None
+    if notify:
+        try:
+            from server.notify import DiscordNotifier, build_pipeline_running_payload
+
+            candidate = DiscordNotifier.from_env()
+            if candidate.enabled:
+                notifier = candidate
+                message_id = notifier.post(build_pipeline_running_payload(summary))
+        except Exception as e:
+            log.warning(f"  Discord start notification failed: {e}")
+
+    def finish_summary(silent=False, error=None):
+        if notifier is None:
+            return
+        try:
+            from server.notify import build_pipeline_finished_payload
+
+            bundle_count, change_count = _pipeline_totals()
+            summary.update({
+                "finished_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "bundles": bundle_count,
+                "changes": change_count,
+                "silent": silent,
+            })
+            notifier.edit(
+                message_id,
+                build_pipeline_finished_payload(summary, error=error),
+            )
+        except Exception as e:
+            log.warning(f"  Discord finish notification failed: {e}")
 
     try:
         ensure_dirs()
@@ -86,13 +135,6 @@ def run(db_only=False, db_path=None):
 
         log.info("STEP 2: Downloading bundles")
         download_all_bundles()
-
-        log.info("STEP 2a: Discovering bundle sources")
-        try:
-            from discovery.runner import run as run_discovery
-            run_discovery(search=True, limit=400, quiet=True)
-        except Exception as e:
-            log.warning(f"  Discovery failed (non-fatal): {e}")
 
         log.info("STEP 2b: Fetching external repos")
         fetch_external_repos()
@@ -176,6 +218,7 @@ def run(db_only=False, db_path=None):
             _update_last_run_success(start_time)
             if db_only:
                 _sync_db(db_path)
+            finish_summary(silent=True)
             return
 
         log.info("STEP 5: Accumulating daily buffer")
@@ -221,6 +264,7 @@ def run(db_only=False, db_path=None):
         _update_last_run_success(start_time)
         if db_only:
             _sync_db(db_path)
+        finish_summary()
         log.info("=== PIPELINE RUN COMPLETE ===")
 
     except Exception as e:
@@ -237,6 +281,7 @@ def run(db_only=False, db_path=None):
             save_last_run(last_run_data)
         except Exception:
             pass
+        finish_summary(error=str(e))
         sys.exit(1)
 
 
@@ -256,8 +301,13 @@ def main(argv=None):
         help="skip static site/RSS/Telegram and import the result into SQLite",
     )
     parser.add_argument("--db", default=None, help="override the SQLite database path")
+    parser.add_argument(
+        "--no-notify",
+        action="store_true",
+        help="do not post Discord messages",
+    )
     args = parser.parse_args(argv)
-    run(db_only=args.db_only, db_path=args.db)
+    run(db_only=args.db_only, db_path=args.db, notify=not args.no_notify)
     return 0
 
 

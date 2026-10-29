@@ -28,6 +28,9 @@ COLOR_RUNNING = 0xE0A84B
 COLOR_OK = 0x3BA55D
 COLOR_PARTIAL = 0xE0A84B
 COLOR_ERROR = 0xED4245
+COLOR_DISCOVERY = 0x5865F2
+
+SCANNED_CACHE_LABEL = "scanned_repos.txt"
 
 
 def _clean(value, limit):
@@ -138,7 +141,8 @@ def _errors_field(summary, error=None):
         url = str(item.get("url") or "unknown")
         branch = str(item.get("branch") or "")
         label = f"{url}@{branch}" if branch else url
-        lines.append(f'• `{_clean(label, 120)}`: {_clean(item.get("error"), 180)}')
+        detail = _clean(item.get("error"), 180)
+        lines.append(f'• `{_clean(label, 120)}`' + (f": {detail}" if detail else ""))
     hidden = len(errors) - len(lines)
     if hidden > 0:
         lines.append(f"_+{hidden} more_")
@@ -202,6 +206,180 @@ def build_finished_payload(summary, error=None):
     }
 
 
+def _found_lines(summary):
+    found = summary.get("found") or []
+    if not found:
+        return "No new repositories found."
+    lines = []
+    for item in found[:DISCORD_MAX_CHANGES]:
+        if not isinstance(item, dict):
+            continue
+        name = _clean(item.get("name") or item.get("repo") or "?", 80)
+        url = str(item.get("url") or "").replace("https://", "").replace("http://", "")
+        channels = ", ".join(str(channel) for channel in (item.get("channels") or []))
+        lines.append(f"**{name}** — {_clean(url or item.get('repo'), 180)}")
+        suffix = f" · `{channels}`" if channels else ""
+        lines.append(f"[ saved to {SCANNED_CACHE_LABEL} ]{suffix}")
+    hidden = len(found) - min(len(found), DISCORD_MAX_CHANGES)
+    if hidden > 0:
+        lines.append(f"_+{hidden} more_")
+    return "\n".join(lines) if lines else "No new repositories found."
+
+
+def _provider_field(summary):
+    providers = summary.get("providers") or {}
+    if not providers:
+        return None
+    bits = []
+    for name, info in providers.items():
+        count = (info or {}).get("count", 0)
+        status = (info or {}).get("status", "ok")
+        marker = "!" if status in ("error", "skipped") else ""
+        bits.append(f"`{name}{marker}` {count}")
+    return _clean(" · ".join(bits), DISCORD_MAX_FIELD)
+
+
+def build_discovery_running_payload(summary):
+    started = _format_timestamp(summary.get("started_at"))
+    return {
+        "allowed_mentions": {"parse": []},
+        "embeds": [{
+            "title": "Finding new repositories/bundles…",
+            "description": f"Started: `{started}`\nScanning GitHub + known sources…",
+            "color": COLOR_DISCOVERY,
+            "footer": {"text": "Fresh Morphe • discovery"},
+        }],
+    }
+
+
+def build_discovery_payload(summary, error=None):
+    errors = list(summary.get("errors") or [])
+    if error is not None:
+        errors.append(f"discovery: {error}")
+    found = summary.get("found") or []
+    if error is not None:
+        title = "Discovery failed"
+        color = COLOR_ERROR
+    elif found:
+        title = f"Found {len(found)} bundle{'s' if len(found) != 1 else ''}"
+        color = COLOR_OK
+    else:
+        title = "No new repositories found"
+        color = COLOR_PARTIAL
+
+    started = _format_timestamp(summary.get("started_at"))
+    finished = _format_timestamp(summary.get("finished_at") or utc_now())
+    duration = _format_duration(
+        summary.get("started_at"), summary.get("finished_at") or utc_now()
+    )
+    description_parts = [
+        f"Started: `{started}`",
+        f"Finished: `{finished}`",
+        f"Duration: `{duration}`",
+        "",
+        f"**{title}**",
+        _found_lines(summary),
+    ]
+    if error is not None:
+        description_parts.extend(["", f"**Error:** {_clean(error, 500)}"])
+
+    fields = []
+    provider_field = _provider_field(summary)
+    if provider_field:
+        fields.append({"name": "Sources", "value": provider_field, "inline": False})
+    fields.append({
+        "name": "Scan",
+        "value": (
+            f'Candidates `{summary.get("candidates", 0)}` · '
+            f'Verified `{summary.get("verified", 0)}` · '
+            f'Review `{summary.get("review", 0)}`\n'
+            f'Checked this run `{summary.get("checked_this_run", 0)}` · '
+            f'Cached `{summary.get("scanned", 0)}`'
+        ),
+        "inline": False,
+    })
+    error_field = _errors_field({"errors": [{"url": item, "error": ""} for item in errors]})
+    if error_field:
+        fields.append({"name": "Errors", "value": error_field, "inline": False})
+
+    return {
+        "allowed_mentions": {"parse": []},
+        "embeds": [{
+            "title": title,
+            "description": _clean("\n".join(description_parts), DISCORD_MAX_DESCRIPTION),
+            "color": color,
+            "fields": fields,
+            "footer": {"text": "Fresh Morphe • discovery"},
+        }],
+    }
+
+
+def build_pipeline_running_payload(summary):
+    started = _format_timestamp(summary.get("started_at"))
+    mode = "phone (db-only)" if summary.get("db_only") else "full"
+    return {
+        "allowed_mentions": {"parse": []},
+        "embeds": [{
+            "title": "Fetching bundles — worker running…",
+            "description": (
+                f"Started: `{started}`\n"
+                f"Mode: `{mode}`\n"
+                "Downloading, parsing, and diffing patches…"
+            ),
+            "color": COLOR_RUNNING,
+            "footer": {"text": "Fresh Morphe • pipeline"},
+        }],
+    }
+
+
+def build_pipeline_finished_payload(summary, error=None):
+    errors = list(summary.get("errors") or [])
+    if error is not None:
+        errors.append(str(error))
+    failed = bool(errors)
+    title = "Pipeline finished with errors" if failed else "Pipeline finished"
+    color = COLOR_ERROR if error is not None else (COLOR_PARTIAL if failed else COLOR_OK)
+
+    started = _format_timestamp(summary.get("started_at"))
+    finished = _format_timestamp(summary.get("finished_at") or utc_now())
+    duration = _format_duration(
+        summary.get("started_at"), summary.get("finished_at") or utc_now()
+    )
+    description_parts = [
+        f"Started: `{started}`",
+        f"Finished: `{finished}`",
+        f"Duration: `{duration}`",
+        "",
+        f'Changes `{summary.get("changes", 0)}` · '
+        f'Bundles `{summary.get("bundles", 0)}` · '
+        f'Errors `{len(errors)}`',
+    ]
+    if summary.get("silent"):
+        description_parts.extend(["", "_Silent run — no bundle changes._"])
+    if error is not None:
+        description_parts.extend(["", f"**Error:** {_clean(error, 500)}"])
+
+    fields = [{
+        "name": "Mode",
+        "value": "phone (db-only)" if summary.get("db_only") else "full",
+        "inline": True,
+    }]
+    error_field = _errors_field({"errors": [{"url": item, "error": ""} for item in errors]})
+    if error_field:
+        fields.append({"name": "Errors", "value": error_field, "inline": False})
+
+    return {
+        "allowed_mentions": {"parse": []},
+        "embeds": [{
+            "title": title,
+            "description": _clean("\n".join(description_parts), DISCORD_MAX_DESCRIPTION),
+            "color": color,
+            "fields": fields,
+            "footer": {"text": "Fresh Morphe • pipeline"},
+        }],
+    }
+
+
 def _valid_webhook_url(value):
     try:
         parsed = urlparse(value)
@@ -235,6 +413,39 @@ class DiscordNotifier:
 
     def _endpoint(self, suffix=""):
         return self.webhook_url.rstrip("/") + suffix
+
+    def post(self, payload):
+        """Post a payload and return the Discord message id (or None)."""
+        if not self.enabled:
+            return None
+        try:
+            response = self.transport(
+                "POST",
+                self._endpoint("?wait=true"),
+                payload,
+            )
+        except Exception as exc:
+            print(f"[notify] could not post message: {exc}", flush=True)
+            return None
+        return str((response or {}).get("id") or "") or None
+
+    def edit(self, message_id, payload):
+        """Edit an existing message. Posts a new one if the id is missing."""
+        if not self.enabled:
+            return False
+        try:
+            if message_id:
+                self.transport(
+                    "PATCH",
+                    self._endpoint(f"/messages/{message_id}?wait=true"),
+                    payload,
+                )
+            else:
+                self.transport("POST", self._endpoint("?wait=true"), payload)
+            return True
+        except Exception as exc:
+            print(f"[notify] could not edit message: {exc}", flush=True)
+            return False
 
     def start(self, summary):
         if not self.enabled:
