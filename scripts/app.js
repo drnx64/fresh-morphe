@@ -60,9 +60,7 @@ import { showWorkToast } from './components/workToast.js'
 import { preloadAvatars } from './services/iconCache.js'
 import { initIconQueue, runIconQueue } from './services/iconFetchQueue.js'
 import { loadBundleState, saveBundleState } from './services/bundleCache.js'
-import {
-  ensureAppBundles, ensureBundleChannels, onBundleDetailsLoaded,
-} from './services/bundleLoader.js'
+import { onBundleDetailsLoaded } from './services/bundleLoader.js'
 import { loadChangelog, loadSiteData } from './services/siteData.js'
 import { beginJob, endJob, progressJob } from './services/loadingBar.js'
 import { SITE_URL, GITHUB_REPO_URL, shrinkPlayIconUrl, withAvatarSize } from './utils/url.js'
@@ -676,21 +674,15 @@ function applyReducedMotion() {
 store.subscribe('reducedMotion', applyReducedMotion)
 
 // ── Modal Event Listeners ──
-// Patches only exist in per-bundle files, so every entry point waits for the
-// records it needs (a single round trip, single-flighted and cached) before
-// the modal opens — otherwise the Patches tab renders empty.
-function hideDevChannels() {
-  return storageGet('hide_dev') === 'true' ? ['dev'] : []
-}
-
+// Both modals paint from the index immediately and load the per-bundle files
+// they actually display (app modal: the selected bundle; bundle modal: its
+// description and patch counts). Waiting here for every candidate record made a
+// cold click feel dead — for a popular app that is over a hundred files.
 async function handleOpenApp(detail) {
-  const pkg = detail?.app?.package
-  if (pkg) await ensureAppBundles(pkg, { excludeChannels: hideDevChannels() })
   openAppDetailModal(detail)
 }
 
 async function handleOpenBundle(detail) {
-  if (detail?.bundleName) await ensureBundleChannels(detail.bundleName, detail.channels || [])
   openBundleModal(detail)
 }
 
@@ -729,8 +721,8 @@ async function handleUrlParams() {
   const openApp = params.get('open-app')
   const patchName = params.get('patch')
   if (openApp) {
-    // Deep links can land before loadData finishes; wait for the directory
-    await ensureAppBundles(openApp, { excludeChannels: hideDevChannels() })
+    // Runs after loadData, so the directory is already in the store. The modal
+    // loads the patches for whichever bundle it lands on.
     const bundles = store.get('bundles') || {}
     // Find app by package across all bundles
     for (const [key, bundle] of Object.entries(bundles)) {
