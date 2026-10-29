@@ -10,10 +10,15 @@ import { resolveAppName, renderAppIcon } from './misc.js'
 
 const BATCH_SIZE = 30
 
-function buildRow(app, idx, prefix, nameCache, iconCache) {
+function buildRow(app, idx, prefix, nameCache, iconCache, countsKnown) {
   const appName = resolveAppName(app, nameCache)
   const iconHtml = renderAppIcon(app, iconCache, 'sm')
   const patchCount = (app.patches || []).length
+  // Index-only records have no patches yet, and "0 patches" would be a lie —
+  // the real count lands when the bundle file does.
+  const countHtml = countsKnown
+    ? `${patchCount} patch${patchCount !== 1 ? 'es' : ''}`
+    : '…'
   const row = el('div', { class: `${prefix}-row`, role: 'button', tabindex: '0', dataset: { idx } })
   row.innerHTML = `
     ${iconHtml}
@@ -21,7 +26,7 @@ function buildRow(app, idx, prefix, nameCache, iconCache) {
       <span class="${prefix}-name">${escHtml(appName)}</span>
       <span class="${prefix}-pkg">${escHtml(app.package)}</span>
     </div>
-    <span class="${prefix}-patches">${patchCount} patch${patchCount !== 1 ? 'es' : ''}</span>
+    <span class="${prefix}-patches${countsKnown ? '' : ' is-pending'}">${countHtml}</span>
   `
   return row
 }
@@ -35,9 +40,11 @@ function buildRow(app, idx, prefix, nameCache, iconCache) {
  * @param {(app: Object) => void} opts.onOpen
  * @param {Object} opts.nameCache
  * @param {Object} opts.iconCache
+ * @param {boolean} [opts.countsKnown] - false renders a placeholder count for
+ *   records whose patches have not loaded yet (defaults to true)
  * @param {() => void} [opts.onBatch] - called after each batch (e.g. to sync max-height)
  */
-export function mountAppRows(listEl, apps, { prefix, onOpen, nameCache, iconCache, onBatch }) {
+export function mountAppRows(listEl, apps, { prefix, onOpen, nameCache, iconCache, countsKnown = true, onBatch }) {
   if (listEl.dataset.mounted) return
   listEl.dataset.mounted = '1'
   listEl.__apps = apps
@@ -65,7 +72,7 @@ export function mountAppRows(listEl, apps, { prefix, onOpen, nameCache, iconCach
     const end = Math.min(idx + BATCH_SIZE, apps.length)
     const frag = document.createDocumentFragment()
     for (; idx < end; idx++) {
-      frag.appendChild(buildRow(apps[idx], idx, prefix, nameCache, iconCache))
+      frag.appendChild(buildRow(apps[idx], idx, prefix, nameCache, iconCache, countsKnown))
     }
     listEl.appendChild(frag)
     if (onBatch) onBatch()
