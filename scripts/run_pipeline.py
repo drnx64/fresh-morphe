@@ -72,7 +72,7 @@ def _sync_db(db_path=None):
 
 def run(db_only=False, db_path=None):
     start_time = datetime.now()
-    log.info("=== STARTING MORPHE PATCH TRACKER PIPELINE ===")
+    log.info("=== STARTING FRESH MORPHE PIPELINE ===")
     log.info(f"Current local time: {start_time.isoformat()}")
     if db_only:
         log.info("Phone mode: DB-only (static publish + notifications disabled)")
