@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "dev",
   "repo_url": "https://github.com/ineednotitle/Halo-patches",
-  "created_at": "2026-10-28T18:25:10Z",
-  "version": "1.15.0",
-  "description": "## [1.15.0](https://github.com/ineednotitle/Halo-patches/compare/v1.14.0...v1.15.0) (2026-10-28)\n\n### ✨ New Features\n\n* **chatgpt:** add privacy patch removing mic and camera access ([e176707](https://github.com/ineednotitle/Halo-patches/commit/e176707df317f529343c50c1a0f339da37e2718a))",
+  "created_at": "2026-10-29T10:58:55Z",
+  "version": "1.17.0",
+  "description": "## [1.17.0](https://github.com/ineednotitle/Halo-patches/compare/v1.16.0...v1.17.0) (2026-10-29)\n\n### ✨ New Features\n\n* **chatgpt:** strip location contacts and phone data permissions ([168cad1](https://github.com/ineednotitle/Halo-patches/commit/168cad1315e6843e4b631640afd80fca935f614b))",
   "apps": [
     {
       "app_name": "OBD2 Scanner: Torque & FixD",
@@ -1047,7 +1047,7 @@
       ]
     },
     {
-      "app_name": "ES File Explorer",
+      "app_name": "ES File Explorer File Manager",
       "package": "com.estrongs.android.pop",
       "patches": [
         {
@@ -2210,6 +2210,24 @@
       "app_name": "ChatGPT",
       "package": "com.openai.chatgpt",
       "patches": [
+        {
+          "name": "Privacy: block trackers & analytics",
+          "description": "Suppresses ChatGPT product analytics, Statsig events/exposures, Segment event dispatch and Bitdrift crash/session-replay startup; disables Datadog RUM and removes ad-ID/install-referrer access. Chat, login, files and push notifications are preserved. Core service requests and server-side logging cannot be disabled by an APK patch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2026.293"
+          ]
+        },
+        {
+          "name": "Privacy: no location, contacts or phone data",
+          "description": "Removes ChatGPT's location, contacts, phone-state and SMS-send permissions. Location-based answers, contact lookup, phone-state access and direct SMS sending are disabled. Call/voice-assistant framework permissions, chat, files and push notifications are preserved.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2026.293"
+          ]
+        },
         {
           "name": "Privacy: no mic or camera",
           "description": "Removes RECORD_AUDIO, CAMERA, FOREGROUND_SERVICE_MICROPHONE plus all camera/microphone uses-feature declarations from the manifest. Voice Mode and camera capture become impossible (not merely denied - the grant dialog itself is gone). File storage, notifications and everything else are untouched.",
@@ -4597,10 +4615,10 @@
     }
   ],
   "patches_name": "Halo Patches",
-  "fingerprint": "af6bf1b710d375d4c5e8d0282f31484ee657f982933c59b2afe19cbf57f9ea3e",
-  "release_notes": "## [1.15.0](https://github.com/ineednotitle/Halo-patches/compare/v1.14.0...v1.15.0) (2026-10-28)\n\n### ✨ New Features\n\n* **chatgpt:** add privacy patch removing mic and camera access ([e176707](https://github.com/ineednotitle/Halo-patches/commit/e176707df317f529343c50c1a0f339da37e2718a))\n",
-  "release_tag": "v1.15.0",
-  "release_date": "2026-10-28T18:25:10Z",
+  "fingerprint": "d57887682ecd202e7f10542b3aaecba9c031f7ee7457f0d34cb202c76a7c5302",
+  "release_notes": "## [1.17.0](https://github.com/ineednotitle/Halo-patches/compare/v1.16.0...v1.17.0) (2026-10-29)\n\n### ✨ New Features\n\n* **chatgpt:** strip location contacts and phone data permissions ([168cad1](https://github.com/ineednotitle/Halo-patches/commit/168cad1315e6843e4b631640afd80fca935f614b))\n",
+  "release_tag": "v1.17.0",
+  "release_date": "2026-10-29T10:58:55Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",

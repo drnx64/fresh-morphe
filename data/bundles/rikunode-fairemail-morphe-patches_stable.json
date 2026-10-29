@@ -2,14 +2,45 @@
   "bundle": "rikunode-fairemail-morphe-patches",
   "channel": "stable",
   "repo_url": "https://github.com/rikunode/fairemail-morphe-patches",
-  "created_at": "2026-10-27T17:28:18Z",
-  "version": "0.2.0",
-  "description": "Unofficial FairEmail 1.2337 and 1.2338 Morphe patch preview: optional Pro features, encrypted settings export, and donation banner hide. Android real-device behavior has not been tested.",
+  "created_at": "2026-10-29T13:26:33Z",
+  "version": "0.3.1",
+  "description": "FairEmail Patches v0.3.1, unofficial Morphe six-patch source. Display name renamed from FairEmail Morphe customizations; patches and compatibility unchanged from v0.3.0. OAuth/Pro/export remain opt-in experimental, clone and changelog suppression ON. No data migration, OAuth refresh or SMTP guarantee.",
   "apps": [
     {
       "app_name": "FairEmail, privacy aware email",
       "package": "eu.faircode.email",
       "patches": [
+        {
+          "name": "Clone FairEmail alongside official app",
+          "description": "Install patched FairEmail alongside the official app using the same .morphe package suffix as Morphe's Clone app. Do NOT select Morphe's separate Clone app simultaneously.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Default: eu.faircode.email.morphe. Keep unchanged on future updates to preserve data."
+            },
+            {
+              "key": "updatePermissions",
+              "description": "Match the upstream Morphe Clone app default; prevents collisions with the official installation."
+            },
+            {
+              "key": "updateProviders",
+              "description": "Match upstream Morphe Clone app behavior; prevents collisions with the official installation."
+            }
+          ],
+          "compatible_versions": [
+            "1.2338"
+          ]
+        },
+        {
+          "name": "Enable OAuth setup in re-signed FairEmail (experimental)",
+          "description": "Enable both Gmail and provider OAuth setup menu paths without modifying global signature checks. Google authorization is not guaranteed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.2338"
+          ]
+        },
         {
           "name": "Enable local Pro features (experimental)",
           "description": "Make FairEmail's local Pro feature checks return true. No purchases or signing changes. Does not preserve stock-install data across a signature mismatch.",
@@ -39,15 +70,24 @@
             "1.2337",
             "1.2338"
           ]
+        },
+        {
+          "name": "Suppress automatic changelog popup",
+          "description": "Prevent the startup changelog pop-up without deleting the changelog or changing the first-run welcome dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2338"
+          ]
         }
       ]
     }
   ],
   "patches_name": "FairEmail Morphe customizations",
-  "fingerprint": "417e828377c115c8a08628675f99cf6c8af7c5f8227ae5be176b74b1286b5eba",
-  "release_notes": "Unofficial FairEmail Morphe patch bundle. Three patches: donation banner hide (default ON), settings export (experimental OFF), local Pro checks (experimental OFF). Supports official GitHub FairEmail 1.2337a and 1.2338a only. Desktop APK patch and DEX tests passed, Android device login/export/import untested. Do not uninstall or overwrite existing official FairEmail, since signing certificates differ.",
-  "release_tag": "v0.2.0",
-  "release_date": "2026-10-27T17:28:18Z",
+  "fingerprint": "74abc02fe6aedaa3769bd77bc12fc8f418de4f65f4bbc9bcf76308e48548dd2f",
+  "release_notes": "# FairEmail Patches v0.3.1 — source display name update\n\n**The Morphe patch source now displays as \"FairEmail Patches\"**, matching the simple naming style of sources such as \"Gboard Patches\".\n\nThis is a **branding-only update** from `v0.3.0`; the six patch names, code behavior, supported upstream FairEmail APKs, default selections, license, and GitHub repository URL are unchanged. The source's embedded MPP manifest now uses `Name: FairEmail Patches`.\n\n## Updating an existing Morphe source\n\n1. Open **Morphe Manager → Sources** and disable **Use prerelease patches** in settings if you previously enabled it.\n2. Refresh the existing `rikunode/fairemail-morphe-patches` source. It should offer `v0.3.1` with **six patches** and the display name **FairEmail Patches**.\n3. If you previously set your own name using the source's **Rename (pencil)** action, Morphe preserves your custom override. Rename the source locally to `FairEmail Patches` if the old title remains.\n4. **Do not delete and re-add the source; do not re-patch, uninstall or replace the installed FairEmail app solely for this naming update.** Source-label changes do not alter an installed APK.\n\nFor a new source, use the same repository:\n`https://morphe.software/add-source?github=rikunode/fairemail-morphe-patches&name=FairEmail%20Patches`.\n\n## Six patches (unchanged)\n\n| Patch | Default | Compatible FairEmail |\n| --- | --- | --- |\n| Clone FairEmail alongside official app | ON | 1.2338 |\n| Suppress automatic changelog popup | ON | 1.2338 |\n| Permanently hide donation banner | ON | 1.2337, 1.2338 |\n| Enable OAuth setup in re-signed FairEmail (experimental) | OFF | 1.2338 |\n| Enable local Pro features (experimental) | OFF | 1.2337, 1.2338 |\n| Enable local settings export (experimental) | OFF | 1.2337, 1.2338 |\n\n## Existing limitations and privacy\n\nThe original FairEmail 1.2338a APK SHA-256 is `666b9f4ada53f69199355f1ccc2bed73e01fa23786fc0189cf81cc51932dc5a9`. This remains an independent unofficial GPLv3 Morphe patch source (not an upstream FairEmail or Morphe release). Its experimental OAuth/Pro/export features remain opt-in. **Still unverified:** Gmail SMTP sending from the modified app, unattended token refresh, new-mail synchronization on the destination after backup import, safe in-place signed-clone updates, and device lifecycle suppression of changelog. See [the v0.3.0 release notes](https://github.com/rikunode/fairemail-morphe-patches/releases/tag/v0.3.0) and [open device acceptance tests](https://github.com/rikunode/fairemail-morphe-patches/issues/5).\n\nNo pre-signed FairEmail APK, signing key, personal Gmail credentials or backup archives are included. To preserve data, **never uninstall or clear an existing clone** just to change a source name.\n",
+  "release_tag": "v0.3.1",
+  "release_date": "2026-10-29T13:26:33Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",

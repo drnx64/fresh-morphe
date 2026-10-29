@@ -2,8 +2,8 @@
   "bundle": "gmaps",
   "channel": "latest",
   "repo_url": "https://github.com/fangkampanat/gmaps-patches",
-  "created_at": "2026-10-28T10:20:38",
-  "version": "1.4.2",
+  "created_at": "2026-10-29T15:12:28",
+  "version": "1.4.3",
   "description": "Use official MicroG-RE 7.2.2 for Google Maps and synthesized navigation speech, start Google TTS before guidance, skip the uncertified-device screen and avoid a crash when a location-settings dialog cannot open. Includes an opt-in Picture-in-picture setting in Maps Settings and an opt-in native EV model experiment that sends BYD battery data and estimated road-load coefficients to Google. Arrival forecasts and navigation display remain experimental. Requires Morphe Desktop 1.19.0 or newer.",
   "apps": [
     {
@@ -23,8 +23,29 @@
           "compatible_versions": []
         },
         {
+          "name": "BYD navigation audio routing",
+          "description": "Routes navigation prompts to the BYD-specific audio stream when supported, retaining the original fallback. Not needed on phones.",
+          "use": false,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Device certification fix",
+          "description": "Skips the uncertified-device screen that closes Maps on devices Google does not certify.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Google Maps for MicroG-RE",
-          "description": "Connects supported Google Maps builds to MicroG-RE 7.2.2, skips the uncertified-device screen, avoids a crash when a location-settings dialog cannot open, and prefers synthesized navigation speech with early Google TTS startup and the existing audio fallback.",
+          "description": "Connects supported Google Maps builds to MicroG-RE 7.2.2 and avoids a crash when a location-settings dialog cannot open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Navigation speech and TTS startup",
+          "description": "Prefers synthesized navigation speech, keeping the existing audio fallback, and starts Google TTS when Maps opens.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -40,10 +61,10 @@
     }
   ],
   "patches_name": "Maps Patches",
-  "fingerprint": "3f217f0e8277058611034455dbce5e14586df1e87bf54c956261c655e294beea",
-  "release_notes": "- Adds an optional **Picture-in-picture setting** patch: Maps → Settings → Picture-in-picture, On or Off. With Off, leaving Maps during navigation no longer opens the small window (#20).\n- Supports Google Maps `26.42.02.997557324`.\n- Uses official MicroG-RE 7.2.2.\n- Requires Morphe Desktop 1.19.0 or newer. Restart Desktop before patching another APK.\n\nTested on Maps `26.42.02.997557324` on an Android 16 phone and in a BYD Dolphin (DiLink 3.0), including the BYD battery experiment's arrival battery, with a pre-release build that has the same patch code.\n\n`patches-1.4.2.mpp` SHA-256: `ea3bb346d08ba94fd3052c0365c05b93512ebe4b70118dbcdd2a6ff861102b21`\n",
-  "release_tag": "v1.4.2",
-  "release_date": "2026-10-28T10:21:12Z",
+  "fingerprint": "6da1b8f3dcc23b57a82c2f0e3b77d8b836927667b9a565bc6d06b81553ff6616",
+  "release_notes": "- Splits the single Maps patch into patches you can select separately (#22, thanks @sheepymeh):\n  - **Google Maps for MicroG-RE** keeps MicroG-RE support and the location-settings crash fix.\n  - **Device certification fix** and **Navigation speech and TTS startup** are on by default.\n  - **BYD navigation audio routing** is now off by default. On a BYD head unit, turn it on when patching so navigation prompts keep using the BYD navigation audio stream.\n- The patched code is unchanged. With all six patches selected, the patched app is identical to the 1.4.2 test build.\n- Uses official MicroG-RE 7.2.2.\n- Requires Morphe Desktop 1.19.0 or newer. Restart Desktop before patching another APK.\n\nTested on Maps `26.42.02.997557324` on an Android 16 phone with the default patches.\n\n`patches-1.4.3.mpp` SHA-256: `82fa21f4c7f6b455b588e838fd9355298e415593b0a7285300cf3f9a40142e7a`\n",
+  "release_tag": "v1.4.3",
+  "release_date": "2026-10-29T15:13:29Z",
   "isPreRelease": false,
   "stars": 29,
   "avatarUrl": "https://avatars.githubusercontent.com/u/11970624?v=4",
