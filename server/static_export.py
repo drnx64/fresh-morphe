@@ -59,7 +59,7 @@ def export_db(db_path=DB_PATH, out_dir=EXPORT_DIR):
 
     parent = os.path.dirname(out_dir)
     Path(parent).mkdir(parents=True, exist_ok=True)
-    tmp_dir = tempfile.mkdtemp(prefix=".morphe-export-", dir=parent)
+    tmp_dir = tempfile.mkdtemp(prefix=".fresh-export-", dir=parent)
     try:
         write_json(os.path.join(tmp_dir, "meta.json"), meta)
         write_json(os.path.join(tmp_dir, "index.json"), index)

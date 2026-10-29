@@ -3,10 +3,14 @@ set -u
 HOME=${HOME:-/data/data/com.termux/files/home}
 PATH=/data/data/com.termux/files/usr/bin:$PATH
 export HOME PATH
-cd "$HOME/morphe" || exit 1
+FRESH_HOME=${FRESH_HOME:-$HOME/fresh-morphe}
+if [ ! -d "$FRESH_HOME" ] && [ -d "$HOME/morphe" ]; then
+  FRESH_HOME="$HOME/morphe"
+fi
+cd "$FRESH_HOME" || exit 1
 mkdir -p logs
 
-lock="$HOME/morphe/.pipeline.lock"
+lock="$FRESH_HOME/.pipeline.lock"
 if ! mkdir "$lock" 2>/dev/null; then
   pid=$(cat "$lock/pid" 2>/dev/null || true)
   if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then

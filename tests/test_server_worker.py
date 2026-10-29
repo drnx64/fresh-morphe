@@ -217,7 +217,11 @@ def test_worker_bootstraps_incrementally_and_merges_changelog(tmp_path):
         assert detail["apps"][0]["package"] == APP
         assert conn.execute("SELECT COUNT(*) FROM patch_targets").fetchone()[0] == 6
         assert conn.execute("SELECT COUNT(*) FROM changes").fetchone()[0] == 0
-        assert get_snapshot(conn, "changes") == {"affected_bundles": []}
+        # Bootstrap runs emit no changelog items, but the snapshot still carries
+        # the UTC day so the frontend can label an empty "What's New".
+        snapshot = get_snapshot(conn, "changes")
+        assert snapshot["affected_bundles"] == []
+        assert snapshot["date"] == get_meta(conn, "last_success_at")[:10]
         assert get_snapshot(conn, "core")["date"]
         assert get_snapshot(conn, "stats")["total_apps"] == 1
     finally:

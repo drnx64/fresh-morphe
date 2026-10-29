@@ -1,4 +1,4 @@
-"""Read-only phone API for MorpheTracker.
+"""Read-only phone API for Fresh Morphe.
 
 Stdlib only so Termux does not need a web framework. The process binds to
 localhost; Cloudflare Tunnel (or a VPS reverse proxy) is the public edge.
@@ -197,6 +197,27 @@ def bundle_repo_id(conn, bundle, channel):
     return row["repo_id"] if row else None
 
 
+def latest_change_payload(conn, exclude_date=None):
+    rows = conn.execute(
+        "SELECT payload_json FROM changes ORDER BY date DESC LIMIT 30"
+    ).fetchall()
+    for row in rows:
+        try:
+            day = json.loads(row["payload_json"])
+        except (TypeError, ValueError):
+            continue
+        if not isinstance(day, dict) or not day.get("date"):
+            continue
+        if exclude_date and day["date"] == exclude_date:
+            continue
+        if day.get("affected_bundles"):
+            return {
+                "date": day["date"],
+                "affected_bundles": day["affected_bundles"],
+            }
+    return None
+
+
 def search_apps(conn, query, limit=20):
     like = f"%{query}%"
     rows = conn.execute(
@@ -263,7 +284,7 @@ def app_detail(conn, package):
 
 
 class ApiHandler(BaseHTTPRequestHandler):
-    server_version = "MorpheTrackerAPI/1"
+    server_version = "FreshMorpheAPI/1"
 
     def log_message(self, fmt, *args):
         if getattr(self, "_dev", False):
@@ -372,7 +393,7 @@ class ApiHandler(BaseHTTPRequestHandler):
     def _root(self):
         self._send_json({
             "ok": True,
-            "service": "MorpheTracker read-only API",
+            "service": "Fresh Morphe read-only API",
             "version": "v1",
             "endpoints": {
                 "health": "/healthz",
@@ -425,6 +446,13 @@ class ApiHandler(BaseHTTPRequestHandler):
                     }
                 else:
                     value = {}
+            if head == "changes":
+                if not isinstance(value, dict):
+                    value = {}
+                if not value.get("affected_bundles") and not value.get("latest"):
+                    latest = latest_change_payload(conn, exclude_date=value.get("date"))
+                    if latest:
+                        value = {**value, "latest": latest}
             self._send_json(value)
         elif head == "changelog":
             limit = as_int((query.get("limit") or ["30"])[0], 30, 1, 200)
@@ -568,7 +596,7 @@ def serve(db_path=DB_PATH, host=API_HOST, port=API_PORT):
     server.allow_reuse_address = True
     server.db_path = db_path
     print(f"[api] listening on http://{host}:{port} using {db_path}", flush=True)
-    print("[api] verbose logging: localhost requests (MORPHE_DEBUG=1/0 overrides)", flush=True)
+    print("[api] verbose logging: localhost requests (FRESH_DEBUG=1/0 overrides)", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
@@ -578,7 +606,7 @@ def serve(db_path=DB_PATH, host=API_HOST, port=API_PORT):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Run the read-only MorpheTracker API")
+    parser = argparse.ArgumentParser(description="Run the read-only Fresh Morphe API")
     parser.add_argument("--db", default=DB_PATH)
     parser.add_argument("--host", default=API_HOST)
     parser.add_argument("--port", type=int, default=API_PORT)

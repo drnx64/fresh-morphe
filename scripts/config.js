@@ -4,14 +4,22 @@
  * The public site can run against the phone API, the static JSON snapshot, or
  * both (API first, snapshot fallback). Resolution order:
  *   1. ?api=<origin> on the current URL (handy for testing a quick tunnel)
- *   2. localStorage "morphe_api_base" (set it in devtools to pin an origin)
- *   3. public/config.js -> window.MORPHE_CONFIG.apiBase
+ *   2. localStorage "fresh_api_base" (set it in devtools to pin an origin)
+ *   3. public/config.js -> window.FRESH_CONFIG.apiBase
  *   4. static-only
  */
 const params = new URLSearchParams(window.location.search)
 const stored = (() => {
   try {
-    return localStorage.getItem('morphe_api_base') || ''
+    const value =
+      localStorage.getItem('fresh_api_base') ||
+      localStorage.getItem('morphe_api_base') ||
+      ''
+    if (value) {
+      localStorage.setItem('fresh_api_base', value)
+      localStorage.removeItem('morphe_api_base')
+    }
+    return value
   } catch {
     return ''
   }
@@ -25,7 +33,7 @@ function joinUrl(base, path) {
   return `${trimSlash(base)}/${String(path || '').replace(/^\/+/, '')}`
 }
 
-const configured = window.MORPHE_CONFIG || {}
+const configured = window.FRESH_CONFIG || window.MORPHE_CONFIG || {}
 export const API_BASE = trimSlash(params.get('api') || stored || configured.apiBase || '')
 export const API_ENABLED = Boolean(API_BASE)
 export const FALLBACK_BASE = trimSlash(configured.fallbackBase || 'data')

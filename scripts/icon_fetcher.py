@@ -10,7 +10,8 @@ import random
 import urllib.error
 import urllib.request
 from app_metadata import (
-    APP_CACHE_PATH, PLAY_SOURCE, clean_app_name, is_real_name, resolve_name, upsert,
+    APP_CACHE_PATH, PLAY_SOURCE, apply_icon_overrides, clean_app_name, is_real_name,
+    normalize_cache, resolve_name, upsert, valid_icon_url,
 )
 from state_manager import load_json, save_json
 
@@ -23,7 +24,9 @@ __all__ = [
     "enrich_parsed_bundles_with_icons",
     "enrich_parsed_bundles_with_names",
     "enrich_parsed_bundles_with_store_fallbacks",
+    "enrich_parsed_bundles_with_apkmirror_fallbacks",
     "apply_resolved_names",
+    "apply_parsed_bundle_icon_overrides",
     "retry_empty_icons",
 ]
 
@@ -124,12 +127,14 @@ def fetch_app_icon(package_name, skip_cache=False):
     if not skip_cache and pkg in cache:
         entry = cache[pkg]
         if isinstance(entry, dict):
-            return entry.get("icon_url", "")
-        return ""
+            cached_icon = valid_icon_url(entry.get("icon_url"))
+            if cached_icon:
+                return cached_icon
 
     name, icon_url = _fetch_app_details(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
     upsert(pkg, cache, name=name, name_source=PLAY_SOURCE,
            icon_url=icon_url, icon_source=PLAY_SOURCE)
     save_json(APP_CACHE_PATH, cache)
@@ -147,7 +152,11 @@ def enrich_parsed_bundles_with_icons(parsed_bundles):
                 all_packages.add(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
-    uncached = [p for p in all_packages if p not in cache or not cache[p].get("icon_url")]
+    normalize_cache(cache)
+    uncached = [
+        p for p in all_packages
+        if not valid_icon_url((cache.get(p) or {}).get("icon_url"))
+    ]
 
     if uncached:
         print(f"[icons] Fetching icons for {len(uncached)} uncached packages...")
@@ -163,16 +172,23 @@ def enrich_parsed_bundles_with_icons(parsed_bundles):
     return parsed_bundles
 
 
-def retry_empty_icons():
+def retry_empty_icons(max_packages=None):
     cache = load_json(APP_CACHE_PATH, default={})
-    empty_pkgs = [p for p, v in cache.items() if isinstance(v, dict) and not v.get("icon_url")]
+    fixed = normalize_cache(cache)
+    if fixed:
+        print(f"[icons] Normalized {fixed} malformed cache entries")
+        save_json(APP_CACHE_PATH, cache)
 
-    # Also fix entries where icon_url is not a string (e.g., {})
-    for p, v in list(cache.items()):
-        if isinstance(v, dict) and v.get("icon_url") and not isinstance(v["icon_url"], str):
-            print(f"[icons] Fixed non-string icon_url for {p}")
-            v["icon_url"] = ""
-            empty_pkgs.append(p)
+    empty_pkgs = [
+        p for p, v in cache.items()
+        if isinstance(v, dict) and not valid_icon_url(v.get("icon_url"))
+    ]
+    empty_pkgs.sort(key=lambda p: (
+        cache[p].get("last_icon_attempt") or 0,
+        cache[p].get("updated_at") or 0,
+    ))
+    if max_packages is not None:
+        empty_pkgs = empty_pkgs[:max_packages]
 
     if not empty_pkgs:
         print("[icons] No empty entries to retry.")
@@ -180,15 +196,26 @@ def retry_empty_icons():
 
     print(f"[icons] Retrying {len(empty_pkgs)} previously failed packages...")
     success = 0
+    attempted = []
     for i, pkg in enumerate(empty_pkgs):
         if i > 0 and i % 10 == 0:
             print(f"[icons] Retry progress: {i}/{len(empty_pkgs)} ({success} recovered)")
         result = fetch_app_icon(pkg, skip_cache=True)
         if result:
             success += 1
+        else:
+            attempted.append(pkg)
         if i < len(empty_pkgs) - 1:
             time.sleep(random.uniform(0.5, 1.2))
 
+    cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
+    now = int(time.time())
+    for pkg in attempted:
+        entry = cache.get(pkg)
+        if isinstance(entry, dict) and not valid_icon_url(entry.get("icon_url")):
+            entry["last_icon_attempt"] = now
+    save_json(APP_CACHE_PATH, cache)
     print(f"[icons] Retry done: {success}/{len(empty_pkgs)} recovered")
 
 
@@ -209,6 +236,7 @@ def fetch_and_cache_app_name(package_name):
     name, icon_url = _fetch_app_details(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
     upsert(pkg, cache, name=name, name_source=PLAY_SOURCE,
            icon_url=icon_url, icon_source=PLAY_SOURCE)
     save_json(APP_CACHE_PATH, cache)
@@ -281,6 +309,7 @@ def enrich_parsed_bundles_with_store_fallbacks(parsed_bundles):
                 all_packages.add(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
     try:
         import fdroid_source
         fdroid_source.enrich_unresolved(cache, all_packages)
@@ -290,6 +319,41 @@ def enrich_parsed_bundles_with_store_fallbacks(parsed_bundles):
 
     save_json(APP_CACHE_PATH, cache)
     apply_resolved_names(parsed_bundles, cache)
+    return parsed_bundles
+
+
+def enrich_parsed_bundles_with_apkmirror_fallbacks(parsed_bundles):
+    """Query APKMirror search for packages Play and F-Droid could not resolve."""
+    all_packages = set()
+    for record in parsed_bundles.values():
+        for app in record.get("apps", []):
+            pkg = app.get("package", "").lower().strip()
+            if pkg:
+                all_packages.add(pkg)
+
+    cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
+    try:
+        import apkmirror_source
+        apkmirror_source.enrich_unresolved(cache, all_packages)
+    except Exception as e:
+        print(f"[-] APKMirror lookup failed (non-fatal): {e}")
+        return parsed_bundles
+
+    save_json(APP_CACHE_PATH, cache)
+    apply_resolved_names(parsed_bundles, cache)
+    return parsed_bundles
+
+
+def apply_parsed_bundle_icon_overrides(parsed_bundles):
+    """Apply data/state/icon_overrides.json after every automatic source."""
+    cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
+    applied = apply_icon_overrides(cache)
+    if applied:
+        save_json(APP_CACHE_PATH, cache)
+        apply_resolved_names(parsed_bundles, cache)
+        print(f"[icons] Applied {applied} manual overrides")
     return parsed_bundles
 
 

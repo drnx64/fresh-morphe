@@ -24,8 +24,12 @@ def is_local_host(value):
 
 
 def dev_logging_enabled(host):
-    """MORPHE_DEBUG overrides detection; otherwise only loopback is verbose."""
-    override = os.environ.get("MORPHE_DEBUG", "").strip().lower()
+    """FRESH_DEBUG overrides detection; otherwise only loopback is verbose."""
+    override = (
+        os.environ.get("FRESH_DEBUG")
+        or os.environ.get("MORPHE_DEBUG")
+        or ""
+    ).strip().lower()
     if override in TRUE_VALUES:
         return True
     if override in FALSE_VALUES:

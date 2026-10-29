@@ -69,7 +69,7 @@ def fetch_gitlab_repo_details(repo):
     request = urllib.request.Request(
         "https://gitlab.com/api/graphql",
         data=payload,
-        headers={"Content-Type": "application/json", "User-Agent": "MorpheTracker/1.0"},
+        headers={"Content-Type": "application/json", "User-Agent": "FreshMorphe/1.0"},
     )
     try:
         with urllib.request.urlopen(request, timeout=10) as response:

@@ -21,7 +21,7 @@ import {
 } from './iconCache.js'
 import { devLog } from '../utils/devLog.js'
 
-const QUEUE_KEY = 'morphe_icon_queue_v1'
+const QUEUE_KEY = 'fresh_icon_queue_v1'
 const SWEEP_PAUSE_MIN_MS = 1000
 const SWEEP_PAUSE_JITTER_MS = 1000
 const PERSIST_THROTTLE_MS = 2000

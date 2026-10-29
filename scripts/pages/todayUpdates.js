@@ -15,8 +15,8 @@ import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
 import { renderColorGame } from '../components/colorGame.js'
 
 const HIERARCHY_ORDER = { 'NEW BUNDLE': 0, 'UPDATED': 1, 'REMOVED BUNDLE': 2 }
-const STORAGE_KEY = 'morphe_updates_collapsed'
-const HIDE_DEV_KEY = 'morphe_hide_dev'
+const STORAGE_KEY = 'fresh_updates_collapsed'
+const HIDE_DEV_KEY = 'fresh_hide_dev'
 
 function isHideDev() {
   return localStorage.getItem(HIDE_DEV_KEY) === 'true'
@@ -27,19 +27,34 @@ export function renderTodayUpdates() {
 
   const isCollapsed = localStorage.getItem(STORAGE_KEY) !== 'false'
 
+  const changes = store.get('changes')
+  const todayBundles = Array.isArray(changes?.affected_bundles) ? changes.affected_bundles : []
+  const latest = changes?.latest
+  const latestBundles = Array.isArray(latest?.affected_bundles) ? latest.affected_bundles : []
+  const usingLatest = todayBundles.length === 0 && latestBundles.length > 0
+  const displayDate = usingLatest
+    ? (latest.date || '')
+    : (changes?.date || store.get('liveDataDate') || '')
+  let affectedBundles = usingLatest ? latestBundles : todayBundles
+
   const headingRow = el('div', { class: 'today-updates-heading-row' })
   const headingLeft = el('div', { class: 'today-updates-heading-left' })
   headingLeft.appendChild(el('h2', { class: 'section-title', id: 'today-heading' }, ["What's New"]))
 
-  const liveDate = store.get('liveDataDate') || ''
-  if (liveDate) {
-    const liveParts = dateParts(liveDate)
+  if (displayDate) {
+    const liveParts = dateParts(displayDate)
     const liveDateEl = el('span', { class: 'today-updates-date' }, [
       el('span', { class: 'today-updates-date-day' }, [liveParts.day]),
       ` ${liveParts.month}, ${liveParts.year}`,
     ])
-    liveDateEl.style.setProperty('--date-hue', String(dayHue(liveDate)))
+    liveDateEl.style.setProperty('--date-hue', String(dayHue(displayDate)))
     headingLeft.appendChild(liveDateEl)
+  }
+  if (usingLatest) {
+    headingLeft.appendChild(el('span', {
+      class: 'today-updates-latest',
+      title: 'No changes today - showing the most recent updates',
+    }, ['Latest']))
   }
   headingRow.appendChild(headingLeft)
 
@@ -67,8 +82,6 @@ export function renderTodayUpdates() {
 
   const body = el('div', { class: 'today-updates-body' })
 
-  const changes = store.get('changes')
-  let affectedBundles = changes?.affected_bundles
   if (affectedBundles && isHideDev()) {
     affectedBundles = affectedBundles.filter((b) => b.channel !== 'dev')
   }

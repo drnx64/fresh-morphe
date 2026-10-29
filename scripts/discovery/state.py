@@ -28,6 +28,21 @@ def review_path():
     return os.path.join(state_manager.STATE_DIR, "discovery_review.json")
 
 
+LEGACY_PROVIDER = "awesome"
+PROVIDER = "fresh"
+
+
+def _normalize_sources(value):
+    if not isinstance(value, list):
+        return value
+    normalized = []
+    for item in value:
+        item = PROVIDER if item == LEGACY_PROVIDER else item
+        if item not in normalized:
+            normalized.append(item)
+    return normalized
+
+
 def empty_state():
     return {
         "generated_at": "",
@@ -46,6 +61,9 @@ def load_state():
     state.update(data)
     if not isinstance(state.get("repos"), dict):
         state["repos"] = {}
+    for entry in state["repos"].values():
+        if isinstance(entry, dict) and "sources" in entry:
+            entry["sources"] = _normalize_sources(entry["sources"])
     return state
 
 
@@ -56,7 +74,16 @@ def save_state(state):
 
 def load_provider_runs():
     data = state_manager.load_json(provider_runs_path(), default={})
-    return data if isinstance(data, dict) else {}
+    if not isinstance(data, dict):
+        return {}
+    if LEGACY_PROVIDER in data:
+        legacy = data.pop(LEGACY_PROVIDER)
+        if PROVIDER in data and isinstance(data[PROVIDER], dict) and isinstance(legacy, dict):
+            for key, value in legacy.items():
+                data[PROVIDER].setdefault(key, value)
+        elif PROVIDER not in data:
+            data[PROVIDER] = legacy
+    return data
 
 
 def save_provider_runs(data):

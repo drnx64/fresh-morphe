@@ -1,8 +1,8 @@
-# Morphe Tracker — Architecture Reference
+# Fresh Morphe — Architecture Reference
 
 ## Overview
 
-Morphe Tracker is a fully automated monitoring system that crawls the
+Fresh Morphe is a fully automated monitoring system that crawls the
 [Jman-Github/ReVanced-Patch-Bundles](https://github.com/Jman-Github/ReVanced-Patch-Bundles)
 registry, discovers Morphe `.mpp` patch bundles, parses their compatible apps and patches,
 detects changes via SHA-256 fingerprinting, accumulates daily changelogs, enriches app data
@@ -17,7 +17,7 @@ stale-while-revalidate for the data files.
 ## File Tree
 
 ```
-MorpheTracker/
+fresh-morphe/
 |
 |-- .env                          # Telegram bot token & chat ID (secrets, gitignored)
 |-- .gitignore
@@ -57,7 +57,7 @@ MorpheTracker/
 |   |   |-- previous_snapshot.json# Snapshot before current (for diffing)
 |   |   |-- daily_buffer.json     # Today's accumulated changes
 |   |   |-- last_run.json         # Pipeline metadata (errors, counts, timestamps)
-|   |   |-- icon_cache.json       # Cached Google Play icon URLs by package name
+|   |   |-- app_cache.json        # Verified names/icons by package (Play, F-Droid, APKMirror)
 |   |
 |   |-- output/
 |       |-- changelog.json        # Structured changelog (array of day entries)
@@ -69,7 +69,9 @@ MorpheTracker/
     |-- fetch_patch_tree.py       # Step 1-2: crawl GitHub Git Trees API
     |-- download_bundles.py       # Step 3: download & validate Morphe bundle JSONs
     |-- parse_bundles.py          # Step 4: extract apps, patches, repo URLs + icon enrichment
-    |-- icon_fetcher.py           # Google Play Store icon scraper with cache
+    |-- icon_fetcher.py           # Play Store icon scraper + fallback orchestration
+|-- fdroid_source.py          # F-Droid metadata fallback
+|-- apkmirror_source.py       # APKMirror search fallback (title-verified)
     |-- fingerprint_engine.py     # Step 5: SHA-256 fingerprinting
     |-- diff_engine.py            # Step 6: compare old vs new fingerprints
     |-- merge_daily_buffer.py     # Step 7-8: buffer, finalize day, update data files
@@ -83,7 +85,7 @@ MorpheTracker/
 
 ```
 UPSTREAM REGISTRY                          LOCAL DISK                        WEB UI
-(Jman-Github/                              (MorpheTracker repo)
+(Jman-Github/                              (Fresh Morphe repo)
  ReVanced-Patch-Bundles)
 
 bundles branch
@@ -217,21 +219,22 @@ bundles branch
 }
 ```
 
-The `icon_url` field is populated by `icon_fetcher.py` during parsing, using Google Play Store's `og:image` meta tag.
+The registry entry is populated by `icon_fetcher.py` during parsing. Store fallbacks run in order: Play Store (`og:image`), F-Droid, APKMirror search, then manual `data/state/icon_overrides.json`; unresolved apps get an initial-letter tile in the UI.
 
 ---
 
-### 5. `icon_fetcher.py` (99 lines)
+### 5. `icon_fetcher.py`
 
-**Role:** Fetches Google Play Store app icons for each package name.
+**Role:** Resolves app names and icons, with store fallbacks.
 
 **How it works:**
-- Makes a request to `https://play.google.com/store/apps/details?id={package_name}` with a browser User-Agent
-- Parses the HTML with BeautifulSoup (`lxml` parser)
-- Extracts the `og:image` meta tag content as the icon URL
-- Falls back to `""` if the page errors or the tag is not found
-- Results cached in `data/state/icon_cache.json` to avoid re-scraping every pipeline run
-- Batch-enriches all apps after parsing via `enrich_parsed_bundles_with_icons()`
+- Play Store: requests `https://play.google.com/store/apps/details?id={package_name}` with a browser User-Agent and extracts `og:image`/`og:title`
+- F-Droid: `fdroid_source.py` reads the package page for names and repo icons
+- APKMirror: `apkmirror_source.py` reads the public search page and accepts a row only when its title matches the name derived from the package id
+- Manual overrides in `data/state/icon_overrides.json` win over every automatic source
+- Results cached in `data/state/app_cache.json`; malformed `icon_url` values are normalized to `""`
+- `retry_empty_icons(max_packages=40)` retries the oldest empty entries each run
+- Batch-enriches all apps after parsing via `enrich_parsed_bundles_with_icons()` and the fallback helpers
 
 ---
 
@@ -371,7 +374,7 @@ directly on disk. The script exists to ensure files survive a fresh GitHub Actio
 - **Background refresh:** When fresh data is fetched, posts `DATA_UPDATED` message to all clients
 - **On message:** Dashboard re-fetches and re-renders stats, updates, and bundle grid
 - **On message:** Changelog page re-invokes `initChangelog()`
-- **Cache versioning:** Cache named `morphe-tracker-v1`, old caches purged on activate
+- **Cache versioning:** Cache named `fresh-morphe-v1`, old caches purged on activate
 
 ### `app.js` Key Functions
 
@@ -562,10 +565,10 @@ Forces the current daily buffer to finalize immediately (creates changelog entry
 
 ### Icon Cache
 
-App icons are cached in `data/state/icon_cache.json`. To clear the cache and force re-fetch:
+App metadata is cached in `data/state/app_cache.json` (Play/F-Droid/APKMirror names and icons), with per-source lookup caches in `fdroid_cache.json` and `apkmirror_cache.json`. To clear the registry and force re-fetch:
 
 ```bash
-echo {} > data/state/icon_cache.json
+echo {} > data/state/app_cache.json
 ```
 
-The cache is checked before each pipeline run so previously fetched icons are not re-scraped.
+The cache is checked before each pipeline run so previously fetched icons are not re-scraped. Add manual fixes to `data/state/icon_overrides.json`, which take precedence over all automatic sources.

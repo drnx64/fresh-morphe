@@ -3,8 +3,8 @@
  */
 import * as store from '../store.js'
 
-export const SITE_URL = 'https://drnx64.github.io/morphe-track-patches'
-export const GITHUB_REPO_URL = 'https://github.com/drnx64/morphe-track-patches'
+export const SITE_URL = 'https://drnx64.github.io/fresh-morphe'
+export const GITHUB_REPO_URL = 'https://github.com/drnx64/fresh-morphe'
 
 export function getRepoInfo(repoUrl) {
   if (!repoUrl) return { isGitLab: false, path: '' }

@@ -12,7 +12,7 @@ import { SEARCH_ICON } from '../utils/svg.js'
 const MAX_APP_RESULTS = 6
 const MAX_BUNDLE_RESULTS = 4
 const MAX_RECENT = 5
-const RECENT_STORAGE_KEY = 'morphe_recent_searches'
+const RECENT_STORAGE_KEY = 'fresh_recent_searches'
 
 function getRecentSearches() {
   try {

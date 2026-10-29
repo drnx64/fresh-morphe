@@ -150,10 +150,10 @@ def build_running_payload(summary):
     return {
         "allowed_mentions": {"parse": []},
         "embeds": [{
-            "title": "Morphe worker running",
+            "title": "Fresh Morphe worker running",
             "description": f"Started: `{started}`\nWaiting for mirror results…",
             "color": COLOR_RUNNING,
-            "footer": {"text": "MorpheTracker • phone worker"},
+            "footer": {"text": "Fresh Morphe • phone worker"},
         }],
     }
 
@@ -163,7 +163,7 @@ def build_finished_payload(summary, error=None):
     if error is not None:
         errors.append({"url": "worker", "branch": "", "error": str(error)})
     failed = bool(errors)
-    title = "Morphe worker finished with errors" if failed else "Morphe worker finished"
+    title = "Fresh Morphe worker finished with errors" if failed else "Fresh Morphe worker finished"
     color = COLOR_ERROR if error is not None else (COLOR_PARTIAL if failed else COLOR_OK)
     started = _format_timestamp(summary.get("started_at"))
     finished = _format_timestamp(summary.get("finished_at") or utc_now())
@@ -197,7 +197,7 @@ def build_finished_payload(summary, error=None):
             "description": _clean("\n".join(description_parts), DISCORD_MAX_DESCRIPTION),
             "color": color,
             "fields": fields,
-            "footer": {"text": "MorpheTracker • phone worker"},
+            "footer": {"text": "Fresh Morphe • phone worker"},
         }],
     }
 
@@ -285,7 +285,7 @@ class DiscordNotifier:
                 method=method,
                 headers={
                     "Content-Type": "application/json",
-                    "User-Agent": "MorpheTrackerWorker/1.0",
+                    "User-Agent": "FreshMorpheWorker/1.0",
                 },
             )
             try:

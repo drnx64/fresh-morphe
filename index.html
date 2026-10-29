@@ -3,55 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Morphe Tracker — App Patch Bundles, Compatible Apps & Changelog</title>
+    <title>Fresh Morphe — App Patch Bundles, Compatible Apps & Changelog</title>
     <meta
       name="description"
-      content="Automated patch tracker for Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap." />
+      content="Fresh Morphe tracks Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap. Freshly patched, freshly posted." />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#fbf7f4">
     <meta name="author" content="drnx64" />
     <meta name="google-site-verification" content="7YmvVgfw2TZntcB_0wiT1NEREuO9dtZTXgn2vED_lyQ" />
-    <link rel="canonical" href="https://drnx64.github.io/morphe-track-patches/" />
+    <link rel="canonical" href="https://drnx64.github.io/fresh-morphe/" />
     <script>
       // FOUC guard — apply the saved theme before the stylesheet is parsed so
       // the first paint is already the right palette (scripts/app.js re-reads
       // the same value for the toggle button).
       try {
-        document.documentElement.setAttribute(
-          'data-theme',
-          localStorage.getItem('morphe_theme') || 'light',
-        )
+        var savedTheme =
+          localStorage.getItem('fresh_theme') ||
+          localStorage.getItem('morphe_theme') ||
+          'light'
+        localStorage.setItem('fresh_theme', savedTheme)
+        localStorage.removeItem('morphe_theme')
+        document.documentElement.setAttribute('data-theme', savedTheme)
       } catch (e) { /* private mode: keep the CSS default */ }
     </script>
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Morphe Tracker" />
-    <meta property="og:title" content="Morphe Tracker — App Patch Bundles, Compatible Apps & Changelog" />
+    <meta property="og:site_name" content="Fresh Morphe" />
+    <meta property="og:title" content="Fresh Morphe — App Patch Bundles, Compatible Apps & Changelog" />
     <meta
       property="og:description"
-      content="Automated patch tracker for Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap." />
-    <meta property="og:url" content="https://drnx64.github.io/morphe-track-patches/" />
-    <meta property="og:image" content="https://drnx64.github.io/morphe-track-patches/public/tracker_logo.jpg" />
+      content="Fresh Morphe tracks Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap. Freshly patched, freshly posted." />
+    <meta property="og:url" content="https://drnx64.github.io/fresh-morphe/" />
+    <meta property="og:image" content="https://drnx64.github.io/fresh-morphe/public/fresh-og.jpg" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Morphe Tracker — App Patch Bundles, Compatible Apps & Changelog" />
+    <meta name="twitter:title" content="Fresh Morphe — App Patch Bundles, Compatible Apps & Changelog" />
     <meta
       name="twitter:description"
-      content="Automated patch tracker for Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap." />
-    <meta name="twitter:image" content="https://drnx64.github.io/morphe-track-patches/public/tracker_logo.jpg" />
+      content="Fresh Morphe tracks Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap. Freshly patched, freshly posted." />
+    <meta name="twitter:image" content="https://drnx64.github.io/fresh-morphe/public/fresh-og.jpg" />
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Morphe Tracker",
-      "url": "https://drnx64.github.io/morphe-track-patches/",
-      "description": "Automated patch tracker for Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap.",
+      "name": "Fresh Morphe",
+      "url": "https://drnx64.github.io/fresh-morphe/",
+      "description": "Fresh Morphe tracks Morphe application patches. Browse compatible apps across stable and dev bundles, monitor updates, and add patch sources to Morphe with one tap. Freshly patched, freshly posted.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Any",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
     </script>
-    <link rel="alternate" type="application/rss+xml" title="Morphe Tracker Changelog" href="feed.xml" />
-    <link rel="alternate" type="application/rss+xml" title="Morphe Tracker Daily Updates" href="feed-daily.xml" />
-    <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Fresh Morphe Changelog" href="feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Fresh Morphe Daily Updates" href="feed-daily.xml" />
+    <link rel="icon" href="public/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="public/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png" />
     <link rel="preconnect" href="https://play-lh.googleusercontent.com" crossorigin />
     <link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin />
     <link rel="stylesheet" href="assets/css/1-tokens.css" />
@@ -80,7 +86,7 @@
     var name = _error ? _error.name || 'Error' : 'Error'
     var msg = _error ? _error.message || 'No message' : 'No message'
     var stack = _error ? _error.stack || 'No stack trace' : 'No stack trace'
-    var tech = ['Vanilla ES Modules (no framework)','Hash-based SPA routing','IndexedDB (MorpheTrackerCache)','CSS custom properties (dark/light)','Python 3 (backend crawl & diff pipeline)'].map(function(s){return '<li>'+s+'</li>'}).join('')
+    var tech = ['Vanilla ES Modules (no framework)','Hash-based SPA routing','IndexedDB (FreshMorpheCache)','CSS custom properties (dark/light)','Python 3 (backend crawl & diff pipeline)'].map(function(s){return '<li>'+s+'</li>'}).join('')
     var html = '<div class="error-page-box"><div class="error-page-icon">!</div><h1 class="error-page-title">Something went wrong</h1><p class="error-page-subtitle">An unexpected error occurred. The application may not function correctly.</p><div class="error-page-details"><div class="error-page-section"><span class="error-page-label">Error</span><code class="error-page-value">'+esc(name)+'</code></div><div class="error-page-section"><span class="error-page-label">Message</span><code class="error-page-value error-page-message">'+esc(msg)+'</code></div>'+(stack?'<div class="error-page-section"><span class="error-page-label">Stack Trace</span><pre class="error-page-pre">'+esc(stack)+'</pre></div>':'')+'<div class="error-page-section"><span class="error-page-label">Tech Stack</span><ul class="error-page-tech-list">'+tech+'</ul></div></div><div class="error-page-actions"><button class="error-page-btn error-page-btn-primary" onclick="location.reload()">Retry</button><button class="error-page-btn error-page-btn-copy" id="mt-copy">Copy Error Details</button></div></div>'
     var div = document.createElement('div')
     div.id = 'mt-error-page'
@@ -88,7 +94,7 @@
     div.innerHTML = html
     document.body.appendChild(div)
     document.getElementById('mt-copy').onclick = function() {
-      var t = 'Error: '+name+'\nMessage: '+msg+'\nStack: '+stack+'\n\nTech Stack:\n- Vanilla ES Modules (no framework)\n- Hash-based SPA routing\n- IndexedDB (MorpheTrackerCache)\n- CSS custom properties (dark/light)\n- Python 3 (backend crawl & diff pipeline)\n\nURL: '+window.location.href+'\nUser Agent: '+navigator.userAgent+'\n\n--- How to fix ---\nPaste the above error details in your chat with opencode to get help fixing this issue.'
+      var t = 'Error: '+name+'\nMessage: '+msg+'\nStack: '+stack+'\n\nTech Stack:\n- Vanilla ES Modules (no framework)\n- Hash-based SPA routing\n- IndexedDB (FreshMorpheCache)\n- CSS custom properties (dark/light)\n- Python 3 (backend crawl & diff pipeline)\n\nURL: '+window.location.href+'\nUser Agent: '+navigator.userAgent+'\n\n--- How to fix ---\nPaste the above error details in your chat with opencode to get help fixing this issue.'
       try { navigator.clipboard.writeText(t) } catch(e) {}
     }
   }
@@ -109,10 +115,10 @@
           <div class="header-top-row">
             <div class="header-title-group">
               <div class="header-title-row">
-                <img class="header-logo" src="public/tracker_logo.webp" alt="" width="28" height="28" />
-                <h1 id="main-title" class="header-title-clickable" title="Double-click to toggle reduced motion">Morphe Tracker</h1>
+                <img class="header-logo" src="public/fresh-logo.webp" alt="" width="28" height="28" />
+                <h1 id="main-title" class="header-title-clickable" title="Double-click to toggle reduced motion">Fresh Morphe</h1>
               </div>
-              <span class="subtitle">Patch monitoring &amp; changelog dashboard</span>
+              <span class="subtitle">Freshly patched, freshly posted.</span>
             </div>
             <div class="header-right-row" id="header-actions">
               <div class="header-color-slot" id="color-game-slot"></div>
@@ -141,11 +147,11 @@
       <footer class="app-footer">
         <div class="footer-inner">
           <div class="footer-links">
-            <a href="https://drnx64.github.io/morphe-track-patches/feed.xml" target="_blank" rel="noopener">RSS Feed</a>
+            <a href="https://drnx64.github.io/fresh-morphe/feed.xml" target="_blank" rel="noopener">RSS Feed</a>
             <span class="footer-sep">|</span>
-            <a href="https://github.com/drnx64/morphe-track-patches" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://github.com/drnx64/fresh-morphe" target="_blank" rel="noopener">GitHub</a>
           </div>
-          <p class="footer-disclaimer">MorpheTracker is not affiliated with or endorsed by any app developers.</p>
+          <p class="footer-disclaimer">Fresh Morphe is not affiliated with or endorsed by any app developers.</p>
         </div>
       </footer>
       <nav class="bottom-nav" id="bottom-nav" aria-label="Primary navigation">

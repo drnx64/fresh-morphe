@@ -1,4 +1,4 @@
-"""SQLite helpers for the phone-hosted MorpheTracker service."""
+"""SQLite helpers for the phone-hosted Fresh Morphe service."""
 import json
 import os
 import sqlite3

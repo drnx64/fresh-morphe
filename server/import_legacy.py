@@ -2,7 +2,7 @@
 
 Usage:
     python -m server.import_legacy --reset
-    python -m server.import_legacy --db ~/morphe/morphe.db --data-dir ./data
+    python -m server.import_legacy --db ~/fresh-morphe/fresh.db --data-dir ./data
 """
 import argparse
 import hashlib
@@ -370,7 +370,12 @@ def sync_changes(conn, data_dir, now=None):
         or core.get("lastChecked")
         or now
     )
-    today = core.get("date") or last_checked[:10] or now[:10]
+    today = (
+        (changes.get("date") if isinstance(changes, dict) else None)
+        or core.get("date")
+        or last_checked[:10]
+        or now[:10]
+    )
 
     for day in changelog:
         _upsert_change(conn, day)
@@ -378,6 +383,20 @@ def sync_changes(conn, data_dir, now=None):
     affected = changes.get("affected_bundles") if isinstance(changes, dict) else None
     if not isinstance(affected, list):
         affected = []
+
+    latest = changes.get("latest") if isinstance(changes, dict) else None
+    if not isinstance(latest, dict) or not latest.get("affected_bundles"):
+        latest = None
+        if not affected:
+            for day in changelog:
+                if not isinstance(day, dict) or day.get("date") == today:
+                    continue
+                if day.get("affected_bundles"):
+                    latest = {
+                        "date": day["date"],
+                        "affected_bundles": day["affected_bundles"],
+                    }
+                    break
 
     if affected:
         _upsert_change(conn, {
@@ -393,7 +412,10 @@ def sync_changes(conn, data_dir, now=None):
         )
 
     if changes_exists:
-        set_snapshot(conn, "changes", {"affected_bundles": affected})
+        snapshot = {"date": today, "affected_bundles": affected}
+        if latest:
+            snapshot["latest"] = latest
+        set_snapshot(conn, "changes", snapshot)
 
     set_meta(conn, "last_checked", last_checked)
     if last_run.get("completed_at"):
@@ -595,7 +617,7 @@ def import_data(db_path, data_dir, reset=False):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Import legacy MorpheTracker JSON into SQLite")
+    parser = argparse.ArgumentParser(description="Import legacy Fresh Morphe JSON into SQLite")
     parser.add_argument("--db", default=DB_PATH)
     parser.add_argument("--data-dir", default=DATA_DIR)
     parser.add_argument("--reset", action="store_true", help="delete the existing DB before importing")

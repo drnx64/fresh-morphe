@@ -36,13 +36,14 @@ from server.import_legacy import ensure_repo, normalize_url, upsert_bundle, upse
 from server.notify import DiscordNotifier
 
 
-DEFAULT_SOURCE_BASE = os.environ.get(
-    "MORPHE_SOURCE_BASE",
-    "https://raw.githubusercontent.com/nvbangg/awesome-morphe/main/",
+DEFAULT_SOURCE_BASE = (
+    os.environ.get("FRESH_SOURCE_BASE")
+    or os.environ.get("MORPHE_SOURCE_BASE")
+    or "https://raw.githubusercontent.com/nvbangg/awesome-morphe/main/"
 )
 WORKER_VERSION = "1"
 BOOTSTRAP_META = "worker_bootstrap_done"
-USER_AGENT = "MorpheTrackerWorker/1.0"
+USER_AGENT = "FreshMorpheWorker/1.0"
 
 BRANCH_CHANNELS = (("main", "stable"), ("dev", "dev"))
 GENERIC_BUNDLE_NAMES = frozenset({
@@ -752,6 +753,31 @@ def merge_changes(conn, affected, now):
     return payload
 
 
+def today_change_payload(conn, now):
+    """Return the accumulated changelog payload for the UTC day containing ``now``.
+
+    Snapshots must describe the whole day, not the current run's delta: a scan
+    that finds nothing new used to write an empty ``affected_bundles`` list and
+    blank the frontend's "What's New" section until the next pipeline import.
+    """
+    date = now[:10]
+    row = conn.execute(
+        "SELECT payload_json FROM changes WHERE date = ?", (date,)
+    ).fetchone()
+    payload = {}
+    if row:
+        try:
+            loaded = json.loads(row["payload_json"])
+        except (TypeError, ValueError):
+            loaded = {}
+        if isinstance(loaded, dict):
+            payload = loaded
+    payload.setdefault("date", date)
+    if not isinstance(payload.get("affected_bundles"), list):
+        payload["affected_bundles"] = []
+    return payload
+
+
 def make_snapshots(conn, now):
     counts = table_counts(conn)
     today = now[:10]
@@ -1087,7 +1113,9 @@ class Worker:
             with conn:
                 if changes:
                     merge_changes(conn, changes, now)
-                set_snapshot(conn, "changes", {"affected_bundles": changes})
+                # Snapshot the day's accumulated entries, never just this run's
+                # delta — otherwise a quiet scan blanks "What's New".
+                set_snapshot(conn, "changes", today_change_payload(conn, now))
                 data_version, counts = make_snapshots(conn, now)
                 if bootstrap and not summary["errors"] and limit is None:
                     set_meta(conn, BOOTSTRAP_META, "1")
@@ -1129,7 +1157,7 @@ class Worker:
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Incrementally update MorpheTracker SQLite from the awesome-morphe mirror")
+    parser = argparse.ArgumentParser(description="Incrementally update Fresh Morphe SQLite from the awesome-morphe mirror")
     parser.add_argument("--db", default=DB_PATH)
     parser.add_argument("--source-base", default=DEFAULT_SOURCE_BASE)
     parser.add_argument("--force", action="store_true", help="refetch every branch even when its hash is unchanged")

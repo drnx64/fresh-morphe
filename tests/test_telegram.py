@@ -145,13 +145,14 @@ class TestEditInPlace:
         assert "Updated" not in first
         assert re.search(r"Updated \d{1,2}:\d{2} (AM|PM) UTC", last)
 
-    def test_identical_content_counts_as_success(self, env):
+    def test_identical_content_skips_the_api(self, env):
+        """Unchanged digests must not re-edit: CI and the phone share one message."""
         fake, path = env
         tg.send_or_edit(["same"], token=TOKEN, chat_id=CHAT)
         fake.reset()
-        tg.send_or_edit(["same"], token=TOKEN, chat_id=CHAT)
+        assert tg.send_or_edit(["same"], token=TOKEN, chat_id=CHAT) is True
         assert fake.of("sendMessage") == []
-        assert len(fake.of("editMessageText")) == 1
+        assert fake.of("editMessageText") == []
         assert read_state(path)["messages"][0]["message_id"] == 101
 
     def test_growth_sends_new_chunk_and_keeps_older_ids(self, env):

@@ -9,7 +9,7 @@ import urllib.request
 def get_auth_headers(url="", extra=None):
     """Return headers with User-Agent and optional GITHUB_TOKEN auth."""
     headers = dict(extra) if extra else {}
-    headers.setdefault("User-Agent", "MorpheTracker/1.0")
+    headers.setdefault("User-Agent", "FreshMorphe/1.0")
     parsed = urllib.request.urlsplit(url)
     is_github = any(h in (parsed.hostname or "") for h in ("github.com", "githubusercontent.com"))
     if is_github:

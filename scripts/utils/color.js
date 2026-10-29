@@ -13,16 +13,27 @@ function pad2(n) {
   return String(n).padStart(2, '0')
 }
 
-/** Local-midnight ISO date (YYYY-MM-DD), never UTC. */
-export function localISODate(date = new Date()) {
-  return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`
+/** UTC ISO date (YYYY-MM-DD), matching the pipeline's day boundary. */
+export function utcISODate(date = new Date()) {
+  return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())}`
 }
 
-/** Local ISO date shifted by whole days. */
+/** UTC ISO date shifted by whole days. */
 export function addDays(dateStr, days) {
   const [y, m, d] = String(dateStr).split('-').map(Number)
-  const shifted = new Date(y, (m || 1) - 1, (d || 1) + days)
-  return localISODate(shifted)
+  const shifted = new Date(Date.UTC(y, (m || 1) - 1, (d || 1) + days))
+  return utcISODate(shifted)
+}
+
+/** Milliseconds until just after the next UTC midnight. */
+export function msUntilNextUtcMidnight(now = new Date()) {
+  const next = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    0, 0, 5,
+  )
+  return Math.max(1000, next - now.getTime())
 }
 
 export function hslToRgb(h, s, l) {

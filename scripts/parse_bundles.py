@@ -382,6 +382,28 @@ def parse_all_bundles():
     except Exception as e:
         print(f"[-] F-Droid enrichment failed (non-fatal): {e}")
 
+    # Then APKMirror search, which covers many Play-less closed-source apps
+    print("\n--- Looking up unresolved apps on APKMirror ---")
+    try:
+        from icon_fetcher import enrich_parsed_bundles_with_apkmirror_fallbacks
+        enrich_parsed_bundles_with_apkmirror_fallbacks(parsed_bundles)
+    except Exception as e:
+        print(f"[-] APKMirror enrichment failed (non-fatal): {e}")
+
+    # Manual overrides win over every automatic source
+    try:
+        from icon_fetcher import apply_parsed_bundle_icon_overrides
+        apply_parsed_bundle_icon_overrides(parsed_bundles)
+    except Exception as e:
+        print(f"[-] Icon override application failed (non-fatal): {e}")
+
+    # Retry a bounded batch of older empty registry entries each run
+    try:
+        from icon_fetcher import retry_empty_icons
+        retry_empty_icons(max_packages=40)
+    except Exception as e:
+        print(f"[-] Empty-icon retry failed (non-fatal): {e}")
+
     # Save parsed bundles
     save_json(os.path.join(RAW_DIR, "parsed_bundles.json"), parsed_bundles)
     

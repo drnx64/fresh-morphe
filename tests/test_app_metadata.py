@@ -4,6 +4,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
 
 import app_metadata as m
+import icon_fetcher as icons
 
 
 class TestDeriveName:
@@ -110,6 +111,41 @@ class TestResolveIcon:
     def test_missing_icon(self):
         assert m.resolve_icon("com.x", {"com.x": {"name": "X", "icon_url": ""}}) == ("", "")
 
+    def test_malformed_icon_is_a_miss(self):
+        assert m.resolve_icon("com.x", {"com.x": {"icon_url": {}}}) == ("", "")
+        assert m.resolve_icon("com.x", {"com.x": {"icon_url": None}}) == ("", "")
+
+    def test_normalize_cache_repairs_malformed_values(self):
+        cache = {
+            "com.a": {"icon_url": {}},
+            "com.b": {"icon_url": None},
+            "com.c": "junk",
+            "com.d": {"icon_url": "https://i/d.png"},
+        }
+        assert m.normalize_cache(cache) == 3
+        assert cache["com.a"]["icon_url"] == ""
+        assert cache["com.b"]["icon_url"] == ""
+        assert cache["com.c"] == {"icon_url": ""}
+        assert cache["com.d"]["icon_url"] == "https://i/d.png"
+
+
+class TestIconOverrides:
+    def test_override_wins_and_records_manual_source(self, tmp_path):
+        path = tmp_path / "icon_overrides.json"
+        path.write_text('{"com.x": {"name": "X App", "icon_url": "https://i/x.png"}}', encoding="utf-8")
+        cache = {"com.x": {"icon_url": "", "icon_source": "play"}}
+        assert m.apply_icon_overrides(cache, str(path)) == 1
+        assert cache["com.x"]["icon_url"] == "https://i/x.png"
+        assert cache["com.x"]["icon_source"] == m.MANUAL_SOURCE
+        assert cache["com.x"]["name"] == "X App"
+
+    def test_string_override_is_an_icon_url(self, tmp_path):
+        path = tmp_path / "icon_overrides.json"
+        path.write_text('{"com.x": "https://i/x.png"}', encoding="utf-8")
+        cache = {}
+        assert m.apply_icon_overrides(cache, str(path)) == 1
+        assert cache["com.x"]["icon_url"] == "https://i/x.png"
+
 
 class TestUpsert:
     def test_creates_entry_with_provenance(self):
@@ -161,6 +197,22 @@ class TestRegistryPersistence:
     def test_missing_file_loads_empty(self, tmp_path):
         assert m.load_cache(str(tmp_path / "nope.json")) == {}
 
+    def test_load_repairs_malformed_icons(self, tmp_path):
+        path = tmp_path / "app_cache.json"
+        path.write_text('{"com.x": {"icon_url": {}}}', encoding="utf-8")
+        cache = m.load_cache(str(path))
+        assert cache["com.x"]["icon_url"] == ""
+
+
+class TestFetchIconCache:
+    def test_malformed_cache_value_is_a_miss(self, tmp_path, monkeypatch):
+        path = tmp_path / "app_cache.json"
+        path.write_text('{"com.x": {"icon_url": {}}}', encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        monkeypatch.setattr(icons, "_fetch_app_details", lambda pkg: ("X", "https://i/x.png"))
+        assert icons.fetch_app_icon("com.x") == "https://i/x.png"
+        assert m.load_cache(str(path))["com.x"]["icon_url"] == "https://i/x.png"
+
 
 class TestIsUnresolved:
     def test_fully_resolved(self):
@@ -200,6 +252,12 @@ class TestStoreLink:
     def test_legacy_entry_without_provenance_is_play(self):
         cache = {"com.x": {"name": "X", "icon_url": "https://i/x.png"}}
         assert m.store_link("com.x", cache)[1] == m.STORE_PLAY
+
+    def test_apkmirror_source_links_to_search(self):
+        cache = {"com.x": {"name": "X", "name_source": "apkmirror", "icon_url": "https://i/x.png"}}
+        url, store = m.store_link("com.x", cache)
+        assert url == "https://www.apkmirror.com/?s=com.x"
+        assert store == m.STORE_APKMIRROR
 
     def test_unknown_app_falls_back_to_apkmirror_search(self):
         url, store = m.store_link("com.some.app", {})

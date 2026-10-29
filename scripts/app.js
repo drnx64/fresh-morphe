@@ -1,19 +1,23 @@
 /**
- * MorpheTracker — Vanilla JS Entry Point
+ * Fresh Morphe — Vanilla JS Entry Point
  * Boot: init store, load data, register routes, render shell.
  */
 
 // ── Verbose Logging with Colors ──
+import { migrateLegacyStorage, storageGet, storageSet } from './utils/storage.js'
+
+migrateLegacyStorage()
+
 const _LOG_COLORS = { log: '#948d81', info: '#6b9fd4', warn: '#d4a06b', error: '#b5533f', debug: '#a281ad' }
 for (const [method, color] of Object.entries(_LOG_COLORS)) {
   const orig = console[method].bind(console)
-  console[method] = (...args) => orig(`%c[Morphe]`, `color:${color};font-weight:bold`, ...args)
+  console[method] = (...args) => orig(`%c[Fresh Morphe]`, `color:${color};font-weight:bold`, ...args)
 }
 window.addEventListener('error', (e) => console.error('Uncaught:', e.message, e.filename, e.lineno, e.error))
 window.addEventListener('unhandledrejection', (e) => console.error('Unhandled promise:', e.reason))
 
 // ── Theme ──
-const savedTheme = localStorage.getItem('morphe_theme') || 'light'
+const savedTheme = storageGet('theme', 'light')
 document.documentElement.setAttribute('data-theme', savedTheme)
 
 function updateThemeMeta(theme) {
@@ -28,7 +32,7 @@ function toggleTheme() {
   // Freeze color transitions for the swap, then repaint once.
   root.classList.add('theme-switching')
   root.setAttribute('data-theme', next)
-  localStorage.setItem('morphe_theme', next)
+  storageSet('theme', next)
   updateThemeMeta(next)
   const btn = document.querySelector('.theme-toggle')
   if (btn) btn.innerHTML = next === 'dark' ? MOON_ICON : SUN_ICON
@@ -83,12 +87,12 @@ store.init({
   loadingProgress: 0,
   loadingStatus: 'Initializing...',
   filters: { search: '', channel: 'all', hideArchived: false, hidePreRelease: false },
-  viewMode: localStorage.getItem('morphe_view') || 'grid',
-  changelogViewMode: localStorage.getItem('morphe_changelog_view') || 'grid',
-  updatesViewMode: localStorage.getItem('morphe_updates_view') || 'timeline',
-  lastVisitScan: localStorage.getItem('morphe_last_visit_scan') || '',
+  viewMode: storageGet('view', 'grid'),
+  changelogViewMode: storageGet('changelog_view', 'grid'),
+  updatesViewMode: storageGet('updates_view', 'timeline'),
+  lastVisitScan: storageGet('last_visit_scan', ''),
   fetchErrors: [],
-  reducedMotion: localStorage.getItem('morphe_reduced_motion') === 'true',
+  reducedMotion: storageGet('reduced_motion') === 'true',
   liveClockUTC: '',
   liveClockLocal: '',
 })
@@ -120,10 +124,10 @@ function renderShell() {
       el('div', { class: 'header-top-row' }, [
         el('div', { class: 'header-title-group' }, [
           el('div', { class: 'header-title-row' }, [
-            el('img', { class: 'header-logo', src: 'public/tracker_logo.webp', alt: '', width: '28', height: '28' }),
-            el('h1', { id: 'main-title', class: 'header-title-clickable', title: 'Double-click to toggle reduced motion' }, ['Morphe Tracker']),
+            el('img', { class: 'header-logo', src: 'public/fresh-logo.webp', alt: '', width: '28', height: '28' }),
+            el('h1', { id: 'main-title', class: 'header-title-clickable', title: 'Double-click to toggle reduced motion' }, ['Fresh Morphe']),
           ]),
-          el('span', { class: 'subtitle' }, ['Patch monitoring & changelog dashboard']),
+          el('span', { class: 'subtitle' }, ['Freshly patched, freshly posted.']),
         ]),
         el('div', { class: 'header-right-row', id: 'header-actions' }, [
           el('div', { class: 'header-color-slot', id: 'color-game-slot' }),
@@ -145,7 +149,7 @@ function renderShell() {
   title.addEventListener('dblclick', () => {
     const next = !store.get('reducedMotion')
     store.set('reducedMotion', next)
-    localStorage.setItem('morphe_reduced_motion', String(next))
+    storageSet('reduced_motion', String(next))
   })
 
   // Global search bar
@@ -190,7 +194,7 @@ function renderShell() {
         el('a', { href: GITHUB_REPO_URL, target: '_blank', rel: 'noopener' }, ['GitHub']),
       ]),
       el('p', { class: 'footer-disclaimer' }, [
-        'MorpheTracker is not affiliated with or endorsed by any app developers.',
+        'Fresh Morphe is not affiliated with or endorsed by any app developers.',
       ]),
     ]),
   ])
@@ -306,7 +310,7 @@ function finishBoot(status = 'Loading complete') {
   // Record last visit for "new scan" detection
   const today = new Date().toISOString().split('T')[0]
   if (store.get('lastVisitScan') !== today) {
-    localStorage.setItem('morphe_last_visit_scan', today)
+    storageSet('last_visit_scan', today)
     store.set('lastVisitScan', today)
   }
 }
@@ -622,7 +626,7 @@ store.subscribe('reducedMotion', applyReducedMotion)
 // records it needs (a single round trip, single-flighted and cached) before
 // the modal opens — otherwise the Patches tab renders empty.
 function hideDevChannels() {
-  return localStorage.getItem('morphe_hide_dev') === 'true' ? ['dev'] : []
+  return storageGet('hide_dev') === 'true' ? ['dev'] : []
 }
 
 async function handleOpenApp(detail) {

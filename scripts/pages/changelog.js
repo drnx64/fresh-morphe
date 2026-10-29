@@ -8,7 +8,7 @@ import { escHtml } from '../utils/html.js'
 import { dateParts, dayHue, badgeLabel } from '../utils/format.js'
 import { TELEGRAM_ICON, CHEVRON_DOWN } from '../utils/svg.js'
 
-const HIDE_DEV_KEY = 'morphe_hide_dev'
+const HIDE_DEV_KEY = 'fresh_hide_dev'
 
 function plural(n, word) {
   return `${n} ${word}${n === 1 ? '' : 's'}`
