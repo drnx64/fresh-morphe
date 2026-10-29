@@ -17,7 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     # The full crawl + parse + diff cycle needs headroom: a 2026-10-26 run
     # took 14m22s, so the old 15m cap cancelled every scheduled run after it.
-    timeout-minutes: 30
+    # 2026-10-29 then hit the 30m cap inside icon fetching (404 retries), now
+    # bounded by ICON_FETCH_LIMIT + permanent-404 handling.
+    timeout-minutes: 40
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -41,6 +43,7 @@ jobs:
         # Runs independently of the pipeline so a slow GitHub search can never
         # block the hourly data update. Failures are non-fatal.
         continue-on-error: true
+        timeout-minutes: 15
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -54,6 +57,7 @@ jobs:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT: ${{ secrets.TG_CHAT }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ICON_FETCH_LIMIT: '40'
         run: |
           python scripts/run_pipeline.py
 
