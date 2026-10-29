@@ -209,6 +209,41 @@ def ignored_repo_keys():
     return keys
 
 
+REPOS_LIST_PATH = os.path.join(state_manager.ROOT_DATA_DIR, "repos_list.txt")
+_GITHUB_REPO_RE = re.compile(
+    r"(?:github\.com|gitlab\.com)/([^/\s>\"']+/[^/\s>\"']+)", re.IGNORECASE
+)
+
+
+def known_repo_keys():
+    """Repos already tracked in ``data/repos_list.txt``.
+
+    Those are written by ``fetch_external_repos`` from the morphe-archive list
+    and are fetched by the pipeline already, so discovery must not spend its
+    request budget verifying them again.
+    """
+    keys = set()
+    if not os.path.exists(REPOS_LIST_PATH):
+        return keys
+    try:
+        with open(REPOS_LIST_PATH, "r", encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                match = _GITHUB_REPO_RE.search(line)
+                if match:
+                    platform = "gitlab" if "gitlab.com" in line.lower() else "github"
+                    keys.add(repo_key(platform, match.group(1).rstrip(".,;/")))
+                    continue
+                match = re.match(r"^([^/#\s]+)/([^/#\s]+)", line)
+                if match:
+                    keys.add(repo_key("github", f"{match.group(1)}/{match.group(2)}"))
+    except OSError:
+        return keys
+    return keys
+
+
 def search_page_limit():
     """How many result pages to read per query (env-tunable, hard-capped)."""
     try:

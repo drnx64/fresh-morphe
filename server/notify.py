@@ -304,6 +304,7 @@ def build_discovery_payload(summary, error=None):
             f'Verified `{summary.get("verified", 0)}` · '
             f'Review `{summary.get("review", 0)}`\n'
             f'Checked this run `{summary.get("checked_this_run", 0)}` · '
+            f'Already tracked `{summary.get("known_skipped", 0)}` · '
             f'Cached `{summary.get("scanned", 0)}`'
         ),
         "inline": False,

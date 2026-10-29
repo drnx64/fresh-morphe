@@ -150,6 +150,7 @@ def test_runner_merges_dedupes_and_verifies(monkeypatch, tmp_path):
         ],
     )
     monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: set())
     monkeypatch.setattr(
         runner,
         "verify_repo",
@@ -197,6 +198,7 @@ def test_runner_keeps_verified_repo_on_transient(monkeypatch, tmp_path):
     })
     monkeypatch.setattr(runner, "FAST_PROVIDERS", ())
     monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: set())
     monkeypatch.setattr(
         runner,
         "verify_repo",
@@ -310,6 +312,7 @@ def test_scanned_cache_skips_rescan_when_state_lost(tmp_path, monkeypatch):
     })
     monkeypatch.setattr(runner, "FAST_PROVIDERS", ())
     monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: set())
     calls = []
     monkeypatch.setattr(
         runner,
@@ -328,6 +331,7 @@ def test_runner_checkpoints_state_per_provider(tmp_path, monkeypatch):
     monkeypatch.setattr(runner, "FAST_PROVIDERS", (("custom", "custom_repos"),))
     monkeypatch.setattr(runner, "run_fast_provider", lambda name: [])
     monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: set())
     saved = []
     real_save = runner.save_state
     monkeypatch.setattr(
@@ -355,6 +359,7 @@ def test_runner_reports_newly_verified_repos(monkeypatch, tmp_path):
         }],
     )
     monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: set())
     monkeypatch.setattr(
         runner,
         "verify_repo",
@@ -374,3 +379,113 @@ def test_runner_reports_newly_verified_repos(monkeypatch, tmp_path):
         "channels": ["stable"],
     }]
     assert "github:acme/patches" in state.load_scanned()
+
+
+def test_known_repo_keys_parses_repos_list(tmp_path, monkeypatch):
+    path = tmp_path / "repos_list.txt"
+    path.write_text(
+        "# Fresh Morphe - All Known Repositories\n"
+        "# Total: 3 repos\n"
+        "\n"
+        "020krJ/morpheArc -> https://github.com/020krJ/morpheArc\n"
+        "Acme/Patches -> https://github.com/Acme/Patches/\n"
+        "gl:someone/gitlab-patches -> https://gitlab.com/someone/gitlab-patches\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(providers, "REPOS_LIST_PATH", str(path))
+
+    keys = providers.known_repo_keys()
+
+    # Owner case is normalized away, headers and blank lines are ignored.
+    assert "github:020krj/morphearc" in keys
+    assert "github:acme/patches" in keys
+    assert "gitlab:someone/gitlab-patches" in keys
+    assert len(keys) == 3
+
+
+def test_known_repo_keys_without_file_is_empty(tmp_path, monkeypatch):
+    monkeypatch.setattr(providers, "REPOS_LIST_PATH", str(tmp_path / "missing.txt"))
+    assert providers.known_repo_keys() == set()
+
+
+def test_known_repo_is_skipped_but_stays_in_state(tmp_path, monkeypatch):
+    monkeypatch.setattr(state_manager, "STATE_DIR", str(tmp_path))
+    monkeypatch.setattr(runner, "FAST_PROVIDERS", ())
+    monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: {"github:acme/tracked"})
+    state.save_state({
+        "baseline_done": True,
+        "repos": {
+            "github:acme/tracked": {
+                "platform": "github",
+                "repo": "acme/tracked",
+                "url": "https://github.com/acme/tracked",
+                "status": "verified",
+                "last_verified": "2026-01-01T00:00:00Z",
+                "channels": {"stable": {"branch": "main", "patch_count": 2}},
+                "sources": ["github-search"],
+            },
+        },
+    })
+    calls = []
+    monkeypatch.setattr(
+        runner,
+        "verify_repo",
+        lambda entry: calls.append(entry) or {"status": "verified", "channels": {}},
+    )
+
+    summary = runner.run(force=True, search=False, quiet=True)
+
+    # Already tracked by the pipeline — never re-verified.
+    assert calls == []
+    assert summary["checked_this_run"] == 0
+    assert summary["known_skipped"] == 1
+    assert summary["found"] == []
+
+    # State survives so load_verified_repos() keeps its channels.
+    entry = state.load_state()["repos"]["github:acme/tracked"]
+    assert entry["channels"] == {"stable": {"branch": "main", "patch_count": 2}}
+    assert "github:acme/tracked" not in state.load_scanned()
+
+
+def test_untracked_repo_is_still_verified(tmp_path, monkeypatch):
+    monkeypatch.setattr(state_manager, "STATE_DIR", str(tmp_path))
+    monkeypatch.setattr(runner, "FAST_PROVIDERS", ())
+    monkeypatch.setattr(runner, "ignored_repo_keys", lambda: set())
+    monkeypatch.setattr(runner, "known_repo_keys", lambda: {"github:acme/tracked"})
+    state.save_state({
+        "baseline_done": True,
+        "repos": {
+            "github:acme/tracked": {
+                "platform": "github",
+                "repo": "acme/tracked",
+                "url": "https://github.com/acme/tracked",
+                "status": "new",
+                "sources": ["github-search"],
+            },
+            "github:newbie/fresh": {
+                "platform": "github",
+                "repo": "newbie/fresh",
+                "url": "https://github.com/newbie/fresh",
+                "status": "new",
+                "sources": ["github-search"],
+            },
+        },
+    })
+    calls = []
+    monkeypatch.setattr(
+        runner,
+        "verify_repo",
+        lambda entry: calls.append(entry["repo"]) or {
+            "status": "verified",
+            "channels": {"stable": {"branch": "main", "patch_count": 1}},
+            "evidence": {"name": "Fresh"},
+        },
+    )
+
+    summary = runner.run(force=True, search=False, quiet=True)
+
+    assert calls == ["newbie/fresh"]
+    assert summary["known_skipped"] == 1
+    assert [item["repo"] for item in summary["found"]] == ["newbie/fresh"]
+
