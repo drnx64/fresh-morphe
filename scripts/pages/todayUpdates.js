@@ -166,13 +166,15 @@ export function renderTodayUpdates() {
       'today-bundle-avatar-placeholder',
     )
 
+    // Badge first, then the avatar, so the status tag leads the row and the
+    // identity chip reads as an attachment to the bundle name on its right.
     const headerParts = [
+      el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [badgeLabel(entry.badge_type) || 'UPDATE']),
       el('span', {
         class: 'today-bundle-avatar-area',
         'aria-hidden': 'true',
         dangerouslySetInnerHTML: avatarHtml,
       }),
-      el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [badgeLabel(entry.badge_type) || 'UPDATE']),
     ]
 
     const nameEl = el('span', {
