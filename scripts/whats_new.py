@@ -169,10 +169,16 @@ def _dedup_sections(sections):
 
 
 def _app_label(app):
-    """App name as a store-page link when one can be built."""
+    """App name as a store-page link when one can be built.
+
+    The link text is underlined so an app reads distinctly from the patch links
+    indented beneath it. Both render in the link colour, and in a Telegram
+    client an underlined app name against plain patch links is the only thing
+    that separates the two levels of the hierarchy.
+    """
     name = _esc(app["name"])
     url = app.get("url", "")
-    return f'<a href="{_esc(url)}">{name}</a>' if url else name
+    return f'<a href="{_esc(url)}"><u>{name}</u></a>' if url else name
 
 
 def _render_bundle(item):

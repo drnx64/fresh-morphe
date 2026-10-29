@@ -251,8 +251,34 @@ class TestStoreLinks:
                       "patches": [], "url": "https://play.google.com/store/apps/details?id=com.example.gallery"}],
         }
         rendered = wn._render_bundle(item)
-        assert '<a href="https://play.google.com/store/apps/details?id=com.example.gallery">Gallery</a>' in rendered
+        assert '<a href="https://play.google.com/store/apps/details?id=com.example.gallery"><u>Gallery</u></a>' in rendered
         assert "<b>" in rendered
+
+    def test_app_link_text_is_underlined(self):
+        # Patch links are not underlined, so the underline is what separates an
+        # app from the patches indented under it.
+        item = {
+            "bundle_name": "B",
+            "patches_name": "B",
+            "apps": [{"name": "Gallery", "pkg": "com.example.gallery", "patches": [],
+                      "url": "https://play.google.com/store/apps/details?id=com.example.gallery"}],
+        }
+        rendered = wn._render_bundle(item)
+        assert "<u>Gallery</u>" in rendered
+        # properly nested: link inside bold, underline inside the link
+        assert "<b><a href=" in rendered
+        assert "</u></a></b>" in rendered
+
+    def test_removed_app_underline_does_not_leak(self):
+        item = {
+            "bundle_name": "B",
+            "patches_name": "B",
+            "apps": [{"name": "Gallery", "pkg": "com.example.gallery", "removed": True,
+                      "url": "https://f-droid.org/en/packages/com.example.gallery/"}],
+        }
+        rendered = wn._render_bundle(item)
+        assert "<s><a href=" in rendered
+        assert "</u></a></s>" in rendered
 
     def test_removed_app_is_linked(self):
         item = {
