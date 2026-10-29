@@ -7,7 +7,7 @@
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { groupAffectedBundles, resolveAppName, getAppIconUrl, renderAppIcon } from '../utils/misc.js'
+import { groupAffectedBundles, resolveAppName, getAppIconUrl, renderAppIcon, avatarStackHtml } from '../utils/misc.js'
 import { getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { dateParts, dayHue, shortVersion, badgeLabel } from '../utils/format.js'
@@ -155,7 +155,23 @@ export function renderTodayUpdates() {
   function buildBundleEl(bundleName, entry) {
     const bundleEl = el('div', { class: 'today-bundle-entry' })
 
+    // Bundle identity: cover image → owner avatar → first letter. Decorative,
+    // since the bundle name sits immediately beside it.
+    const avatarLetter = (entry.patches_name || bundleName || '?').charAt(0).toUpperCase()
+    const avatarHtml = avatarStackHtml(
+      entry.bundleImageUrl,
+      entry.avatarUrl,
+      `<span>${escHtml(avatarLetter)}</span>`,
+      'today-bundle-avatar',
+      'today-bundle-avatar-placeholder',
+    )
+
     const headerParts = [
+      el('span', {
+        class: 'today-bundle-avatar-area',
+        'aria-hidden': 'true',
+        dangerouslySetInnerHTML: avatarHtml,
+      }),
       el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [badgeLabel(entry.badge_type) || 'UPDATE']),
     ]
 
