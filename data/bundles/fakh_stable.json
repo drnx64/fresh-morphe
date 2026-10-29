@@ -2,9 +2,9 @@
   "bundle": "fakh",
   "channel": "stable",
   "repo_url": "https://github.com/amfakh/fakh-patches",
-  "created_at": "2026-10-29T04:52:03",
-  "version": "1.5.5",
-  "description": "## [1.5.5](https://github.com/amfakh/fakh-patches/compare/v1.5.4...v1.5.5) (2026-10-29)\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** fix Hide puzzle games blanking the Games page when you open it from a shortcut or link ([85b4e5d](https://github.com/amfakh/fakh-patches/commit/85b4e5d9d8ce7b275882702b8947e213bc923038))\n* **LinkedIn:** fix Hide video posts not hiding videos on LinkedIn 4.1.1264 ([d13d8a9](https://github.com/amfakh/fakh-patches/commit/d13d8a97f4281b6e49128f88691665ba88ca4e4c))",
+  "created_at": "2026-10-29T17:53:32",
+  "version": "1.6.0",
+  "description": "## [1.6.0](https://github.com/amfakh/fakh-patches/compare/v1.5.5...v1.6.0) (2026-10-30)\n\n### ✨ New Features\n\n* **Smart Life:** add Hide Plus button to remove the \"Plus\" pill from the home header ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide Recommended for you to remove the \"Recommended for You\" section and its cards from the home screen ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide AI ask bar to remove the \"How can I help?\" Tuya AI bar above the bottom navigation ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide Explore tab to remove the Explore tab from the bottom navigation ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide Rewards Hub, Hide My Orders and Hide Tuya AI Web Version to remove those rows from the Me tab ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Disable analytics to stop AppsFlyer and turn off Firebase Analytics, Crashlytics and Sessions ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add GmsCore support (off by default) so \"Sign in with Google\" works through microG RE ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n\n### 🐛 Bug Fixes\n\n* **Smart Life:** fix GmsCore support leaving the app without a device location, which pinned the map at 0,0 ([cbbef17](https://github.com/amfakh/fakh-patches/commit/cbbef1702875555fd877e67c3c395d1a87318d0a))",
   "apps": [
     {
       "app_name": "Radio Streaming Indonesia",
@@ -265,6 +265,93 @@
       ]
     },
     {
+      "app_name": "SmartLife: Smart Living",
+      "package": "com.tuya.smartlife",
+      "patches": [
+        {
+          "name": "Disable analytics",
+          "description": "Stops AppsFlyer from tracking installs and in-app events, and turns off Firebase Analytics, Crashlytics and Sessions. Tuya's own usage statistics are left on.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes \"Sign in with Google\" work. Signs in through microG RE (GmsCore) instead of Google Play services, so it needs microG RE installed and signed in to a Google account.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide AI ask bar",
+          "description": "Removes the \"How can I help?\" Tuya AI bar above the bottom navigation.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide Explore tab",
+          "description": "Removes the Explore tab from the bottom navigation.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide My Orders",
+          "description": "Removes the \"My Orders\" row from the Me tab.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide Plus button",
+          "description": "Removes the \"Plus\" pill from the home header.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide Recommended for you",
+          "description": "Removes the \"Recommended for You\" section and its cards (AI Notes and the rest) from the home screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide Rewards Hub",
+          "description": "Removes the \"Rewards Hub\" row and its banner from the Me tab.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        },
+        {
+          "name": "Hide Tuya AI Web Version",
+          "description": "Removes the \"Tuya AI Web Version\" row from the Me tab.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.3"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Windy.com - Weather Forecast",
       "package": "com.windyty.android",
       "patches": [
@@ -281,10 +368,10 @@
     }
   ],
   "patches_name": "Fakh Patches",
-  "fingerprint": "04961175987ef15043db5b4cc79d2fecf38e37cfb3f71825d0afe368f3183468",
-  "release_notes": "## [1.5.5](https://github.com/amfakh/fakh-patches/compare/v1.5.4...v1.5.5) (2026-10-29)\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** fix Hide puzzle games blanking the Games page when you open it from a shortcut or link ([85b4e5d](https://github.com/amfakh/fakh-patches/commit/85b4e5d9d8ce7b275882702b8947e213bc923038))\n* **LinkedIn:** fix Hide video posts not hiding videos on LinkedIn 4.1.1264 ([d13d8a9](https://github.com/amfakh/fakh-patches/commit/d13d8a97f4281b6e49128f88691665ba88ca4e4c))\n",
-  "release_tag": "v1.5.5",
-  "release_date": "2026-10-29T04:52:03Z",
+  "fingerprint": "8fbc1bbde18d61369133ea33c1773afb4cd66c7635088a9a94bd9defa1f9d87c",
+  "release_notes": "## [1.6.0](https://github.com/amfakh/fakh-patches/compare/v1.5.5...v1.6.0) (2026-10-30)\n\n### ✨ New Features\n\n* **Smart Life:** add Hide Plus button to remove the \"Plus\" pill from the home header ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide Recommended for you to remove the \"Recommended for You\" section and its cards from the home screen ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide AI ask bar to remove the \"How can I help?\" Tuya AI bar above the bottom navigation ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide Explore tab to remove the Explore tab from the bottom navigation ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Hide Rewards Hub, Hide My Orders and Hide Tuya AI Web Version to remove those rows from the Me tab ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add Disable analytics to stop AppsFlyer and turn off Firebase Analytics, Crashlytics and Sessions ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n* **Smart Life:** add GmsCore support (off by default) so \"Sign in with Google\" works through microG RE ([ae307e8](https://github.com/amfakh/fakh-patches/commit/ae307e827983ee65a86e289a5b6e1120f77697c1))\n\n### 🐛 Bug Fixes\n\n* **Smart Life:** fix GmsCore support leaving the app without a device location, which pinned the map at 0,0 ([cbbef17](https://github.com/amfakh/fakh-patches/commit/cbbef1702875555fd877e67c3c395d1a87318d0a))\n",
+  "release_tag": "v1.6.0",
+  "release_date": "2026-10-29T17:53:32Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/8016957?v=4&s=128",

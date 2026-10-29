@@ -2,9 +2,9 @@
   "bundle": "buienalarm",
   "channel": "dev",
   "repo_url": "https://github.com/johnneerdael/buienalarm-patches",
-  "created_at": "2026-10-29T15:43:28",
-  "version": "1.16.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johnneerdael/dutch-applications-patches/25380ddf11030a71b91028576bd7ca4b93c29fde/docs/site/assets/brand/release-banner.png)\n\n**Stable release · patch bundle v1.16.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johnneerdael/dutch-applications-patches) · [User guide](https://morphe-patches.neerdael.nl/en/)\n\nSource: [25380ddf1103](https://github.com/johnneerdael/dutch-applications-patches/commit/25380ddf11030a71b91028576bd7ca4b93c29fde). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.16.0](https://github.com/johnneerdael/dutch-applications-patches/compare/v1.15.0...v1.16.0) (2026-10-29)\n\n### ✨ New Features\n\n* **release:** separate stable TV and Marktplaats support from dev-only 9292 ([25380dd](https://github.com/johnneerdael/dutch-applications-patches/commit/25380ddf11030a71b91028576bd7ca4b93c29fde))",
+  "created_at": "2026-10-29T20:58:18",
+  "version": "1.19.1",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johnneerdael/dutch-applications-patches/5eedbaaa45a57f88920fb64bb528f88836227209/docs/site/assets/brand/release-banner.png)\n\n**Stable release · patch bundle v1.19.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johnneerdael/dutch-applications-patches) · [User guide](https://morphe-patches.neerdael.nl/en/)\n\nSource: [5eedbaaa45a5](https://github.com/johnneerdael/dutch-applications-patches/commit/5eedbaaa45a57f88920fb64bb528f88836227209). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.19.1](https://github.com/johnneerdael/dutch-applications-patches/compare/v1.19.0...v1.19.1) (2026-10-29)\n\n### 🐛 Bug Fixes\n\n* **npo-start:** enable all three TV controls by default ([6d3310b](https://github.com/johnneerdael/dutch-applications-patches/commit/6d3310b43be40112a043e5c5b5d3fe3fe75d95c9))",
   "apps": [
     {
       "app_name": "AD – Nieuws, Regio en Show",
@@ -578,9 +578,9 @@
       "package": "nl.marktplaats.android",
       "patches": [
         {
-          "name": "Disable ThreatMetrix (expert)",
-          "description": "Stops ThreatMetrix initialization and security profiling, omitting its session headers. Login, checkout or other protected requests may fail. Independent and off by default.",
-          "use": false,
+          "name": "Disable ThreatMetrix",
+          "description": "Stops ThreatMetrix initialization, device/security profiling and its session headers. Independent and enabled by default.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "16.17.0"
@@ -596,12 +596,72 @@
           ]
         },
         {
+          "name": "Google sign-in via microG-Re",
+          "description": "Routes Google sign-in through an installed microG-Re with Credential Manager support. Preserves the original route when that service is unavailable; device sign-in testing is required.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.17.0"
+          ]
+        },
+        {
           "name": "Hide ads",
           "description": "Removes explicit display/native advertising slots and advertising startup while preserving genuine seller listings, promoted seller inventory, search metadata and functional services.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "16.17.0"
+          ]
+        },
+        {
+          "name": "Skip consent screens",
+          "description": "Prevents the startup cookie popup from being displayed and requests the SDK's reject-all choice. Manual privacy settings remain available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.17.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "9292 travel planner + e-ticket",
+      "package": "nl.negentwee",
+      "patches": [
+        {
+          "name": "Disable tracking",
+          "description": "Disables optional app analytics, diagnostic collection, queued Firebase measurements, Usercentrics session pixels and Adyen analytics. Includes Hide ads. Preserves the functional API identity, travel location, consent choices, notifications and genuine checkout outcomes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.48.1"
+          ]
+        },
+        {
+          "name": "Fix PairIP startup",
+          "description": "Stops 9292's local Play licensing entry point from redirecting re-signed builds to Play and scheduling shutdown. Preserves native application initialization, journeys, tickets and payment checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.48.1"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Uses 9292's native no-ad paths for Google/PubMatic, station ads and post-payment voucher promotions. Stops ad auto-initialization and advertising location publication while preserving journeys, precise location, tickets and payment outcomes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.48.1"
+          ]
+        },
+        {
+          "name": "Skip consent screens",
+          "description": "Rejects advertising and analytics consent before startup onboarding is selected. Allows local trips, favourites and tickets through 9292's separate functional-data service. Includes ad and tracking controls and preserves native completion handling.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.48.1"
           ]
         }
       ]
@@ -724,13 +784,46 @@
       ]
     },
     {
+      "app_name": "TVgids.nl - Dutch TV Guide",
+      "package": "nl.tvgids",
+      "patches": [
+        {
+          "name": "Disable tracking",
+          "description": "Disables OSB, Comscore, Sentry and optional Facebook/Firebase measurement, tracking identifiers and queued telemetry. Includes Hide ads. Keeps manual privacy choices and functional account, guide and messaging paths.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.16"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes ad placements, their reserved space and explicitly branded promotions. Stops ad-only configuration requests and native ad startup/loading while preserving guide and editorial content.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.16"
+          ]
+        },
+        {
+          "name": "Skip consent screens",
+          "description": "Skips automatic privacy-consent screens after disabling ads and tracking. Records no consent choice and preserves manual cookie settings and existing choices.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.16"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "NPO Start",
       "package": "nl.uitzendinggemist",
       "patches": [
         {
           "name": "Disable tracking",
           "description": "Stops NPO Tag/Topspin/DAM, STER targeting, Bitmovin/Sentry collection, Cast/TV-ad diagnostics and Google telemetry collection/uploads, including queued batches. Preserves playback, authentication and functional Cast controls.",
-          "use": false,
+          "use": true,
           "options": [],
           "compatible_versions": [
             "1.48.2-2405"
@@ -739,7 +832,7 @@
         {
           "name": "Fix PairIP startup",
           "description": "Restores the exact TV startup data and lifecycle helpers, AppAuth discovery and token requests, network updates and audio-route events. Retains native VM execution for other protected callbacks.",
-          "use": false,
+          "use": true,
           "options": [],
           "compatible_versions": [
             "1.48.2-2405"
@@ -748,7 +841,7 @@
         {
           "name": "Hide ads",
           "description": "Suppresses nullable preroll inputs and the optional IMA ad loader. Uses the player's existing content-only path while retaining real content, DRM, subtitles and player state.",
-          "use": false,
+          "use": true,
           "options": [],
           "compatible_versions": [
             "1.48.2-2405"
@@ -902,10 +995,10 @@
     }
   ],
   "patches_name": "Dutch applications patches",
-  "fingerprint": "68bde2328c4a20e4242c5b6c12c06baf9e0afbd0bb4e1ac447204e34387b73e9",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johnneerdael/dutch-applications-patches/ea40f6b9af9e153899a58477c091379d612f67f8/docs/site/assets/brand/release-banner.png)\n\n**Stable release · patch bundle v1.16.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johnneerdael/dutch-applications-patches) · [User guide](https://morphe-patches.neerdael.nl/en/)\n\nSource: [ea40f6b9af9e](https://github.com/johnneerdael/dutch-applications-patches/commit/ea40f6b9af9e153899a58477c091379d612f67f8). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.16.0](https://github.com/johnneerdael/dutch-applications-patches/compare/v1.15.0...v1.16.0) (2026-10-29)\n\n### ✨ New Features\n\n* **release:** separate stable TV and Marktplaats support from dev-only 9292 ([25380dd](https://github.com/johnneerdael/dutch-applications-patches/commit/25380ddf11030a71b91028576bd7ca4b93c29fde))\n",
-  "release_tag": "v1.16.0",
-  "release_date": "2026-10-29T15:44:45Z",
+  "fingerprint": "dda2e693e59732b31821e4de06eeb1240fdb7a4cf801a5598ed7eb4dd2dd6785",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johnneerdael/dutch-applications-patches/78ac3902a1e7fc678b145474c1cb97c23f5b62d6/docs/site/assets/brand/release-banner.png)\n\n**Stable release · patch bundle v1.19.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johnneerdael/dutch-applications-patches) · [User guide](https://morphe-patches.neerdael.nl/en/)\n\nSource: [78ac3902a1e7](https://github.com/johnneerdael/dutch-applications-patches/commit/78ac3902a1e7fc678b145474c1cb97c23f5b62d6). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.19.1](https://github.com/johnneerdael/dutch-applications-patches/compare/v1.19.0...v1.19.1) (2026-10-29)\n\n### 🐛 Bug Fixes\n\n* **npo-start:** enable all three TV controls by default ([6d3310b](https://github.com/johnneerdael/dutch-applications-patches/commit/6d3310b43be40112a043e5c5b5d3fe3fe75d95c9))\n",
+  "release_tag": "v1.19.1",
+  "release_date": "2026-10-29T20:59:39Z",
   "isPreRelease": false,
   "stars": 8,
   "avatarUrl": "https://avatars.githubusercontent.com/u/7794406?v=4&s=128",
