@@ -7,10 +7,50 @@ import * as store from '../store.js'
 import { buildAppIndex, resolveAppName, getAppIconUrl, renderAppIcon, suggestFuzzy } from '../utils/misc.js'
 import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
+import { groupAppsIntoFamilies } from '../utils/appFamily.js'
 import { renderTodayUpdates } from './todayUpdates.js'
 import { skeletonGrid } from '../components/skeleton.js'
 
+const RENDER_BATCH = 24
+const STACK_FILL_BATCH = 24
+
 let unsubscribeBundles = null
+
+function openApp(app) {
+  window.dispatchEvent(new CustomEvent('open-app', {
+    detail: { app: { package: app.package, app_name: app.name } },
+  }))
+}
+
+function makeCardInteractive(card, activate) {
+  card.style.cursor = 'pointer'
+  card.setAttribute('role', 'button')
+  card.setAttribute('tabindex', '0')
+  card.addEventListener('click', activate)
+  card.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    e.preventDefault()
+    activate()
+  })
+  return card
+}
+
+function buildAppCard(app, iconCache) {
+  const card = el('div', { class: 'app-card' })
+  const iconHtml = renderAppIcon({ package: app.package, app_name: app.name }, iconCache)
+  const bundleCount = app.bundles.length
+  card.innerHTML = `
+    <div class="app-card-main">
+      ${iconHtml}
+      <div class="app-card-info">
+        <span class="app-card-name">${escHtml(app.name)}</span>
+        <span class="app-card-pkg">${escHtml(app.package)}</span>
+      </div>
+      <span class="app-card-bundle-count">${bundleCount} bundle${bundleCount !== 1 ? 's' : ''}</span>
+    </div>
+  `
+  return makeCardInteractive(card, () => openApp(app))
+}
 
 export function renderApps(container) {
   const page = el('div', { class: 'apps-page' })
@@ -53,12 +93,97 @@ export function renderApps(container) {
   // Invalidates an in-flight progressive-render chain when the list refills
   let listGeneration = 0
 
+  // Stacks the user opened; survives a refill so streaming bundles don't shut them
+  const openStacks = new Set()
+
   function rebuildIndex() {
     appIndex = buildAppIndex(
       store.get('bundles') || {},
       store.get('nameCache') || {},
       store.get('iconCache') || {},
     )
+  }
+
+  /**
+   * App family: a deck of cards that expands inline into its member apps.
+   *
+   * The collapsed face is the lead app's icon sitting on top of two offset
+   * layers, which reads as "there's a pile here" the way a 2x2 mosaic doesn't.
+   * Members are built on first expand (a 50-app publisher is not free to paint)
+   * and the panel animates with grid-template-rows, so no height measuring runs.
+   */
+  function buildAppStack(family, gen, iconCache) {
+    const { id, label, source, apps } = family
+    const panelId = `app-stack-${id.replace(/[^a-z0-9]+/gi, '-')}`
+    const stack = el('div', { class: `app-stack ${source === 'developer' ? 'is-publisher' : 'is-namespace'}` })
+    const toggle = el('div', { class: 'app-card app-stack-toggle' })
+
+    const leadIcon = renderAppIcon({ package: apps[0].package, app_name: apps[0].name }, iconCache)
+    const eyebrow = source === 'developer' ? 'Publisher' : 'Package family'
+    toggle.innerHTML = `
+      <div class="app-card-main">
+        <span class="app-stack-deck" aria-hidden="true">
+          <span class="app-stack-layer"></span>
+          <span class="app-stack-layer"></span>
+          <span class="app-stack-lead">${leadIcon}</span>
+        </span>
+        <div class="app-card-info">
+          <span class="app-stack-eyebrow">${eyebrow}</span>
+          <span class="app-card-name${source === 'namespace' ? ' is-namespace' : ''}">${escHtml(label)}</span>
+          <span class="app-card-pkg">${apps.length} apps</span>
+        </div>
+        <span class="app-stack-count" aria-hidden="true">${apps.length}</span>
+        <span class="app-stack-chevron" aria-hidden="true"></span>
+      </div>
+    `
+    toggle.setAttribute('aria-controls', panelId)
+    toggle.setAttribute('aria-expanded', 'false')
+    toggle.setAttribute('aria-label', `${label}, ${apps.length} apps`)
+
+    const panel = el('div', { class: 'app-stack-panel', id: panelId })
+    panel.innerHTML = '<div class="app-stack-panel-inner"><div class="app-stack-members"></div></div>'
+    const membersBox = panel.firstElementChild.firstElementChild
+    let membersBuilt = false
+
+    function fillMembers() {
+      if (membersBuilt) return
+      membersBuilt = true
+      let rendered = 0
+      const fillBatch = () => {
+        if (gen !== listGeneration) return
+        const end = Math.min(rendered + STACK_FILL_BATCH, apps.length)
+        for (; rendered < end; rendered++) {
+          const card = buildAppCard(apps[rendered], store.get('iconCache') || {})
+          card.classList.add('app-stack-member')
+          // Stagger the entrance; the panel is already opening around them
+          card.style.setProperty('--i', String(rendered))
+          membersBox.appendChild(card)
+        }
+        if (rendered < apps.length) requestAnimationFrame(fillBatch)
+      }
+      fillBatch()
+    }
+
+    function setExpanded(open) {
+      stack.classList.toggle('is-open', open)
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
+      // Collapsed members must not be tabbable or announced while they animate out
+      panel.toggleAttribute('inert', !open)
+      panel.setAttribute('aria-hidden', open ? 'false' : 'true')
+      if (open) {
+        openStacks.add(id)
+        fillMembers()
+      } else {
+        openStacks.delete(id)
+      }
+    }
+
+    makeCardInteractive(toggle, () => setExpanded(!stack.classList.contains('is-open')))
+
+    stack.appendChild(toggle)
+    stack.appendChild(panel)
+    setExpanded(openStacks.has(id))
+    return stack
   }
 
   function renderAppsList(query = '') {
@@ -111,49 +236,25 @@ export function renderApps(container) {
       return
     }
 
+    // A search result set stays flat: the user is looking for one package inside
+    // the family, so folding the whole publisher back into a stack would hide it.
+    const entries = query ? list.map((app) => ({ kind: 'app', app })) : groupAppsIntoFamilies(list)
+
     let rendered = 0
-    const BATCH = 24
     function renderBatch() {
       if (gen !== listGeneration) return
-      const end = Math.min(rendered + BATCH, list.length)
+      const end = Math.min(rendered + RENDER_BATCH, entries.length)
       for (let i = rendered; i < end; i++) {
-        const app = list[i]
-        const card = el('div', { class: 'app-card' })
-        const iconCache = store.get('iconCache') || {}
-        const iconHtml = renderAppIcon({ package: app.package, app_name: app.name }, iconCache)
-
-        const bundleCount = app.bundles.length
-        card.innerHTML = `
-          <div class="app-card-main">
-            ${iconHtml}
-            <div class="app-card-info">
-              <span class="app-card-name">${escHtml(app.name)}</span>
-              <span class="app-card-pkg">${escHtml(app.package)}</span>
-            </div>
-            <span class="app-card-bundle-count">${bundleCount} bundle${bundleCount !== 1 ? 's' : ''}</span>
-          </div>
-        `
-        card.style.cursor = 'pointer'
-        card.setAttribute('role', 'button')
-        card.setAttribute('tabindex', '0')
-
-        card.addEventListener('click', () => {
-          window.dispatchEvent(new CustomEvent('open-app', {
-            detail: { app: { package: app.package, app_name: app.name } },
-          }))
-        })
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            window.dispatchEvent(new CustomEvent('open-app', {
-              detail: { app: { package: app.package, app_name: app.name } },
-            }))
-          }
-        })
-        grid.appendChild(card)
+        const entry = entries[i]
+        const cache = store.get('iconCache') || {}
+        grid.appendChild(
+          entry.kind === 'family'
+            ? buildAppStack(entry, gen, cache)
+            : buildAppCard(entry.app, cache)
+        )
       }
       rendered = end
-      if (rendered < list.length) requestAnimationFrame(renderBatch)
+      if (rendered < entries.length) requestAnimationFrame(renderBatch)
     }
     renderBatch()
   }

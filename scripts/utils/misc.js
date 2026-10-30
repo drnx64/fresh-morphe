@@ -477,10 +477,17 @@ export function buildAppIndex(bundlesData, nameCache, iconCache) {
           package: app.package,
           name: resolveAppName(app, nameCache),
           iconUrl: getAppIconUrl(app, iconCache),
+          // Publisher name from the pipeline; until that lands, families fall
+          // back to the package namespace (see utils/appFamily.js).
+          developer: app.developer ? String(app.developer) : '',
           bundles: [],
           patchesNames: [],
         }
         map.set(app.package, entry)
+      } else if (!entry.developer && app.developer) {
+        // The same package can appear in several bundles; the first one wins
+        // but a later bundle may be the only one that resolved the publisher.
+        entry.developer = String(app.developer)
       }
       if (bundle.patches_name && !entry.patchesNames.includes(bundle.patches_name)) {
         entry.patchesNames.push(bundle.patches_name)
