@@ -2,10 +2,34 @@
   "bundle": "badfella",
   "channel": "latest",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-10-29T20:11:07",
+  "created_at": "2026-10-30T05:01:09",
   "version": "1.0.0",
-  "description": "# BadFella Patches v1.0.0\n\nInitial release of BadFella Patches for TickTick 8.2.4.0.\n\n- Client-side Premium features and limits.\n- Scheduled reminder compatibility.\n- Firebase certificate compatibility, including Android 17 token setup.\n- Reduced declared analytics collection and disabled legacy Google Analytics startup.\n- Monkey source icon and concise Morphe setup instructions.\n\nServer-side AI access and extra-list cloud sync are not granted. Local-only list organization and backup are not included in this release.\n",
+  "description": "# BadFella Patches v1.0.0\n\nInitial clean release.\n\n- TickTick 8.2.4.0: client Premium gates, reminder/notification compatibility and reduced analytics collection.\n- Optional local lists and backups: 299/900 local lists with manual or scheduled local backups. Off by default; cloud ownership and quotas remain unchanged.\n- Emby 3.5.72: client unlock and Firebase/DataTransport removal for ARM64 and ARMv7. SDK removal disables Firebase push.\n\nServer entitlements and AI access are unchanged. Keep the same Manager signing key when updating an installed app.\n",
   "apps": [
+    {
+      "app_name": "Emby for Android",
+      "package": "com.mb.android",
+      "patches": [
+        {
+          "name": "Emby client unlock",
+          "description": "Enables local in-app feature gates using Kirlif's observed approach. Does not grant server Premiere entitlements.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.72"
+          ]
+        },
+        {
+          "name": "Emby remove Firebase and DataTransport",
+          "description": "Removes Firebase/DataTransport SDK classes and manifest components. Disables Firebase push messaging; keeps Cast and billing libraries.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.72"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "TickTick:To Do List & Calendar",
       "package": "com.ticktick.task",
@@ -14,6 +38,15 @@
           "name": "Disable analytics collection",
           "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.2.4.0"
+          ]
+        },
+        {
+          "name": "Local lists and backups",
+          "description": "Adds BadFella Settings with 299 or 900 local lists, local task assignments, and manual or scheduled local backups of organization and supported task snapshots. Cloud lists and task ownership stay in TickTick; attachment file contents are not included.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "8.2.4.0"
@@ -50,9 +83,16 @@
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "8bfe5ba39bc0780404b2283aa73c2a004b17bc3373431e548faa7998372af5de",
-  "release_notes": "# BadFella Patches v1.0.0\r\n\r\nInitial release of BadFella Patches for TickTick 8.2.4.0.\r\n\r\n- Client-side Premium features and limits.\r\n- Scheduled reminder compatibility.\r\n- Firebase certificate compatibility, including Android 17 token setup.\r\n- Reduced declared analytics collection and disabled legacy Google Analytics startup.\r\n- Monkey source icon and concise Morphe setup instructions.\r\n\r\nServer-side AI access and extra-list cloud sync are not granted. Local-only list organization and backup are not included in this release.\r\n",
+  "fingerprint": "13604c00e8a01f6031f02206d35f01a3e0e9d25033911fdc61c98d9b83e3abb6",
+  "release_notes": "# BadFella Patches v1.0.0\r\n\r\nInitial clean release.\r\n\r\n- TickTick 8.2.4.0: client Premium gates, reminder/notification compatibility and reduced analytics collection.\r\n- Optional local lists and backups: 299/900 local lists with manual or scheduled local backups. Off by default; cloud ownership and quotas remain unchanged.\r\n- Emby 3.5.72: client unlock and Firebase/DataTransport removal for ARM64 and ARMv7. SDK removal disables Firebase push.\r\n\r\nServer entitlements and AI access are unchanged. Keep the same Manager signing key when updating an installed app.\r\n",
   "release_tag": "v1.0.0",
-  "release_date": "2026-10-29T20:15:38Z",
-  "isPreRelease": false
+  "release_date": "2026-10-30T04:45:07Z",
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",
+  "repoDescription": "BadFella Patches - community patches for Morphe Manager.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": "https://github.com/XBadFellaX/BadFella-Patches/raw/HEAD/patches-bundle.png"
 }

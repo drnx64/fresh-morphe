@@ -118,5 +118,12 @@
   "release_notes": "Патчи Morphe для официального клиента «VK Видео» 1.168 (`com.vk.vkvideo` → клон `com.vk.vkvideo.morphe`).\n\n**В бандле 9 патчей:**\n\n- **Video ad-blocker** — прероллы, мидроллы, построллы, рекламная плашка в плеере, промо-карточки и growth-traps.\n- **Video quality preference** — разрешение выбирается при патчинге (Авто / 1080p / 720p / 480p / 360p), по умолчанию 1080p; выбор вручную в плеере перекрывает авто.\n- **Native anti-tamper bypass** — обход проверки подписи в `libvkcore.so` и `libvkmedia.so`: kill-блоки `mov w0,#1 ; bl _exit` находятся структурно (по PLT-стабу `_exit` и единственному guard-переходу), а не по жёстким адресам, поэтому переживают смену сборки.\n- **Bypass security and package checks** — проверки пакета в AuthBridge и `BuildInfo`, детект окружения.\n- **Bypass VPN detection** — перехват `NetworkCapabilities.hasTransport/hasCapability`, `ConnectivityManager.getNetworkInfo` и прокси-свойств.\n- **Disable telemetry** — MyTracker.\n- **Fix Tracer manifest for clone** — без него клон падал при входе в аккаунт: OK Tracer сверяет `applicationId()` своего манифеста с реальным пакетом и ронял процесс фоновым исключением.\n- **Clone app** — смена пакета, снятие split-ограничений, перезапись прав и authority провайдеров, включая те, что объявлены как строковый ресурс (без этого клон не ставился рядом с оригиналом).\n- **App icon colors** — перекраска адаптивной иконки: фон и знак отдельными цветами.\n\n**Не закрыто и проверено не полностью:**\n\n- Нативная реклама в ленте рекомендаций под постом (карточка с меткой «РЕКЛАМА», MyTarget) — это отдельный слой, в этом релизе не блокируется.\n- Качество проверено на уровне байткода (хук на месте, вызов `getPreferredQuality1080` в APK), но не на глаз в воспроизведении.\n- Целевая версия — 1.168; на других сборках патчи ищутся по структурам и могут частично не примениться (в этом случае они молча пропускаются, а не ломают APK).\n\nУстановка: импортировать `patches-1.0.0.mpp` в Morphe Manager, выбрать исходный APK «VK Видео» 1.168 и собрать.\n",
   "release_tag": "v1.0.0",
   "release_date": "2026-10-29T11:52:23Z",
-  "isPreRelease": false
+  "isPreRelease": false,
+  "stars": 2,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/96340456?v=4&s=128",
+  "repoDescription": "Патчи Morphe для Android-клиента «VK Видео»: блокировка рекламы, фиксированное качество, обход нативных проверок подписи, клон",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }
