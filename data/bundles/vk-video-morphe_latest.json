@@ -1,0 +1,122 @@
+{
+  "bundle": "vk-video-morphe",
+  "channel": "latest",
+  "repo_url": "https://github.com/PerfLite/morphe-patches-vk-video",
+  "created_at": "2026-10-29T18:08:00",
+  "version": "1.0.0",
+  "description": "Патчи к VK Видео (com.vk.vkvideo) для Morphe. Обход нативной проверки подписи в libvkcore.so и libvkmedia.so — kill-блоки ищутся по структуре (PLT-стаб _exit и единственный guard-переход), а не по смещению, поэтому переживают смену сборки. Фикс входа в аккаунт: OK Tracer сверял applicationId своего манифеста с пакетом и ронял процесс фоновым исключением. Клонирование пакета с перезаписью authority провайдеров, объявленных как строковый ресурс (без этого клон не ставился рядом с оригиналом). Плюс блокировка рекламы в плеере, качество видео по умолчанию (Авто, 1080p, 720p, 480p, 360p), отключение телеметрии, обход VPN-детекта и перекраска адаптивной иконки лаунчера.",
+  "apps": [
+    {
+      "app_name": "VK Video: movies, cartoons, TV",
+      "package": "com.vk.vkvideo",
+      "patches": [
+        {
+          "name": "App icon colors",
+          "description": "Recolors the adaptive launcher icon: the background plate and the glyph drawn on top of it.",
+          "use": true,
+          "options": [
+            {
+              "key": "backgroundColor",
+              "description": "Color of the icon background plate (#RRGGBB or #AARRGGBB)."
+            },
+            {
+              "key": "foregroundColor",
+              "description": "Color of the glyph on top of the background (#RRGGBB or #AARRGGBB)."
+            }
+          ],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Bypass security and package checks",
+          "description": "Bypasses package verification in AuthBridge and BuildInfo to prevent profile crash and unofficial client warnings, disables dangerous app detection, and disables VPN detection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Bypass VPN detection",
+          "description": "Bypasses VPN and proxy detection across the application so video streaming works smoothly over VPN.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Clone app",
+          "description": "Changes the package name to com.vk.vkvideo.morphe so VK Video can be installed side-by-side with official VK Video.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name to use for the cloned app."
+            }
+          ],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables MyTracker and embedded analytics trackers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Fix Tracer manifest for clone",
+          "description": "Points the OK Tracer manifest at the cloned package name, otherwise its upload thread throws IllegalStateException and takes the app down on login.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Native anti-tamper bypass",
+          "description": "Neutralizes the signature checks in libvkcore.so and libvkmedia.so that exit the process when the APK carries a custom signing key.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Video ad-blocker",
+          "description": "Removes video ads (pre-rolls, mid-rolls, post-rolls, and overlay ad controls), suppresses promo recommendation snippets, and disables promo popups.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
+          "name": "Video quality preference",
+          "description": "Plays videos at the selected resolution instead of falling back to Auto adaptive bitrate, and shows that resolution in the player quality menu.",
+          "use": true,
+          "options": [
+            {
+              "key": "quality",
+              "description": "Resolution applied when a video starts. A quality picked manually in the player is kept."
+            }
+          ],
+          "compatible_versions": [
+            "1.168"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Patches VK Video",
+  "fingerprint": "078baa5e3c35dcb4ac63204d2940c2b63fed54d35de52c9e61b33f501311b604",
+  "release_notes": "Патчи Morphe для официального клиента «VK Видео» 1.168 (`com.vk.vkvideo` → клон `com.vk.vkvideo.morphe`).\n\n**В бандле 9 патчей:**\n\n- **Video ad-blocker** — прероллы, мидроллы, построллы, рекламная плашка в плеере, промо-карточки и growth-traps.\n- **Video quality preference** — разрешение выбирается при патчинге (Авто / 1080p / 720p / 480p / 360p), по умолчанию 1080p; выбор вручную в плеере перекрывает авто.\n- **Native anti-tamper bypass** — обход проверки подписи в `libvkcore.so` и `libvkmedia.so`: kill-блоки `mov w0,#1 ; bl _exit` находятся структурно (по PLT-стабу `_exit` и единственному guard-переходу), а не по жёстким адресам, поэтому переживают смену сборки.\n- **Bypass security and package checks** — проверки пакета в AuthBridge и `BuildInfo`, детект окружения.\n- **Bypass VPN detection** — перехват `NetworkCapabilities.hasTransport/hasCapability`, `ConnectivityManager.getNetworkInfo` и прокси-свойств.\n- **Disable telemetry** — MyTracker.\n- **Fix Tracer manifest for clone** — без него клон падал при входе в аккаунт: OK Tracer сверяет `applicationId()` своего манифеста с реальным пакетом и ронял процесс фоновым исключением.\n- **Clone app** — смена пакета, снятие split-ограничений, перезапись прав и authority провайдеров, включая те, что объявлены как строковый ресурс (без этого клон не ставился рядом с оригиналом).\n- **App icon colors** — перекраска адаптивной иконки: фон и знак отдельными цветами.\n\n**Не закрыто и проверено не полностью:**\n\n- Нативная реклама в ленте рекомендаций под постом (карточка с меткой «РЕКЛАМА», MyTarget) — это отдельный слой, в этом релизе не блокируется.\n- Качество проверено на уровне байткода (хук на месте, вызов `getPreferredQuality1080` в APK), но не на глаз в воспроизведении.\n- Целевая версия — 1.168; на других сборках патчи ищутся по структурам и могут частично не примениться (в этом случае они молча пропускаются, а не ломают APK).\n\nУстановка: импортировать `patches-1.0.0.mpp` в Morphe Manager, выбрать исходный APK «VK Видео» 1.168 и собрать.\n",
+  "release_tag": "v1.0.0",
+  "release_date": "2026-10-29T11:52:23Z",
+  "isPreRelease": false
+}

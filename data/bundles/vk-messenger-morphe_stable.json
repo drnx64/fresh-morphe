@@ -1,0 +1,112 @@
+{
+  "bundle": "vk-messenger-morphe",
+  "channel": "stable",
+  "repo_url": "https://github.com/PerfLite/morphe-patches-vk-messenger",
+  "created_at": "2026-10-29T19:00:00",
+  "version": "1.0.0",
+  "description": "Патчи к VK Мессенджеру (com.vk.im) для Morphe. Обход проверок подписи (AuthBridge, DeviceState) и нативного анти-тампера в libvkmedia.so, работающие push-уведомления на переподписанном APK, блокировка MyTracker, обход VPN-детекта. Независимый клон com.vk.im.morphe с исправленным Tracer и без встроенного уведомления VK «опасное приложение», плюс свои цвета лончер-иконки.",
+  "apps": [
+    {
+      "app_name": "VK Messenger: Chats and calls",
+      "package": "com.vk.im",
+      "patches": [
+        {
+          "name": "App icon colors",
+          "description": "Recolors the launcher icon: the cyan plate, the blue speech bubble and the white dots.",
+          "use": true,
+          "options": [
+            {
+              "key": "plateColor",
+              "description": "Color of the large plate behind the icon (#RRGGBB or #AARRGGBB)."
+            },
+            {
+              "key": "bubbleColor",
+              "description": "Color of the speech bubble on the icon (#RRGGBB or #AARRGGBB)."
+            },
+            {
+              "key": "glyphColor",
+              "description": "Color of the three dots on the icon (#RRGGBB or #AARRGGBB)."
+            }
+          ],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Bypass security and package checks",
+          "description": "Bypasses package verification in AuthBridge and BuildInfo to prevent profile crash and unofficial client warnings, disables dangerous app detection, and disables VPN detection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Bypass VPN detection",
+          "description": "Bypasses VPN and proxy detection across the application so messages and calls work over VPN.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Clone app",
+          "description": "Changes the package name to com.vk.im.morphe so VK Messenger can be installed side-by-side with the official app.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name to use for the cloned app."
+            }
+          ],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Disables MyTracker analytics. VK's internal AppStartReporter / BaseAnalyticsSender are intentionally left intact because they carry notification-sync/heartbeat traffic.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Fix push notifications",
+          "description": "Sends the official package name and signing certificate in Firebase requests, so a re-signed or cloned app gets an FCM token and receives push notifications in the background.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Fix Tracer manifest for clone",
+          "description": "Points the OK Tracer manifest at the cloned package name, otherwise its upload thread throws IllegalStateException and takes the app down on login.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.329"
+          ]
+        },
+        {
+          "name": "Native anti-tamper bypass",
+          "description": "Neutralizes the signature checks in libvkmedia.so that exit the process when the APK carries a custom signing key.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.329"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Patches VK Messenger",
+  "fingerprint": "42e3e3dc08f4047c4ab3dd2b2ff3b8ff2349ff8e4625ce753441389c659927eb",
+  "release_notes": "Добавлено:\n- Обход проверок подписи (`AuthBridge`, `DeviceState`) и нативного анти-тампера в `libvkmedia.so` — патченный клиент запускается без падений и предупреждений.\n- Push-уведомления через FCM на переподписанном APK: подмена `X-Android-Package` / `X-Android-Cert`.\n- Полная блокировка телеметрии MyTracker.\n- Обход детекта VPN/прокси.\n- Независимый клон: пакет `com.vk.im.morphe`, установка рядом с оригиналом, отключённый AccountManager, переименованные провайдеры/authorities.\n- Свои цвета лончер-иконки: плашка, пузырь и точки, включая adaptive-слой.\n\nИсправлено:\n- Клон больше не триггерит встроенный детектор VK «Найдено опасное приложение … может использоваться для взлома»: у приложения теперь собственный `taskAffinity`, не совпадающий с именем пакета.\n- Tracer получает клонированный `applicationId`, поэтому запуск и логин после смены пакета не ломаются.\n\nИзвестно:\n- Проверено на «VK Мессенджер» 1.329 (versionCode 34779).\n- Установка клона и отсутствие уведомления о «взломе» проверены на устройстве; логин, push и VK ID проверялись частично.\n",
+  "release_tag": "v1.0.0",
+  "release_date": "2026-10-29T14:37:49Z",
+  "isPreRelease": false
+}

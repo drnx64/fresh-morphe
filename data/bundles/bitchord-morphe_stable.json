@@ -1,0 +1,61 @@
+{
+  "bundle": "bitchord-morphe",
+  "channel": "stable",
+  "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
+  "created_at": "2026-10-29T06:26:24",
+  "version": "1.0.20",
+  "description": "Morphe patches for BitChord 1.8.1: play music from your own Telegram channels, with lossless quality, album covers and track name fixes. Uses your own Telegram account; doesn't unlock premium features.",
+  "apps": [
+    {
+      "app_name": "BitChord",
+      "package": "com.music.bitchord",
+      "patches": [
+        {
+          "name": "Install as Bitchord+",
+          "description": "Installs next to your regular BitChord as Bitchord+, or under a name you choose.",
+          "use": true,
+          "options": [
+            {
+              "key": "installationName",
+              "description": "The app name on your home screen, up to 80 characters. Leave blank for Bitchord+. A name containing Telegram must include Unofficial Telegram."
+            }
+          ],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Unofficial Telegram music",
+          "description": "Search and play audio from your own Telegram channels, right on your phone. Android 8 or newer.",
+          "use": true,
+          "options": [
+            {
+              "key": "telegramApplicationId",
+              "description": "Leave at 0 and enter your API ID in the app after installing."
+            },
+            {
+              "key": "telegramApplicationHash",
+              "description": "Leave empty and enter your API hash in the app after installing."
+            }
+          ],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Hexclyde",
+  "fingerprint": "dcb1e7e2e1b825ff45c5cb130cc0749613c04b8109ffcab1102cdb126ee8bc65",
+  "release_notes": "- **Fixed a crash when a song starts playing** in 1.0.18 and 1.0.19: the audio sink hook called code BitChord's player wasn't allowed to reach.\n\nIf you're updating from 1.0.18 or earlier, this release also includes:\n  - **The switch to Telegram is lined up by the waveform:** after the loudness finds the offset to a few milliseconds, the two waveforms find it to a fraction of a millisecond.\n  - **No more small repeat at the crossfade:** the Telegram copy took a moment to start, so it began a little behind the stream. Before the crossfade, while it's still silent, it now leaves out exactly the audio it's behind by, to the sample. Lyrics and the progress bar stay on the song.\n  - Fixed the offset being measured as if at 1x when a playback speed is set.\n\nIf you're updating from 1.0.17 or earlier, this release also includes:\n  - **Lined-up switch to Telegram** (1.0.18): the Telegram copy starts as much earlier or later as the two uploads differ, so switching mid-song doesn't repeat or skip.\n  - **Fixed hi-res files showing \"5 kbps\"** (1.0.18).\n\nIf you're updating from 1.0.15, also:\n  - **Back up and sign out:** **Session → Sign out** now offers to back up first, with the saved index, and signs you out only once the backup is saved. After you sign in again, **Welcome back** restores everything in one tap, without indexing your chats again. Your AcoustID key stays on the phone when you sign out.\n  - **Fake lossless check** (**Track details → Check lossless files**, on by default): a FLAC or WAV file that plays is checked a minute later for a lossy encoder's cut-off. A file made from an MP3 shows as **FLAC 16bit · from ≈128 kbps** and is ranked as that MP3 by BitChord, **Hide duplicate songs** and **Lossless only** copying. Upsampled hi-res shows as **FLAC 24bit · from 44.1 kHz**, padded 24-bit as **FLAC 24bit · really 16bit**, and weaker evidence as **· maybe lossy**.\n  - **Check in the background** (off by default): every lossless file in your music chats, up to 1 GB a day, keeping to the Wi-Fi and charging switches. Results are kept in the saved index and travel with shared indexes.\n  - **Name untagged files by sound** (**Track names**, off by default): with your own free AcoustID key, files without tags get their real title and artist. Only a fingerprint is sent, never the audio.\n\nWorks with BitChord **1.8.1**. Patch with **both** patches and the same Morphe signing key to update over your current Bitchord+.\n",
+  "release_tag": "v1.0.20",
+  "release_date": "2026-10-29T06:38:25Z",
+  "isPreRelease": false,
+  "stars": 6,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/10942734?v=4&s=128",
+  "repoDescription": "Morphe patches for BitChord: play music from your own Telegram channels and more add-ons. Free, on-device.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}

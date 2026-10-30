@@ -1,0 +1,781 @@
+{
+  "bundle": "emotionbug",
+  "channel": "latest",
+  "repo_url": "https://github.com/emotionbug/EBPatcher-patches",
+  "created_at": "2026-10-29T02:48:37",
+  "version": "0.5.6",
+  "description": "EBPatcher patches for Morphe: nine ACall 14.4.0 (14409) patches and 49 editable YouTube Music patches based on Morphe v1.48.0. Recording, native call-history summary persistence, Compose settings entry, banner and privacy hooks match the original APK. Existing Whisper turbo and Gemma E4B models and interactive CPU/noninteractive GPU policy are unchanged. Requires Morphe 2.1.0+ (patcher 2.0.0). Device calls and server acceptance are unverified. Independent EB branding; see release notes and notices.",
+  "apps": [
+    {
+      "app_name": "YouTube Music",
+      "package": "com.google.android.apps.youtube.music",
+      "patches": [
+        {
+          "name": "Android Auto",
+          "description": "Bypasses certificate checks and restores YouTube Music Home recommendations, Library collections, and podcasts in Android Auto.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "App refresh rate",
+          "description": "Adds an option to change the app refresh rate.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Change header",
+          "description": "Adds an option to change the header logo in the top left corner of the app. Keeps the original by default; the bundled alternative is independent EB artwork. User-supplied custom headers are supported.",
+          "use": true,
+          "options": [
+            {
+              "key": "custom",
+              "description": "\n            Folder with images to use as a custom header logo.\n\n            The folder must contain one or more of the following folders, depending on the DPI of the device:\n            - drawable-hdpi\n- drawable-xhdpi\n- drawable-xxhdpi\n- drawable-xxxhdpi\n\n            Each of the folders must contain the following file(s):\n            - morphe_header_custom_dark.png\n\n            Required dimensions:\n            - drawable-hdpi: 121x36 px\n- drawable-xhdpi: 160x48 px\n- drawable-xxhdpi: 240x72 px\n- drawable-xxxhdpi: 320x96 px\n        "
+            }
+          ],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Change miniplayer color",
+          "description": "Adds an option to change the miniplayer background color to match the fullscreen player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Change start page",
+          "description": "Adds an option to set which page the app opens in instead of the homepage.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Check watch history domain name resolution",
+          "description": "Checks if the device DNS server is preventing user watch history from being saved.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Crossfade",
+          "description": "Adds a true dual-player crossfade between consecutive tracks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Custom branding",
+          "description": "Adds options to change the app icon and app name. EBPatcher keeps the original icon by default and supplies independent EB presets, not Morphe artwork. For mounted (root) installations the branding is applied while patching, because it cannot be changed from the app settings.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Custom app name."
+            },
+            {
+              "key": "customIcon",
+              "description": "\n            Folder with images to use as a custom icon.\n            \n            The folder must contain one or more of the following folders, depending on the DPI of the device:\n            - mipmap-mdpi\n- mipmap-hdpi\n- mipmap-xhdpi\n- mipmap-xxhdpi\n- mipmap-xxxhdpi\n            \n            Each of the folders must contain all of the following files:\n            morphe_adaptive_background_custom.png\nmorphe_adaptive_foreground_custom.png\n            \n            The image dimensions must be as follows:\n            - mipmap-mdpi: 108x108 px\n- mipmap-hdpi: 162x162 px\n- mipmap-xhdpi: 216x216 px\n- mipmap-xxhdpi: 324x324 px\n- mipmap-xxxhdpi: 432x432 px\n\n            Optionally, the path contains a 'drawable' folder with a monochrome icon file:\n            morphe_adaptive_monochrome_custom.xml\n\n            Optionally, the path contains a notification icon in one of the following formats:\n            - XML vector drawable placed in 'drawable':\n              morphe_notification_icon_custom.xml\n            - PNG raster images placed in the matching 'drawable-<dpi>' folders:\n              - drawable-mdpi/morphe_notification_icon_custom.png (24x24 px)\n- drawable-hdpi/morphe_notification_icon_custom.png (36x36 px)\n- drawable-xhdpi/morphe_notification_icon_custom.png (48x48 px)\n- drawable-xxhdpi/morphe_notification_icon_custom.png (72x72 px)\n- drawable-xxxhdpi/morphe_notification_icon_custom.png (96x96 px)\n        "
+            },
+            {
+              "key": "appIcon",
+              "description": "\n            The app icon to use, including the notification icon.\n\n            'Automatic' uses the custom icon if one is provided, and otherwise 'Original'.\n            Select 'Original' to keep the unpatched app icon and startup animation. Other presets use independent EB artwork, not Morphe branding.\n\n            The icon can be changed later in the app settings, but only for the launcher.\n            Android Auto, the app list of the system settings and the apk file always show\n            the icon chosen here, and a mounted (root) installation can only change it by\n            patching again.\n        "
+            }
+          ],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Custom font",
+          "description": "Adds an option to show the app with the device system font or a custom TTF or OTF font file instead of YouTube Sans.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Disable DRC audio",
+          "description": "Adds an option to disable DRC (Dynamic Range Compression) audio.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Disable QUIC protocol",
+          "description": "Adds an option to disable QUIC (Quick UDP Internet Connections) network protocol.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Disable dislike redirection",
+          "description": "Adds an option to prevent skipping to the next track when the dislike button is pressed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Downloads",
+          "description": "Adds support to download songs using the in-app download button, either with an external downloader app or inside YouTube Music.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Enable audio/video switch",
+          "description": "Adds an option to switch between the audio and the video version of a track by redirecting videoId.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Enable debugging",
+          "description": "Adds options for debugging and exporting Morphe logs to the clipboard.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Enable exclusive audio playback",
+          "description": "Enables the option to play audio without video.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Enable forced miniplayer",
+          "description": "Adds an option to enable forced miniplayer when switching between music videos, podcasts, or songs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Enable swipe to dismiss miniplayer",
+          "description": "Adds an option to enable dismissing the miniplayer by swiping down on it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Force original audio",
+          "description": "Adds an option to always use the original audio track.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Force portrait orientation",
+          "description": "Adds an option to keep the app in portrait orientation when the device is rotated.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Allows the app to work without root by using a different package name when patched using a GmsCore instead of Google Play Services.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Adds options to hide fullscreen ads, Premium promotions and video ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Hide buttons",
+          "description": "Adds options to hide the cast, history, notification, search, voice search, sound search, and Library New buttons.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Hide flyout menu components",
+          "description": "Adds options to hide individual items from the player and queue flyout menus.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Hide layout components",
+          "description": "Adds options to hide general layout components.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Hide music action buttons",
+          "description": "Adds options to hide action buttons under the player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Jam queue sharing",
+          "description": "Shares the host queue and playback controls through an authenticated Jam bridge. Root installation is not supported.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Media notification controls",
+          "description": "Adds options to disable the seekbar and previous/next buttons in the media notification and headphone controls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Miniplayer previous and next buttons",
+          "description": "Adds options to show previous and next track buttons in the miniplayer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Navigation bar",
+          "description": "Adds options to hide navigation bar, labels and buttons.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Network proxy",
+          "description": "Adds settings to route supported network requests through an HTTP or HTTPS proxy. Including this patch may cause connectivity problems on certain devices",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Play albums songs",
+          "description": "Adds an option to play the song version of album tracks instead of music videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Playback speed",
+          "description": "Adds options to change the playback speed and pitch of tracks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Playlist track tap action",
+          "description": "Adds an option to play only the tapped track of a playlist or album, or to add it to the queue, instead of replacing the queue with the whole playlist.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "PoToken provider",
+          "description": "Adds option to get PoToken using an external PoToken minter app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Remember repeat state",
+          "description": "Adds an option to remember the repeat state when playing a new track or playlist.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Remember shuffle state",
+          "description": "Adds an option to remember the shuffle state when playing a new track or playlist.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Remove background playback restrictions",
+          "description": "Removes restrictions on background playback, including playing kids videos in the background.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Remove viewer discretion dialog",
+          "description": "Adds an option to remove the dialog that appears when opening a video that has been age-restricted by accepting it automatically. This does not bypass the age restriction.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Return YouTube Dislike",
+          "description": "Adds an option to show the dislike count of tracks with Return YouTube Dislike.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Sanitize sharing links",
+          "description": "Removes the tracking query parameters from shared links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Scrobbling",
+          "description": "Adds options to add played tracks to Last.fm and ListenBrainz.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Settings menu filter",
+          "description": "Adds an option to hide items on the standard YouTube Music settings screen by their visible name.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Skip silence",
+          "description": "Adds an option to automatically skip silent pauses in audio playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "SponsorBlock",
+          "description": "Adds options to enable and configure SponsorBlock, which can skip non-music segments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Spoof app version",
+          "description": "Adds an option to trick the app into thinking you are running an older version.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Spoof video streams",
+          "description": "Adds options to spoof the client video streams to fix playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Theme",
+          "description": "Adds options for theming, and settings to change the app foreground and background colors.",
+          "use": true,
+          "options": [
+            {
+              "key": "darkThemeColor",
+              "description": "Can be a hex color (#RRGGBB) or a color resource reference. Setting a color of either theme applies both while patching and removes the in-app theme color settings."
+            }
+          ],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        },
+        {
+          "name": "Third-party lyrics",
+          "description": "Adds an option to show synced lyrics with experience enhancement from 18+ providers in the lyrics panel.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.42.52",
+            "9.41.52",
+            "9.40.51",
+            "9.20.53",
+            "9.15.51"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "에이닷 전화",
+      "package": "com.skt.prod.dialer",
+      "patches": [
+        {
+          "name": "ACall Galaxy device profile",
+          "description": "Report the scoped Galaxy metadata profile without changing OS, IDs, fingerprint, hardware, product or device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall disable USB debugging detection",
+          "description": "Disable local USB debugging detection without changing device settings.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall disable debugger detection",
+          "description": "Disable only the guarded Java and native debugger detectors; retain authentication and certificate verification.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall embedded Shizuku recording",
+          "description": "Use the original recording controls with an authorized Shizuku recorder; retain failure callbacks and show failure reasons.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall local Gemma summaries",
+          "description": "Use Korean Whisper turbo and Gemma after exact TICKET_ALL_USED or in Always mode. Persist the selected API/local result in the original call-history database, with silent processing notifications and five local histories. Download or update models in settings; preserve the API original.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall manufacturer compatibility",
+          "description": "Retain capability, account and permission checks while removing the manufacturer restriction.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall original AppProtect hashes",
+          "description": "Bind an explicit original APK/APKM to this input and preserve original APK and central-directory hashes without bypassing verification.",
+          "use": false,
+          "options": [
+            {
+              "key": "originalApk",
+              "description": "Exact original, signed ACall 14.4.0 (14409) APK or APKM. Select a local filesystem path, not a rebuilt APK."
+            }
+          ],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall remove banner ads",
+          "description": "Remove commercial Google and Kakao banner requests and their reserved space; retain caller information and safety notices.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "ACall suppress nonessential analytics",
+          "description": "Deactivate Firebase Analytics and keep AppsFlyer stopped-tracking paths active; preserve Messaging, Crashlytics, authentication and phone services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "14.4.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "EBPatcher patches",
+  "fingerprint": "e0bdc47638e3d51e6a46d20b399eccb78b1d0037775d83e83c9fbc3a279706d3",
+  "release_notes": "## ACall 14.4.0 (14409)\n\n- Ports all nine ACall patches to the current original APK, including recording, local summaries, manufacturer compatibility, original AppProtect hashes, scoped debugger/USB detection changes, device metadata, banner removal, and optional analytics suppression.\n- Updates recording, Room database, cloud upload, notification, and coroutine boundaries. Preserves original API results and speaker-publication safeguards.\n- Adds the extension settings entry inside the original Compose settings list, using the existing row resources and new-item badge rather than a screen overlay.\n- Keeps the existing Whisper and Gemma models and execution policy: CPU while interactive, GPU preferred otherwise. No model redownload is required by this update.\n- Includes 49 editable YouTube Music patches based on Morphe stable v1.48.0.\n- Uses ACall terminology in English public documentation, patch metadata, and extension settings.\n\n### Install\n\nRefresh the EB source in Morphe Manager 2.1.0 or later, then patch the untouched **ACall 14.4.0 (14409)** input. Refreshing the source does not update an installed APK. Select optional patches explicitly.\n\nThe optional original AppProtect hash patch requires a local filesystem path to the exact untouched, signed original APK/APKM. The base APK must contain both arm64-v8a and armeabi-v7a native libraries. Vendor APKs, patched APKs, model weights, recordings, and private keys are not distributed.\n\n### Validation and limitations\n\n- 264 tests passed with no failures or skips: runtime 128, summary engine 36, patches 100.\n- A separate Morphe 2.0.0 consumer loaded the release MPP's 58 exports, applied all nine ACall patches to the original APK, and rebuilt an APK.\n- Checks cover original-code preservation, recording/summary/database/upload boundaries, APKM original binding, settings resources, and host-side Android widget interaction.\n- **Real device calls, original Compose rendering/recomposition, server acceptance, YouTube Music APK execution, and device model performance remain unverified for this release.**\n\n### Assets\n\nUse `patches-0.5.6.mpp`. Its SHA-256 is published in `patches-0.5.6.mpp.sha256`.\n\nThis is an independent EB derivative distribution, not an official Morphe release. Preserved licenses and third-party notices apply.\n",
+  "release_tag": "v0.5.6",
+  "release_date": "2026-10-29T02:51:56Z",
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/58318746?v=4&s=128",
+  "repoDescription": "ACall and YouTube Music patches for Morphe. Independent EB distribution.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}

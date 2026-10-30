@@ -2,14 +2,23 @@
   "bundle": "bitchord-morphe",
   "channel": "dev",
   "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
-  "created_at": "2026-10-29T06:26:24",
-  "version": "1.0.20",
+  "created_at": "2026-10-29T22:29:20",
+  "version": "1.1.0-beta.2",
   "description": "Morphe patches for BitChord 1.8.1: play music from your own Telegram channels, with lossless quality, album covers and track name fixes. Uses your own Telegram account; doesn't unlock premium features.",
   "apps": [
     {
       "app_name": "BitChord",
       "package": "com.music.bitchord",
       "patches": [
+        {
+          "name": "Battery saver",
+          "description": "Lets the phone's audio chip decode songs, so long listens use less battery. BitChord's effects don't run on songs played this way. Inspired by Auris, Prism and Stash. Settings are at the end of the Equalizer page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
         {
           "name": "Install as Bitchord+",
           "description": "Installs next to your regular BitChord as Bitchord+, or under a name you choose.",
@@ -20,6 +29,60 @@
               "description": "The app name on your home screen, up to 80 characters. Leave blank for Bitchord+. A name containing Telegram must include Unofficial Telegram."
             }
           ],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Lossless addons over Bluetooth",
+          "description": "Keeps addons marked lossless in use over Bluetooth, where BitChord normally skips them. Settings are at the end of the Equalizer page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Loudness level",
+          "description": "Sets how loud loudness normalisation plays songs, from -23 to -8 LUFS instead of -14. Inspired by Auris, Prism and Stash. Settings are at the end of the Equalizer page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Pitch control",
+          "description": "Moves the key up or down by up to 12 semitones without changing the speed. Inspired by Auris, Prism and Stash. Settings are at the end of the Equalizer page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Sign in with MicroG",
+          "description": "Offers to sign in to YouTube Music with an account that's already in MicroG RE, instead of Google's sign-in page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Sing",
+          "description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Settings are at the end of the Equalizer page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
+          "name": "Sleep timer fade-out",
+          "description": "Fades the song out over 10 seconds before the sleep timer pauses it. Settings are at the end of the Equalizer page.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "1.8.1"
           ]
@@ -46,10 +109,10 @@
     }
   ],
   "patches_name": "Hexclyde",
-  "fingerprint": "63bfc9cab1ba4094290f6bc5d634c5a2486b75a7e284ce295742dfd84c12a188",
-  "release_notes": "- **Format legend for every format:** FLAC 16bit / 24bit, ALAC, WAV, and lossy formats with their bitrate, like MP3 320kbps or OPUS 160kbps, as a small white label on a grey chip.\n- **Legends in the main search:** each search also checks your selected Telegram chats once, and songs you have there show their format right in the results.\n- 1.0.1 changes (if you're coming from 1.0.0): the Telegram page uses BitChord-style switches and no longer jumps to the top, and **Play surround as stereo** is off by default.\n- Project website: https://hexclyde.github.io/bitchord-morphe-patches/\n\nWorks with BitChord **1.8.1**. Patch with **both** patches and the same Morphe signing key to update over your current Bitchord+.\n",
-  "release_tag": "v1.0.2",
-  "release_date": "2026-10-28T16:59:13Z",
+  "fingerprint": "49182c9a23fbd02a9405187c39c0476e85bb4d01bd6b6dee7601d5fa1996d1bd",
+  "release_notes": "**Testing build.** It's only on the `testing` branch. To try it, add `https://raw.githubusercontent.com/Hexclyde/bitchord-morphe-patches/refs/heads/testing/patches-bundle.json` as a second source in Morphe, with **Experimental app versions** on, and patch from it with the other sources turned off. The normal source stays on 1.0.20 until 1.1.0 is released.\n\n- **Fixed a cover playing instead of the song:** a Telegram file with the song's title, artist and length was trusted without being listened to, so a cover tagged as the original could replace it (reported with \"Enter Sandman\"). Before switching to a Telegram copy, the patch now always compares it with what's playing. When the song has only just started, it listens for a few seconds first. If the two don't sound alike, the stream keeps playing, and a file that sounds different at two switches isn't used for that song again.\n- **The playback features are now six separate patches,** all off by default: **Sing**, **Pitch control**, **Loudness level**, **Sleep timer fade-out**, **Battery saver** and **Lossless addons over Bluetooth**. Turn on only the ones you want in Morphe; the Playback extras page at the end of **Settings → Equalizer** shows the settings of the ones you added.\n- **Fixed Sign in with MicroG not being offered** on Android 11 and newer: Android hides other apps' account types from an app unless it declares them, so BitChord couldn't tell MicroG RE was installed and opened Google's sign-in page. It's now declared. When the offer is skipped, the log says why.\n- **Install as Bitchord+** now says when a patch from another source has already changed BitChord's package name, instead of failing with a general error.\n- The README, setup guide and building notes give the testing source's working link. Morphe turns other GitHub branch links into `main`.\n\nEverything from 1.1.0-beta.1 is included: the playback features above, **Sign in with MicroG**, and the fixes for zips after signing in again and for \"YouTube\" shown on Telegram FLACs.\n",
+  "release_tag": "v1.1.0-beta.2",
+  "release_date": "2026-10-29T23:31:52Z",
   "isPreRelease": true,
   "stars": 6,
   "avatarUrl": "https://avatars.githubusercontent.com/u/10942734?v=4&s=128",
