@@ -2,9 +2,9 @@
   "bundle": "vk-video-morphe",
   "channel": "stable",
   "repo_url": "https://github.com/PerfLite/morphe-patches-vk-video",
-  "created_at": "2026-10-29T18:08:00",
-  "version": "1.0.0",
-  "description": "Патчи к VK Видео (com.vk.vkvideo) для Morphe. Обход нативной проверки подписи в libvkcore.so и libvkmedia.so — kill-блоки ищутся по структуре (PLT-стаб _exit и единственный guard-переход), а не по смещению, поэтому переживают смену сборки. Фикс входа в аккаунт: OK Tracer сверял applicationId своего манифеста с пакетом и ронял процесс фоновым исключением. Клонирование пакета с перезаписью authority провайдеров, объявленных как строковый ресурс (без этого клон не ставился рядом с оригиналом). Плюс блокировка рекламы в плеере, качество видео по умолчанию (Авто, 1080p, 720p, 480p, 360p), отключение телеметрии, обход VPN-детекта и перекраска адаптивной иконки лаунчера.",
+  "created_at": "2026-10-30T13:20:00",
+  "version": "1.1.0",
+  "description": "Патчи к VK Видео (com.vk.vkvideo) для Morphe. Обход нативной проверки подписи в libvkcore.so и libvkmedia.so — kill-блоки ищутся по структуре (PLT-стаб _exit и единственный guard-переход), а не по смещению, поэтому переживают смену сборки. Фикс входа в аккаунт: OK Tracer сверял applicationId своего манифеста с пакетом и ронял процесс фоновым исключением. Клонирование пакета с перезаписью authority провайдеров, объявленных как строковый ресурс (без этого клон не ставился рядом с оригиналом). Плюс блокировка рекламы в плеере, рекламного баннера под плеером и MyTarget-карточек в ленте, качество видео по умолчанию (Авто, 1080p, 720p, 480p, 360p), отключение телеметрии, обход VPN-детекта и перекраска адаптивной иконки лаунчера.",
   "apps": [
     {
       "app_name": "VK Video: movies, cartoons, TV",
@@ -70,6 +70,15 @@
           ]
         },
         {
+          "name": "Feed ad-block",
+          "description": "Removes MyTarget native ad cards from the recommendations list on the video page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
           "name": "Fix Tracer manifest for clone",
           "description": "Points the OK Tracer manifest at the cloned package name, otherwise its upload thread throws IllegalStateException and takes the app down on login.",
           "use": true,
@@ -97,6 +106,15 @@
           ]
         },
         {
+          "name": "Video banner ad-block",
+          "description": "Removes the ad banner under the player - the «РЕКЛАМА» card between the comments and the recommendations title.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.168"
+          ]
+        },
+        {
           "name": "Video quality preference",
           "description": "Plays videos at the selected resolution instead of falling back to Auto adaptive bitrate, and shows that resolution in the player quality menu.",
           "use": true,
@@ -114,10 +132,10 @@
     }
   ],
   "patches_name": "Patches VK Video",
-  "fingerprint": "eca4fdf898d7b9a28ff2f0822a71486e95361f108b2e87ce0115a5e20dd92478",
-  "release_notes": "Патчи Morphe для официального клиента «VK Видео» 1.168 (`com.vk.vkvideo` → клон `com.vk.vkvideo.morphe`).\n\n**В бандле 9 патчей:**\n\n- **Video ad-blocker** — прероллы, мидроллы, построллы, рекламная плашка в плеере, промо-карточки и growth-traps.\n- **Video quality preference** — разрешение выбирается при патчинге (Авто / 1080p / 720p / 480p / 360p), по умолчанию 1080p; выбор вручную в плеере перекрывает авто.\n- **Native anti-tamper bypass** — обход проверки подписи в `libvkcore.so` и `libvkmedia.so`: kill-блоки `mov w0,#1 ; bl _exit` находятся структурно (по PLT-стабу `_exit` и единственному guard-переходу), а не по жёстким адресам, поэтому переживают смену сборки.\n- **Bypass security and package checks** — проверки пакета в AuthBridge и `BuildInfo`, детект окружения.\n- **Bypass VPN detection** — перехват `NetworkCapabilities.hasTransport/hasCapability`, `ConnectivityManager.getNetworkInfo` и прокси-свойств.\n- **Disable telemetry** — MyTracker.\n- **Fix Tracer manifest for clone** — без него клон падал при входе в аккаунт: OK Tracer сверяет `applicationId()` своего манифеста с реальным пакетом и ронял процесс фоновым исключением.\n- **Clone app** — смена пакета, снятие split-ограничений, перезапись прав и authority провайдеров, включая те, что объявлены как строковый ресурс (без этого клон не ставился рядом с оригиналом).\n- **App icon colors** — перекраска адаптивной иконки: фон и знак отдельными цветами.\n\n**Не закрыто и проверено не полностью:**\n\n- Нативная реклама в ленте рекомендаций под постом (карточка с меткой «РЕКЛАМА», MyTarget) — это отдельный слой, в этом релизе не блокируется.\n- Качество проверено на уровне байткода (хук на месте, вызов `getPreferredQuality1080` в APK), но не на глаз в воспроизведении.\n- Целевая версия — 1.168; на других сборках патчи ищутся по структурам и могут частично не примениться (в этом случае они молча пропускаются, а не ломают APK).\n\nУстановка: импортировать `patches-1.0.0.mpp` в Morphe Manager, выбрать исходный APK «VK Видео» 1.168 и собрать.\n",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-10-29T11:52:23Z",
+  "fingerprint": "e466b553fcb7f40b88bd93b30c09ce8889ee1456e2eaf87c950ed160e9241412",
+  "release_notes": "## Что нового\n\n**Блокировка рекламного баннера под плеером.** Пропала карточка «РЕКЛАМА» между блоком комментариев и «Смотрите также» на странице видео. Это не карточка ленты: элемент `AboutVideoItem$a` строится из события `VideoAdBannerRepository`, рисуется `AdBlockDelegate` по layout `res/layout/video_ad_banner.xml`. Патч глушит колбэк доставки загруженной рекламы, поэтому событие не попадает в поток, на который подписан презентер страницы.\n\nПроверено на устройстве на VK Видео 1.168 — карточка пропала.\n\n## Остальное в бандле\n\n- Блокировка видео-рекламы в плеере (прероллы, мидроллы, оверлей).\n- Блокировка нативных MyTarget-карточек в lego-ленте.\n- Обход нативной проверки подписи в `libvkcore.so` / `libvkmedia.so` (kill-блоки ищутся по структуре, а не по смещению).\n- Рабочий вход в аккаунт в клоне (фикс OK Tracer: сверка `applicationId` с пакетом).\n- Клонирование пакета рядом с оригиналом (authority провайдеров, объявленных строковым ресурсом).\n- Качество видео, выбираемое при патчинге: Авто / 1080p / 720p / 480p / 360p.\n- Отключение телеметрии, обход VPN-детекта, перекраска адаптивной иконки лаунчера.\n\n## Оговорки\n\n- Качество видео — опция патча; поведение на устройстве отдельно не проверялось.\n- MyTarget-патч ленты применяется (проверено в собранном APK), но именно эта поверхность скриншотом с устройства не подтверждена — та карточка оказалась баннером под плеером.\n\n`patches-1.1.0.mpp` — 913 468 байт, SHA-256 `8dd85be139a600a889cb13a66d1655de5183af342ce09ac75ace47ae22eb577c`.",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-10-30T09:00:50Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/96340456?v=4&s=128",

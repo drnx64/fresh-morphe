@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/rikunode/tairiku-x-patches",
   "created_at": "2026-10-16T08:43:27Z",
   "version": "1.12.1-tairiku.4-beta.4",
-  "description": "## 1.12.0-tairiku.3 (stable, 2026-10-12)\n\n### Morphe patches for X (Twitter) — 3 patches\n\n* **Fix external post links:** Open external X status URLs directly as post details instead of falling back to Home when the For You/Following tabs are hidden. Verified by user screenshot on a patched Android phone on 2026-10-12.\n* **Hide Find more:** Narrow recommendation filtering to the related-tweets module and Search recommendations, avoiding the generic tweetdetail entry prefix.\n* **Hide Who to follow:** Preserve hiding recommended accounts.\n* Verified against X 12.31.0-prod.01 and 12.32.0-prod.01 APK fingerprints and patch application. URL parser regression tests, Gradle bundle tests, and CI build must pass. Other deep-link variants and Android versions are not separately verified.",
+  "description": "## X Patch 1.12.1-x.2 (2026-10-30)\n\n* Copy media URL: copy the direct video file URL from X's video download action, or continue with Save video.\n* Also copies direct photo, video and GIF URLs from post options.\n* Retains Fix external post links, Hide Find more and Hide Who to follow.\n* Supports X 12.31.0-prod.01 and 12.32.0-prod.01. Android UI and APK-level behavior for the new video action are not yet verified.\n* Image long-press and image-viewer overflow menu entry points remain unimplemented.",
   "apps": [
     {
       "app_name": "X",
@@ -39,12 +39,22 @@
             "12.31.0-prod.01",
             "12.32.0-prod.01"
           ]
+        },
+        {
+          "name": "Copy media URL",
+          "description": "Copy direct image/video/GIF URLs from post options or from the video player's download action.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.31.0-prod.01",
+            "12.32.0-prod.01"
+          ]
         }
       ]
     }
   ],
   "patches_name": "Tairiku X Patches",
-  "fingerprint": "ae6cf9741472681666f7290a759ed1ecc187e3f1fde09702eaf51807b6047e19",
+  "fingerprint": "e04fbc3339c1073c0702d332ae6a456a1bc98a97523af8e562d19f4f43c88597",
   "release_notes": "Experimental five-patch Morphe bundle. Adds Hide search relevance prompt to hide the Search results yes/no survey. Preserves four previous patches. Static X 12.31/12.32 APK model evidence and CI tests pass; user device testing is pending. Existing Morphe source with prerelease toggle reads dev/patches-bundle.json. Stable main remains unchanged.",
   "release_tag": "v1.12.1-tairiku.4-beta.4",
   "release_date": "2026-10-16T08:43:27Z",

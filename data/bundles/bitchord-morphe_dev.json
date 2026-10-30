@@ -2,9 +2,9 @@
   "bundle": "bitchord-morphe",
   "channel": "dev",
   "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
-  "created_at": "2026-10-30T02:08:12",
-  "version": "1.1.0-beta.4",
-  "description": "Morphe patches for BitChord 1.8.1: play music from your own Telegram channels, with lossless quality, album covers and track name fixes. Uses your own Telegram account; doesn't unlock premium features.",
+  "created_at": "2026-10-30T20:23:22",
+  "version": "1.1.0-beta.5",
+  "description": "Morphe patches for BitChord 1.8.1: music from your own Telegram channels, download-only Soulseek audio, and optional playback tools. Runs on your phone using your own accounts; doesn't unlock premium features.",
   "apps": [
     {
       "app_name": "BitChord",
@@ -88,6 +88,15 @@
           ]
         },
         {
+          "name": "Unofficial Soulseek audio",
+          "description": "Download selected Soulseek or debrid audio to a phone folder, a configured Telegram main channel, or both. Optional debrid services use your own API keys. Choose accepted formats and their order in setup. Live playback and automatic source matching are disabled. Android 8 or newer.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.8.1"
+          ]
+        },
+        {
           "name": "Unofficial Telegram music",
           "description": "Search and play audio from your own Telegram channels, right on your phone. Android 8 or newer.",
           "use": true,
@@ -109,10 +118,10 @@
     }
   ],
   "patches_name": "Hexclyde",
-  "fingerprint": "05a211f3c50ca07098e6335df5ad7df6ba9c7d59e2a496ccfb848e5ac7ae44dd",
-  "release_notes": "**Testing build.** It's only on the `testing` branch. To try it, add `https://raw.githubusercontent.com/Hexclyde/bitchord-morphe-patches/refs/heads/testing/patches-bundle.json` as a second source in Morphe, with **Experimental app versions** on, and patch from it with the other sources turned off. The normal source stays on 1.0.20 until 1.1.0 is released.\n\n- **Fixed Telegram copies still failing with \"ENOENT\" and falling back to YouTube** (reported with \"Bring Me To Life\"). Each time a Telegram read started, the patch trimmed TDLib's audio cache to its size limit, and could delete the very file being played or about to play; TDLib kept naming the deleted file. Files downloaded in the last hour are now kept when the cache is trimmed; clearing the cache yourself still removes everything. If a file is gone anyway, TDLib is asked to download that part again.\n\nEverything from 1.1.0-beta.3 is included.\n",
-  "release_tag": "v1.1.0-beta.4",
-  "release_date": "2026-10-30T02:20:25Z",
+  "fingerprint": "0fc8e8c1ae6f641f9ad1b596a956bc525d4bf3b28382afc4cf0b68f79150355d",
+  "release_notes": "# 1.1.0-beta.5\n\nFirst-time download setup now asks where copies go: a phone folder, the user's\nconfigured private Telegram main channel, or both. Users choose enabled audio\nformats and arrange their preference order. Downloads retain the settings chosen\nwhen they were queued and validate the completed file's encoding before saving.\n\nThe optional Soulseek patch remains download-only. Paired phones can explicitly\nshare selected files through encrypted Nostr coordination, direct UDP/QUIC, and\navailable I2P, Tor or IPFS fallback routes. Verified chunks and independent copy\nreceipts support recovery without silently substituting another recording.\n\nOptional Real-Debrid, AllDebrid, Premiumize and TorBox link downloads are included\nin this same build. Each service is independently enabled, starts off,\nand uses the user's own protected API key. A chosen service resolves a supplied\nHTTPS link or magnet; selected audio files use the saved Phone, Telegram main\nchannel or Both destination. These services do not provide a music catalogue or\nautomatic paid-provider fallback. See [debrid setup](https://github.com/Hexclyde/bitchord-morphe-patches/blob/3abaad00d5ca329c93420575e9d3effc1695aff4/docs/DEBRID.md).\n\nThe new runtime libraries are included for arm64-v8a, armeabi-v7a and x86_64 on\nAndroid 8 or newer. This is a testing build for BitChord 1.8.1. Local checks pass;\npublic-network operation and the new workflows still need real-phone testing.\nProvider fixtures do not establish live debrid account access or queue behavior.\nCollection-level album/playlist integration remains pending. Ordinary Soulseek\nclients do not gain the paired-phone overlay protocol automatically.\n",
+  "release_tag": "v1.1.0-beta.5",
+  "release_date": "2026-10-30T13:04:59Z",
   "isPreRelease": true,
   "stars": 6,
   "avatarUrl": "https://avatars.githubusercontent.com/u/10942734?v=4&s=128",
