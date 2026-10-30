@@ -1,9 +1,12 @@
 /**
- * Stats section — 4 stat cards + last checked.
+ * Stats section — 4 stat cards.
+ *
+ * "Last checked" lives under the What's New heading on the apps page instead:
+ * freshness answers a question about the changes, and nobody reads the strip
+ * of stat cards to find it.
  */
 import { el } from '../ui.js'
 import * as store from '../store.js'
-import { formatTime, getTimeAgo } from '../utils/format.js'
 
 export function renderStatsSection() {
   const section = el('section', { class: 'stats-section', 'aria-labelledby': 'stats-heading' })
@@ -17,9 +20,6 @@ export function renderStatsSection() {
   }
   const totalApps = seen.size
   const stats = store.get('stats') || {}
-  const lastChecked = store.get('lastChecked') || ''
-  const liveDataDate = store.get('liveDataDate') || ''
-  const todayStr = new Date().toISOString().split('T')[0]
 
   const statsGrid = el('div', { class: 'stats-grid' }, [
     makeStatCard('Total Bundles', String(bundleList.length)),
@@ -28,14 +28,7 @@ export function renderStatsSection() {
     makeStatCard('New Bundles Today', String(stats.new_bundles_today ?? '-'), true),
   ])
 
-  const lastUpdatedRow = el('div', { class: 'last-updated-row' }, [
-    el('span', { class: `scan-pulse${liveDataDate === todayStr ? ' scan-pulse--fresh' : ''}` }),
-    el('span', {}, ['Last checked: ', el('strong', {}, [formatTime(lastChecked)])]),
-    el('span', { class: 'last-updated-ago' }, [`(${getTimeAgo(lastChecked)})`]),
-  ])
-
   section.appendChild(statsGrid)
-  section.appendChild(lastUpdatedRow)
   return section
 }
 
