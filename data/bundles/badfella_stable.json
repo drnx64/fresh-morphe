@@ -2,9 +2,9 @@
   "bundle": "badfella",
   "channel": "stable",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-10-30T14:31:38",
-  "version": "1.1.0",
-  "description": "## BadFella Patches 1.1.0\n\nRemote for Android TV 6.1.0 (build 45): ad-free patch, advertising-ID suppression and reduced declared analytics collection. Supports ARM64, ARMv7 and x86-64, including Manager unused-library stripping. Existing TickTick and Emby patches remain included.",
+  "created_at": "2026-10-30T23:45:07",
+  "version": "1.2.0",
+  "description": "## 1.2.0 (2026-10-30)\n\n### 🐛 Bug Fixes\n\n* complete reader access and enable built-in ad-free rendering 9319515\n* **dev:** restore the patch catalog after the version bump 031eb30\n* **mit-review:** mark the verified 3.0 target supported 0903045\n* select the declared bundle when generating the patch catalog 41e7e15\n\n### ✨ New Features\n\n* add experimental MIT Tech Review reading meter patch b75bf34\n* **remote-atv:** replace premium offers with ad-free status 36550b9",
   "apps": [
     {
       "app_name": "Emby for Android",
@@ -26,6 +26,21 @@
           "options": [],
           "compatible_versions": [
             "3.5.72"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "MIT Technology Review",
+      "package": "com.technologyreview.mit",
+      "patches": [
+        {
+          "name": "MIT Tech Review reading meter",
+          "description": "Removes local article gates and the remaining-views banner, and enables the app's ad-free flag for native and article ads. Keeps account authentication; does not grant a server subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0"
           ]
         }
       ]
@@ -87,7 +102,7 @@
       "patches": [
         {
           "name": "Remote ATV ad-free",
-          "description": "Disables ad initialization/loading and advertising IDs, removes PairIP startup protection and reduces declared analytics collection. Does not claim zero tracking.",
+          "description": "Disables advertising, restores startup and replaces premium activation with a local ad-free status. Hides the English home announcement. Does not create a server subscription.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -98,10 +113,10 @@
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "ed231e4c541271002b954fcf36c227c5a90678071df9234855c2a734a5589908",
-  "release_notes": "## BadFella Patches 1.1.0\r\n\r\n### Remote for Android TV\r\n\r\n- Supports **6.1.0, build 45** on ARM64, ARMv7 and x86-64.\r\n- Disables ad loading and advertising-ID access, and reduces declared analytics collection.\r\n- Fixes patching with Morphe Manager's unused-library stripping enabled.\r\n- Declares the supported build explicitly in Manager.\r\n\r\nThis replaces the earlier 1.1.0 bundle. In Morphe Manager, open **Sources -> BadFella Patches -> Update**, then select the original **6.1.0 APKM** and enable **Remote ATV ad-free**. The source version remains **1.1.0**.\r\n\r\n[Add to Morphe](https://morphe.software/add-source?github=XBadFellaX/BadFella-Patches)\r\n\r\nThe five TickTick patches and two Emby patches remain included. TickTick local lists/backups remain optional and off by default.\r\n",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-10-30T14:04:05Z",
+  "fingerprint": "d9892634cab2d8ba4b6cf29d5b8457ab7534e595f5025d4ff4ee8793c8a74b19",
+  "release_notes": "Remote ATV: hides the English home announcement and opens an ad-free status dialog from Settings instead of subscription offers.\r\n\r\nMIT Technology Review: adds the tested 3.0 reading and ad-free patches.\r\n\r\nTickTick and Emby patches are included.\r\n\r\nRefresh the BadFella Patches source in Morphe Manager, then patch the original app again using your existing signing key.\r\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-10-30T23:45:56Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",
