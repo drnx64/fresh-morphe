@@ -105,10 +105,13 @@ export function renderApps(container) {
   }
 
   /**
-   * App family: a deck of cards that expands inline into its member apps.
+   * App family: the card itself is a stack of cards.
    *
-   * The collapsed face is the lead app's icon sitting on top of two offset
-   * layers, which reads as "there's a pile here" the way a 2x2 mosaic doesn't.
+   * The collapsed face is a real `.app-card` with two card-shaped layers
+   * peeking out behind its top edge — narrower the further back, so the pile
+   * reads as "more cards under this one". A row of icons does not: it says
+   * "four apps" while pretending to be one card.
+   *
    * Members are built on first expand (a 50-app publisher is not free to paint)
    * and the panel animates with grid-template-rows, so no height measuring runs.
    */
@@ -122,11 +125,7 @@ export function renderApps(container) {
     const eyebrow = source === 'developer' ? 'Publisher' : 'Package family'
     toggle.innerHTML = `
       <div class="app-card-main">
-        <span class="app-stack-deck" aria-hidden="true">
-          <span class="app-stack-layer"></span>
-          <span class="app-stack-layer"></span>
-          <span class="app-stack-lead">${leadIcon}</span>
-        </span>
+        ${leadIcon}
         <div class="app-card-info">
           <span class="app-stack-eyebrow">${eyebrow}</span>
           <span class="app-card-name${source === 'namespace' ? ' is-namespace' : ''}">${escHtml(label)}</span>
@@ -180,6 +179,10 @@ export function renderApps(container) {
 
     makeCardInteractive(toggle, () => setExpanded(!stack.classList.contains('is-open')))
 
+    // Two card-shaped layers behind the real card. They are siblings of the
+    // toggle, absolutely positioned inside the stack's top padding.
+    stack.appendChild(el('span', { class: 'app-stack-layer app-stack-layer--back', 'aria-hidden': 'true' }))
+    stack.appendChild(el('span', { class: 'app-stack-layer app-stack-layer--mid', 'aria-hidden': 'true' }))
     stack.appendChild(toggle)
     stack.appendChild(panel)
     setExpanded(openStacks.has(id))

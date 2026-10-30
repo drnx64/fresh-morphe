@@ -127,19 +127,49 @@
 
 /* ── App families (publisher stacks) ──────────────────── */
 /* A family card has to read as a different kind of object than an app card:
-   it is a pile (deck layers), it is titled by its owner rather than a package,
-   and it carries a count chip instead of a bundle chip. */
+   it is a pile — two card-shaped layers step up behind the front card — it is
+   titled by its owner rather than by a package, and the count chip replaces
+   the bundle chip. */
 .app-stack {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  /* Headroom for the two card layers that peek out above the front card */
+  padding-top: 14px;
 }
 /* The open stack takes the whole row so its members get room to breathe */
 .app-stack.is-open {
   grid-column: 1 / -1;
 }
+/* Card layers: same surface, border and corner radius as the real card, inset
+   and stepped up so each one shows only its top edge. The front card covers
+   the rest of them, so no height has to be coordinated. */
+.app-stack-layer {
+  position: absolute;
+  height: 44px;
+  border: 1px solid var(--border-hairline-strong);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--bg-surface);
+  pointer-events: none;
+}
+.app-stack-layer--mid {
+  top: 7px;
+  left: 7px;
+  right: 7px;
+  z-index: 1;
+}
+.app-stack-layer--back {
+  top: 0;
+  left: 14px;
+  right: 14px;
+  z-index: 0;
+  opacity: 0.65;
+}
 .app-stack-toggle {
   position: relative;
+  z-index: 2;
   padding: 0.75rem 0.85rem 0.85rem;
   background:
     linear-gradient(135deg, var(--accent-soft), transparent 62%),
@@ -181,56 +211,10 @@
   flex-shrink: 0;
   align-self: center;
 }
-/* Deck: two layers peek out above the lead icon, each narrower than the one in
-   front of it, stepping up in 5px increments. Explicit widths beat transforms
-   here — a scaled box re-centres itself, so the peeking edges drift. The deck
-   is only a few px taller than a plain card's icon, so the grid keeps its
-   rhythm instead of stretching a whole row. */
-.app-stack-deck {
-  position: relative;
-  width: 40px;
-  height: 46px;
+/* Icons keep their normal card size — the stack cue is the card layers, not a
+   decorated icon. */
+.app-stack-toggle .app-icon {
   flex-shrink: 0;
-}
-.app-stack-layer,
-.app-stack-lead {
-  position: absolute;
-  border-radius: calc(var(--radius-sm) + 2px);
-  background: var(--bg-surface-inner);
-  border: 1px solid var(--border-hairline);
-}
-.app-stack-layer {
-  left: 4px;
-  top: 5px;
-  width: 32px;
-  height: 32px;
-}
-.app-stack-layer:nth-child(1) {
-  top: 0;
-  left: 6px;
-  width: 28px;
-  height: 28px;
-  opacity: 0.55;
-}
-.app-stack-layer:nth-child(2) {
-  opacity: 0.8;
-}
-.app-stack-lead {
-  top: 10px;
-  left: 2px;
-  width: 36px;
-  height: 36px;
-  overflow: hidden;
-  transition: transform var(--transition-speed);
-}
-.app-stack-lead .app-icon {
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  font-size: 1rem;
-}
-.app-stack-toggle:hover .app-stack-lead {
-  transform: translateY(-2px);
 }
 .app-stack-chevron {
   width: 8px;
@@ -304,8 +288,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .app-stack-panel,
-  .app-stack-chevron,
-  .app-stack-lead {
+  .app-stack-chevron {
     transition: none;
   }
   .app-stack-member {
