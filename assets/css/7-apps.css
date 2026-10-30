@@ -125,6 +125,195 @@
   color: var(--text-muted);
 }
 
+/* ── App families (publisher stacks) ──────────────────── */
+/* A family card has to read as a different kind of object than an app card:
+   it is a pile (deck layers), it is titled by its owner rather than a package,
+   and it carries a count chip instead of a bundle chip. */
+.app-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+/* The open stack takes the whole row so its members get room to breathe */
+.app-stack.is-open {
+  grid-column: 1 / -1;
+}
+.app-stack-toggle {
+  position: relative;
+  padding: 0.75rem 0.85rem 0.85rem;
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 62%),
+    var(--bg-surface);
+  border-color: var(--border-hairline-strong);
+}
+.app-stack.is-open .app-stack-toggle {
+  border-color: var(--accent-dim);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.app-stack-eyebrow {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.app-stack-toggle .app-card-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* A namespace is a package prefix, so it stays monospace like `.app-card-pkg` */
+.app-stack-toggle .app-card-name.is-namespace {
+  font-family: var(--mono-stack);
+  font-size: 0.8rem;
+}
+.app-stack-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: center;
+}
+/* Deck: two layers peek out above the lead icon, each narrower than the one in
+   front of it, stepping up in 5px increments. Explicit widths beat transforms
+   here — a scaled box re-centres itself, so the peeking edges drift. The deck
+   is only a few px taller than a plain card's icon, so the grid keeps its
+   rhythm instead of stretching a whole row. */
+.app-stack-deck {
+  position: relative;
+  width: 40px;
+  height: 46px;
+  flex-shrink: 0;
+}
+.app-stack-layer,
+.app-stack-lead {
+  position: absolute;
+  border-radius: calc(var(--radius-sm) + 2px);
+  background: var(--bg-surface-inner);
+  border: 1px solid var(--border-hairline);
+}
+.app-stack-layer {
+  left: 4px;
+  top: 5px;
+  width: 32px;
+  height: 32px;
+}
+.app-stack-layer:nth-child(1) {
+  top: 0;
+  left: 6px;
+  width: 28px;
+  height: 28px;
+  opacity: 0.55;
+}
+.app-stack-layer:nth-child(2) {
+  opacity: 0.8;
+}
+.app-stack-lead {
+  top: 10px;
+  left: 2px;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  transition: transform var(--transition-speed);
+}
+.app-stack-lead .app-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  font-size: 1rem;
+}
+.app-stack-toggle:hover .app-stack-lead {
+  transform: translateY(-2px);
+}
+.app-stack-chevron {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  align-self: center;
+  margin-left: 0.2rem;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(-45deg);
+  transition: transform var(--transition-speed);
+}
+.app-stack.is-open .app-stack-chevron {
+  transform: rotate(135deg);
+}
+/* 0fr → 1fr animates the open/close without measuring heights in JS */
+.app-stack-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.26s ease,
+    opacity 0.2s ease;
+}
+.app-stack.is-open .app-stack-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.app-stack-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+/* Open, the panel reads as the body of the toggle card: same side borders,
+   squared top, rounded bottom. Closed it is 0fr tall and draws nothing. */
+.app-stack.is-open .app-stack-panel-inner {
+  border: 1px solid var(--accent-dim);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--bg-surface-inner);
+}
+/* Members stack in one column: a family is a list of siblings, and a wrap grid
+   makes the eye re-scan rows to find the app it came for. The column is capped
+   so an expanded stack on a desktop does not turn into 1000px-wide rows. */
+.app-stack-members {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.618rem 0.75rem 0.75rem;
+  max-width: 720px;
+  max-height: 56vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.app-stack-member {
+  padding: 0.618rem 0.75rem;
+  animation: app-stack-member-in 0.24s ease both;
+  /* Capped: a 50-app publisher appended in batches must not keep the tail of
+     the list invisible for a second after the panel is already open. */
+  animation-delay: calc(min(var(--i, 0), 12) * 18ms);
+  opacity: 0;
+}
+@keyframes app-stack-member-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-stack-panel,
+  .app-stack-chevron,
+  .app-stack-lead {
+    transition: none;
+  }
+  .app-stack-member {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* ── Bundle Detail Page ───────────────────────────────── */
 .bundle-detail-page {
   padding-bottom: 2rem;
