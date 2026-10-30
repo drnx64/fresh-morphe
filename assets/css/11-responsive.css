@@ -613,8 +613,11 @@
   color: var(--state-info);
 }
 
-/* ── Phones: Today's Updates as stacked bundle cards ───── */
-@media (max-width: 639px) {
+/* ── Tablet + phone: Today's Updates as stacked bundle cards ─────
+   The card treatment holds up to 1024px: two ~370px columns of bundle rows
+   squeeze the header into three wrapped lines on an iPad mini, and the app
+   rows lose their icons. */
+@media (max-width: 1023px) {
   .today-updates-heading-row {
     align-items: flex-start;
   }
@@ -656,9 +659,6 @@
     font-size: 0.95rem;
     color: var(--text-primary);
   }
-  .today-version-tag {
-    display: none;
-  }
 
   .today-app-entry {
     margin-left: 0;
@@ -685,11 +685,14 @@
     font-size: 0.92rem;
     line-height: 1.35;
   }
-  .today-app-version-diff {
-    flex: 0 0 100%;
-    margin-left: 0;
-    padding-left: 1.7rem;
-    font-size: 0.7rem;
+}
+
+/* ── Phones ───────────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* The card header already names the bundle; the version tag wraps below the
+     author and pushes the row to three lines on a 360px screen. */
+  .today-version-tag {
+    display: none;
   }
 
   /* Bebas Neue reads extra narrow on phones — nudge the display sizes up. */

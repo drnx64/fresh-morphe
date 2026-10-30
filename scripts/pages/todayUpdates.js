@@ -10,7 +10,7 @@ import * as store from '../store.js'
 import { groupAffectedBundles, resolveAppName, getAppIconUrl, renderAppIcon, avatarStackHtml } from '../utils/misc.js'
 import { getAuthorLink } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { dateParts, dayHue, shortVersion, badgeLabel } from '../utils/format.js'
+import { dateParts, dayHue, shortVersion, badgeLabel, formatTime, getTimeAgo } from '../utils/format.js'
 import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
 import { renderColorGame } from '../components/colorGame.js'
 
@@ -39,7 +39,8 @@ export function renderTodayUpdates() {
 
   const headingRow = el('div', { class: 'today-updates-heading-row' })
   const headingLeft = el('div', { class: 'today-updates-heading-left' })
-  headingLeft.appendChild(el('h2', { class: 'section-title', id: 'today-heading' }, ["What's New"]))
+  const titleLine = el('div', { class: 'today-updates-title-line' })
+  titleLine.appendChild(el('h2', { class: 'section-title', id: 'today-heading' }, ["What's New"]))
 
   if (displayDate) {
     const liveParts = dateParts(displayDate)
@@ -48,14 +49,16 @@ export function renderTodayUpdates() {
       ` ${liveParts.month}, ${liveParts.year}`,
     ])
     liveDateEl.style.setProperty('--date-hue', String(dayHue(displayDate)))
-    headingLeft.appendChild(liveDateEl)
+    titleLine.appendChild(liveDateEl)
   }
   if (usingLatest) {
-    headingLeft.appendChild(el('span', {
+    titleLine.appendChild(el('span', {
       class: 'today-updates-latest',
       title: 'No changes today - showing the most recent updates',
     }, ['Latest']))
   }
+  headingLeft.appendChild(titleLine)
+  headingLeft.appendChild(buildLastCheckedRow())
   headingRow.appendChild(headingLeft)
 
   const headingRight = el('div', { class: 'today-updates-heading-right' })
@@ -230,23 +233,16 @@ export function renderTodayUpdates() {
       const badgeHtml = app.badge_type ? `<span class="badge ${badgeClass}">${escHtml(badgeLabel(app.badge_type))}</span>` : ''
 
       const appName = resolveAppName(app, nameCache)
-      const appPrevVer = shortVersion(app.previous_version)
-      const appNextVer = shortVersion(app.new_version)
-      let versionHtml = ''
-      if (appPrevVer && appNextVer && appPrevVer !== appNextVer) {
-        versionHtml = `<span class="today-app-version-diff">${escHtml(appPrevVer)} ${VERSION_ARROW} ${escHtml(appNextVer)}</span>`
-      } else if (appNextVer) {
-        versionHtml = `<span class="today-app-version-diff">${escHtml(appNextVer)}</span>`
-      }
+      const diffChips = buildPatchDiffChips(app.patch_diff)
 
       appEl.innerHTML = `
         <div class="today-app-main">
           ${badgeHtml}
           ${iconHtml}
           <span class="today-app-name">${escHtml(appName)}</span>
-          ${versionHtml}
         </div>
       `
+      if (diffChips) appEl.querySelector('.today-app-main').appendChild(diffChips)
 
       appEl.style.cursor = 'pointer'
       appEl.setAttribute('role', 'button')
@@ -311,6 +307,45 @@ export function renderTodayUpdates() {
   setupToggle(section, summaryEl, toggleBtn)
 
   return section
+}
+
+/**
+ * "Last checked: October 30, 2026 at 3:52 PM (12m ago)" under the What's New
+ * heading — it answers "is this fresh?" at the moment the reader is looking at
+ * the changes, which is where the bundles page used to put it.
+ * @returns {HTMLElement}
+ */
+function buildLastCheckedRow() {
+  const lastChecked = store.get('lastChecked') || ''
+  const liveDataDate = store.get('liveDataDate') || ''
+  const todayStr = new Date().toISOString().split('T')[0]
+  return el('div', { class: 'last-updated-row' }, [
+    el('span', { class: `scan-pulse${liveDataDate === todayStr ? ' scan-pulse--fresh' : ''}` }),
+    el('span', {}, ['Last checked: ', el('strong', {}, [formatTime(lastChecked)])]),
+    el('span', { class: 'last-updated-ago' }, [`(${getTimeAgo(lastChecked)})`]),
+  ])
+}
+
+/**
+ * Compact patch counter for an app row: `+2 ~3 −1`. Apps carry a `patch_diff`
+ * but no version of their own, so this is the one signal that says *what* about
+ * the app changed without opening the modal.
+ * @param {object} [diff]
+ * @returns {HTMLElement|null}
+ */
+function buildPatchDiffChips(diff) {
+  if (!diff) return null
+  const counts = [
+    ['added', (diff.patches_added || []).length, '+'],
+    ['modified', (diff.patches_modified || []).length, '~'],
+    ['removed', (diff.patches_removed || []).length, '−'],
+  ].filter(([, count]) => count > 0)
+  if (counts.length === 0) return null
+  const box = el('span', { class: 'today-app-diff', 'aria-hidden': 'true' })
+  for (const [kind, count, symbol] of counts) {
+    box.appendChild(el('span', { class: `today-app-diff-chip is-${kind}` }, [`${symbol}${count}`]))
+  }
+  return box
 }
 
 function applyCollapsed(section, summaryEl, isCollapsed) {

@@ -23,12 +23,6 @@
   width: 11px;
   height: 11px;
 }
-.today-app-version-diff {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  margin-left: 0.3rem;
-  font-family: var(--font-mono);
-}
 .badge--version-bump {
   font-size: 0.55rem;
   font-weight: 700;
@@ -302,7 +296,8 @@
 }
 .app-detail-diff-row {
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: baseline;
   gap: 0.4rem;
   font-size: 0.78rem;
   padding: 0.3rem 0.5rem;
@@ -313,6 +308,9 @@
   width: 1rem;
   text-align: center;
   flex-shrink: 0;
+}
+.app-detail-diff-name {
+  font-weight: 500;
 }
 .app-detail-diff-row--added {
   background: var(--state-stable-dim);
@@ -335,23 +333,61 @@
 .app-detail-diff-row--modified .app-detail-diff-icon {
   color: var(--state-info);
 }
-.app-detail-diff-changes {
-  display: block;
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  margin-top: 0.1rem;
+/* Field tags ("default changed") that ride beside the patch name. */
+.app-detail-diff-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-left: auto;
 }
-.app-detail-diff-desc {
-  margin: 0 0 0.4rem 1.4rem;
+.app-detail-diff-tag {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  background: var(--bg-surface-inner);
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  white-space: nowrap;
+}
+/* Before → after: old text clamped above, the new text (the one that ships)
+   below with the arrow leading it. */
+.app-detail-diff-pair {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.15rem 0 0.45rem 1.5rem;
   padding: 0.4rem 0.6rem;
   font-size: 0.72rem;
-  line-height: 1.55;
-  white-space: pre-wrap;
-  word-break: break-word;
+  line-height: 1.5;
+  border-left: 2px solid var(--border-hairline-strong);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-surface-inner);
+}
+.app-detail-diff-old {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   color: var(--text-muted);
-  background: var(--bg-surface, rgba(255, 255, 255, 0.03));
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-hairline);
+  margin: 0;
+}
+.app-detail-diff-new {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0;
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+.app-detail-diff-arrow {
+  display: inline-flex;
+  align-items: center;
+  color: var(--state-info);
+  flex-shrink: 0;
+  margin-top: 0.18rem;
+}
+.app-detail-diff-arrow svg {
+  width: 12px;
+  height: 12px;
 }
 .word-diff-del {
   background: var(--state-critical-dim);

@@ -20,10 +20,9 @@ import {
 } from '../utils/misc.js'
 import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { wordDiffHtml } from '../utils/wordDiff.js'
 import { parseBundleKey, findBundleRecord } from '../utils/bundleKey.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
-import { CLOSE_ICON } from '../utils/svg.js'
+import { CLOSE_ICON, VERSION_ARROW } from '../utils/svg.js'
 
 const PLAY_STORE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M.859 11.981V1.741c0-.672.79-1.098 1.434-.771L12.37 6.09c.662.336.662 1.207 0 1.543l-10.077 5.12c-.644.327-1.434-.099-1.434-.772M9.23 9.23l-8.1-8.101m8.1 3.364l-8.1 8.1"/></svg>'
 
@@ -315,28 +314,48 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
   }
 
   // ── Changes tab ──────────────────────────────────────
+  // One row per patch, and for a rewritten description one compact pair: the
+  // old text above, the arrow, the new text below. A word-level diff of a
+  // 200-word blurb is unreadable in a 600px modal and made a "description
+  // updated" change look like a wall of red and green.
   if (hasChanges) {
     const changesTab = tabContents['Changes']
     const diffList = el('div', { class: 'app-detail-diff' })
     for (const added of app.patch_diff.patches_added || []) {
       const row = el('div', { class: 'app-detail-diff-row app-detail-diff-row--added' })
-      row.innerHTML = `<span class="app-detail-diff-icon">+</span><span>${escHtml(added.name)}</span>`
+      row.innerHTML = `<span class="app-detail-diff-icon">+</span><span class="app-detail-diff-name">${escHtml(added.name)}</span>`
       diffList.appendChild(row)
     }
     for (const removed of app.patch_diff.patches_removed || []) {
       const row = el('div', { class: 'app-detail-diff-row app-detail-diff-row--removed' })
-      row.innerHTML = `<span class="app-detail-diff-icon">−</span><span>${escHtml(removed.name)}</span>`
+      row.innerHTML = `<span class="app-detail-diff-icon">−</span><span class="app-detail-diff-name">${escHtml(removed.name)}</span>`
       diffList.appendChild(row)
     }
     for (const modified of app.patch_diff.patches_modified || []) {
       const row = el('div', { class: 'app-detail-diff-row app-detail-diff-row--modified' })
-      const changes = (modified.changes || []).map((c) => escHtml(c)).join(', ')
-      row.innerHTML = `<span class="app-detail-diff-icon">~</span><span>${escHtml(modified.name)}<span class="app-detail-diff-changes">${changes}</span></span>`
+      row.innerHTML = `<span class="app-detail-diff-icon">~</span><span class="app-detail-diff-name">${escHtml(modified.name)}</span>`
+
+      // "description updated" is already implied by the pair below it; every
+      // other field the diff engine reports stays visible as a short tag.
+      const tags = (modified.changes || []).filter((c) => !/description/i.test(c))
+      if (tags.length) {
+        const tagBox = el('span', { class: 'app-detail-diff-tags' })
+        for (const tag of tags) tagBox.appendChild(el('span', { class: 'app-detail-diff-tag' }, [tag]))
+        row.appendChild(tagBox)
+      }
       diffList.appendChild(row)
-      if (typeof modified.previous_description === 'string') {
-        const desc = el('div', { class: 'app-detail-diff-desc' })
-        desc.innerHTML = wordDiffHtml(modified.previous_description, modified.description || '', escHtml)
-        diffList.appendChild(desc)
+
+      if (typeof modified.previous_description === 'string' && modified.previous_description) {
+        const pair = el('div', { class: 'app-detail-diff-pair' })
+        const oldText = el('p', { class: 'app-detail-diff-old', title: modified.previous_description }, [
+          modified.previous_description,
+        ])
+        const newText = el('p', { class: 'app-detail-diff-new' })
+        newText.innerHTML = `<span class="app-detail-diff-arrow" aria-label="changed to">${VERSION_ARROW}</span>`
+        newText.appendChild(document.createTextNode(modified.description || ''))
+        pair.appendChild(oldText)
+        pair.appendChild(newText)
+        diffList.appendChild(pair)
       }
     }
     changesTab.appendChild(diffList)

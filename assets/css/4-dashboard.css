@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  margin-top: 0.6rem;
+  margin-top: 0.15rem;
   font-size: 0.74rem;
   color: var(--text-muted);
 }
@@ -100,7 +100,16 @@
 .today-updates-heading-row .section-title {
   margin: 0;
 }
+/* Title + date on one line, the "last checked" stamp on the next, so the
+   freshness note hangs under the heading instead of in the stats strip. */
 .today-updates-heading-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.today-updates-title-line {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
@@ -284,7 +293,10 @@
   min-height: 0;
   overflow: hidden;
 }
-@media (min-width: 768px) {
+/* Two columns need ~370px each to hold a bundle header, so they start at
+   iPad-landscape width (1024px). At 768px — an iPad mini in portrait — two
+   columns squeezed the version tags and app rows into wrapping. */
+@media (min-width: 1024px) {
   .today-updates-body-wrap {
     margin-top: 1.25rem;
   }
@@ -384,6 +396,36 @@
 .today-app-name {
   font-size: 0.88rem;
   font-weight: 500;
+}
+/* Patch counter chips: +added ~modified −removed, colour-coded like the diff. */
+.today-app-diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.today-app-diff-chip {
+  font-family: var(--mono-stack);
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.today-app-diff-chip.is-added {
+  color: var(--state-stable);
+  background: var(--state-stable-dim);
+}
+.today-app-diff-chip.is-modified {
+  color: var(--state-info);
+  background: var(--state-info-dim);
+}
+.today-app-diff-chip.is-removed {
+  color: var(--state-critical);
+  background: var(--state-critical-dim);
 }
 
 /* ── Badges ───────────────────────────────────────────── */
