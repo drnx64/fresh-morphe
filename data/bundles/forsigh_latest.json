@@ -2,8 +2,8 @@
   "bundle": "forsigh",
   "channel": "latest",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-10-29T21:33:05",
-  "version": "0.30.43",
+  "created_at": "2026-10-30T18:18:36",
+  "version": "0.30.44",
   "description": "Morphe patches for Waze: themes, map colours, alerts, speedometer, Android Auto, launcher icon and app name.",
   "apps": [
     {
@@ -227,6 +227,10 @@
               "description": "Only used by the Waze ghost option. Stock is #FF33CCFF."
             },
             {
+              "key": "hideLaunchArt",
+              "description": "Also drops the Waze ghost from the launch screen. The launch colour comes from the Launch screen row."
+            },
+            {
               "key": "icon",
               "description": "Square, 432x432 recommended, 192x192 minimum. PNG, JPG or WebP. Fills the icon."
             }
@@ -292,6 +296,20 @@
           ]
         },
         {
+          "name": "Hide recent destinations",
+          "description": "Keeps the places you navigated to out of every recent list. Waze still stores them.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0",
+            "5.26.5.0"
+          ]
+        },
+        {
           "name": "Instrument cluster support",
           "description": "Shows the map and alerts on the car's cluster screen.",
           "use": false,
@@ -338,6 +356,29 @@
           "description": "Shows lane guidance, including straight-ahead hints.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0",
+            "5.26.5.0"
+          ]
+        },
+        {
+          "name": "Launch screen background colour",
+          "description": "Colour behind the Waze logo while the app starts. #00000000 makes it transparent.",
+          "use": false,
+          "options": [
+            {
+              "key": "splashPreset",
+              "description": "Pick a colour, or choose Custom colour and type your own hex."
+            },
+            {
+              "key": "splashColor",
+              "description": "Only used when Launch screen is set to Custom colour."
+            }
+          ],
           "compatible_versions": [
             "5.24.90.901",
             "5.25.0.1",
@@ -610,10 +651,10 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "d2b7736400f7653b5abef345d7c6c6cace0880befe3999246be33fbd3bb93aa8",
-  "release_notes": "Launcher icon and app name.\n\n- **Change Waze icon** - Forsigh Reaper, the stock ghost in any colour, or your own square image (PNG/JPG/WebP, 432x432 recommended)\n- **Rename app** - changes the name under the icon only; the package stays com.waze\n\n31 rows. Nothing else changed.",
-  "release_tag": "v0.30.43",
-  "release_date": "2026-10-29T21:36:45Z",
+  "fingerprint": "6cbd4d7ae0fbdf9387e1ce36f677a0138707070bdc1f5e9a101c489d3370b9d0",
+  "release_notes": "Launch screen colour, hidden recent destinations, and grouped patches.\n\n## New\n\n- **Launch screen background colour** — pick a preset (AMOLED black, Waze blue, green, transparent) or your own hex for the screen behind the Waze logo\n- **Hide recent destinations** — keeps the places you drove to out of Waze's recent lists on the phone and in the car; Waze still stores them\n- **Hide launch logo** — option on **Change Waze icon** that removes the ghost from the launch screen\n\n## Changed\n\n- Waze patches are grouped into **UI Customization**, **Map & Alerts**, **Driving & Voice**, **Privacy & Updates**, **Android Auto** and **Experimental**\n\n33 rows, targeting Waze 5.24.90.901 - 5.26.5.0.",
+  "release_tag": "v0.30.44",
+  "release_date": "2026-10-30T18:19:06Z",
   "isPreRelease": false,
   "stars": 11,
   "avatarUrl": "https://avatars.githubusercontent.com/u/35919784?v=4",

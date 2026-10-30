@@ -1,0 +1,113 @@
+{
+  "bundle": "badfella",
+  "channel": "dev",
+  "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
+  "created_at": "2026-10-30T14:31:38",
+  "version": "1.1.0",
+  "description": "## BadFella Patches 1.1.0\n\nRemote for Android TV 6.1.0 (build 45): ad-free patch, advertising-ID suppression and reduced declared analytics collection. Supports ARM64, ARMv7 and x86-64, including Manager unused-library stripping. Existing TickTick and Emby patches remain included.",
+  "apps": [
+    {
+      "app_name": "Emby for Android",
+      "package": "com.mb.android",
+      "patches": [
+        {
+          "name": "Emby client unlock",
+          "description": "Enables local in-app feature gates using Kirlif's observed approach. Does not grant server Premiere entitlements.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.72"
+          ]
+        },
+        {
+          "name": "Emby remove Firebase and DataTransport",
+          "description": "Removes Firebase/DataTransport SDK classes and manifest components. Disables Firebase push messaging; keeps Cast and billing libraries.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.72"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "TickTick:To Do List & Calendar",
+      "package": "com.ticktick.task",
+      "patches": [
+        {
+          "name": "Disable analytics collection",
+          "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.2.4.0"
+          ]
+        },
+        {
+          "name": "Local lists and backups",
+          "description": "Adds BadFella Settings with 299 or 900 local lists, local task assignments, and manual or scheduled local backups of organization and supported task snapshots. Cloud lists and task ownership stay in TickTick; attachment file contents are not included.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.4.0"
+          ]
+        },
+        {
+          "name": "Restore notifications",
+          "description": "Restores Firebase certificate metadata on re-signed apps, with an Android 17 compatible token setup. Push delivery still requires device testing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.2.4.0"
+          ]
+        },
+        {
+          "name": "Restore reminder alarms",
+          "description": "Restores task/reminder alarm scheduling on re-signed apps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.2.4.0"
+          ]
+        },
+        {
+          "name": "TickTick Premium",
+          "description": "Enables client-side premium features and limits. Does not grant server-side AI access or a subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.2.4.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Remote for Android TV",
+      "package": "tech.simha.androidtvremote",
+      "patches": [
+        {
+          "name": "Remote ATV ad-free",
+          "description": "Disables ad initialization/loading and advertising IDs, removes PairIP startup protection and reduces declared analytics collection. Does not claim zero tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "BadFella Patches",
+  "fingerprint": "d2391d06236966604718ba3597209fdd7f24c58b567c58c38f8a43757e65b1ae",
+  "release_notes": "## BadFella Patches 1.1.0\r\n\r\n### Remote for Android TV\r\n\r\n- Supports **6.1.0, build 45** on ARM64, ARMv7 and x86-64.\r\n- Disables ad loading and advertising-ID access, and reduces declared analytics collection.\r\n- Fixes patching with Morphe Manager's unused-library stripping enabled.\r\n- Declares the supported build explicitly in Manager.\r\n\r\nThis replaces the earlier 1.1.0 bundle. In Morphe Manager, open **Sources -> BadFella Patches -> Update**, then select the original **6.1.0 APKM** and enable **Remote ATV ad-free**. The source version remains **1.1.0**.\r\n\r\n[Add to Morphe](https://morphe.software/add-source?github=XBadFellaX/BadFella-Patches)\r\n\r\nThe five TickTick patches and two Emby patches remain included. TickTick local lists/backups remain optional and off by default.\r\n",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-10-30T14:04:05Z",
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",
+  "repoDescription": "BadFella Patches - community patches for Morphe Manager.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": "https://github.com/XBadFellaX/BadFella-Patches/raw/HEAD/patches-bundle.png"
+}

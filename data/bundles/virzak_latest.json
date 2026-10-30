@@ -2,12 +2,42 @@
   "bundle": "virzak",
   "channel": "latest",
   "repo_url": "https://github.com/virzak/morphe-patches",
-  "created_at": "2026-08-16T17:01:35",
-  "version": "1.1.0",
-  "description": "RuTube patches for Morphe. Compatible with RuTube 31.14.2-rustore.",
+  "created_at": "2026-10-30T12:08:08Z",
+  "version": "1.0.0-dev.3",
+  "description": "## [1.0.0-dev.3](https://github.com/virzak/morphe-patches/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2026-10-30)\n\n### ✨ New Features\n\n* **instagram:** show Download on home-feed reels ([#8](https://github.com/virzak/morphe-patches/issues/8)) ([d687f47](https://github.com/virzak/morphe-patches/commit/d687f47d2f71ec32d434ad2f76bf5485d684bf3f))\n",
   "apps": [
     {
-      "app_name": "RuTube",
+      "app_name": "Instagram",
+      "package": "com.instagram.android",
+      "patches": [
+        {
+          "name": "Download media",
+          "description": "Adds a \"Download\" option to the post and reel \"...\" menus to save photos and videos to the gallery.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "453.0.0.57.79"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Toyota",
+      "package": "com.toyota.oneapp",
+      "patches": [
+        {
+          "name": "Bypass device lock requirement",
+          "description": "Stops the app from refusing to start unless the phone has a lockscreen PIN, pattern or password set. Also keeps the app running after it has been re-signed, which its tamper check would otherwise treat as a compromised device and shut the app down on launch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.6.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Rutube",
       "package": "ru.rutube.app",
       "patches": [
         {
@@ -59,11 +89,7 @@
     }
   ],
   "patches_name": "RuTube Patches",
-  "fingerprint": "979f36015869ed7722fadfb8b7e49642ed433cb03e225e181f66e474effaebc4",
-  "release_notes": "### ✨ New Features\n\n* **Custom branding icon** - badge on the launcher icon so the patched app is distinguishable from an unpatched install.\n* **Disable ads** - stops the ad SDK from starting (banner + pre-roll video ads).\n* **Enable background playback** - playback continues when the app is not in the foreground.\n* **Lift download restrictions** - download videos the app otherwise refuses (uploader-disabled, or longer than six hours).\n* **Unlock subscription features** - reports the account as subscribed to the app itself. Anything the server enforces is unaffected.\n\nCompatible with RuTube `31.14.2-rustore`.",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-09-21T23:16:38Z",
-  "isPreRelease": false,
+  "fingerprint": "2b060bb084f9d1844d665562c58794d47a31de167298bb87e86d6a81ba0bb556",
   "stars": 6,
   "avatarUrl": "https://avatars.githubusercontent.com/u/6209775?v=4",
   "repoDescription": "Morphe patch source (RuTube and more). Add: github.com/virzak/morphe-patches",
