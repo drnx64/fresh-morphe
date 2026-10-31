@@ -824,7 +824,67 @@
 .release-section-markdown { line-height: 1.55; }
 .release-section-markdown p { margin: 0 0 0.5rem; }
 .release-section-markdown ul { margin: 0 0 0.5rem; padding-left: 1.1rem; }
+.release-section-markdown ol { margin: 0 0 0.5rem; padding-left: 1.4rem; }
 .release-section-markdown li { margin: 0.15rem 0; }
+/* Headings stay small: the section header above is already the visual h3. */
+.release-section-markdown h4,
+.release-section-markdown h5,
+.release-section-markdown h6 {
+  margin: 0.65rem 0 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+.release-section-markdown h5 { font-size: 0.74rem; }
+.release-section-markdown h6 {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.release-section-markdown > :first-child { margin-top: 0; }
+.release-section-markdown del { color: var(--text-muted); }
+.release-section-markdown hr {
+  border: none;
+  border-top: 1px solid var(--border-hairline);
+  margin: 0.65rem 0;
+}
+/* Fenced code keeps the author's line breaks and scrolls instead of wrapping. */
+.release-section-markdown pre.release-code {
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: var(--bg-void);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.release-section-markdown pre.release-code code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  white-space: pre;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+/* Task lists: the bullet is replaced by the checkbox glyph. */
+.release-section-markdown .release-task-list {
+  padding-left: 0.1rem;
+  list-style: none;
+}
+.release-task {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.release-task-box {
+  flex: 0 0 auto;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+.release-task.is-checked .release-task-box { color: var(--state-stable); }
+.release-task.is-checked .release-task-text { color: var(--text-muted); }
 .release-section-markdown a,
 .release-link { color: var(--accent); text-decoration: none; }
 .release-section-markdown a:hover,
