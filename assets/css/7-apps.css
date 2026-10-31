@@ -126,60 +126,163 @@
 }
 
 /* ── App families (publisher stacks) ──────────────────── */
-/* A family card has to read as a different kind of object than an app card:
-   it is a pile — two card-shaped layers step up behind the front card — it is
-   titled by its owner rather than by a package, and the count chip replaces
-   the bundle chip. */
+/* A family is a pile of its own app cards. Collapsed they all sit on one spot:
+   the front card is the family's first app, and each card behind it steps up
+   and in slightly so only its top edge shows. Opening lays them out in a
+   single column — `top` goes from 0 to index * step — so the pile unpacks
+   instead of a panel sliding out under a header. */
 .app-stack {
+  --layers: 3;
+  --card-h: 68px;
+  --step: 74px;
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  /* Headroom for the two card layers that peek out above the front card */
-  padding-top: 14px;
+  /* Headroom for the peeking edges of the cards behind the front one */
+  padding-top: calc(var(--layers) * 7px);
+  transition: padding-top 0.3s var(--ease);
 }
-/* The open stack takes the whole row so its members get room to breathe */
+/* Opening collapses the headroom, so the front card rises into the column. */
 .app-stack.is-open {
   grid-column: 1 / -1;
+  padding-top: 0;
 }
-/* Card layers: same surface, border and corner radius as the real card, inset
-   and stepped up so each one shows only its top edge. The front card covers
-   the rest of them, so no height has to be coordinated. */
-.app-stack-layer {
-  position: absolute;
-  height: 44px;
-  border: 1px solid var(--border-hairline-strong);
-  border-bottom: none;
-  border-radius: var(--radius) var(--radius) 0 0;
-  background: var(--bg-surface);
-  pointer-events: none;
-}
-.app-stack-layer--mid {
-  top: 7px;
-  left: 7px;
-  right: 7px;
-  z-index: 1;
-}
-.app-stack-layer--back {
-  top: 0;
-  left: 14px;
-  right: 14px;
-  z-index: 0;
-  opacity: 0.65;
-}
-.app-stack-toggle {
+/* The pile: one card tall while collapsed. Absolute children do not stretch it,
+   so the height is declared — and it is what animates open. */
+.app-stack-pile {
   position: relative;
-  z-index: 2;
-  padding: 0.75rem 0.85rem 0.85rem;
-  background:
-    linear-gradient(135deg, var(--accent-soft), transparent 62%),
-    var(--bg-surface);
-  border-color: var(--border-hairline-strong);
+  height: var(--card-h);
+  /* Card edges behind the front card sit at negative offsets, so the collapsed
+     pile must not clip them. */
+  overflow: visible;
+  transition: height 0.3s var(--ease);
 }
-.app-stack.is-open .app-stack-toggle {
-  border-color: var(--accent-dim);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.app-stack.is-open .app-stack-pile {
+  height: min(calc(var(--count) * var(--step) - 6px), 58vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Every member card, stacked in the same box. `--i` is its index in the family,
+   `--d` its depth in the visible pile (capped at 3). */
+.app-stack-note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--card-h);
+  justify-content: center;
+  z-index: calc(100 - var(--i));
+  transform: translateY(calc(var(--d) * -7px)) scale(calc(1 - var(--d) * 0.015));
+  transition:
+    top 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.app-stack.is-open .app-stack-note {
+  top: calc(var(--i) * var(--step));
+  transform: none;
+}
+/* Collapsed cards only ever show their top edge, so their content is noise. */
+.app-stack:not(.is-open) .app-stack-note:not(.app-stack-note--front) {
+  opacity: 0.75;
+}
+.app-stack-note .app-card-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* "+12" on the front card: how many more cards are under it */
+.app-stack-chip {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 0.32rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+/* Open, the caption already says how many; the chip would be clipped by the
+   pile's scroll box anyway. */
+.app-stack.is-open .app-stack-chip {
+  display: none;
+}
+/* The whole collapsed pile is one button. It sits above the inert cards, and
+   disappears once they are laid out and clickable themselves. */
+.app-stack-expander {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 200;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  cursor: pointer;
+}
+.app-stack-expander:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.app-stack:not(.is-open):hover .app-stack-note--front {
+  border-color: var(--border-hairline-strong);
+  transform: translateY(-2px);
+}
+.app-stack.is-open .app-stack-expander {
+  display: none;
+}
+
+/* Family identity + collapse control, revealed above the unstacked cards. */
+.app-stack-caption-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.3s var(--ease),
+    opacity 0.2s ease;
+}
+.app-stack.is-open .app-stack-caption-wrap {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.app-stack-caption {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  margin-bottom: 0.55rem;
+  padding: 0 0.15rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+}
+.app-stack-caption-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* A namespace is a package prefix, so it stays monospace like `.app-card-pkg` */
+.app-stack.is-namespace .app-stack-caption-label {
+  font-family: var(--mono-stack);
+  font-size: 0.76rem;
 }
 .app-stack-eyebrow {
   font-size: 0.6rem;
@@ -187,113 +290,37 @@
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--text-muted);
-}
-.app-stack-toggle .app-card-name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* A namespace is a package prefix, so it stays monospace like `.app-card-pkg` */
-.app-stack-toggle .app-card-name.is-namespace {
-  font-family: var(--mono-stack);
-  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 .app-stack-count {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   color: var(--accent);
   background: var(--accent-soft);
   border-radius: 999px;
-  padding: 0.1rem 0.45rem;
+  padding: 0.05rem 0.42rem;
   white-space: nowrap;
-  flex-shrink: 0;
-  align-self: center;
-}
-/* Icons keep their normal card size — the stack cue is the card layers, not a
-   decorated icon. */
-.app-stack-toggle .app-icon {
   flex-shrink: 0;
 }
 .app-stack-chevron {
   width: 8px;
   height: 8px;
   flex-shrink: 0;
-  align-self: center;
-  margin-left: 0.2rem;
+  margin-left: auto;
+  margin-right: 0.3rem;
   border-right: 2px solid var(--text-muted);
   border-bottom: 2px solid var(--text-muted);
-  transform: rotate(-45deg);
+  transform: rotate(135deg);
   transition: transform var(--transition-speed);
 }
-.app-stack.is-open .app-stack-chevron {
-  transform: rotate(135deg);
-}
-/* 0fr → 1fr animates the open/close without measuring heights in JS */
-.app-stack-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition:
-    grid-template-rows 0.26s ease,
-    opacity 0.2s ease;
-}
-.app-stack.is-open .app-stack-panel {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
-.app-stack-panel-inner {
-  min-height: 0;
-  overflow: hidden;
-}
-/* Open, the panel reads as the body of the toggle card: same side borders,
-   squared top, rounded bottom. Closed it is 0fr tall and draws nothing. */
-.app-stack.is-open .app-stack-panel-inner {
-  border: 1px solid var(--accent-dim);
-  border-top: none;
-  border-radius: 0 0 var(--radius) var(--radius);
-  background: var(--bg-surface-inner);
-}
-/* Members stack in one column: a family is a list of siblings, and a wrap grid
-   makes the eye re-scan rows to find the app it came for. The column is capped
-   so an expanded stack on a desktop does not turn into 1000px-wide rows. */
-.app-stack-members {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.618rem 0.75rem 0.75rem;
-  max-width: 720px;
-  max-height: 56vh;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-.app-stack-member {
-  padding: 0.618rem 0.75rem;
-  animation: app-stack-member-in 0.24s ease both;
-  /* Capped: a 50-app publisher appended in batches must not keep the tail of
-     the list invisible for a second after the panel is already open. */
-  animation-delay: calc(min(var(--i, 0), 12) * 18ms);
-  opacity: 0;
-}
-@keyframes app-stack-member-in {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .app-stack-panel,
-  .app-stack-chevron {
+  .app-stack,
+  .app-stack-pile,
+  .app-stack-note,
+  .app-stack-caption-wrap,
+  .app-stack-chevron,
+  .app-stack-caption {
     transition: none;
-  }
-  .app-stack-member {
-    animation: none;
-    opacity: 1;
   }
 }
 
