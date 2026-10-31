@@ -476,7 +476,7 @@
       ]
     },
     {
-      "app_name": "Telegram",
+      "app_name": "Telegram (web version)",
       "package": "org.telegram.messenger.web",
       "patches": [
         {
@@ -669,7 +669,7 @@
     }
   ],
   "patches_name": "Joussflls10",
-  "fingerprint": "bf28f34ab04f33f59dce89b34af11dc04c1c845966bc779a9eea61640efca625",
+  "fingerprint": "37f423000458cb9dba7904fb3cd79adf7a9fbee895adee3e6ba3492637bd2868",
   "release_notes": "### THE REAL FIX\n\nPatch CustomerInfo.getActiveSubscriptions() to return a non-empty set.\n\n**Root cause:** The JS app checks `activeSubscriptions.length > 0` FIRST in `hasActiveEntitlementOrSubscription()`. If the user never subscribed, RevenueCat returns an empty set. Our `EntitlementInfo.isActive()` patch was useless because there were ZERO `EntitlementInfo` objects to call it on.\n\n**Fix:** `CustomerInfo.getActiveSubscriptions()` now returns `Collections.singleton(\"premium\")` so JS sees an active subscription and calls `setIsPremiumUser(true)`.",
   "release_tag": "v1.21.0",
   "release_date": "2026-07-13T17:39:19Z",

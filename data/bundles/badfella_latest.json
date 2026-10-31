@@ -2,9 +2,9 @@
   "bundle": "badfella",
   "channel": "latest",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-10-31T03:25:46",
-  "version": "1.5.1",
-  "description": "## 1.5.1 (2026-10-31)\n\n### 🐛 Bug Fixes\n\n* **hbr:** compare full anchor length when validating edits 9dbc6bb",
+  "created_at": "2026-10-31T06:50:12",
+  "version": "2.0.0",
+  "description": "## 2.0.0 (2026-10-31)\n\n### ⚠ BREAKING CHANGES\n\n* **ticktick:** remove local lists and backups\n\n### 🐛 Bug Fixes\n\n* **nikkei:** badge the account subscribe row and disable the paywall overlay e4be15a\n* **nikkei:** disable the app's self-updating web bundle 812fb19\n\n### ✨ New Features\n\n* **lrb:** add premium reading patch for 4.6.0 a52fc0f\n* **nikkei:** add Nikkei Asia premium reading patch 4f78d8d\n* **ticktick:** remove local lists and backups 9b80437",
   "apps": [
     {
       "app_name": "HBR Mobile",
@@ -41,6 +41,21 @@
           "options": [],
           "compatible_versions": [
             "3.5.72"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Nikkei Asia - Business News",
+      "package": "com.nikkei.asia",
+      "patches": [
+        {
+          "name": "Nikkei Asia premium reading",
+          "description": "Grants article access in the Nikkei Asia reader by making its local article-access check always succeed, removes the paywall overlay, stops the app's self-updating web bundle from replacing the patched assets, labels the Account screen \"Premium Unlocked by BadFella\" and its Subscribe row \"Patched by BadFella\". Keeps account sign-in and store billing; does not change server-side entitlements.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8a14774d3a9cb8f25eaae58f4c4e4f3e"
           ]
         }
       ]
@@ -83,15 +98,6 @@
           "name": "Disable analytics collection",
           "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "8.2.4.0"
-          ]
-        },
-        {
-          "name": "Local lists and backups",
-          "description": "Adds BadFella Settings with 299 or 900 local lists, local task assignments, and manual or scheduled local backups of organization and supported task snapshots. Cloud lists and task ownership stay in TickTick; attachment file contents are not included.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "8.2.4.0"
@@ -155,13 +161,28 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "London Review of Books",
+      "package": "uk.co.lrb.mag",
+      "patches": [
+        {
+          "name": "LRB premium reading",
+          "description": "Unlocks locally paywalled LRB articles and issues by making the standard paywall manager report content as unlocked, and brands the settings version banner Patched by BadFella. Keeps account authentication and store billing; does not grant a server subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.6.0"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "b210ce120f17839a163ea20ac5c6b5658e6722a54dba2436678cc1a9fae25e8f",
-  "release_notes": "## BadFella Patches v1.5.1\n\n### 🐛 Bug Fixes\n\n* **Harvard Business Review (HBR):** compare full anchor length when validating edits 9dbc6bb\n",
-  "release_tag": "v1.5.1",
-  "release_date": "2026-10-31T03:26:43Z",
+  "fingerprint": "70cfd7febfae7fe5d78bdd5cb7dc032688ac49285574ea32f9d34c54ebd42f89",
+  "release_notes": "## BadFella Patches v2.0.0\n\n### ⚠ BREAKING CHANGES\n\n* **TickTick:** remove local lists and backups\n\n### 🐛 Bug Fixes\n\n* **Nikkei Asia:** badge the account subscribe row and disable the paywall overlay e4be15a\n* **Nikkei Asia:** disable the app's self-updating web bundle 812fb19\n\n### ✨ New Features\n\n* **London Review of Books:** add premium reading patch for 4.6.0 a52fc0f\n* **Nikkei Asia:** add Nikkei Asia premium reading patch 4f78d8d\n* **TickTick:** remove local lists and backups 9b80437\n",
+  "release_tag": "v2.0.0",
+  "release_date": "2026-10-31T06:50:56Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",
