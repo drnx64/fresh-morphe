@@ -1,0 +1,771 @@
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile-first. Base = phone. Widen upward.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≥640px) ──────────────────────────────────── */
+@media (min-width: 640px) {
+  body {
+    font-size: 15.5px;
+  }
+  .page-container,
+  .header-content,
+  .footer-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .stats-grid {
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 0.6rem;
+  }
+  .stat-card {
+    flex: 1 1 calc(25% - 0.6rem);
+    min-width: 120px;
+  }
+  .today-app-entry {
+    padding: 0.6rem 0.8rem;
+  }
+  .bundles-grid {
+    gap: 0.6rem;
+  }
+}
+
+/* ── Desktop nav switch (≥768px) ──────────────────────── */
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none;
+  }
+  .app-nav {
+    display: flex;
+    gap: 0.2rem;
+  }
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .header-top-row {
+    flex-wrap: nowrap;
+  }
+  .header-search-row {
+    display: block;
+    flex: 1;
+    min-width: 0;
+  }
+  .header-search-row .search-bar {
+    max-width: 360px;
+  }
+  .page-container {
+    padding-bottom: 2rem;
+  }
+}
+
+/* ── Wide desktop (≥1024px) ───────────────────────────── */
+@media (min-width: 1024px) {
+  .page-container {
+    max-width: 900px;
+  }
+}
+
+/* ── Ultra wide (≥1440px) ─────────────────────────────── */
+@media (min-width: 1440px) {
+  .page-container {
+    max-width: 1100px;
+  }
+}
+
+/* ── Mobile global search ──────────────────────────────── */
+@media (max-width: 767px) {
+  .global-search-root {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+  .global-search-root > .global-search {
+    display: none;
+  }
+  .search-sheet .global-search {
+    display: block;
+  }
+  .global-search-open {
+    display: inline-flex;
+  }
+  .header-top-row {
+    flex-wrap: wrap;
+  }
+}
+
+/* ── Copy to clipboard flash ──────────────────────────── */
+.copied-flash {
+  animation: copied-pulse 0.6s ease;
+}
+@keyframes copied-pulse {
+  0% {
+    background: var(--state-stable-dim);
+  }
+  100% {
+    background: transparent;
+  }
+}
+.copyable {
+  cursor: pointer;
+  transition: background var(--transition-speed);
+  border-radius: var(--radius-sm);
+}
+.copyable:hover {
+  background: var(--surface-tint);
+}
+
+/* ── Mobile compact tweaks ────────────────────────────── */
+@media (max-width: 520px) {
+  .stat-card {
+    padding: 0.4rem 0.65rem;
+  }
+  .stat-value {
+    font-size: 0.88rem;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+  }
+  .bundle-card-content {
+    padding: 0.618rem 0.85rem;
+  }
+  .changelog-app {
+    font-size: 0.78rem;
+  }
+  .bundle-card-image-area {
+    aspect-ratio: 2/1;
+  }
+  .color-game-chip {
+    gap: 0.32rem;
+    padding: 0.16rem 0.42rem 0.16rem 0.24rem;
+    font-size: 0.66rem;
+  }
+  .color-game-chip .color-game-swatch,
+  .color-game-fire {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+/* ── Modal desktop centering ──────────────────────────── */
+@media (min-width: 640px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 1.5rem;
+  }
+  .modal-box {
+    border-radius: var(--radius);
+    max-height: 85dvh;
+  }
+  .modal-box::before {
+    display: none;
+  }
+}
+
+/* ── Modal header (phones): bundle identity in the header ── */
+@media (max-width: 639px) {
+  .modal-header--custom {
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem 0.85rem;
+  }
+  .modal-header--custom .bundle-modal-header {
+    flex: 1;
+    min-width: 0;
+    gap: 0.6rem;
+  }
+  .modal-header--custom .bundle-modal-avatar-area {
+    width: 42px;
+    height: 42px;
+  }
+  .modal-header--custom .bundle-modal-avatar-placeholder span {
+    font-size: 1.1rem;
+  }
+  .modal-header--custom .bundle-modal-name {
+    font-size: 0.98rem;
+    line-height: 1.2;
+  }
+  .modal-header--custom .bundle-modal-author {
+    font-size: 0.7rem;
+  }
+  .modal-header--custom .bundle-modal-meta {
+    margin-top: 0.25rem;
+  }
+  .modal-header--custom .modal-close {
+    margin-top: 1px;
+  }
+}
+
+/* ── Diff mobile notice ───────────────────────────────── */
+@media (max-width: 768px) {
+  .diff-mobile-notice {
+    display: block;
+  }
+}
+
+/* ── Print ────────────────────────────────────────────── */
+@media print {
+  .app-header,
+  .bottom-nav,
+  .app-nav,
+  .app-footer,
+  .back-to-top {
+    display: none;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .bundle-card,
+  .stat-card,
+  .today-app-entry,
+  .app-card {
+    border-color: #ccc;
+  }
+}
+
+/* ── Compare overlay ──────────────────────────────────── */
+.compare-overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.compare-summary {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.compare-summary b {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.compare-summary b.compare-summary-shared {
+  color: var(--state-info);
+}
+.compare-summary b.compare-summary-differs {
+  color: var(--state-critical);
+}
+.compare-summary-sep {
+  color: var(--border-hairline-strong);
+  margin: 0 0.1rem;
+}
+
+/* Filter chips */
+.compare-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.compare-filter {
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-speed),
+    color var(--transition-speed);
+}
+.compare-filter:hover {
+  border-color: var(--border-hairline-strong);
+  color: var(--text-primary);
+}
+.compare-filter.active {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+/* Presence matrix */
+.compare-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+}
+.compare-matrix {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  font-size: 0.78rem;
+}
+.compare-th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg-surface-inner);
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 0.45rem 0.4rem;
+  text-align: center;
+  vertical-align: bottom;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.compare-th--name {
+  text-align: left;
+  left: 0;
+  z-index: 3;
+  min-width: 12rem;
+}
+.compare-th-avatar {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 0.2rem;
+}
+.compare-th-name {
+  display: block;
+  max-width: 5.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.compare-row {
+  cursor: pointer;
+}
+.compare-row > td {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-hairline);
+}
+.compare-row:hover > td,
+.compare-row--open > td {
+  background: var(--bg-surface-inner);
+}
+.compare-cell-name {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  min-width: 12rem;
+  max-width: 22rem;
+  word-break: break-word;
+}
+/* Shared = present in 2+ bundles (a 2-of-3 patch counts too): tint every cell
+   so the row reads as shared even before you look at the count chip. */
+.compare-row--shared > td {
+  background: var(--state-info-dim);
+}
+.compare-row--shared:hover > td,
+.compare-row--shared.compare-row--open > td {
+  background: color-mix(in srgb, var(--state-info) 22%, transparent);
+}
+.compare-row--shared > .compare-cell-name {
+  box-shadow: inset 3px 0 0 var(--state-info);
+}
+.compare-row--unique > .compare-cell-name {
+  box-shadow: inset 3px 0 0 var(--border-hairline-strong);
+}
+/* Presence dots follow the row: shared rows glow, unique rows stay neutral. */
+.compare-row--shared .compare-cell--on .compare-dot {
+  background: var(--state-info);
+  border-color: var(--state-info);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--state-info) 25%, transparent);
+}
+.compare-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.compare-count {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  background: var(--state-info-dim);
+  color: var(--state-info);
+  vertical-align: middle;
+}
+.compare-count--only {
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+}
+.compare-shared-flag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  background: var(--state-info-dim);
+  color: var(--state-info);
+  vertical-align: middle;
+}
+.compare-flag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  background: var(--state-critical-dim);
+  color: var(--state-critical);
+  vertical-align: middle;
+}
+.compare-cell {
+  text-align: center;
+  padding: 0.35rem 0.5rem;
+  width: 3.6rem;
+}
+.compare-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--border-hairline-strong);
+}
+.compare-cell--on .compare-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.compare-group-cell {
+  background: var(--bg-surface-inner);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 0.5rem 0.5rem 0.3rem;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+/* Expandable detail */
+.compare-detail-cell {
+  padding: 0;
+  background: var(--bg-surface-inner);
+  border-bottom: 1px solid var(--border-hairline);
+}
+.compare-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.6rem 0.7rem;
+}
+.compare-detail-note {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.compare-detail-desc {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+.compare-detail-meta {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.compare-variant {
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  padding: 0.5rem 0.6rem;
+}
+.compare-variant-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.3rem;
+}
+.compare-variant-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.compare-variant-name {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.compare-variant-version {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+}
+.compare-variant-ref {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--state-info);
+  background: var(--state-info-dim);
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+}
+.compare-variant-desc {
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+.compare-variant-versions {
+  margin-top: 0.3rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.compare-variant-label {
+  font-weight: 700;
+}
+.compare-empty {
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--text-muted);
+  padding: 0.7rem;
+}
+
+/* ── Diff page: bundle picker ─────────────────────────── */
+.diff-bundle-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0.7rem 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+}
+.diff-bundle-picker-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.diff-bundle-picker-controls {
+  display: flex;
+  gap: 0.4rem;
+}
+.diff-bundle-picker-btn {
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-speed),
+    color var(--transition-speed);
+}
+.diff-bundle-picker-btn:hover {
+  border-color: var(--border-hairline-strong);
+  color: var(--text-primary);
+}
+.diff-bundle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0.55;
+  transition:
+    border-color var(--transition-speed),
+    color var(--transition-speed),
+    opacity var(--transition-speed);
+}
+.diff-bundle-pill:hover {
+  border-color: var(--border-hairline-strong);
+}
+.diff-bundle-pill.active {
+  opacity: 1;
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+/* View toggle: presence matrix (default) vs grouped bundle sections */
+.diff-view-toggle {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0.6rem 0 0;
+}
+.diff-view-btn {
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-speed),
+    background var(--transition-speed),
+    color var(--transition-speed);
+}
+.diff-view-btn:hover {
+  border-color: var(--border-hairline-strong);
+  color: var(--text-primary);
+}
+.diff-view-btn.active {
+  border-color: var(--state-info);
+  background: var(--state-info-dim);
+  color: var(--state-info);
+}
+
+/* ── Tablet + phone: Today's Updates as stacked bundle cards ─────
+   The card treatment holds up to 1024px: two ~370px columns of bundle rows
+   squeeze the header into three wrapped lines on an iPad mini, and the app
+   rows lose their icons. */
+@media (max-width: 1023px) {
+  .today-updates-heading-row {
+    align-items: flex-start;
+  }
+  .today-hide-dev-btn {
+    min-height: 34px;
+    padding: 0.4rem 0.7rem;
+  }
+  .today-updates-toggle {
+    width: 36px;
+    height: 36px;
+  }
+  .today-updates-summary {
+    min-height: 46px;
+    padding: 0.7rem 0.85rem;
+  }
+  .today-updates-summary-text {
+    font-size: 0.85rem;
+  }
+
+  .today-bundle-entry {
+    margin-bottom: 0.85rem;
+    padding-left: 0;
+    border: 1px solid var(--border-hairline);
+    border-left: 1px solid var(--border-hairline);
+    border-radius: var(--radius);
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+  .today-bundle-header {
+    margin: 0;
+    padding: 0.75rem 0.85rem;
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+    background: var(--bg-surface-inner);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+  .today-bundle-name {
+    flex: 1 1 55%;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .today-app-entry {
+    margin-left: 0;
+    min-height: 48px;
+    padding: 0.75rem 0.85rem;
+    border-left: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .today-app-entry + .today-app-entry {
+    margin-top: 0;
+    border-top: 1px solid var(--border-hairline);
+  }
+  .today-app-main {
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    min-width: 0;
+    row-gap: 0.3rem;
+    align-items: flex-start;
+  }
+  .today-app-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+}
+
+/* ── Phones ───────────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* The card header already names the bundle; the version tag wraps below the
+     author and pushes the row to three lines on a 360px screen. */
+  .today-version-tag {
+    display: none;
+  }
+
+  /* Bebas Neue reads extra narrow on phones — nudge the display sizes up. */
+  .header-title-clickable {
+    font-size: 1.9rem;
+  }
+  .section-title {
+    font-size: 2.05rem;
+  }
+  .today-updates-date {
+    font-size: 1.4rem;
+  }
+  .changelog-date {
+    font-size: 1.9rem;
+  }
+  .changelog-day-toggle {
+    gap: 0.5rem;
+    padding: 0.75rem 0.85rem;
+  }
+  .changelog-day-meta {
+    font-size: 0.7rem;
+  }
+  .changelog-day-body {
+    padding: 0.75rem 0.85rem 0.85rem;
+  }
+  .color-game-label {
+    font-size: 1.02rem;
+  }
+  .badge,
+  .bundle-archived-badge {
+    font-size: 0.9rem;
+  }
+  .channel-badge:not(.channel-badge--sm) {
+    font-size: 0.9rem;
+  }
+
+  /* The color game reads as a card, so keep it centered on phones. */
+  .modal-overlay.color-game-modal {
+    align-items: center;
+    padding: 1rem;
+  }
+  .color-game-modal .modal-box {
+    border-radius: var(--radius);
+  }
+}
+
+/* ── Bundle Detail (hero, facts, channels) ────────────── */
+@media (max-width: 767px) {
+  .bundle-hero {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 1rem;
+  }
+  .bundle-hero-avatar {
+    width: 68px;
+    height: 68px;
+  }
+  .bundle-hero-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .bundle-hero-actions .btn {
+    flex: 1 1 140px;
+  }
+  .bundle-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bundle-channel-row {
+    grid-template-columns: 72px minmax(0, 1fr);
+    row-gap: 0.2rem;
+  }
+  .bundle-channel-sub {
+    grid-column: 2;
+  }
+}

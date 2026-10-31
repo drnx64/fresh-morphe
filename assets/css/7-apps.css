@@ -1,0 +1,559 @@
+/* ── Apps Page ────────────────────────────────────────── */
+.apps-page {
+  padding-bottom: 2rem;
+}
+.apps-header {
+  margin-bottom: 1rem;
+}
+.apps-search-input {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+  color: var(--text-primary);
+  font-family: var(--font-stack);
+  font-size: 0.88rem;
+  outline: none;
+  margin-bottom: 1rem;
+  transition: border-color var(--transition-speed);
+}
+.apps-search-input::placeholder {
+  color: var(--text-muted);
+}
+.apps-search-input:focus {
+  border-color: var(--text-muted);
+}
+.search-no-results {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+}
+.search-no-results-text {
+  font-size: 0.88rem;
+  display: block;
+  margin-bottom: 0.618rem;
+}
+.search-suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.382rem;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+.search-suggestion-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.search-suggestion-link:hover {
+  color: var(--text-primary);
+}
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  /* A stack is taller than a card (it reserves room for the peeking edges), and
+     stretching its neighbours to match would leave them with dead space. */
+  align-items: start;
+  gap: 0.75rem;
+}
+.app-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.618rem;
+  transition:
+    border-color var(--transition-speed),
+    transform var(--transition-speed),
+    box-shadow var(--transition-speed);
+}
+.app-card:hover {
+  border-color: var(--border-hairline-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.app-card-main {
+  display: flex;
+  align-items: center;
+  gap: 0.618rem;
+  min-width: 0;
+}
+.app-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+.app-card-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.app-card-pkg {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--mono-stack);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-card-bundles {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.app-card-bundle-count {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-surface-inner);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.app-card-patches {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ── App families (publisher stacks) ──────────────────── */
+/* A family is a pile of its own app cards. Collapsed they all sit on one spot:
+   the front card is the family's first app, and each card behind it steps up
+   and in slightly so only its top edge shows.
+   Opening floats the pile over the grid at the card's own width — the cell
+   keeps its size, so no app is pushed aside — and the cards unpack into a
+   column inside it (`top` goes from 0 to index * step). */
+.app-stack {
+  --layers: 3;
+  --card-h: 68px;
+  --step: 74px;
+  position: relative;
+  /* Own stacking context: the collapsed hit area must sit above the cards but
+     never above the sticky header (z 40), or it would swallow header clicks. */
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* Constant open or shut: the overlay is out of flow, so the cell has to keep
+     the pile's height or the row would jump closed the moment it opens. */
+  height: calc(var(--card-h) + var(--layers) * 7px);
+  /* Headroom for the peeking edges of the cards behind the front one */
+  padding-top: calc(var(--layers) * 7px);
+}
+/* The open pile has to paint over its neighbours, but stay under the header */
+.app-stack.is-open {
+  z-index: 30;
+}
+/* Caption + pile travel together: in flow when collapsed, floating when open */
+.app-stack-overlay {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.app-stack.is-open .app-stack-overlay {
+  position: absolute;
+  top: calc(var(--layers) * 7px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 66vh;
+  /* No side padding: the cards inside stay exactly as wide as a plain card */
+  padding: 0.5rem 0 0.3rem;
+  border: 1px solid var(--border-hairline-strong);
+  border-radius: var(--radius);
+  background: var(--bg-void);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+/* The pile: one card tall while collapsed. Absolute children do not stretch it,
+   so the height is declared — and it is what animates open. */
+.app-stack-pile {
+  position: relative;
+  height: var(--card-h);
+  /* Card edges behind the front card sit at negative offsets, so the collapsed
+     pile must not clip them. */
+  overflow: visible;
+  transition: height 0.3s var(--ease);
+}
+.app-stack.is-open .app-stack-pile {
+  height: min(calc(var(--count) * var(--step) - 6px), calc(66vh - 4rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Every member card, stacked in the same box. `--i` is its index in the family,
+   `--d` its depth in the visible pile (capped at 3). */
+.app-stack-note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--card-h);
+  justify-content: center;
+  z-index: calc(100 - var(--i));
+  transform: translateY(calc(var(--d) * -7px)) scale(calc(1 - var(--d) * 0.015));
+  transition:
+    top 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.app-stack.is-open .app-stack-note {
+  top: calc(var(--i) * var(--step));
+  transform: none;
+}
+/* Collapsed cards only ever show their top edge, so their content is noise. */
+.app-stack:not(.is-open) .app-stack-note:not(.app-stack-note--front) {
+  opacity: 0.75;
+}
+/* The head card keeps the orange upper-left wash: it is what marks a pile as a
+   stack instead of one app, collapsed or open. Doubled class so it does not
+   depend on source order against `.app-card`'s own background. */
+.app-stack-note.app-stack-note--front {
+  border-color: var(--border-hairline-strong);
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 62%),
+    var(--bg-surface);
+}
+.app-stack-note .app-card-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* "+12" on the front card: how many more cards are under it */
+.app-stack-chip {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 0.32rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+/* Open, the caption already says how many; the chip would be clipped by the
+   pile's scroll box anyway. */
+.app-stack.is-open .app-stack-chip {
+  display: none;
+}
+/* The whole collapsed pile is one button. It sits above the inert cards, and
+   disappears once they are laid out and clickable themselves. */
+.app-stack-expander {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 200;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  cursor: pointer;
+}
+.app-stack-expander:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.app-stack.is-open .app-stack-expander {
+  display: none;
+}
+/* A pinned pile's click-away catcher. Transparent on purpose: the overlay's own
+   shadow does the separating, and the header (z 40) stays clickable above it. */
+.app-stack-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  background: transparent;
+}
+
+/* Family identity + collapse control, revealed above the unstacked cards. */
+.app-stack-caption-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.3s var(--ease),
+    opacity 0.2s ease;
+}
+.app-stack.is-open .app-stack-caption-wrap {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.app-stack-caption {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  margin-bottom: 0.55rem;
+  /* The overlay has no side padding (cards stay full width), so the caption
+     carries its own inset instead */
+  padding: 0 0.7rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+}
+.app-stack-caption-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* A namespace is a package prefix, so it stays monospace like `.app-card-pkg` */
+.app-stack.is-namespace .app-stack-caption-label {
+  font-family: var(--mono-stack);
+  font-size: 0.76rem;
+}
+.app-stack-eyebrow {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.app-stack-count {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 0.05rem 0.42rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.app-stack-chevron {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: 0.3rem;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(135deg);
+  transition: transform var(--transition-speed);
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-stack-overlay,
+  .app-stack-pile,
+  .app-stack-note,
+  .app-stack-caption-wrap,
+  .app-stack-chevron,
+  .app-stack-caption {
+    transition: none;
+  }
+}
+
+/* ── Bundle Detail Page ───────────────────────────────── */
+.bundle-detail-page {
+  padding-bottom: 2rem;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  padding: 0.3rem 0;
+  transition: color var(--transition-speed);
+}
+.back-link:hover {
+  color: var(--text-primary);
+}
+.bundle-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1.15rem;
+  padding: 1.25rem;
+  margin-bottom: 0.7rem;
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 55%),
+    var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+}
+.bundle-hero-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface-inner);
+}
+.bundle-hero-avatar-img,
+.bundle-hero-avatar-ph {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bundle-hero-avatar-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  color: var(--text-muted);
+}
+.bundle-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+.bundle-hero-title {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.bundle-hero-author {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.bundle-hero-desc {
+  margin: 0.1rem 0 0.25rem;
+  max-width: 68ch;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.bundle-hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.bundle-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+.bundle-hero-actions .btn {
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.bundle-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-bottom: 1.5rem;
+}
+.bundle-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+}
+.bundle-fact-value {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  line-height: 1;
+  color: var(--accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bundle-fact-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.bundle-panel {
+  margin-bottom: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.bundle-panel-title {
+  margin: 0;
+  padding: 0.65rem 0.95rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-surface-inner);
+  border-bottom: 1px solid var(--border-hairline);
+}
+.bundle-channel-row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.95rem;
+}
+.bundle-channel-row + .bundle-channel-row {
+  border-top: 1px solid var(--border-hairline);
+}
+.bundle-channel-row .channel-badge {
+  justify-self: start;
+}
+.bundle-channel-main {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.bundle-channel-version {
+  font-family: var(--mono-stack);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+.bundle-channel-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.bundle-apps-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.bundle-apps-heading .section-title {
+  margin: 0;
+}
+.bundle-apps-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
