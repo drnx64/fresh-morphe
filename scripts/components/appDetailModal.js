@@ -20,7 +20,7 @@ import {
 } from '../utils/misc.js'
 import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { parseBundleKey, findBundleRecord } from '../utils/bundleKey.js'
+import { parseBundleKey, makeBundleKey } from '../utils/bundleKey.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
 import { CLOSE_ICON, VERSION_ARROW } from '../utils/svg.js'
 
@@ -211,10 +211,59 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     })
   }
 
-  // ── Patches tab ──────────────────────────────────────
+  // ── Patches tab (+ channel compare) ──────────────────
+  // One bundle can publish stable, latest and dev with different patch sets, so
+  // a patch list alone is only half the story: the channel row switches it and
+  // the delta line spells out what differs, without leaving the modal.
+  const channelBar = el('div', { class: 'app-detail-channels', hidden: true })
+  const channelList = el('div', {
+    class: 'app-detail-channel-list',
+    role: 'group',
+    'aria-label': 'Channels for this bundle',
+  })
+  channelBar.appendChild(el('span', { class: 'app-detail-channels-label' }, ['Channels']))
+  channelBar.appendChild(channelList)
+
+  const deltaEl = el('div', { class: 'app-detail-channel-delta', hidden: true })
+
   const patchesTab = tabContents['Patches']
   const patchesList = el('div', { class: 'app-detail-patches' })
+  patchesTab.appendChild(channelBar)
+  patchesTab.appendChild(deltaEl)
   patchesTab.appendChild(patchesList)
+
+  /** Patches of this app inside one bundle record (records are app objects or bare packages). */
+  function appPatchesFrom(record) {
+    const apps = record?.apps || []
+    const appData = apps.find((a) => (typeof a === 'string' ? a : a.package) === pkg)
+    return appData?.patches || []
+  }
+
+  // `name:channel` → patches. Per modal session: bundles do not change while it
+  // is open, and a channel the user toggles back to must not refetch.
+  const appPatchCache = new Map()
+
+  /**
+   * Load one channel's patches for this app, fetching the bundle file if the
+   * store only holds its index row.
+   * @param {string} bundleName
+   * @param {string} channel
+   * @returns {Promise<Array>}
+   */
+  async function patchesFor(bundleName, channel) {
+    const key = makeBundleKey(bundleName, channel)
+    if (appPatchCache.has(key)) return appPatchCache.get(key)
+    let record = (store.get('bundles') || {})[key]
+    if (record && record._partial) {
+      await ensureBundleKey(key)
+      record = (store.get('bundles') || {})[key]
+    }
+    const patches = appPatchesFrom(record)
+    // A failed fetch leaves an index-only record; caching that would hide the
+    // patches for the rest of the session.
+    if (record && !record._partial) appPatchCache.set(key, patches)
+    return patches
+  }
 
   function renderPatchSkeleton() {
     patchesList.replaceChildren()
@@ -229,11 +278,14 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     patchesList.setAttribute('aria-busy', 'true')
   }
 
-  function renderPatchList(list) {
+  function renderPatchList(list, channel = '') {
     patchesList.removeAttribute('aria-busy')
     patchesList.replaceChildren()
     if (list.length === 0) {
-      patchesList.appendChild(el('div', { class: 'app-detail-patch-empty' }, ['No patch data available.']))
+      const text = channel
+        ? `No patches for this app in the ${channel} channel.`
+        : 'No patch data available.'
+      patchesList.appendChild(el('div', { class: 'app-detail-patch-empty' }, [text]))
       return
     }
     const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name))
@@ -268,31 +320,197 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
   // Incremented per request so a fast chip switch cannot render a stale list.
   let patchRequest = 0
 
-  async function renderPatches(candidate, { highlight = null } = {}) {
+  async function renderPatches(candidate, { channel = '', highlight = null } = {}) {
     if (!candidate) {
       renderPatchList([])
       return
     }
+    const chan = channel || channelState?.active || ''
     const request = ++patchRequest
-    const found = findBundleRecord(store.get('bundles') || {}, candidate.bundleName, hintFor(candidate))
-    if (!found.record) {
-      renderPatchList([])
+    const key = makeBundleKey(candidate.bundleName, chan)
+    const cached = appPatchCache.get(key)
+    if (cached) {
+      renderPatchList(cached, chan)
+      if (highlight) highlightPatch(highlight)
       return
     }
 
-    if (found.record._partial && found.key) {
+    const record = (store.get('bundles') || {})[key]
+    if (record && !record._partial) {
+      // Already fully loaded — no skeleton flash for the common case
+      const patches = appPatchesFrom(record)
+      appPatchCache.set(key, patches)
+      renderPatchList(patches, chan)
+      if (highlight) highlightPatch(highlight)
+      return
+    }
+
+    if (record) {
       renderPatchSkeleton()
       // bundleLoader swallows its own errors (index-only fallback), so the
       // skeleton must not survive a failed load.
-      await ensureBundleKey(found.key)
+      await ensureBundleKey(key)
       if (request !== patchRequest) return
     }
 
-    const fresh = findBundleRecord(store.get('bundles') || {}, candidate.bundleName, hintFor(candidate))
-    const apps = fresh.record?.apps || []
-    const appData = apps.find((a) => (typeof a === 'string' ? a : a.package) === pkg)
-    renderPatchList(appData?.patches || [])
+    const patches = await patchesFor(candidate.bundleName, chan)
+    if (request !== patchRequest) return
+    renderPatchList(patches, chan)
     if (highlight) highlightPatch(highlight)
+  }
+
+  // ── Channel compare ──────────────────────────────────
+  /** @type {{ channels: string[], active: string, patches: Map<string, Array> }|null} */
+  let channelState = null
+  let channelRequest = 0
+
+  /** Name-level diff between two patch sets of the same app. */
+  function diffPatchSets(base, next) {
+    const index = (list) => new Map(list.map((p) => [p.name, p]))
+    const baseByName = index(base)
+    const nextByName = index(next)
+    const added = []
+    const removed = []
+    const changed = []
+    for (const [name, patch] of nextByName) {
+      const before = baseByName.get(name)
+      if (!before) {
+        added.push(name)
+        continue
+      }
+      const versionsChanged =
+        (before.compatible_versions || []).join(', ') !== (patch.compatible_versions || []).join(', ')
+      if (versionsChanged || before.description !== patch.description || !!before.use !== !!patch.use) {
+        changed.push(name)
+      }
+    }
+    for (const name of baseByName.keys()) {
+      if (!nextByName.has(name)) removed.push(name)
+    }
+    const byName = (a, b) => a.localeCompare(b)
+    return { added: added.sort(byName), removed: removed.sort(byName), changed: changed.sort(byName) }
+  }
+
+  const channelButtons = new Map()
+
+  function paintChannelButtons() {
+    for (const [channel, button] of channelButtons) {
+      const active = channelState?.active === channel
+      button.classList.toggle('is-active', active)
+      button.setAttribute('aria-pressed', String(active))
+    }
+  }
+
+  /** Counts land one channel at a time; a channel whose file is still loading shows an ellipsis. */
+  function paintChannelCount(channel, count) {
+    const button = channelButtons.get(channel)
+    if (!button) return
+    const badge = button.querySelector('.app-detail-channel-count')
+    if (badge) badge.textContent = String(count)
+    button.title = `${count} patch${count === 1 ? '' : 'es'} in ${channel}`
+  }
+
+  function maskedName(name) {
+    return name.length > 26 ? `${name.slice(0, 25)}…` : name
+  }
+
+  function renderDelta(candidate) {
+    const state = channelState
+    if (!state || state.channels.length < 2) {
+      deltaEl.hidden = true
+      return
+    }
+    const base = state.channels[0]
+    const mine = state.patches.get(state.active)
+    const reference = state.patches.get(base)
+    if (!mine || !reference || state.active === base) {
+      deltaEl.hidden = true
+      return
+    }
+
+    const { added, removed, changed } = diffPatchSets(reference, mine)
+    deltaEl.hidden = false
+    deltaEl.replaceChildren()
+    deltaEl.appendChild(el('span', { class: 'app-detail-channel-delta-label' }, [`vs ${base}`]))
+
+    if (added.length + removed.length + changed.length === 0) {
+      deltaEl.appendChild(el('span', { class: 'app-detail-channel-delta-same' }, ['Same patches']))
+      return
+    }
+
+    const tags = [
+      ...added.map((name) => ({ name, kind: 'added', sign: '+' })),
+      ...removed.map((name) => ({ name, kind: 'removed', sign: '−' })),
+      ...changed.map((name) => ({ name, kind: 'modified', sign: '~' })),
+    ]
+    const shown = tags.slice(0, 8)
+    for (const tag of shown) {
+      const chip = el('span', {
+        class: `app-detail-channel-delta-tag app-detail-channel-delta-tag--${tag.kind}`,
+        title: `${tag.sign} ${tag.name}`,
+      }, [`${tag.sign} ${maskedName(tag.name)}`])
+      deltaEl.appendChild(chip)
+    }
+    if (tags.length > shown.length) {
+      deltaEl.appendChild(
+        el('span', { class: 'app-detail-channel-delta-tag app-detail-channel-delta-tag--more' }, [
+          `+${tags.length - shown.length} more`,
+        ])
+      )
+    }
+  }
+
+  function selectChannel(candidate, channel) {
+    if (!channelState || channelState.active === channel) return
+    channelState.active = channel
+    paintChannelButtons()
+    renderDelta(candidate)
+    renderPatches(candidate, { channel }).catch(() => {})
+  }
+
+  /**
+   * Build the channel row for a bundle and warm every channel in the background
+   * so the counts and the delta line are real, not placeholders.
+   */
+  function setupChannels(candidate, { initial = false } = {}) {
+    const channels = candidate.channels || []
+    const hints = hintFor(candidate)
+    const active = channels.find((ch) => hints.includes(ch)) || channels[0] || ''
+    channelState = { channels, active, patches: new Map() }
+    channelButtons.clear()
+    channelList.replaceChildren()
+    deltaEl.hidden = true
+
+    channelBar.hidden = channels.length < 2
+    if (channels.length >= 2) {
+      for (const channel of channels) {
+        const button = el('button', {
+          class: 'app-detail-channel',
+          type: 'button',
+          'aria-pressed': 'false',
+          'data-channel': channel,
+        })
+        button.innerHTML = `${channel}<span class="app-detail-channel-count">…</span>`
+        button.addEventListener('click', () => selectChannel(candidate, channel))
+        channelList.appendChild(button)
+        channelButtons.set(channel, button)
+      }
+      paintChannelButtons()
+    }
+
+    renderPatches(candidate, { channel: active, highlight: initial ? patchName : null }).catch(() => {})
+
+    const request = ++channelRequest
+    for (const channel of channels) {
+      patchesFor(candidate.bundleName, channel)
+        .then((patches) => {
+          if (request !== channelRequest || !channelState) return
+          channelState.patches.set(channel, patches)
+          paintChannelCount(channel, patches.length)
+          renderDelta(candidate)
+        })
+        .catch(() => {})
+    }
   }
 
   function renderSource() {
@@ -310,7 +528,7 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
       chip.classList.toggle('is-active', name === candidate.bundleName)
     }
     renderSource()
-    renderPatches(candidate, { highlight: initial ? patchName : null })
+    setupChannels(candidate, { initial })
   }
 
   // ── Changes tab ──────────────────────────────────────

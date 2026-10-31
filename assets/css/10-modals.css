@@ -217,6 +217,114 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Channel compare — one bundle, up to three channels, one patch list. */
+.app-detail-channels {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+}
+/* `display: flex` above would otherwise beat the [hidden] attribute */
+.app-detail-channels[hidden] {
+  display: none;
+}
+.app-detail-channels-label {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.app-detail-channel-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.app-detail-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.16rem 0.5rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: 999px;
+  background: var(--bg-surface-inner);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition:
+    color var(--transition-speed),
+    border-color var(--transition-speed),
+    background var(--transition-speed);
+}
+.app-detail-channel:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hairline-strong);
+}
+.app-detail-channel.is-active {
+  color: var(--text-primary);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.app-detail-channel-count {
+  min-width: 1.15rem;
+  padding: 0 0.28rem;
+  border-radius: 999px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-align: center;
+}
+.app-detail-channel.is-active .app-detail-channel-count {
+  color: var(--accent);
+}
+/* What the active channel has that the baseline does not */
+.app-detail-channel-delta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.55rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.app-detail-channel-delta[hidden] {
+  display: none;
+}
+.app-detail-channel-delta-label {
+  font-weight: 600;
+}
+.app-detail-channel-delta-same {
+  color: var(--state-stable);
+}
+.app-detail-channel-delta-tag {
+  max-width: 100%;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-detail-channel-delta-tag--added {
+  color: var(--state-stable);
+  background: var(--state-stable-dim);
+}
+.app-detail-channel-delta-tag--removed {
+  color: var(--state-critical);
+  background: var(--state-critical-dim);
+}
+.app-detail-channel-delta-tag--modified {
+  color: var(--state-info);
+  background: var(--state-info-dim);
+}
+.app-detail-channel-delta-tag--more {
+  color: var(--text-muted);
+  background: var(--bg-surface-inner);
+}
 .app-detail-patch {
   padding: 0.45rem 0.65rem;
   border-bottom: 1px solid var(--border-hairline);
