@@ -1,0 +1,220 @@
+{
+  "bundle": "gcamvboost",
+  "channel": "latest",
+  "repo_url": "https://github.com/Kekimurus/GCamVBoost",
+  "created_at": "2026-10-22T00:00:00",
+  "version": "1.0.0",
+  "description": "# 1.0.0 (2026-10-22)\n\nFirst release of GCamVBoost, a Morphe patch bundle for Google Camera (`com.google.android.GoogleCamera` and `com.google.android.GoogleCameraEng`).\n\n### ✨ Features\n\n* **Clone Google Camera:** Change the package name (default `com.google.android.GoogleCameraEng`) so the patched app installs next to the stock Google Camera\n* **Video Boost startup state:** Remember the last Video Boost setting between launches, or always start with it on or off\n* **Video Boost shortcuts:** Add \"Video VB On\" and \"Video VB Off\" launcher shortcuts\n\n### 🐛 Bug Fixes\n\n* **Fix Magic Capture crash:** Fall back to CPU when the EdgeTPU can't be used on re-signed builds\n* **Fix Magic Capture crash:** Add Me uses its CPU models instead of the EdgeTPU models\n* **Fix MediaProvider invalid column crash:** Remap the `file_name` and `restore_path` columns to standard MediaStore columns\n* **Fix launcher app shortcuts:** Point launcher shortcuts at the app's actual package name",
+  "apps": [
+    {
+      "app_name": "Googlecamera",
+      "package": "com.google.android.googlecamera",
+      "patches": [
+        {
+          "name": "Clone Google Camera",
+          "description": "Changes the package name (default com.google.android.GoogleCameraEng) so the patched app installs next to the stock Google Camera. Renames provider authorities and custom permissions in the manifest and the matching strings in code.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name for the cloned app. Must differ from any Google Camera already installed."
+            },
+            {
+              "key": "appLabel",
+              "description": "Optional launcher name for the clone, for example \"Camera Eng\". Leave empty to keep the original name."
+            },
+            {
+              "key": "renameCodeReferences",
+              "description": "Replaces hard-coded references to the old package name in code, so internal intents open the clone instead of the stock app."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix Magic Capture crash",
+          "description": "Bypasses EdgeTPU JNI native initialization in Magic Capture and falls back to CPU scoring to prevent SIGABRT crashes on non-stock signatures.",
+          "use": true,
+          "options": [
+            {
+              "key": "patchAddMeEdgeTpu",
+              "description": "Makes Add Me use its CPU models instead of the EdgeTPU ones, which crash (SIGABRT) on re-signed builds."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix MediaProvider invalid column crash",
+          "description": "Prevents IllegalArgumentException crashes on file_name and restore_path columns when saving Video Boost or querying MediaStore without stock Google Photos signatures.",
+          "use": true,
+          "options": [
+            {
+              "key": "stripContentValuesPut",
+              "description": "Neutralizes ContentValues.put() calls for proprietary file_name and restore_path columns."
+            },
+            {
+              "key": "remapStandardColumns",
+              "description": "Replaces file_name with _display_name and restore_path with relative_path in query projections and Cursor lookups."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix launcher app shortcuts",
+          "description": "Updates static launcher shortcuts (Take a selfie, Take a video) in shortcuts.xml so they target the modified package instead of throwing 'App isn't installed'.",
+          "use": true,
+          "options": [
+            {
+              "key": "targetPackageName",
+              "description": "The package name that launcher shortcut intents should open. Leave empty to use the app's own package name (recommended)."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Video Boost shortcuts",
+          "description": "Adds two launcher shortcuts that open video mode with Video Boost on or off (\"Video VB On\" and \"Video VB Off\" by default).",
+          "use": true,
+          "options": [
+            {
+              "key": "onLabel",
+              "description": "Name of the shortcut that opens video mode with Video Boost on."
+            },
+            {
+              "key": "offLabel",
+              "description": "Name of the shortcut that opens video mode with Video Boost off."
+            },
+            {
+              "key": "keepOriginalVideoShortcut",
+              "description": "Also keep the stock \"Video\" shortcut. Most launchers only show the first 4 shortcuts."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Video Boost startup state",
+          "description": "Controls Video Boost when the camera opens: remember the last setting (default), always on, or always off. Video Boost can still be switched on and off as usual.",
+          "use": true,
+          "options": [
+            {
+              "key": "mode",
+              "description": "What Video Boost is set to when the camera opens. Launcher shortcuts from \"Video Boost shortcuts\" override this."
+            },
+            {
+              "key": "rememberDefaultOn",
+              "description": "With \"Remember last setting\", whether Video Boost starts on before it has ever been changed."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ]
+    },
+    {
+      "app_name": "Googlecameraeng",
+      "package": "com.google.android.googlecameraeng",
+      "patches": [
+        {
+          "name": "Clone Google Camera",
+          "description": "Changes the package name (default com.google.android.GoogleCameraEng) so the patched app installs next to the stock Google Camera. Renames provider authorities and custom permissions in the manifest and the matching strings in code.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name for the cloned app. Must differ from any Google Camera already installed."
+            },
+            {
+              "key": "appLabel",
+              "description": "Optional launcher name for the clone, for example \"Camera Eng\". Leave empty to keep the original name."
+            },
+            {
+              "key": "renameCodeReferences",
+              "description": "Replaces hard-coded references to the old package name in code, so internal intents open the clone instead of the stock app."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix Magic Capture crash",
+          "description": "Bypasses EdgeTPU JNI native initialization in Magic Capture and falls back to CPU scoring to prevent SIGABRT crashes on non-stock signatures.",
+          "use": true,
+          "options": [
+            {
+              "key": "patchAddMeEdgeTpu",
+              "description": "Makes Add Me use its CPU models instead of the EdgeTPU ones, which crash (SIGABRT) on re-signed builds."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix MediaProvider invalid column crash",
+          "description": "Prevents IllegalArgumentException crashes on file_name and restore_path columns when saving Video Boost or querying MediaStore without stock Google Photos signatures.",
+          "use": true,
+          "options": [
+            {
+              "key": "stripContentValuesPut",
+              "description": "Neutralizes ContentValues.put() calls for proprietary file_name and restore_path columns."
+            },
+            {
+              "key": "remapStandardColumns",
+              "description": "Replaces file_name with _display_name and restore_path with relative_path in query projections and Cursor lookups."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix launcher app shortcuts",
+          "description": "Updates static launcher shortcuts (Take a selfie, Take a video) in shortcuts.xml so they target the modified package instead of throwing 'App isn't installed'.",
+          "use": true,
+          "options": [
+            {
+              "key": "targetPackageName",
+              "description": "The package name that launcher shortcut intents should open. Leave empty to use the app's own package name (recommended)."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Video Boost shortcuts",
+          "description": "Adds two launcher shortcuts that open video mode with Video Boost on or off (\"Video VB On\" and \"Video VB Off\" by default).",
+          "use": true,
+          "options": [
+            {
+              "key": "onLabel",
+              "description": "Name of the shortcut that opens video mode with Video Boost on."
+            },
+            {
+              "key": "offLabel",
+              "description": "Name of the shortcut that opens video mode with Video Boost off."
+            },
+            {
+              "key": "keepOriginalVideoShortcut",
+              "description": "Also keep the stock \"Video\" shortcut. Most launchers only show the first 4 shortcuts."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Video Boost startup state",
+          "description": "Controls Video Boost when the camera opens: remember the last setting (default), always on, or always off. Video Boost can still be switched on and off as usual.",
+          "use": true,
+          "options": [
+            {
+              "key": "mode",
+              "description": "What Video Boost is set to when the camera opens. Launcher shortcuts from \"Video Boost shortcuts\" override this."
+            },
+            {
+              "key": "rememberDefaultOn",
+              "description": "With \"Remember last setting\", whether Video Boost starts on before it has ever been changed."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ]
+    }
+  ],
+  "patches_name": "GCamVBoost",
+  "fingerprint": "0aa3dd7a324fdb3d1b0d4aa47f8d14f0c2b5b412fe7942dbd2e6e363be49ed94",
+  "release_notes": "# 1.0.0 (2026-10-22)\r\n\r\nFirst release of GCamVBoost, a Morphe patch bundle for Pixel Camera (`com.google.android.GoogleCamera`). Tested on Pixel Camera version 11.1.040.982810059.19 on a Pixel 11 Pro XL.\r\n\r\n### ✨ Features\r\n\r\n* **Clone Google Camera:** Change the package name (default `com.google.android.GoogleCameraEng`) so the patched app installs next to the stock Google Camera\r\n* **Video Boost startup state:** Remember the last Video Boost setting between launches\r\n* **Video Boost shortcuts:** Add \"Video VB On\" and \"Video VB Off\" launcher shortcuts\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* **Fix Magic Capture crash:** Fall back to CPU when the EdgeTPU can't be used on re-signed builds\r\n* **Fix Magic Capture crash:** Add Me uses its CPU models instead of the EdgeTPU models\r\n* **Fix MediaProvider invalid column crash:** Remap the `file_name` and `restore_path` columns to standard MediaStore columns\r\n* **Fix launcher app shortcuts:** Point launcher shortcuts at the app's actual package name\r\n",
+  "release_tag": "v1.0.0",
+  "release_date": "2026-10-22T16:34:20Z",
+  "isPreRelease": false
+}

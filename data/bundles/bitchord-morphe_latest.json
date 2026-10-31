@@ -2,14 +2,23 @@
   "bundle": "bitchord-morphe",
   "channel": "latest",
   "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
-  "created_at": "2026-10-31T02:33:04",
-  "version": "1.1.0-beta.8",
-  "description": "Morphe patches for BitChord 1.9: music from your own Telegram channels, download-only Soulseek audio, and optional playback tools. Runs on your phone using your own accounts; doesn't unlock premium features.",
+  "created_at": "2026-10-31T11:11:20",
+  "version": "1.1.0-beta.15",
+  "description": "Morphe patches for BitChord 1.9: Telegram music, an integrated Downloads explorer, Soulseek sharing, Telegram archives, mixed-source device playlists, an optional FLAC Audio source and playback tools.",
   "apps": [
     {
       "app_name": "BitChord",
       "package": "com.music.bitchord",
       "patches": [
+        {
+          "name": "Audio and video switch",
+          "description": "Adds a song and video switch to the top of the player, as in YouTube Music: one tap plays a song's music video, or the song again, in the same place in the queue. Settings are in Settings, Patches & tweaks.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
         {
           "name": "Battery saver",
           "description": "Lets the phone's audio chip decode songs, so long listens use less battery. BitChord's effects don't run on songs played this way. Settings are in Settings, Patches & tweaks.",
@@ -31,6 +40,15 @@
         {
           "name": "Equaliser per output",
           "description": "Remembers BitChord's equaliser for each output (speaker, wired, each Bluetooth device) and puts it back when that output is used; shares settings as codes. From Prism by Yigder. Settings are in Settings, Patches & tweaks.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
+          "name": "Flac Downloader Audio",
+          "description": "Optional native adapter for aztecempire's Spotube FLAC Audio source. Search, stream and download through flacdownloader.com, with explicit FLAC/MP3 choices. Starts disabled; enable in Sources or Patches & tweaks. Requested quality is not file verification. No Spotube runtime or account is installed.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -88,6 +106,15 @@
           ]
         },
         {
+          "name": "Mixed-source playlists",
+          "description": "Adds downloaded files, local audio and streamed tracks to device playlists without a YouTube account. Preserves file and addon source metadata across restarts. Settings are in Settings, Patches & tweaks.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
           "name": "Per-download quality",
           "description": "Asks which quality to download each song in: Standard, High or Lossless. An album is asked about once. From Stash by Rawnald Clark. Settings are in Settings, Patches & tweaks.",
           "use": false,
@@ -133,8 +160,17 @@
           ]
         },
         {
+          "name": "Streamseek previews",
+          "description": "Preview an explicitly selected Soulseek MP3 or FLAC through Media3 while it transfers. Keep download reuses buffered bytes. Compare an excerpt with a known local reference and export transparent evidence. Optional; enable in Patches & tweaks. No automatic Soulseek playback or Mornye integration.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
           "name": "Unofficial Soulseek audio",
-          "description": "Download selected Soulseek or debrid audio to a phone folder, a configured Telegram main channel, or both. Optional debrid services use your own API keys. Choose accepted formats and their order in setup. Live playback and automatic source matching are disabled. Settings are in Settings, Patches & tweaks. Android 8 or newer.",
+          "description": "Adds player-integrated Downloads on BitChord 1.9, addon/Soulseek source choices, batch review, selected-file public Soulseek sharing, and verified Telegram archiving/restore. Telegram copies require the optional Telegram patch and your private main channel. Debrid services use your API keys. Live Soulseek playback stays disabled. Settings are in Patches & tweaks. Android 8 or newer.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -164,10 +200,10 @@
     }
   ],
   "patches_name": "Hexclyde",
-  "fingerprint": "04b76c6318f79ba15f549726b7f34a97035c50331f2311cfb0f09e3c07fb2812",
-  "release_notes": "# 1.1.0-beta.8\n\nThis testing release combines the BitChord 1.9 compatibility work with the\nUnofficial Soulseek audio patch and its download tools. It targets the released\nBitChord 1.9 phone APKs on Android 8 / API 26 or newer.\n\n- **Patches & tweaks** opens from BitChord's redesigned Settings page. Soulseek,\n  peer downloads, debrid services, copy destinations and format preferences\n  remain nested under that page. The managed download entries stay out of the\n  Sources page.\n- **Soulseek downloads** retain the chosen source file, format preferences and\n  copy destinations. The download-route adapter handles BitChord 1.9's changed\n  constructor and optimized coroutine layouts. Cancellation marks queued\n  selections before interrupting an active transfer.\n- **Debrid downloads** retain independent Real-Debrid, AllDebrid, Premiumize and\n  TorBox switches. Each service starts disabled and uses the user's own API key.\n  Provider cards start collapsed, expand one at a time, and use the themed\n  switch and existing settings gear. Disabled providers hide their controls and\n  disable the gear. First enable waits for a successful encrypted key save.\n- **Peer downloads** retain Nostr coordination, direct UDP / QUIC transfer and\n  the Tor, I2P and IPFS fallback runtimes. They remain download features.\n- **Telegram downloads** handle the source probe introduced in BitChord 1.9\n  using indexed file information. Channel playlists handle the new song field.\n- **Smooth quality switching** handles BitChord 1.9's version-alignment\n  parameters. Sing, headphone correction and DJ analysis cover Automix's\n  separately rendered loop-mix audio paths.\n- **Bit-perfect output** is reflected in the effects page. Sleep timers pause\n  without an unavailable software-volume fade, Battery saver stands down, and\n  the page identifies effects that do not reach that output.\n- **DJ mode** waits for an active Automix transition before rearranging the queue.\n\nExplicit Telegram and Soulseek file selections retain their original encoding;\nthe per-download quality chooser applies to catalogue downloads. A format label\nor encoding probe cannot prove that a lossless file was never transcoded.\n\nThe patch bundle includes arm64-v8a, armeabi-v7a and x86_64 runtimes. Selecting\nSoulseek on the BitChord 1.9 universal APK removes its unsupported 32-bit x86\nnative directory; that patched APK supports the three complete architectures.\n\nThis is a testing build. Automated checks do not qualify physical-device audio,\nreal provider accounts, public relay/NAT/overlay connectivity or Android\nlifecycle behavior. See the [known limitations](https://github.com/Hexclyde/bitchord-morphe-patches/blob/testing/docs/KNOWN_LIMITATIONS.md) and\n[download testing guide](https://github.com/Hexclyde/bitchord-morphe-patches/blob/testing/docs/SOULSEEK-TESTING.md).\n\n- **Translations:** Soulseek, debrid and peer-transfer pages follow BitChord's selected language across all 20 supported translations, including RTL layout and download notifications.\n- **UI review:** screenshots and screen recording are enabled across beta.8, including setup pages and dialogs; other builds default to protection.\n",
-  "release_tag": "v1.1.0-beta.8",
-  "release_date": "2026-10-30T19:12:14Z",
+  "fingerprint": "f9ee7c1a2cf53068a568fa03752ecb8e99a179777e4d56ecd32abe5e429ac77d",
+  "release_notes": "# 1.1.0-beta.15 testing build\r\n\r\nCombines both beta.14 source branches and retains all 19 selectable patches, with complete source history.\r\n\r\n- Fix Downloads navigation: use AndroidView's default modifier when the optimized host passes null, and keep rendering inside LibraryScreen's balanced Compose restart group and original recomposition callback.\r\n- Restore the Audio/Video control after every actual player-window open, close and recreation. Keep the user's saved YouTube mode across tracks.\r\n- Retain Streamseek MP3/FLAC previews, reuse the selected transfer for immediate/queued downloads, compare excerpts with a known local reference, inspect complete-file SHA-256 and export evidence.\r\n- Handle Telegram page startup/render failures without closing BitChord. If Android refuses overlay protection, fail before credential entry and show a diagnostic screen. Copy crash details includes exception classes and stack frames, excluding exception messages and account/API values. Handle a missing error detail safely. This fixes reproduced failure paths; the reported phone failure has no trace, so its exact cause and resolution remain unconfirmed.\r\n- Preserve the beta.11 interactive guide and six README badges. The full repository README is also the ZIP's README; short installation/publishing instructions are in INSTALL.md. Open-Guide.html opens the bundled offline guide, updated for beta.15 and all 19 patches.\r\n\r\nAutomated results and tested APK selections are recorded in verification.json. No phone, real Telegram account or public Soulseek peer qualification is claimed. \r\n\r\nRepatch the original BitChord 1.9 APK with the same selections and existing Morphe signing key, then update the installed patched app. Keep Streamseek previews selected if you use it; its in-app toggle starts off on a first install. No data-clearing or reinstall step is required by these changes.\r\n",
+  "release_tag": "v1.1.0-beta.15",
+  "release_date": "2026-10-31T03:19:26Z",
   "isPreRelease": true,
   "stars": 6,
   "avatarUrl": "https://avatars.githubusercontent.com/u/10942734?v=4&s=128",

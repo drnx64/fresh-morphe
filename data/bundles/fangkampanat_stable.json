@@ -1,30 +1,39 @@
 {
   "bundle": "fangkampanat",
   "channel": "stable",
-  "repo_url": "https://github.com/fangkampanat/gmaps-patches",
-  "created_at": "2026-10-25T18:45:37Z",
-  "version": "1.4.1",
-  "description": "Use official MicroG-RE 7.2.2 for Google Maps and synthesized navigation speech, start Google TTS before guidance, skip the uncertified-device screen and avoid a crash when a location-settings dialog cannot open. Includes an opt-in native EV model experiment that sends BYD battery data and estimated road-load coefficients to Google. Arrival forecasts and navigation display remain experimental. Requires Morphe Desktop 1.19.0 or newer.",
+  "repo_url": "https://github.com/fangkampanat/google-maps-automotive-patches",
+  "created_at": "2026-10-30T04:51:36Z",
+  "version": "0.1.1",
+  "description": "Runs the Android Automotive build of Google Maps (26.10.120003.E) on BYD DiLink 3 head units (Android 10) as \"Maps Car\" with MicroG-RE 7.2.2: sign-in, map, search, navigation and voice, a UI density setting, the car's battery for EV routing (on by default on the tested BYD Dolphin), Send to car from phone Maps, an in-app problem report that is sent only after you review it, and a safe mode with feature switches. BYD battery, Send to car and the BYD location flicker fix are separate patches. Requires Morphe Desktop 1.19.1 or newer.",
   "apps": [
     {
       "app_name": "Google Maps",
       "package": "com.google.android.apps.maps",
       "patches": [
         {
-          "name": "BYD native battery experiment",
-          "description": "Experimental: sends this BYD's battery and road-load model to Google through Maps' native EV route requests. Starts from the car's own average consumption, learns slowly from BMS energy/distance, and adds in-app vehicle settings. Native hooks inspected on Maps 26.41 and 26.42. Targets BYD DiLink 3; DiLink 5 unverified.",
-          "use": false,
-          "options": [
-            {
-              "key": "guidanceBattery",
-              "description": "Experimental: shows an inline battery icon and Google's arrival percentage after ETA."
-            }
-          ],
+          "name": "BYD battery (EV)",
+          "description": "Feeds the BYD battery into Maps' EV routing (battery on arrival, chargers). On by default on the tested BYD Dolphin, off with an \"untested\" notice on other BYD models; a Settings row turns it on or off.",
+          "use": true,
+          "options": [],
           "compatible_versions": []
         },
         {
-          "name": "Google Maps for MicroG-RE",
-          "description": "Connects supported Google Maps builds to MicroG-RE 7.2.2, skips the uncertified-device screen, avoids a crash when a location-settings dialog cannot open, and prefers synthesized navigation speech with early Google TTS startup and the existing audio fallback.",
+          "name": "BYD location flicker fix",
+          "description": "Holds back BYD's brief location off/on flips for up to 3 s, so Maps does not flash its location lockout.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Google Maps Automotive for MicroG-RE",
+          "description": "Runs Google Maps for Android Automotive on Android 10 as \"Maps Car\" with MicroG-RE 7.2.2. Adds a UI density setting, a problem report and a safe mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Send to car",
+          "description": "Lets phone Maps send a trip to Maps Car through MicroG-RE (push routes, the notification service identity and maps.app.goo.gl links).",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -32,17 +41,10 @@
       ]
     }
   ],
-  "patches_name": "Maps Patches",
-  "fingerprint": "17d4259e69e5fcd809009c4ba18c754c037b71c17c52b06d987f69e3a2df9ba4",
-  "release_notes": "- Supports Google Maps `26.42.01.997557324` (#14).\n- Works without signing in: map tiles, search and place details now load (#16).\n- Fixes a crash when a location-settings prompt cannot open (#15).\n- Uses official MicroG-RE 7.2.2.\n- Requires Morphe Desktop 1.19.0 or newer. Restart Desktop before patching another APK.\n\nTested on an Android 16 phone. The BYD battery experiment was not tested in a car for this release.\n\n`patches-1.4.1.mpp` SHA-256: `d923ca8ad2fef4ff8b6f9ba384dca4b6f32d6fe81268ee22a4a8ff1630183754`\n",
-  "release_tag": "v1.4.1",
-  "release_date": "2026-10-25T18:45:37Z",
-  "isPreRelease": false,
-  "stars": 29,
-  "avatarUrl": "https://avatars.githubusercontent.com/u/11970624?v=4",
-  "repoDescription": "Google Maps patches for MicroG-RE on BYD head units.",
-  "isArchived": false,
-  "isFork": false,
-  "forkParent": "",
-  "bundleImageUrl": ""
+  "patches_name": "Maps Automotive Patches",
+  "fingerprint": "fb0f37fbefc53b4fb0b653899de2a713a0d565ad57a5eebc7aab1adca3d57117",
+  "release_notes": "- A **Maps Car report** app icon sends a problem report even when Maps Car's Settings will not open. After a crash, a notification leads there.\n- **Safe mode**: After two crashes within 10 minutes, Maps Car starts with its extra features off. In Maps Car report you turn them back on one at a time to find the one that crashes.\n- For each crash, a report now includes the warning and error lines the crashed process wrote to the system log. Reports also catch native crashes (found at the next start) and freezes of 5 seconds or more, and name the car model, head unit software version and screen. Nothing leaves the car until you tap Send.\n- BYD battery (EV), Send to car and BYD location flicker fix are now separate patches, on by default.\n- UI density defaults to 200 dpi only on the Dolphin's 1920×1080 screen. Other screens keep the system density until you pick one.\n\nTested on a BYD Dolphin (DiLink 3.0) with Google Maps (Android Automotive) 26.10.120003.E. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.1.mpp` SHA-256: `7ca3c37ba42906e9cf095c1e151aeffd0357803dac9bd337ba01bcb001f39e27`\n",
+  "release_tag": "v0.1.1",
+  "release_date": "2026-10-30T04:51:36Z",
+  "isPreRelease": false
 }
