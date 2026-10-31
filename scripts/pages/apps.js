@@ -14,7 +14,56 @@ import { skeletonGrid } from '../components/skeleton.js'
 const RENDER_BATCH = 24
 const STACK_FILL_BATCH = 24
 
+// Hover opens a pile where there is a real pointer and room to spare. Touch
+// screens and narrow viewports keep the click path (which is also the keyboard
+// path everywhere) — `(min-width: 1024px)` alone would hijack a touchscreen
+// laptop, `(hover: hover)` alone would open piles mid-scroll on a phone.
+const STACK_HOVER_QUERY = '(hover: hover) and (pointer: fine) and (min-width: 1024px)'
+const STACK_HOVER_OPEN_MS = 120
+const STACK_HOVER_CLOSE_MS = 200
+
 let unsubscribeBundles = null
+
+/** Cached MediaQueryList; read `.matches` per event so a resize applies at once. */
+let hoverStackMq
+function canHoverStacks() {
+  if (hoverStackMq === undefined) {
+    hoverStackMq = typeof window.matchMedia === 'function'
+      ? window.matchMedia(STACK_HOVER_QUERY)
+      : null
+  }
+  return !!hoverStackMq?.matches
+}
+
+// One pile is open at a time: opening a stack shuts the others. Module-level
+// because the grid is rebuilt on every refill and a stale closer must not
+// outlive the node it closes.
+const stackClosers = new Map()
+
+// Transparent catcher that turns "click anywhere else" into a collapse. Only
+// pinned (click/keyboard) piles get one — a hovered pile already closes when
+// the pointer leaves, and the backdrop would block the next pile's hover.
+let stackBackdrop = null
+let stackBackdropOwner = ''
+
+function dropStackBackdrop(owner = null) {
+  if (!stackBackdrop) return
+  if (owner !== null && stackBackdropOwner !== owner) return
+  stackBackdrop.remove()
+  stackBackdrop = null
+  stackBackdropOwner = ''
+}
+
+function showStackBackdrop(owner, onDismiss) {
+  dropStackBackdrop()
+  stackBackdropOwner = owner
+  stackBackdrop = el('div', { class: 'app-stack-backdrop', 'aria-hidden': 'true' })
+  stackBackdrop.addEventListener('pointerdown', (e) => {
+    e.preventDefault()
+    onDismiss()
+  })
+  document.body.appendChild(stackBackdrop)
+}
 
 function openApp(app) {
   window.dispatchEvent(new CustomEvent('open-app', {
@@ -110,9 +159,13 @@ export function renderApps(container) {
    * Collapsed, every card occupies the same spot: the front one is the family's
    * first app, and each card behind it steps up 7px and shrinks slightly, so
    * only its top edge shows — the card-stack silhouette, made of real cards
-   * rather than a decorated icon. Opening lays them out in a single column
-   * (`top: index * step`), so the pile visibly unpacks instead of a panel
-   * sliding out under a header.
+   * rather than a decorated icon.
+   *
+   * Opening must not resize the grid cell: the pile floats (absolutely
+   * positioned, at the card's own width) over the neighbouring apps and the
+   * cards unpack into a column inside it. On a pointer device with room to
+   * spare a hover opens the pile; everywhere else it is a click, which also
+   * pins it so the list survives the pointer drifting away.
    *
    * Only the first four cards are built up front (a 50-app publisher is not
    * free to paint); the rest are appended in batches once the pile opens.
@@ -190,7 +243,24 @@ export function renderApps(container) {
       'aria-label': `Expand ${label}, ${count} apps`,
     })
 
-    function setExpanded(open) {
+    // Pinned = the user opened it on purpose, so it must not close under them.
+    let pinned = false
+    let hoverTimer = null
+    let onEscape = null
+
+    function clearHoverTimer() {
+      if (hoverTimer) clearTimeout(hoverTimer)
+      hoverTimer = null
+    }
+
+    function setExpanded(open, { via = 'api', force = false } = {}) {
+      if (!force && open === stack.classList.contains('is-open')) {
+        if (open && via === 'click') pinned = true
+        return
+      }
+      clearHoverTimer()
+      if (open && via === 'click') pinned = true
+
       stack.classList.toggle('is-open', open)
       for (const control of [expander, caption]) {
         control.setAttribute('aria-expanded', open ? 'true' : 'false')
@@ -200,27 +270,81 @@ export function renderApps(container) {
       pile.toggleAttribute('inert', !open)
       caption.tabIndex = open ? 0 : -1
       caption.setAttribute('aria-hidden', open ? 'false' : 'true')
+
       if (open) {
+        // One pile at a time — a second one would overlap the first
+        for (const [otherId, close] of stackClosers) {
+          if (otherId !== id) close()
+        }
+        stackClosers.set(id, () => setExpanded(false, { via: 'elsewhere' }))
         openStacks.add(id)
+        if (pinned) showStackBackdrop(id, () => setExpanded(false, { via: 'outside' }))
         fillRemaining()
+        onEscape = (e) => {
+          if (e.key === 'Escape') setExpanded(false, { via: 'escape' })
+        }
+        document.addEventListener('keydown', onEscape)
+        // Hover must not steal the caret; a deliberate open hands focus to the
+        // collapse control, which is the first thing inside the overlay.
+        if (via === 'click') caption.focus({ preventScroll: true })
       } else {
         openStacks.delete(id)
+        stackClosers.delete(id)
+        pinned = false
+        dropStackBackdrop(id)
+        if (onEscape) {
+          document.removeEventListener('keydown', onEscape)
+          onEscape = null
+        }
+        // The cards are about to go inert; focus would fall back to <body>
+        if (stack.contains(document.activeElement)) expander.focus({ preventScroll: true })
       }
     }
 
-    expander.addEventListener('click', () => setExpanded(true))
-    caption.addEventListener('click', () => setExpanded(false))
+    expander.addEventListener('click', () => {
+      clearHoverTimer()
+      setExpanded(true, { via: 'click' })
+    })
+    caption.addEventListener('click', () => setExpanded(false, { via: 'click' }))
 
-    stack.appendChild(el('div', { class: 'app-stack-caption-wrap' }, [caption]))
-    stack.appendChild(pile)
+    // Hover intent: 120ms in, 200ms out. The grace on the way out is what lets
+    // the pointer travel from the card into the open list without it snapping
+    // shut — the overlay starts where the peeking edges were, so there is no gap
+    // to cross. `is-open` is checked because the timer may fire after a click.
+    stack.addEventListener('mouseenter', () => {
+      if (pinned || stack.classList.contains('is-open') || !canHoverStacks()) return
+      clearHoverTimer()
+      hoverTimer = setTimeout(() => {
+        if (gen === listGeneration) setExpanded(true, { via: 'hover' })
+      }, STACK_HOVER_OPEN_MS)
+    })
+    stack.addEventListener('mouseleave', () => {
+      clearHoverTimer()
+      if (pinned || !stack.classList.contains('is-open')) return
+      hoverTimer = setTimeout(() => {
+        if (gen === listGeneration) setExpanded(false, { via: 'hover' })
+      }, STACK_HOVER_CLOSE_MS)
+    })
+
+    // Caption and pile ride in one box: collapsed it sits in flow, open it floats
+    const overlay = el('div', { class: 'app-stack-overlay' })
+    overlay.appendChild(el('div', { class: 'app-stack-caption-wrap' }, [caption]))
+    overlay.appendChild(pile)
+
+    stack.appendChild(overlay)
     stack.appendChild(expander)
-    setExpanded(openStacks.has(id))
+    // Force: a fresh node is "collapsed" by class already, but its caption and
+    // pile still need the collapsed attributes (inert, aria-hidden, tabIndex).
+    setExpanded(openStacks.has(id), { force: true })
     return stack
   }
 
   function renderAppsList(query = '') {
     const gen = ++listGeneration
     grid.replaceChildren()
+    // The old stacks are detached: their closers and any backdrop go with them
+    stackClosers.clear()
+    dropStackBackdrop()
 
     // Booting: the app index is still being built — show skeletons, not "no apps"
     if (store.get('booting') && appIndex.length === 0) {
@@ -297,6 +421,8 @@ export function renderApps(container) {
   unsubscribeBundles = store.subscribe('bundles', () => {
     if (!page.isConnected) {
       unsubscribeBundles()
+      // A pinned pile's backdrop lives on <body>, outliving the page
+      dropStackBackdrop()
       return
     }
     rebuildIndex()

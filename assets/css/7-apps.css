@@ -59,6 +59,9 @@
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  /* A stack is taller than a card (it reserves room for the peeking edges), and
+     stretching its neighbours to match would leave them with dead space. */
+  align-items: start;
   gap: 0.75rem;
 }
 .app-card {
@@ -128,25 +131,52 @@
 /* ── App families (publisher stacks) ──────────────────── */
 /* A family is a pile of its own app cards. Collapsed they all sit on one spot:
    the front card is the family's first app, and each card behind it steps up
-   and in slightly so only its top edge shows. Opening lays them out in a
-   single column — `top` goes from 0 to index * step — so the pile unpacks
-   instead of a panel sliding out under a header. */
+   and in slightly so only its top edge shows.
+   Opening floats the pile over the grid at the card's own width — the cell
+   keeps its size, so no app is pushed aside — and the cards unpack into a
+   column inside it (`top` goes from 0 to index * step). */
 .app-stack {
   --layers: 3;
   --card-h: 68px;
   --step: 74px;
   position: relative;
+  /* Own stacking context: the collapsed hit area must sit above the cards but
+     never above the sticky header (z 40), or it would swallow header clicks. */
+  z-index: 0;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  /* Constant open or shut: the overlay is out of flow, so the cell has to keep
+     the pile's height or the row would jump closed the moment it opens. */
+  height: calc(var(--card-h) + var(--layers) * 7px);
   /* Headroom for the peeking edges of the cards behind the front one */
   padding-top: calc(var(--layers) * 7px);
-  transition: padding-top 0.3s var(--ease);
 }
-/* Opening collapses the headroom, so the front card rises into the column. */
+/* The open pile has to paint over its neighbours, but stay under the header */
 .app-stack.is-open {
-  grid-column: 1 / -1;
-  padding-top: 0;
+  z-index: 30;
+}
+/* Caption + pile travel together: in flow when collapsed, floating when open */
+.app-stack-overlay {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.app-stack.is-open .app-stack-overlay {
+  position: absolute;
+  top: calc(var(--layers) * 7px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 66vh;
+  /* No side padding: the cards inside stay exactly as wide as a plain card */
+  padding: 0.5rem 0 0.3rem;
+  border: 1px solid var(--border-hairline-strong);
+  border-radius: var(--radius);
+  background: var(--bg-void);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.3);
 }
 /* The pile: one card tall while collapsed. Absolute children do not stretch it,
    so the height is declared — and it is what animates open. */
@@ -159,7 +189,7 @@
   transition: height 0.3s var(--ease);
 }
 .app-stack.is-open .app-stack-pile {
-  height: min(calc(var(--count) * var(--step) - 6px), 58vh);
+  height: min(calc(var(--count) * var(--step) - 6px), calc(66vh - 4rem));
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -186,6 +216,15 @@
 /* Collapsed cards only ever show their top edge, so their content is noise. */
 .app-stack:not(.is-open) .app-stack-note:not(.app-stack-note--front) {
   opacity: 0.75;
+}
+/* The head card keeps the orange upper-left wash: it is what marks a pile as a
+   stack instead of one app, collapsed or open. Doubled class so it does not
+   depend on source order against `.app-card`'s own background. */
+.app-stack-note.app-stack-note--front {
+  border-color: var(--border-hairline-strong);
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 62%),
+    var(--bg-surface);
 }
 .app-stack-note .app-card-name {
   white-space: nowrap;
@@ -235,12 +274,16 @@
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-.app-stack:not(.is-open):hover .app-stack-note--front {
-  border-color: var(--border-hairline-strong);
-  transform: translateY(-2px);
-}
 .app-stack.is-open .app-stack-expander {
   display: none;
+}
+/* A pinned pile's click-away catcher. Transparent on purpose: the overlay's own
+   shadow does the separating, and the header (z 40) stays clickable above it. */
+.app-stack-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  background: transparent;
 }
 
 /* Family identity + collapse control, revealed above the unstacked cards. */
@@ -264,7 +307,9 @@
   gap: 0.45rem;
   width: 100%;
   margin-bottom: 0.55rem;
-  padding: 0 0.15rem;
+  /* The overlay has no side padding (cards stay full width), so the caption
+     carries its own inset instead */
+  padding: 0 0.7rem;
   border: none;
   background: none;
   font: inherit;
@@ -314,7 +359,7 @@
   transition: transform var(--transition-speed);
 }
 @media (prefers-reduced-motion: reduce) {
-  .app-stack,
+  .app-stack-overlay,
   .app-stack-pile,
   .app-stack-note,
   .app-stack-caption-wrap,
