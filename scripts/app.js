@@ -561,7 +561,10 @@ async function loadData() {
       missingIcons: Object.keys(cacheRes || {}).length - Object.keys(iconCache).length,
     })
     store.merge({ iconCache, nameCache })
-    initIconQueue(iconCache)
+    // Hydration is async and must finish before the sweep starts: it is what
+    // tells the queue which icons IndexedDB already holds, so progress begins
+    // at the real number instead of zero.
+    const iconHydration = initIconQueue(iconCache)
 
     // Repo owner avatars (repo_cache.json → repo_url → avatarUrl)
     const repoAvatarMap = {}
@@ -586,9 +589,11 @@ async function loadData() {
     // Background-warm icon + avatar caches. Deferred so they never compete
     // with the boot requests above.
     deferredPreloads = () => {
-      cacheImagesInBackground(iconCache, repoAvatarMap, repoBundleImageMap).catch((err) => {
-        console.error('[app] Image caching failed:', err)
-      })
+      iconHydration
+        .then(() => cacheImagesInBackground(iconCache, repoAvatarMap, repoBundleImageMap))
+        .catch((err) => {
+          console.error('[app] Image caching failed:', err)
+        })
     }
 
     if (!index || Object.keys(index).length === 0) {
