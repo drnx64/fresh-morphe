@@ -53,7 +53,6 @@ import * as router from './router.js'
 import { el, mount } from './ui.js'
 import { openAppDetailModal } from './components/appDetailModal.js'
 import { openBundleHistoryModal } from './components/bundleHistoryModal.js'
-import { openBundleModal } from './components/bundleModal.js'
 import { renderGlobalSearch } from './components/globalSearch.js'
 import { syncColorGameChip } from './components/colorGame.js'
 import { showWorkToast } from './components/workToast.js'
@@ -674,16 +673,11 @@ function applyReducedMotion() {
 store.subscribe('reducedMotion', applyReducedMotion)
 
 // ── Modal Event Listeners ──
-// Both modals paint from the index immediately and load the per-bundle files
-// they actually display (app modal: the selected bundle; bundle modal: its
-// description and patch counts). Waiting here for every candidate record made a
-// cold click feel dead — for a popular app that is over a hundred files.
+// The app modal paints from the index immediately and loads the per-bundle file
+// it actually displays. Waiting here for every candidate record made a cold
+// click feel dead — for a popular app that is over a hundred files.
 async function handleOpenApp(detail) {
   openAppDetailModal(detail)
-}
-
-async function handleOpenBundle(detail) {
-  openBundleModal(detail)
 }
 
 // Persist bundle detail warmed by bundleLoader once the main thread is idle;
@@ -709,10 +703,6 @@ window.addEventListener('open-app', (e) => {
 window.addEventListener('open-bundle-history', async (e) => {
   await ensureChangelog()
   await openBundleHistoryModal(e.detail.bundleName, e.detail.bundleNames)
-})
-
-window.addEventListener('open-bundle', (e) => {
-  handleOpenBundle(e.detail).catch((err) => console.error('[app] open-bundle failed:', err))
 })
 
 // ── URL Parameter Deep Linking ──

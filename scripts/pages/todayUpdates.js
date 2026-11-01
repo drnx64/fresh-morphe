@@ -13,6 +13,7 @@ import { escHtml } from '../utils/html.js'
 import { dateParts, dayHue, shortVersion, badgeLabel, formatTime, getTimeAgo } from '../utils/format.js'
 import { CHEVRON_DOWN, VERSION_ARROW, CHEVRON_RIGHT } from '../utils/svg.js'
 import { renderColorGame } from '../components/colorGame.js'
+import { focusBundleCard } from './bundlesGrid.js'
 
 const HIERARCHY_ORDER = { 'NEW BUNDLE': 0, 'UPDATED': 1, 'REMOVED BUNDLE': 2 }
 const STORAGE_KEY = 'fresh_updates_collapsed'
@@ -171,35 +172,26 @@ export function renderTodayUpdates() {
 
     // Badge first, then the avatar, so the status tag leads the row and the
     // identity chip reads as an attachment to the bundle name on its right.
+    const displayName = entry.patches_name || bundleName
     const headerParts = [
       el('span', { class: `badge badge--${(entry.badge_type || 'updated').toLowerCase().replace(/\s+/g, '-')}` }, [badgeLabel(entry.badge_type) || 'UPDATE']),
-      el('span', {
-        class: 'today-bundle-avatar-area',
-        'aria-hidden': 'true',
-        dangerouslySetInnerHTML: avatarHtml,
-      }),
     ]
 
-    const nameEl = el('span', {
-      class: 'today-bundle-name',
-      role: 'button',
-      tabindex: '0',
-      title: 'View bundle details',
-    }, [entry.patches_name || bundleName])
-    nameEl.addEventListener('click', () => {
-      window.dispatchEvent(new CustomEvent('open-bundle', {
-        detail: { bundleName, channels: entry.channels },
-      }))
+    // Avatar + name are one link to the Bundles page, where the card is scrolled
+    // to and pulsed. The author link and the app rows below stay separate
+    // targets (apps still open the app modal).
+    const jump = el('a', {
+      class: 'today-bundle-jump',
+      href: '#/bundles',
+      title: `Open ${displayName} on the Bundles page`,
     })
-    nameEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        window.dispatchEvent(new CustomEvent('open-bundle', {
-          detail: { bundleName, channels: entry.channels },
-        }))
-      }
-    })
-    headerParts.push(nameEl)
+    jump.innerHTML = `
+      <span class="today-bundle-avatar-area" aria-hidden="true">${avatarHtml}</span>
+      <span class="today-bundle-name">${escHtml(displayName)}</span>
+    `
+    jump.addEventListener('click', () => focusBundleCard(bundleName))
+    headerParts.push(jump)
+
     headerParts.push(el('span', { class: 'bundle-author', dangerouslySetInnerHTML: getAuthorLink(entry.repo_url) }))
 
     const prevVer = shortVersion(entry.previous_version)

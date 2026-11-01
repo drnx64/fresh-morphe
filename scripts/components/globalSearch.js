@@ -8,6 +8,8 @@ import { buildAppIndex, suggestFuzzy, resolveAppName, groupBundleCards } from '.
 import { escHtml } from '../utils/html.js'
 import { formatVersion } from '../utils/format.js'
 import { SEARCH_ICON } from '../utils/svg.js'
+import * as router from '../router.js'
+import { focusBundleCard } from '../pages/bundlesGrid.js'
 
 const MAX_APP_RESULTS = 6
 const MAX_BUNDLE_RESULTS = 4
@@ -286,9 +288,10 @@ export function renderGlobalSearch() {
           </div>
         `
         item.addEventListener('click', () => {
-          window.dispatchEvent(new CustomEvent('open-bundle', {
-            detail: { bundleName: bundle.bundle, channels: bundle.channels },
-          }))
+          // Bundles open on the Bundles page, same as What's New — the modal was
+          // retired and the card is scrolled to + pulsed on arrival.
+          focusBundleCard(bundle.bundle)
+          router.navigate('/bundles')
           saveRecentSearch(input.value.trim())
           closeDropdown()
           closeSheet()
