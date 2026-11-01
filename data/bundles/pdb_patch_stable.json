@@ -2,10 +2,118 @@
   "bundle": "pdb_patch",
   "channel": "stable",
   "repo_url": "https://github.com/madushas/pdb_patch",
-  "created_at": "2026-10-31T22:36:19",
-  "version": "0.5.7",
-  "description": "## [0.5.7](https://github.com/madushas/morphe-patches-custom/compare/v0.5.6...v0.5.7) (2026-11-01)\n\n### 🧹 Changes\n* fix(pdb): demote Chat-button-on-profiles to expert (bad anchor on 2.135.1 — Ldra; is a different menu; blank+ANR) — v0.5.7 stable set verified: chat→profile renders ([4d3c4b2](https://github.com/madushas/morphe-patches-custom/commit/4d3c4b2))\n* chore(repo): keep local app packages untracked (*.apkm/*.xapk/*.apks/*.aab, .kotlin/) ([aa7ab16](https://github.com/madushas/morphe-patches-custom/commit/aa7ab16))\n* chore(build): pin patcher 2.0.1 + smali ac700e1942, record Manager 2.2.0 floor ([4cd66e1](https://github.com/madushas/morphe-patches-custom/commit/4cd66e1))\n* docs: DEVLOG — cross-app screenshot contamination was co-agent interference, not an app bug ([9aa60dd](https://github.com/madushas/morphe-patches-custom/commit/9aa60dd))\n* fix(pdb): async openChat + cached-user guard (blank-profile ANR), MmkvRelocate patch, DEVLOG bisection lessons ([a5a5e60](https://github.com/madushas/morphe-patches-custom/commit/a5a5e60))\n* fix(manager): add CHANGELOG.md — the Manager 404s it into an empty list, which suppresses the per-app update badge; pdbrelease now maintains it ([16ffa6c](https://github.com/madushas/morphe-patches-custom/commit/16ffa6c))",
+  "created_at": "2026-11-01T22:06:49",
+  "version": "0.5.8",
+  "description": "## [0.5.8](https://github.com/madushas/morphe-patches-custom/compare/v0.5.7...v0.5.8) (2026-11-02)\n\n### 🧹 Changes\n* fix(pdb): soul history newest-first + honest Chat/Profile pill (channel pre-check off-thread); PdbTools.DB_EXECUTOR public ([7c54d92](https://github.com/madushas/morphe-patches-custom/commit/7c54d92))",
   "apps": [
+    {
+      "app_name": "Strava: Run, Bike, Walk",
+      "package": "com.strava",
+      "patches": [
+        {
+          "name": "AMOLED dark theme",
+          "description": "Makes Strava dark mode true-black for OLED screens: the dark surface colors (#141413 / #21211f / #43423f) are remapped to a black ladder. Light mode is untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        },
+        {
+          "name": "Custom app name",
+          "description": "Renames the launcher label (Settings > Apps, home screen) to the value of the stravaAppName option. Leave the option empty to keep the original name.",
+          "use": false,
+          "options": [
+            {
+              "key": "stravaAppName",
+              "description": "The app name shown in the launcher and app drawer. Empty = keep \"Strava\"."
+            }
+          ],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        },
+        {
+          "name": "Extra settings resources",
+          "description": "Registers the Extra Settings activity and applies the accent color.",
+          "use": true,
+          "options": [
+            {
+              "key": "stravaAccent",
+              "description": "Replaces the Strava orange brand color family app-wide."
+            },
+            {
+              "key": "suConsoleExport",
+              "description": "Exports Strava's hidden SuperUserToolsActivity for adb access (feature-switch console, modular-UI tools, network settings). DEBUG-ONLY: any on-device app could then launch it. Off by default."
+            },
+            {
+              "key": "unlockShareOverlays",
+              "description": "Removes the subscriber lock from the sticker/share overlay carousel (all client-rendered designs become selectable)."
+            }
+          ],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        },
+        {
+          "name": "Extra settings screen",
+          "description": "Adds an 'Extra Settings' entry at the top of Settings with theme mode switching and patch info. Accent color is a build-time option.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        },
+        {
+          "name": "Remove Data Peek upsells",
+          "description": "Removes server-driven subscription upsells (Data Peek carousel, replay card, prediction banner, SubPreview banners, Maps explore card) with runtime toggles in Extra Settings, and strips the Settings Subscriptions section.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Strips Sentry, Embrace and Facebook analytics, disables Firebase analytics, and empties the advertising ID (push notifications keep working).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Unlocks Strava Premium features (spoofs PAID state + far-future expiry). Also re-enables password login after OTP.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "480.15",
+            "485.12",
+            "486.9",
+            "486.11"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "MyDialog",
       "package": "net.omobio.dialogsc",
@@ -263,10 +371,10 @@
     }
   ],
   "patches_name": "Pdb Patches",
-  "fingerprint": "ecbdeb81c442776d51e3475ef9c918ea1e0348bec4cee5478de17cf70f09b373",
-  "release_notes": "## [0.5.7](https://github.com/madushas/morphe-patches-custom/compare/v0.5.6...v0.5.7) (2026-11-01)\n\n### 🧹 Changes\n* fix(pdb): demote Chat-button-on-profiles to expert (bad anchor on 2.135.1 — Ldra; is a different menu; blank+ANR) — v0.5.7 stable set verified: chat→profile renders ([4d3c4b2](https://github.com/madushas/morphe-patches-custom/commit/4d3c4b2))\n* chore(repo): keep local app packages untracked (*.apkm/*.xapk/*.apks/*.aab, .kotlin/) ([aa7ab16](https://github.com/madushas/morphe-patches-custom/commit/aa7ab16))\n* chore(build): pin patcher 2.0.1 + smali ac700e1942, record Manager 2.2.0 floor ([4cd66e1](https://github.com/madushas/morphe-patches-custom/commit/4cd66e1))\n* docs: DEVLOG — cross-app screenshot contamination was co-agent interference, not an app bug ([9aa60dd](https://github.com/madushas/morphe-patches-custom/commit/9aa60dd))\n* fix(pdb): async openChat + cached-user guard (blank-profile ANR), MmkvRelocate patch, DEVLOG bisection lessons ([a5a5e60](https://github.com/madushas/morphe-patches-custom/commit/a5a5e60))\n* fix(manager): add CHANGELOG.md — the Manager 404s it into an empty list, which suppresses the per-app update badge; pdbrelease now maintains it ([16ffa6c](https://github.com/madushas/morphe-patches-custom/commit/16ffa6c))\n",
-  "release_tag": "v0.5.7",
-  "release_date": "2026-10-31T22:36:25Z",
+  "fingerprint": "0aa594b084c4d0948fcd4d19a0c2fd5c410c4dd9b9fcf9f3fdb07c5e0f0c08f6",
+  "release_notes": "## [0.5.8](https://github.com/madushas/morphe-patches-custom/compare/v0.5.7...v0.5.8) (2026-11-02)\n\n### 🧹 Changes\n* fix(pdb): soul history newest-first + honest Chat/Profile pill (channel pre-check off-thread); PdbTools.DB_EXECUTOR public ([7c54d92](https://github.com/madushas/morphe-patches-custom/commit/7c54d92))\n",
+  "release_tag": "v0.5.8",
+  "release_date": "2026-11-01T22:06:55Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/44031016?v=4&s=128",

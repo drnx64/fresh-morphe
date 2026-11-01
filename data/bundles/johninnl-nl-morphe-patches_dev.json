@@ -2,10 +2,69 @@
   "bundle": "johninnl-nl-morphe-patches",
   "channel": "dev",
   "repo_url": "https://github.com/johninnl/nl-morphe-patches",
-  "created_at": "2026-11-01T14:18:38Z",
-  "version": "1.9.0-dev.3",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/643e179fd308a1897b46f6afde176e884f7ab529/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.14.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [643e179fd308](https://github.com/johninnl/nl-morphe-patches/commit/643e179fd308a1897b46f6afde176e884f7ab529). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.14.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.13.0...v1.14.0) (2026-11-01)\n\n### ✨ New Features\n\n* **Waze:** add full patch catalog for 5.26.90.901 ([caba974](https://github.com/johninnl/nl-morphe-patches/commit/caba974ff21504d6411d9e3e1e43da2059eb66ee))\n* **Waze:** answer consent silently and close privacy gaps ([643e179](https://github.com/johninnl/nl-morphe-patches/commit/643e179fd308a1897b46f6afde176e884f7ab529))",
+  "created_at": "2026-11-01T21:24:41Z",
+  "version": "1.23.0-dev.1",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/cf9acd2fe8597795be9e40409eaf415613ed93e5/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.23.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [cf9acd2fe859](https://github.com/johninnl/nl-morphe-patches/commit/cf9acd2fe8597795be9e40409eaf415613ed93e5). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.23.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.22.0...v1.23.0) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **Vela Maps:** follow active car routes without the phone service ([cf9acd2](https://github.com/johninnl/nl-morphe-patches/commit/cf9acd2fe8597795be9e40409eaf415613ed93e5))\n\n### ✨ New Features\n\n* **Flitsmeister:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))\n* **Vela Maps:** integrate external speed and road warnings natively ([8e2a2a2](https://github.com/johninnl/nl-morphe-patches/commit/8e2a2a22e0d04049602d96ce1a4de35c7cbe0617))\n* **Waze:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))",
   "apps": [
+    {
+      "app_name": "Music Speed Changer",
+      "package": "app.morphe.android.apps.youtube.music",
+      "patches": [
+        {
+          "name": "Gearslip music browser support",
+          "description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageNames",
+              "description": "Comma-separated installed Gearslip host package names. Each caller must own its package under its actual callback UID."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ]
+    },
+    {
+      "app_name": "Gearslip",
+      "package": "app.seb3thehacker.gearslip",
+      "patches": [
+        {
+          "name": "Hide apps from drawer",
+          "description": "Adds an Apps card to Gearslip's phone settings. Every installed car app is ticked by default; unticking one hides its tile from the car drawer. Does not disable or uninstall apps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.3.12-alpha",
+            "0.3.31-alpha"
+          ]
+        },
+        {
+          "name": "Keep music player entries",
+          "description": "Keeps a music app's player available when it also provides a car Settings screen, including YT Music Morphe. Uses Gearslip's existing docked player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.3.12-alpha",
+            "0.3.31-alpha"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Vela Maps",
+      "package": "app.vela",
+      "patches": [
+        {
+          "name": "External speed controls",
+          "description": "Use De-Waze or Flitsmeister speed, limits, road warnings and partial average-zone progress in Vela and Android Auto, with native fallback and provider settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.5.2621"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Wuplay Android TV",
       "package": "app.wuplay.androidtv",
@@ -490,6 +549,48 @@
       ]
     },
     {
+      "app_name": "2dehands",
+      "package": "be.tweedehands.m",
+      "patches": [
+        {
+          "name": "Disable ThreatMetrix",
+          "description": "Stops device/security profiling and its session headers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        },
+        {
+          "name": "Disable tracking",
+          "description": "Stops optional analytics, marketing, Gemius/CIM and device profiling.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes display/native ads, paid seller placements, promotional search cards and advertising measurements.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        },
+        {
+          "name": "Skip consent screens",
+          "description": "Hides startup and manual privacy forms and requests genuine reject-all consent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Rollerbank - Scooter & Fatbike",
       "package": "com.dennisk.rollerbank",
       "patches": [
@@ -570,6 +671,24 @@
           "compatible_versions": [
             "2.8.10"
           ]
+        }
+      ]
+    },
+    {
+      "app_name": "YouTube Music",
+      "package": "com.google.android.apps.youtube.music",
+      "patches": [
+        {
+          "name": "Gearslip music browser support",
+          "description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageNames",
+              "description": "Comma-separated installed Gearslip host package names. Each caller must own its package under its actual callback UID."
+            }
+          ],
+          "compatible_versions": []
         }
       ]
     },
@@ -1083,6 +1202,34 @@
           ]
         },
         {
+          "name": "Allow high refresh rate",
+          "description": "Lets Waze select supported phone display modes up to an adjustable ceiling. Does not guarantee rendering FPS.",
+          "use": false,
+          "options": [
+            {
+              "key": "targetRefreshRate",
+              "description": "60 to 120 Hz. Editable in Customization. Restart Waze after changing it; higher rates may use more power."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Auto zoom",
+          "description": "Keeps your auto-zoom choice after settings sync. Choose off, on or by speed.",
+          "use": false,
+          "options": [
+            {
+              "key": "mode",
+              "description": "Also editable in Customization after patching."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
           "name": "Average speed zone bar",
           "description": "Bar with progress and your average speed in an average speed zone. Off until switched on.",
           "use": true,
@@ -1132,6 +1279,52 @@
           ]
         },
         {
+          "name": "Broadcast navigation data",
+          "description": "Broadcasts current speed, road limits, road alerts and approaching/active average-speed zones locally, including in the background. No overlay required.",
+          "use": true,
+          "options": [
+            {
+              "key": "receiverPackage",
+              "description": "Optional target app package. Blank broadcasts to running compatible local receivers."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Car alerts as notifications",
+          "description": "Uses car notifications for supported Waze alerts. Availability depends on the car host.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Car reconnect grace period",
+          "description": "Defers Android Auto projection shutdown for brief disconnections. Leaves the phone background timeout unchanged.",
+          "use": false,
+          "options": [
+            {
+              "key": "minutes",
+              "description": "1 to 10 minutes. Also editable in Customization; restart Waze/reconnect to apply."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Car traffic meter",
+          "description": "Enables the traffic meter on supported car navigation screens.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
           "name": "Change app name",
           "description": "Renames Waze.",
           "use": true,
@@ -1139,6 +1332,24 @@
             {
               "key": "appName",
               "description": "Shown on the home screen and Android Auto."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Extra map info",
+          "description": "Separate switches for an always-visible compass and available toll prices.",
+          "use": false,
+          "options": [
+            {
+              "key": "compass",
+              "description": "Adds a compass switch in Customization."
+            },
+            {
+              "key": "tolls",
+              "description": "Shows prices when supplied with route data. Adds a separate switch in Customization."
             }
           ],
           "compatible_versions": [
@@ -1178,6 +1389,29 @@
           ]
         },
         {
+          "name": "Hide recent destinations",
+          "description": "Hides the native recent-destination list. Waze still stores the history; favorites and future events stay available.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Lane guidance",
+          "description": "Enables lane guidance and optional straight-ahead hints. Keeps your Waze lane-guidance preference.",
+          "use": false,
+          "options": [
+            {
+              "key": "straightAhead",
+              "description": "Adds a separate switch in Customization. Lane data must be available for the road."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
           "name": "Map skin",
           "description": "Bigger map labels, a wider arrow and a warm day background.",
           "use": true,
@@ -1205,6 +1439,44 @@
             {
               "key": "dayBackground",
               "description": "Waze: fafcfa."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Native camera and hazard controls",
+          "description": "Keeps selected Waze camera and crosswalk alerts enabled, including map and notification gates. Needs Waze data.",
+          "use": false,
+          "options": [
+            {
+              "key": "phone",
+              "description": "Adds a separate Customization switch."
+            },
+            {
+              "key": "bus",
+              "description": "Adds a separate Customization switch."
+            },
+            {
+              "key": "carpool",
+              "description": "Adds a separate Customization switch."
+            },
+            {
+              "key": "hov",
+              "description": "Adds a separate Customization switch."
+            },
+            {
+              "key": "noise",
+              "description": "Adds a separate Customization switch."
+            },
+            {
+              "key": "raisedCrosswalks",
+              "description": "Adds a separate Customization switch."
+            },
+            {
+              "key": "highwayCrosswalks",
+              "description": "Adds a separate Customization switch."
             }
           ],
           "compatible_versions": [
@@ -1322,6 +1594,24 @@
           "compatible_versions": []
         },
         {
+          "name": "Speed bump controls",
+          "description": "Independent controls to show speed bumps on the map and silence their on-route warnings.",
+          "use": false,
+          "options": [
+            {
+              "key": "map",
+              "description": "Adds Show speed bumps on map in Customization."
+            },
+            {
+              "key": "silence",
+              "description": "Adds a separate suppression switch; does not hide map markers."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
           "name": "Speed camera alerts",
           "description": "Chime when a speed camera is ahead, from OpenStreetMap, in any country. No map pins or routing. Off until switched on.",
           "use": true,
@@ -1344,6 +1634,28 @@
           "description": "Camera and police alerts in every country. Camera warnings are illegal in some.",
           "use": false,
           "options": [],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Speed limit controls",
+          "description": "Keeps the speed limit visible and enables limit-drop warnings with an editable distance.",
+          "use": false,
+          "options": [
+            {
+              "key": "alwaysShow",
+              "description": "Adds a separate visibility switch. Reporting and sign style stay independent."
+            },
+            {
+              "key": "limitDrops",
+              "description": "Adds a separate warning switch in Customization."
+            },
+            {
+              "key": "distance",
+              "description": "0 to 20000 metres. Also editable in Customization after patching."
+            }
+          ],
           "compatible_versions": [
             "5.26.90.901"
           ]
@@ -1372,6 +1684,15 @@
               "description": "Waze: 10."
             }
           ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
+          "name": "Support Gearslip",
+          "description": "Accepts Gearslip as a car host by package name, whichever key signed it, so a patched Gearslip keeps working. Other hosts keep Android Auto host validation.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "5.26.90.901"
           ]
@@ -1603,6 +1924,20 @@
       "package": "nl.flitsmeister",
       "patches": [
         {
+          "name": "Broadcast navigation data",
+          "description": "Shares current speed, road limits, road alerts and approaching/active average-speed zones with compatible local apps, also in the background without an overlay.",
+          "use": true,
+          "options": [
+            {
+              "key": "receiverPackage",
+              "description": "Optional target Android package. Blank sends to running compatible local receivers."
+            }
+          ],
+          "compatible_versions": [
+            "14.17"
+          ]
+        },
+        {
           "name": "Disable partner services",
           "description": "Hides Parking, Toll and Carwash service entries, removes Parking and Carwash from Settings, and disables Parking customer fetches.",
           "use": true,
@@ -1623,6 +1958,15 @@
         {
           "name": "Fix PairIP startup",
           "description": "Restores captured startup data, lifecycle helpers and functional car, audio, connectivity, location and background-work callbacks while avoiding damaged PairIP execution.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.17"
+          ]
+        },
+        {
+          "name": "Guest mode",
+          "description": "Adds Continue as guest to onboarding, allows reopening without an account and hides the guest sign-up card. Keeps optional login and services that require a genuine account.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2284,11 +2628,11 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "cbf94ad690a493e781b37448ee8708c130e4a42d047a21c4ae87e5126769be33",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/20846b41cd41fe57f672ef9f139557387303a50c/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.9.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [20846b41cd41](https://github.com/johninnl/nl-morphe-patches/commit/20846b41cd41fe57f672ef9f139557387303a50c). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.9.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.8.0...v1.9.0) (2026-11-01)\n\n### ✨ New Features\n\n* **Projectivy Launcher:** add Unlock Premium for 4.73 ([b17fcab](https://github.com/johninnl/nl-morphe-patches/commit/b17fcabce88a394c5cd72b6a0a58e125f09c2c7c))\n",
-  "release_tag": "v1.9.0",
-  "release_date": "2026-11-01T02:12:00Z",
-  "isPreRelease": false,
+  "fingerprint": "41d9d39569ca801988d0ead8e200065688f1f268cb0687a9d864e837b720c4f1",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/63c4342b4b669283978192824270aefcc4f68d9f/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.23.0-dev.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [63c4342b4b66](https://github.com/johninnl/nl-morphe-patches/commit/63c4342b4b669283978192824270aefcc4f68d9f). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.23.0-dev.1](https://github.com/johninnl/nl-morphe-patches/compare/v1.22.0...v1.23.0-dev.1) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **Vela Maps:** follow active car routes without the phone service ([4dc55b1](https://github.com/johninnl/nl-morphe-patches/commit/4dc55b1b3f8bf700cd95f905e9929f43adcba872))\n\n### ✨ New Features\n\n* **Flitsmeister:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))\n* **Vela Maps:** integrate external speed and road warnings natively ([8e2a2a2](https://github.com/johninnl/nl-morphe-patches/commit/8e2a2a22e0d04049602d96ce1a4de35c7cbe0617))\n* **Waze:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))\n",
+  "release_tag": "v1.23.0-dev.1",
+  "release_date": "2026-11-01T21:24:41Z",
+  "isPreRelease": true,
   "stars": 9,
   "avatarUrl": "https://avatars.githubusercontent.com/u/349981574?v=4&s=128",
   "repoDescription": "Morphe Patches voor Nederlands en Vlaamse Apps",
