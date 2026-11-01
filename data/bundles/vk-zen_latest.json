@@ -11,6 +11,26 @@
       "package": "com.vkontakte.android",
       "patches": [
         {
+          "name": "App icon colors",
+          "description": "Recolors the VK Zen launcher artwork: the glow around the logo and the background plate.",
+          "use": true,
+          "options": [
+            {
+              "key": "glowColor",
+              "description": "Color of the glowing ring around the logo (#RRGGBB or #AARRGGBB)."
+            },
+            {
+              "key": "plateColor",
+              "description": "Color of the background plate behind the logo (#RRGGBB or #AARRGGBB)."
+            }
+          ],
+          "compatible_versions": [
+            "8.201",
+            "8.200",
+            "8.195"
+          ]
+        },
+        {
           "name": "Bypass security and package checks",
           "description": "Bypasses package verification in AuthBridge and BuildInfo to prevent profile crash and unofficial client warnings, disables dangerous app detection, and disables VPN detection in music.",
           "use": true,
@@ -173,10 +193,10 @@
     }
   ],
   "patches_name": "Patches Vk",
-  "fingerprint": "7a5c2a3458f0a9bd53dc6dc2d58ba057194f1b2adfeb59e3ae6a3ac76c41def4",
-  "release_notes": "### Что нового\n- Добавлена поддержка VK версии 8.201\n- Обход детектирования VPN и прокси:\n  - Подмена проверок `NetworkCapabilities` (`hasTransport` -> `false`, `hasCapability` -> `true`)\n  - Скрытие сетевого интерфейса VPN (`ConnectivityManager.getNetworkInfo(TYPE_VPN)` -> `null`)\n  - Блокировка чтения системных свойств прокси (`http.proxyHost`, `https.proxyHost`, `http.proxyPort` и др.)\n  - Отключение внутренних детекторов туннелей и предупреждающих плашек в звонках (`DefaultLocalTunnelDetector`, `CallVpnSnackbarDelegate`, `DeviceCheckUtils`)\n- Очистка меню сервисов (SuperApp): скрыты вкладки «Знакомства», «Билеты» и «Закладки»\n- Блокировка всплывающих промо-баннеров RuStore и диалогов Trap\n- Выбор предпочтительного качества видео по умолчанию (Авто, 1080p, 720p, 480p, 360p)\n- Фоновое воспроизведение музыки и скачивание треков в кэш («Скачанные») без подписки\n- Блокировка рекламы в видеоплеере (preroll, midroll, postroll)\n- Блокировка рекламных и спонсорских постов в новостной ленте\n- Кастомизация всех 5 вкладок нижней панели навигации (Tabbar)\n\n### Исправления\n- Исправлен вылет голосовых сообщений при записи и воспроизведении в режиме клона (`libvkmedia.so`)\n\n---\n\n> [!NOTE]\n> **Примечание:** Предыдущий файл патча был удалён и заменён, так как во время тестирования нейросеть по ошибке выгрузила непроверенную сборку. Текущий файл полностью протестирован и стабилен.\n\n---\n\n**Полный список изменений:** https://github.com/PerfLite/VK-Zen/commits/v1.0.0\r\n",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-10-18T11:36:07Z",
+  "fingerprint": "2f0fc3f54d30ad29752323e90305f586874d2641d0136b3e42ed8a7bfef4589c",
+  "release_notes": "Исправлено:\n- Голосовые сообщения больше не вылетают на VK 8.201. Нативная анти-тампер проверка в libvkmedia.so теперь ищется по структуре кода, а не по жёстким смещениям, поэтому фикс работает и на 8.195, и на 8.201.\n- Настройка вкладок нижней панели снова применяется: хук перенесён в геттер, который панель реально читает.\n- Выбранная вкладка остаётся на своём месте после сохранения и не «уезжает» в конец.\n- Вкладка, поставленная в слот, больше не остаётся скрытой.\n- Сборка не падает на старых базах: патч рекламы в видео пропускает то, чего в конкретной версии VK нет.\n\nДобавлено:\n- Скрытие любых вкладок нижней панели — состав настраивается по вкусу.\n- Возврат вкладок, которых нет в текущем конфиге VK (например, Музыки), по умолчанию включён.\n- Порядок по умолчанию: Главная, Друзья, Сообщения, Музыка, Сервисы.\n\nИзвестно:\n- Кнопка отзеркаливания видео временно отключена — вернём после починки раскладки в ConstraintLayout.",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-10-29T12:15:45Z",
   "isPreRelease": false,
   "stars": 7,
   "avatarUrl": "https://avatars.githubusercontent.com/u/96340456?v=4&s=128",

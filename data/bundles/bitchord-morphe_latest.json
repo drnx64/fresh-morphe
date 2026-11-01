@@ -2,8 +2,8 @@
   "bundle": "bitchord-morphe",
   "channel": "latest",
   "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
-  "created_at": "2026-10-31T06:26:06",
-  "version": "1.1.0-beta.16.3",
+  "created_at": "2026-11-01T05:10:14",
+  "version": "1.1.0-beta.17",
   "description": "Morphe patches for BitChord 1.9: Telegram music, an integrated Downloads explorer, Soulseek sharing, Telegram archives, mixed-source device playlists, an optional FLAC Audio source and playback tools.",
   "apps": [
     {
@@ -107,7 +107,7 @@
         },
         {
           "name": "Mixed-source playlists",
-          "description": "Adds downloaded files, local audio and streamed tracks to device playlists without a YouTube account. Preserves file and addon source metadata across restarts. Settings are in Settings, Patches & tweaks.",
+          "description": "Adds signed-out playlist links, editable device copies, queue saving, native file import and reviewed two-way Spotify/YouTube Music playlist sync. Keeps files and streams together with full source metadata across restarts. Settings are in Settings, Patches & tweaks.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -160,8 +160,17 @@
           ]
         },
         {
+          "name": "Source-independent AutoMix",
+          "description": "Measures the selected playable source, verifies automatic replacements, preserves playback speed and adds a native, pair-specific transition timeline with volume, EQ, filter controls and preview. BitChord 1.9.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
           "name": "Streamseek previews",
-          "description": "Preview an explicitly selected Soulseek MP3 or FLAC through Media3 while it transfers. Keep download reuses buffered bytes. Compare an excerpt with a known local reference and export transparent evidence. Optional; enable in Patches & tweaks. No automatic Soulseek playback or Mornye integration.",
+          "description": "Preview explicitly selected Soulseek audio while it transfers: FLAC, WAV/AIFF, ALAC, APE, WavPack, TTA/TAK, WMA Lossless and DSD, plus MP3. A dedicated on-device FFmpeg decoder feeds Media3. Keep download reuses buffered bytes. Compare an excerpt with a known local reference and export transparent evidence. Optional; enable in Patches & tweaks. No automatic Soulseek playback or Mornye integration.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -200,10 +209,10 @@
     }
   ],
   "patches_name": "Hexclyde",
-  "fingerprint": "f9ee7c1a2cf53068a568fa03752ecb8e99a179777e4d56ecd32abe5e429ac77d",
-  "release_notes": "**Testing build.** It's only on the `testing` branch. To try it, add `https://raw.githubusercontent.com/Hexclyde/bitchord-morphe-patches/refs/heads/testing/patches-bundle.json` as a second source in Morphe, with **Experimental app versions** on, and patch from it with the normal source turned off. The normal source stays on 1.0.20 until 1.1.0 is released.\n\n- **Playback extras** (new patch, on by default): a **Playback extras** page at the end of **Settings → Equalizer**. It works with or without the Telegram patch, and nothing changes until you change a setting there.\n  - **Sing** turns the lead vocal down so you can sing over the song. It's ported from the vocal remover in [Auris](https://github.com/OreoMuncher45/Auris) by OreoMuncher45, a fork of BitChord. By default only the voice range is cut, only while someone is singing; **Whole centre** removes everything in the middle, which suits older recordings.\n  - **Pitch** moves the key up or down by up to 12 semitones without changing the speed.\n  - **Loudness level** sets how loud loudness normalisation plays songs, from -23 to -8 LUFS instead of BitChord's fixed -14.\n  - **Fade out at the sleep timer:** the song fades out over 10 seconds before the timer pauses it.\n  - **Battery saver** lets the phone's audio chip decode songs. BitChord's effects (equaliser, loudness, Sing, spatial audio, crossfade) don't run on songs played this way, so it's off by default.\n  - **Lossless addons over Bluetooth** keeps addons marked lossless in use over Bluetooth, where BitChord normally skips them.\n\nAlso in this build, from 1.0.21, which wasn't released on its own:\n- **Sign in with MicroG** (new optional patch): with [MicroG RE](https://github.com/MorpheApp/MicroG-RE) installed, signing in to YouTube Music offers an account that's already in MicroG instead of Google's sign-in page.\n- **Fixed zips not being opened after signing in again** or restoring a backup: every waiting zip failed with \"Telegram 404\" and was given up on. They're now opened using the file's new number, and those given up on are tried again once.\n- **Fixed \"YouTube\" under Stats for nerds for a FLAC:** a Telegram copy played again from BitChord's song cache now shows as **Unofficial Telegram (saved copy)**.\n\nThanks to kushagra for [BitChord](https://github.com/kushagrasinghx/BitChord), OreoMuncher45 for [Auris](https://github.com/OreoMuncher45/Auris), Yigder for [Prism](https://github.com/Yigder/Prism) and Rawnald Clark and Evo for [Stash](https://github.com/rawnaldclark/Stash), whose features shaped this release.\n\nWorks with BitChord **1.8.1**. Patch with the same Morphe signing key to update over your current Bitchord+. Keep **Unofficial Telegram music** and **Install as Bitchord+** selected, add **Playback extras**, and add **Sign in with MicroG** if you use MicroG RE.\n",
-  "release_tag": "v1.1.0-beta.1",
-  "release_date": "2026-10-29T21:18:01Z",
+  "fingerprint": "c8367f24836eeff3e7a6487b5fe915ba1daab43212414b39108b4355eb5d0623",
+  "release_notes": "# BitChord Morphe patches 1.1.0-beta.17\n\nNative Patches & tweaks adds installed-feature search, category/enabled filters,\ndistinct icons, gear-only settings, precise sliders and scoped toggle Undo.\nDownloads/Explorer use individual source cards, local search, real progress/counts\nand explicit admission. Soulseek previews play inline, with optional recording\nchecks. Telegram tasks use grouped native cards and expandable advanced settings.\n\nStreamseek adds an independent on-device lossless decoder. Existing AutoMix,\nsource selection, original-speed transitions, player and playlist work is retained.\n\nValidation: 330 Android tests, 31 Python tests, host/native regressions, 24 exact-MPP\nAPK configurations, 22 device decoder probes, all 20 native feature controls,\nlocal playlist operations, live previews/downloads and GGlos two-track fades.\nOther supplied add-ons had service errors or required a lossless output route.\nExternal-service sync and physical audio-route testing remain pending. See the\nincluded verification report for precise scope and AutoMix analysis limits.\n",
+  "release_tag": "v1.1.0-beta.17",
+  "release_date": "2026-11-01T09:43:04Z",
   "isPreRelease": true,
   "stars": 6,
   "avatarUrl": "https://avatars.githubusercontent.com/u/10942734?v=4&s=128",

@@ -1,0 +1,109 @@
+{
+  "bundle": "venusisjaded-prathxm",
+  "channel": "latest",
+  "repo_url": "https://github.com/VenusIsJaded/Prathxm-Patches",
+  "created_at": "2026-09-28T16:00:00",
+  "version": "1.19.0",
+  "description": "## 1.19.0\n\n### ✨ Features\n\n* **Chess.com:** Game Review **names the opening** and marks theory moves as **Book**, from an offline book of 3,815 lines (Lichess chess-openings, CC0); a line the engine rates as a Mistake, Blunder or Miss keeps that rating\n* **Chess.com:** **meaningful report card**: Opening, Middlegame and Endgame ratings come from each phase's real accuracy, Tactics from brilliant / great finds versus blunders and misses, and the summary names the opening and both accuracies\n* **Chess.com:** move toasts show **📖 Book: opening name** for theory moves\n\n### 🐛 Bug Fixes\n\n* **Chess.com:** the **Lichess daily puzzle** is the real puzzle of the day; the UCI solution was pasted into the PGN as-is, the app's parser rejected it, and the fallback stub was shown every day\n* **Chess.com:** puzzle **correct / wrong / solved sounds** play; their asset paths did not exist in 4.10.17, and a wrong move matched the \"correct\" sound\n* **Chess.com:** report-card performance values are real classification names; the old words (Great / Fair / Poor) were ignored by the app\n* **Chess.com:** the crash screen appears for very long stack traces (they exceeded the Binder limit, so the crash screen could not start)\n* **Chess.com:** custom titles are cached for offline use and matched with `Locale.ROOT` (Turkish-locale phones broke names containing an I)\n\n### 🔧 Improvements\n\n* **Chess.com:** the puzzle's reply move uses Chess.com's opponent-move sound\n* **Chess.com:** the Application context and the settings are cached instead of being looked up several times per move\n* **Build:** new `scripts/generate_opening_book.py`; the verification harness checks the opening book, the Lichess puzzle conversion against the real PGN parser, and that every classification, report-card category and performance value maps to the app's own enums",
+  "apps": [
+    {
+      "app_name": "Chess - Play and Learn Online",
+      "package": "com.chess",
+      "patches": [
+        {
+          "name": "Ad-Free",
+          "description": "Removes advertisements",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Clone Chess.com",
+          "description": "Changes the package name to com.chess.prathxm, allowing the patched app to be installed side-by-side with the original Chess.com app.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Custom Titles",
+          "description": "Fetches and applies custom titles for users from a remote database. DM PrathxmOp to get yours for fun lol!",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Global Crash Handler",
+          "description": "Catches uncaught exceptions and displays a custom crash screen with details to report issues.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Lichess Puzzles",
+          "description": "Loads daily puzzles from Lichess and bypasses Chess.com puzzle premium limits.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Local Stockfish Analysis",
+          "description": "Enables local Stockfish engine for post-game review & analysis.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Unlimited Play Coach",
+          "description": "Removes the one-free-game-per-day limit on Play Coach.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        },
+        {
+          "name": "Unlock All Bots",
+          "description": "Unlocks all premium and restricted bots in the Versus Bots feature.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.10.17",
+            "4.10.17-googleplay"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Prathxm Patches",
+  "fingerprint": "131cee70e454a9e577fa03df785496fb06845d6f33767b0482c4a4a864220642",
+  "release_notes": "## ♟️ Prathxm Patches v1.19.0\n\nGame Review now knows its openings and gives a report card based on how you actually played. The daily puzzle is the real Lichess puzzle of the day, and puzzle sounds work again. Every change was traced through the Chess.com 4.10.17 code and checked against the real app classes.\n\n### ✨ New\n- **Opening names and Book moves.** Game Review names your opening (e.g. *Ruy Lopez: Morphy Defense*) and marks theory moves as **Book**, like Chess.com's own review. It runs fully offline from a built-in book of 3,815 lines (Lichess chess-openings). A book line the engine rates as a mistake, blunder or miss keeps that rating.\n- **A real report card.** Opening, Middlegame and Endgame ratings come from how accurately you played each phase; before, they were fixed offsets from your overall rating. Tactics rewards brilliant and great moves and penalises blunders and misses. The summary line shows the opening, both accuracies and the blunder count.\n- **Book toasts.** With *Rate each move* on, theory moves show `📖 Book: <opening name>`.\n\n### 🐛 Fixes\n- **The daily puzzle is the real Lichess puzzle.** Lichess sends solutions in a format Chess.com's parser rejected, so the same fallback puzzle appeared every day.\n- **Puzzle sounds play.** The correct, wrong and solved sounds pointed to files that don't exist in 4.10.17, and a wrong move could trigger the \"correct\" sound. The puzzle's reply now uses Chess.com's opponent-move sound.\n- **Report-card grades are read by the app.** The old grade words were ignored.\n- **The crash screen always appears**, even for very long error logs (these used to stop it from opening).\n- **Custom titles work offline** and on phones set to Turkish.\n\n### 🔧 Improvements\n- Less work per move: the app context and settings are cached instead of looked up again and again.\n\n### 🚀 App support\n- **Chess.com 4.10.17 / 4.10.17-googleplay** (recommended: **4.10.17-googleplay**)\n\n### 📲 Install\n**Morphe Manager:** add the source `https://github.com/VenusIsJaded/Prathxm-Patches`, pick Chess.com **4.10.17-googleplay**, then tap Patch.\n**CLI:** `java -jar morphe-cli.jar patch -p patches-1.19.0.mpp -o chess-patched.apk com.chess.apkm`\n\n**Controls:** press and hold the top bar of the home screen to open **Engine Settings**. Double-tap it for **panic mode**.\n\nTested by patching Chess.com 4.10.17-googleplay with morphe-cli 1.17.0 (patcher 1.14.1): all 7 default patches applied. The verification harness passed all 92 checks against the real 4.10.17 classes.\n\n<sub>SHA-256 `patches-1.19.0.mpp`: `3a91fac641f8f0d6dc16fbef7db0240a46e9bc0ff8593789ef48932ab820842f`</sub>\n",
+  "release_tag": "v1.19.0",
+  "release_date": "2026-09-28T16:50:25Z",
+  "isPreRelease": false,
+  "stars": 1,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/119279783?v=4&s=128",
+  "repoDescription": "Chess.com Android patches: offline Stockfish 19 analysis & accurate game review, ad-free, all bots unlocked, offline Lichess puzzles",
+  "isArchived": false,
+  "isFork": true,
+  "forkParent": "PrathxmOp/Prathxm-Patches",
+  "bundleImageUrl": ""
+}
