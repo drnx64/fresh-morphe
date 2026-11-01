@@ -2,22 +2,22 @@
   "bundle": "stylus",
   "channel": "stable",
   "repo_url": "https://github.com/ch3thanhs/stylus",
-  "created_at": "2026-10-31T20:09:15",
-  "version": "1.8.3",
-  "description": "## [1.8.3](https://github.com/ch3thanhs/stylus/compare/v1.8.2...v1.8.3) (2026-10-31)\n\n### 🐛 Bug Fixes\n\n* **font:** decode resources before listing them for patcher 2.x ([ab344d0](https://github.com/ch3thanhs/stylus/commit/ab344d04a152d9f43cbedb7f542e39486d31fb36))",
+  "created_at": "2026-11-01T07:19:53",
+  "version": "1.9.0",
+  "description": "## [1.9.0](https://github.com/ch3thanhs/stylus/compare/v1.8.3...v1.9.0) (2026-11-01)\n\n### ✨ New Features\n\n* **bitwarden:** add custom font patches ([5bedaf9](https://github.com/ch3thanhs/stylus/commit/5bedaf9a9f4d796b5e4e2f09bfc2838c0b248acc))",
   "apps": [
     {
       "app_name": "GitHub",
       "package": "com.github.android",
       "patches": [
         {
-          "name": "Custom font (GitHub)",
-          "description": "Replaces GitHub's bundled Inter and Mona Sans UI fonts with a custom font file.",
+          "name": "Custom font",
+          "description": "Replaces the bundled Inter and Mona Sans UI fonts with your own font.",
           "use": false,
           "options": [
             {
               "key": "customFontFile",
-              "description": "The file path to your font file. Tap the file picker and select it. The font file must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
+              "description": "The file path to your font. Tap the file picker and select it. The font must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
             }
           ],
           "compatible_versions": [
@@ -25,13 +25,13 @@
           ]
         },
         {
-          "name": "Custom monospace font (GitHub)",
-          "description": "Replaces GitHub's bundled Roboto Mono code font with a custom monospace font file.",
+          "name": "Custom monospace font",
+          "description": "Replaces the bundled Roboto Mono code font with your own monospace font.",
           "use": false,
           "options": [
             {
               "key": "customMonospaceFontFile",
-              "description": "The file path to your monospace font file. Tap the file picker and select it. The font file must be in TTF or OTF format."
+              "description": "The file path to your monospace font. Tap the file picker and select it. The font must be in TTF or OTF format."
             }
           ],
           "compatible_versions": [
@@ -39,8 +39,8 @@
           ]
         },
         {
-          "name": "Force system font (GitHub)",
-          "description": "Renders GitHub UI text using the device system font by overriding bundled font resources at runtime.",
+          "name": "Force system font",
+          "description": "Uses the device's system font for UI text.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -48,8 +48,8 @@
           ]
         },
         {
-          "name": "Force system font (including monospace) (GitHub)",
-          "description": "Renders GitHub UI and monospace text using the device system UI font.",
+          "name": "Force system font (including monospace)",
+          "description": "Uses the device's system font for UI and monospace text.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -63,13 +63,13 @@
       "package": "com.whereismytrain.android",
       "patches": [
         {
-          "name": "Custom font (Where is my Train)",
-          "description": "Replaces Where is my Train's bundled Google Sans, Nunito Sans, and Roboto UI fonts with a custom font file. Optional OpenType feature settings can enable alternate digits such as Inter's ss01 open-style numbers.",
+          "name": "Custom font",
+          "description": "Replaces the bundled Google Sans, Nunito Sans, and Roboto UI fonts with your own font.",
           "use": false,
           "options": [
             {
               "key": "customFontFile",
-              "description": "The file path to your font file. Tap the file picker and select it. The font file must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
+              "description": "The file path to your font. Tap the file picker and select it. The font must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
             },
             {
               "key": "fontFeatureSettings",
@@ -81,8 +81,8 @@
           ]
         },
         {
-          "name": "Force system font (Where is my Train)",
-          "description": "Renders the app using the device's system font instead of Google Sans / Nunito Sans.",
+          "name": "Force system font",
+          "description": "Uses the device's system font for UI text.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -96,12 +96,44 @@
       "package": "com.x8bit.bitwarden",
       "patches": [
         {
-          "name": "Force system font (Bitwarden)",
-          "description": "Renders the app using the device's system font instead of DM Sans / Roboto.",
+          "name": "Custom font",
+          "description": "Replaces the bundled DM Sans UI fonts with your own font.",
+          "use": false,
+          "options": [
+            {
+              "key": "customFontFile",
+              "description": "The file path to your font. Tap the file picker and select it. The font must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
+            },
+            {
+              "key": "fontFeatureSettings",
+              "description": "Optional OpenType features for the custom font. For example, enter 'ss01' 1 to use Inter's open-style digits. You can also paste a CSS declaration such as font-feature-settings: \"ss01\" 1;. Android ignores features that the selected font does not support."
+            }
+          ],
+          "compatible_versions": [
+            "2026.10.1"
+          ]
+        },
+        {
+          "name": "Custom monospace font",
+          "description": "Replaces the bundled Roboto Mono font with your own monospace font.",
+          "use": false,
+          "options": [
+            {
+              "key": "customMonospaceFontFile",
+              "description": "The file path to your monospace font. Tap the file picker and select it. The font must be in TTF or OTF format."
+            }
+          ],
+          "compatible_versions": [
+            "2026.10.1"
+          ]
+        },
+        {
+          "name": "Force system font",
+          "description": "Uses the device's system font for UI text. Monospace text keeps its bundled font.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2026.10.0"
+            "2026.10.1"
           ]
         }
       ]
@@ -111,8 +143,8 @@
       "package": "org.telegram.messenger",
       "patches": [
         {
-          "name": "Force system font (Telegram)",
-          "description": "Renders the app using the device's system font instead of Telegram's bundled font.",
+          "name": "Force system font",
+          "description": "Uses the device's system font for all app text.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -126,8 +158,8 @@
       "package": "org.telegram.messenger.web",
       "patches": [
         {
-          "name": "Force system font (Telegram)",
-          "description": "Renders the app using the device's system font instead of Telegram's bundled font.",
+          "name": "Force system font",
+          "description": "Uses the device's system font for all app text.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -138,10 +170,10 @@
     }
   ],
   "patches_name": "Stylus",
-  "fingerprint": "a50973ffd8148a7990910ef07e55efe52330b84643c718bcf2be28246e4a5863",
-  "release_notes": "## [1.8.2](https://github.com/ch3thanhs/stylus/compare/v1.8.1...v1.8.2) (2026-10-30)\n\n### 🚀 Updated App Support\n\n* update Telegram app support to 13.1.1 and 13.1.0 (web version) ([36bcbfc](https://github.com/ch3thanhs/stylus/commit/36bcbfc1646185bacf68be3bf52c5b0863707a6f))\n",
-  "release_tag": "v1.8.2",
-  "release_date": "2026-10-30T16:43:02Z",
+  "fingerprint": "46527495e605981520bb33eb88a0239e752c515c8f915bab40681dee2f12f1a5",
+  "release_notes": "## [1.9.0](https://github.com/ch3thanhs/stylus/compare/v1.8.3...v1.9.0) (2026-11-01)\n\n### ✨ New Features\n\n* **bitwarden:** add custom font patches ([5bedaf9](https://github.com/ch3thanhs/stylus/commit/5bedaf9a9f4d796b5e4e2f09bfc2838c0b248acc))\n",
+  "release_tag": "v1.9.0",
+  "release_date": "2026-11-01T07:20:29Z",
   "isPreRelease": false,
   "stars": 27,
   "avatarUrl": "https://avatars.githubusercontent.com/u/76928501?v=4",
