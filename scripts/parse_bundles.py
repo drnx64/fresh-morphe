@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import time
 from datetime import datetime
 from state_manager import (
     load_json, save_json, ensure_dirs, RAW_DIR, STATE_DIR, load_last_run,
@@ -360,6 +361,7 @@ def parse_all_bundles():
 
     # Enrich with Google Play Store app icons
     print("\n--- Enriching apps with Play Store icons ---")
+    icon_run_started_at = int(time.time())
     try:
         from icon_fetcher import enrich_parsed_bundles_with_icons
         enrich_parsed_bundles_with_icons(parsed_bundles)
@@ -396,6 +398,14 @@ def parse_all_bundles():
         apply_parsed_bundle_icon_overrides(parsed_bundles)
     except Exception as e:
         print(f"[-] Icon override application failed (non-fatal): {e}")
+
+    # Every store source has run for this pass, so packages they all missed can
+    # be marked unlistable instead of eating a budget slot on every future run.
+    try:
+        from icon_fetcher import mark_unresolved_icons
+        mark_unresolved_icons(parsed_bundles, since=icon_run_started_at)
+    except Exception as e:
+        print(f"[-] Icon negative pass failed (non-fatal): {e}")
 
     # Retry a bounded batch of older empty registry entries each run
     try:

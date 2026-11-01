@@ -11,8 +11,9 @@ import random
 import urllib.error
 import urllib.request
 from app_metadata import (
-    APP_CACHE_PATH, PLAY_SOURCE, apply_icon_overrides, clean_app_name, is_real_name,
-    normalize_cache, resolve_name, upsert, valid_icon_url,
+    APP_CACHE_PATH, PLAY_SOURCE, apply_icon_overrides, clean_app_name,
+    icon_coverage, icon_negative_days, is_icon_negative, is_real_name,
+    mark_icon_negative, normalize_cache, resolve_name, upsert, valid_icon_url,
 )
 from state_manager import load_json, save_json
 
@@ -28,6 +29,7 @@ __all__ = [
     "enrich_parsed_bundles_with_apkmirror_fallbacks",
     "apply_resolved_names",
     "apply_parsed_bundle_icon_overrides",
+    "mark_unresolved_icons",
     "retry_empty_icons",
 ]
 
@@ -190,11 +192,22 @@ def enrich_parsed_bundles_with_icons(parsed_bundles):
     cache = load_json(APP_CACHE_PATH, default={})
     normalize_cache(cache)
     cutoff = _icon_attempt_cutoff()
+    negatives = [
+        p for p in all_packages
+        if not valid_icon_url((cache.get(p) or {}).get("icon_url"))
+        and is_icon_negative(cache.get(p))
+    ]
     uncached = [
         p for p in all_packages
         if not valid_icon_url((cache.get(p) or {}).get("icon_url"))
+        and p not in negatives
         and ((cache.get(p) or {}).get("last_icon_attempt") or 0) < cutoff
     ]
+    if negatives:
+        print(
+            f"[icons] {len(negatives)} package(s) skipped as known unlistable "
+            f"(negative younger than {icon_negative_days()} days)"
+        )
     uncached.sort(key=lambda p: (cache.get(p) or {}).get("last_icon_attempt") or 0)
     limit = _icon_fetch_limit()
     if len(uncached) > limit:
@@ -218,6 +231,51 @@ def enrich_parsed_bundles_with_icons(parsed_bundles):
     return parsed_bundles
 
 
+def mark_unresolved_icons(parsed_bundles, since=None):
+    """Stamp a negative for packages every store source missed this run.
+
+    Runs after Play, F-Droid, APKMirror and the manual overrides, so a negative
+    means "all sources missed", not "Play missed". `since` bounds it to packages
+    actually attempted during this run: a package skipped by the per-run budget
+    or the retry window was never tried, so it must not be marked unlistable.
+    """
+    all_packages = set()
+    for record in parsed_bundles.values():
+        for app in record.get("apps", []):
+            pkg = app.get("package", "").lower().strip()
+            if pkg:
+                all_packages.add(pkg)
+
+    cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
+    cutoff = since if since is not None else 0
+    stamped = 0
+    for pkg in sorted(all_packages):
+        entry = cache.get(pkg)
+        if not isinstance(entry, dict):
+            continue
+        if valid_icon_url(entry.get("icon_url")):
+            continue
+        if (entry.get("last_icon_attempt") or 0) < cutoff:
+            # Not attempted in this window - the budget or the retry gate
+            # skipped it, so we still know nothing new about it.
+            continue
+        if is_icon_negative(entry):
+            continue
+        if mark_icon_negative(pkg, cache):
+            stamped += 1
+
+    if stamped:
+        save_json(APP_CACHE_PATH, cache)
+    coverage = icon_coverage(cache)
+    print(
+        f"[icons] Coverage: {coverage['resolved']}/{coverage['total']} "
+        f"({coverage['percent']}%), {coverage['negative']} unlistable"
+        + (f", {stamped} newly marked for {icon_negative_days()} days" if stamped else "")
+    )
+    return stamped
+
+
 def retry_empty_icons(max_packages=None):
     cache = load_json(APP_CACHE_PATH, default={})
     fixed = normalize_cache(cache)
@@ -227,7 +285,12 @@ def retry_empty_icons(max_packages=None):
 
     empty_pkgs = [
         p for p, v in cache.items()
-        if isinstance(v, dict) and not valid_icon_url(v.get("icon_url"))
+        if isinstance(v, dict)
+        and not valid_icon_url(v.get("icon_url"))
+        and not is_icon_negative(v)
+        # Honour the same retry window as the main pass: without this the 40
+        # oldest empties were re-probed on every single run.
+        and (v.get("last_icon_attempt") or 0) < _icon_attempt_cutoff()
     ]
     empty_pkgs.sort(key=lambda p: (
         cache[p].get("last_icon_attempt") or 0,
@@ -414,11 +477,13 @@ if __name__ == "__main__":
         retry_empty_icons()
     elif "--stats" in sys.argv:
         cache = load_json(APP_CACHE_PATH, default={})
-        total = len(cache)
-        with_icon = sum(1 for v in cache.values() if isinstance(v, dict) and v.get("icon_url"))
-        with_name = sum(1 for v in cache.values() if isinstance(v, dict) and v.get("name"))
-        empty = total - with_icon
-        print(f"Total: {total} | with icon: {with_icon} | with name: {with_name} | missing icon: {empty}")
+        coverage = icon_coverage(cache)
+        print(
+            f"Total: {coverage['total']} | with icon: {coverage['resolved']} | "
+            f"with name: {sum(1 for v in cache.values() if isinstance(v, dict) and v.get('name'))} | "
+            f"missing icon: {coverage['missing']} ({coverage['percent']}% resolved) | "
+            f"unlistable: {coverage['negative']}"
+        )
     else:
         test_pkg = "com.instagram.android"
         icon = fetch_app_icon(test_pkg)

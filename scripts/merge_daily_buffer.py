@@ -4,7 +4,7 @@ import re
 import subprocess
 from datetime import datetime, timezone
 from config import CHANGELOG_MAX_ENTRIES
-from app_metadata import derive_name_from_package
+from app_metadata import derive_name_from_package, icon_coverage
 from changelog_shape import slim_changelog, slim_day
 from state_manager import (
     load_daily_buffer,
@@ -92,6 +92,15 @@ def _compute_snapshot_stats(snapshot):
     total_apps = len(unique_packages)
 
     return total_bundles, total_apps
+
+
+def _save_stats(stats):
+    """Write stats.json, attaching icon coverage so it is measurable."""
+    try:
+        stats["icon_coverage"] = icon_coverage()
+    except Exception as e:
+        print(f"[-] Icon coverage failed (non-fatal): {e}")
+    save_stats_json(stats)
 
 
 def build_changelog_entry(date_str, affected_bundles_dict):
@@ -414,7 +423,7 @@ def finalize_buffer(buffer_data):
         merge_release_notes(bundles)
         apply_repo_metadata(bundles)
         save_core_json(core)
-        save_stats_json(stats)
+        _save_stats(stats)
         save_changes_json(changes)
         save_bundles_split(bundles)
         save_bundles_json(bundles)
@@ -471,7 +480,7 @@ def update_data_files(today_str, buffer_data, snapshot):
     merge_release_notes(bundles)
     apply_repo_metadata(bundles)
     save_core_json(core)
-    save_stats_json(stats)
+    _save_stats(stats)
     save_changes_json(changes_to_save)
     save_bundles_split(bundles)
     save_bundles_json(bundles)
@@ -551,7 +560,7 @@ def write_data_files(has_changes=True, preserve_changes_json=False):
     merge_release_notes(bundles)
     apply_repo_metadata(bundles)
     save_core_json(core)
-    save_stats_json(stats)
+    _save_stats(stats)
     if changes_to_save is not None:
         save_changes_json(changes_to_save)
     save_bundles_split(bundles)
