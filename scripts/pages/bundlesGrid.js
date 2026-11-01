@@ -20,6 +20,48 @@ const SORT_OPTIONS = [
 // Invalidates any in-flight progressive-render chain when a refill starts
 let renderGeneration = 0
 
+// Cards render a batch per animation frame, so a card from the bottom of the
+// grid does not exist yet when #/bundles lands. Arrivals from What's New and
+// the search dropdown set a target; the loop below waits for that card, then
+// scrolls to it. ~10 seconds is far longer than any real render.
+const FOCUS_FRAME_BUDGET = 600
+let focusTarget = null
+let focusFrames = 0
+
+/**
+ * Scroll to a bundle's card once the grid has rendered it.
+ * Safe to call before navigating — it polls rather than assuming the grid exists,
+ * and it is a no-op when the card never appears (filtered out, or gone).
+ * @param {string} bundleName
+ */
+export function focusBundleCard(bundleName) {
+  if (!bundleName) return
+  focusTarget = String(bundleName)
+  focusFrames = 0
+  requestAnimationFrame(tryFocusBundleCard)
+}
+
+function tryFocusBundleCard() {
+  if (!focusTarget) return
+  const grid = document.getElementById('bundles-grid-container')
+  // Escape only what an attribute-string selector needs; CSS.escape() would
+  // escape leading digits, which is wrong inside a quoted value.
+  const needle = focusTarget.replace(/["\\]/g, '\\$&')
+  const card = grid?.querySelector(`[data-bundle-name="${needle}"]`)
+  if (card) {
+    focusTarget = null
+    card.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    card.classList.add('bundle-highlight-pulse')
+    card.addEventListener('animationend', () => card.classList.remove('bundle-highlight-pulse'), { once: true })
+    return
+  }
+  if (++focusFrames > FOCUS_FRAME_BUDGET) {
+    focusTarget = null
+    return
+  }
+  requestAnimationFrame(tryFocusBundleCard)
+}
+
 export function renderBundlesGrid() {
   const section = el('section', { class: 'bundles-section', 'aria-labelledby': 'bundles-heading' })
 

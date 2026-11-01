@@ -11,7 +11,7 @@
 import * as store from '../store.js'
 import { fetchWithTimeout } from '../utils/http.js'
 import { devLog } from '../utils/devLog.js'
-import { CHANNELS, makeBundleKey, parseBundleKey } from '../utils/bundleKey.js'
+import { parseBundleKey } from '../utils/bundleKey.js'
 import { API_ENABLED, API_HEADERS, apiUrl, fallbackUrl } from '../config.js'
 import { isApiAvailable } from './apiState.js'
 
@@ -103,22 +103,6 @@ export function ensureBundleKey(key) {
  */
 export function ensureBundleKeys(keys) {
   return Promise.all(keys.filter(Boolean).map(ensureBundleKey))
-}
-
-/**
- * Ensure every existing channel of a bundle has full detail.
- * @param {string} name - bundle name (without channel)
- * @param {string[]} [channels] - defaults to all channels present in the store
- * @returns {Promise<Object[]>}
- */
-export function ensureBundleChannels(name, channels = []) {
-  const bundles = store.get('bundles') || {}
-  const wanted = []
-  for (const channel of (channels.length ? channels : CHANNELS)) {
-    const key = makeBundleKey(name, channel)
-    if (bundles[key]) wanted.push(key)
-  }
-  return ensureBundleKeys(wanted)
 }
 
 /**
