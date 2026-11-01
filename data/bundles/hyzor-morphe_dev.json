@@ -2,9 +2,9 @@
   "bundle": "hyzor-morphe",
   "channel": "dev",
   "repo_url": "https://github.com/hyzor/hyzor-morphe-patches",
-  "created_at": "2026-10-31T12:35:24",
-  "version": "1.3.1",
-  "description": "## [1.3.1](https://github.com/hyzor/hyzor-morphe-patches/compare/v1.3.0...v1.3.1) (2026-10-31)\n\n### 🐛 Bug Fixes\n\n* **chesscom:** give the puzzle result empty stats and bonuses ([f4b465e](https://github.com/hyzor/hyzor-morphe-patches/commit/f4b465e96b4548b6af9185a59f77cc3865376a65))\n* **chesscom:** keep the Next hook out of chess.com puzzles ([fe6650d](https://github.com/hyzor/hyzor-morphe-patches/commit/fe6650d4cbdafba632703ec1d28fc5d3a5a32083))\n* **chesscom:** open the next Lichess puzzle from Next ([75af36e](https://github.com/hyzor/hyzor-morphe-patches/commit/75af36ea4f82e945fd86fa4f398a66927b172d0f))\n* **chesscom:** score Lichess puzzles on 4.10.23 ([88d9fbe](https://github.com/hyzor/hyzor-morphe-patches/commit/88d9fbea4177b0a6eceea5d34d205439db127cf1))",
+  "created_at": "2026-11-01T17:27:49",
+  "version": "1.4.1",
+  "description": "## [1.4.1](https://github.com/hyzor/hyzor-morphe-patches/compare/v1.4.0...v1.4.1) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **chesscom:** stop making every class mutable while patching ([10ce39b](https://github.com/hyzor/hyzor-morphe-patches/commit/10ce39b4891f16e13729ca1ffc1b2a0949b16115)), closes [#7](https://github.com/hyzor/hyzor-morphe-patches/issues/7)",
   "apps": [
     {
       "app_name": "Chess - Play and Learn Online",
@@ -213,6 +213,53 @@
       ]
     },
     {
+      "app_name": "Duolingo: Language Lessons",
+      "package": "com.duolingo",
+      "patches": [
+        {
+          "name": "Disable dynamic app icon",
+          "description": "Prevents Duolingo from changing the app icon. Only the default icon will be available.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.104.3"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Enables app features locked behind the subscription paywall. Some features like AI video calls may not work.",
+          "use": true,
+          "options": [
+            {
+              "key": "premiumVariant",
+              "description": "Choose which type of premium Duolingo subscription to enable."
+            }
+          ],
+          "compatible_versions": [
+            "6.104.3"
+          ]
+        },
+        {
+          "name": "Enable debug mode",
+          "description": "Enables hidden debug menu in settings.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.104.3"
+          ]
+        },
+        {
+          "name": "Unlimited RampUp time",
+          "description": "The timer for RampUp challenges will never decrease.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.104.3"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "NYT Games: Wordle & Crossword",
       "package": "com.nytimes.crossword",
       "patches": [
@@ -279,10 +326,10 @@
     }
   ],
   "patches_name": "Hyzor Patches",
-  "fingerprint": "89add70c6dc5e93d2f1f64e78fc4b0c9692d8a31ab816c4a5c8a00bb23730e05",
-  "release_notes": "## [1.3.0](https://github.com/hyzor/hyzor-morphe-patches/compare/v1.2.0...v1.3.0) (2026-10-29)\n\n### ✨ New Features\n\n* **chesscom:** add the chess.com patch set with 4.10.23 support ([6ed90c7](https://github.com/hyzor/hyzor-morphe-patches/commit/6ed90c7be4faca94e82daad838d723e80d2494b4))\n* **nytgames:** add AMOLED Black patch for 6.48.0 ([0ead9e6](https://github.com/hyzor/hyzor-morphe-patches/commit/0ead9e6edb69a5c72d197dc71ba0f7c8a1158534))\n\n### 🐛 Bug Fixes\n\n* **chesscom:** ship the Lichess badge drawables in the bundle ([8b2750d](https://github.com/hyzor/hyzor-morphe-patches/commit/8b2750db792779454c7ff38b7ac98c7781b1b97d))\n\n### 📝 Note on NYT Games' AMOLED Black\n\nIt applies to the app's **native UI only** — home, Me, settings, archive sheets, tab bar, dialogs, puzzle toolbars and the system bars go from dark grey to `#000000`.\n\nThe games themselves (Wordle, Connections, Strands, Spelling Bee, …) are **WebViews** rendering\nnytimes.com with the website's own CSS, so they keep the website's dark grey (`#121213`). That is\nout of reach of a resource/bytecode patch: the web bundles are served with content-hashed CSS and\nclass names and ship independently of the APK.\n\nAvailable for NYT Games `6.48.0` (APKM): **Unlock Subscription**, **AMOLED Black**.\n",
-  "release_tag": "v1.3.0",
-  "release_date": "2026-10-29T22:59:43Z",
+  "fingerprint": "e41c95f40adae90c1c1b46f685c2cf1b9d331a0775868d3bf928da94a7be9313",
+  "release_notes": "## [1.4.1](https://github.com/hyzor/hyzor-morphe-patches/compare/v1.4.0...v1.4.1) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **chesscom:** stop making every class mutable while patching ([10ce39b](https://github.com/hyzor/hyzor-morphe-patches/commit/10ce39b4891f16e13729ca1ffc1b2a0949b16115)), closes [#7](https://github.com/hyzor/hyzor-morphe-patches/issues/7)\n",
+  "release_tag": "v1.4.1",
+  "release_date": "2026-11-01T17:28:41Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/4078483?v=4&s=128",

@@ -2,9 +2,9 @@
   "bundle": "commit-regrets",
   "channel": "latest",
   "repo_url": "https://github.com/commit-regrets/morphe-youtube-vr-patches",
-  "created_at": "2026-10-30T21:04:19",
-  "version": "1.29.0",
-  "description": "## [1.29.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.28.0...v1.29.0) (2026-10-30)\n\n### 🐛 Bug Fixes\n\n* **ci:** make the dexaudit bootstrap cross-platform\n    The audit's Initialize-DexAudit assumed Windows: $env:USERPROFILE (null on  \n    Linux, so Join-Path failed with \"Cannot bind argument to parameter 'Path'  \n    because it is null\"), .exe tool names, backslash-separated literals inside  \n    Join-Path children (filename characters on Linux), and a ';' classpath  \n    separator. It was Windows-only while it lived in APK mode, which CI never  \n    ran; the new bundle-mode scan is the first thing CI executes there, and the  \n    first \"Build the bundle\" run on ubuntu died in it. HOME, plain tool names,  \n    forward-slash path segments, and the platform's classpath separator now;  \n    $Work's default gets the same forward-slash treatment, which on Linux had  \n    built a directory literally … ([6ded431](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/6ded431e83bf6d9314d6ca4b7da1792b5614305b))\n\n### ✨ New Features\n\n* align the bundle with Morphe patcher 2.x hosts\n    Three measured failures fixed:  \n    \n    - Patcher 2.x hosts render a `values` map's keys and store its values  \n      (Manager 2.2's DropdownOptionField, Desktop's PatchOptionEditor), so the  \n      1.x-shaped {token: label} maps stored display names and the SponsorBlock ([f325509](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/f3255093e4d56fe23710b15fad8857f32a759ab3)), references [#45](https://github.com/commit-regrets/morphe-youtube-vr-patches/issues/45)",
+  "created_at": "2026-11-01T16:46:08",
+  "version": "1.30.0",
+  "description": "## [1.30.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.29.0...v1.30.0) (2026-11-01)\n\n### ✨ New Features\n\n* support YouTube VR 1.90.05, drop 1.88.10\n    Every fingerprint was re-derived against the 1.90.05 dex and the whole  \n    patch set verified on the device: the spoof fetches and injects its  \n    ladder, ad slots stay empty, 8K is applied, SponsorBlock segments and  \n    markers … ([463dc48](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/463dc4842459709290b812f5e6a210002ec8e31e))",
   "apps": [
     {
       "app_name": "Oculus Store",
@@ -21,8 +21,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -36,8 +36,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -75,8 +75,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -85,8 +85,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -108,8 +108,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -118,8 +118,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -133,8 +133,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -143,8 +143,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -198,8 +198,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -213,8 +213,8 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         },
         {
@@ -228,18 +228,18 @@
             }
           ],
           "compatible_versions": [
-            "1.89.09",
-            "1.88.10"
+            "1.90.05",
+            "1.89.09"
           ]
         }
       ]
     }
   ],
   "patches_name": "YouTube VR Patches",
-  "fingerprint": "1474581f4b0dab7a7f1c4c6b0380d76d8876737b00957a5d3d2ad753418c15f0",
-  "release_notes": "## [1.29.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.28.0...v1.29.0) (2026-10-30)\n\n### 🐛 Bug Fixes\n\n* **ci:** make the dexaudit bootstrap cross-platform\n    The audit's Initialize-DexAudit assumed Windows: $env:USERPROFILE (null on  \n    Linux, so Join-Path failed with \"Cannot bind argument to parameter 'Path'  \n    because it is null\"), .exe tool names, backslash-separated literals inside  \n    Join-Path children (filename characters on Linux), and a ';' classpath  \n    separator. It was Windows-only while it lived in APK mode, which CI never  \n    ran; the new bundle-mode scan is the first thing CI executes there, and the  \n    first \"Build the bundle\" run on ubuntu died in it. HOME, plain tool names,  \n    forward-slash path segments, and the platform's classpath separator now;  \n    $Work's default gets the same forward-slash treatment, which on Linux had  \n    built a directory literally … ([6ded431](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/6ded431e83bf6d9314d6ca4b7da1792b5614305b))\n\n### ✨ New Features\n\n* align the bundle with Morphe patcher 2.x hosts\n    Three measured failures fixed:  \n    \n    - Patcher 2.x hosts render a `values` map's keys and store its values  \n      (Manager 2.2's DropdownOptionField, Desktop's PatchOptionEditor), so the  \n      1.x-shaped {token: label} maps stored display names and the SponsorBlock ([f325509](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/f3255093e4d56fe23710b15fad8857f32a759ab3)), references [#45](https://github.com/commit-regrets/morphe-youtube-vr-patches/issues/45)\n",
-  "release_tag": "v1.29.0",
-  "release_date": "2026-10-30T21:05:13Z",
+  "fingerprint": "8cdc13a38725b4b034d30efea85202d1db14fe095c8aa3655a03af7b19b00830",
+  "release_notes": "## [1.30.0](https://github.com/commit-regrets/morphe-youtube-vr-patches/compare/v1.29.0...v1.30.0) (2026-11-01)\n\n### ✨ New Features\n\n* support YouTube VR 1.90.05, drop 1.88.10\n    Every fingerprint was re-derived against the 1.90.05 dex and the whole  \n    patch set verified on the device: the spoof fetches and injects its  \n    ladder, ad slots stay empty, 8K is applied, SponsorBlock segments and  \n    markers … ([463dc48](https://github.com/commit-regrets/morphe-youtube-vr-patches/commit/463dc4842459709290b812f5e6a210002ec8e31e))\n",
+  "release_tag": "v1.30.0",
+  "release_date": "2026-11-01T16:47:01Z",
   "isPreRelease": false,
   "stars": 18,
   "avatarUrl": "https://avatars.githubusercontent.com/u/292802799?v=4",

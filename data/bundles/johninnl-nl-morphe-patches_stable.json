@@ -2,10 +2,59 @@
   "bundle": "johninnl-nl-morphe-patches",
   "channel": "stable",
   "repo_url": "https://github.com/johninnl/nl-morphe-patches",
-  "created_at": "2026-11-01T02:12:00Z",
-  "version": "1.9.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/643e179fd308a1897b46f6afde176e884f7ab529/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.14.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [643e179fd308](https://github.com/johninnl/nl-morphe-patches/commit/643e179fd308a1897b46f6afde176e884f7ab529). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.14.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.13.0...v1.14.0) (2026-11-01)\n\n### ✨ New Features\n\n* **Waze:** add full patch catalog for 5.26.90.901 ([caba974](https://github.com/johninnl/nl-morphe-patches/commit/caba974ff21504d6411d9e3e1e43da2059eb66ee))\n* **Waze:** answer consent silently and close privacy gaps ([643e179](https://github.com/johninnl/nl-morphe-patches/commit/643e179fd308a1897b46f6afde176e884f7ab529))",
+  "created_at": "2026-11-01T19:22:06Z",
+  "version": "1.19.1",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/2c920a152821ca4d54561096ad8419f625680a83/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.19.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [2c920a152821](https://github.com/johninnl/nl-morphe-patches/commit/2c920a152821ca4d54561096ad8419f625680a83). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.19.1](https://github.com/johninnl/nl-morphe-patches/compare/v1.19.0...v1.19.1) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **YouTube Music:** discover compatible Gearslip browser layouts across versions ([2c920a1](https://github.com/johninnl/nl-morphe-patches/commit/2c920a152821ca4d54561096ad8419f625680a83))",
   "apps": [
+    {
+      "app_name": "Music Speed Changer",
+      "package": "app.morphe.android.apps.youtube.music",
+      "patches": [
+        {
+          "name": "Gearslip music browser support",
+          "description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageNames",
+              "description": "Comma-separated installed Gearslip host package names. Each caller must own its package under its actual callback UID."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ]
+    },
+    {
+      "app_name": "Gearslip",
+      "package": "app.seb3thehacker.gearslip",
+      "patches": [
+        {
+          "name": "Hide apps from drawer",
+          "description": "Hides selected packages from Gearslip's discovered app tiles. Does not disable or uninstall apps; Gearslip's built-in Settings remain available.",
+          "use": false,
+          "options": [
+            {
+              "key": "hiddenPackages",
+              "description": "Comma-separated Android package names. Empty keeps Gearslip's own exclusions only. All discovered tiles from each listed package are hidden."
+            }
+          ],
+          "compatible_versions": [
+            "0.3.12-alpha",
+            "0.3.31-alpha"
+          ]
+        },
+        {
+          "name": "Keep music player entries",
+          "description": "Keeps a music app's player available when it also provides a car Settings screen, including YT Music Morphe. Uses Gearslip's existing docked player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.3.12-alpha",
+            "0.3.31-alpha"
+          ]
+        }
+      ]
+    },
     {
       "app_name": "Wuplay Android TV",
       "package": "app.wuplay.androidtv",
@@ -490,6 +539,48 @@
       ]
     },
     {
+      "app_name": "2dehands",
+      "package": "be.tweedehands.m",
+      "patches": [
+        {
+          "name": "Disable ThreatMetrix",
+          "description": "Stops device/security profiling and its session headers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        },
+        {
+          "name": "Disable tracking",
+          "description": "Stops optional analytics, marketing, Gemius/CIM and device profiling.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes display/native ads, paid seller placements, promotional search cards and advertising measurements.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        },
+        {
+          "name": "Skip consent screens",
+          "description": "Hides startup and manual privacy forms and requests genuine reject-all consent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "16.19.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Rollerbank - Scooter & Fatbike",
       "package": "com.dennisk.rollerbank",
       "patches": [
@@ -570,6 +661,24 @@
           "compatible_versions": [
             "2.8.10"
           ]
+        }
+      ]
+    },
+    {
+      "app_name": "YouTube Music",
+      "package": "com.google.android.apps.youtube.music",
+      "patches": [
+        {
+          "name": "Gearslip music browser support",
+          "description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageNames",
+              "description": "Comma-separated installed Gearslip host package names. Each caller must own its package under its actual callback UID."
+            }
+          ],
+          "compatible_versions": []
         }
       ]
     },
@@ -1132,6 +1241,20 @@
           ]
         },
         {
+          "name": "Broadcast navigation data",
+          "description": "Broadcasts current speed, the road speed limit and average-speed zone observations locally, including in the background. No overlay required.",
+          "use": true,
+          "options": [
+            {
+              "key": "receiverPackage",
+              "description": "Optional target app package. Blank broadcasts to running compatible local receivers."
+            }
+          ],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
           "name": "Change app name",
           "description": "Renames Waze.",
           "use": true,
@@ -1377,6 +1500,15 @@
           ]
         },
         {
+          "name": "Support Gearslip",
+          "description": "Allows the official Gearslip release host while retaining Android Auto host validation.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.26.90.901"
+          ]
+        },
+        {
           "name": "YT Music Morphe in Waze",
           "description": "Adds YT Music Morphe to Waze's built-in audio player. Show list displays supported Home recommendations and mixes, not your personal Library. Available shelves depend on the installed client.",
           "use": true,
@@ -1603,6 +1735,20 @@
       "package": "nl.flitsmeister",
       "patches": [
         {
+          "name": "Broadcast navigation data",
+          "description": "Shares current speed, road limits and observed average-speed zone progress with compatible local apps, also in the background without an overlay.",
+          "use": true,
+          "options": [
+            {
+              "key": "receiverPackage",
+              "description": "Optional target Android package. Blank sends to running compatible local receivers."
+            }
+          ],
+          "compatible_versions": [
+            "14.17"
+          ]
+        },
+        {
           "name": "Disable partner services",
           "description": "Hides Parking, Toll and Carwash service entries, removes Parking and Carwash from Settings, and disables Parking customer fetches.",
           "use": true,
@@ -1623,6 +1769,15 @@
         {
           "name": "Fix PairIP startup",
           "description": "Restores captured startup data, lifecycle helpers and functional car, audio, connectivity, location and background-work callbacks while avoiding damaged PairIP execution.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.17"
+          ]
+        },
+        {
+          "name": "Guest mode",
+          "description": "Adds Continue as guest to onboarding, allows reopening without an account and hides the guest sign-up card. Keeps optional login and services that require a genuine account.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2284,10 +2439,10 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "6b8020682832ae28baf9479e98c332f1bf2e3f746381d7e518d97b38719d1c43",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/20846b41cd41fe57f672ef9f139557387303a50c/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.9.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [20846b41cd41](https://github.com/johninnl/nl-morphe-patches/commit/20846b41cd41fe57f672ef9f139557387303a50c). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.9.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.8.0...v1.9.0) (2026-11-01)\n\n### ✨ New Features\n\n* **Projectivy Launcher:** add Unlock Premium for 4.73 ([b17fcab](https://github.com/johninnl/nl-morphe-patches/commit/b17fcabce88a394c5cd72b6a0a58e125f09c2c7c))\n",
-  "release_tag": "v1.9.0",
-  "release_date": "2026-11-01T02:12:00Z",
+  "fingerprint": "93314db0e8736a1f47ed6f22eb9f77773a84e44d5f1ee6aa997432b71a074b8a",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/3d9fba39b652c4eb1f749ab9775f8757ee6d2bf9/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.19.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [3d9fba39b652](https://github.com/johninnl/nl-morphe-patches/commit/3d9fba39b652c4eb1f749ab9775f8757ee6d2bf9). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.19.1](https://github.com/johninnl/nl-morphe-patches/compare/v1.19.0...v1.19.1) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **YouTube Music:** discover compatible Gearslip browser layouts across versions ([2c920a1](https://github.com/johninnl/nl-morphe-patches/commit/2c920a152821ca4d54561096ad8419f625680a83))\n",
+  "release_tag": "v1.19.1",
+  "release_date": "2026-11-01T19:22:06Z",
   "isPreRelease": false,
   "stars": 9,
   "avatarUrl": "https://avatars.githubusercontent.com/u/349981574?v=4&s=128",
