@@ -204,6 +204,16 @@ def normalize_cache(cache):
         if entry.get("icon_url") != clean or "icon_url" not in entry:
             entry["icon_url"] = clean
             entry_changed = True
+        # A negative marker only means something while the entry is still
+        # unresolved; a later source overwrote it, so drop the stale stamp.
+        if clean and entry.get("icon_source") == ICON_NEGATIVE_SOURCE:
+            entry["icon_source"] = ""
+            entry.pop("icon_negative_at", None)
+            entry_changed = True
+        stamped = entry.get("icon_negative_at")
+        if stamped is not None and not isinstance(stamped, (int, float)):
+            entry.pop("icon_negative_at", None)
+            entry_changed = True
         if entry_changed:
             changed += 1
     return changed
@@ -294,3 +304,86 @@ def is_unresolved(cache, package_name):
     name_ok = is_real_name(clean_app_name(entry.get("name", "")), pkg)
     icon_ok = bool(valid_icon_url(entry.get("icon_url")))
     return not (name_ok and icon_ok)
+
+
+# A package that Play, F-Droid and APKMirror all fail to resolve is usually
+# delisted or was never published. Re-probing it every ICON_RETRY_DAYS (7) burns
+# a slot of the per-run budget forever, so a full miss stamps a negative that
+# holds for ICON_NEGATIVE_DAYS before the package gets another turn.
+ICON_NEGATIVE_SOURCE = "none"
+ICON_NEGATIVE_DAYS_ENV = "ICON_NEGATIVE_DAYS"
+ICON_NEGATIVE_DAYS_DEFAULT = 90
+
+
+def icon_negative_days():
+    try:
+        return max(0, int(os.environ.get(ICON_NEGATIVE_DAYS_ENV, ICON_NEGATIVE_DAYS_DEFAULT)))
+    except (TypeError, ValueError):
+        return ICON_NEGATIVE_DAYS_DEFAULT
+
+
+def mark_icon_negative(package_name, cache, now=None):
+    """Record that every store source missed this package's icon.
+
+    Returns False when the entry already holds an icon URL - a full miss must
+    never overwrite a hit from an earlier run.
+    """
+    pkg = (package_name or "").lower().strip()
+    if not pkg or not isinstance(cache, dict):
+        return False
+    entry = cache.get(pkg)
+    if not isinstance(entry, dict):
+        entry = {}
+        cache[pkg] = entry
+    if valid_icon_url(entry.get("icon_url")):
+        return False
+    stamped = int(now if now is not None else time.time())
+    entry["icon_url"] = ""
+    entry["icon_source"] = ICON_NEGATIVE_SOURCE
+    entry["icon_negative_at"] = stamped
+    entry["last_icon_attempt"] = stamped
+    return True
+
+
+def is_icon_negative(entry, now=None, retry_days=None):
+    """True while a full-miss negative is still fresh enough to trust.
+
+    Expired negatives keep their stamp but report False, so the package goes
+    back into the fetch queue without any extra bookkeeping.
+    """
+    if not isinstance(entry, dict):
+        return False
+    if valid_icon_url(entry.get("icon_url")):
+        return False
+    if entry.get("icon_source") != ICON_NEGATIVE_SOURCE:
+        return False
+    stamped = entry.get("icon_negative_at")
+    if not isinstance(stamped, (int, float)) or stamped <= 0:
+        return False
+    days = icon_negative_days() if retry_days is None else max(0, retry_days)
+    current = now if now is not None else time.time()
+    return current - stamped < days * 86400
+
+
+def icon_coverage(cache=None, path=APP_CACHE_PATH):
+    """Summarize icon resolution so the pipeline can publish the real number."""
+    if cache is None:
+        cache = load_cache(path)
+    total = resolved = negative = 0
+    for entry in cache.values():
+        total += 1
+        if not isinstance(entry, dict):
+            # Malformed entries count as missing; normalize_cache repairs them
+            # on every real load, so this only matters for hand-built dicts.
+            continue
+        if valid_icon_url(entry.get("icon_url")):
+            resolved += 1
+        elif is_icon_negative(entry):
+            negative += 1
+    return {
+        "resolved": resolved,
+        "total": total,
+        "missing": total - resolved,
+        "negative": negative,
+        "percent": round(resolved * 100.0 / total, 1) if total else 0.0,
+    }

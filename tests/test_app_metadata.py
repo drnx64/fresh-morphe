@@ -360,3 +360,216 @@ class TestStoreLink:
 
     def test_handles_malformed_cache(self):
         assert m.store_link("com.x", {"com.x": "junk"})[1] == m.STORE_APKMIRROR
+
+
+class TestIconNegatives:
+    """A package every store missed must stop eating the per-run budget."""
+
+    def test_mark_stamps_source_and_timestamp(self):
+        cache = {}
+        assert m.mark_icon_negative("com.gone", cache, now=1000) is True
+        entry = cache["com.gone"]
+        assert entry["icon_url"] == ""
+        assert entry["icon_source"] == m.ICON_NEGATIVE_SOURCE
+        assert entry["icon_negative_at"] == 1000
+        assert entry["last_icon_attempt"] == 1000
+
+    def test_mark_never_overwrites_a_hit(self):
+        cache = {"com.x": {"icon_url": "https://i/x.png", "icon_source": "play"}}
+        assert m.mark_icon_negative("com.x", cache, now=1000) is False
+        assert cache["com.x"]["icon_url"] == "https://i/x.png"
+        assert "icon_negative_at" not in cache["com.x"]
+
+    def test_mark_ignores_empty_package(self):
+        cache = {}
+        assert m.mark_icon_negative("  ", cache) is False
+        assert cache == {}
+
+    def test_fresh_negative_is_trusted(self):
+        entry = {"icon_url": "", "icon_source": m.ICON_NEGATIVE_SOURCE, "icon_negative_at": 1000}
+        assert m.is_icon_negative(entry, now=1000 + 86400) is True
+
+    def test_expired_negative_is_retried(self):
+        entry = {"icon_url": "", "icon_source": m.ICON_NEGATIVE_SOURCE, "icon_negative_at": 1000}
+        # 90 days later the package gets another turn.
+        assert m.is_icon_negative(entry, now=1000 + 91 * 86400) is False
+
+    def test_resolved_entry_is_never_negative(self):
+        entry = {"icon_url": "https://i/x.png", "icon_source": m.ICON_NEGATIVE_SOURCE}
+        assert m.is_icon_negative(entry) is False
+
+    def test_plain_miss_is_not_a_negative(self):
+        assert m.is_icon_negative({"icon_url": "", "last_icon_attempt": 1000}) is False
+
+    def test_malformed_stamp_is_not_a_negative(self):
+        entry = {"icon_url": "", "icon_source": m.ICON_NEGATIVE_SOURCE, "icon_negative_at": "soon"}
+        assert m.is_icon_negative(entry) is False
+
+    def test_normalize_drops_stamp_once_an_icon_lands(self):
+        cache = {
+            "com.x": {
+                "icon_url": "https://i/x.png",
+                "icon_source": m.ICON_NEGATIVE_SOURCE,
+                "icon_negative_at": 1000,
+            }
+        }
+        m.normalize_cache(cache)
+        assert "icon_negative_at" not in cache["com.x"]
+        assert cache["com.x"].get("icon_source", "") != m.ICON_NEGATIVE_SOURCE
+
+    def test_normalize_drops_non_numeric_stamp(self):
+        cache = {"com.x": {"icon_url": "", "icon_negative_at": "yesterday"}}
+        m.normalize_cache(cache)
+        assert "icon_negative_at" not in cache["com.x"]
+
+    def test_enrich_skips_a_fresh_negative(self, tmp_path, monkeypatch):
+        import json
+        import time
+
+        path = tmp_path / "app_cache.json"
+        path.write_text(json.dumps({
+            "com.gone": {
+                "icon_url": "",
+                "icon_source": m.ICON_NEGATIVE_SOURCE,
+                "icon_negative_at": int(time.time()),
+                "last_icon_attempt": 1,
+            },
+            "com.fresh": {"icon_url": ""},
+        }), encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        fetched = []
+        monkeypatch.setattr(
+            icons, "fetch_app_icon", lambda pkg, skip_cache=False: fetched.append(pkg) or ""
+        )
+
+        parsed = {"bundle": {"apps": [{"package": "com.gone"}, {"package": "com.fresh"}]}}
+        icons.enrich_parsed_bundles_with_icons(parsed)
+
+        assert fetched == ["com.fresh"]
+
+    def test_enrich_retries_an_expired_negative(self, tmp_path, monkeypatch):
+        import json
+
+        path = tmp_path / "app_cache.json"
+        path.write_text(json.dumps({
+            "com.gone": {
+                "icon_url": "",
+                "icon_source": m.ICON_NEGATIVE_SOURCE,
+                "icon_negative_at": 1000,
+                "last_icon_attempt": 1000,
+            },
+        }), encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        fetched = []
+        monkeypatch.setattr(
+            icons, "fetch_app_icon", lambda pkg, skip_cache=False: fetched.append(pkg) or ""
+        )
+
+        parsed = {"bundle": {"apps": [{"package": "com.gone"}]}}
+        icons.enrich_parsed_bundles_with_icons(parsed)
+
+        assert fetched == ["com.gone"]
+
+    def test_retry_empty_skips_negatives(self, tmp_path, monkeypatch):
+        import json
+        import time
+
+        path = tmp_path / "app_cache.json"
+        path.write_text(json.dumps({
+            "com.gone": {
+                "icon_url": "",
+                "icon_source": m.ICON_NEGATIVE_SOURCE,
+                "icon_negative_at": int(time.time()),
+                "last_icon_attempt": int(time.time()),
+            },
+            "com.stale": {"icon_url": "", "last_icon_attempt": 1},
+        }), encoding="utf-8")
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        fetched = []
+        monkeypatch.setattr(
+            icons, "fetch_app_icon", lambda pkg, skip_cache=False: fetched.append(pkg) or ""
+        )
+
+        icons.retry_empty_icons(max_packages=10)
+
+        assert fetched == ["com.stale"]
+
+
+class TestMarkUnresolvedIcons:
+    def _write_cache(self, tmp_path, payload):
+        import json
+        path = tmp_path / "app_cache.json"
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return path
+
+    def test_stamps_only_packages_attempted_this_run(self, tmp_path, monkeypatch):
+        import time
+
+        now = int(time.time())
+        path = self._write_cache(tmp_path, {
+            "com.missed": {"icon_url": "", "last_icon_attempt": now},
+            "com.skipped": {"icon_url": "", "last_icon_attempt": now - 3600},
+            "com.resolved": {"icon_url": "https://i/x.png", "icon_source": "play"},
+        })
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+
+        parsed = {"bundle": {"apps": [
+            {"package": "com.missed"},
+            {"package": "com.skipped"},
+            {"package": "com.resolved"},
+        ]}}
+        assert icons.mark_unresolved_icons(parsed, since=now) == 1
+
+        cache = m.load_cache(str(path))
+        assert cache["com.missed"]["icon_source"] == m.ICON_NEGATIVE_SOURCE
+        assert cache["com.missed"]["icon_negative_at"] >= now
+        assert "icon_negative_at" not in cache["com.skipped"]
+        assert cache["com.resolved"]["icon_url"] == "https://i/x.png"
+
+    def test_does_not_restamp_an_existing_negative(self, tmp_path, monkeypatch):
+        import time
+
+        now = int(time.time())
+        path = self._write_cache(tmp_path, {
+            "com.gone": {
+                "icon_url": "",
+                "icon_source": m.ICON_NEGATIVE_SOURCE,
+                "icon_negative_at": now - 86400,
+                "last_icon_attempt": now,
+            },
+        })
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+
+        parsed = {"bundle": {"apps": [{"package": "com.gone"}]}}
+        assert icons.mark_unresolved_icons(parsed, since=now) == 0
+        assert m.load_cache(str(path))["com.gone"]["icon_negative_at"] == now - 86400
+
+    def test_no_packages_is_a_noop(self, tmp_path, monkeypatch):
+        path = self._write_cache(tmp_path, {})
+        monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
+        assert icons.mark_unresolved_icons({}, since=0) == 0
+
+
+class TestIconCoverage:
+    def test_counts_resolved_missing_and_negative(self):
+        cache = {
+            "com.a": {"icon_url": "https://i/a.png"},
+            "com.b": {"icon_url": ""},
+            "com.c": {
+                "icon_url": "",
+                "icon_source": m.ICON_NEGATIVE_SOURCE,
+                "icon_negative_at": 1,
+            },
+            "com.d": "junk",
+        }
+        coverage = m.icon_coverage(cache)
+        assert coverage["total"] == 4
+        assert coverage["resolved"] == 1
+        assert coverage["missing"] == 3
+        assert coverage["percent"] == 25.0
+
+    def test_empty_cache(self):
+        assert m.icon_coverage({}) == {
+            "resolved": 0, "total": 0, "missing": 0, "negative": 0, "percent": 0.0,
+        }
+

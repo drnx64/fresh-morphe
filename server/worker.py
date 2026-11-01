@@ -865,15 +865,28 @@ def make_snapshots(conn, now):
         "new_apps_today": len(new_apps),
         "new_bundles_today": len(new_bundles),
     })
-    set_snapshot(conn, "stats", stats)
 
     app_cache = get_snapshot(conn, "app_cache", {}) or {}
+    icon_rows = icon_resolved = 0
     for row in conn.execute("SELECT package, name, icon_url FROM apps"):
+        icon_rows += 1
+        if row["icon_url"]:
+            icon_resolved += 1
         entry = dict(app_cache.get(row["package"]) or {})
         entry["name"] = row["name"] or entry.get("name") or derive_name_from_package(row["package"])
         entry["icon_url"] = row["icon_url"] or entry.get("icon_url") or ""
         app_cache[row["package"]] = entry
     set_snapshot(conn, "app_cache", app_cache)
+
+    # Same coverage number the static pipeline publishes, so the phone DB can
+    # be compared against CI without guessing from the app list.
+    stats["icon_coverage"] = {
+        "resolved": icon_resolved,
+        "total": icon_rows,
+        "missing": icon_rows - icon_resolved,
+        "percent": round(icon_resolved * 100.0 / icon_rows, 1) if icon_rows else 0.0,
+    }
+    set_snapshot(conn, "stats", stats)
 
     repo_cache = get_snapshot(conn, "repo_cache", {}) or {}
     for row in conn.execute(
