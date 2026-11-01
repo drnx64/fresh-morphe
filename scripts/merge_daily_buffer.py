@@ -5,6 +5,7 @@ import subprocess
 from datetime import datetime, timezone
 from config import CHANGELOG_MAX_ENTRIES
 from app_metadata import derive_name_from_package
+from changelog_shape import slim_changelog, slim_day
 from state_manager import (
     load_daily_buffer,
     save_daily_buffer,
@@ -94,12 +95,16 @@ def _compute_snapshot_stats(snapshot):
 
 
 def build_changelog_entry(date_str, affected_bundles_dict):
-    """Builds a structured changelog entry from the buffer's affected_bundles dict."""
-    return {
+    """Builds a structured changelog entry from the buffer's affected_bundles dict.
+
+    Finalized days are slimmed on the way out: patch descriptions are ~40% of
+    this payload and no historical reader renders them (see changelog_shape).
+    """
+    return slim_day({
         "date": date_str,
         "lastChecked": now_utc_iso(),
         "affected_bundles": list(affected_bundles_dict.values())
-    }
+    })
 
 
 def assign_scan_numbers(buffer_bundles, incoming, scan_counter):
@@ -343,7 +348,9 @@ def finalize_buffer(buffer_data):
         new_entry = build_changelog_entry(date_str, affected_bundles_dict)
         changelog_json.insert(0, new_entry)
         changelog_json = changelog_json[:CHANGELOG_MAX_ENTRIES]
-        save_json(changelog_json_path, changelog_json)
+        # Re-slim the whole list, not just today: days written before the shape
+        # existed stay fat forever otherwise (see changelog_shape).
+        save_json(changelog_json_path, slim_changelog(changelog_json))
         print(f"[+] Changelog JSON written: {len(changelog_json)} entries")
     except Exception as e:
         print(f"[!] Failed to write changelog.json: {e}")
