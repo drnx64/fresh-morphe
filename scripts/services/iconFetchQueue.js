@@ -5,25 +5,36 @@
  * their own. The queue only warms IndexedDB with resized WebP data URLs so
  * later renders are instant and survive offline.
  *
- * Two lanes share one worker, one fetch at a time:
- *  - Priority: icons scrolled into view (IntersectionObserver) fetch first.
- *  - Sweep: the rest of the icon universe one at a time with 1–2s pauses.
+ * Two lanes share one worker:
+ *  - Priority: icons scrolled into view (IntersectionObserver) fetch back to
+ *    back, up to PRIORITY_BATCH at a time.
+ *  - Sweep: the rest of the icon universe in batches of SWEEP_BATCH with a
+ *    short pause between batches, so a full sweep takes a couple of minutes
+ *    instead of ~20.
  *
  * 429/403 responses back off exponentially inside iconCache.loadImage, which
- * pauses both lanes (rate-limited URLs are requeued, not failed). Remaining
- * work persists to localStorage so a reload resumes where it left off.
+ * pauses both lanes (rate-limited URLs are requeued, not failed) and ratchets
+ * the sweep back down to one request at a time. Remaining work persists to
+ * localStorage so a reload resumes where it left off.
  */
 import {
   fetchAndCacheIcon,
   getCachedIconDataUrl,
+  hydrateIconCache,
   registerIconUrls,
   pruneStoredImages,
 } from './iconCache.js'
 import { devLog } from '../utils/devLog.js'
 
 const QUEUE_KEY = 'fresh_icon_queue_v1'
-const SWEEP_PAUSE_MIN_MS = 1000
-const SWEEP_PAUSE_JITTER_MS = 1000
+// Icons per batch. Four is enough to turn a ~21 minute serial sweep into a
+// couple of minutes without looking like a scraper; the shared 429/403 gate in
+// iconCache still protects every request.
+const SWEEP_BATCH = 4
+// Visible icons may jump the queue, but a fast scroll must not open 40 sockets.
+const PRIORITY_BATCH = 3
+const SWEEP_PAUSE_MIN_MS = 300
+const SWEEP_PAUSE_JITTER_MS = 400
 const PERSIST_THROTTLE_MS = 2000
 // How often a backgrounded tab re-checks whether it became visible again.
 const HIDDEN_POLL_MS = 2000
@@ -108,10 +119,12 @@ function prioritize(url) {
 }
 
 async function fetchOne(url) {
+  let outcome = 'failed'
   try {
     const result = await fetchAndCacheIcon(url)
     if (result) {
       done.add(url)
+      outcome = 'done'
     } else {
       addFailed(url)
     }
@@ -119,13 +132,19 @@ async function fetchOne(url) {
     if (err && err.rateLimited) {
       // loadImage armed the shared backoff; requeue for a later pass.
       pending.unshift(url)
+      outcome = 'rateLimited'
     } else {
       addFailed(url)
     }
   }
   report()
   persistSoon()
+  return outcome
 }
+
+// Rate-limit pressure ratchets the sweep down to one request at a time; a clean
+// batch lets it climb back towards SWEEP_BATCH one step at a time.
+let sweepBatch = SWEEP_BATCH
 
 async function workerLoop() {
   while (true) {
@@ -136,18 +155,24 @@ async function workerLoop() {
       await sleep(HIDDEN_POLL_MS)
       continue
     }
-    if (priorityQueue.length) {
-      await fetchOne(priorityQueue.shift())
-      continue
+    const fromPriority = priorityQueue.length > 0
+    if (!fromPriority && !(sweepStarted && pending.length)) break
+
+    const source = fromPriority ? priorityQueue : pending
+    const size = fromPriority ? PRIORITY_BATCH : sweepBatch
+    const batch = source.splice(0, Math.min(size, source.length))
+    if (!batch.length) continue
+
+    const outcomes = await Promise.all(batch.map(fetchOne))
+    if (outcomes.includes('rateLimited')) {
+      sweepBatch = 1
+    } else if (!fromPriority) {
+      sweepBatch = Math.min(SWEEP_BATCH, sweepBatch + 1)
     }
-    if (sweepStarted && pending.length) {
-      await fetchOne(pending.shift())
-      if (pending.length || priorityQueue.length) {
-        await sleep(SWEEP_PAUSE_MIN_MS + Math.random() * SWEEP_PAUSE_JITTER_MS)
-      }
-      continue
+    // Visible icons go back-to-back; the sweep paces itself between batches.
+    if (!fromPriority && (pending.length || priorityQueue.length)) {
+      await sleep(SWEEP_PAUSE_MIN_MS + Math.random() * SWEEP_PAUSE_JITTER_MS)
     }
-    break
   }
 }
 
@@ -209,13 +234,35 @@ function startObservers() {
 }
 
 /**
+ * Reconcile the queues with what IndexedDB already had.
+ * @param {string[]} warmUrls
+ */
+function applyHydration(warmUrls) {
+  if (!warmUrls || !warmUrls.length) return
+  const warm = new Set(warmUrls)
+  for (const url of warmUrls) done.add(url)
+  pending = pending.filter((url) => !warm.has(url))
+  priorityQueue = priorityQueue.filter((url) => !warm.has(url))
+  failed = failed.filter((url) => !warm.has(url))
+  devLog('icon queue hydrated', { warm: warm.size, pending: pending.length })
+  report()
+  persistSoon()
+}
+
+/**
  * Register the icon universe from app_cache and start observing the DOM so
  * icons scrolled into view jump the sweep queue. No network happens here.
- * Idempotent — safe if called more than once per load.
+ * Idempotent - safe if called more than once per load.
+ *
+ * Returns the hydration promise so callers can start the sweep only once the
+ * warm set is known (otherwise progress starts at 0 on every reload and the
+ * sweep re-attempts icons IndexedDB already has).
+ *
  * @param {Object<string,string>} iconMap
+ * @returns {Promise<string[]>} icon URLs already warm in IndexedDB
  */
 export function initIconQueue(iconMap) {
-  if (inited) return
+  if (inited) return Promise.resolve([])
   inited = true
   registerIconUrls(iconMap)
   for (const val of Object.values(iconMap)) {
@@ -225,6 +272,16 @@ export function initIconQueue(iconMap) {
     else pending.push(val)
   }
   restore()
+  // A fresh page has an empty memory map even when IndexedDB holds the whole
+  // universe, so everything above looks cold. Reconcile once the batch read
+  // lands: warmed URLs leave both queues and the progress bar starts where the
+  // cache actually is instead of at zero.
+  const hydration = hydrateIconCache(iconMap)
+    .then(applyHydration)
+    .catch((err) => {
+      devLog('icon queue hydrate failed', err?.message)
+      return []
+    })
   devLog('icon queue init', {
     universe: universe.size,
     warm: done.size,
@@ -232,6 +289,7 @@ export function initIconQueue(iconMap) {
   })
   if (typeof window !== 'undefined') window.addEventListener('beforeunload', persistNow)
   startObservers()
+  return hydration
 }
 
 /**

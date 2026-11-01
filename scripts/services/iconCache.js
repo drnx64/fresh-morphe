@@ -12,10 +12,20 @@ const urlToPkg = {}
 /** @type {Object<string, string>} URL -> dataUrl (repo/author avatars) */
 const avatarCache = {}
 
-const MAX_STORED_IMAGES = 600
-const MAX_STORED_AVATARS = 256
+// Sized to the real universe rather than a round number: app_cache carries
+// ~1,460 icon URLs today, so a 600 cap guaranteed that ~60% of icons were
+// pruned and re-downloaded on every single session. A 96px WebP icon is ~5KB,
+// so the full universe is ~7MB and this ceiling (~13MB) leaves headroom for
+// growth without ever evicting an icon that is still on screen.
+const MAX_STORED_ICONS = 2600
+const MAX_STORED_AVATARS = 600
 const ICON_MAX = 96
 const AVATAR_MAX = 96
+// Keep well clear of the per-origin quota: if the origin is already this full
+// (bundle cache is the other big tenant), trim icons harder instead of letting
+// a write fail.
+const STORAGE_PRESSURE_BYTES = 64 * 1024 * 1024
+const STORAGE_PRESSURE_RATIO = 0.8
 
 function pkgKey(pkg) {
   return `icon_${pkg}`
@@ -39,18 +49,38 @@ function avatarKey(url) {
   return 'avatar_' + hashStr(url)
 }
 
+/**
+ * Is the origin's storage nearly full? Icons share it with the bundle cache,
+ * so a generous count cap can still be the wrong cap on a cramped device.
+ * @returns {Promise<boolean>}
+ */
+async function isStoragePressured() {
+  try {
+    if (typeof navigator === 'undefined' || !navigator.storage?.estimate) return false
+    const { usage, quota } = await navigator.storage.estimate()
+    if (!usage) return false
+    if (usage > STORAGE_PRESSURE_BYTES) return true
+    return Boolean(quota) && usage / quota > STORAGE_PRESSURE_RATIO
+  } catch {
+    return false
+  }
+}
+
 export async function pruneStoredImages() {
   try {
     const keys = await idbKeys('icon_')
     const hashKeys = await idbKeys('img_')
     const allKeys = [...keys, ...hashKeys]
-    if (allKeys.length <= MAX_STORED_IMAGES) {
-      devLog('icon cache prune', `${allKeys.length}/${MAX_STORED_IMAGES} stored`)
+    const limit = (await isStoragePressured())
+      ? Math.floor(MAX_STORED_ICONS * 0.5)
+      : MAX_STORED_ICONS
+    if (allKeys.length <= limit) {
+      devLog('icon cache prune', `${allKeys.length}/${limit} stored`)
       return
     }
     const inUse = new Set()
     for (const url of Object.keys(imageCache)) inUse.add(resolveIdbKey(url))
-    let toDelete = allKeys.length - MAX_STORED_IMAGES
+    let toDelete = allKeys.length - limit
     const del = []
     for (const k of allKeys) {
       if (toDelete <= 0) break
@@ -62,7 +92,7 @@ export async function pruneStoredImages() {
     if (del.length) {
       await idbDeleteMany(del)
     }
-    devLog('icon cache prune', `deleted ${del.length}, kept ${MAX_STORED_IMAGES}`)
+    devLog('icon cache prune', `deleted ${del.length}, kept ${limit}`)
   } catch (err) {
     devLog('icon cache prune failed', err.message)
   }
@@ -202,6 +232,44 @@ export function registerIconUrls(iconMap) {
     if (val && typeof val === 'string' && val.startsWith('http')) {
       urlToPkg[val] = pkg
     }
+  }
+}
+
+/**
+ * Hydrate the in-memory icon map from IndexedDB.
+ *
+ * `getCachedIconDataUrl` reads memory only, so every reload reported the whole
+ * universe as cold even when IndexedDB held it all — the fetch queue rebuilt
+ * its pending set from scratch and progress started at 0. One read-only batch
+ * at boot fixes both, the way `preloadAvatars` already hydrates avatars.
+ *
+ * @param {Object<string,string>} iconMap package -> icon URL (the same map the
+ *   display layer and the fetch queue use)
+ * @returns {Promise<string[]>} icon URLs that turned out to be already warm
+ */
+export async function hydrateIconCache(iconMap) {
+  if (!iconMap || typeof iconMap !== 'object') return []
+  registerIconUrls(iconMap)
+  const urls = [...new Set(
+    Object.values(iconMap).filter(
+      (val) => typeof val === 'string' && val.startsWith('http') && !imageCache[val],
+    ),
+  )]
+  if (!urls.length) return []
+  try {
+    const found = await idbGetMany(urls.map(resolveIdbKey))
+    const warm = []
+    for (const url of urls) {
+      const value = found.get(resolveIdbKey(url))
+      if (value) {
+        imageCache[url] = value
+        warm.push(url)
+      }
+    }
+    devLog('icon cache hydrate', `${warm.length}/${urls.length} warm from IndexedDB`)
+    return warm
+  } catch {
+    return []
   }
 }
 
