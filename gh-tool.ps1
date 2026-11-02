@@ -26,6 +26,12 @@
     inspection action with a workflow flag is rejected instead of silently doing one of them.
     Use -Status for the one-screen repository summary.
 
+    Pull request review also runs instead of the workflow, one action per call:
+        -PrStatus -Watch -Base -UpdateBranch
+    These talk to the GitHub API and default to the pull request whose head is the current
+    branch; -PrNumber targets another one. -Base and -UpdateBranch change the pull request on
+    GitHub, so -DryRun prints the exact request instead of sending it.
+
     Token lookup order: GITHUB_TOKEN in .env (current directory, then repository root),
     then the GITHUB_TOKEN environment variable. Only GITHUB_TOKEN is read from .env.
     The token is never printed, never placed in a URL, and never passed to git.
@@ -180,6 +186,30 @@
     Diff range for -Diff. A bare ref expands to "<ref>...HEAD" (what this branch adds on
     top of it); a value containing ".." is passed through, so "v1.2..v1.3" works as-is.
 
+.PARAMETER PrStatus
+    Print the pull request for the current branch: title, head and base, state, mergeability,
+    the check-run rollup, requested reviewers, and the size of the change.
+
+.PARAMETER Watch
+    Follow the checks until they finish, then report. Polls every 10 seconds, fails fast when
+    a check has already failed, and gives up after -Timeout seconds.
+
+.PARAMETER Base
+    Re-target a pull request onto another base branch (the "Edit" button on the pull request
+    page). Requires -PrNumber.
+
+.PARAMETER UpdateBranch
+    Merge the current base branch into the pull request branch with the GitHub "Update branch"
+    action, for a pull request that is behind. The request is pinned to the head commit that was
+    just read, so a concurrent push makes it fail instead of silently mixing commits.
+
+.PARAMETER PrNumber
+    Pull request number for the review actions. Alias: -n. When omitted, the open pull request
+    whose head is the current branch is used.
+
+.PARAMETER Timeout
+    Seconds -Watch keeps polling before giving up. Default 900, range 5-7200.
+
 .PARAMETER DryRun
     Print every action without changing the repository or calling a GitHub API endpoint.
     Read-only git commands still run. API requests and local writes are skipped.
@@ -246,6 +276,18 @@
 .EXAMPLE
     .\gh-tool.ps1 -Restore -Staged -Path gh-tool.ps1
     Unstage gh-tool.ps1 while keeping the edits in the working tree.
+
+.EXAMPLE
+    .\gh-tool.ps1 -PrStatus
+    Summarize the pull request whose head is the current branch, checks included.
+
+.EXAMPLE
+    .\gh-tool.ps1 -Watch -PrNumber 64 -Timeout 1800
+    Wait up to thirty minutes for pull request 64's checks, then report the verdict.
+
+.EXAMPLE
+    .\gh-tool.ps1 -UpdateBranch -PrNumber 64
+    Pull the base branch into pull request 64 so it is no longer behind.
 
 .NOTES
     Format of the .env file (one line is enough):
@@ -370,6 +412,28 @@ param(
     [ValidateNotNullOrEmpty()]
     [string]$Between,
 
+    [Parameter(ParameterSetName = 'Review')]
+    [switch]$PrStatus,
+
+    [Parameter(ParameterSetName = 'Review')]
+    [switch]$Watch,
+
+    [Parameter(ParameterSetName = 'Review')]
+    [ValidateNotNullOrEmpty()]
+    [string]$Base,
+
+    [Parameter(ParameterSetName = 'Review')]
+    [switch]$UpdateBranch,
+
+    [Parameter(ParameterSetName = 'Review')]
+    [Alias('n')]
+    [ValidateRange(0, 1000000)]
+    [int]$PrNumber = 0,
+
+    [Parameter(ParameterSetName = 'Review')]
+    [ValidateRange(5, 7200)]
+    [int]$Timeout = 900,
+
     [Parameter(ParameterSetName = 'Status', Mandatory)]
     [switch]$Status,
 
@@ -397,6 +461,7 @@ $GITHUB_API_BASE_URL = 'https://api.github.com'
 $GITHUB_WEB_BASE_URL = 'https://github.com'
 $GITHUB_API_VERSION = '2022-11-28'
 $GITHUB_API_TIMEOUT_SECONDS = 30
+$CHECK_POLL_INTERVAL_SECONDS = 10
 $USER_AGENT = "$TOOL_NAME.ps1/$TOOL_VERSION"
 $TOKEN_VARIABLE_NAME = 'GITHUB_TOKEN'
 $ENV_FILE_NAME = '.env'
@@ -460,6 +525,12 @@ $GNU_OPTION_TABLE = @{
     '--staged'      = @{ Parameter = 'Staged';     ValueKind = 'None' }
     '--stat'        = @{ Parameter = 'Stat';       ValueKind = 'None' }
     '--between'     = @{ Parameter = 'Between';    ValueKind = 'Single' }
+    '--pr-status'   = @{ Parameter = 'PrStatus';   ValueKind = 'None' }
+    '--watch'       = @{ Parameter = 'Watch';      ValueKind = 'None' }
+    '--base'        = @{ Parameter = 'Base';       ValueKind = 'Single' }
+    '--update-branch' = @{ Parameter = 'UpdateBranch'; ValueKind = 'None' }
+    '--number'      = @{ Parameter = 'PrNumber';   ValueKind = 'Single' }
+    '--timeout'     = @{ Parameter = 'Timeout';    ValueKind = 'Single' }
     '--dry-run'     = @{ Parameter = 'DryRun';     ValueKind = 'None' }
     '--verbose-log' = @{ Parameter = 'VerboseLog'; ValueKind = 'None' }
 }
@@ -845,6 +916,7 @@ function Invoke-GitHubTool {
         $context = New-ToolContext -Options $Options -Report $Report
         if ($Options.Status) { Show-RepositoryStatus -Context $context }
         elseif (Test-AnyInspectActionRequested -Options $Options) { Invoke-InspectWorkflow -Context $context }
+        elseif (Test-AnyReviewActionRequested -Options $Options) { Invoke-ReviewWorkflow -Context $context }
         else { Invoke-ChangeWorkflow -Context $context }
     }
     catch {
@@ -943,7 +1015,38 @@ function Test-ShouldPushBranch {
 
 function Test-GitHubApiRequired {
     param([Parameter(Mandatory)]$Options)
-    return [bool]($Options.Status -or $Options.Pr -or $Options.Issue -or $Options.Release)
+    return [bool]($Options.Status -or $Options.Pr -or $Options.Issue -or $Options.Release -or
+        (Test-AnyReviewActionRequested -Options $Options))
+}
+
+function Test-AnyReviewActionRequested {
+    param([Parameter(Mandatory)]$Options)
+    return [bool]($Options.PrStatus -or $Options.Watch -or $Options.Base -or $Options.UpdateBranch)
+}
+
+function Get-ReviewViolations {
+    param([Parameter(Mandatory)]$Options)
+    $violations = [System.Collections.Generic.List[string]]::new()
+
+    $verbs = [System.Collections.Generic.List[string]]::new()
+    if ($Options.PrStatus) { $verbs.Add('-PrStatus') }
+    if ($Options.Watch) { $verbs.Add('-Watch') }
+    if ($Options.Base) { $verbs.Add('-Base') }
+    if ($Options.UpdateBranch) { $verbs.Add('-UpdateBranch') }
+
+    if ($verbs.Count -ne 1) {
+        $found = if ($verbs.Count -eq 0) { 'none' } else { $verbs -join ', ' }
+        $violations.Add("Pull request review runs one action at a time; got $found. Choose one of -PrStatus, -Watch, -Base, -UpdateBranch.")
+        return $violations
+    }
+
+    if ($Options.Timeout -ne 900 -and -not $Options.Watch) { $violations.Add('-Timeout applies to -Watch only.') }
+    if ($Options.Base -and $Options.PrNumber -lt 1) {
+        $violations.Add('-Base needs -PrNumber, because the pull request to re-target must be explicit.')
+    }
+    # Commit-workflow flags cannot reach this point: they live in other parameter sets, so
+    # PowerShell itself rejects the combination before validation runs.
+    return $violations
 }
 
 function Get-OptionViolations {
@@ -954,6 +1057,11 @@ function Get-OptionViolations {
     # workflow, so they get their own rule set and return early.
     if (-not $Options.Status -and (Test-AnyInspectActionRequested -Options $Options)) {
         foreach ($item in (Get-InspectViolations -Options $Options)) { $violations.Add($item) }
+        return $violations
+    }
+
+    if (-not $Options.Status -and (Test-AnyReviewActionRequested -Options $Options)) {
+        foreach ($item in (Get-ReviewViolations -Options $Options)) { $violations.Add($item) }
         return $violations
     }
 
@@ -1122,7 +1230,8 @@ function New-ToolContext {
         CommitHash   = $null
     }
 
-    if (-not $Options.Status -and -not (Test-AnyInspectActionRequested -Options $Options)) {
+    if (-not $Options.Status -and -not (Test-AnyInspectActionRequested -Options $Options) -and
+        -not (Test-AnyReviewActionRequested -Options $Options)) {
         Confirm-WorkflowPreconditions -Context $context
     }
     if ((Test-GitHubApiRequired -Options $Options) -and -not $Options.DryRun) { Confirm-TokenIsAccepted -Context $context }
@@ -1828,6 +1937,257 @@ function Invoke-RestorePaths {
 }
 
 # ----------------------------------------------------------------------------
+# Pull request review (read-mostly, GitHub API)
+# ----------------------------------------------------------------------------
+function Invoke-ReviewWorkflow {
+    param([Parameter(Mandatory)]$Context)
+    $options = $Context.Options
+
+    if ($options.PrStatus) { Show-PullRequestStatus -Context $Context }
+    elseif ($options.Watch) { Wait-ForPullRequestChecks -Context $Context }
+    elseif ($options.Base) { Set-PullRequestBase -Context $Context }
+    elseif ($options.UpdateBranch) { Update-PullRequestBranch -Context $Context }
+}
+
+function Resolve-PullRequestNumber {
+    param([Parameter(Mandatory)]$Context)
+
+    if ($Context.Options.PrNumber -gt 0) { return [int]$Context.Options.PrNumber }
+
+    $branch = $Context.TargetBranch
+    if (-not $branch) {
+        throw (New-ToolException -Message 'HEAD is detached, so the pull request cannot be inferred from a branch.' -Hint 'Pass -PrNumber <n>.')
+    }
+
+    $repository = $Context.Repository
+    $headFilter = [uri]::EscapeDataString("$($repository.Owner):$branch")
+    $endpoint = "repos/$($repository.Owner)/$($repository.Name)/pulls?state=open&head=$headFilter"
+    # An empty result comes back as an empty array, sometimes still wrapped in one element,
+    # so match on the property instead of trusting the count.
+    $candidates = @(Invoke-GitHubApi -Method 'Get' -Endpoint $endpoint -Token $Context.Token.Value -Operation 'Finding the pull request for this branch' |
+        Where-Object { $null -ne $_ -and $_.PSObject.Properties['number'] })
+
+    if ($candidates.Count -eq 0) {
+        throw (New-ToolException -Message "No open pull request has '$branch' as its head." -Hint 'Open one with -Pr, or pass -PrNumber <n>.')
+    }
+    return [int]$candidates[0].number
+}
+
+function Get-PullRequestDetails {
+    param(
+        [Parameter(Mandatory)]$Context,
+        [Parameter(Mandatory)][int]$Number
+    )
+    $repository = $Context.Repository
+    $endpoint = "repos/$($repository.Owner)/$($repository.Name)/pulls/$Number"
+    return Invoke-GitHubApi -Method 'Get' -Endpoint $endpoint -Token $Context.Token.Value -Operation "Reading pull request #$Number"
+}
+
+function Get-PullRequestCheckRollup {
+    param(
+        [Parameter(Mandatory)]$Context,
+        [Parameter(Mandatory)][string]$Sha
+    )
+    $repository = $Context.Repository
+    $prefix = "repos/$($repository.Owner)/$($repository.Name)/commits/$Sha"
+    $checks = [System.Collections.Generic.List[object]]::new()
+
+    $runs = Invoke-GitHubApi -Method 'Get' -Endpoint "$prefix/check-runs?per_page=100" -Token $Context.Token.Value -Operation 'Reading check runs'
+    foreach ($run in @(Get-OptionalProperty -InputObject $runs -Name 'check_runs' | Where-Object { $null -ne $_ })) {
+        # Only "completed" carries a verdict; queued and in_progress are still running.
+        $state = if ("$($run.status)" -ne 'completed') {
+            'Pending'
+        }
+        else {
+            switch ("$($run.conclusion)") {
+                'success' { 'Success' }
+                'skipped' { 'Skipped' }
+                'neutral' { 'Neutral' }
+                'stale' { 'Neutral' }
+                default { 'Failed' }
+            }
+        }
+        $checks.Add([pscustomobject]@{ Name = [string]$run.name; State = $state })
+    }
+
+    # Commit statuses come from older CI integrations and live on a different endpoint.
+    $status = Invoke-GitHubApi -Method 'Get' -Endpoint "$prefix/status" -Token $Context.Token.Value -Operation 'Reading commit statuses'
+    foreach ($entry in @(Get-OptionalProperty -InputObject $status -Name 'statuses' | Where-Object { $null -ne $_ })) {
+        $state = switch ("$($entry.state)") {
+            'success' { 'Success' }
+            'pending' { 'Pending' }
+            default { 'Failed' }
+        }
+        $checks.Add([pscustomobject]@{ Name = [string]$entry.context; State = $state })
+    }
+
+    return [pscustomobject]@{
+        Checks  = $checks
+        Total   = $checks.Count
+        Passed  = @($checks | Where-Object { $_.State -in @('Success', 'Skipped', 'Neutral') }).Count
+        Pending = @($checks | Where-Object { $_.State -eq 'Pending' }).Count
+        Failed  = @($checks | Where-Object { $_.State -eq 'Failed' }).Count
+    }
+}
+
+function Get-PullRequestStateSummary {
+    param([Parameter(Mandatory)]$PullRequest)
+    $state = if ($PullRequest.merged) { 'merged' } elseif ($PullRequest.draft) { 'open (draft)' } else { [string]$PullRequest.state }
+    $autoMerge = Get-OptionalProperty -InputObject $PullRequest -Name 'auto_merge'
+    if ($autoMerge -and -not $PullRequest.merged) { $state += ', auto-merge armed' }
+    return $state
+}
+
+function Get-PullRequestMergeSummary {
+    param([Parameter(Mandatory)]$PullRequest)
+    if ($PullRequest.merged) { return 'already merged' }
+
+    $mergeable = Get-OptionalProperty -InputObject $PullRequest -Name 'mergeable'
+    if ($false -eq $mergeable) { return 'conflicts with the base branch' }
+
+    $state = [string](Get-OptionalProperty -InputObject $PullRequest -Name 'mergeable_state')
+    switch ($state) {
+        'clean' { return 'no conflicts, nothing blocking' }
+        'dirty' { return 'conflicts with the base branch' }
+        'blocked' { return 'blocked by required checks or review' }
+        'unstable' { return 'checks failing or still running' }
+        'behind' { return "behind its base branch (use -UpdateBranch)" }
+        'draft' { return 'draft; not yet ready to merge' }
+        'unknown' { return 'not computed yet by GitHub' }
+        default { if ($state) { return $state } else { return 'not computed yet by GitHub' } }
+    }
+}
+
+function Write-PullRequestCheckList {
+    param([Parameter(Mandatory)]$Rollup)
+    if ($Rollup.Total -eq 0) {
+        Write-TreeLine -Text 'no checks reported for this commit' -IsLast $true -Color DarkGray
+        return
+    }
+    foreach ($check in $Rollup.Checks) {
+        $color = switch ($check.State) {
+            'Success' { 'Green' }
+            'Pending' { 'Yellow' }
+            'Neutral' { 'DarkGray' }
+            'Skipped' { 'DarkGray' }
+            default { 'Red' }
+        }
+        Write-Host ($TREE_INDENT + '  ' + ('{0,-9}{1}' -f $check.State.ToLowerInvariant(), $check.Name)) -ForegroundColor $color
+    }
+}
+
+function Show-PullRequestStatus {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Pull request status'
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $number = Resolve-PullRequestNumber -Context $Context
+    $pullRequest = Get-PullRequestDetails -Context $Context -Number $number
+    $rollup = Get-PullRequestCheckRollup -Context $Context -Sha $pullRequest.head.sha
+
+    $rows = [System.Collections.Generic.List[object]]::new()
+    $rows.Add(@{ Label = 'Title'; Value = [string]$pullRequest.title })
+    $rows.Add(@{ Label = 'Branch'; Value = "$($pullRequest.head.ref) -> $($pullRequest.base.ref)" })
+    $rows.Add(@{ Label = 'State'; Value = Get-PullRequestStateSummary -PullRequest $pullRequest })
+    $rows.Add(@{ Label = 'Mergeable'; Value = Get-PullRequestMergeSummary -PullRequest $pullRequest })
+    $rows.Add(@{ Label = 'Checks'; Value = "$($rollup.Passed)/$($rollup.Total) green, $($rollup.Pending) running, $($rollup.Failed) failed" })
+    $requested = @(Get-OptionalProperty -InputObject $pullRequest -Name 'requested_reviewers' | Where-Object { $null -ne $_ })
+    if ($requested.Count -gt 0) {
+        $rows.Add(@{ Label = 'Review'; Value = 'waiting on ' + (($requested | ForEach-Object { $_.login }) -join ', ') })
+    }
+    $rows.Add(@{ Label = 'Changes'; Value = "+$($pullRequest.additions) -$($pullRequest.deletions) in $($pullRequest.changed_files) file(s)" })
+
+    Write-Host ''
+    Write-SectionTitle "Pull Request #$number"
+    for ($index = 0; $index -lt $rows.Count; $index++) {
+        Write-TreeLine -Text ('{0,-12}{1}' -f $rows[$index].Label, $rows[$index].Value) -IsLast ($index -eq $rows.Count - 1)
+    }
+    Write-PullRequestCheckList -Rollup $rollup
+
+    Add-ReportLink -Report $Context.Report -Label 'Pull Request' -Url $pullRequest.html_url
+    $detail = "#$number $(Get-PullRequestStateSummary -PullRequest $pullRequest); $($rollup.Passed)/$($rollup.Total) checks green"
+    Complete-Step -Context $Context -Name $stepName -Detail $detail
+}
+
+function Wait-ForPullRequestChecks {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Watch checks'
+    $options = $Context.Options
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    if ($options.DryRun) {
+        Write-LogDryRun "poll pull request checks every $CHECK_POLL_INTERVAL_SECONDS s for up to $($options.Timeout) s"
+        Complete-Step -Context $Context -Name $stepName -Detail 'would wait for the checks to finish'
+        return
+    }
+
+    $number = Resolve-PullRequestNumber -Context $Context
+    $deadline = (Get-Date).AddSeconds($options.Timeout)
+
+    while ($true) {
+        $pullRequest = Get-PullRequestDetails -Context $Context -Number $number
+        $rollup = Get-PullRequestCheckRollup -Context $Context -Sha $pullRequest.head.sha
+        Write-LogInfo "#$number $($rollup.Passed)/$($rollup.Total) green, $($rollup.Pending) running, $($rollup.Failed) failed"
+
+        if ($rollup.Pending -eq 0 -or $rollup.Failed -gt 0) { break }
+        if ((Get-Date) -ge $deadline) {
+            throw (New-ToolException -Message "Pull request #$number still has $($rollup.Pending) check(s) running after $($options.Timeout) s." -Hint 'Re-run -Watch with a larger -Timeout, or open the pull request page.')
+        }
+        Start-Sleep -Seconds $CHECK_POLL_INTERVAL_SECONDS
+    }
+
+    if ($rollup.Failed -gt 0) {
+        $names = @($rollup.Checks | Where-Object { $_.State -eq 'Failed' } | ForEach-Object { $_.Name }) -join ', '
+        $details = @($names -split ', ')
+        throw (New-ToolException -Message "Pull request #$number has $($rollup.Failed) failing check(s)." -Hint 'Fix the failures, push, then watch again.' -Details $details)
+    }
+
+    Add-ReportLink -Report $Context.Report -Label 'Pull Request' -Url $pullRequest.html_url
+    if ($rollup.Total -eq 0) {
+        Write-StepResult -Report $Context.Report -Name $stepName -Outcome 'Skipped' -Detail "#$number reports no checks"
+        return
+    }
+    $state = if ($pullRequest.merged) { 'merged' } else { 'ready to merge' }
+    Complete-Step -Context $Context -Name $stepName -Detail "#$number green ($($rollup.Passed) check(s)), $state"
+}
+
+function Set-PullRequestBase {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Re-target pull request'
+    $target = $Context.Options.Base
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    Confirm-RefNameIsValid -Arguments @('check-ref-format', '--branch', $target) -Description "branch name '$target'" -Context $Context
+
+    $number = Resolve-PullRequestNumber -Context $Context
+    $repository = $Context.Repository
+    $endpoint = "repos/$($repository.Owner)/$($repository.Name)/pulls/$number"
+    $response = Invoke-GitHubMutation -Context $Context -Method 'Patch' -Endpoint $endpoint -Body @{ base = $target } -Operation "Re-targeting pull request #$number"
+
+    if ($response) { Add-ReportLink -Report $Context.Report -Label 'Pull Request' -Url $response.html_url }
+    $actual = if ($response) { [string]$response.base.ref } else { $target }
+    Complete-Step -Context $Context -Name $stepName -Detail "#$number now targets '$actual'"
+}
+
+function Update-PullRequestBranch {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Update PR branch'
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $number = Resolve-PullRequestNumber -Context $Context
+    $pullRequest = Get-PullRequestDetails -Context $Context -Number $number
+    $repository = $Context.Repository
+    $endpoint = "repos/$($repository.Owner)/$($repository.Name)/pulls/$number/update-branch"
+
+    # expected_head_sha makes the request fail instead of clobbering a newer push.
+    $body = @{ expected_head_sha = [string]$pullRequest.head.sha }
+    Invoke-GitHubMutation -Context $Context -Method 'Put' -Endpoint $endpoint -Body $body -Operation "Updating pull request #$number from its base" | Out-Null
+
+    Add-ReportLink -Report $Context.Report -Label 'Pull Request' -Url $pullRequest.html_url
+    Complete-Step -Context $Context -Name $stepName -Detail "#$number updated from '$($pullRequest.base.ref)'"
+}
+
+# ----------------------------------------------------------------------------
 # Status
 # ----------------------------------------------------------------------------
 function Show-RepositoryStatus {
@@ -1886,7 +2246,10 @@ function Get-OpenPullRequestsForStatus {
     if ($Context.Options.DryRun) { return }
     $repository = $Context.Repository
     $endpoint = "repos/$($repository.Owner)/$($repository.Name)/pulls?state=open&per_page=$MAX_LISTED_PULL_REQUESTS"
-    return Invoke-GitHubApi -Method 'Get' -Endpoint $endpoint -Token $Context.Token.Value -Operation 'Listing open pull requests'
+    $response = Invoke-GitHubApi -Method 'Get' -Endpoint $endpoint -Token $Context.Token.Value -Operation 'Listing open pull requests'
+    # An empty result is an empty array that Invoke-RestMethod hands back as a single element,
+    # so match on the shape of a pull request instead of trusting the pipeline count.
+    return @($response | Where-Object { $null -ne $_ -and $_.PSObject.Properties['number'] })
 }
 
 function Write-PullRequestRows {
@@ -2117,7 +2480,7 @@ function Invoke-GitMutation {
 function Invoke-GitHubMutation {
     param(
         [Parameter(Mandatory)]$Context,
-        [Parameter(Mandatory)][ValidateSet('Post', 'Patch')][string]$Method,
+        [Parameter(Mandatory)][ValidateSet('Post', 'Patch', 'Put')][string]$Method,
         [Parameter(Mandatory)][string]$Endpoint,
         [Parameter(Mandatory)][hashtable]$Body,
         [Parameter(Mandatory)][string]$Operation
@@ -2131,7 +2494,7 @@ function Invoke-GitHubMutation {
 
 function Invoke-GitHubApi {
     param(
-        [Parameter(Mandatory)][ValidateSet('Get', 'Post', 'Patch')][string]$Method,
+        [Parameter(Mandatory)][ValidateSet('Get', 'Post', 'Patch', 'Put')][string]$Method,
         [Parameter(Mandatory)][string]$Endpoint,
         [Parameter(Mandatory)][string]$Token,
         [Parameter(Mandatory)][string]$Operation,
@@ -2281,6 +2644,12 @@ $toolOptions = [pscustomobject]@{
     Staged     = $Staged.IsPresent
     Stat       = $Stat.IsPresent
     Between    = $Between
+    PrStatus   = $PrStatus.IsPresent
+    Watch      = $Watch.IsPresent
+    Base       = $Base
+    UpdateBranch = $UpdateBranch.IsPresent
+    PrNumber   = $PrNumber
+    Timeout    = $Timeout
     DryRun     = $DryRun.IsPresent
 }
 
