@@ -43,6 +43,16 @@ MAX_APP_PAGES_PER_RUN = 60
 # rule is not evidence of absence, so it is re-checked instead of trusted.
 VERIFY_STAGE = 2
 
+_app_page_limit_env = "MAX_APP_PAGES_PER_RUN"
+
+
+def _app_page_limit():
+    """Per-run app-page ceiling, overridable for longer phone runs."""
+    try:
+        return max(1, int(os.environ.get(_app_page_limit_env, MAX_APP_PAGES_PER_RUN)))
+    except (TypeError, ValueError):
+        return MAX_APP_PAGES_PER_RUN
+
 _pages_fetched = 0
 
 CACHE_TTL_DAYS = 14
@@ -193,7 +203,7 @@ def resolve_by_package_page(package_name, search_page):
     slugs = app_slugs(search_page)
     for index, slug in enumerate(slugs):
         global _pages_fetched
-        if _pages_fetched >= MAX_APP_PAGES_PER_RUN:
+        if _pages_fetched >= _app_page_limit():
             raise ApkmirrorUnavailable(
                 f"{package_name}: app-page budget spent for this run"
             )

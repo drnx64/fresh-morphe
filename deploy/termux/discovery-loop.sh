@@ -17,6 +17,10 @@ fi
 cd "$FRESH_HOME" || exit 1
 mkdir -p logs
 
+if [ -f deploy/termux/env.sh ]; then
+  . ./deploy/termux/env.sh
+fi
+
 lock="$FRESH_HOME/.discovery.lock"
 if ! mkdir "$lock" 2>/dev/null; then
   pid=$(cat "$lock/pid" 2>/dev/null || true)

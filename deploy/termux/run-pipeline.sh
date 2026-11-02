@@ -10,6 +10,12 @@ fi
 cd "$FRESH_HOME" || exit 1
 mkdir -p logs
 
+# Shared phone env (icon budget etc.). Optional so a half-copied checkout still
+# runs; every value inside has a default.
+if [ -f deploy/termux/env.sh ]; then
+  . ./deploy/termux/env.sh
+fi
+
 lock="$FRESH_HOME/.pipeline.lock"
 if ! mkdir "$lock" 2>/dev/null; then
   pid=$(cat "$lock/pid" 2>/dev/null || true)
