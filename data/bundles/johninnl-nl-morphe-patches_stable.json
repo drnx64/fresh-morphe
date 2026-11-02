@@ -2,9 +2,9 @@
   "bundle": "johninnl-nl-morphe-patches",
   "channel": "stable",
   "repo_url": "https://github.com/johninnl/nl-morphe-patches",
-  "created_at": "2026-11-01T21:36:28Z",
-  "version": "1.23.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/cf9acd2fe8597795be9e40409eaf415613ed93e5/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.23.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [cf9acd2fe859](https://github.com/johninnl/nl-morphe-patches/commit/cf9acd2fe8597795be9e40409eaf415613ed93e5). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.23.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.22.0...v1.23.0) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **Vela Maps:** follow active car routes without the phone service ([cf9acd2](https://github.com/johninnl/nl-morphe-patches/commit/cf9acd2fe8597795be9e40409eaf415613ed93e5))\n\n### ✨ New Features\n\n* **Flitsmeister:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))\n* **Vela Maps:** integrate external speed and road warnings natively ([8e2a2a2](https://github.com/johninnl/nl-morphe-patches/commit/8e2a2a22e0d04049602d96ce1a4de35c7cbe0617))\n* **Waze:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))",
+  "created_at": "2026-11-02T05:58:48Z",
+  "version": "1.26.1",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/bfdc032e1ee71fc160fc208d48f6aa96f4568e02/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.27.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [bfdc032e1ee7](https://github.com/johninnl/nl-morphe-patches/commit/bfdc032e1ee71fc160fc208d48f6aa96f4568e02). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.27.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.26.1...v1.27.0) (2026-11-02)\n\n### ✨ New Features\n\n* **Myspoti:** enable personal libraries in Gearslip ([bfdc032](https://github.com/johninnl/nl-morphe-patches/commit/bfdc032e1ee71fc160fc208d48f6aa96f4568e02))",
   "apps": [
     {
       "app_name": "Music Speed Changer",
@@ -25,9 +25,39 @@
       ]
     },
     {
+      "app_name": "Myspoti",
+      "package": "app.myspoti.stable",
+      "patches": [
+        {
+          "name": "Gearslip personal library",
+          "description": "Allows the configured Gearslip host to use Myspoti's signed-in library, search and playback while retaining Android caller verification.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageNames",
+              "description": "Comma-separated Gearslip host packages. Myspoti retains its UID ownership checks for browsing and search."
+            }
+          ],
+          "compatible_versions": [
+            "2.2.0",
+            "2.3.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Gearslip",
       "package": "app.seb3thehacker.gearslip",
       "patches": [
+        {
+          "name": "Control car display density",
+          "description": "Adds a density submenu under Screen for larger text and controls, including hosted navigation apps. Choose the car's density or 160–240 DPI. Keeps resolution unchanged; reconnect to apply.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.3.31-alpha"
+          ]
+        },
         {
           "name": "Hide apps from drawer",
           "description": "Adds an Apps card to Gearslip's phone settings. Every installed car app is ticked by default; unticking one hides its tile from the car drawer. Does not disable or uninstall apps.",
@@ -675,6 +705,297 @@
       ]
     },
     {
+      "app_name": "Google Maps",
+      "package": "com.google.android.apps.maps",
+      "patches": [
+        {
+          "name": "120 refresh rate",
+          "description": "Lifts the 60 Hz limit Maps puts on itself, on the app and on the map, so it can run at your screen's full refresh rate (such as 120 Hz). Uses more battery, most of all while navigating. Off by default: switch it on on the Customization screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Account sheet cleanup",
+          "description": "Removes the \"More from this app\" label from the account sheet, and keeps the sheet open when you come back from Settings or Customization or tap \"Your profile\", instead of dropping back to the map.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Add microG-RE support",
+          "description": "Signs in to your Google account through microG-RE (MicroG-RE or ReVanced GmsCore), keeping the name from Change app name. Not for root installs; for original microG, use Add original microG support.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Add original microG support",
+          "description": "Signs in through original microG on ROMs with signature spoofing. Keeps Maps' own package name; allow signature spoofing for it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Any media app",
+          "description": "Navigation's Default media app (Settings > Navigation) offers every music and podcast app that works with Android Auto, such as Poweramp, also where Google switches media controls off. YouTube Music and Spotify only connect to Google's own Maps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Avoid Flock cameras",
+          "description": "Steers driving directions around Flock cameras: when Google's route passes one, a camera-free way is worked out with BRouter, an OpenStreetMap router, and Maps asks Google again for a route through it, so Google still times and navigates the trip, and keeps it through reroutes. A detour longer than half again the distance is dropped. Off until turned on in Waze & external data source, with Flock cameras; your route's start and end go to brouter.de. Trips with stops are left as they are.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Better offline maps",
+          "description": "Reworks the offline area picker: zooming out really selects more instead of being shrunk to Google's size cap, the box can be resized by dragging its edges and corners, a large area is split into several downloads whose true total size is shown, and areas already downloaded are drawn on the map. Can be turned off on the Customization screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Black theme",
+          "description": "AMOLED-black theme. Pins Maps' own dark mode and its separate navigation colour scheme, and remaps colour resources, drawable fills and draw-time paints so no surface is left grey.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Blue pin",
+          "description": "Chromium-coloured flat map pin on every in-app product logo and the search bar's leading icon.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Bypass Play Services checks",
+          "description": "Makes Maps' bundled Play services signature and availability checks always pass, so it runs re-signed and with Play services disabled or absent, and lets it load tiles, search and routing by sending Google's own package and certificate in the identity headers the Maps backend checks. Where Play services rejects the re-signed app, Maps degrades instead of crashing. Also skips Google's \"isn't Play Protect certified\" page, and with no Play services at all uses Android's own Cronet so the map still loads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Change app name",
+          "description": "Sets the launcher and in-app app name.",
+          "use": true,
+          "options": [
+            {
+              "key": "appName",
+              "description": "The name shown under the launcher icon and in the app switcher, including with either microG support patch."
+            }
+          ],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Installs alongside stock Google Maps under its own package name. On by default, because stock Maps comes built into most phones and cannot be replaced by a patched copy.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to install under. Must be a valid Android package name. Left at org.ungoogled.android.apps.maps, Add microG-RE support installs under org.ungoogled.android.apps.maps.microg instead and Add original microG support keeps com.google.android.apps.maps."
+            }
+          ],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Customization screen",
+          "description": "Adds a Customization row under Settings on the account sheet, with switches for the patches here that can be turned back off inside the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Flock cameras",
+          "description": "Puts Flock and other license plate reader cameras on the map, from OpenStreetMap -- the cameras DeFlock's volunteers map -- and chimes and shows a note when one is coming up ahead. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the ones near you from an OpenStreetMap server, over the same area as the speed cameras.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Follow playing media",
+          "description": "Navigation's media controls show what an app is playing, also apps that refuse Maps such as Pocket Casts and TIDAL. Needs notification access (Customization), not on root mount installs.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Hide ads and clutter",
+          "description": "Hides promoted map pins (on the map, in search results and along a route) and \"Sponsored\" search results, Gemini's AI summaries (\"Know before you go\" and the review summary), the row of businesses under an address on its place sheet, the home tab's Explore feed and the Explore / Contribute / You tabs. Each can be switched back on on the Customization screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Legacy icon",
+          "description": "Uses the flat multicolour pin Maps had before the 2025 gradient icon as the launcher icon and on the screen Maps opens with. With Add microG-RE support, microG's C sits in the pin's circle.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Location provider toggle",
+          "description": "Adds a Location source choice to the Customization screen: Android's own location providers, microG-RE's or Google Play services' fused provider. With Android, neither is ever asked for a location. A source that is missing or disabled is never used, so location keeps working without it. Also keeps the network (Wi-Fi/cell) provider registered when no fused provider answers, instead of GPS only, so a fix does not go stale indoors.",
+          "use": true,
+          "options": [
+            {
+              "key": "useFusedProvider",
+              "description": "The location source Maps starts with. On: the fused provider -- Google Play services', or microG-RE's in microG Maps -- whenever it is installed and enabled, Android's own providers otherwise. Off: Android's own providers. Can be changed later on the Customization screen."
+            }
+          ],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Offline saved places",
+          "description": "Save places without a Google account, kept only on the phone: Save opens Maps' own \"Place saved\" sheet (Want to go, Travel plans, Starred places, Favorites, your own lists, a note), and a \"Local saved\" row on the account sheet rebuilds Maps' You tab -- your recent places, your lists and labels (Home, Work, your own) -- with export and import (backup file, KML, Google Takeout's saved lists and Saved Places.json, several files or the whole Takeout .zip at once). It also has a Timeline: where the phone has been, grouped into days and visits, kept only on the phone, with GPX export. Recording is off until switched on there; it shows a notification while it runs. With Add microG-RE support, Maps' own Save keeps syncing to your account and Local saved instead copies the account's saved lists to the phone (Pull from Google account).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Power saving mode",
+          "description": "Brings the Pixel-only power saving mode to every phone: while driving with navigation, press the power button and Maps shows only key information such as the next turn on a black screen. Turn it on or off in Settings > Navigation > Power saving mode. Pixels that have it built in keep Google's own version unless Power saving mode is turned on in Power Saving Options, a row on the account sheet under Customization, which also has: a navigation button that opens the power saving screen without locking the phone, switching to it by itself when idle, a speedometer on it, a lower frame rate, and its black map in navigation or all over Maps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Proxy",
+          "description": "Adds a Proxy screen to Customization that sends Maps' own traffic, map data included, through an HTTP proxy -- for example Orbot's (127.0.0.1:8118) to use Tor. Map data never falls back to a direct connection: if the proxy stops, Maps stops loading. Needs a recent Play services network engine (Cronet); Maps warns when it cannot take the proxy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Rectangle shapes",
+          "description": "Squares off rounded corners across the UI, including the two round navigation buttons.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Remove permissions",
+          "description": "Removes permissions that only serve Google-account features or Google's data collection: background location, physical activity, contacts, microphone (voice search stops working), camera (Lens and Live View stop working), car speed, advertising ID, push messages and Google services settings. Left out with Add microG-RE support, whose account features need them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Remove sign-in prompts",
+          "description": "Removes Google's sign-in prompts: the first-launch \"Make it your map\" page, the search screen's \"Tired of typing?\" card and the account sheet's \"Sign in\" pill. Tapping \"Your profile\" (or the pill, where it still shows) answers with a \"Can't sign in\" toast instead of nothing. With Add microG-RE support, which signs in, only the first-launch page and the card go.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Points the Firebase Installations and Play services compliance check-ins at an unresolvable host, stops every ad impression and click ping from being sent, and deregisters Google's logging, performance-monitoring, survey and Location History libraries and the on-device federated-learning services. With Add microG-RE support, Firebase Installations and Location History are left alone, so Timeline, account sync and push messages keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Speed cameras",
+          "description": "Chimes and shows a note when a speed or red light camera is coming up ahead, and puts the cameras on the map, from OpenStreetMap. Off until turned on in Waze & external data source, a row on the account sheet, because it downloads the cameras near you from an OpenStreetMap server -- an area you choose there, about 25 to 175 km across.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Speeding chime",
+          "description": "Plays a chime when your speed passes the speed limit during navigation, as Waze does. Maps itself only turns its speedometer red. When it chimes is chosen in Waze & external data source, a row on the account sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Trim account menu",
+          "description": "Removes Your Timeline, Location sharing, Your data in Maps and Help & feedback from the account sheet. Left out with Add microG-RE support, whose account features need them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Waze alerts",
+          "description": "Shows nearby Waze and Flitsmeister alerts as map pins with ahead-of-you chimes and notes. Supports our navigation broadcasts for current speed, speed limits and average-speed zones, plus bearinmind's Waze Share alerts with Maps feed. Choose a provider in Waze & external data source; external data is off by default. The selected source must be patched, enabled and running.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
+          "name": "Zoom controls in navigation",
+          "description": "Adds +, − and reset tiles during turn-by-turn that change the navigation zoom while the camera keeps following the car.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "YouTube Music",
       "package": "com.google.android.apps.youtube.music",
       "patches": [
@@ -703,6 +1024,93 @@
           "options": [],
           "compatible_versions": [
             "1.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "RainViewer: Live Weather Radar",
+      "package": "com.lucky_apps.rainviewer",
+      "patches": [
+        {
+          "name": "Disable tracking",
+          "description": "Disables Firebase analytics, performance and crash uploads, Clarity recording, advertising identifiers and publisher session/paywall/open-notification events while retaining weather requests and notification delivery.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Enable local Pro features",
+          "description": "Uses Pro client controls while keeping map and forecast requests within Free limits. Includes Disable tracking and Hide AI insights. Purchases and server entitlements remain unchanged; paid data may be unavailable.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Fix Google services",
+          "description": "Reports RainViewer's original certificate digest to Firebase/Google API package restrictions after re-signing. Does not forge Google Play Integrity tokens or suppress publisher server rejection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Fix integrity",
+          "description": "Uses RainViewer's no-attestation fallback and renews its anonymous app session once, preserving settings and purchase records. Includes original-certificate compatibility for Google services. Does not forge signed Google verdicts or hide publisher errors.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Hide AI insights",
+          "description": "Removes the forecast AI tab and summary panel, retaining the normal temperature forecast. Stops automatic assistant requests.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Disables map, forecast, sharing, post-play and post-premium advertising, in-house promotions and chart promo blocks, including cached and remotely enabled placements.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Hide weather warnings overlay",
+          "description": "Removes the Weather Warnings map-layer control and stops its overlay downloads. Keeps weather warnings delivered as part of ordinary forecasts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Skip consent screens",
+          "description": "Skips the automatic Google UMP consent request and banner after disabling ads and tracking. Does not record or grant consent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Skip subscription screens",
+          "description": "Skips subscription onboarding, automatic startup/web promotions, recurring purchase offers and Settings offer cards. Hides the Settings plan Manage link while retaining the plan badge and premium access state.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
           ]
         }
       ]
@@ -2628,10 +3036,10 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "f71fb39dc8cf763fc740a0920d7e1b0c6ca20b2cd3ab10f09f626f091579e010",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/b60fd5bb5f0c1e27cc3ec8733a783aca9127ad1a/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.23.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [b60fd5bb5f0c](https://github.com/johninnl/nl-morphe-patches/commit/b60fd5bb5f0c1e27cc3ec8733a783aca9127ad1a). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.23.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.22.0...v1.23.0) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* **Vela Maps:** follow active car routes without the phone service ([cf9acd2](https://github.com/johninnl/nl-morphe-patches/commit/cf9acd2fe8597795be9e40409eaf415613ed93e5))\n\n### ✨ New Features\n\n* **Flitsmeister:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))\n* **Vela Maps:** integrate external speed and road warnings natively ([8e2a2a2](https://github.com/johninnl/nl-morphe-patches/commit/8e2a2a22e0d04049602d96ce1a4de35c7cbe0617))\n* **Waze:** share road alerts and zone approaches with third-party apps ([27f0205](https://github.com/johninnl/nl-morphe-patches/commit/27f0205b3ca015055bc007cafdafe61f6035782e))\n",
-  "release_tag": "v1.23.0",
-  "release_date": "2026-11-01T21:36:28Z",
+  "fingerprint": "0ee34b7b27cafe73f84df1ff444bda2a1bfa18bae78b6b2169a0a1b278705284",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/47970293af77d1673e021f7257a984448b4c9317/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.26.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [47970293af77](https://github.com/johninnl/nl-morphe-patches/commit/47970293af77d1673e021f7257a984448b4c9317). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.26.1](https://github.com/johninnl/nl-morphe-patches/compare/v1.26.0...v1.26.1) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* **Google Maps:** retain the chosen app name with microG support ([c50dcd8](https://github.com/johninnl/nl-morphe-patches/commit/c50dcd8cdd23df060acba8e214d505b65d452eb6))\n",
+  "release_tag": "v1.26.1",
+  "release_date": "2026-11-02T05:58:48Z",
   "isPreRelease": false,
   "stars": 9,
   "avatarUrl": "https://avatars.githubusercontent.com/u/349981574?v=4&s=128",

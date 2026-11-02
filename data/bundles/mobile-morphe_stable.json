@@ -2,9 +2,9 @@
   "bundle": "mobile-morphe",
   "channel": "stable",
   "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
-  "created_at": "2026-10-31T23:43:08",
-  "version": "1.0.2",
-  "description": "## [1.0.2](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.1...v1.0.2) (2026-10-31)\n\n\n### Features\n\n* add carrier presets to Spoof carrier ([00bc6c7](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/00bc6c756b489d971dad5311f8eb5c53e746cacc))\n* add Spoof carrier ([80bae66](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/80bae6637793cca09548af088d94554b2aad0b18))\n* enable the shared patches for ESPN, NFL and NBA ([03128b9](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/03128b9714ccf176d544325039ab737a6907d90c))\n* **espn:** add ESPN Skip ads and Block analytics ([a954b61](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/a954b61f8a932fb6fa5ca8c1d8150251abfd4ea8))\n* **nba:** add NBA Skip ads, Disable Ask NBA AI and Block analytics ([11f9b1a](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/11f9b1a0debc3d0c55bceeaf76373fd0f49ec62d))\n* **nfl:** add NFL Skip ads and Block analytics ([5cd4dfe](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/5cd4dfecc8b41b0dba9d05e6673d97b03b32f4f9))",
+  "created_at": "2026-11-02T05:03:50",
+  "version": "1.0.3",
+  "description": "## [1.0.3](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.2...v1.0.3) (2026-11-02)\n\n\n### Bug Fixes\n\n* limit the store-tracking privacy patches to the shopping apps ([6b2084b](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/6b2084b7427102f33ae145c979cee6a8d3e11805))\n* offer Report Wi-Fi connection and Hide VPN connection on streaming and news apps only ([dc77c43](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/dc77c43a5527ea9b5741c22678a6aa8578179ca4))\n* **primevideo:** rename shared Amazon permissions ([2eeb522](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/2eeb5229cb3c1eee24dbfcbba2b31a7299e07477))\n\n\n### Features\n\n* add DealSeek and seven store apps, with shopping privacy patches ([6c6abfa](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/6c6abfa0cbaf084dbc779d87c37f3f2689c54a25))",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -47,6 +47,15 @@
           ]
         },
         {
+          "name": "Rename shared permissions",
+          "description": "Renames the Amazon sign-in permissions that Prime Video shares with other Amazon apps, so the patched app does not block installing Amazon Shopping and other Amazon apps from the Play Store.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0.477.1447"
+          ]
+        },
+        {
           "name": "Report Wi-Fi connection",
           "description": "Makes the app see an unmetered Wi-Fi connection when the phone is on mobile data, so Wi-Fi-only downloads and quality limits do not apply. This can use a lot of mobile data. Opt-in / experimental; test on-device.",
           "use": false,
@@ -76,6 +85,98 @@
           ],
           "compatible_versions": [
             "3.0.477.1447"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Shopping",
+      "package": "com.amazon.mshop.android.shopping",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Disable AI",
+          "description": "Turns off Rufus, Amazon's AI shopping assistant, in the app's tabs, search, and camera lens, and the AI assistant in Amazon Pay. Rufus prompts that Amazon's web pages show inside the app may still appear. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Hide sponsored listings",
+          "description": "Hides sponsored products in Amazon search results and on product pages. Sponsored items in the app's native screens, such as some home page rows, may still show. Experimental; test on-device.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "32.19.0.100"
           ]
         }
       ]
@@ -183,6 +284,98 @@
           "options": [],
           "compatible_versions": [
             "3.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Best Buy: Shop tech deals",
+      "package": "com.bestbuy.android",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Disable AI",
+          "description": "Hides the AI-written review summaries on Best Buy product pages. The reviews themselves still show. Ask Blue, Best Buy's AI assistant, is not covered. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Hide sponsored listings",
+          "description": "Turns on Best Buy's own option for search results without sponsored listings. The sponsored \"Featured products\" row in search still shows. Experimental; test on-device.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.10"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "26.10.10"
           ]
         }
       ]
@@ -450,6 +643,190 @@
           ],
           "compatible_versions": [
             "26.21.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CVS Health",
+      "package": "com.cvs.launchers.cvs",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Disable AI",
+          "description": "Turns off AI in the CVS app: AI search in the help center, which also stops the app from downloading Google's on-device AI model, AI insights, AI summaries of visits, lab results and claims, and proactive AI on pharmacy orders. The original visit, lab and claim details still show. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "26.10.50"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "DealSeek: Coupons & Discounts",
+      "package": "com.dealseekorg.dealseek",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops analytics and tracking in the DealSeek app: AppsFlyer, Meta app events, Firebase, TikTok and PostHog. Blocking happens on the device, inside the app. Sign-in and deals are left alone. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Disable Pairip license check",
+          "description": "Lets the re-signed app start: Google's Pairip license check otherwise blocks any copy not installed from the Play Store. Client-side only; it does not bypass Play Integrity attestation.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "1.64.0"
+          ]
+        },
+        {
+          "name": "Strip affiliate links",
+          "description": "Opens DealSeek deals at the store's own page. It skips DealSeek's click tracking and the affiliate redirects, and removes affiliate tags such as Amazon's.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.64.0"
           ]
         }
       ]
@@ -1451,6 +1828,181 @@
       ]
     },
     {
+      "app_name": "Target: Shop. Style. Save.",
+      "package": "com.target.ui",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Disable AI",
+          "description": "Turns off Ask Target, Target's AI shopping agent and AI mode in search, the AI gift finder, the AI shopping list scanner, and AI replies in support chat, which then goes to the regular chat. AI review summaries still show. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Hide sponsored listings",
+          "description": "Asks Target's search for results without sponsored products, so search results show only regular listings. Experimental; test on-device.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "2026.43.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "The Home Depot",
+      "package": "com.thehomedepot",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Disable AI",
+          "description": "Turns off Magic Apron, The Home Depot's AI project assistant, in the app and hides its chat button on the store's web pages inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "8.2.5"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "Tubi: Free Movies & Live TV",
       "package": "com.tubitv",
       "patches": [
@@ -1538,6 +2090,163 @@
           ],
           "compatible_versions": [
             "10.43.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Walgreens",
+      "package": "com.usablenet.mobile.walgreen",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "118.0"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "118.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "118.0"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "118.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "118.0"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "118.0"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "118.0"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Walmart: Shopping & Savings",
+      "package": "com.walmart.android",
+      "patches": [
+        {
+          "name": "Block background location",
+          "description": "Removes the app's ability to ask for location while it is closed or in the background, so it cannot notice you arriving at a store, even if you tap Allow all the time. Location while you use the app still works if you allow it. May affect: automatic store mode, store-arrival notifications, and pickup check-in that tracks your drive after you close the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Block Bluetooth scanning",
+          "description": "Stops the app from scanning for Bluetooth devices and in-store beacons, and hides your paired devices. Beacon libraries no longer wake the app when the phone starts or charges. May affect: in-store maps and their location dot (Target, The Home Depot), pharmacy kiosk check-in (CVS), smart-home device setup (Amazon), and pairing with Bluetooth accessories inside the app. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Disable AI",
+          "description": "Turns off Sparky, Walmart's AI shopping assistant, and the AI features on item and search pages, such as AI compare and AI suggestions. May affect: customer care chat, which Walmart routes through Sparky, falls back to the regular help pages. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from silently replacing the patched app with the official version, which would bring the ads back. It raises the app's version number far ahead of the Store's, so the Store sees it as up to date. You can still update on purpose by patching a newer version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Hide cell tower info",
+          "description": "Hides the cell towers your phone sees from the app, which can place you within a few blocks even without location access. Use Spoof carrier to hide the carrier itself. Few app features rely on this. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random per-install Android ID instead of your device's, and reports a zeroed advertising ID with ad tracking limited, as if you had deleted your ad ID in Android settings. The video DRM ID is left alone so playback works. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Hide Wi-Fi networks",
+          "description": "Hides nearby Wi-Fi networks and the name of the network you are on from the app, so it cannot tell which store's Wi-Fi is around you. May affect: store detection and store mode, Wi-Fi setup for smart-home devices (Amazon), and fraud checks at checkout, which can then ask for extra verification. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.38"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app and the ad and analytics SDKs inside it, or reports a carrier name you choose. Carrier deals the app detects from your carrier will not work while this is on. Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "26.38"
           ]
         }
       ]
@@ -1885,10 +2594,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "ed1ccc7cdbfecde536fef7c258324962c3c978fbe7412172d5faa358ff04462e",
-  "release_notes": "## [1.0.2](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.1...v1.0.2) (2026-10-31)\n\n\n### Features\n\n* add carrier presets to Spoof carrier ([00bc6c7](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/00bc6c756b489d971dad5311f8eb5c53e746cacc))\n* add Spoof carrier ([80bae66](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/80bae6637793cca09548af088d94554b2aad0b18))\n* enable the shared patches for ESPN, NFL and NBA ([03128b9](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/03128b9714ccf176d544325039ab737a6907d90c))\n* **espn:** add ESPN Skip ads and Block analytics ([a954b61](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/a954b61f8a932fb6fa5ca8c1d8150251abfd4ea8))\n* **nba:** add NBA Skip ads, Disable Ask NBA AI and Block analytics ([11f9b1a](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/11f9b1a0debc3d0c55bceeaf76373fd0f49ec62d))\n* **nfl:** add NFL Skip ads and Block analytics ([5cd4dfe](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/5cd4dfecc8b41b0dba9d05e6673d97b03b32f4f9))\n\n\n\n",
-  "release_tag": "v1.0.2",
-  "release_date": "2026-10-31T23:43:35Z",
+  "fingerprint": "60bb605e5f5e1c6f1913c199e8538e8f7f109986797dee26fec1ab6940159f0c",
+  "release_notes": "## [1.0.3](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.2...v1.0.3) (2026-11-02)\n\n\n### Bug Fixes\n\n* limit the store-tracking privacy patches to the shopping apps ([6b2084b](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/6b2084b7427102f33ae145c979cee6a8d3e11805))\n* offer Report Wi-Fi connection and Hide VPN connection on streaming and news apps only ([dc77c43](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/dc77c43a5527ea9b5741c22678a6aa8578179ca4))\n* **primevideo:** rename shared Amazon permissions ([2eeb522](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/2eeb5229cb3c1eee24dbfcbba2b31a7299e07477))\n\n\n### Features\n\n* add DealSeek and seven store apps, with shopping privacy patches ([6c6abfa](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/6c6abfa0cbaf084dbc779d87c37f3f2689c54a25))\n\n\n\n",
+  "release_tag": "v1.0.3",
+  "release_date": "2026-11-02T05:04:24Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",
