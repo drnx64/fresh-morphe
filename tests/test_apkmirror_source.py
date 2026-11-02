@@ -255,3 +255,16 @@ def test_page_budget_stops_fetching_and_does_not_cache(monkeypatch):
     assert cache == {}
 
 
+def test_page_budget_is_env_overridable(monkeypatch):
+    assert am._app_page_limit() == am.MAX_APP_PAGES_PER_RUN
+    monkeypatch.setenv("MAX_APP_PAGES_PER_RUN", "250")
+    assert am._app_page_limit() == 250
+
+
+def test_page_budget_env_is_clamped_and_ignores_junk(monkeypatch):
+    monkeypatch.setenv("MAX_APP_PAGES_PER_RUN", "0")
+    assert am._app_page_limit() == 1
+    monkeypatch.setenv("MAX_APP_PAGES_PER_RUN", "many")
+    assert am._app_page_limit() == am.MAX_APP_PAGES_PER_RUN
+
+
