@@ -1,0 +1,15 @@
+# Paths that `gh-tool.ps1 -All` must never stage.
+#
+# One pattern per line, `*` and `?` work, `#` starts a comment. Matching is
+# case-insensitive so the same list behaves the same on Windows and Linux.
+# This list only guards -All; naming a file with -Path always stages it.
+#
+# data/bundles/_index.json tracks both the CamelCase and the lowercase spelling of
+# the Naga and Zeus repos. On a case-insensitive checkout one physical file cannot
+# satisfy both keys, so these four always report as modified no matter how many
+# times the working tree is reset. They are bot-owned: -All used to sweep them into
+# every local commit.
+data/bundles/alexnaga_stable.json
+data/bundles/immortalzeus_dev.json
+data/bundles/immortalzeus_latest.json
+data/bundles/immortalzeus_stable.json
