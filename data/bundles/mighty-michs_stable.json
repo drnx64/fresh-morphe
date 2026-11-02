@@ -2,9 +2,9 @@
   "bundle": "mighty-michs",
   "channel": "stable",
   "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
-  "created_at": "2026-10-25T13:28:50",
-  "version": "1.12.0",
-  "description": "## [1.12.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.11.1...v1.12.0) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* Enhance UnlockPremium patch for MagoVideo [skip ci] ([d894129](https://github.com/mich111discord/MightyMichs-Patches/commit/d894129d440480078b6340d95739a79ad857e692))\n* fixed InShot Patch error ([d7a8949](https://github.com/mich111discord/MightyMichs-Patches/commit/d7a8949400bb5ce6c9ad99ecb10451f47816a267))\n* InShot unlock Pro via SubscribeProOfHw / DebugPro gate ([7199bde](https://github.com/mich111discord/MightyMichs-Patches/commit/7199bde8ba49a2a5e71613644245d69455bc0329))\n\n### ✨ New Features\n\n* Add patch to disable CCleaner telemetry tracking [skip ci] ([14a9e5d](https://github.com/mich111discord/MightyMichs-Patches/commit/14a9e5d18f84e0d7e180d90211a3ac97f2fd3f27))\n* Add UnlockPremium patch for CCleaner [skip ci] ([7fd2df3](https://github.com/mich111discord/MightyMichs-Patches/commit/7fd2df3a41d83ff417c1a0be7dd495e7ed8628eb))\n* added new patches and fixed the old ones ([aea3ecd](https://github.com/mich111discord/MightyMichs-Patches/commit/aea3ecd5424896a606e250793316e9f5234834fc))",
+  "created_at": "2026-11-02T17:55:55",
+  "version": "1.13.0",
+  "description": "## [1.13.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.12.0...v1.13.0) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* fiexed change app name patch ([5a0c2e5](https://github.com/mich111discord/MightyMichs-Patches/commit/5a0c2e5417af442bcceaae7b279d6b3361e287cd))\n* fixed CallFilter patch ([1083a0e](https://github.com/mich111discord/MightyMichs-Patches/commit/1083a0e6fb7c2a4daff80d6061970333c0695b42))\n* fixed Change package name patch and added new options ([cca5315](https://github.com/mich111discord/MightyMichs-Patches/commit/cca53152ca2d41e4ef092e0bd3752a01bc070e50))\n* fixed InShot patch ([7b43724](https://github.com/mich111discord/MightyMichs-Patches/commit/7b43724500b9a6f76cf1ba1bd4e9f4c01cb6bee8))\n* fixed inshot unlock premium ([baba1fc](https://github.com/mich111discord/MightyMichs-Patches/commit/baba1fc7a8d323bcd17941dbee1641347180f3b9))\n* fixed pou patch ([3c588a1](https://github.com/mich111discord/MightyMichs-Patches/commit/3c588a19c4f9356b726a48c3980f2fcac752fe78))\n\n### ✨ New Features\n\n* add Bypass in-app purchase for offline Play Billing gate(universal) ([14f7384](https://github.com/mich111discord/MightyMichs-Patches/commit/14f73841ed915026a5f3d539b42de66deeafbf02))\n* Added Adobe Photoshop unlock premium patch ([cd6d4fe](https://github.com/mich111discord/MightyMichs-Patches/commit/cd6d4fe57a474ce0292a4dc5e2cfe619345bc937))\n* added mix explorer Disable signature verification and more! ([e356dc9](https://github.com/mich111discord/MightyMichs-Patches/commit/e356dc910a120c4ba6288ae1ccde4d50ad45ad70))\n* added sideme Unlimited energy ([a9edf53](https://github.com/mich111discord/MightyMichs-Patches/commit/a9edf53861fbe0a8ec86b99f4496d6ff81cfc6ce))\n* added sideme unlock premium ([43028fd](https://github.com/mich111discord/MightyMichs-Patches/commit/43028fdb187fbfe7f28dee7bffbd1ad082162d86))\n* added video engine killing ([b2d99f5](https://github.com/mich111discord/MightyMichs-Patches/commit/b2d99f5e295e446d20bea0ccd1b98e56ae3235f5))",
   "apps": [
     {
       "app_name": "Audio Editor & Music Editor",
@@ -37,15 +37,19 @@
       ]
     },
     {
-      "app_name": "App",
+      "app_name": "Call Filter",
       "package": "callfilter.app",
       "patches": [
         {
-          "name": "Unlock Premium (Experimental)",
-          "description": "Unlocks Callfilter.app premium by forcing the 'isSubscribed' check to return true. WARNING: May cause crashes or unexpected behavior. ",
-          "use": false,
+          "name": "Unlock Premium",
+          "description": "Forces Call Filter local subscription flag isSubscribed to true (SharedPreferences reads + persist on app start).",
+          "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "1.50.2",
+            "1.50.1",
+            "1.50.0"
+          ]
         }
       ]
     },
@@ -60,6 +64,22 @@
           "options": [],
           "compatible_versions": [
             "9.1.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "Photoshop with AI Assistant",
+      "package": "com.adobe.photoshop.retail",
+      "patches": [
+        {
+          "name": "Unlock Photoshop Premium",
+          "description": "Forces local Adobe Photoshop entitlement checks to paid/ENTITLED. Cloud-only features may still require a server-side Adobe subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.7.0.2322",
+            "1.7.0"
           ]
         }
       ]
@@ -97,8 +117,18 @@
       "package": "com.camerasideas.instashot",
       "patches": [
         {
+          "name": "Fix video engine on re-sign",
+          "description": "Stops the bundled video engine library from terminating the process when the APK is re-signed. Covers arm64-v8a and armeabi-v7a copies of libisvideoengine.so so the editor can load after a custom signature.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.214.1539",
+            "2.243.1555"
+          ]
+        },
+        {
           "name": "Unlock Premium",
-          "description": "Unlocks InShot Pro: no export watermark, no ads, paid filters/effects/HD. On-device AI tools may still require original signing key.",
+          "description": "Enables InShot Pro entitlements offline: export without watermark, no interstitial ads, and access to paid effects, transitions, stickers and HD. Built-in AI features that validate the store signature in native code may still refuse a re-signed package.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -184,6 +214,60 @@
       ]
     },
     {
+      "app_name": "MiXplorer",
+      "package": "com.mixplorer",
+      "patches": [
+        {
+          "name": "Disable signature verification",
+          "description": "Allows re-signed MiXplorer builds by adding the installed signing cert fingerprint to the internal allow-list.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.71.15",
+            "6.71.14",
+            "6.71.12",
+            "6.71.10"
+          ]
+        },
+        {
+          "name": "Hide browser Download component",
+          "description": "Removes DownloadActivity intent-filters so MiXplorer is not offered in browser/Firefox download choosers.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.71.15",
+            "6.71.14",
+            "6.71.12",
+            "6.71.10"
+          ]
+        },
+        {
+          "name": "Limit Copy to share menu",
+          "description": "Removes CopyActivity VIEW filters (open-with) while keeping SEND filters so Copy remains in the system share menu.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.71.15",
+            "6.71.14",
+            "6.71.12",
+            "6.71.10"
+          ]
+        },
+        {
+          "name": "Remove HTTP/HTTPS intent filters",
+          "description": "Strips http/https schemes from VIEW/BROWSABLE intent-filters so MiXplorer is not offered for web links.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.71.15",
+            "6.71.14",
+            "6.71.12",
+            "6.71.10"
+          ]
+        }
+      ]
+    },
+    {
       "app_name": "VideoPlayer (Wear OS)",
       "package": "com.mxtech.videoplayer.pro",
       "patches": [
@@ -204,36 +288,12 @@
       "patches": [
         {
           "name": "Unlock Premium Features",
-          "description": "Unlocks ReelShort VIP (vip_status=1) and unlocks ad-gated episodes.",
+          "description": "Forces local VIP membership (status, type, expire) and unlocks ad/paywall episode flags. Server-side purchases are not forged.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "4.2.20",
             "4.2.00"
-          ]
-        }
-      ]
-    },
-    {
-      "app_name": "CCleaner – Phone Cleaner",
-      "package": "com.piriform.ccleaner",
-      "patches": [
-        {
-          "name": "Disable Telemetry",
-          "description": "Disables analytics and telemetry event tracking.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.08.0"
-          ]
-        },
-        {
-          "name": "Unlock Premium",
-          "description": "Unlocks CCleaner Premium / Pro features (Ultimate Multi + Lifetime style).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.08.0"
           ]
         }
       ]
@@ -264,6 +324,30 @@
           "options": [],
           "compatible_versions": [
             "2.8.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SideMe: Learn Coding",
+      "package": "com.sideme",
+      "patches": [
+        {
+          "name": "Unlimited Energy",
+          "description": "Bypasses energy limits so lessons can be started freely (bonus QoL).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.19.5"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Unlocks SideMe Super / Premium subscription features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.19.5"
           ]
         }
       ]
@@ -417,21 +501,21 @@
       "package": "me.pou.app",
       "patches": [
         {
-          "name": "Unlimited Coins (Experimental)",
-          "description": "Gives unlimited coins in POU. WARNING: May cause crashes or reset progress.",
-          "use": false,
+          "name": "Unlimited coins",
+          "description": "Forces Pou's coin balance getter to a very large value so shop and unlock checks always pass (local save).",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "1.4.135"
+            "1.4.139"
           ]
         },
         {
-          "name": "Unlock Everything (Experimental)",
-          "description": "Unlocks all items in POU and bypasses integrity check. WARNING: May cause crashes.",
-          "use": false,
+          "name": "Unlock everything",
+          "description": "Sets shop item prices to zero and relaxes lock UI gates so items can be obtained freely (works best with Unlimited coins).",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "1.4.135"
+            "1.4.139"
           ]
         }
       ]
@@ -620,10 +704,10 @@
     }
   ],
   "patches_name": "MightyMich's Patches",
-  "fingerprint": "394f0702f187b8749aa290dc41cffd6806ac55b72a08fce3d3df417e6f96cd51",
-  "release_notes": "## [1.12.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.11.1...v1.12.0) (2026-10-25)\n\n### 🐛 Bug Fixes\n\n* Enhance UnlockPremium patch for MagoVideo [skip ci] ([d894129](https://github.com/mich111discord/MightyMichs-Patches/commit/d894129d440480078b6340d95739a79ad857e692))\n* fixed InShot Patch error ([d7a8949](https://github.com/mich111discord/MightyMichs-Patches/commit/d7a8949400bb5ce6c9ad99ecb10451f47816a267))\n* InShot unlock Pro via SubscribeProOfHw / DebugPro gate ([7199bde](https://github.com/mich111discord/MightyMichs-Patches/commit/7199bde8ba49a2a5e71613644245d69455bc0329))\n\n### ✨ New Features\n\n* Add patch to disable CCleaner telemetry tracking [skip ci] ([14a9e5d](https://github.com/mich111discord/MightyMichs-Patches/commit/14a9e5d18f84e0d7e180d90211a3ac97f2fd3f27))\n* Add UnlockPremium patch for CCleaner [skip ci] ([7fd2df3](https://github.com/mich111discord/MightyMichs-Patches/commit/7fd2df3a41d83ff417c1a0be7dd495e7ed8628eb))\n* added new patches and fixed the old ones ([aea3ecd](https://github.com/mich111discord/MightyMichs-Patches/commit/aea3ecd5424896a606e250793316e9f5234834fc))\n",
-  "release_tag": "v1.12.0",
-  "release_date": "2026-10-25T13:29:39Z",
+  "fingerprint": "afa57d9c9550a9f693e55da8cab5f732e85268cee7c61794e4c6b3a82aba458d",
+  "release_notes": "## [1.13.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.12.0...v1.13.0) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* fiexed change app name patch ([5a0c2e5](https://github.com/mich111discord/MightyMichs-Patches/commit/5a0c2e5417af442bcceaae7b279d6b3361e287cd))\n* fixed CallFilter patch ([1083a0e](https://github.com/mich111discord/MightyMichs-Patches/commit/1083a0e6fb7c2a4daff80d6061970333c0695b42))\n* fixed Change package name patch and added new options ([cca5315](https://github.com/mich111discord/MightyMichs-Patches/commit/cca53152ca2d41e4ef092e0bd3752a01bc070e50))\n* fixed InShot patch ([7b43724](https://github.com/mich111discord/MightyMichs-Patches/commit/7b43724500b9a6f76cf1ba1bd4e9f4c01cb6bee8))\n* fixed inshot unlock premium ([baba1fc](https://github.com/mich111discord/MightyMichs-Patches/commit/baba1fc7a8d323bcd17941dbee1641347180f3b9))\n* fixed pou patch ([3c588a1](https://github.com/mich111discord/MightyMichs-Patches/commit/3c588a19c4f9356b726a48c3980f2fcac752fe78))\n\n### ✨ New Features\n\n* add Bypass in-app purchase for offline Play Billing gate(universal) ([14f7384](https://github.com/mich111discord/MightyMichs-Patches/commit/14f73841ed915026a5f3d539b42de66deeafbf02))\n* Added Adobe Photoshop unlock premium patch ([cd6d4fe](https://github.com/mich111discord/MightyMichs-Patches/commit/cd6d4fe57a474ce0292a4dc5e2cfe619345bc937))\n* added mix explorer Disable signature verification and more! ([e356dc9](https://github.com/mich111discord/MightyMichs-Patches/commit/e356dc910a120c4ba6288ae1ccde4d50ad45ad70))\n* added sideme Unlimited energy ([a9edf53](https://github.com/mich111discord/MightyMichs-Patches/commit/a9edf53861fbe0a8ec86b99f4496d6ff81cfc6ce))\n* added sideme unlock premium ([43028fd](https://github.com/mich111discord/MightyMichs-Patches/commit/43028fdb187fbfe7f28dee7bffbd1ad082162d86))\n* added video engine killing ([b2d99f5](https://github.com/mich111discord/MightyMichs-Patches/commit/b2d99f5e295e446d20bea0ccd1b98e56ae3235f5))\n",
+  "release_tag": "v1.13.0",
+  "release_date": "2026-11-02T17:56:43Z",
   "isPreRelease": false,
   "stars": 16,
   "avatarUrl": "https://avatars.githubusercontent.com/u/141028293?v=4",

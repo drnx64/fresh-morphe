@@ -2,9 +2,9 @@
   "bundle": "6zev",
   "channel": "stable",
   "repo_url": "https://github.com/6zev/morphe-patches",
-  "created_at": "2026-11-02T13:06:51Z",
-  "version": "1.4.2",
-  "description": "## [1.4.2](https://github.com/6zev/morphe-patches/compare/v1.4.1...v1.4.2) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* the self-stop guard tested the branch the wrong way round ([107fea2](https://github.com/6zev/morphe-patches/commit/107fea26477184f3d809a630e30cd8cd990e32dd))",
+  "created_at": "2026-11-02T22:34:46Z",
+  "version": "1.5.1",
+  "description": "## [1.5.1](https://github.com/6zev/morphe-patches/compare/v1.5.0...v1.5.1) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* no-op the liba.so call that force-stops the app ([cfeb192](https://github.com/6zev/morphe-patches/commit/cfeb192d8ef6e27cab3d9963b852cde6c01f327e))",
   "apps": [
     {
       "app_name": "tvQuickActions Pro",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Never stop itself",
-          "description": "Keeps the app from stopping its own package. Stop recent apps, Restart app and Force stop app all end in `am force-stop <package>` run over ADB, and the app is in the recents list it works from, so once an ADB connection is up the app stops itself, restarts, and loops every few seconds. The app only skips the foreground app, and only when the matching preference is enabled, so this covers what the preference does not.",
+          "description": "Keeps the app from stopping its own package. Stop recent apps, Restart app and Force stop app all end in `am force-stop <package>` run over ADB, and the app is in the recents list it works from, so once an ADB connection is up the app stops itself, restarts, and loops every few seconds. The app only skips the foreground app, and only when the matching preference is enabled, so this covers what the preference does not. Custom ADB command actions are covered too, and such a command is logged under the TVQA-GUARD tag before it is dropped.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -22,7 +22,7 @@
         },
         {
           "name": "Unlock native engine",
-          "description": "Patches the native engine library (libd.so) so that it loads on a re-signed APK. The anti-tamper constructor that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work.",
+          "description": "Patches the native engine libraries so that they run on a re-signed APK. The anti-tamper constructor of libd.so that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work. The only `system()` call of liba.so, which force-stops the app when the ADB speed-up server loads it, is turned into no-ops as well, which is what stops the app from killing itself in a loop.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -43,10 +43,10 @@
     }
   ],
   "patches_name": "tvQuickActions Patches",
-  "fingerprint": "9960460ff8bd26a3ae44b5b6b2546c60ed5712aed7a068412412f752b56d9bf2",
-  "release_notes": "## [1.4.2](https://github.com/6zev/morphe-patches/compare/v1.4.1...v1.4.2) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* the self-stop guard tested the branch the wrong way round ([107fea2](https://github.com/6zev/morphe-patches/commit/107fea26477184f3d809a630e30cd8cd990e32dd))\n",
-  "release_tag": "v1.4.2",
-  "release_date": "2026-11-02T13:06:51Z",
+  "fingerprint": "558b14d391ba51cbcbb1c533c5165e7517436d25087a15f40362461841c0b7ac",
+  "release_notes": "## [1.5.1](https://github.com/6zev/morphe-patches/compare/v1.5.0...v1.5.1) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* no-op the liba.so call that force-stops the app ([cfeb192](https://github.com/6zev/morphe-patches/commit/cfeb192d8ef6e27cab3d9963b852cde6c01f327e))\n",
+  "release_tag": "v1.5.1",
+  "release_date": "2026-11-02T22:34:46Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/264537056?v=4&s=128",
