@@ -7,7 +7,7 @@
 
     Execution order (each step runs only when its flags are present):
         1. Validate environment (git, repository, GITHUB_TOKEN)
-        2. Switch or create branch   (-Branch)
+        2. Switch or create branch   (-Branch, -From fetches the base first)
         3. Stage                     (-All | -Path)
         4. Compose commit subject    (-Type / -Scope, shortcuts expanded)
         5. Commit                    (-Message)
@@ -18,6 +18,13 @@
 
     The branch switch runs BEFORE staging and committing so the commit lands on the target branch.
     Running it after the commit would leave the same commit on both the old and the new branch.
+
+    Read-only inspection runs instead of the workflow, one action per call:
+        -Checkout -Switch -Sync -Log -Diff -Show -Grep -CheckIgnore -Restore
+    They accept -DryRun where they change the repository (-Checkout, -Switch, -Sync, -Restore)
+    and -Path where a path filter makes sense (-Diff, -Log, -Grep, -Restore). Mixing an
+    inspection action with a workflow flag is rejected instead of silently doing one of them.
+    Use -Status for the one-screen repository summary.
 
     Token lookup order: GITHUB_TOKEN in .env (current directory, then repository root),
     then the GITHUB_TOKEN environment variable. Only GITHUB_TOKEN is read from .env.
@@ -38,7 +45,7 @@
     and -Type / -Scope that disagree with that prefix are reported as conflicts.
 
     Long GNU-style flags are accepted and translated to PowerShell parameters:
-        --message --type --scope --all --path --paths --force --branch --pr --pr-title
+        --message --type --scope --all --path --paths --force --branch --from --pr --pr-title
         --pr-body --draft --auto-merge --issue --issue-title --issue-body --tag --release
         --status --dry-run --verbose-log
     Both "--flag value" and "--flag=value" forms work. Use "--paths a b c" for several
@@ -80,6 +87,13 @@
 
 .PARAMETER Branch
     Branch to switch to, or create from the current HEAD, before committing and pushing. Alias: -b.
+    Pair it with -From to create the branch from an up-to-date base instead of stale HEAD.
+
+.PARAMETER From
+    Base ref for a newly created -Branch. The matching remote is fetched first, so the branch
+    starts from a fresh origin<name> rather than whatever the local checkout happens to hold.
+    Ignored when the branch already exists. Accepts a branch (main), a remote branch
+    (origin/main), a tag, or a commit hash.
 
 .PARAMETER Pr
     Create a pull request from the target branch into the repository default branch after pushing.
@@ -116,6 +130,55 @@
 .PARAMETER Status
     Print a repository summary: branch, working tree, ahead/behind counts, open pull requests.
     Cannot be combined with workflow parameters.
+
+.PARAMETER Checkout
+    Check out any ref: a branch, a tag, or a commit hash. Unlike -Switch it never creates
+    a branch, so a typo fails instead of leaving a stray branch behind.
+
+.PARAMETER Switch
+    Move to a branch, creating it when neither the local nor the remote copy exists.
+    Safe to re-run: it reports "already on '<branch>'" instead of failing.
+
+.PARAMETER Sync
+    Fetch every remote with --prune, then fast-forward the current branch from its upstream.
+    A branch without an upstream is fetched and reported instead of being pulled.
+
+.PARAMETER Log
+    Show the most recent commits (one line each, with decorations). Alias for reading history
+    without leaving the shell. Combine with -Count, -Grep, and -Path.
+
+.PARAMETER Diff
+    Show the working tree diff, the staged diff with -Staged, or a range with -Between.
+    Add -Stat for the file summary. Combine with -Path to narrow the diff.
+
+.PARAMETER Show
+    Show one commit, tag, or tree with "git show". Add -Stat for the file summary only.
+
+.PARAMETER CheckIgnore
+    Report which ignore rule matches a path, or state that nothing ignores it. Useful for
+    confirming a file is really excluded before blaming the staging step.
+
+.PARAMETER Restore
+    Discard changes. Requires -Path naming the targets, and -Force because it throws work away.
+    Add -Staged to only unstage (git restore --staged), which is the safe form.
+
+.PARAMETER Grep
+    Search the tracked files with "git grep -n". Respects -Path, and only reports tracked
+    content, so build output and untracked scratch files never match.
+
+.PARAMETER Count
+    How many commits -Log prints. Default 15, range 1-500.
+
+.PARAMETER Staged
+    With -Diff, read the index instead of the working tree. With -Restore, unstage instead
+    of discarding.
+
+.PARAMETER Stat
+    Print the diffstat instead of the full patch. Requires -Diff or -Show.
+
+.PARAMETER Between
+    Diff range for -Diff. A bare ref expands to "<ref>...HEAD" (what this branch adds on
+    top of it); a value containing ".." is passed through, so "v1.2..v1.3" works as-is.
 
 .PARAMETER DryRun
     Print every action without changing the repository or calling a GitHub API endpoint.
@@ -168,6 +231,22 @@
     .\gh-tool.ps1 -m "Preview only" -a --pr --dry-run -v
     Show every command and request that would run, without changing anything.
 
+.EXAMPLE
+    .\gh-tool.ps1 -b feat/resume -From main -p scripts -m "feat(ui): resume boot" -t f -s u --pr --auto-merge
+    Fetch origin, cut feat/resume from the newest origin/main, then commit and open the pull request.
+
+.EXAMPLE
+    .\gh-tool.ps1 -Log -Count 10 -Grep "icon"
+    Show the last ten commits whose message mentions "icon".
+
+.EXAMPLE
+    .\gh-tool.ps1 -Diff -Between main -Stat
+    List the files this branch changes relative to main.
+
+.EXAMPLE
+    .\gh-tool.ps1 -Restore -Staged -Path gh-tool.ps1
+    Unstage gh-tool.ps1 while keeping the edits in the working tree.
+
 .NOTES
     Format of the .env file (one line is enough):
         GITHUB_TOKEN=ghp_yourTokenHere
@@ -198,10 +277,12 @@ param(
     [switch]$All,
 
     [Parameter(ParameterSetName = 'Workflow')]
+    [Parameter(ParameterSetName = 'Inspect')]
     [Alias('p')]
     [string[]]$Path,
 
     [Parameter(ParameterSetName = 'Workflow')]
+    [Parameter(ParameterSetName = 'Inspect')]
     [Alias('f')]
     [switch]$Force,
 
@@ -209,6 +290,10 @@ param(
     [Alias('b')]
     [ValidateNotNullOrEmpty()]
     [string]$Branch,
+
+    [Parameter(ParameterSetName = 'Workflow')]
+    [ValidateNotNullOrEmpty()]
+    [string]$From,
 
     [Parameter(ParameterSetName = 'Workflow')]
     [switch]$Pr,
@@ -240,6 +325,51 @@ param(
     [Parameter(ParameterSetName = 'Workflow')]
     [switch]$Release,
 
+    [Parameter(ParameterSetName = 'Inspect')]
+    [ValidateNotNullOrEmpty()]
+    [string]$Checkout,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [ValidateNotNullOrEmpty()]
+    [string]$Switch,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [switch]$Sync,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [switch]$Log,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [switch]$Diff,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [ValidateNotNullOrEmpty()]
+    [string]$Show,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [ValidateNotNullOrEmpty()]
+    [string]$CheckIgnore,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [switch]$Restore,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [string]$Grep,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [ValidateRange(1, 500)]
+    [int]$Count = 15,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [switch]$Staged,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [switch]$Stat,
+
+    [Parameter(ParameterSetName = 'Inspect')]
+    [ValidateNotNullOrEmpty()]
+    [string]$Between,
+
     [Parameter(ParameterSetName = 'Status', Mandatory)]
     [switch]$Status,
 
@@ -262,7 +392,7 @@ $ErrorActionPreference = 'Stop'
 # Constants
 # ----------------------------------------------------------------------------
 $TOOL_NAME = 'gh-tool'
-$TOOL_VERSION = '1.1.0'
+$TOOL_VERSION = '1.2.0'
 $GITHUB_API_BASE_URL = 'https://api.github.com'
 $GITHUB_WEB_BASE_URL = 'https://github.com'
 $GITHUB_API_VERSION = '2022-11-28'
@@ -305,6 +435,7 @@ $GNU_OPTION_TABLE = @{
     '--paths'       = @{ Parameter = 'Path';       ValueKind = 'List' }
     '--force'       = @{ Parameter = 'Force';      ValueKind = 'None' }
     '--branch'      = @{ Parameter = 'Branch';     ValueKind = 'Single' }
+    '--from'        = @{ Parameter = 'From';       ValueKind = 'Single' }
     '--pr'          = @{ Parameter = 'Pr';         ValueKind = 'None' }
     '--pr-title'    = @{ Parameter = 'PrTitle';    ValueKind = 'Single' }
     '--pr-body'     = @{ Parameter = 'PrBody';     ValueKind = 'Single' }
@@ -316,6 +447,19 @@ $GNU_OPTION_TABLE = @{
     '--tag'         = @{ Parameter = 'Tag';        ValueKind = 'Single' }
     '--release'     = @{ Parameter = 'Release';    ValueKind = 'None' }
     '--status'      = @{ Parameter = 'Status';     ValueKind = 'None' }
+    '--checkout'    = @{ Parameter = 'Checkout';   ValueKind = 'Single' }
+    '--switch'      = @{ Parameter = 'Switch';     ValueKind = 'Single' }
+    '--sync'        = @{ Parameter = 'Sync';       ValueKind = 'None' }
+    '--log'         = @{ Parameter = 'Log';        ValueKind = 'None' }
+    '--diff'        = @{ Parameter = 'Diff';       ValueKind = 'None' }
+    '--show'        = @{ Parameter = 'Show';       ValueKind = 'Single' }
+    '--check-ignore' = @{ Parameter = 'CheckIgnore'; ValueKind = 'Single' }
+    '--restore'     = @{ Parameter = 'Restore';    ValueKind = 'None' }
+    '--grep'        = @{ Parameter = 'Grep';       ValueKind = 'Single' }
+    '--count'       = @{ Parameter = 'Count';      ValueKind = 'Single' }
+    '--staged'      = @{ Parameter = 'Staged';     ValueKind = 'None' }
+    '--stat'        = @{ Parameter = 'Stat';       ValueKind = 'None' }
+    '--between'     = @{ Parameter = 'Between';    ValueKind = 'Single' }
     '--dry-run'     = @{ Parameter = 'DryRun';     ValueKind = 'None' }
     '--verbose-log' = @{ Parameter = 'VerboseLog'; ValueKind = 'None' }
 }
@@ -700,6 +844,7 @@ function Invoke-GitHubTool {
         Set-ConventionalCommitMessage -Options $Options
         $context = New-ToolContext -Options $Options -Report $Report
         if ($Options.Status) { Show-RepositoryStatus -Context $context }
+        elseif (Test-AnyInspectActionRequested -Options $Options) { Invoke-InspectWorkflow -Context $context }
         else { Invoke-ChangeWorkflow -Context $context }
     }
     catch {
@@ -739,6 +884,58 @@ function Test-AnyWorkflowActionRequested {
         $Options.Force -or $Options.Pr -or $Options.Issue -or $Options.Tag -or $Options.Release)
 }
 
+function Test-AnyInspectActionRequested {
+    param([Parameter(Mandatory)]$Options)
+    # -Path is not an action on its own: without -Message it still belongs to the commit
+    # workflow's staging rules, and the workflow violations explain that far better.
+    return [bool](
+        $Options.Sync -or $Options.Checkout -or $Options.Switch -or $Options.Log -or
+        $Options.Diff -or $Options.Show -or $Options.CheckIgnore -or $Options.Restore -or
+        ($Options.Grep -and -not $Options.Log)
+    )
+}
+
+function Get-InspectViolations {
+    param([Parameter(Mandatory)]$Options)
+    $violations = [System.Collections.Generic.List[string]]::new()
+
+    $verbs = [System.Collections.Generic.List[string]]::new()
+    if ($Options.Checkout) { $verbs.Add('-Checkout') }
+    if ($Options.Switch) { $verbs.Add('-Switch') }
+    if ($Options.Sync) { $verbs.Add('-Sync') }
+    if ($Options.Log) { $verbs.Add('-Log') }
+    if ($Options.Diff) { $verbs.Add('-Diff') }
+    if ($Options.Show) { $verbs.Add('-Show') }
+    if ($Options.CheckIgnore) { $verbs.Add('-CheckIgnore') }
+    if ($Options.Restore) { $verbs.Add('-Restore') }
+    if ($Options.Grep -and -not $Options.Log) { $verbs.Add('-Grep') }
+
+    if ($verbs.Count -ne 1) {
+        $found = if ($verbs.Count -eq 0) { 'none' } else { $verbs -join ', ' }
+        $violations.Add("Inspection runs one action at a time; got $found. Choose one of -Checkout, -Switch, -Sync, -Log, -Diff, -Show, -Grep, -CheckIgnore, -Restore.")
+        return $violations
+    }
+
+    if ($Options.Count -ne 15 -and -not $Options.Log) { $violations.Add('-Count applies to -Log only.') }
+    if ($Options.Staged -and -not ($Options.Diff -or $Options.Restore)) { $violations.Add('-Staged requires -Diff (staged changes) or -Restore (unstage).') }
+    if ($Options.Stat -and -not ($Options.Diff -or $Options.Show)) { $violations.Add('-Stat requires -Diff or -Show.') }
+    if ($Options.Between -and -not $Options.Diff) { $violations.Add('-Between requires -Diff.') }
+    if ($Options.Restore -and -not $Options.Staged -and -not $Options.Force) {
+        $violations.Add('-Restore throws away uncommitted changes, so it needs -Force to confirm. For the safe version add -Staged to unstage instead.')
+    }
+    if ($Options.Restore -and $Options.Path.Count -eq 0) { $violations.Add('-Restore needs -Path with the files to restore.') }
+    if ($Options.Path.Count -gt 0 -and -not ($Options.Restore -or $Options.Diff -or $Options.Log -or $Options.Grep)) {
+        $violations.Add('-Path filters -Diff, -Log, and -Grep, or lists the -Restore targets.')
+    }
+    foreach ($name in @('Message', 'Type', 'Scope', 'All', 'Branch', 'Pr', 'PrTitle', 'PrBody', 'Draft',
+            'AutoMerge', 'Issue', 'IssueTitle', 'IssueBody', 'Tag', 'Release')) {
+        if ($Options.$name) {
+            $violations.Add("-$name belongs to the commit and pull-request workflow and cannot be combined with an inspection action.")
+        }
+    }
+    return $violations
+}
+
 function Test-ShouldPushBranch {
     param([Parameter(Mandatory)]$Options)
     return [bool]($Options.Message -or $Options.All -or $Options.Path.Count -gt 0 -or $Options.Branch -or $Options.Force -or $Options.Pr)
@@ -752,6 +949,14 @@ function Test-GitHubApiRequired {
 function Get-OptionViolations {
     param([Parameter(Mandatory)]$Options)
     $violations = [System.Collections.Generic.List[string]]::new()
+
+    # Inspection actions are read-only and share no validation with the commit
+    # workflow, so they get their own rule set and return early.
+    if (-not $Options.Status -and (Test-AnyInspectActionRequested -Options $Options)) {
+        foreach ($item in (Get-InspectViolations -Options $Options)) { $violations.Add($item) }
+        return $violations
+    }
+
     $stagesFiles = $Options.All -or $Options.Path.Count -gt 0
 
     if (-not $Options.Status -and -not (Test-AnyWorkflowActionRequested -Options $Options)) {
@@ -769,6 +974,7 @@ function Get-OptionViolations {
     if (($Options.Type -or $Options.Scope) -and -not $Options.Message) { $violations.Add('-Type and -Scope compose the commit subject, which requires -Message.') }
     if ($Options.AutoMerge -and -not $Options.Pr) { $violations.Add('-AutoMerge requires -Pr.') }
     if ($Options.AutoMerge -and $Options.Draft) { $violations.Add('-AutoMerge cannot be combined with -Draft.') }
+    if ($Options.From -and -not $Options.Branch) { $violations.Add('-From sets the base of a new branch, which requires -Branch.') }
     foreach ($check in @(
         @{ Value = $Options.Type; Resolve = 'Resolve-CommitType'; Label = 'type' }
         @{ Value = $Options.Scope; Resolve = 'Resolve-CommitScope'; Label = 'scope' }
@@ -916,7 +1122,9 @@ function New-ToolContext {
         CommitHash   = $null
     }
 
-    if (-not $Options.Status) { Confirm-WorkflowPreconditions -Context $context }
+    if (-not $Options.Status -and -not (Test-AnyInspectActionRequested -Options $Options)) {
+        Confirm-WorkflowPreconditions -Context $context
+    }
     if ((Test-GitHubApiRequired -Options $Options) -and -not $Options.DryRun) { Confirm-TokenIsAccepted -Context $context }
 
     $tokenSource = if ($token) { "token from $($token.Source)" } else { 'no token (dry run)' }
@@ -1108,6 +1316,28 @@ function Confirm-RefNameIsValid {
 # ----------------------------------------------------------------------------
 # Workflow steps
 # ----------------------------------------------------------------------------
+function Resolve-BranchStartPoint {
+    param(
+        [Parameter(Mandatory)]$Context,
+        [Parameter(Mandatory)][string]$From
+    )
+    $repository = $Context.Repository
+    $remote = $repository.RemoteName
+    $name = if ($From -like "$remote/*") { $From.Substring($remote.Length + 1) } else { $From }
+
+    # Refresh the remote-tracking refs, otherwise -From main silently branches off a
+    # base that is days old and the pull request opens with merge conflicts.
+    Invoke-GitMutation -Context $Context -Arguments @('fetch', $remote, '--prune') -Operation "Fetching from '$remote'" | Out-Null
+
+    # The fetched remote branch wins over a stale local one so 'main' means origin/main.
+    foreach ($candidate in @("$remote/$name", $From)) {
+        $resolved = Get-GitOutputOrNull -Arguments @('rev-parse', '--verify', '--quiet', "$candidate^{commit}") -WorkingDirectory $repository.Root
+        if ($resolved) { return $candidate }
+    }
+
+    throw (New-ToolException -Message "'$From' does not name a commit that '$remote' or this repository knows." -Hint 'Use a branch (-From main or -From origin/main), a tag, or a commit hash.')
+}
+
 function Invoke-BranchSwitch {
     param([Parameter(Mandatory)]$Context)
     $stepName = 'Switch branch'
@@ -1123,11 +1353,23 @@ function Invoke-BranchSwitch {
     $existsLocally = Test-GitRefExists -Ref "refs/heads/$branch" -Root $repository.Root
     $existsOnRemote = Test-GitRefExists -Ref "refs/remotes/$($repository.RemoteName)/$branch" -Root $repository.Root
     $isExistingBranch = $existsLocally -or $existsOnRemote
+
+    if (-not $isExistingBranch -and $Context.Options.From) {
+        $startPoint = Resolve-BranchStartPoint -Context $Context -From $Context.Options.From
+        Invoke-GitMutation -Context $Context -Arguments @('checkout', '-b', $branch, $startPoint) -Operation "Creating branch '$branch' from '$startPoint'" | Out-Null
+        Complete-Step -Context $Context -Name $stepName -Detail "created '$branch' from '$startPoint'"
+        return
+    }
+
     $arguments = if ($isExistingBranch) { @('checkout', $branch) } else { @('checkout', '-b', $branch) }
 
     Invoke-GitMutation -Context $Context -Arguments $arguments -Operation "Switching to branch '$branch'" | Out-Null
     $action = if ($isExistingBranch) { 'switched to' } else { 'created' }
-    Complete-Step -Context $Context -Name $stepName -Detail "$action '$branch'"
+    $detail = if ($isExistingBranch -and $Context.Options.From) {
+        "$action '$branch' (-From ignored, the branch already exists)"
+    }
+    else { "$action '$branch'" }
+    Complete-Step -Context $Context -Name $stepName -Detail $detail
 }
 
 function Invoke-Staging {
@@ -1368,6 +1610,221 @@ function Invoke-ReleaseCreation {
     $response = Invoke-GitHubMutation -Context $Context -Method 'Post' -Endpoint $endpoint -Body $requestBody -Operation 'Creating release'
     if ($response) { Add-ReportLink -Report $Context.Report -Label 'Release' -Url $response.html_url }
     Complete-Step -Context $Context -Name $stepName -Detail $tag
+}
+
+# ----------------------------------------------------------------------------
+# Inspection (read-only) actions
+# ----------------------------------------------------------------------------
+function Invoke-InspectWorkflow {
+    param([Parameter(Mandatory)]$Context)
+    $options = $Context.Options
+
+    if ($options.Checkout) { Invoke-CheckoutRef -Context $Context }
+    elseif ($options.Switch) { Invoke-SwitchRef -Context $Context }
+    elseif ($options.Sync) { Invoke-SyncBranch -Context $Context }
+    elseif ($options.Log) { Show-CommitLog -Context $Context }
+    elseif ($options.Diff) { Show-WorkingDiff -Context $Context }
+    elseif ($options.Show) { Show-GitObject -Context $Context }
+    elseif ($options.CheckIgnore) { Show-IgnoreMatch -Context $Context }
+    elseif ($options.Restore) { Invoke-RestorePaths -Context $Context }
+    elseif ($options.Grep) { Show-GrepMatches -Context $Context }
+}
+
+function Write-GitOutput {
+    param(
+        [AllowEmptyCollection()][string[]]$Lines,
+        [string]$EmptyMessage = 'No output.'
+    )
+    $items = @($Lines | Where-Object { $null -ne $_ })
+    if ($items.Count -eq 0) {
+        Write-Host "  $EmptyMessage" -ForegroundColor DarkGray
+        return
+    }
+    foreach ($line in $items) { Write-Host "  $line" }
+}
+
+function Invoke-CheckoutRef {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Check out ref'
+    $ref = $Context.Options.Checkout
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    Invoke-GitMutation -Context $Context -Arguments @('checkout', $ref) -Operation "Checking out '$ref'" | Out-Null
+    $branch = Get-GitOutputOrNull -Arguments @('symbolic-ref', '--short', '-q', 'HEAD') -WorkingDirectory $Context.Repository.Root
+    $detail = if ($branch) { "on '$branch'" } else { 'detached HEAD' }
+    Complete-Step -Context $Context -Name $stepName -Detail "$ref ($detail)"
+}
+
+function Invoke-SwitchRef {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Switch branch'
+    $branch = $Context.Options.Switch
+    $repository = $Context.Repository
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    if ($branch -eq $repository.CurrentBranch) {
+        Write-StepResult -Report $Context.Report -Name $stepName -Outcome 'Success' -Detail "already on '$branch'"
+        return
+    }
+
+    $existsLocally = Test-GitRefExists -Ref "refs/heads/$branch" -Root $repository.Root
+    $existsOnRemote = Test-GitRefExists -Ref "refs/remotes/$($repository.RemoteName)/$branch" -Root $repository.Root
+    $arguments = if ($existsLocally -or $existsOnRemote) { @('checkout', $branch) } else { @('checkout', '-b', $branch) }
+
+    Invoke-GitMutation -Context $Context -Arguments $arguments -Operation "Switching to '$branch'" | Out-Null
+    $action = if ($existsLocally -or $existsOnRemote) { 'switched to' } else { 'created' }
+    Complete-Step -Context $Context -Name $stepName -Detail "$action '$branch'"
+}
+
+function Invoke-SyncBranch {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Sync branch'
+    $repository = $Context.Repository
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    if (-not $repository.CurrentBranch) {
+        throw (New-ToolException -Message 'HEAD is detached, so there is no branch to sync.' -Hint 'Check out a branch first: .\gh-tool.ps1 -Checkout main')
+    }
+
+    $upstream = Get-GitOutputOrNull -Arguments @('rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}') -WorkingDirectory $repository.Root
+    Invoke-GitMutation -Context $Context -Arguments @('fetch', '--prune', '--all') -Operation 'Fetching from every remote' | Out-Null
+
+    if (-not $upstream) {
+        Write-StepResult -Report $Context.Report -Name $stepName -Outcome 'Skipped' -Detail "fetched; '$($repository.CurrentBranch)' has no upstream to fast-forward"
+        return
+    }
+
+    Invoke-GitMutation -Context $Context -Arguments @('pull', '--ff-only') -Operation "Fast-forwarding '$($repository.CurrentBranch)'" | Out-Null
+    Complete-Step -Context $Context -Name $stepName -Detail "$($repository.CurrentBranch) up to date with $upstream"
+}
+
+function Show-CommitLog {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Show commit log'
+    $options = $Context.Options
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $arguments = @('log', '--oneline', '--decorate', "--max-count=$($options.Count)")
+    if ($options.Grep) { $arguments += "--grep=$($options.Grep)" }
+    if ($options.Path.Count -gt 0) { $arguments += @('--') + $options.Path }
+
+    $result = Invoke-GitCommand -Arguments $arguments -WorkingDirectory $Context.Repository.Root
+    Confirm-GitSucceeded -Result $result -Operation 'Reading the commit log'
+
+    Write-Host ''
+    foreach ($line in @($result.Output)) {
+        $space = $line.IndexOf(' ')
+        if ($space -gt 0) {
+            Write-Host "  $($line.Substring(0, $space))" -ForegroundColor DarkGray -NoNewline
+            Write-Host $line.Substring($space)
+        }
+        else { Write-Host "  $line" }
+    }
+    $filter = if ($options.Grep) { " matching '$($options.Grep)'" } else { '' }
+    Complete-Step -Context $Context -Name $stepName -Detail "$(@($result.Output).Count) commit(s)$filter"
+}
+
+function Resolve-DiffRange {
+    param([Parameter(Mandatory)][string]$Value)
+    # A bare ref means "what this branch adds on top of it"; a range passes through.
+    if ($Value -match '\.\.') { return $Value }
+    return "$Value...HEAD"
+}
+
+function Show-WorkingDiff {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Show diff'
+    $options = $Context.Options
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $arguments = @('diff', '--no-color')
+    if ($options.Staged) { $arguments += '--cached' }
+    if ($options.Stat) { $arguments += '--stat' }
+    if ($options.Between) { $arguments += (Resolve-DiffRange -Value $options.Between) }
+    if ($options.Path.Count -gt 0) { $arguments += @('--') + $options.Path }
+
+    $result = Invoke-GitCommand -Arguments $arguments -WorkingDirectory $Context.Repository.Root
+    Confirm-GitSucceeded -Result $result -Operation 'Reading the diff'
+
+    Write-Host ''
+    Write-GitOutput -Lines $result.Output -EmptyMessage 'No changes.'
+    $scope = if ($options.Staged) { 'staged' } elseif ($options.Between) { "vs $($options.Between)" } else { 'working tree' }
+    Complete-Step -Context $Context -Name $stepName -Detail "$(@($result.Output).Count) line(s), $scope"
+}
+
+function Show-GitObject {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Show object'
+    $options = $Context.Options
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $arguments = @('show', '--no-color')
+    if ($options.Stat) { $arguments += '--stat' }
+    $arguments += $options.Show
+
+    $result = Invoke-GitCommand -Arguments $arguments -WorkingDirectory $Context.Repository.Root
+    Confirm-GitSucceeded -Result $result -Operation "Showing '$($options.Show)'"
+
+    Write-Host ''
+    Write-GitOutput -Lines $result.Output -EmptyMessage 'Nothing to show.'
+    Complete-Step -Context $Context -Name $stepName -Detail $options.Show
+}
+
+function Show-IgnoreMatch {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Check ignore rules'
+    $target = $Context.Options.CheckIgnore
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $result = Invoke-GitCommand -Arguments @('check-ignore', '-v', '--', $target) -WorkingDirectory $Context.Repository.Root
+    if ($result.ExitCode -eq 1) {
+        Write-Host ''
+        Write-LogInfo "'$target' is not ignored by any rule."
+        Write-StepResult -Report $Context.Report -Name $stepName -Outcome 'Success' -Detail 'not ignored'
+        return
+    }
+    Confirm-GitSucceeded -Result $result -Operation 'Evaluating ignore rules'
+
+    Write-Host ''
+    Write-GitOutput -Lines $result.Output
+    Complete-Step -Context $Context -Name $stepName -Detail (@($result.Output)[0])
+}
+
+function Show-GrepMatches {
+    param([Parameter(Mandatory)]$Context)
+    $stepName = 'Search tracked files'
+    $options = $Context.Options
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $arguments = @('grep', '--line-number', '--no-color', '-e', $options.Grep)
+    if ($options.Path.Count -gt 0) { $arguments += @('--') + $options.Path }
+
+    $result = Invoke-GitCommand -Arguments $arguments -WorkingDirectory $Context.Repository.Root
+    if ($result.ExitCode -eq 1) {
+        Write-Host ''
+        Write-Host "  No matches for '$($options.Grep)'." -ForegroundColor DarkGray
+        Write-StepResult -Report $Context.Report -Name $stepName -Outcome 'Success' -Detail 'no matches'
+        return
+    }
+    Confirm-GitSucceeded -Result $result -Operation 'Searching tracked files'
+
+    Write-Host ''
+    Write-GitOutput -Lines $result.Output
+    Complete-Step -Context $Context -Name $stepName -Detail "$(@($result.Output).Count) match(es) for '$($options.Grep)'"
+}
+
+function Invoke-RestorePaths {
+    param([Parameter(Mandatory)]$Context)
+    $options = $Context.Options
+    $stepName = if ($options.Staged) { 'Unstage paths' } else { 'Restore paths' }
+    Enter-Step -Report $Context.Report -Name $stepName
+
+    $arguments = if ($options.Staged) { @('restore', '--staged', '--') + $options.Path }
+    else { @('restore', '--') + $options.Path }
+
+    Invoke-GitMutation -Context $Context -Arguments $arguments -Operation 'Restoring paths' | Out-Null
+    $verb = if ($options.Staged) { 'unstaged' } else { 'restored from HEAD' }
+    Complete-Step -Context $Context -Name $stepName -Detail "$($options.Path.Count) path(s) $verb"
 }
 
 # ----------------------------------------------------------------------------
@@ -1799,6 +2256,7 @@ $toolOptions = [pscustomobject]@{
     Path       = [string[]]@($Path | Where-Object { $_ })
     Force      = $Force.IsPresent
     Branch     = $Branch
+    From       = $From
     Pr         = $Pr.IsPresent
     PrTitle    = $PrTitle
     PrBody     = $PrBody
@@ -1810,6 +2268,19 @@ $toolOptions = [pscustomobject]@{
     Tag        = $Tag
     Release    = $Release.IsPresent
     Status     = $Status.IsPresent
+    Checkout   = $Checkout
+    Switch     = $Switch
+    Sync       = $Sync.IsPresent
+    Log        = $Log.IsPresent
+    Diff       = $Diff.IsPresent
+    Show       = $Show
+    CheckIgnore = $CheckIgnore
+    Restore    = $Restore.IsPresent
+    Grep       = $Grep
+    Count      = $Count
+    Staged     = $Staged.IsPresent
+    Stat       = $Stat.IsPresent
+    Between    = $Between
     DryRun     = $DryRun.IsPresent
 }
 
