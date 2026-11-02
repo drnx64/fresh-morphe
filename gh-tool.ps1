@@ -35,7 +35,9 @@
     Token lookup order: GITHUB_TOKEN in .env (current directory, then repository root),
     then the GITHUB_TOKEN environment variable. Only GITHUB_TOKEN is read from .env.
     The token is never printed, never placed in a URL, and never passed to git.
-    Files named .env are always excluded from -All staging.
+    Files named .env are always excluded from -All staging. Paths listed in .gh-toolignore at
+    the repository root are excluded too, which is how a file the pipeline rewrites on every
+    run stays out of local commits; -Path always wins over that list.
 
     Commit subjects can be composed from shortcuts (-Type / -Scope) or written directly:
         .\gh-tool.ps1 -m "add chips" -t f -s u    ->  feat(ui): add chips
@@ -51,9 +53,12 @@
     and -Type / -Scope that disagree with that prefix are reported as conflicts.
 
     Long GNU-style flags are accepted and translated to PowerShell parameters:
-        --message --type --scope --all --path --paths --force --branch --from --pr --pr-title
-        --pr-body --draft --auto-merge --issue --issue-title --issue-body --tag --release
-        --status --dry-run --verbose-log
+        --message --amend --type --scope --all --path --paths --force --branch --from
+        --pr --pr-title --pr-body --draft --auto-merge --issue --issue-title --issue-body
+        --tag --release --status --dry-run --verbose-log
+        --checkout --switch --sync --log --diff --show --grep --check-ignore --restore
+        --count --staged --stat --between
+        --pr-status --watch --base --update-branch --number --timeout
     Both "--flag value" and "--flag=value" forms work. Use "--paths a b c" for several
     paths: PowerShell binds "--path" to -Path directly and then only takes one value.
     For the same reason prefer "--paths a b" over "-Path a,b" when the call comes from
@@ -84,9 +89,18 @@
 
 .PARAMETER All
     Stage all untracked and modified files (git add -A) before committing. Alias: -a.
+    Paths listed in .gh-toolignore at the repository root are skipped and reported, so a
+    file the pipeline rewrites on every run cannot be swept into a local commit. An explicit
+    -Path still stages it.
+
+.PARAMETER Amend
+    Rewrite the last commit instead of adding a new one. With -Message it replaces the
+    subject and body; with only -All or -Path it keeps the existing message (--no-edit).
+    Amending a commit that is already pushed then needs -Force to push.
 
 .PARAMETER Path
-    Files or directories to stage before committing. Alias: -p. Requires -Message.
+    Files or directories to stage before committing. Alias: -p. Requires -Message, unless it
+    is folding files into the last commit with -Amend.
 
 .PARAMETER Force
     Force push using --force-with-lease. Alias: -f.
@@ -289,6 +303,14 @@
     .\gh-tool.ps1 -UpdateBranch -PrNumber 64
     Pull the base branch into pull request 64 so it is no longer behind.
 
+.EXAMPLE
+    .\gh-tool.ps1 -Amend -All -Message "fx(ui): stop double render" -Force
+    Fold everything staged and unstaged into the last commit, then force push it.
+
+.EXAMPLE
+    .\gh-tool.ps1 -Amend -p gh-tool.ps1
+    Add one file to the last commit and keep its existing message.
+
 .NOTES
     Format of the .env file (one line is enough):
         GITHUB_TOKEN=ghp_yourTokenHere
@@ -305,6 +327,9 @@ param(
     [Alias('m')]
     [ValidateNotNullOrEmpty()]
     [string]$Message,
+
+    [Parameter(ParameterSetName = 'Workflow')]
+    [switch]$Amend,
 
     [Parameter(ParameterSetName = 'Workflow')]
     [Alias('t')]
@@ -465,6 +490,7 @@ $CHECK_POLL_INTERVAL_SECONDS = 10
 $USER_AGENT = "$TOOL_NAME.ps1/$TOOL_VERSION"
 $TOKEN_VARIABLE_NAME = 'GITHUB_TOKEN'
 $ENV_FILE_NAME = '.env'
+$TOOL_IGNORE_FILE_NAME = '.gh-toolignore'
 $DEFAULT_REMOTE_NAME = 'origin'
 $FALLBACK_DEFAULT_BRANCH = 'main'
 $MAX_LISTED_PULL_REQUESTS = 100
@@ -493,6 +519,7 @@ $LOG_LEVEL_COLORS = @{
 
 $GNU_OPTION_TABLE = @{
     '--message'     = @{ Parameter = 'Message';    ValueKind = 'Single' }
+    '--amend'       = @{ Parameter = 'Amend';      ValueKind = 'None' }
     '--type'        = @{ Parameter = 'Type';       ValueKind = 'Single' }
     '--scope'       = @{ Parameter = 'Scope';      ValueKind = 'Single' }
     '--all'         = @{ Parameter = 'All';        ValueKind = 'None' }
@@ -936,7 +963,7 @@ function Invoke-ChangeWorkflow {
 
     if ($options.Branch) { Invoke-BranchSwitch -Context $Context }
     if ($options.All -or $options.Path.Count -gt 0) { Invoke-Staging -Context $Context }
-    if ($options.Message) { Invoke-Commit -Context $Context }
+    if ($options.Message -or $options.Amend) { Invoke-Commit -Context $Context }
     if (Test-ShouldPushBranch -Options $options) { Invoke-BranchPush -Context $Context }
     if ($options.Tag) {
         Invoke-TagCreation -Context $Context
@@ -1071,7 +1098,7 @@ function Get-OptionViolations {
         $violations.Add('No action requested. Pass at least one of -Message, -Branch, -Pr, -Issue, -Tag, -Release, -Force, -Status.')
     }
     if ($Options.All -and $Options.Path.Count -gt 0) { $violations.Add('-All and -Path cannot be combined. Choose one.') }
-    if ($stagesFiles -and -not $Options.Message) { $violations.Add('-All and -Path stage files, which requires -Message.') }
+    if ($stagesFiles -and -not $Options.Message -and -not $Options.Amend) { $violations.Add('-All and -Path stage files, which requires -Message.') }
     if ($Options.Message -and [string]::IsNullOrWhiteSpace($Options.Message)) {
         $violations.Add('-Message cannot be blank.')
     }
@@ -1083,6 +1110,9 @@ function Get-OptionViolations {
     if ($Options.AutoMerge -and -not $Options.Pr) { $violations.Add('-AutoMerge requires -Pr.') }
     if ($Options.AutoMerge -and $Options.Draft) { $violations.Add('-AutoMerge cannot be combined with -Draft.') }
     if ($Options.From -and -not $Options.Branch) { $violations.Add('-From sets the base of a new branch, which requires -Branch.') }
+    if ($Options.Amend -and -not $Options.Message -and -not $stagesFiles) {
+        $violations.Add('-Amend rewrites the last commit, so it needs -Message or files to fold in (-All or -Path).')
+    }
     foreach ($check in @(
         @{ Value = $Options.Type; Resolve = 'Resolve-CommitType'; Label = 'type' }
         @{ Value = $Options.Scope; Resolve = 'Resolve-CommitScope'; Label = 'scope' }
@@ -1481,6 +1511,37 @@ function Invoke-BranchSwitch {
     Complete-Step -Context $Context -Name $stepName -Detail $detail
 }
 
+function Get-StageIgnorePatterns {
+    param([Parameter(Mandatory)][string]$Root)
+    $path = Join-Path $Root $TOOL_IGNORE_FILE_NAME
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return @() }
+
+    $patterns = [System.Collections.Generic.List[string]]::new()
+    foreach ($line in [System.IO.File]::ReadAllLines($path)) {
+        $trimmed = $line.Trim()
+        if (-not $trimmed -or $trimmed.StartsWith('#')) { continue }
+        $patterns.Add(($trimmed -replace '\\', '/'))
+    }
+    return @($patterns)
+}
+
+function Get-IgnoredStagePaths {
+    param([Parameter(Mandatory)]$Context)
+    $patterns = @(Get-StageIgnorePatterns -Root $Context.Repository.Root)
+    if ($patterns.Count -eq 0) { return @() }
+
+    $matchers = @($patterns | ForEach-Object {
+            [System.Management.Automation.WildcardPattern]::new($_, [System.Management.Automation.WildcardOptions]::IgnoreCase)
+        })
+    $result = Invoke-GitCommand -Arguments @('ls-files', '--modified', '--others', '--exclude-standard') -WorkingDirectory $Context.Repository.Root
+    Confirm-GitSucceeded -Result $result -Operation "Listing the changes $TOOL_IGNORE_FILE_NAME applies to"
+
+    return @($result.Output | Where-Object { $_ } | Where-Object {
+            $candidate = $_
+            @($matchers | Where-Object { $_.IsMatch($candidate) }).Count -gt 0
+        })
+}
+
 function Invoke-Staging {
     param([Parameter(Mandatory)]$Context)
     $stepName = 'Stage changes'
@@ -1489,6 +1550,15 @@ function Invoke-Staging {
     if ($Context.Options.All) {
         $arguments = @('add', '-A', '--', '.', ":(exclude,glob)**/$ENV_FILE_NAME")
         $detail = "all changes (excluding $ENV_FILE_NAME files)"
+
+        # -All is the flag that sweeps in files nobody meant to commit, so the ignore list
+        # is applied here and only here: an explicit -Path always wins.
+        $ignored = @(Get-IgnoredStagePaths -Context $Context)
+        foreach ($path in $ignored) { $arguments += ":(exclude,literal)$path" }
+        if ($ignored.Count -gt 0) {
+            $detail += ", $($ignored.Count) skipped by $TOOL_IGNORE_FILE_NAME"
+            Write-LogWarning ("Skipped {0} path(s) listed in {1}: {2}" -f $ignored.Count, $TOOL_IGNORE_FILE_NAME, ($ignored -join ', '))
+        }
     }
     else {
         $resolvedPaths = @($Context.Options.Path | ForEach-Object { $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($_) })
@@ -1509,18 +1579,27 @@ function Test-HasStagedChanges {
 
 function Invoke-Commit {
     param([Parameter(Mandatory)]$Context)
-    $stepName = 'Commit'
+    $stepName = if ($Context.Options.Amend) { 'Amend commit' } else { 'Commit' }
     Enter-Step -Report $Context.Report -Name $stepName
 
     $hasStagedChanges = Test-HasStagedChanges -Context $Context
-    if (-not $hasStagedChanges -and -not $Context.Options.DryRun) {
+    if (-not $hasStagedChanges -and -not $Context.Options.DryRun -and -not $Context.Options.Amend) {
         Write-StepResult -Report $Context.Report -Name $stepName -Outcome 'Skipped' -Detail 'nothing staged (use -All or -Path to stage files)'
         return
     }
+    if ($Context.Options.Amend -and -not $Context.Options.Force) {
+        Write-LogWarning 'Amend rewrites the last commit; pushing it needs -Force (--force-with-lease).'
+    }
 
-    Invoke-GitMutation -Context $Context -Arguments @('commit', '-m', $Context.Options.Message) -Operation 'Committing' | Out-Null
+    $arguments = @('commit')
+    if ($Context.Options.Amend) { $arguments += '--amend' }
+    if ($Context.Options.Message) { $arguments += @('-m', $Context.Options.Message) }
+    elseif ($Context.Options.Amend) { $arguments += '--no-edit' }
+
+    Invoke-GitMutation -Context $Context -Arguments $arguments -Operation 'Committing' | Out-Null
     if ($Context.Options.DryRun) {
-        Complete-Step -Context $Context -Name $stepName -Detail "message: $($Context.Options.Message)"
+        $detail = if ($Context.Options.Message) { "message: $($Context.Options.Message)" } else { 'keeps the existing message' }
+        Complete-Step -Context $Context -Name $stepName -Detail $detail
         return
     }
     $Context.CommitHash = Get-GitOutputOrNull -Arguments @('rev-parse', '--short', 'HEAD') -WorkingDirectory $Context.Repository.Root
@@ -2628,6 +2707,7 @@ function ConvertTo-GitHubApiException {
 # ----------------------------------------------------------------------------
 $toolOptions = [pscustomobject]@{
     Message    = $Message
+    Amend      = $Amend.IsPresent
     Type       = $Type
     Scope      = $Scope
     All        = $All.IsPresent
