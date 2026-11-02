@@ -2,8 +2,8 @@
   "bundle": "bitchord-morphe",
   "channel": "dev",
   "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
-  "created_at": "2026-11-01T05:10:14",
-  "version": "1.1.0-beta.17",
+  "created_at": "2026-11-02T04:42:12",
+  "version": "1.1.0-beta.18",
   "description": "Morphe patches for BitChord 1.9: Telegram music, an integrated Downloads explorer, Soulseek sharing, Telegram archives, mixed-source device playlists, an optional FLAC Audio source and playback tools.",
   "apps": [
     {
@@ -40,15 +40,6 @@
         {
           "name": "Equaliser per output",
           "description": "Remembers BitChord's equaliser for each output (speaker, wired, each Bluetooth device) and puts it back when that output is used; shares settings as codes. From Prism by Yigder. Settings are in Settings, Patches & tweaks.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.9"
-          ]
-        },
-        {
-          "name": "Flac Downloader Audio",
-          "description": "Optional native adapter for aztecempire's Spotube FLAC Audio source. Search, stream and download through flacdownloader.com, with explicit FLAC/MP3 choices. Starts disabled; enable in Sources or Patches & tweaks. Requested quality is not file verification. No Spotube runtime or account is installed.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -133,6 +124,15 @@
           ]
         },
         {
+          "name": "Play alongside other apps",
+          "description": "Keeps the music playing when another app plays sound, such as a reel or a video, instead of pausing. Calls still pause it. Settings are in Settings, Patches & tweaks.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
           "name": "Sign in with MicroG",
           "description": "Offers to sign in to YouTube Music with an account that's already in MicroG RE, instead of Google's sign-in page.",
           "use": true,
@@ -143,7 +143,7 @@
         },
         {
           "name": "Sing",
-          "description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Settings are in Settings, Patches & tweaks.",
+          "description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Choose the filter or on-device separation model. Settings are in Settings, Patches & tweaks.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -160,9 +160,27 @@
           ]
         },
         {
+          "name": "Smart downloads",
+          "description": "Downloads the songs you play most, on Wi-Fi, so they're there without a signal. Uses BitChord's listening statistics and its Download quality; songs you delete aren't downloaded again. Settings are in Settings, Patches & tweaks.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
           "name": "Source-independent AutoMix",
           "description": "Measures the selected playable source, verifies automatic replacements, preserves playback speed and adds a native, pair-specific transition timeline with volume, EQ, filter controls and preview. BitChord 1.9.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.9"
+          ]
+        },
+        {
+          "name": "Steady playback",
+          "description": "Reads further ahead, through the rest of the song and into the next ones, with separate limits for Wi-Fi and mobile data, and waits through a lost signal instead of stopping. Settings are in Settings, Patches & tweaks.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "1.9"
@@ -209,10 +227,10 @@
     }
   ],
   "patches_name": "Hexclyde",
-  "fingerprint": "066a6510d5a9886f16314c203cd7c8ecf045042092290b235ad4e5cb151725cc",
-  "release_notes": "# BitChord Morphe patches 1.1.0-beta.17\n\nNative Patches & tweaks adds installed-feature search, category/enabled filters,\ndistinct icons, gear-only settings, precise sliders and scoped toggle Undo.\nDownloads/Explorer use individual source cards, local search, real progress/counts\nand explicit admission. Soulseek previews play inline, with optional recording\nchecks. Telegram tasks use grouped native cards and expandable advanced settings.\n\nStreamseek adds an independent on-device lossless decoder. Existing AutoMix,\nsource selection, original-speed transitions, player and playlist work is retained.\n\nValidation: 330 Android tests, 31 Python tests, host/native regressions, 24 exact-MPP\nAPK configurations, 22 device decoder probes, all 20 native feature controls,\nlocal playlist operations, live previews/downloads and GGlos two-track fades.\nOther supplied add-ons had service errors or required a lossless output route.\nExternal-service sync and physical audio-route testing remain pending. See the\nincluded verification report for precise scope and AutoMix analysis limits.\n",
-  "release_tag": "v1.1.0-beta.17",
-  "release_date": "2026-11-01T09:43:04Z",
+  "fingerprint": "0250cd9fad0539b3c083f623ba223b3d677622726fa55e8c164d0130b38c5163",
+  "release_notes": "In Morphe, add the MPP as a local source and select an original BitChord 1.9 APK.\nFor updates, use the same package and signing key to preserve app data.\n\n- **Patches & tweaks** has a sliders icon, clearer feature descriptions and a searchable shortcut to Storage Sense.\n- **Stats** shows the average bitrate of the prepared rendition and its actual source. Old or ambiguous cache entries show an unknown source.\n- **Play the best source first** prepares upcoming songs through enabled sources with recording and timing checks. Separate queue entries can use different copies without changing an entry already playing.\n- Complete verified replacements reclaim obsolete YouTube playback cache while protecting active readers and saved **downloads**.\n- **Unofficial Telegram music** handles cached and bounded recording reads without crashing during two-player quality upgrades. Local message-cache eviction does not invalidate an unchanged remote file.\n- **Source-independent AutoMix** measures the selected recording with bounded DSP when full analysis cannot fit. Low-confidence analysis uses a basic crossfade without changing playback speed or pitch.\n- **Play alongside other apps** (new, off by default) continues music over other apps and pauses for calls, with recovery for the same track.\n- **Steady playback** (new, off by default) offers connection-specific read-ahead and offline retries, with combined music and artwork buffers bounded on smaller heaps.\n- **Smart downloads** (new, off by default) queues frequently played songs through enabled download sources in the selected quality.\n- **Sing** offers local separation-model vocal removal with a filter fallback and offline Spleeter conversion.\n- **Storage Sense** lists audio caches, protects active resources and offers confirmed file deletion and content-hash duplicate review. Cleanup rules start disabled.\n- Downloads settings contain patch controls alongside BitChord’s quality, Wi-Fi, export and playlist-sync options. Selected-source filenames and converted formats stay consistent across patch selections.\n- **Smart playlists** creates local library matches by default, with a separate optional text-service connection and review before saving.\n- **Peer downloads** separates Receive, Share and Transfers, with pairing instructions, stable progress rows and connection details behind an explicit action.\n- **FLAC Downloader** is unavailable in the patch catalogue. Existing saved files remain accessible from Downloads.\n\nKnown limits: [Known limitations](https://github.com/Hexclyde/bitchord-morphe-patches/blob/v1.1.0-beta.18/docs/KNOWN_LIMITATIONS.md).\n",
+  "release_tag": "v1.1.0-beta.18",
+  "release_date": "2026-11-02T11:47:56Z",
   "isPreRelease": true,
   "stars": 6,
   "avatarUrl": "https://avatars.githubusercontent.com/u/10942734?v=4&s=128",

@@ -1,7 +1,7 @@
 {
   "date": "2026-11-02",
-  "lastChecked": "2026-11-02T06:12:46Z",
-  "scan_counter": 1,
+  "lastChecked": "2026-11-02T16:02:34Z",
+  "scan_counter": 2,
   "affected_bundles": {
     "hushfeed:latest": {
       "bundle": "hushfeed",
@@ -13,7 +13,12 @@
           "package": "com.zhiliaoapp.musically",
           "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Hide read receipts",
+                "description": "Stops TikTok telling people you've read their messages. Your own unread badges still clear as usual. Starts off. Turn it on in Hushfeed settings > Inbox."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -1022,15 +1027,18 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
       "repo_url": "https://github.com/SysAdminDoc/hushfeed",
       "patches_name": "Hushfeed",
-      "extra_badges": [],
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
       "previous_version": "0.79.0",
-      "new_version": "0.79.0",
+      "new_version": "0.80.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -1044,7 +1052,12 @@
           "package": "com.zhiliaoapp.musically",
           "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Hide read receipts",
+                "description": "Stops TikTok telling people you've read their messages. Your own unread badges still clear as usual. Starts off. Turn it on in Hushfeed settings > Inbox."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -2053,15 +2066,18 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
       "repo_url": "https://github.com/SysAdminDoc/hushfeed",
       "patches_name": "Hushfeed",
-      "extra_badges": [],
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
       "previous_version": "0.79.0",
-      "new_version": "0.79.0",
+      "new_version": "0.80.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -2079,6 +2095,10 @@
               {
                 "name": "Unlock native engine",
                 "description": "Patches the native engine library (libd.so) so that it loads on a re-signed APK. The anti-tamper constructor that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work."
+              },
+              {
+                "name": "Never stop itself",
+                "description": "Keeps the app from stopping its own package. Stop recent apps, Restart app and Force stop app all end in `am force-stop <package>` run over ADB, and the app is in the recents list it works from, so once an ADB connection is up the app stops itself, restarts, and loops every few seconds. The app only skips the foreground app, and only when the matching preference is enabled, so this covers what the preference does not."
               }
             ],
             "patches_removed": [],
@@ -2094,15 +2114,18 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
       "repo_url": "https://github.com/6zev/morphe-patches",
       "patches_name": "tvQuickActions Patches",
-      "extra_badges": [],
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
       "previous_version": "1.0.0-dev.1",
-      "new_version": "1.0.0-dev.1",
+      "new_version": "1.4.2",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -2120,6 +2143,10 @@
               {
                 "name": "Unlock native engine",
                 "description": "Patches the native engine library (libd.so) so that it loads on a re-signed APK. The anti-tamper constructor that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work."
+              },
+              {
+                "name": "Never stop itself",
+                "description": "Keeps the app from stopping its own package. Stop recent apps, Restart app and Force stop app all end in `am force-stop <package>` run over ADB, and the app is in the recents list it works from, so once an ADB connection is up the app stops itself, restarts, and loops every few seconds. The app only skips the foreground app, and only when the matching preference is enabled, so this covers what the preference does not."
               }
             ],
             "patches_removed": [],
@@ -2135,7 +2162,8 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
@@ -2145,7 +2173,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.1.0",
-      "new_version": "1.3.2",
+      "new_version": "1.4.2",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -2581,6 +2609,10 @@
               {
                 "name": "Stories priority",
                 "description": "Puts the accounts on your list first in the stories row at the top of Home while they have a story you haven't watched. Starts off. Turn it on and type the accounts in HushGram settings > Stories."
+              },
+              {
+                "name": "Home header text",
+                "description": "Puts words of your own, or a picture, at the top of Home in place of Instagram's logo. Nothing changes until you set one in HushGram settings > Layout."
               }
             ],
             "patches_removed": [],
@@ -2624,11 +2656,44 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Chat history tools",
+                "description": "Tap the clock button at the top of a chat, or long press its name, to jump to its first message or to a date, or to save the chat as a text file. The chat loads its older messages on its own, with a count and a Cancel button. Both start off. Turn them on in HushGram settings > Messages.",
+                "previous_description": "Long press a chat's name to jump to its first message or to a date, or to save the chat as a text file. The chat loads its older messages on its own, with a count and a Cancel button. Both start off. Turn them on in HushGram settings > Messages.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Explore without personalization",
+                "description": "Opens Explore on the grid that isn't personalized every time and keeps it from switching back after ten minutes. Instagram only promises that grid in the EU. A second switch hides the EU menu button for it. Both start off. Turn them on in HushGram settings > Explore.",
+                "previous_description": "Where Instagram lets you turn off personalization in Explore (in the EU), opens Explore on the grid that isn't personalized every time and keeps it from switching back after ten minutes. A second switch hides the menu button for it. Both start off. Turn them on in HushGram settings > Explore.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide reels with few views",
+                "description": "Leaves out reels in the Reels tab with fewer views or likes than numbers you pick. Accounts you follow stay. Starts off. Turn it on in HushGram settings > Reels.",
+                "previous_description": "Leaves out reels in the Reels tab that fewer people have watched than a number you pick. Accounts you follow stay. Starts off. Turn it on in HushGram settings > Reels.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Upload stories at full quality",
+                "description": "Sends the video stories you post at 1080p and a higher bitrate, as Instagram does with its own Upload at highest quality setting on. Two choices under it can cover posts and reels too and ask for a bitrate up to 50 Mbps. Instagram still shrinks story videos to 720p on its servers, so viewers see a small difference. Starts off. Turn it on in HushGram settings > Stories.",
+                "previous_description": "Sends the video stories you post at 1080p and a higher bitrate, as Instagram does with its own Upload at highest quality setting on. Instagram still shrinks story videos to 720p on its servers, so viewers see a small difference. Starts off. Turn it on in HushGram settings > Stories.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
@@ -2666,6 +2731,10 @@
               {
                 "name": "Stories priority",
                 "description": "Puts the accounts on your list first in the stories row at the top of Home while they have a story you haven't watched. Starts off. Turn it on and type the accounts in HushGram settings > Stories."
+              },
+              {
+                "name": "Home header text",
+                "description": "Puts words of your own, or a picture, at the top of Home in place of Instagram's logo. Nothing changes until you set one in HushGram settings > Layout."
               }
             ],
             "patches_removed": [],
@@ -2709,11 +2778,44 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Chat history tools",
+                "description": "Tap the clock button at the top of a chat, or long press its name, to jump to its first message or to a date, or to save the chat as a text file. The chat loads its older messages on its own, with a count and a Cancel button. Both start off. Turn them on in HushGram settings > Messages.",
+                "previous_description": "Long press a chat's name to jump to its first message or to a date, or to save the chat as a text file. The chat loads its older messages on its own, with a count and a Cancel button. Both start off. Turn them on in HushGram settings > Messages.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Explore without personalization",
+                "description": "Opens Explore on the grid that isn't personalized every time and keeps it from switching back after ten minutes. Instagram only promises that grid in the EU. A second switch hides the EU menu button for it. Both start off. Turn them on in HushGram settings > Explore.",
+                "previous_description": "Where Instagram lets you turn off personalization in Explore (in the EU), opens Explore on the grid that isn't personalized every time and keeps it from switching back after ten minutes. A second switch hides the menu button for it. Both start off. Turn them on in HushGram settings > Explore.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide reels with few views",
+                "description": "Leaves out reels in the Reels tab with fewer views or likes than numbers you pick. Accounts you follow stay. Starts off. Turn it on in HushGram settings > Reels.",
+                "previous_description": "Leaves out reels in the Reels tab that fewer people have watched than a number you pick. Accounts you follow stay. Starts off. Turn it on in HushGram settings > Reels.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Upload stories at full quality",
+                "description": "Sends the video stories you post at 1080p and a higher bitrate, as Instagram does with its own Upload at highest quality setting on. Two choices under it can cover posts and reels too and ask for a bitrate up to 50 Mbps. Instagram still shrinks story videos to 720p on its servers, so viewers see a small difference. Starts off. Turn it on in HushGram settings > Stories.",
+                "previous_description": "Sends the video stories you post at 1080p and a higher bitrate, as Instagram does with its own Upload at highest quality setting on. Instagram still shrinks story videos to 720p on its servers, so viewers see a small difference. Starts off. Turn it on in HushGram settings > Stories.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
@@ -2811,6 +2913,110 @@
           "scan_numbers": [
             1
           ]
+        },
+        {
+          "app_name": "Mywireless",
+          "package": "com.att.mywireless",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Recreation.gov",
+          "package": "com.bah.r1smobile",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "JustWatch - Streaming Guide",
+          "package": "com.justwatch.justwatch",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "T-Mobile Play",
+          "package": "com.tmobile.m1",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "T-Life",
+          "package": "com.tmobile.tuesdays",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Mint Mobile",
+          "package": "com.uvnv.mintsim",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Visible mobile",
+          "package": "com.visiblemobile.flagship",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Xfinity",
+          "package": "com.xfinity.digitalhome",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "MyTSA",
+          "package": "gov.dhs.tsa.mytsa",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "FEMA",
+          "package": "gov.fema.mobile.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "National Park Service",
+          "package": "gov.nps.mobileapp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "National Forests & Grasslands",
+          "package": "gov.usda.fs.nfg",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "The White House",
+          "package": "gov.whitehouse.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
         }
       ],
       "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
@@ -2819,7 +3025,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.0.2",
-      "new_version": "1.0.3",
+      "new_version": "1.0.4",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -2909,6 +3115,110 @@
           "scan_numbers": [
             1
           ]
+        },
+        {
+          "app_name": "Mywireless",
+          "package": "com.att.mywireless",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Recreation.gov",
+          "package": "com.bah.r1smobile",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "JustWatch - Streaming Guide",
+          "package": "com.justwatch.justwatch",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "T-Mobile Play",
+          "package": "com.tmobile.m1",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "T-Life",
+          "package": "com.tmobile.tuesdays",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Mint Mobile",
+          "package": "com.uvnv.mintsim",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Visible mobile",
+          "package": "com.visiblemobile.flagship",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Xfinity",
+          "package": "com.xfinity.digitalhome",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "MyTSA",
+          "package": "gov.dhs.tsa.mytsa",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "FEMA",
+          "package": "gov.fema.mobile.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "National Park Service",
+          "package": "gov.nps.mobileapp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "National Forests & Grasslands",
+          "package": "gov.usda.fs.nfg",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "The White House",
+          "package": "gov.whitehouse.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
         }
       ],
       "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
@@ -2917,7 +3227,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.0.2",
-      "new_version": "1.0.3",
+      "new_version": "1.0.4",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5673,8 +5983,23 @@
           "package": "app.myspoti.stable",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            1
-          ]
+            1,
+            2
+          ],
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Gearslip personal library",
+                "description": "Allows the configured Gearslip host to use Myspoti's signed-in library, search and playback while retaining Android caller verification.",
+                "changes": [
+                  "options: ~1 option",
+                  "versions: -2 versions"
+                ]
+              }
+            ]
+          }
         },
         {
           "app_name": "Gearslip",
@@ -5688,10 +6013,20 @@
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "Keep music player entries",
+                "description": "Shows only the music player when an app also provides a car Settings service, including YT Music Morphe. Uses Gearslip's existing docked player.",
+                "previous_description": "Keeps a music app's player available when it also provides a car Settings screen, including YT Music Morphe. Uses Gearslip's existing docked player.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         },
         {
@@ -5699,8 +6034,28 @@
           "package": "com.google.android.apps.maps",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            1
-          ]
+            1,
+            2
+          ],
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Native navigation for Gearslip and Android Auto",
+                "description": "Shows this patched Maps app's original Android Auto map and navigation UI through a native navigation service. Requires the full Android Auto app for its car UI resources."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Waze alerts",
+                "description": "Shows nearby Waze and Flitsmeister alerts as map pins with ahead-of-you chimes and notes. Supports our navigation broadcasts for current speed, speed limits and average-speed zones, plus bearinmind's Waze Share alerts with Maps feed. Choose a provider in Waze & external data source; external data is off by default. Updated patched providers start silently and are monitored while Maps is in use. Complete provider setup and location permissions once.",
+                "previous_description": "Shows nearby Waze and Flitsmeister alerts as map pins with ahead-of-you chimes and notes. Supports our navigation broadcasts for current speed, speed limits and average-speed zones, plus bearinmind's Waze Share alerts with Maps feed. Choose a provider in Waze & external data source; external data is off by default. The selected source must be patched, enabled and running.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          }
         },
         {
           "app_name": "RainViewer: Live Weather Radar",
@@ -5708,6 +6063,132 @@
           "badge_type": "NEW APP",
           "scan_numbers": [
             1
+          ]
+        },
+        {
+          "app_name": "Vela Maps",
+          "package": "app.vela",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "External speed controls",
+                "description": "Use De-Waze or Flitsmeister speed, limits, road warnings and partial average-zone progress in Vela and Android Auto, with native fallback, silent provider startup and automatic engine recovery.",
+                "previous_description": "Use De-Waze or Flitsmeister speed, limits, road warnings and partial average-zone progress in Vela and Android Auto, with native fallback and provider settings.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "WuPlay Mobile",
+          "package": "app.wuplay.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Gearslip music browser support",
+                "description": "Adds Gearslip access to personal Home and Library using the app's existing account. Enable Morphe's Android Auto patch alongside it. Verifies the real Android caller identity.",
+                "previous_description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
+                "changes": [
+                  "description updated",
+                  "options: ~1 option"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "SoundCloud: The Music You Love",
+          "package": "com.soundcloud.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Broadcast navigation data",
+                "description": "Broadcasts current speed, road limits, road alerts and approaching/active average-speed zones locally, including in the background. Includes a silent startup and health API for patched Maps/Vela; no overlay required.",
+                "previous_description": "Broadcasts current speed, road limits, road alerts and approaching/active average-speed zones locally, including in the background. No overlay required.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Support Gearslip",
+                "description": "Accepts Gearslip and DriveDeck as car hosts by package name, whichever key signed them, so a patched Gearslip keeps working. Other hosts keep Android Auto host validation.",
+                "previous_description": "Accepts Gearslip as a car host by package name, whichever key signed it, so a patched Gearslip keeps working. Other hosts keep Android Auto host validation.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Flitsmeister",
+          "package": "nl.flitsmeister",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Support Gearslip and DriveDeck",
+                "description": "Accepts Gearslip and DriveDeck as car hosts by package name, whichever key signed them, so DriveDeck works without the original Gearslip installed. Other hosts keep Android Auto host validation."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Broadcast navigation data",
+                "description": "Shares current speed, road limits, road alerts and approaching/active average-speed zones with compatible local apps, also in the background without an overlay, with a silent startup and health API for Maps/Vela.",
+                "previous_description": "Shares current speed, road limits, road alerts and approaching/active average-speed zones with compatible local apps, also in the background without an overlay.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Music Speed Changer",
+          "package": "app.morphe.android.apps.youtube.music",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            2
           ]
         }
       ],
@@ -5717,7 +6198,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.23.0",
-      "new_version": "1.26.1",
+      "new_version": "1.33.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5735,6 +6216,18 @@
               {
                 "name": "Keep the search bar",
                 "description": "Brings back the search bar at the top of your chat list when Messenger has swapped it for a search icon. Restart Messenger after changing it. If Messenger never gave you the icon, nothing changes. Starts off. Turn it on in HushMessenger settings > Controls."
+              },
+              {
+                "name": "Ask before a call",
+                "description": "Tapping the audio or video call button in a chat's top bar asks first, so a stray tap doesn't ring anyone. Call starts it, Cancel doesn't. Calls coming in aren't affected. Starts off. Turn it on in HushMessenger settings > Controls."
+              },
+              {
+                "name": "Jump to the first message or a date",
+                "description": "Long press a chat's name at the top of the chat to jump to its first message or to a day you pick. Messenger loads a chat a page at a time, so it scrolls back with a count on screen until it gets there, and Cancel stops it. It can only go as far back as Messenger can load. Starts off. Turn it on in HushMessenger settings > Controls."
+              },
+              {
+                "name": "Your own home header",
+                "description": "Puts words or a picture of your own at the top of the chat list in place of Messenger's wordmark. Type the words or pick the picture in HushMessenger settings. With neither, the wordmark stays. Starts off. Turn it on in HushMessenger settings > Controls."
               }
             ],
             "patches_removed": [],
@@ -5746,11 +6239,19 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Clone install under another package name",
+                "description": "Installs a second copy of Messenger beside the first, with its own app name. Push notifications may not reach the copy. Pick it in Morphe Manager's Expert mode. Works as soon as you patch it in, with no switch.",
+                "changes": [
+                  "options: +1 option"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
@@ -5776,6 +6277,18 @@
               {
                 "name": "Keep the search bar",
                 "description": "Brings back the search bar at the top of your chat list when Messenger has swapped it for a search icon. Restart Messenger after changing it. If Messenger never gave you the icon, nothing changes. Starts off. Turn it on in HushMessenger settings > Controls."
+              },
+              {
+                "name": "Ask before a call",
+                "description": "Tapping the audio or video call button in a chat's top bar asks first, so a stray tap doesn't ring anyone. Call starts it, Cancel doesn't. Calls coming in aren't affected. Starts off. Turn it on in HushMessenger settings > Controls."
+              },
+              {
+                "name": "Jump to the first message or a date",
+                "description": "Long press a chat's name at the top of the chat to jump to its first message or to a day you pick. Messenger loads a chat a page at a time, so it scrolls back with a count on screen until it gets there, and Cancel stops it. It can only go as far back as Messenger can load. Starts off. Turn it on in HushMessenger settings > Controls."
+              },
+              {
+                "name": "Your own home header",
+                "description": "Puts words or a picture of your own at the top of the chat list in place of Messenger's wordmark. Type the words or pick the picture in HushMessenger settings. With neither, the wordmark stays. Starts off. Turn it on in HushMessenger settings > Controls."
               }
             ],
             "patches_removed": [],
@@ -5787,11 +6300,19 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Clone install under another package name",
+                "description": "Installs a second copy of Messenger beside the first, with its own app name. Push notifications may not reach the copy. Pick it in Morphe Manager's Expert mode. Works as soon as you patch it in, with no switch.",
+                "changes": [
+                  "options: +1 option"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            2
           ]
         }
       ],
@@ -5800,6 +6321,3105 @@
       "extra_badges": [],
       "previous_version": "0.28.0",
       "new_version": "0.28.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "sysadmindoc:stable": {
+      "bundle": "sysadmindoc",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "PineDrama - Short Dramas",
+          "package": "com.ss.android.ttmd.video",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Facebook",
+          "package": "com.facebook.katana",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/SysAdminDoc/HushPine",
+      "patches_name": "HushPine",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "0.18.0",
+      "new_version": "0.0.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "proxma:dev": {
+      "bundle": "proxma",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "ROX",
+          "package": "com.jazz.rox",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/totsiaw/proxma-patches",
+      "patches_name": "Proxma Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.27.5",
+      "new_version": "1.28.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "proxma:latest": {
+      "bundle": "proxma",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "ROX",
+          "package": "com.jazz.rox",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/totsiaw/proxma-patches",
+      "patches_name": "Proxma Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.27.5",
+      "new_version": "1.28.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "proxma:stable": {
+      "bundle": "proxma",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "ROX",
+          "package": "com.jazz.rox",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/totsiaw/proxma-patches",
+      "patches_name": "Proxma Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.27.5",
+      "new_version": "1.28.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "o1hitman1o:dev": {
+      "bundle": "o1hitman1o",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/o1hitman1o/Morphe-Patches",
+      "patches_name": "o1hitman1o's Morphe Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "o1hitman1o:stable": {
+      "bundle": "o1hitman1o",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/o1hitman1o/Morphe-Patches",
+      "patches_name": "o1hitman1o's Morphe Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hyperland956-lgtm:stable": {
+      "bundle": "hyperland956-lgtm",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "XYZ app",
+          "package": "com.example.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/hyperland956-lgtm/morphe-essentials-patches",
+      "patches_name": "UserXYZ Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "callmebeyonder:dev": {
+      "bundle": "callmebeyonder",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "MacroFactor Workouts - Tracker",
+          "package": "com.sbs.train",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium (Root)",
+                "description": "Unlocks all premium features. Requires root: the patched build must be mounted over the genuine Play-signed install — a re-signed sideload will not work.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/callMeBeyonder/morphe-patches",
+      "patches_name": "Beyonder Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.3.0",
+      "new_version": "1.4.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "callmebeyonder:latest": {
+      "bundle": "callmebeyonder",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "MacroFactor Workouts - Tracker",
+          "package": "com.sbs.train",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium (Root)",
+                "description": "Unlocks all premium features. Requires root: the patched build must be mounted over the genuine Play-signed install — a re-signed sideload will not work.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/callMeBeyonder/morphe-patches",
+      "patches_name": "Beyonder Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.3.0",
+      "new_version": "1.4.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "callmebeyonder:stable": {
+      "bundle": "callmebeyonder",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "MacroFactor Workouts - Tracker",
+          "package": "com.sbs.train",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium (Root)",
+                "description": "Unlocks all premium features. Requires root: the patched build must be mounted over the genuine Play-signed install — a re-signed sideload will not work.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/callMeBeyonder/morphe-patches",
+      "patches_name": "Beyonder Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.3.0",
+      "new_version": "1.4.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mangotornado:dev": {
+      "bundle": "mangotornado",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "renshuu - Japanese learning",
+          "package": "com.renshuu.renshuu_org",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Pimsleur | Language Learning",
+          "package": "com.simonandschuster.pimsleur.unified.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Teuida: Learn Languages",
+          "package": "net.teuida.teuida",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Du Chinese: Read&Learn Chinese",
+          "package": "org.sinamon.duchinese",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/MangoTornado/morphe-patches-suchi",
+      "patches_name": "Suchi Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.1.3-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mangotornado:stable": {
+      "bundle": "mangotornado",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "renshuu - Japanese learning",
+          "package": "com.renshuu.renshuu_org",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Pimsleur | Language Learning",
+          "package": "com.simonandschuster.pimsleur.unified.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Teuida: Learn Languages",
+          "package": "net.teuida.teuida",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Du Chinese: Read&Learn Chinese",
+          "package": "org.sinamon.duchinese",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/MangoTornado/morphe-patches-suchi",
+      "patches_name": "Suchi Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.1.3",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "piracola:dev": {
+      "bundle": "piracola",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "pixiv",
+          "package": "jp.pxv.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Piracola/Pixiv-Patched",
+      "patches_name": "PixivPatched",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.0-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "piracola:stable": {
+      "bundle": "piracola",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "pixiv",
+          "package": "jp.pxv.android",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Piracola/Pixiv-Patched",
+      "patches_name": "PixivPatched",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "uta-a:stable": {
+      "bundle": "uta-a",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "LINE: Calls & Messages",
+          "package": "jp.naver.line.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "画像メッセージ横の LINE AI",
+                "description": "画像メッセージ横の LINE AI ボタンを、長押しメニューの LINE AI と同じ設定で取り除けるようにします。"
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Linimal",
+                "description": "LINE の設定画面に Linimal を追加し、実行時設定で不要な機能を無効化できるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal のパッチ適用状況",
+                "description": "各パッチの適用結果を APK 内の asset として書き出します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal のパッチ適用確認",
+                "description": "bytecode パッチの処理が対象を変更せずに最後まで実行されたことを確認します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal の初期化",
+                "description": "LINE の起動処理へ Linimal の初期化を差し込みます。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal の基盤",
+                "description": "Linimal の実行時 extension を対象 APK へ統合します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal 設定の文字列",
+                "description": "Linimal の設定項目が参照する文字列 resource を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal 設定の追加",
+                "description": "LINE の設定画面へ Linimal の設定項目を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Linimal 設定画面の登録",
+                "description": "Linimal の設定画面を AndroidManifest へ component として登録します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "MicroG-RE でトークをバックアップする",
+                "description": "Google ドライブ連携の token 要求を、実行時設定で MicroG-RE へ向けられるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "MicroG-RE でトークをバックアップする（manifest）",
+                "description": "MicroG-RE に公式 LINE の証明書を申告する meta-data を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Smart Channel の広告",
+                "description": "トーク一覧の Smart Channel にある広告を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "アプリを閉じていても通知を受け取る",
+                "description": "Firebase Installations の登録で送る署名情報を、実行時設定で公式 LINE のものに置き換えられるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ウォレット上部の Agent i",
+                "description": "ウォレット画面上部にある Agent i の入口を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "チャット入力欄の Agent i",
+                "description": "チャット入力欄にある Agent i のボタンと候補チップを、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "チャット情報の Agent i",
+                "description": "チャット情報画面にある Agent i の入口を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "トークの ＋ メニュー",
+                "description": "トークの ＋ メニューからカレンダー・LINE ギフト・LINE Pay を、実行時設定で個別に取り除けるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "トーク一覧の検索欄の Agent i",
+                "description": "トーク一覧上部の検索欄にある Agent i のボタンを、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "トーク一覧上部のアイコン",
+                "description": "トーク一覧上部の AI Friends・カレンダー・オープンチャットのアイコンを、実行時設定で個別に取り除けるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホームのおすすめ枠",
+                "description": "ホームのおすすめ枠を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホームの投稿カード",
+                "description": "ホーム下部にある投稿カードを、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホームの最近の履歴",
+                "description": "ホーム上部にある最近使用したサービスの枠を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホームの特集枠",
+                "description": "ホームの特集枠にある動画のグリッドを、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホームの話題枠",
+                "description": "ホームの話題・トレンド枠を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホームの読み込み表示",
+                "description": "ホームのフィードが読み込み中に出る円形の読み込み表示を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホーム上部の Agent i",
+                "description": "ホーム画面上部にある Agent i の入口を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "ホーム内の広告",
+                "description": "ホーム画面内の Performance Ad とフィード広告を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "メッセージ長押しメニューの LINE AI",
+                "description": "メッセージの長押しメニューにある LINE AI の項目を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "リンクを外部ブラウザで開く",
+                "description": "トーク本文の通常の http/https リンクを、実行時設定で外部ブラウザへ渡せるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "下部タブ",
+                "description": "下部タブの VOOM・ショッピング・ニュース・ウォレット・アプリを、実行時設定で個別に取り除けるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "写真・動画表示画面の LINE AI",
+                "description": "チャットの写真・動画表示画面にある LINE AI の入口を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "手動既読の受け渡し",
+                "description": "手動既読の印を、非同期処理へ引き継ぐための識別子として登録します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "手動既読の呼び出し元",
+                "description": "LINE 自身の手動既読操作を識別できるよう、呼び出し元スレッドへ印を付けます。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "手動既読の送信許可",
+                "description": "非同期処理側で手動既読の識別子を送信許可へ変換し、処理の終了時に破棄します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読なし閲覧のメッセージ別既読操作",
+                "description": "受信した通常メッセージの下に、そこまでを既読にする操作を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読なし閲覧中の手動既読入口",
+                "description": "選択したメッセージと現在のトーク全体を、公式の既読処理へ渡す入口を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読なし閲覧中の送信で既読にする",
+                "description": "既読をつけずに開いた通常トークでも、送信操作で閲覧セッションを終了して既読を反映します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読をつけずに読む",
+                "description": "トーク一覧の長押しメニューへ「既読をつけずに読む」の行を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読をつけずに読むの文字列",
+                "description": "「既読をつけずに読む」のメニュー項目が参照する文字列 resource を追加します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読をつけずに読むの既読停止",
+                "description": "「既読をつけずに読む」で開いたトークだけ、既読送信の RPC を実行しないようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読をつけずに読むの未読維持",
+                "description": "「既読をつけずに読む」で開いたトークだけ、ローカルの未読クリアも実行しないようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "既読をつけずに読むの閲覧セッション",
+                "description": "トーク画面の生成時に閲覧セッションを開始し、一時的な離脱で既読抑制が解除されないようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "設定の Premium",
+                "description": "LINE の設定画面にある LINE Premium の行を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "設定画面の Agent i",
+                "description": "LINE の設定画面にある Agent i と LINE AI Services の入口を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "送信取消の Premium 案内",
+                "description": "送信取消時に出る LINE Premium の案内を、実行時設定で非表示にできるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "通常チャットの自動既読",
+                "description": "通常チャットの既読送信を、実行時設定で止められるようにします。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "通知から既読をつけずに開く",
+                "description": "メッセージ通知からのトーク起動時だけ既読をつけない閲覧セッションを予約します。",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/uta-a/linimal",
+      "patches_name": "Linimal",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "0.7.0",
+      "new_version": "0.8.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "d0nj:dev": {
+      "bundle": "d0nj",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Niagara Launcher ‧ Home Screen",
+          "package": "bitpit.launcher",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Novel Reader: AI Audio",
+          "package": "com.thien.novelreader",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock premium",
+                "description": "Unlocks premium features and stops the 10-hour trial countdown.",
+                "previous_description": "Makes isPremium() always return true in AI Audio Novel Reader. Unlocks all premium features and disables the 10-hour trial countdown.",
+                "changes": [
+                  "description updated",
+                  "versions: -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Firefox Fast & Private Browser",
+          "package": "org.mozilla.firefox",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/d0nj/morphe-patches",
+      "patches_name": "d0nj Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "v1.1.0-dev.1",
+      "new_version": "1.6.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "sabopura:latest": {
+      "bundle": "sabopura",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Ambient light",
+                "description": "Fills the black bars around the video with a soft glow of the picture's colours, like Ambient light for YouTube. Configurable in Settings > Video and audio > Ambient light.",
+                "changes": [
+                  "versions: +2 versions, -2 versions"
+                ]
+              },
+              {
+                "name": "Danmaku comments",
+                "description": "Flows regular comments, live chat, and chat replays over videos like NicoNico/bilibili, with native in-app settings, NG words, and no API key.",
+                "changes": [
+                  "versions: +2 versions, -2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Reddit",
+          "package": "com.reddit.frontpage",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Auto-translate Reddit content",
+                "description": "Automatically invokes Reddit's existing post and comment translation path.",
+                "changes": [
+                  "versions: +2 versions, -3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "SmartNews: Live News & Rewards",
+          "package": "jp.gocro.smartnews.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Auto claim mission rewards",
+                "description": "Claims completed My missions rewards and draws their lotteries in the background, without the reward popup or the lottery animation, and shows a short message with the result.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Open in external browser",
+                "description": "Opens the web pages that SmartNews shows in its in-app browser in another installed browser instead: as a Custom Tab (the browser's own in-app browser) or in the browser app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "SmartNews cleanup",
+                "description": "Disables SmartNews ad config, native layouts, and reader ad nodes via stable anchors.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/sabopura/sabopura-morphe-patches",
+      "patches_name": "Sabopura Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.18.1",
+      "new_version": "1.18.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "sabopura:stable": {
+      "bundle": "sabopura",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Ambient light",
+                "description": "Fills the black bars around the video with a soft glow of the picture's colours, like Ambient light for YouTube. Configurable in Settings > Video and audio > Ambient light.",
+                "changes": [
+                  "versions: +2 versions, -2 versions"
+                ]
+              },
+              {
+                "name": "Danmaku comments",
+                "description": "Flows regular comments, live chat, and chat replays over videos like NicoNico/bilibili, with native in-app settings, NG words, and no API key.",
+                "changes": [
+                  "versions: +2 versions, -2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Reddit",
+          "package": "com.reddit.frontpage",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Auto-translate Reddit content",
+                "description": "Automatically invokes Reddit's existing post and comment translation path.",
+                "changes": [
+                  "versions: +2 versions, -3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "SmartNews: Live News & Rewards",
+          "package": "jp.gocro.smartnews.android",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Auto claim mission rewards",
+                "description": "Claims completed My missions rewards and draws their lotteries in the background, without the reward popup or the lottery animation, and shows a short message with the result.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Open in external browser",
+                "description": "Opens the web pages that SmartNews shows in its in-app browser in another installed browser instead: as a Custom Tab (the browser's own in-app browser) or in the browser app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "SmartNews cleanup",
+                "description": "Disables SmartNews ad config, native layouts, and reader ad nodes via stable anchors.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/sabopura/sabopura-morphe-patches",
+      "patches_name": "Sabopura Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.18.1",
+      "new_version": "1.18.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "dragon0wattyler:dev": {
+      "bundle": "dragon0wattyler",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "XYZ app",
+          "package": "com.example.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Reddit",
+          "package": "com.reddit.frontpage",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Dragon0WaTTyler/dragon0wattyler-morphe-patches",
+      "patches_name": "UserXYZ Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.0-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "dragon0wattyler:stable": {
+      "bundle": "dragon0wattyler",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "XYZ app",
+          "package": "com.example.app",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Reddit",
+          "package": "com.reddit.frontpage",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Dragon0WaTTyler/dragon0wattyler-morphe-patches",
+      "patches_name": "UserXYZ Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.0-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "ak-a-ra:stable": {
+      "bundle": "ak-a-ra",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "K PLUS",
+          "package": "com.kasikorn.retail.mbanking.wap",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/ak-a-ra/kplus-root-bypass",
+      "patches_name": "UserXYZ Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.1.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "quwis:dev": {
+      "bundle": "quwis",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Chess - Play and Learn Online",
+          "package": "com.chess",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/quwi26/Quwis-Patches",
+      "patches_name": "Quwi's Chess Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.9.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mod-prod-modprod-apk-creator:dev": {
+      "bundle": "mod-prod-modprod-apk-creator",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "APK Base",
+          "package": "app.modprod.apkbase",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "ATV Base",
+          "package": "app.modprod.atvlink.base",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/MOD-PROD/modprod-apk-creator",
+      "patches_name": "ModProd APK Creator",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "base-apk",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mod-prod-modprod-apk-creator:stable": {
+      "bundle": "mod-prod-modprod-apk-creator",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "APK Base",
+          "package": "app.modprod.apkbase",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "ATV Base",
+          "package": "app.modprod.atvlink.base",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/MOD-PROD/modprod-apk-creator",
+      "patches_name": "ModProd APK Creator",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.5.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "baconreader-morphe:dev": {
+      "bundle": "baconreader-morphe",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BaconReader for Reddit",
+          "package": "com.onelouder.baconreader",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix Reddit links",
+                "description": "Opens Reddit's share links, and links to galleries, to posts without their subreddit and to posts on a user's profile, in the app instead of its browser."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "BaconReader for Reddit",
+          "package": "com.onelouder.baconreader.premium",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix Reddit links",
+                "description": "Opens Reddit's share links, and links to galleries, to posts without their subreddit and to posts on a user's profile, in the app instead of its browser."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/JoanComasFdz/baconreader-morphe-patches",
+      "patches_name": "JoanComasFdz BaconReader Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.0",
+      "new_version": "1.5.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "baconreader-morphe:latest": {
+      "bundle": "baconreader-morphe",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BaconReader for Reddit",
+          "package": "com.onelouder.baconreader",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix Reddit links",
+                "description": "Opens Reddit's share links, and links to galleries, to posts without their subreddit and to posts on a user's profile, in the app instead of its browser."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "BaconReader for Reddit",
+          "package": "com.onelouder.baconreader.premium",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix Reddit links",
+                "description": "Opens Reddit's share links, and links to galleries, to posts without their subreddit and to posts on a user's profile, in the app instead of its browser."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/JoanComasFdz/baconreader-morphe-patches",
+      "patches_name": "JoanComasFdz BaconReader Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.0",
+      "new_version": "1.5.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "baconreader-morphe:stable": {
+      "bundle": "baconreader-morphe",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BaconReader for Reddit",
+          "package": "com.onelouder.baconreader",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix Reddit links",
+                "description": "Opens Reddit's share links, and links to galleries, to posts without their subreddit and to posts on a user's profile, in the app instead of its browser."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "BaconReader for Reddit",
+          "package": "com.onelouder.baconreader.premium",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Fix Reddit links",
+                "description": "Opens Reddit's share links, and links to galleries, to posts without their subreddit and to posts on a user's profile, in the app instead of its browser."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/JoanComasFdz/baconreader-morphe-patches",
+      "patches_name": "JoanComasFdz BaconReader Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.0",
+      "new_version": "1.5.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "snowyegret23:latest": {
+      "bundle": "snowyegret23",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "치지직 – CHZZK",
+          "package": "com.navercorp.game.android.community",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "CDN playback",
+                "description": "Creates player configurations with peer-assisted streaming disabled.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Change package name",
+                "description": "Installs alongside the original app using a separate package name and app data.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Chat customization",
+                "description": "Adds in-player Morphe settings, draggable chat width, chat styling, individual badge controls, device icons, chat input buttons, live viewer count, live rewind and catch-up, audio compression and volume boost, player button visibility, recent chat and settings copy/paste.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom app branding",
+                "description": "Changes the app name shown by Android. Defaults to 치지직 S.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Playback without ads",
+                "description": "Skips player ad-source wrapping, ignores live ad events and removes AD cards from the clip feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/snowyegret23/morphe-patches",
+      "patches_name": "S Chzzk Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.6",
+      "new_version": "1.4.7",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "snowyegret23:stable": {
+      "bundle": "snowyegret23",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "치지직 – CHZZK",
+          "package": "com.navercorp.game.android.community",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "CDN playback",
+                "description": "Creates player configurations with peer-assisted streaming disabled.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Change package name",
+                "description": "Installs alongside the original app using a separate package name and app data.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Chat customization",
+                "description": "Adds in-player Morphe settings, draggable chat width, chat styling, individual badge controls, device icons, chat input buttons, live viewer count, live rewind and catch-up, audio compression and volume boost, player button visibility, recent chat and settings copy/paste.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom app branding",
+                "description": "Changes the app name shown by Android. Defaults to 치지직 S.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Playback without ads",
+                "description": "Skips player ad-source wrapping, ignores live ad events and removes AD cards from the clip feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/snowyegret23/morphe-patches",
+      "patches_name": "S Chzzk Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.6",
+      "new_version": "1.4.7",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "xavierlee-0:stable": {
+      "bundle": "xavierlee-0",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Reddit",
+          "package": "com.reddit.frontpage",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/XavierLee-0/morphe-patches",
+      "patches_name": "Morphe Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "2.0.0-custom.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "xxlc:dev": {
+      "bundle": "xxlc",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Grok",
+          "package": "ai.x.grok",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/XXLC/grok-morphe-patches",
+      "patches_name": "XXLC Grok Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.0-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "xxlc:stable": {
+      "bundle": "xxlc",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Grok",
+          "package": "ai.x.grok",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/XXLC/grok-morphe-patches",
+      "patches_name": "XXLC Grok Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.0.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mmenzyns:stable": {
+      "bundle": "mmenzyns",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Alza",
+          "package": "cz.alza.eshop",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/mmenzyns/morphe-patches",
+      "patches_name": "Menzac Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.6.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "xob0t:dev": {
+      "bundle": "xob0t",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Avito",
+          "package": "com.avito.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "AMOLED dark theme",
+                "description": "Makes dark-theme page, app navigation and system bars pure black (AMOLED) while keeping elevated cards, sheets and controls gray so their boundaries remain visible.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Block listings",
+                "description": "Hides Avito offers from blacklisted adverts or sellers and adds a blacklist manager (import/export compatible with the Ave Blacklist extension).",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Avito first-party clickstream analytics and Avito's direct Adjust telemetry wrapper.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Prevents Avito's force-update screen opener from launching update screens. Toggleable in Настройки Morphe.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide professional sellers",
+                "description": "Adds a maximum seller review count to Avito search filters and hides or dims offers from sellers above that limit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Morphe settings",
+                "description": "Adds a \"Настройки Morphe\" entry to Avito's settings that hosts the configuration for the other Morphe patches.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "UI tweaks",
+                "description": "Optional interface tweaks, each toggleable in Настройки Morphe: single-row home categories, hide the \"Подписки\" tab in Избранное, hide installments (Рассрочка) and the \"Спросите у продавца\" block on offers, expand descriptions by default (no \"Читать далее\"), hide reserved offers and offer recommendations, hide profile raffle, referral and Avito Pro promos, optionally hide profile sections (recommendations, tools, services, jobs), and hide the Avi assistant tab in the bottom navigation.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/xob0t/morphe-patches",
+      "patches_name": "xob0t Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.14.4",
+      "new_version": "1.14.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "xob0t:latest": {
+      "bundle": "xob0t",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Avito",
+          "package": "com.avito.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "AMOLED dark theme",
+                "description": "Makes dark-theme page, app navigation and system bars pure black (AMOLED) while keeping elevated cards, sheets and controls gray so their boundaries remain visible.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Block listings",
+                "description": "Hides Avito offers from blacklisted adverts or sellers and adds a blacklist manager (import/export compatible with the Ave Blacklist extension).",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Avito first-party clickstream analytics and Avito's direct Adjust telemetry wrapper.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Prevents Avito's force-update screen opener from launching update screens. Toggleable in Настройки Morphe.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide professional sellers",
+                "description": "Adds a maximum seller review count to Avito search filters and hides or dims offers from sellers above that limit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Morphe settings",
+                "description": "Adds a \"Настройки Morphe\" entry to Avito's settings that hosts the configuration for the other Morphe patches.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "UI tweaks",
+                "description": "Optional interface tweaks, each toggleable in Настройки Morphe: single-row home categories, hide the \"Подписки\" tab in Избранное, hide installments (Рассрочка) and the \"Спросите у продавца\" block on offers, expand descriptions by default (no \"Читать далее\"), hide reserved offers and offer recommendations, hide profile raffle, referral and Avito Pro promos, optionally hide profile sections (recommendations, tools, services, jobs), and hide the Avi assistant tab in the bottom navigation.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/xob0t/morphe-patches",
+      "patches_name": "xob0t Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.14.4",
+      "new_version": "1.14.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "xob0t:stable": {
+      "bundle": "xob0t",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Avito",
+          "package": "com.avito.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "AMOLED dark theme",
+                "description": "Makes dark-theme page, app navigation and system bars pure black (AMOLED) while keeping elevated cards, sheets and controls gray so their boundaries remain visible.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Block listings",
+                "description": "Hides Avito offers from blacklisted adverts or sellers and adds a blacklist manager (import/export compatible with the Ave Blacklist extension).",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Disables Avito first-party clickstream analytics and Avito's direct Adjust telemetry wrapper.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable update prompts",
+                "description": "Prevents Avito's force-update screen opener from launching update screens. Toggleable in Настройки Morphe.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide professional sellers",
+                "description": "Adds a maximum seller review count to Avito search filters and hides or dims offers from sellers above that limit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Morphe settings",
+                "description": "Adds a \"Настройки Morphe\" entry to Avito's settings that hosts the configuration for the other Morphe patches.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "UI tweaks",
+                "description": "Optional interface tweaks, each toggleable in Настройки Morphe: single-row home categories, hide the \"Подписки\" tab in Избранное, hide installments (Рассрочка) and the \"Спросите у продавца\" block on offers, expand descriptions by default (no \"Читать далее\"), hide reserved offers and offer recommendations, hide profile raffle, referral and Avito Pro promos, optionally hide profile sections (recommendations, tools, services, jobs), and hide the Avi assistant tab in the bottom navigation.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/xob0t/morphe-patches",
+      "patches_name": "xob0t Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.14.4",
+      "new_version": "1.14.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hushfacebook:latest": {
+      "bundle": "hushfacebook",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Facebook",
+          "package": "com.facebook.katana",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Photo carousel",
+                "description": "Shows a post's photos and videos in a row you swipe through, one at a time, instead of a grid. Starts off. Turn it on in Hushfacebook settings > News feed."
+              },
+              {
+                "name": "Search posts tab",
+                "description": "Puts the Posts chip back in the row over search results, after Reels, so you can see only posts for what you searched. Turn it off in Hushfacebook settings > Search."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Clean up Reels",
+                "description": "Hides clutter on reels, such as the Follow button, comment previews, Remix and Use template buttons and Threads cards between reels, so more of the video shows, and can play each reel once instead of over and over, keep its original audio instead of a Meta AI dub, drop the search suggestions under the caption, over the comments and at the top of a profile's reels, or hide the like, comment and share counts, the Like, Comment, Share, Save or speaker button, or the line naming the reel's sound. It can also keep the Reels tab to accounts you follow, open a video you tap in the feed on its own, with no reels after it, stop the \"This is taking a while\" message when a video is slow to load, and play whole reels in the feed's Reels row instead of the same second over and over, or keep the Comment button on reels with comments turned off so you can read them, and hide the one-tap Subscribe button some authors get instead of Follow, or Search and the button beside it at the top of a video you open and of the Reels tab, and show when a reel or video was posted. Its Burn-in guard can fade a reel's buttons, caption and bars when you leave them alone, so they don't burn into the screen. Starts off. Turn on the parts you want in Hushfacebook settings > Reels and Watch.",
+                "previous_description": "Hides clutter on reels, such as the Follow button, comment previews, Remix and Use template buttons and Threads cards between reels, so more of the video shows, and can play each reel once instead of over and over, keep its original audio instead of a Meta AI dub, drop the search suggestions under the caption, over the comments and at the top of a profile's reels, or hide the like, comment and share counts, the Like, Comment, Share, Save or speaker button, or the line naming the reel's sound. It can also open a video you tap in the feed on its own, with no reels after it, stop the \"This is taking a while\" message when a video is slow to load, and play whole reels in the feed's Reels row instead of the same second over and over, or keep the Comment button on reels with comments turned off so you can read them, and hide the one-tap Subscribe button some authors get instead of Follow, or Search and the button beside it at the top of a video you open, and show when a reel or video was posted. Its Burn-in guard can fade a reel's buttons, caption and bars when you leave them alone, so they don't burn into the screen. Starts off. Turn on the parts you want in Hushfacebook settings > Reels and Watch.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Comment sheet options",
+                "description": "Small fixes for comments. Stop a long press on Like from opening reactions, hide the GIF and sticker buttons, show every reply without tapping View replies, load a whole reply thread as you scroll, close an open reply thread with a Hide replies button, open more replies with a tap anywhere on their row, hide the comments under feed posts, hide the thumbs-down on comments or turn it into a Block button, hide Like on comments, hide Related groups under group posts, hide comments with shop links or your words, hide who is typing and the new comments pop-up, hide the emoji row over the comment box, hide the line over the comment box, and hide the comment box under full-screen videos. Starts off. Turn on the parts you want in Hushfacebook settings > Comments and writing.",
+                "previous_description": "Small fixes for comments. Stop a long press on Like from opening reactions, hide the GIF and sticker buttons, show every reply without tapping View replies, load a whole reply thread as you scroll, close an open reply thread with a Hide replies button, open more replies with a tap anywhere on their row, hide the comments under feed posts, hide the thumbs-down on comments or turn it into a Block button, hide Like on comments, hide Related groups under group posts, hide comments with shop links or your words, hide who is typing and the new comments pop-up, hide the emoji row over the comment box, and hide the comment box under full-screen videos. Starts off. Turn on the parts you want in Hushfacebook settings > Comments and writing.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide affiliate product links",
+                "description": "Removes the shopping cards that affiliate links add to reels, feed posts and comments, plus Shop now cards on reels and the shop banner on a profile you open from one, so you see fewer sales pitches while you scroll. On by default. Turn it off in Hushfacebook settings > News feed.",
+                "previous_description": "Removes the shopping cards that affiliate links add to reels, feed posts and comments, plus Shop now cards on reels, so you see fewer sales pitches while you scroll. On by default. Turn it off in Hushfacebook settings > News feed.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide suggested stories",
+                "description": "Removes stories Facebook suggests from people and Pages you don't follow, and the \"Find friends from contacts\" card, so the Stories tray sticks to people you know. On by default. Turn it off in Hushfacebook settings > Stories, where more switches, all off at first, also hide the Pages you follow and the stories you've already watched, or keep only the ones you've watched.",
+                "previous_description": "Removes stories Facebook suggests from people and Pages you don't follow, and the \"Find friends from contacts\" card, so the Stories tray sticks to people you know. On by default. Turn it off in Hushfacebook settings > Stories, where two more switches, both off at first, also hide the Pages you follow and the stories you've already watched.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide tabs",
+                "description": "Takes the tabs you pick off the tab bar, such as Friends, Marketplace, Groups, Gaming or Events, so the bar only has what you use, and puts the ones left in the order you want. Each page stays in the Menu. Starts off. Pick the tabs and their order in Hushfacebook settings > Tabs and navigation, then restart Facebook.",
+                "previous_description": "Takes the tabs you pick off the tab bar, such as Friends, Marketplace, Groups, Gaming or Events, so the bar only has what you use. Each page stays in the Menu. Starts off. Turn on the ones you want in Hushfacebook settings > Tabs and navigation, then restart Facebook.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Keep feed videos muted",
+                "description": "Feed videos start with the sound off every time you open Facebook, and only a tap on a video's speaker or the volume up key turns it on. It can also keep a long watch of a video you open from turning the feed's sound on. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
+                "previous_description": "Feed videos start with the sound off every time you open Facebook, and only a tap on a video's speaker or the volume up key turns it on. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Search date range",
+                "description": "Adds a from and to date picker to the Date posted filter in post search, in place of the list of years, so you can narrow results to a few days or a stretch of months. Starts off. Turn it on in Hushfacebook settings > Search.",
+                "previous_description": "Adds a from and to month picker to the Date posted filter in post search, in place of the list of years, so you can narrow results to a stretch of time. Starts off. Turn it on in Hushfacebook settings > Search.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/SysAdminDoc/Hushfacebook",
+      "patches_name": "Hushfacebook",
+      "extra_badges": [],
+      "previous_version": "0.20.0",
+      "new_version": "0.20.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hushfacebook:stable": {
+      "bundle": "hushfacebook",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Facebook",
+          "package": "com.facebook.katana",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Photo carousel",
+                "description": "Shows a post's photos and videos in a row you swipe through, one at a time, instead of a grid. Starts off. Turn it on in Hushfacebook settings > News feed."
+              },
+              {
+                "name": "Search posts tab",
+                "description": "Puts the Posts chip back in the row over search results, after Reels, so you can see only posts for what you searched. Turn it off in Hushfacebook settings > Search."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Clean up Reels",
+                "description": "Hides clutter on reels, such as the Follow button, comment previews, Remix and Use template buttons and Threads cards between reels, so more of the video shows, and can play each reel once instead of over and over, keep its original audio instead of a Meta AI dub, drop the search suggestions under the caption, over the comments and at the top of a profile's reels, or hide the like, comment and share counts, the Like, Comment, Share, Save or speaker button, or the line naming the reel's sound. It can also keep the Reels tab to accounts you follow, open a video you tap in the feed on its own, with no reels after it, stop the \"This is taking a while\" message when a video is slow to load, and play whole reels in the feed's Reels row instead of the same second over and over, or keep the Comment button on reels with comments turned off so you can read them, and hide the one-tap Subscribe button some authors get instead of Follow, or Search and the button beside it at the top of a video you open and of the Reels tab, and show when a reel or video was posted. Its Burn-in guard can fade a reel's buttons, caption and bars when you leave them alone, so they don't burn into the screen. Starts off. Turn on the parts you want in Hushfacebook settings > Reels and Watch.",
+                "previous_description": "Hides clutter on reels, such as the Follow button, comment previews, Remix and Use template buttons and Threads cards between reels, so more of the video shows, and can play each reel once instead of over and over, keep its original audio instead of a Meta AI dub, drop the search suggestions under the caption, over the comments and at the top of a profile's reels, or hide the like, comment and share counts, the Like, Comment, Share, Save or speaker button, or the line naming the reel's sound. It can also open a video you tap in the feed on its own, with no reels after it, stop the \"This is taking a while\" message when a video is slow to load, and play whole reels in the feed's Reels row instead of the same second over and over, or keep the Comment button on reels with comments turned off so you can read them, and hide the one-tap Subscribe button some authors get instead of Follow, or Search and the button beside it at the top of a video you open, and show when a reel or video was posted. Its Burn-in guard can fade a reel's buttons, caption and bars when you leave them alone, so they don't burn into the screen. Starts off. Turn on the parts you want in Hushfacebook settings > Reels and Watch.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Comment sheet options",
+                "description": "Small fixes for comments. Stop a long press on Like from opening reactions, hide the GIF and sticker buttons, show every reply without tapping View replies, load a whole reply thread as you scroll, close an open reply thread with a Hide replies button, open more replies with a tap anywhere on their row, hide the comments under feed posts, hide the thumbs-down on comments or turn it into a Block button, hide Like on comments, hide Related groups under group posts, hide comments with shop links or your words, hide who is typing and the new comments pop-up, hide the emoji row over the comment box, hide the line over the comment box, and hide the comment box under full-screen videos. Starts off. Turn on the parts you want in Hushfacebook settings > Comments and writing.",
+                "previous_description": "Small fixes for comments. Stop a long press on Like from opening reactions, hide the GIF and sticker buttons, show every reply without tapping View replies, load a whole reply thread as you scroll, close an open reply thread with a Hide replies button, open more replies with a tap anywhere on their row, hide the comments under feed posts, hide the thumbs-down on comments or turn it into a Block button, hide Like on comments, hide Related groups under group posts, hide comments with shop links or your words, hide who is typing and the new comments pop-up, hide the emoji row over the comment box, and hide the comment box under full-screen videos. Starts off. Turn on the parts you want in Hushfacebook settings > Comments and writing.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide affiliate product links",
+                "description": "Removes the shopping cards that affiliate links add to reels, feed posts and comments, plus Shop now cards on reels and the shop banner on a profile you open from one, so you see fewer sales pitches while you scroll. On by default. Turn it off in Hushfacebook settings > News feed.",
+                "previous_description": "Removes the shopping cards that affiliate links add to reels, feed posts and comments, plus Shop now cards on reels, so you see fewer sales pitches while you scroll. On by default. Turn it off in Hushfacebook settings > News feed.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide suggested stories",
+                "description": "Removes stories Facebook suggests from people and Pages you don't follow, and the \"Find friends from contacts\" card, so the Stories tray sticks to people you know. On by default. Turn it off in Hushfacebook settings > Stories, where more switches, all off at first, also hide the Pages you follow and the stories you've already watched, or keep only the ones you've watched.",
+                "previous_description": "Removes stories Facebook suggests from people and Pages you don't follow, and the \"Find friends from contacts\" card, so the Stories tray sticks to people you know. On by default. Turn it off in Hushfacebook settings > Stories, where two more switches, both off at first, also hide the Pages you follow and the stories you've already watched.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide tabs",
+                "description": "Takes the tabs you pick off the tab bar, such as Friends, Marketplace, Groups, Gaming or Events, so the bar only has what you use, and puts the ones left in the order you want. Each page stays in the Menu. Starts off. Pick the tabs and their order in Hushfacebook settings > Tabs and navigation, then restart Facebook.",
+                "previous_description": "Takes the tabs you pick off the tab bar, such as Friends, Marketplace, Groups, Gaming or Events, so the bar only has what you use. Each page stays in the Menu. Starts off. Turn on the ones you want in Hushfacebook settings > Tabs and navigation, then restart Facebook.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Keep feed videos muted",
+                "description": "Feed videos start with the sound off every time you open Facebook, and only a tap on a video's speaker or the volume up key turns it on. It can also keep a long watch of a video you open from turning the feed's sound on. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
+                "previous_description": "Feed videos start with the sound off every time you open Facebook, and only a tap on a video's speaker or the volume up key turns it on. Starts off. Turn it on in Hushfacebook settings > Video and audio.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Search date range",
+                "description": "Adds a from and to date picker to the Date posted filter in post search, in place of the list of years, so you can narrow results to a few days or a stretch of months. Starts off. Turn it on in Hushfacebook settings > Search.",
+                "previous_description": "Adds a from and to month picker to the Date posted filter in post search, in place of the list of years, so you can narrow results to a stretch of time. Starts off. Turn it on in Hushfacebook settings > Search.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/SysAdminDoc/Hushfacebook",
+      "patches_name": "Hushfacebook",
+      "extra_badges": [],
+      "previous_version": "0.20.0",
+      "new_version": "0.20.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "bitchord-morphe:dev": {
+      "bundle": "bitchord-morphe",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BitChord",
+          "package": "com.music.bitchord",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Play alongside other apps",
+                "description": "Keeps the music playing when another app plays sound, such as a reel or a video, instead of pausing. Calls still pause it. Settings are in Settings, Patches & tweaks."
+              },
+              {
+                "name": "Smart downloads",
+                "description": "Downloads the songs you play most, on Wi-Fi, so they're there without a signal. Uses BitChord's listening statistics and its Download quality; songs you delete aren't downloaded again. Settings are in Settings, Patches & tweaks."
+              },
+              {
+                "name": "Steady playback",
+                "description": "Reads further ahead, through the rest of the song and into the next ones, with separate limits for Wi-Fi and mobile data, and waits through a lost signal instead of stopping. Settings are in Settings, Patches & tweaks."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Flac Downloader Audio",
+                "description": "Optional native adapter for aztecempire's Spotube FLAC Audio source. Search, stream and download through flacdownloader.com, with explicit FLAC/MP3 choices. Starts disabled; enable in Sources or Patches & tweaks. Requested quality is not file verification. No Spotube runtime or account is installed."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Sing",
+                "description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Choose the filter or on-device separation model. Settings are in Settings, Patches & tweaks.",
+                "previous_description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Settings are in Settings, Patches & tweaks.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
+      "patches_name": "Hexclyde",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.1.0-beta.17",
+      "new_version": "1.1.0-beta.18",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "bitchord-morphe:latest": {
+      "bundle": "bitchord-morphe",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BitChord",
+          "package": "com.music.bitchord",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Play alongside other apps",
+                "description": "Keeps the music playing when another app plays sound, such as a reel or a video, instead of pausing. Calls still pause it. Settings are in Settings, Patches & tweaks."
+              },
+              {
+                "name": "Smart downloads",
+                "description": "Downloads the songs you play most, on Wi-Fi, so they're there without a signal. Uses BitChord's listening statistics and its Download quality; songs you delete aren't downloaded again. Settings are in Settings, Patches & tweaks."
+              },
+              {
+                "name": "Steady playback",
+                "description": "Reads further ahead, through the rest of the song and into the next ones, with separate limits for Wi-Fi and mobile data, and waits through a lost signal instead of stopping. Settings are in Settings, Patches & tweaks."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Flac Downloader Audio",
+                "description": "Optional native adapter for aztecempire's Spotube FLAC Audio source. Search, stream and download through flacdownloader.com, with explicit FLAC/MP3 choices. Starts disabled; enable in Sources or Patches & tweaks. Requested quality is not file verification. No Spotube runtime or account is installed."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Sing",
+                "description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Choose the filter or on-device separation model. Settings are in Settings, Patches & tweaks.",
+                "previous_description": "Turns the lead vocal down so you can sing over the song. Ported from the vocal remover in Auris by OreoMuncher45, a fork of BitChord. Settings are in Settings, Patches & tweaks.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Hexclyde/bitchord-morphe-patches",
+      "patches_name": "Hexclyde",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.1.0-beta.17",
+      "new_version": "1.1.0-beta.18",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "myvoow:dev": {
+      "bundle": "myvoow",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Apple Music",
+          "package": "com.apple.android.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/myvoow/LiquidMusic",
+      "patches_name": "LiquidMusic Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.1.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "myvoow:stable": {
+      "bundle": "myvoow",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Apple Music",
+          "package": "com.apple.android.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/myvoow/LiquidMusic",
+      "patches_name": "LiquidMusic Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.1.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "gmaps:latest": {
+      "bundle": "gmaps",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Google Maps",
+          "package": "com.google.android.apps.maps",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [
+              {
+                "name": "BYD native battery experiment",
+                "description": "Experimental: sends this BYD's battery and road-load model to Google through Maps' native EV route requests. Starts from the car's own average consumption, learns slowly from BMS energy/distance, and adds in-app vehicle settings. Native hooks inspected on Maps 26.41 and 26.42. Targets BYD DiLink 3; DiLink 5 unverified."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Google Maps for MicroG-RE",
+                "description": "Connects supported Google Maps builds to MicroG-RE 7.3.0 and avoids a crash when a location-settings dialog cannot open.",
+                "previous_description": "Connects supported Google Maps builds to MicroG-RE 7.2.2 and avoids a crash when a location-settings dialog cannot open.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/fangkampanat/gmaps-patches",
+      "patches_name": "Maps Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.4",
+      "new_version": "1.5.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "gmaps:stable": {
+      "bundle": "gmaps",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Google Maps",
+          "package": "com.google.android.apps.maps",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [
+              {
+                "name": "BYD native battery experiment",
+                "description": "Experimental: sends this BYD's battery and road-load model to Google through Maps' native EV route requests. Starts from the car's own average consumption, learns slowly from BMS energy/distance, and adds in-app vehicle settings. Native hooks inspected on Maps 26.41 and 26.42. Targets BYD DiLink 3; DiLink 5 unverified."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Google Maps for MicroG-RE",
+                "description": "Connects supported Google Maps builds to MicroG-RE 7.3.0 and avoids a crash when a location-settings dialog cannot open.",
+                "previous_description": "Connects supported Google Maps builds to MicroG-RE 7.2.2 and avoids a crash when a location-settings dialog cannot open.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/fangkampanat/gmaps-patches",
+      "patches_name": "Maps Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.4",
+      "new_version": "1.5.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hxreborn-morphe:dev": {
+      "bundle": "hxreborn-morphe",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BeReal. Your friends for real.",
+          "package": "com.bereal.ft",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Back up memories",
+                "description": "Adds Back up all memories to the patch settings. Saves every memory as separate back and front photos with the time, place and caption, plus the BTS video. The JSON sidecars hold location, friends' usernames and comments, and go to Download/BeReal unless a folder is picked.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Change download location",
+                "description": "Saves downloaded BeReals to Pictures/BeReal, DCIM/BeReal or a folder you pick. Requires Android 10 or newer.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom location",
+                "description": "Sets the location shown on your BeReal to a place you choose on a map or by name.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom retake count",
+                "description": "Asks before each BeReal how many retakes your friends see on it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable data collection",
+                "description": "Turns off ad tracking, Firebase crash reports and sessions, Amplitude and Datadog analytics, Adjust attribution and the Shake bug reporter.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable typing indicator",
+                "description": "Stops showing friends that you're typing in a chat. You still see when they type.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable view receipts",
+                "description": "Stops sending which BeReals you viewed and which chats you opened.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Post from gallery",
+                "description": "Adds a gallery button to the camera for picking the back and front photo of your BeReal.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Friends of Friends prompts",
+                "description": "Removes the \"Share with Friends of Friends\" card and the end-of-feed messages.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Friends of Friends tab",
+                "description": "Removes the Friends of Friends tab from the home screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Removes ads and sponsored BeReals from both feeds and the full-screen ad at launch, and stops the ad networks from loading.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove contacts permission",
+                "description": "Removes the contacts permission. BeReal can't ask for or read your phone's contacts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove friend suggestions",
+                "description": "Removes suggested friends, contacts on BeReal and popular accounts from Friends and the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove late flag",
+                "description": "Sends BeReals you take after the moment's window as on time. Friends don't see a late tag.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove late label",
+                "description": "Removes the late label from friends' BeReals. Each one shows how long ago your friend posted it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove promotions",
+                "description": "Removes Recap cards, the \"How's BeReal?\" review prompt, the profile completion card, the notifications banner and the music tooltip.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove streak prompts",
+                "description": "Removes the offers to recover your streak and the Save your streak sheet. Your streak count doesn't change.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove update prompts",
+                "description": "Removes BeReal's required and suggested update popups and the Play Store update prompt.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove watermark",
+                "description": "Saves downloaded BeReals at full size without the BeReal logo.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Save friends' BeReals",
+                "description": "Adds Download to the 3-dot menu of friends' BeReals in the feed and on the RealMoji screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show friends' posts before posting",
+                "description": "Shows friends' BeReals in My Friends and Friends of Friends before you post your own.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Public - Indian Local Videos",
+          "package": "com.cardfeed.video_public",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Remove promotions",
+                "description": "Removes advertiser banners under posts and the VIP package and advertising offers on the profile."
+              },
+              {
+                "name": "Remove screenshot restriction",
+                "description": "Allows screenshots and screen recording on every screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "NEETprep Essential",
+          "package": "com.gooded.essential",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "GmsCore support",
+                "description": "Signs in through GmsCore instead of Google Play Services. Requires GmsCore to be installed."
+              },
+              {
+                "name": "Remove screenshot restriction",
+                "description": "Allows screenshots and screen recording on every screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock premium",
+                "description": "Unlocks all chapters, practice sets, flashcards, hardest questions, mock tests and PYQ Marked NCERT questions.",
+                "previous_description": "Unlocks all chapters, practice sets, flashcards, hardest questions and mock tests.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "TunnelDOOm VPN-Internet seguro",
+          "package": "com.tunneldoom.http",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/hxreborn/morphe-patches",
+      "patches_name": "hxreborn Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.68.0",
+      "new_version": "1.69.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hxreborn-morphe:latest": {
+      "bundle": "hxreborn-morphe",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BeReal. Your friends for real.",
+          "package": "com.bereal.ft",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Back up memories",
+                "description": "Adds Back up all memories to the patch settings. Saves every memory as separate back and front photos with the time, place and caption, plus the BTS video. The JSON sidecars hold location, friends' usernames and comments, and go to Download/BeReal unless a folder is picked.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Change download location",
+                "description": "Saves downloaded BeReals to Pictures/BeReal, DCIM/BeReal or a folder you pick. Requires Android 10 or newer.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom location",
+                "description": "Sets the location shown on your BeReal to a place you choose on a map or by name.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom retake count",
+                "description": "Asks before each BeReal how many retakes your friends see on it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable data collection",
+                "description": "Turns off ad tracking, Firebase crash reports and sessions, Amplitude and Datadog analytics, Adjust attribution and the Shake bug reporter.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable typing indicator",
+                "description": "Stops showing friends that you're typing in a chat. You still see when they type.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable view receipts",
+                "description": "Stops sending which BeReals you viewed and which chats you opened.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Post from gallery",
+                "description": "Adds a gallery button to the camera for picking the back and front photo of your BeReal.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Friends of Friends prompts",
+                "description": "Removes the \"Share with Friends of Friends\" card and the end-of-feed messages.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Friends of Friends tab",
+                "description": "Removes the Friends of Friends tab from the home screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Removes ads and sponsored BeReals from both feeds and the full-screen ad at launch, and stops the ad networks from loading.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove contacts permission",
+                "description": "Removes the contacts permission. BeReal can't ask for or read your phone's contacts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove friend suggestions",
+                "description": "Removes suggested friends, contacts on BeReal and popular accounts from Friends and the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove late flag",
+                "description": "Sends BeReals you take after the moment's window as on time. Friends don't see a late tag.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove late label",
+                "description": "Removes the late label from friends' BeReals. Each one shows how long ago your friend posted it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove promotions",
+                "description": "Removes Recap cards, the \"How's BeReal?\" review prompt, the profile completion card, the notifications banner and the music tooltip.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove streak prompts",
+                "description": "Removes the offers to recover your streak and the Save your streak sheet. Your streak count doesn't change.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove update prompts",
+                "description": "Removes BeReal's required and suggested update popups and the Play Store update prompt.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove watermark",
+                "description": "Saves downloaded BeReals at full size without the BeReal logo.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Save friends' BeReals",
+                "description": "Adds Download to the 3-dot menu of friends' BeReals in the feed and on the RealMoji screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show friends' posts before posting",
+                "description": "Shows friends' BeReals in My Friends and Friends of Friends before you post your own.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Public - Indian Local Videos",
+          "package": "com.cardfeed.video_public",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Remove promotions",
+                "description": "Removes advertiser banners under posts and the VIP package and advertising offers on the profile."
+              },
+              {
+                "name": "Remove screenshot restriction",
+                "description": "Allows screenshots and screen recording on every screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "NEETprep Essential",
+          "package": "com.gooded.essential",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "GmsCore support",
+                "description": "Signs in through GmsCore instead of Google Play Services. Requires GmsCore to be installed."
+              },
+              {
+                "name": "Remove screenshot restriction",
+                "description": "Allows screenshots and screen recording on every screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock premium",
+                "description": "Unlocks all chapters, practice sets, flashcards, hardest questions, mock tests and PYQ Marked NCERT questions.",
+                "previous_description": "Unlocks all chapters, practice sets, flashcards, hardest questions and mock tests.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "TunnelDOOm VPN-Internet seguro",
+          "package": "com.tunneldoom.http",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/hxreborn/morphe-patches",
+      "patches_name": "hxreborn Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.68.0",
+      "new_version": "1.69.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "hxreborn-morphe:stable": {
+      "bundle": "hxreborn-morphe",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "BeReal. Your friends for real.",
+          "package": "com.bereal.ft",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Back up memories",
+                "description": "Adds Back up all memories to the patch settings. Saves every memory as separate back and front photos with the time, place and caption, plus the BTS video. The JSON sidecars hold location, friends' usernames and comments, and go to Download/BeReal unless a folder is picked.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Change download location",
+                "description": "Saves downloaded BeReals to Pictures/BeReal, DCIM/BeReal or a folder you pick. Requires Android 10 or newer.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom location",
+                "description": "Sets the location shown on your BeReal to a place you choose on a map or by name.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Custom retake count",
+                "description": "Asks before each BeReal how many retakes your friends see on it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable data collection",
+                "description": "Turns off ad tracking, Firebase crash reports and sessions, Amplitude and Datadog analytics, Adjust attribution and the Shake bug reporter.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable typing indicator",
+                "description": "Stops showing friends that you're typing in a chat. You still see when they type.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable view receipts",
+                "description": "Stops sending which BeReals you viewed and which chats you opened.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Post from gallery",
+                "description": "Adds a gallery button to the camera for picking the back and front photo of your BeReal.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Friends of Friends prompts",
+                "description": "Removes the \"Share with Friends of Friends\" card and the end-of-feed messages.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove Friends of Friends tab",
+                "description": "Removes the Friends of Friends tab from the home screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove ads",
+                "description": "Removes ads and sponsored BeReals from both feeds and the full-screen ad at launch, and stops the ad networks from loading.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove contacts permission",
+                "description": "Removes the contacts permission. BeReal can't ask for or read your phone's contacts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove friend suggestions",
+                "description": "Removes suggested friends, contacts on BeReal and popular accounts from Friends and the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove late flag",
+                "description": "Sends BeReals you take after the moment's window as on time. Friends don't see a late tag.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove late label",
+                "description": "Removes the late label from friends' BeReals. Each one shows how long ago your friend posted it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove promotions",
+                "description": "Removes Recap cards, the \"How's BeReal?\" review prompt, the profile completion card, the notifications banner and the music tooltip.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove streak prompts",
+                "description": "Removes the offers to recover your streak and the Save your streak sheet. Your streak count doesn't change.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove update prompts",
+                "description": "Removes BeReal's required and suggested update popups and the Play Store update prompt.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove watermark",
+                "description": "Saves downloaded BeReals at full size without the BeReal logo.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Save friends' BeReals",
+                "description": "Adds Download to the 3-dot menu of friends' BeReals in the feed and on the RealMoji screen.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Show friends' posts before posting",
+                "description": "Shows friends' BeReals in My Friends and Friends of Friends before you post your own.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "Public - Indian Local Videos",
+          "package": "com.cardfeed.video_public",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Remove promotions",
+                "description": "Removes advertiser banners under posts and the VIP package and advertising offers on the profile."
+              },
+              {
+                "name": "Remove screenshot restriction",
+                "description": "Allows screenshots and screen recording on every screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "NEETprep Essential",
+          "package": "com.gooded.essential",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "GmsCore support",
+                "description": "Signs in through GmsCore instead of Google Play Services. Requires GmsCore to be installed."
+              },
+              {
+                "name": "Remove screenshot restriction",
+                "description": "Allows screenshots and screen recording on every screen."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock premium",
+                "description": "Unlocks all chapters, practice sets, flashcards, hardest questions, mock tests and PYQ Marked NCERT questions.",
+                "previous_description": "Unlocks all chapters, practice sets, flashcards, hardest questions and mock tests.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            2
+          ]
+        },
+        {
+          "app_name": "TunnelDOOm VPN-Internet seguro",
+          "package": "com.tunneldoom.http",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/hxreborn/morphe-patches",
+      "patches_name": "hxreborn Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.68.0",
+      "new_version": "1.69.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "razorrzr0:dev": {
+      "bundle": "razorrzr0",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "GTA: San Andreas - Definitive",
+          "package": "com.rockstargames.gtasa.de",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "CLEO",
+                "description": "CLEO Android 2.0.1: runs CLEO scripts with the swipe-down CLEO menu, script text and touch. Installs its 14 GTA SA scripts in Android/data/com.rockstargames.gtasa.de/cleo/ (the .csa ones, such as invincibility and regeneration, always run: delete the ones you don't want)."
+              },
+              {
+                "name": "Loading Music",
+                "description": "Plays one of the game's eight loading-screen themes (S_000-S_007) while a save loads, like the PC SALoadingMusic mod."
+              },
+              {
+                "name": "Pak Loader",
+                "description": "Loads Unreal .pak mod files from Android/data/com.rockstargames.gtasa.de/paks/ when the game starts. They load above the game's own paks, so any file a mod pak contains replaces the game's copy (PC Definitive Edition pak mods work as-is). Copy the .pak files there and restart the game. Ships no game files."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/RAZORRZR0/gtasa-de-morphe-patches",
+      "patches_name": "GTA SA DE Mods (RAZORRZR0)",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "razorrzr0:stable": {
+      "bundle": "razorrzr0",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "GTA: San Andreas - Definitive",
+          "package": "com.rockstargames.gtasa.de",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "CLEO",
+                "description": "CLEO Android 2.0.1: runs CLEO scripts with the swipe-down CLEO menu, script text and touch. Installs its 14 GTA SA scripts in Android/data/com.rockstargames.gtasa.de/cleo/ (the .csa ones, such as invincibility and regeneration, always run: delete the ones you don't want)."
+              },
+              {
+                "name": "Loading Music",
+                "description": "Plays one of the game's eight loading-screen themes (S_000-S_007) while a save loads, like the PC SALoadingMusic mod."
+              },
+              {
+                "name": "Pak Loader",
+                "description": "Loads Unreal .pak mod files from Android/data/com.rockstargames.gtasa.de/paks/ when the game starts. They load above the game's own paks, so any file a mod pak contains replaces the game's copy (PC Definitive Edition pak mods work as-is). Copy the .pak files there and restart the game. Ships no game files."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            2
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/RAZORRZR0/gtasa-de-morphe-patches",
+      "patches_name": "GTA SA DE Mods (RAZORRZR0)",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     }

@@ -2,28 +2,10 @@
   "bundle": "johninnl-nl-morphe-patches",
   "channel": "stable",
   "repo_url": "https://github.com/johninnl/nl-morphe-patches",
-  "created_at": "2026-11-02T05:58:48Z",
-  "version": "1.26.1",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/bfdc032e1ee71fc160fc208d48f6aa96f4568e02/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.27.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [bfdc032e1ee7](https://github.com/johninnl/nl-morphe-patches/commit/bfdc032e1ee71fc160fc208d48f6aa96f4568e02). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.27.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.26.1...v1.27.0) (2026-11-02)\n\n### ✨ New Features\n\n* **Myspoti:** enable personal libraries in Gearslip ([bfdc032](https://github.com/johninnl/nl-morphe-patches/commit/bfdc032e1ee71fc160fc208d48f6aa96f4568e02))",
+  "created_at": "2026-11-02T15:52:38Z",
+  "version": "1.33.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/002a241d5542c69196cab4173beec64ce80ab048/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.33.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [002a241d5542](https://github.com/johninnl/nl-morphe-patches/commit/002a241d5542c69196cab4173beec64ce80ab048). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.33.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.32.0...v1.33.0) (2026-11-02)\n\n### ✨ New Features\n\n* **SoundCloud:** port analytics, consent and local Go controls ([002a241](https://github.com/johninnl/nl-morphe-patches/commit/002a241d5542c69196cab4173beec64ce80ab048))",
   "apps": [
-    {
-      "app_name": "Music Speed Changer",
-      "package": "app.morphe.android.apps.youtube.music",
-      "patches": [
-        {
-          "name": "Gearslip music browser support",
-          "description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
-          "use": true,
-          "options": [
-            {
-              "key": "packageNames",
-              "description": "Comma-separated installed Gearslip host package names. Each caller must own its package under its actual callback UID."
-            }
-          ],
-          "compatible_versions": []
-        }
-      ]
-    },
     {
       "app_name": "Myspoti",
       "package": "app.myspoti.stable",
@@ -35,13 +17,10 @@
           "options": [
             {
               "key": "packageNames",
-              "description": "Comma-separated Gearslip host packages. Myspoti retains its UID ownership checks for browsing and search."
+              "description": "Comma-separated Gearslip or DriveDeck host packages. Myspoti retains its UID ownership checks for browsing and search."
             }
           ],
-          "compatible_versions": [
-            "2.2.0",
-            "2.3.0"
-          ]
+          "compatible_versions": []
         }
       ]
     },
@@ -70,7 +49,7 @@
         },
         {
           "name": "Keep music player entries",
-          "description": "Keeps a music app's player available when it also provides a car Settings screen, including YT Music Morphe. Uses Gearslip's existing docked player.",
+          "description": "Shows only the music player when an app also provides a car Settings service, including YT Music Morphe. Uses Gearslip's existing docked player.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -86,11 +65,26 @@
       "patches": [
         {
           "name": "External speed controls",
-          "description": "Use De-Waze or Flitsmeister speed, limits, road warnings and partial average-zone progress in Vela and Android Auto, with native fallback and provider settings.",
+          "description": "Use De-Waze or Flitsmeister speed, limits, road warnings and partial average-zone progress in Vela and Android Auto, with native fallback, silent provider startup and automatic engine recovery.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "0.5.2621"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "WuPlay Mobile",
+      "package": "app.wuplay.android",
+      "patches": [
+        {
+          "name": "Add Gearslip car interface",
+          "description": "Browse Home poster carousels and season/episode shelves in Gearslip, with automatic direct-source selection within 10 Mbps. Uses your WuPlay profile, add-ons and native playback without root or phone-screen mirroring.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "0.1.9-alpha"
           ]
         }
       ]
@@ -886,6 +880,15 @@
           ]
         },
         {
+          "name": "Native navigation for Gearslip and Android Auto",
+          "description": "Shows this patched Maps app's original Android Auto map and navigation UI through a native navigation service. Requires the full Android Auto app for its car UI resources.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710"
+          ]
+        },
+        {
           "name": "Offline saved places",
           "description": "Save places without a Google account, kept only on the phone: Save opens Maps' own \"Place saved\" sheet (Want to go, Travel plans, Starred places, Favorites, your own lists, a note), and a \"Local saved\" row on the account sheet rebuilds Maps' You tab -- your recent places, your lists and labels (Home, Work, your own) -- with export and import (backup file, KML, Google Takeout's saved lists and Saved Places.json, several files or the whole Takeout .zip at once). It also has a Timeline: where the phone has been, grouped into days and visits, kept only on the phone, with GPX export. Recording is off until switched on there; it shows a notification while it runs. With Add microG-RE support, Maps' own Save keeps syncing to your account and Local saved instead copies the account's saved lists to the phone (Pull from Google account).",
           "use": true,
@@ -977,7 +980,7 @@
         },
         {
           "name": "Waze alerts",
-          "description": "Shows nearby Waze and Flitsmeister alerts as map pins with ahead-of-you chimes and notes. Supports our navigation broadcasts for current speed, speed limits and average-speed zones, plus bearinmind's Waze Share alerts with Maps feed. Choose a provider in Waze & external data source; external data is off by default. The selected source must be patched, enabled and running.",
+          "description": "Shows nearby Waze and Flitsmeister alerts as map pins with ahead-of-you chimes and notes. Supports our navigation broadcasts for current speed, speed limits and average-speed zones, plus bearinmind's Waze Share alerts with Maps feed. Choose a provider in Waze & external data source; external data is off by default. Updated patched providers start silently and are monitored while Maps is in use. Complete provider setup and location permissions once.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1001,12 +1004,12 @@
       "patches": [
         {
           "name": "Gearslip music browser support",
-          "description": "Allows installed Gearslip hosts to browse YouTube Music using their actual Android caller UID, without Google Android Auto.",
+          "description": "Adds Gearslip access to personal Home and Library using the app's existing account. Enable Morphe's Android Auto patch alongside it. Verifies the real Android caller identity.",
           "use": true,
           "options": [
             {
               "key": "packageNames",
-              "description": "Comma-separated installed Gearslip host package names. Each caller must own its package under its actual callback UID."
+              "description": "Comma-separated installed Gearslip or DriveDeck host package names. Each caller must own its package under its actual callback UID."
             }
           ],
           "compatible_versions": []
@@ -1294,6 +1297,48 @@
           "options": [],
           "compatible_versions": [
             "3.5.1"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "SoundCloud: The Music You Love",
+      "package": "com.soundcloud.android",
+      "patches": [
+        {
+          "name": "Disable analytics",
+          "description": "Stops SoundCloud's TrackingHandler from storing and dispatching analytics events. Other tracking SDKs and online services remain active.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.10.28-release"
+          ]
+        },
+        {
+          "name": "Disable consent popup",
+          "description": "Uses SoundCloud's no-op consent controller to skip the OneTrust popup. Does not grant consent or disable tracking; select Disable analytics separately.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.10.28-release"
+          ]
+        },
+        {
+          "name": "Enable SoundCloud Go",
+          "description": "Enables local Go+ plan controls, hides Go upsells and consumer-plan transition screens, and disables client ad requests and display placements. Paid streams, downloads and audio quality still depend on the account's server access.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.10.28-release"
+          ]
+        },
+        {
+          "name": "Home in Android Auto",
+          "description": "Fills the car Home tab with the same Home sections as the phone app, grouped by section title, using the app's existing account. Tracks, mixes and artists play; playlists and albums open. Falls back to SoundCloud's original car Home if the phone Home cannot load.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.10.28-release"
           ]
         }
       ]
@@ -1688,7 +1733,7 @@
         },
         {
           "name": "Broadcast navigation data",
-          "description": "Broadcasts current speed, road limits, road alerts and approaching/active average-speed zones locally, including in the background. No overlay required.",
+          "description": "Broadcasts current speed, road limits, road alerts and approaching/active average-speed zones locally, including in the background. Includes a silent startup and health API for patched Maps/Vela; no overlay required.",
           "use": true,
           "options": [
             {
@@ -2098,7 +2143,7 @@
         },
         {
           "name": "Support Gearslip",
-          "description": "Accepts Gearslip as a car host by package name, whichever key signed it, so a patched Gearslip keeps working. Other hosts keep Android Auto host validation.",
+          "description": "Accepts Gearslip and DriveDeck as car hosts by package name, whichever key signed them, so a patched Gearslip keeps working. Other hosts keep Android Auto host validation.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2333,7 +2378,7 @@
       "patches": [
         {
           "name": "Broadcast navigation data",
-          "description": "Shares current speed, road limits, road alerts and approaching/active average-speed zones with compatible local apps, also in the background without an overlay.",
+          "description": "Shares current speed, road limits, road alerts and approaching/active average-speed zones with compatible local apps, also in the background without an overlay, with a silent startup and health API for Maps/Vela.",
           "use": true,
           "options": [
             {
@@ -2393,6 +2438,15 @@
         {
           "name": "Hide ads",
           "description": "Blocks commercial LBA records, image requests, cached images, notifications and dialogs; hides the Ads setting and preserves informative and monitoring traffic items.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.17"
+          ]
+        },
+        {
+          "name": "Support Gearslip and DriveDeck",
+          "description": "Accepts Gearslip and DriveDeck as car hosts by package name, whichever key signed them, so DriveDeck works without the original Gearslip installed. Other hosts keep Android Auto host validation.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -3036,10 +3090,10 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "0ee34b7b27cafe73f84df1ff444bda2a1bfa18bae78b6b2169a0a1b278705284",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/47970293af77d1673e021f7257a984448b4c9317/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.26.1.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [47970293af77](https://github.com/johninnl/nl-morphe-patches/commit/47970293af77d1673e021f7257a984448b4c9317). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.26.1](https://github.com/johninnl/nl-morphe-patches/compare/v1.26.0...v1.26.1) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* **Google Maps:** retain the chosen app name with microG support ([c50dcd8](https://github.com/johninnl/nl-morphe-patches/commit/c50dcd8cdd23df060acba8e214d505b65d452eb6))\n",
-  "release_tag": "v1.26.1",
-  "release_date": "2026-11-02T05:58:48Z",
+  "fingerprint": "b191261c086f3a2e2d0f666fe470a20cb383b1946fd1c2310c34fcd9ed7548ea",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://raw.githubusercontent.com/johninnl/nl-morphe-patches/af8ea797c8645d00e70691566cdb13fd50cfcd89/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.33.0.**\n\n[Add to Morphe](https://morphe.software/add-source?github=johninnl/nl-morphe-patches) · [User guide](https://johninnl.github.io/nl-morphe-patches/en/)\n\nSource: [af8ea797c864](https://github.com/johninnl/nl-morphe-patches/commit/af8ea797c8645d00e70691566cdb13fd50cfcd89). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.33.0](https://github.com/johninnl/nl-morphe-patches/compare/v1.32.0...v1.33.0) (2026-11-02)\n\n### ✨ New Features\n\n* **SoundCloud:** port analytics, consent and local Go controls ([002a241](https://github.com/johninnl/nl-morphe-patches/commit/002a241d5542c69196cab4173beec64ce80ab048))\n",
+  "release_tag": "v1.33.0",
+  "release_date": "2026-11-02T15:52:38Z",
   "isPreRelease": false,
   "stars": 9,
   "avatarUrl": "https://avatars.githubusercontent.com/u/349981574?v=4&s=128",
