@@ -1949,6 +1949,28 @@ function Invoke-ReviewWorkflow {
     elseif ($options.UpdateBranch) { Update-PullRequestBranch -Context $Context }
 }
 
+function Find-PullRequestByBranch {
+    param(
+        [Parameter(Mandatory)]$Context,
+        [Parameter(Mandatory)][string]$Branch
+    )
+    $repository = $Context.Repository
+    $headFilter = [uri]::EscapeDataString("$($repository.Owner):$Branch")
+    $base = "repos/$($repository.Owner)/$($repository.Name)/pulls"
+
+    # Open first, because that is the pull request worth acting on. The "all" pass keeps
+    # -PrStatus useful for the minute after auto-merge has already landed it.
+    foreach ($state in @('open', 'all')) {
+        $endpoint = "${base}?state=$state&sort=updated&direction=desc&per_page=$MAX_LISTED_PULL_REQUESTS&head=$headFilter"
+        $response = Invoke-GitHubApi -Method 'Get' -Endpoint $endpoint -Token $Context.Token.Value -Operation "Finding the pull request for '$Branch'"
+        # An empty result arrives as an empty array, sometimes still wrapped in one element,
+        # so match on the shape of a pull request instead of trusting the count.
+        $candidates = @($response | Where-Object { $null -ne $_ -and $_.PSObject.Properties['number'] })
+        if ($candidates.Count -gt 0) { return [int]$candidates[0].number }
+    }
+    return 0
+}
+
 function Resolve-PullRequestNumber {
     param([Parameter(Mandatory)]$Context)
 
@@ -1959,18 +1981,11 @@ function Resolve-PullRequestNumber {
         throw (New-ToolException -Message 'HEAD is detached, so the pull request cannot be inferred from a branch.' -Hint 'Pass -PrNumber <n>.')
     }
 
-    $repository = $Context.Repository
-    $headFilter = [uri]::EscapeDataString("$($repository.Owner):$branch")
-    $endpoint = "repos/$($repository.Owner)/$($repository.Name)/pulls?state=open&head=$headFilter"
-    # An empty result comes back as an empty array, sometimes still wrapped in one element,
-    # so match on the property instead of trusting the count.
-    $candidates = @(Invoke-GitHubApi -Method 'Get' -Endpoint $endpoint -Token $Context.Token.Value -Operation 'Finding the pull request for this branch' |
-        Where-Object { $null -ne $_ -and $_.PSObject.Properties['number'] })
-
-    if ($candidates.Count -eq 0) {
-        throw (New-ToolException -Message "No open pull request has '$branch' as its head." -Hint 'Open one with -Pr, or pass -PrNumber <n>.')
+    $number = Find-PullRequestByBranch -Context $Context -Branch $branch
+    if ($number -eq 0) {
+        throw (New-ToolException -Message "No pull request has '$branch' as its head, open or merged." -Hint 'Open one with -Pr, or pass -PrNumber <n>.')
     }
-    return [int]$candidates[0].number
+    return $number
 }
 
 function Get-PullRequestDetails {
