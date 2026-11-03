@@ -2,9 +2,9 @@
   "bundle": "ginarena-patch",
   "channel": "dev",
   "repo_url": "https://github.com/sagarkhansau19-svg/GinArena-patch",
-  "created_at": "2026-10-31T23:28:01",
-  "version": "2.5.1",
-  "description": "## [2.5.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.5.0...v2.5.1) (2026-10-31)\n\n### 🚀 Updated App Support\n\n* **cricfy:** support CRICFy TV 7.4 ([fa73617](https://github.com/ginDoki19/GinArena-patch/commit/fa73617cc93b555dc374a301baa812aa9bb197c8))",
+  "created_at": "2026-11-03T03:36:50",
+  "version": "2.6.0",
+  "description": "## [2.6.0](https://github.com/ginDoki19/GinArena-patch/compare/v2.5.1...v2.6.0) (2026-11-03)\n\n### ✨ New Features\n\n* **1dm:** harden cloud sync and patch resilience ([6972768](https://github.com/ginDoki19/GinArena-patch/commit/6972768877540648c3df37cdbc3b17089616ce63))\n\n### 🔧 Improvements\n\n* simplify patch descriptions and collapse README patch lists ([8e6f3fd](https://github.com/ginDoki19/GinArena-patch/commit/8e6f3fda2dfd5735b594df19d71123a90a009efd))",
   "apps": [
     {
       "app_name": "Sportsnet (Android TV)",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Remove ads, proxy & restrictions",
-          "description": "Removes CashRaven background bandwidth sharing, all ads and sponsor/unlock gates, external browser redirects, the startup Telegram join dialog, promo marquee banners, forced-update lockouts, and promo push notifications. Optional clone/sniffer-check bypass and native-library stripping are off by default.",
+          "description": "Stops background bandwidth sharing and removes ads, sponsor popups, and forced updates.",
           "use": true,
           "options": [
             {
@@ -25,7 +25,7 @@
             },
             {
               "key": "blockPromoPushNotifications",
-              "description": "Suppresses promotional/browser-redirect FCM notifications and skips the startup notification permission prompt while preserving silent RemoteConfig API updates."
+              "description": "Blocks promotional push notifications and skips the notification permission prompt."
             },
             {
               "key": "bypassEnvironmentChecks",
@@ -33,7 +33,7 @@
             },
             {
               "key": "stripNativeBloat",
-              "description": "Removes ~7.7 MB of unused CashRaven residential-proxy (libcr_android.so, libjnidispatch.so), Unity Coherence (libunitycoherencenative.so), legacy MIPS/armeabi folders, and WebView ad-viewer assets."
+              "description": "Deletes unused proxy/ad libraries to save about 7.7 MB. Not needed for ad removal."
             }
           ],
           "compatible_versions": [
@@ -49,7 +49,7 @@
       "patches": [
         {
           "name": "Remove ads, telemetry & restrictions",
-          "description": "Replaces native signature-locked config decryption in pure Java so encrypted channel and event feeds keep loading after Morphe re-signs the APK, removes all banner/start/support/external ads, optionally disables the in-app web view, suppresses update lockouts, and optionally bypasses root/sniffer/proxy-cert checks. Strips Firebase telemetry and push notifications.",
+          "description": "Removes ads, tracking, and forced updates, and keeps channels working after patching.",
           "use": true,
           "options": [
             {
@@ -58,19 +58,19 @@
             },
             {
               "key": "bypassUpdateGate",
-              "description": "Skips forced and optional update lockouts on Splash startup and Player exit, and removes the REQUEST_INSTALL_PACKAGES permission used by the in-app self-updater."
+              "description": "Skips forced update screens. With this on the app never updates itself — re-patch a newer stock version to update."
             },
             {
               "key": "bypassEnvironmentChecks",
-              "description": "Neutralizes RootBeer/su root lockouts, Frida/sniffer package checks, and proxy-certificate lockouts. Not needed on ordinary phones/TVs; MainActivity startup tamper crash-bombs are always neutralized separately."
+              "description": "Bypasses root and sniffer-app lockouts. Only turn this on if the app refuses to run on your device."
             },
             {
               "key": "stripNativeAndTelemetryBloat",
-              "description": "Removes libnative-lib.so across all ABIs (plus libtoolChecker.so when the root bypass is enabled) plus Firebase Analytics, Crashlytics, Sessions, DataTransport, and AdServices manifest entries. Purely a size saving; the libraries are never loaded once their Java entry points are removed."
+              "description": "Deletes unused libraries and tracking components to save space. Not needed for ad removal."
             },
             {
               "key": "disableWebActivity",
-              "description": "Stubs WebActivity.onCreate to immediately finish() the activity. SK Tech TV's WebActivity is a generic in-app WebView that could be repurposed for ad landing pages via remote app.txt config; disabling it ensures no remote-config-driven WebView ad can ever render. Off by default: WebActivity also opens legitimate in-app links, and the config sanitizer already blanks the ad sponsor URLs."
+              "description": "Closes the in-app web view so ads cannot open landing pages. Pages that legitimately use it, like score pages, will close too."
             }
           ],
           "compatible_versions": [
@@ -85,7 +85,7 @@
       "patches": [
         {
           "name": "Clean Me page",
-          "description": "Removes the Status Saver, Legal, and Help sections from the Me page while keeping the 8-item local tools grid, App Theme, Settings, and Custom Pop-up Play.",
+          "description": "Removes Status Saver, Legal, and Help from the Me page.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -94,7 +94,7 @@
         },
         {
           "name": "Custom codec",
-          "description": "Bundles an MX Player v3.1.0 custom codec (aio-v3.1.0_r1.zip, architecture ZIP, or libffmpeg.mx.so*) directly into the app for out-of-the-box E-AC-3, TrueHD, MLP, DTS, and AC-3 software audio decoding.",
+          "description": "Bundles a custom codec so AC-3, E-AC-3, DTS, and TrueHD audio play out of the box.",
           "use": false,
           "options": [
             {
@@ -108,7 +108,7 @@
         },
         {
           "name": "Remove ads & bloat",
-          "description": "Removes banner, folder, player, interstitial, rewarded, app-open, exit, and Me-page ads, removes the Home horizontal shortcut strip and online Zodiac App Themes, and disables Live TV, mxplay OTT streaming, MX Tube, Shorts, and Games while keeping Local Music, All-Files-Access setup, and 1-tap Classic Themes working offline and online.",
+          "description": "Removes ads and online extras like Live TV, Tube, Shorts, and Games for a clean local player.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -117,7 +117,7 @@
         },
         {
           "name": "Remove bottom navigation bar",
-          "description": "Removes the bottom navigation bar from the UI and moves Me to the upper-right corner of the Home toolbar. Leave unchecked to keep the bottom navigation bar.",
+          "description": "Removes the bottom navigation bar and moves Me to the top-right corner.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -132,7 +132,7 @@
       "patches": [
         {
           "name": "Remove ads, popups & restrictions",
-          "description": "Replaces the native signature-locked decryption in pure Java so encrypted channel and event feeds keep loading after Morphe re-signs the APK, and removes start/player/support/external ads plus the automatic Telegram promo dialog.",
+          "description": "Removes ads and promo popups, and keeps channels working after patching.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -147,7 +147,7 @@
       "patches": [
         {
           "name": "Remove ads, telemetry & restrictions",
-          "description": "Replaces native signature-locked config decryption in pure Java, removes all banner/popunder/timer ads and the local NanoHTTPD ad server, suppresses the startup Telegram popup and player watermarks, strips Firebase telemetry and push notifications, and bypasses update lockouts. Optional root/sniffer bypass and native/telemetry stripping are off by default.",
+          "description": "Removes ads, promo popups, and tracking, and keeps channels working after patching.",
           "use": true,
           "options": [
             {
@@ -164,11 +164,11 @@
             },
             {
               "key": "bypassEnvironmentChecks",
-              "description": "Neutralizes RootBeer/su root lockouts, Frida/sniffer package checks, and proxy-certificate lockouts. Not needed on ordinary phones/TVs; MainActivity startup tamper crash-bombs are always neutralized separately."
+              "description": "Bypasses root and sniffer-app lockouts. Only turn this on if the app refuses to run on your device."
             },
             {
               "key": "stripNativeAndTelemetryBloat",
-              "description": "Removes libnative-lib.so across all ABIs (plus libtoolChecker.so when the root bypass is enabled) plus Firebase Analytics, Crashlytics, Sessions, DataTransport, and AdServices manifest entries. Purely a size saving; the libraries are never loaded once their Java entry points are removed."
+              "description": "Deletes unused libraries and tracking components to save space. Not needed for ad removal."
             }
           ],
           "compatible_versions": [
@@ -183,16 +183,16 @@
       "patches": [
         {
           "name": "AdBlocker turbo & userscript bundle",
-          "description": "Syncs SHA-256-verified pre-compiled AdBlocker binary engines + per-list filter archives (28 default lists, ~1.22M active rules) automatically in the background with instant Hosts & filters hydration, accelerates on-device filter compilation via 64 KB write buffering + foreground thread scheduling, and optionally seeds and auto-updates the mobile-adapted Bypass All Shortlinks userscript.",
+          "description": "Updates the built-in ad blocker automatically in seconds instead of minutes, and can add a shortlink bypass userscript.",
           "use": true,
           "options": [
             {
               "key": "adblockerMode",
-              "description": "Cloud Pre-Built downloads SHA-256-verified pre-compiled binary filter engines and per-list archives from GitHub automatically in the background (zero on-device compilation lag and full Hosts & filters counts/sizes/dates), falling back automatically to Local Turbo if you customize filter lists. Local Turbo keeps all compilation on-device with 64 KB buffered I/O, foreground CPU scheduling, and 7-day auto-update."
+              "description": "Cloud downloads ready-made filters in seconds (recommended). Local Turbo builds them on your device, faster than stock. Stock leaves 1DM unchanged."
             },
             {
               "key": "bundleBypassShortlinks",
-              "description": "Seeds and auto-updates the mobile-adapted Bypass All Shortlinks Debloated userscript (.1dmus with offline-cached MonkeyConfig, explicit @connect hosts, and zero warnings). Preserves your enabled/disabled state and never re-installs if deleted."
+              "description": "Installs and auto-updates a mobile shortlink bypass userscript. Keeps your on/off choice, and never returns if you delete it."
             }
           ],
           "compatible_versions": [
@@ -201,7 +201,7 @@
         },
         {
           "name": "Browser setup prompts only once",
-          "description": "Shows the default-browser, accessibility, shortcut-menu-strip, and adblocker setup prompts once, recording each as shown as soon as it appears so closing the browser before dismissing cannot make it repeat.",
+          "description": "Shows the one-time browser setup prompts only once, even if you close the browser early.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -210,7 +210,7 @@
         },
         {
           "name": "Optimize cold start and battery",
-          "description": "Eliminates cold-start Chromium WebView initialization in Download Manager and background services, defers Browser AdBlock filter parsing until Browser launch, defers the CheckAppVersion subprocess past startup, pauses MainActivity's 1 Hz background wakeup loop when minimized, and keeps 1DM alive in Android Recents on Back press without killing background downloads.",
+          "description": "Makes the app open faster, use less battery in the background, and stay in Recents when you press Back.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -219,7 +219,7 @@
         },
         {
           "name": "Preset browser settings",
-          "description": "Sets fresh-install browser fallbacks for normal and incognito modes: Brave search, matching suggestions, and Google search by image by default. Saved or imported choices are preserved and can be changed later in 1DM.",
+          "description": "Sets Brave as the default search engine on fresh installs. You can change it anytime in 1DM.",
           "use": false,
           "options": [
             {
@@ -241,7 +241,7 @@
         },
         {
           "name": "Remove ads and promotions",
-          "description": "Removes banner, interstitial, fallback, and Amazon ads, 1DM+ sale/VPN/drawer/rate promotions, sponsored browser tiles, promo FCM topics, and 17 ad/telemetry SDK initializers and native/asset payloads from free 1DM 20.0 (30257).",
+          "description": "Removes banner and popup ads, upgrade offers, and sponsored shortcuts.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -252,10 +252,10 @@
     }
   ],
   "patches_name": "GinArena Patch",
-  "fingerprint": "c977cb62dada469df5c45f45899957fffc3cd100991f28d62f778b0482ad1582",
-  "release_notes": "## [2.5.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.5.0...v2.5.1) (2026-10-31)\r\n\r\nA focused maintenance release adding support for the latest **CRICFy TV `7.4` (`54`)** release, while keeping support for **CRICFy TV `7.3` (`53`)**.\r\n\r\n---\r\n\r\n### 📺 CRICFy TV `7.4` support\r\n\r\nCRICFy TV `7.4` was freshly analyzed and audited, and the **Remove ads, proxy & restrictions** patch has been updated for the new build:\r\n\r\n- **Bandwidth sharing stays off and disabled:** CRICFy `7.4` moved the CashRaven setup into a new initialization path. The patch now blocks that new path, keeps the CashRaven foreground service disabled, and keeps its boot starter disabled, so the residential proxy cannot start. If a **Bandwidth Sharing** label/row is still shown as **OFF** in the UI, it is only a leftover display item — the feature behind it is disabled and cannot run.\r\n- **Updated for `7.4` internals:** Rebuilt fingerprints for the `7.4` code changes so ad removal, sponsor/channel gate bypass, startup promo/Telegram popup suppression, promo push blocking, and force-update bypass continue to work on the new build.\r\n- **Playback still works after re-signing:** The existing native `AntiTamper` handling remains in place across all supported ABIs (`arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`), allowing the re-signed app to load its live configuration normally.\r\n- **Exact-version safety kept:** The patch now accepts only audited CRICFy builds — **`7.4` (`54`)** and **`7.3` (`53`)** — and refuses unsafe mismatches instead of producing a broken APK.\r\n\r\n### Target app\r\n\r\n| App | Supported stock version |\r\n| --- | --- |\r\n| **CRICFy TV** (`com.cricfytv.sports`) | **`7.4` (`54`)** recommended; **`7.3` (`53`)** also supported |\r\n| Stock `7.4` APK SHA-256 | `d37c0c70200981a9558d32abd16ffb7966ae83a2fc84157b82e6869c4e16ae6f` |\r\n| Download | Official CRICFy download page: <https://cricfyapk.io/download/> |\r\n\r\n> Always patch a **fresh stock APK**. Do not re-patch an already patched APK.\r\n\r\n---\r\n\r\n> **Who should re-patch?**\r\n> - **CRICFy TV users:** Download the official stock **CRICFy TV `7.4` (`54`)** APK and patch it fresh with `patches-2.5.1.mpp`.\r\n> - **CRICFy TV `7.3` users:** No need to re-patch unless you want to move to `7.4`; `7.3` support remains included.\r\n> - **1DM, SK Tech TV, MX Player, CricZ TV, and PlayZ TV users:** Nothing changed for these apps in `v2.5.1`; if you are already on `v2.5.0`, there is no need to re-patch.\r\n\r\n### ✨ Commits\r\n\r\n* **cricfy:** support CRICFy TV 7.4 ([fa73617](https://github.com/ginDoki19/GinArena-patch/commit/fa73617cc93b555dc374a301baa812aa9bb197c8))\r\n\r\n### 📦 Asset\r\n\r\n`patches-2.5.1.mpp` SHA-256: `022d0835f3cdb84d7d8f80433397f73719608a2256719026a98acbdee282b5b1`\r\n",
-  "release_tag": "v2.5.1",
-  "release_date": "2026-10-31T23:28:48Z",
+  "fingerprint": "ec47f19abe781396f19471c2519b8bcec9d4f3161e2c90504e3163066719fa3b",
+  "release_notes": "## [2.6.0](https://github.com/ginDoki19/GinArena-patch/compare/v2.5.1...v2.6.0) (2026-11-03)\n\n### ✨ New Features\n\n* **1dm:** harden cloud sync and patch resilience ([6972768](https://github.com/ginDoki19/GinArena-patch/commit/6972768877540648c3df37cdbc3b17089616ce63))\n\n### 🔧 Improvements\n\n* simplify patch descriptions and collapse README patch lists ([8e6f3fd](https://github.com/ginDoki19/GinArena-patch/commit/8e6f3fda2dfd5735b594df19d71123a90a009efd))\n",
+  "release_tag": "v2.6.0",
+  "release_date": "2026-11-03T03:37:25Z",
   "isPreRelease": false,
   "stars": 12,
   "avatarUrl": "https://avatars.githubusercontent.com/u/249589406?v=4&s=128",
