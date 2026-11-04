@@ -2,9 +2,9 @@
   "bundle": "pancake",
   "channel": "latest",
   "repo_url": "https://github.com/Ikuradachi/pancake-patches",
-  "created_at": "2026-10-24T14:37:00",
-  "version": "1.2.0",
-  "description": "## [1.2.0](https://github.com/Ikuradachi/pancake-patches/compare/v1.1.0...v1.2.0) (2026-10-24)\n\n### ✨ New Features\n\n* bstation - add hide bottom navigation items patch ([5e6abeb](https://github.com/Ikuradachi/pancake-patches/commit/5e6abeb82aceacf27177fc62723982ac7ab6f132))\n* bstation - add UI debloat and cleanup patches ([c72b79a](https://github.com/Ikuradachi/pancake-patches/commit/c72b79a6260870a36b3d57db8d3140605ee4c252))",
+  "created_at": "2026-11-04T09:28:15",
+  "version": "1.3.0",
+  "description": "## [1.3.0](https://github.com/Ikuradachi/pancake-patches/compare/v1.2.0...v1.3.0) (2026-11-04)\n\n### ✨ New Features\n\n* crunchyroll - disable telemetry (not guaranteed) ([94b9106](https://github.com/Ikuradachi/pancake-patches/commit/94b9106025000a365ddf84d349a1583293517793))\n* crunchyroll - proxy token request (geo bypass) ([054264b](https://github.com/Ikuradachi/pancake-patches/commit/054264bc395eaaa0f06b29fd7d4314f53a0e36a9))",
   "apps": [
     {
       "app_name": "BiliBili -HD Anime, Videos",
@@ -239,7 +239,90 @@
             "3.83.1"
           ]
         }
-      ]
+      ],
+      "developer": "com.bstar"
+    },
+    {
+      "app_name": "Crunchyroll: Anime Streaming",
+      "package": "com.crunchyroll.crunchyroid",
+      "patches": [
+        {
+          "name": "Disable Datadog telemetry setup",
+          "description": "Selects the app's disabled Datadog implementation, preserving shared initialization and consent observers.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0"
+          ]
+        },
+        {
+          "name": "Disable Firebase analytics after consent initialization",
+          "description": "Keeps Firebase Analytics collection disabled when consent updates arrive. Collection before the first update remains possible.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0"
+          ]
+        },
+        {
+          "name": "Disable Mux playback analytics events",
+          "description": "Drops Mux playback analytics events while retaining player and ad initialization. Local SDK metadata remains.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0"
+          ]
+        },
+        {
+          "name": "Disable Segment analytics events",
+          "description": "Blocks new Segment events, identification and screen payloads. SDK initialization and previously queued events remain.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0"
+          ]
+        },
+        {
+          "name": "Disable automatic Crashlytics uploads",
+          "description": "Denies automatic crash report uploads. Local crash recording and explicit report submission remain available.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0"
+          ]
+        },
+        {
+          "name": "Proxy token requests",
+          "description": "Routes token acquisition and refresh through your SOCKS proxy, with optional proxy authentication.",
+          "use": false,
+          "options": [
+            {
+              "key": "proxyHost",
+              "description": "Hostname or IP address only, without scheme, credentials, or port. Use brackets for IPv6."
+            },
+            {
+              "key": "proxyPort",
+              "description": "Explicit port from 1 to 65535. Enter as a string when using a JSON options file."
+            },
+            {
+              "key": "proxyUsername",
+              "description": "Optional printable ASCII username (1–255 characters). Credentials are embedded in the patched APK. Leave both credential fields blank for no authentication."
+            },
+            {
+              "key": "proxyPassword",
+              "description": "Optional printable ASCII password (1–255 characters). Credentials are embedded in the patched APK. Supply both username and password together."
+            },
+            {
+              "key": "tokenDiagnostics",
+              "description": "Logs token HTTP status and exception class names only, under MorpheTokenProxy. Enable for troubleshooting."
+            }
+          ],
+          "compatible_versions": [
+            "3.127.0"
+          ]
+        }
+      ],
+      "developer": "com.crunchyroll"
     },
     {
       "app_name": "CarbitLink-EasyConnection",
@@ -281,14 +364,15 @@
             "6.5.1"
           ]
         }
-      ]
+      ],
+      "developer": "net.easyconn"
     }
   ],
   "patches_name": "Pancake Patches",
-  "fingerprint": "778612157d6c9da41ce6b62cdbef29889d377dc07a663f3b069be165f4ac963c",
-  "release_notes": "## [1.2.0](https://github.com/Ikuradachi/pancake-patches/compare/v1.1.0...v1.2.0) (2026-10-24)\n\n### ✨ New Features\n\n* bstation - add hide bottom navigation items patch ([5e6abeb](https://github.com/Ikuradachi/pancake-patches/commit/5e6abeb82aceacf27177fc62723982ac7ab6f132))\n* bstation - add UI debloat and cleanup patches ([c72b79a](https://github.com/Ikuradachi/pancake-patches/commit/c72b79a6260870a36b3d57db8d3140605ee4c252))\n",
-  "release_tag": "v1.2.0",
-  "release_date": "2026-10-24T14:37:36Z",
+  "fingerprint": "7931594f07c675be2a28e871f27d5dea6a3630eec365404461d78f71e6c14df2",
+  "release_notes": "## [1.3.0](https://github.com/Ikuradachi/pancake-patches/compare/v1.2.0...v1.3.0) (2026-11-04)\n\n### ✨ New Features\n\n* crunchyroll - disable telemetry (not guaranteed) ([94b9106](https://github.com/Ikuradachi/pancake-patches/commit/94b9106025000a365ddf84d349a1583293517793))\n* crunchyroll - proxy token request (geo bypass) ([054264b](https://github.com/Ikuradachi/pancake-patches/commit/054264bc395eaaa0f06b29fd7d4314f53a0e36a9))\n",
+  "release_tag": "v1.3.0",
+  "release_date": "2026-11-04T09:28:49Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/93316768?v=4&s=128",
