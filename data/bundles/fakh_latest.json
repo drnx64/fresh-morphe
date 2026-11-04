@@ -2,9 +2,9 @@
   "bundle": "fakh",
   "channel": "latest",
   "repo_url": "https://github.com/amfakh/fakh-patches",
-  "created_at": "2026-11-03T12:32:33",
-  "version": "1.10.0",
-  "description": "## [1.10.0](https://github.com/amfakh/fakh-patches/compare/v1.9.1...v1.10.0) (2026-11-03)\n\n### ✨ New Features\n\n* **LinkedIn:** support 4.1.1267, next to 4.1.1264 ([e1c3549](https://github.com/amfakh/fakh-patches/commit/e1c35494caa727072995dbc64c33550495bda296))\n* **IDN:** support 6.69.1, from an XAPK or an APKS bundle; Disable analytics keeps CleverTap for push and popups, without the advertising ID ([518e6a0](https://github.com/amfakh/fakh-patches/commit/518e6a07d8cb2f36de8f277a085974efeaa2a997))\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** hide the highlighted comments of a post that a feed filter hid, instead of leaving them on their own in the feed ([b5d87cc](https://github.com/amfakh/fakh-patches/commit/b5d87cc448c84c56fc0b6a36e4451c5ae7e61eb3))",
+  "created_at": "2026-11-04T04:03:57",
+  "version": "1.11.0",
+  "description": "## [1.11.0](https://github.com/amfakh/fakh-patches/compare/v1.10.0...v1.11.0) (2026-11-04)\n\n### ✨ New Features\n\n* **detikcom:** support 7.14.1, with Hide ads (feed, article, Live TV and Milidetik), Disable analytics, Merge article pages to read a paged article in one go, and Stop autoplay for the video embeds, live ones included ([ee97776](https://github.com/amfakh/fakh-patches/commit/ee97776912867ffa3f6a1a37c500567474f85c90))\n* **CNN Indonesia:** support 2.50.7, with Hide ads (banners, \"Promoted\" rows, full-screen ads, ads on web pages), Disable analytics, and Merge article pages to read a paged article in one go ([b52fdfd](https://github.com/amfakh/fakh-patches/commit/b52fdfdc6bc5dc67230bbe5c1b9a756448ded257))",
   "apps": [
     {
       "app_name": "Radio Streaming Indonesia",
@@ -113,6 +113,39 @@
           "options": [],
           "compatible_versions": [
             "1.5.3"
+          ]
+        }
+      ]
+    },
+    {
+      "app_name": "CNN Indonesia - Berita Terkini",
+      "package": "com.cnn.indonesia",
+      "patches": [
+        {
+          "name": "Disable analytics",
+          "description": "Stops Detik Analytics and Google Analytics from recording screens and events, and turns off Firebase Analytics, Crashlytics, Performance and Sessions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.50.7"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes the ad banners, native ads, sticky ads and full-screen ads, and the ads on cnnindonesia.com pages opened in the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.50.7"
+          ]
+        },
+        {
+          "name": "Merge article pages",
+          "description": "Shows every page of a multi-page article in one continuous article, without the page numbers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.50.7"
           ]
         }
       ]
@@ -674,13 +707,55 @@
           ]
         }
       ]
+    },
+    {
+      "app_name": "detikcom - Berita Terkini",
+      "package": "org.detikcom.rss",
+      "patches": [
+        {
+          "name": "Disable analytics",
+          "description": "Stops Detik Analytics from recording screens and events, keeps the Android ID out of article pages, and turns off Firebase Analytics, Crashlytics, Performance and Sessions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.14.1"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes the ad banners, native ads, full-screen ads and video ads, and the ads on detik.com pages opened in the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.14.1"
+          ]
+        },
+        {
+          "name": "Merge article pages",
+          "description": "Shows every page of a multi-page article in one continuous article, without the page numbers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.14.1"
+          ]
+        },
+        {
+          "name": "Stop autoplay",
+          "description": "Stops the videos and live streams embedded in articles from playing on their own. They play when tapped.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.14.1"
+          ]
+        }
+      ]
     }
   ],
   "patches_name": "Fakh Patches",
-  "fingerprint": "44697fd3b54213d5f85c540b3c85f9a4101a5970a30a9261061640f564c47bbb",
-  "release_notes": "## [1.10.0](https://github.com/amfakh/fakh-patches/compare/v1.9.1...v1.10.0) (2026-11-03)\n\n### ✨ New Features\n\n* **LinkedIn:** support 4.1.1267, next to 4.1.1264 ([e1c3549](https://github.com/amfakh/fakh-patches/commit/e1c35494caa727072995dbc64c33550495bda296))\n* **IDN:** support 6.69.1, from an XAPK or an APKS bundle; Disable analytics keeps CleverTap for push and popups, without the advertising ID ([518e6a0](https://github.com/amfakh/fakh-patches/commit/518e6a07d8cb2f36de8f277a085974efeaa2a997))\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** hide the highlighted comments of a post that a feed filter hid, instead of leaving them on their own in the feed ([b5d87cc](https://github.com/amfakh/fakh-patches/commit/b5d87cc448c84c56fc0b6a36e4451c5ae7e61eb3))\n",
-  "release_tag": "v1.10.0",
-  "release_date": "2026-11-03T12:32:33Z",
+  "fingerprint": "da499162f16738de9bc6b0bd2d17572d7f86e9752f3f693cd5773b6e89b27660",
+  "release_notes": "## [1.11.0](https://github.com/amfakh/fakh-patches/compare/v1.10.0...v1.11.0) (2026-11-04)\n\n### ✨ New Features\n\n* **detikcom:** support 7.14.1, with Hide ads (feed, article, Live TV and Milidetik), Disable analytics, Merge article pages to read a paged article in one go, and Stop autoplay for the video embeds, live ones included ([ee97776](https://github.com/amfakh/fakh-patches/commit/ee97776912867ffa3f6a1a37c500567474f85c90))\n* **CNN Indonesia:** support 2.50.7, with Hide ads (banners, \"Promoted\" rows, full-screen ads, ads on web pages), Disable analytics, and Merge article pages to read a paged article in one go ([b52fdfd](https://github.com/amfakh/fakh-patches/commit/b52fdfdc6bc5dc67230bbe5c1b9a756448ded257))\n",
+  "release_tag": "v1.11.0",
+  "release_date": "2026-11-04T04:03:57Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/8016957?v=4&s=128",

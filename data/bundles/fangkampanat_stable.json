@@ -2,17 +2,24 @@
   "bundle": "fangkampanat",
   "channel": "stable",
   "repo_url": "https://github.com/fangkampanat/google-maps-automotive-patches",
-  "created_at": "2026-11-03T08:58:14",
-  "version": "0.1.3",
-  "description": "Runs the Android Automotive build of Google Maps (26.10.120003.E) on BYD DiLink 3 head units (Android 10) as \"Maps Car\" with MicroG-RE 7.3.0: sign-in, map, search, navigation and voice, a UI density setting, the car's battery for EV routing (on by default on the tested BYD Dolphin), Send to car from phone Maps, an in-app problem report that is sent only after you review it, and a safe mode with feature switches. BYD battery, Send to car, the BYD location flicker fix and BYD navigation volume are separate patches. Requires Morphe Desktop 1.20.0 or newer.",
+  "created_at": "2026-11-04T08:14:46",
+  "version": "0.1.4",
+  "description": "Runs the Android Automotive build of Google Maps (26.10.120003.E) on BYD DiLink 3 head units (Android 10) as \"Maps Car\" with MicroG-RE 7.3.0: sign-in, map, search, navigation and voice, UI density and driver side settings, 3D buildings in the map layers, the car's battery for EV routing (on by default on the tested BYD Dolphin) and the battery to arrive with at charging stops and at the destination, Send to car from phone Maps with a car name you choose, an in-app problem report that is sent only after you review it, and a safe mode with feature switches. BYD battery, Send to car, the BYD location flicker fix, BYD navigation volume and 3D buildings are separate patches. Requires Morphe Desktop 1.20.0 or newer.",
   "apps": [
     {
       "app_name": "Google Maps",
       "package": "com.google.android.apps.maps",
       "patches": [
         {
+          "name": "3D buildings",
+          "description": "Adds Maps' own 3D buildings to the map layers. Google hides them in this app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "BYD battery (EV)",
-          "description": "Feeds the BYD battery into Maps' EV routing (battery on arrival, chargers). On by default on the tested BYD Dolphin, off with an \"untested\" notice on other BYD models; a Settings row turns it on or off.",
+          "description": "Feeds the BYD battery into Maps' EV routing (battery on arrival, chargers). On by default on the tested BYD Dolphin, off with an \"untested\" notice on other BYD models; a Settings row turns it on or off and sets the battery to arrive with at charging stops and at the destination.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -33,14 +40,14 @@
         },
         {
           "name": "Google Maps Automotive for MicroG-RE",
-          "description": "Runs Google Maps for Android Automotive on Android 10 as \"Maps Car\" with MicroG-RE 7.3.0. Adds a UI density setting, a problem report and a safe mode.",
+          "description": "Runs Google Maps for Android Automotive on Android 10 as \"Maps Car\" with MicroG-RE 7.3.0. Adds UI density and driver side settings, a problem report and a safe mode.",
           "use": true,
           "options": [],
           "compatible_versions": []
         },
         {
           "name": "Send to car",
-          "description": "Lets phone Maps send a trip to Maps Car through MicroG-RE (push routes, the notification service identity and maps.app.goo.gl links).",
+          "description": "Lets phone Maps send a trip to Maps Car through MicroG-RE (push routes, the notification service identity and maps.app.goo.gl links). Adds a Settings row for the car's name in phone Maps (default \"Vehicle 1\").",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -49,10 +56,10 @@
     }
   ],
   "patches_name": "Maps Automotive Patches",
-  "fingerprint": "ca567434a4c636cde171a1f7336445cfe8bff884667fb4266c62c050690b97ab",
-  "release_notes": "- New patch **BYD navigation volume**, on by default: spoken directions play on the car's navigation volume instead of the media volume (#1).\n- Maps Car no longer closes itself right after it starts on head units that declare Android Automotive and run apps as the system user, such as DiLink 5 (#3).\n- BYD battery: on head units without the DiLink 3 SDK, it now reads the car adapter that DiLink 5 uses, and starts from the car's own average consumption. One Sealion 7 owner tried it in #3; I haven't tested DiLink 5 myself.\n- The red Report Maps Car icon now appears after Maps Car's first start. On DiLink 5, whose launcher shows one icon per app, it stays hidden, so open the report from **Settings › Report a problem**.\n\nTested on a BYD Dolphin (DiLink 3.0, Android 10) with Google Maps (Android Automotive) 26.10.120003.E and MicroG-RE 7.3.0. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.3.mpp` SHA-256: `b4b4f3d3381bf911f38212364b18801e6262acab2508124f7f6b2ca85a1d7534`\n",
-  "release_tag": "v0.1.3",
-  "release_date": "2026-11-03T09:09:40Z",
+  "fingerprint": "65428894660c416bff37c3d6f80558dfdc6672bddfd540cf948fcf840e76038a",
+  "release_notes": "- New setting **Driver side** in Settings: Auto, Left-hand drive or Right-hand drive. Maps puts its cards (search, route, guidance) on the driver's side and the map buttons on the other side. Auto keeps Maps' own choice, which is left-hand drive on DiLink 3 (#4).\n- New patch **3D buildings**, on by default: it adds Maps' own 3D buildings, which Google hides in this app, to the map layers. Turn them on or off in the layer menu.\n- BYD battery: in the battery dialog you can now choose the battery level Maps plans to arrive with at charging stops and at the destination. Auto uses Google's level.\n- Send to car: give the car a name in Settings, and phone Maps shows it instead of \"Vehicle 1\".\n- An error while Report Maps Car sets up its icon or its start notice no longer closes Maps Car.\n- Install: don't patch from a synced folder such as Google Drive, or Maps Car won't open (#1).\n\nTested on a BYD Dolphin (DiLink 3.0, Android 10) with Google Maps (Android Automotive) 26.10.120003.E and MicroG-RE 7.3.0. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.4.mpp` SHA-256: `a31884134a8cdd3cfcfd93cd8361288125f18191c71e1eca3b9ebd51ff9b067b`\n",
+  "release_tag": "v0.1.4",
+  "release_date": "2026-11-04T08:30:44Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/11970624?v=4&s=128",
