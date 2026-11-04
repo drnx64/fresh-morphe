@@ -54,7 +54,8 @@ CREATE TABLE IF NOT EXISTS apps (
   id       INTEGER PRIMARY KEY,
   package  TEXT NOT NULL UNIQUE,
   name     TEXT NOT NULL DEFAULT '',
-  icon_url TEXT NOT NULL DEFAULT ''
+  icon_url TEXT NOT NULL DEFAULT '',
+  developer TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS bundle_apps (

@@ -2,7 +2,8 @@
  * What's New section — collapsible, shows affected bundles from today's changes.
  * Hierarchy: NEW BUNDLE → bundles with NEW APPs → bundles with UPDATED APPs.
  * Shows version comparison tags (v1.0.1 → v1.0.2).
- * Collapse state persisted in localStorage.
+ * Collapse state persisted in localStorage; expanded by default — this is the
+ * section the page is for, so it opens unless the reader collapsed it.
  * Includes a summary peek row visible when collapsed.
  */
 import { el } from '../ui.js'
@@ -26,7 +27,9 @@ function isHideDev() {
 export function renderTodayUpdates() {
   const section = el('section', { class: 'today-updates-section', 'aria-labelledby': 'today-heading' })
 
-  const isCollapsed = localStorage.getItem(STORAGE_KEY) !== 'false'
+  // Expanded unless the reader has explicitly collapsed it: What's New is the
+  // reason the page exists, and the color game below is the optional extra.
+  const isCollapsed = localStorage.getItem(STORAGE_KEY) === 'true'
 
   const changes = store.get('changes')
   const todayBundles = Array.isArray(changes?.affected_bundles) ? changes.affected_bundles : []
@@ -82,7 +85,6 @@ export function renderTodayUpdates() {
   headingRight.appendChild(toggleBtn)
   headingRow.appendChild(headingRight)
   section.appendChild(headingRow)
-  section.appendChild(renderColorGame())
 
   const body = el('div', { class: 'today-updates-body' })
 
@@ -135,7 +137,10 @@ export function renderTodayUpdates() {
     }
   })
 
+  // The game rides below the updates — a slim bar under the content it is an
+  // extra to, in both the empty and the populated layout.
   if (!affectedBundles || affectedBundles.length === 0) {
+    section.appendChild(renderColorGame())
     applyCollapsed(section, summaryEl, isCollapsed)
     setupToggle(section, summaryEl, toggleBtn)
     return section
@@ -295,6 +300,7 @@ export function renderTodayUpdates() {
   const bodyWrap = el('div', { class: 'today-updates-body-wrap', id: 'today-updates-body' })
   bodyWrap.appendChild(body)
   section.appendChild(bodyWrap)
+  section.appendChild(renderColorGame())
   applyCollapsed(section, summaryEl, isCollapsed)
   setupToggle(section, summaryEl, toggleBtn)
 

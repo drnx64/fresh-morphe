@@ -56,6 +56,47 @@
 .search-suggestion-link:hover {
   color: var(--text-primary);
 }
+/* ── Popular row ──────────────────────────────────────── */
+.apps-featured {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 0.9rem 0.9rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--accent-soft), transparent 55%),
+    var(--bg-surface);
+}
+.apps-featured-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+.apps-featured-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.apps-featured-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.apps-featured-row {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+.apps-featured-row > .app-card {
+  flex: 0 0 220px;
+  scroll-snap-align: start;
+}
+.apps-featured-row .app-card-bundle-count {
+  display: none;
+}
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
@@ -104,6 +145,13 @@
   font-size: 0.68rem;
   color: var(--text-muted);
   font-family: var(--mono-stack);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-card-dev {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

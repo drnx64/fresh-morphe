@@ -39,6 +39,21 @@ def connect(path=None, readonly=False):
     return conn
 
 
+def _migrate(conn):
+    """Add columns shipped after a database was first created.
+
+    `schema.sql` only runs CREATE TABLE IF NOT EXISTS, so an existing phone DB
+    keeps its old column set. Each entry here is idempotent: a column is added
+    only when PRAGMA table_info proves it is missing.
+    """
+    columns = {
+        row["name"] for row in conn.execute("PRAGMA table_info(apps)").fetchall()
+    }
+    if "developer" not in columns:
+        conn.execute("ALTER TABLE apps ADD COLUMN developer TEXT NOT NULL DEFAULT ''")
+        conn.commit()
+
+
 def init_db(path=None):
     path = os.path.abspath(path or DB_PATH)
     Path(path).parent.mkdir(parents=True, exist_ok=True)
@@ -48,6 +63,7 @@ def init_db(path=None):
             schema = fh.read()
         conn.executescript(schema)
         conn.commit()
+        _migrate(conn)
         conn.execute(
             "INSERT OR IGNORE INTO meta(key, value) VALUES ('schema_version', '1')"
         )

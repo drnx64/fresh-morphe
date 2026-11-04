@@ -209,7 +209,7 @@ class TestFetchIconCache:
         path = tmp_path / "app_cache.json"
         path.write_text('{"com.x": {"icon_url": {}}}', encoding="utf-8")
         monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
-        monkeypatch.setattr(icons, "_fetch_app_details", lambda pkg: ("X", "https://i/x.png"))
+        monkeypatch.setattr(icons, "_fetch_app_details", lambda pkg: ("X", "https://i/x.png", "X Corp"))
         assert icons.fetch_app_icon("com.x") == "https://i/x.png"
         assert m.load_cache(str(path))["com.x"]["icon_url"] == "https://i/x.png"
 
@@ -290,12 +290,103 @@ class TestIconFetchBudget:
         path = tmp_path / "app_cache.json"
         path.write_text("{}", encoding="utf-8")
         monkeypatch.setattr(icons, "APP_CACHE_PATH", str(path))
-        monkeypatch.setattr(icons, "_fetch_app_details", lambda pkg: ("", ""))
+        monkeypatch.setattr(icons, "_fetch_app_details", lambda pkg: ("", "", ""))
 
         assert icons.fetch_app_icon("com.missing") == ""
         entry = m.load_cache(str(path))["com.missing"]
         assert entry["icon_url"] == ""
         assert entry["last_icon_attempt"] > 0
+
+
+class TestDeveloper:
+    """Publisher resolution: Play "Offered by" -> package namespace."""
+
+    def test_package_namespace_two_segments(self):
+        assert m.package_namespace("com.simplemobiletools.gallery") == "com.simplemobiletools"
+        assert m.package_namespace("com.simplemobiletools.gallery.pro") == "com.simplemobiletools"
+
+    def test_package_namespace_behind_country_code(self):
+        assert m.package_namespace("jp.co.celsys.paint") == "jp.co.celsys"
+
+    def test_package_namespace_single_segment(self):
+        assert m.package_namespace("youtube") == "youtube"
+        assert m.package_namespace("") == ""
+
+    def test_store_developer_wins(self):
+        cache = {"com.x": {"developer": "Rovio Entertainment Ltd.", "developer_source": "play"}}
+        assert m.resolve_developer("com.x", cache) == ("Rovio Entertainment Ltd.", "play")
+
+    def test_namespace_is_the_fallback(self):
+        developer, source = m.resolve_developer("com.simplemobiletools.gallery", {})
+        assert developer == "com.simplemobiletools"
+        assert source == m.NAMESPACE_SOURCE
+
+    def test_upsert_records_developer(self):
+        cache = {}
+        m.upsert("com.x", cache, developer="Adobe Inc.", developer_source="play")
+        assert cache["com.x"]["developer"] == "Adobe Inc."
+        assert cache["com.x"]["developer_source"] == "play"
+
+    def test_empty_developer_never_overwrites(self):
+        cache = {"com.x": {"developer": "Adobe Inc.", "developer_source": "play"}}
+        m.upsert("com.x", cache, developer="")
+        assert cache["com.x"]["developer"] == "Adobe Inc."
+
+    def test_play_overwrites_namespace_fallback(self):
+        cache = {"com.x": {"developer": "com.x", "developer_source": m.NAMESPACE_SOURCE}}
+        m.upsert("com.x", cache, developer="Google LLC", developer_source="play")
+        assert cache["com.x"]["developer"] == "Google LLC"
+        assert cache["com.x"]["developer_source"] == "play"
+
+    def test_generic_developer_is_rejected(self):
+        assert m.clean_developer("Google Play") == ""
+        assert m.clean_developer("unknown developer") == ""
+        assert m.clean_developer("  Adobe Inc.  ") == "Adobe Inc."
+
+    def test_ensure_developer_stores_namespace_once(self):
+        cache = {}
+        assert m.ensure_developer("com.simplemobiletools.gallery", cache) is True
+        assert cache["com.simplemobiletools.gallery"]["developer"] == "com.simplemobiletools"
+        assert m.ensure_developer("com.simplemobiletools.gallery", cache) is False
+
+    def test_unresolved_when_only_namespace_is_known(self):
+        assert m.is_developer_unresolved({"developer": "com.x", "developer_source": m.NAMESPACE_SOURCE}) is True
+        assert m.is_developer_unresolved({"developer": "Adobe Inc.", "developer_source": "play"}) is False
+
+    def test_developer_coverage_counts_store_names(self):
+        cache = {
+            "a": {"developer": "Adobe Inc.", "developer_source": "play"},
+            "b": {"developer": "com.b", "developer_source": m.NAMESPACE_SOURCE},
+        }
+        coverage = m.developer_coverage(cache)
+        assert coverage == {"resolved": 2, "from_store": 1, "total": 2, "percent": 100.0}
+
+    def test_apply_resolved_developers_writes_both_sources(self):
+        cache = {"com.x": {"developer": "Adobe Inc.", "developer_source": "play"}}
+        parsed = {"k": {"apps": [{"package": "com.x"}, {"package": "com.simplemobiletools.gallery"}]}}
+        icons.apply_resolved_developers(parsed, cache)
+        assert parsed["k"]["apps"][0]["developer"] == "Adobe Inc."
+        assert parsed["k"]["apps"][1]["developer"] == "com.simplemobiletools"
+
+
+class TestPlayDeveloperParsing:
+    def test_offered_by_link(self):
+        html = (
+            '<a href="https://play.google.com/store/apps/dev?id=1">'
+            '<span class="x">Google LLC</span></a>'
+        )
+        assert icons._extract_developer(html) == "Google LLC"
+
+    def test_itemprop_author(self):
+        html = '<span itemprop="author"><a href="/store/apps/dev?id=2">Adobe Inc.</a></span>'
+        assert icons._extract_developer(html) == "Adobe Inc."
+
+    def test_missing_developer(self):
+        assert icons._extract_developer("<html><body>nothing</body></html>") == ""
+
+    def test_generic_offered_by_rejected(self):
+        html = '<a href="/store/apps/dev?id=3">Google Play</a>'
+        assert icons._extract_developer(html) == ""
 
 
 class TestIsUnresolved:

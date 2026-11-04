@@ -452,16 +452,18 @@ export function groupBundleCards(bundles, include = null) {
   return grouped
 }
 
-// Cache keyed on the bundles/nameCache/iconCache object identities — bundles
-// is set twice at boot (cache paint, then index) and detail loads merge into
-// it in place, so Apps/Diff/GlobalSearch visits reuse one index per session.
-let appIndexCache = { bundles: null, nameCache: null, iconCache: null, value: null }
+// Cache keyed on the bundles/nameCache/iconCache/developerCache object
+// identities — bundles is set twice at boot (cache paint, then index) and
+// detail loads merge into it in place, so Apps/Diff/GlobalSearch visits reuse
+// one index per session.
+let appIndexCache = { bundles: null, nameCache: null, iconCache: null, developerCache: null, value: null }
 
-export function buildAppIndex(bundlesData, nameCache, iconCache) {
+export function buildAppIndex(bundlesData, nameCache, iconCache, developerCache = {}) {
   if (
     appIndexCache.bundles === bundlesData &&
     appIndexCache.nameCache === nameCache &&
-    appIndexCache.iconCache === iconCache
+    appIndexCache.iconCache === iconCache &&
+    appIndexCache.developerCache === developerCache
   ) {
     return appIndexCache.value
   }
@@ -477,17 +479,21 @@ export function buildAppIndex(bundlesData, nameCache, iconCache) {
           package: app.package,
           name: resolveAppName(app, nameCache),
           iconUrl: getAppIconUrl(app, iconCache),
-          // Publisher name from the pipeline; until that lands, families fall
-          // back to the package namespace (see utils/appFamily.js).
-          developer: app.developer ? String(app.developer) : '',
+          // Publisher: the pipeline writes it into bundle records and into
+          // app_cache.json; the cache also covers index-only bundle rows,
+          // which carry packages without metadata.
+          developer: app.developer
+            ? String(app.developer)
+            : String(developerCache[app.package] || ''),
           bundles: [],
           patchesNames: [],
         }
         map.set(app.package, entry)
-      } else if (!entry.developer && app.developer) {
-        // The same package can appear in several bundles; the first one wins
-        // but a later bundle may be the only one that resolved the publisher.
-        entry.developer = String(app.developer)
+      } else {
+        if (!entry.developer && app.developer) entry.developer = String(app.developer)
+        if (!entry.developer && developerCache[app.package]) {
+          entry.developer = String(developerCache[app.package])
+        }
       }
       if (bundle.patches_name && !entry.patchesNames.includes(bundle.patches_name)) {
         entry.patchesNames.push(bundle.patches_name)
@@ -502,7 +508,7 @@ export function buildAppIndex(bundlesData, nameCache, iconCache) {
     }
   }
   const value = [...map.values()].sort((a, b) => a.name.localeCompare(b.name))
-  appIndexCache = { bundles: bundlesData, nameCache, iconCache, value }
+  appIndexCache = { bundles: bundlesData, nameCache, iconCache, developerCache, value }
   return value
 }
 

@@ -58,7 +58,8 @@ export function renderDiff(container) {
   const bundles = store.get('bundles') || {}
   const nameCache = store.get('nameCache') || {}
   const iconCache = store.get('iconCache') || {}
-  const appIndex = buildAppIndex(bundles, nameCache, iconCache)
+  const developerCache = store.get('developerCache') || {}
+  const appIndex = buildAppIndex(bundles, nameCache, iconCache, developerCache)
 
   // Filter apps with 2+ distinct bundles for suggestions
   const multiBundleApps = appIndex.filter((app) => {

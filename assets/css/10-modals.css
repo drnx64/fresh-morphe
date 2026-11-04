@@ -69,6 +69,68 @@
   display: flex;
   gap: 0.85rem;
   align-items: flex-start;
+  /* Room for the top-right action pair (Add to Morphe + close). */
+  padding-right: 8.75rem;
+}
+.app-detail-morphe-btn {
+  position: absolute;
+  top: -0.2rem;
+  right: 2.2rem;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0 0.7rem;
+  border: 1px solid transparent;
+  /* Not sharp, not roundy: the same 9px as the cards and chips. */
+  border-radius: var(--radius-sm);
+  background: var(--accent-dim);
+  color: var(--accent-strong);
+  font-family: var(--font-stack);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  z-index: 5;
+  transition:
+    background var(--transition-speed),
+    color var(--transition-speed),
+    border-color var(--transition-speed);
+}
+.app-detail-morphe-btn:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.app-detail-morphe-btn.is-fallback {
+  background: var(--bg-surface-inner);
+  color: var(--text-secondary);
+  border-color: var(--border-hairline-strong);
+}
+.app-detail-morphe-btn svg {
+  flex-shrink: 0;
+}
+.app-detail-morphe-btn.copied-flash {
+  background: var(--state-stable-dim);
+  color: var(--state-stable);
+}
+.app-detail-dev {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 560px) {
+  .app-detail-hero {
+    padding-right: 5rem;
+  }
+  .app-detail-morphe-label {
+    display: none;
+  }
+  .app-detail-morphe-btn {
+    padding: 0 0.5rem;
+  }
 }
 .app-detail-icon {
   width: 56px;

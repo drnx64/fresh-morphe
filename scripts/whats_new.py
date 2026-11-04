@@ -252,8 +252,12 @@ def _render_blocks(sections, date=None):
     return blocks
 
 
-def _more_link(dropped):
+def _more_link(dropped, date=None):
+    # Deep link: the frontend expands and scrolls to that exact day, so a
+    # pointer to "…" opens November 3 rather than the top of the changelog.
     url = f"{SITE_URL}/#/changelog"
+    if date:
+        url = f"{url}?day={date}"
     return f'<a href="{url}">\u2026 {dropped} more ({MORE_LABEL})</a>'
 
 
@@ -312,13 +316,13 @@ def _content_blocks(blocks):
     return [b for i, b in enumerate(blocks) if i and not _is_section_label(b)]
 
 
-def _pack_blocks(blocks, budget=PACK_BUDGET, max_messages=MAX_MESSAGES, link_room=LINK_ROOM):
+def _pack_blocks(blocks, budget=PACK_BUDGET, max_messages=MAX_MESSAGES, link_room=LINK_ROOM, date=None):
     """Pack blocks into at most max_messages Telegram messages.
 
     Blocks arrive highest-priority first, so overflow is always dropped from
     the tail — UPDATED APPS yields before NEW APPS yields before NEW BUNDLES —
-    and is replaced by a pointer to the full changelog. The last content block
-    is never dropped: the digest always shows something.
+    and is replaced by a pointer to that day's changelog. The last content
+    block is never dropped: the digest always shows something.
     """
     if not blocks or not any(blocks):
         return []
@@ -336,7 +340,7 @@ def _pack_blocks(blocks, budget=PACK_BUDGET, max_messages=MAX_MESSAGES, link_roo
             kept.pop()
         chunks = _pack_lines(kept, budget, max_messages, reserve=link_room)
         if chunks is not None:
-            chunks[-1] = f"{chunks[-1]}\n\n{_more_link(dropped)}"
+            chunks[-1] = f"{chunks[-1]}\n\n{_more_link(dropped, date)}"
             return chunks
 
     # single content block that still won't fit — show it truncated
@@ -383,7 +387,7 @@ def generate_whats_new(entries=None, date=None):
                     app["patches"] = app["patches"][:MAX_PATCHES]
                     app["patches"].append({"name": f"+{remaining} more", "badge": "*", "pkg": ""})
 
-    chunks = _pack_blocks(_render_blocks(sections, day))
+    chunks = _pack_blocks(_render_blocks(sections, day), date=day)
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     md_path = os.path.join(OUTPUT_DIR, "whats-new.md")

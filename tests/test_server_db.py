@@ -28,6 +28,27 @@ def source_index():
     return load_source_index(DATA_DIR)
 
 
+def test_migrates_old_database_without_developer(tmp_path):
+    """An existing phone DB predates the developer column; init_db adds it."""
+    db_path = tmp_path / "old.db"
+    conn = connect(str(db_path))
+    try:
+        conn.execute("CREATE TABLE apps (id INTEGER PRIMARY KEY, package TEXT, name TEXT, icon_url TEXT)")
+        conn.execute("INSERT INTO apps(package, name, icon_url) VALUES ('com.x', 'X', '')")
+        conn.commit()
+    finally:
+        conn.close()
+
+    init_db(str(db_path))
+
+    conn = connect(str(db_path), readonly=True)
+    try:
+        row = conn.execute("SELECT developer FROM apps WHERE package = 'com.x'").fetchone()
+        assert row["developer"] == ""
+    finally:
+        conn.close()
+
+
 def test_import_counts(migrated, source_index):
     _, result = migrated
     counts = result["counts"]
@@ -114,7 +135,14 @@ def test_details_match_source(migrated, source_index):
                 expected = json.load(fh)
             got = build_detail(conn, bundle, channel)
             assert got is not None, key
-            assert got["apps"] == expected["apps"], key
+            # The API adds `developer` (publisher), which bundle source files
+            # only carry once the phone has enriched them. Everything else must
+            # match the source record exactly.
+            without_developer = lambda app: {k: v for k, v in app.items() if k != "developer"}
+            assert [without_developer(a) for a in got["apps"]] == [
+                without_developer(a) for a in expected["apps"]
+            ], key
+            assert all(app["developer"] for app in got["apps"]), key
             assert got["version"] == expected["version"]
             assert got["repo_url"].lower() == expected.get("repo_url", "").lower()
             assert got["fingerprint"] == expected.get("fingerprint", "")

@@ -10,6 +10,9 @@ window.FRESH_CONFIG = Object.assign(
   {
     apiBase: 'https://certify-slashed-duo.ngrok-free.dev',
     fallbackBase: 'data',
+    // Deep link used by the app modal's "Add to Morphe" button. {package} is
+    // replaced with the URL-encoded package id.
+    morpheDeepLink: 'morphe://add?package={package}',
   },
   window.FRESH_CONFIG || window.MORPHE_CONFIG || {},
 )

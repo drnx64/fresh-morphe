@@ -167,25 +167,55 @@ def ensure_repo(conn, url, cache_entry=None, record=None, now=None):
     return cur.lastrowid
 
 
-def ensure_app(conn, package, name, icon_url=""):
+_COUNTRY_CODE_RE = re.compile(r"^[a-z]{2}$")
+_ORG_MARKERS = {"ac", "co", "com", "edu", "gov", "ne", "net", "or", "org"}
+
+
+def _package_namespace(package):
+    """Publisher namespace of a package id.
+
+    Mirrors scripts/app_metadata.package_namespace (that module is not
+    importable from the server package) so the API and the pipeline label a
+    publisher identically when the registry has no store-resolved name.
+    """
+    segments = [seg for seg in str(package or "").lower().split(".") if seg]
+    if not segments:
+        return ""
+    if len(segments) == 1:
+        return segments[0]
+    behind_country_code = (
+        bool(_COUNTRY_CODE_RE.match(segments[0])) and segments[1] in _ORG_MARKERS
+    )
+    return ".".join(segments[: 3 if behind_country_code else 2])
+
+
+def ensure_app(conn, package, name, icon_url="", developer=""):
     package = (package or "").strip()
     if not package:
         return None
-    row = conn.execute("SELECT id, name, icon_url FROM apps WHERE package = ?", (package,)).fetchone()
+    row = conn.execute(
+        "SELECT id, name, icon_url, developer FROM apps WHERE package = ?", (package,)
+    ).fetchone()
     name = name or ""
     icon_url = icon_url or ""
+    developer = developer or ""
     if row:
         next_name = name or row["name"]
         next_icon = icon_url or row["icon_url"]
-        if next_name != row["name"] or next_icon != row["icon_url"]:
+        next_developer = developer or row["developer"]
+        if (
+            next_name != row["name"]
+            or next_icon != row["icon_url"]
+            or next_developer != row["developer"]
+        ):
             conn.execute(
-                "UPDATE apps SET name = ?, icon_url = ? WHERE id = ?",
-                (next_name, next_icon, row["id"]),
+                "UPDATE apps SET name = ?, icon_url = ?, developer = ? WHERE id = ?",
+                (next_name, next_icon, next_developer, row["id"]),
             )
         return row["id"]
     cur = conn.execute(
-        "INSERT INTO apps(package, name, icon_url) VALUES (?, ?, ?)",
-        (package, name, icon_url),
+        "INSERT INTO apps(package, name, icon_url, developer) VALUES (?, ?, ?, ?)",
+        (package, name, icon_url, developer),
     )
     return cur.lastrowid
 
@@ -250,7 +280,8 @@ def upsert_bundle(conn, repo_id, bundle, channel, record, index_entry, imported_
         package = app.get("package") or ""
         app_name = app.get("app_name") or package
         cache = app_cache_get(package)
-        app_id = ensure_app(conn, package, app_name, cache.get("icon_url", ""))
+        developer = cache.get("developer", "") or _package_namespace(package)
+        app_id = ensure_app(conn, package, app_name, cache.get("icon_url", ""), developer)
         if not app_id:
             continue
         conn.execute(

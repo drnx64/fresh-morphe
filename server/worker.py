@@ -868,13 +868,15 @@ def make_snapshots(conn, now):
 
     app_cache = get_snapshot(conn, "app_cache", {}) or {}
     icon_rows = icon_resolved = 0
-    for row in conn.execute("SELECT package, name, icon_url FROM apps"):
+    for row in conn.execute("SELECT package, name, icon_url, developer FROM apps"):
         icon_rows += 1
         if row["icon_url"]:
             icon_resolved += 1
         entry = dict(app_cache.get(row["package"]) or {})
         entry["name"] = row["name"] or entry.get("name") or derive_name_from_package(row["package"])
         entry["icon_url"] = row["icon_url"] or entry.get("icon_url") or ""
+        if row["developer"]:
+            entry["developer"] = row["developer"]
         app_cache[row["package"]] = entry
     set_snapshot(conn, "app_cache", app_cache)
 

@@ -8,6 +8,7 @@ import { buildAppIndex, resolveAppName, getAppIconUrl, renderAppIcon, suggestFuz
 import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { groupAppsIntoFamilies } from '../utils/appFamily.js'
+import { featuredApps } from '../utils/popular.js'
 import { renderTodayUpdates } from './todayUpdates.js'
 import { skeletonGrid } from '../components/skeleton.js'
 
@@ -88,11 +89,13 @@ function buildAppCard(app, iconCache) {
   const card = el('div', { class: 'app-card' })
   const iconHtml = renderAppIcon({ package: app.package, app_name: app.name }, iconCache)
   const bundleCount = app.bundles.length
+  const developer = String(app.developer || '').trim()
   card.innerHTML = `
     <div class="app-card-main">
       ${iconHtml}
       <div class="app-card-info">
         <span class="app-card-name">${escHtml(app.name)}</span>
+        ${developer ? `<span class="app-card-dev">${escHtml(developer)}</span>` : ''}
         <span class="app-card-pkg">${escHtml(app.package)}</span>
       </div>
       <span class="app-card-bundle-count">${bundleCount} bundle${bundleCount !== 1 ? 's' : ''}</span>
@@ -129,7 +132,16 @@ export function renderApps(container) {
 
   const grid = el('div', { class: 'apps-grid', id: 'apps-grid' })
 
+  // Featured row: the household names, pinned above the alphabetical registry.
+  // Hidden while searching — a search is already the user's own shortlist.
+  const featuredEl = el('section', {
+    class: 'apps-featured',
+    'aria-label': 'Popular apps',
+    hidden: true,
+  })
+
   page.appendChild(header)
+  page.appendChild(featuredEl)
   page.appendChild(searchRow)
   page.appendChild(grid)
   mount(container, page)
@@ -137,7 +149,8 @@ export function renderApps(container) {
   // Build app index
   const nameCache = store.get('nameCache') || {}
   const iconCache = store.get('iconCache') || {}
-  let appIndex = buildAppIndex(store.get('bundles') || {}, nameCache, iconCache)
+  const developerCache = store.get('developerCache') || {}
+  let appIndex = buildAppIndex(store.get('bundles') || {}, nameCache, iconCache, developerCache)
 
   // Invalidates an in-flight progressive-render chain when the list refills
   let listGeneration = 0
@@ -150,7 +163,34 @@ export function renderApps(container) {
       store.get('bundles') || {},
       store.get('nameCache') || {},
       store.get('iconCache') || {},
+      store.get('developerCache') || {},
     )
+  }
+
+  /**
+   * Paint the Popular row. Icon-less apps are skipped: the row exists for
+   * instant recognition, and a letter tile for YouTube is not that.
+   */
+  function renderFeatured() {
+    featuredEl.replaceChildren()
+    const apps = featuredApps(appIndex, 12)
+    if (apps.length === 0) {
+      featuredEl.hidden = true
+      return
+    }
+    const head = el('div', { class: 'apps-featured-head' }, [
+      el('h3', { class: 'apps-featured-title' }, ['Popular']),
+      el('span', { class: 'apps-featured-sub' }, ['Apps people patch most']),
+    ])
+    const row = el('div', { class: 'apps-featured-row' })
+    const icons = store.get('iconCache') || {}
+    for (const app of apps) {
+      const card = buildAppCard(app, icons)
+      card.classList.add('app-card--featured')
+      row.appendChild(card)
+    }
+    featuredEl.append(head, row)
+    featuredEl.hidden = false
   }
 
   /**
@@ -346,6 +386,9 @@ export function renderApps(container) {
     stackClosers.clear()
     dropStackBackdrop()
 
+    if (query) featuredEl.hidden = true
+    else renderFeatured()
+
     // Booting: the app index is still being built — show skeletons, not "no apps"
     if (store.get('booting') && appIndex.length === 0) {
       grid.appendChild(skeletonGrid(8))
@@ -418,16 +461,25 @@ export function renderApps(container) {
 
   // Streaming boot: refill the grid as bundle files land (keeps search input focus)
   if (unsubscribeBundles) unsubscribeBundles()
-  unsubscribeBundles = store.subscribe('bundles', () => {
+  let unsubCacheKeys = []
+  function handleStoreChange() {
     if (!page.isConnected) {
       unsubscribeBundles()
+      for (const off of unsubCacheKeys) off()
+      unsubCacheKeys = []
       // A pinned pile's backdrop lives on <body>, outliving the page
       dropStackBackdrop()
       return
     }
     rebuildIndex()
     renderAppsList(searchInput.value)
-  })
+  }
+  unsubscribeBundles = store.subscribe('bundles', handleStoreChange)
+  // Icons and publishers land after the bundle index (boot paints from the
+  // IndexedDB cache first), and the Popular row needs both.
+  for (const key of ['iconCache', 'developerCache']) {
+    unsubCacheKeys.push(store.subscribe(key, handleStoreChange))
+  }
 
   let debounceTimer
   searchInput.addEventListener('input', () => {

@@ -2,10 +2,13 @@
  * App families — collapse apps that share one publisher into a stack.
  *
  * Primary signal is the developer/publisher name the pipeline resolves per app
- * (`app.developer`, Play Store "Offered by" → APKMirror fallback). Until that
- * field is populated, the fallback is the reverse-domain package namespace: the
- * prefix one publisher uses for all of its apps, normally two segments
- * (`com.trieudadlovestun`), or three behind a country code (`jp.co.celsys`).
+ * (`app.developer`, Play Store "Offered by" → APKMirror fallback). Subsidiaries
+ * fold into their parent group here (Instagram and WhatsApp → Meta), because
+ * the store names each listing after its product team rather than its owner.
+ * Until that field is populated, the fallback is the reverse-domain package
+ * namespace: the prefix one publisher uses for all of its apps, normally two
+ * segments (`com.trieudadlovestun`), or three behind a country code
+ * (`jp.co.celsys`).
  *
  * Without grouping a handful of publishers bury the directory — `com.google`
  * alone owns 21 packages and `com.trieudadlovestun` 50 exam trainers.
@@ -37,6 +40,32 @@ const GENERIC_DEVELOPERS = new Set([
   'independent',
   'independent developer',
 ])
+
+/**
+ * Subsidiary publishers folded into their parent group.
+ *
+ * Play names each listing by the product team that ships it — Instagram and
+ * WhatsApp are "Instagram" and "WhatsApp LLC" on the store, while Facebook and
+ * Messenger already read "Meta Platforms, Inc." — so without this map the
+ * three apps never stack even though one company owns them. Keys are
+ * `normalizeDeveloper` output; values are the parent key.
+ */
+const PUBLISHER_PARENT = {
+  instagram: 'meta',
+  whatsapp: 'meta',
+  'meta platforms': 'meta',
+  facebook: 'meta',
+  messenger: 'meta',
+  threads: 'meta',
+  google: 'google',
+  youtube: 'google',
+}
+
+/** Display label for a parent group key; falls back to the first member's name. */
+const PUBLISHER_GROUP_LABEL = {
+  meta: 'Meta',
+  google: 'Google',
+}
 
 /** Namespaces with at least this many apps always become a stack. */
 export const APP_FAMILY_MIN_SIZE = 3
@@ -81,7 +110,17 @@ export function normalizeDeveloper(name) {
   const stripped = cleaned.replace(DEVELOPER_NOISE_PATTERN, ' ').replace(/\s+/g, ' ').trim()
   const key = stripped || cleaned
   if (GENERIC_DEVELOPERS.has(key)) return ''
-  return key
+  return PUBLISHER_PARENT[key] || key
+}
+
+/**
+ * Display label for a normalized developer group key.
+ * @param {string} developerKey - output of `normalizeDeveloper`
+ * @param {string} [fallback] - first member's raw developer name
+ * @returns {string}
+ */
+export function developerGroupLabel(developerKey, fallback = '') {
+  return PUBLISHER_GROUP_LABEL[developerKey] || String(fallback || '').trim()
 }
 
 /**
@@ -138,7 +177,7 @@ export function groupAppsIntoFamilies(apps) {
       else {
         developerGroups.set(developerKey, {
           id: `dev:${developerKey}`,
-          label: String(app.developer).trim(),
+          label: developerGroupLabel(developerKey, app.developer),
           apps: [app],
         })
       }

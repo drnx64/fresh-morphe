@@ -98,7 +98,7 @@ def build_detail(conn, bundle, channel):
 
     app_rows = conn.execute(
         """
-        SELECT ba.app_id, ba.name, ba.position, a.package
+        SELECT ba.app_id, ba.name, ba.position, a.package, a.developer
         FROM bundle_apps ba
         JOIN apps a ON a.id = ba.app_id
         WHERE ba.bundle_id = ?
@@ -125,6 +125,7 @@ def build_detail(conn, bundle, channel):
         apps[app_id] = {
             "app_name": app_row["name"] or app_row["package"],
             "package": app_row["package"],
+            "developer": app_row["developer"] or "",
             "patches": [],
         }
         order.append(app_id)
@@ -222,23 +223,28 @@ def search_apps(conn, query, limit=20):
     like = f"%{query}%"
     rows = conn.execute(
         """
-        SELECT package, name, icon_url
+        SELECT package, name, icon_url, developer
         FROM apps
-        WHERE package LIKE ? OR name LIKE ?
+        WHERE package LIKE ? OR name LIKE ? OR developer LIKE ?
         ORDER BY CASE WHEN package = ? THEN 0 WHEN package LIKE ? THEN 1 ELSE 2 END, name
         LIMIT ?
         """,
-        (like, like, query, f"{query}%", limit),
+        (like, like, like, query, f"{query}%", limit),
     ).fetchall()
     return [
-        {"package": row["package"], "name": row["name"], "icon_url": row["icon_url"]}
+        {
+            "package": row["package"],
+            "name": row["name"],
+            "icon_url": row["icon_url"],
+            "developer": row["developer"],
+        }
         for row in rows
     ]
 
 
 def app_detail(conn, package):
     app = conn.execute(
-        "SELECT id, package, name, icon_url FROM apps WHERE package = ?",
+        "SELECT id, package, name, icon_url, developer FROM apps WHERE package = ?",
         (package,),
     ).fetchone()
     if not app:
@@ -267,6 +273,7 @@ def app_detail(conn, package):
         "package": app["package"],
         "name": app["name"],
         "icon_url": app["icon_url"],
+        "developer": app["developer"],
         "patch_count": patch_count,
         "bundles": [
             {
@@ -546,7 +553,8 @@ class ApiHandler(BaseHTTPRequestHandler):
                 self._send_json({"items": search_apps(conn, term, limit)})
                 return
             rows = conn.execute(
-                "SELECT package, name, icon_url FROM apps ORDER BY name LIMIT ?", (limit,)
+                "SELECT package, name, icon_url, developer FROM apps ORDER BY name LIMIT ?",
+                (limit,),
             ).fetchall()
             self._send_json({"items": [dict(row) for row in rows]})
             return
