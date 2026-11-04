@@ -2,9 +2,9 @@
   "bundle": "haiagaru",
   "channel": "dev",
   "repo_url": "https://github.com/areteruhiro/Haiagaru-Morphe",
-  "created_at": "2026-11-02T01:08:57",
-  "version": "1.18.3-dev.1",
-  "description": "# Haiagaru 1.18.3-dev.1\n\n## 今回の更新\n\n- Haiagaru形式のZIPで「書き込み履歴」を保存する際、スレごとの索引（.idx）も含めるよう修正しました。DAT本文を保存しなくても、自分の書き込みマークなどを保存・復元できます。\n- DATを含むZIPから書き込み履歴だけを復元する場合も、索引を復元し、現在のDAT本文を保持します。\n- 設定バックアップに、ローカル自動バックアップの実行間隔・保持件数・保存項目の選択を追加しました。復元先で選んだ保存フォルダ・ON/OFF・保存済みZIPの管理記録は維持します。\n- 保存項目の名称を「書き込み履歴・レスの書き込みマーク」に変更しました。\n\n今回の索引保存に対応する前のバックアップでは、DATを含めていない場合に索引が保存されていないことがあります。バックアップに存在しないマークは、この更新だけでは取り戻せません。\n\n## 確認範囲と継続調査\n\n191／226／242の隔離エミュレータで、書き込み履歴だけのZIP、DAT入りZIPからの項目別復元、ChMate本体による復元済みマークの読み取り、設定の保存・復元を確認しました。\n\n自動バックアップのON/OFF・保存先の初期化、191→242更新後の返信通知と「ここまで読んだ」の表示は継続調査中です。隔離した同一パッケージの更新検証では設定の保持、通知からのスレ表示、未読位置の表示を確認しましたが、報告と同じ症状は再現しておらず、修正済みには含めていません。\n\n共有NG／F9対策とエッヂの公開レベルNGは開発中です。エッヂ認証日の記録・共有は含みません。\n\n## 追加ファイルについて\n\nImage NG・画像取得専用VPNをパッチ時に選ぶ場合は、**追加ファイルのダウンロードが必要です**。このページのAssetsから取得してください。\n\n- Image NG：`haiagaru-image-ng.zip`\n- 画像取得専用VPN：`haiagaru-image-vpn-v2.zip`\n\nそれぞれZIPを展開せず、そのままMorpheのファイル選択で指定してください。これらのパッチを使わない場合、追加ファイルは不要です。\n\n## 謝辞\n\nご支援いただいている皆様、ありがとうございます。README掲載の支援者の皆様へ感謝申し上げます。\n\n- yujirox 様\n- ﾜｯﾁｮｲ 8f01-uDul 様\n- toya0717 様\n- MUMEI 様\n- タケヨシキ 様\n- 無名 様\n\n今回のご報告・動作確認・連携へのご協力にも感謝します。\n\n- ｵｲｺﾗﾐﾈｵ 様\n- Red Frame X 様\n- ﾜｯﾁｮｲ 3f3c-gNc7 様\n- chikuwadon 様（外部チェッカーとの連携をご快諾いただき、ありがとうございます）\n- rikunode 様（226／242のDroid＋ツールバー対応）\n\n## 開発継続へのご支援のお願い\n\n開発の継続を応援していただける場合は、よろしければ[GitHubのStar](https://github.com/areteruhiro/Haiagaru-Morphe)だけでもお願いします。励みになります。さらにご支援いただける場合は、以下から寄付を受け付けています。\n\n- [Amazon Gift Card](https://www.amazon.co.jp/gp/product/B004N3APGO) Send to (areteruhiro@gmail.com)\n- [PayPay](https://qr.paypay.ne.jp/p2p01_FSEj08sDQx0enogO)\n\n皆様からのご報告・検証・ご支援が開発の励みになっています。\n\n### 🐛 Bug Fixes\n\n* **chmate:** synchronize dialog toggles and archive navigation ([703d5cd](https://github.com/areteruhiro/Haiagaru-Morphe/commit/703d5cd3db6e8c80a1ea401efc0a543d7459429a))",
+  "created_at": "2026-11-04T00:16:49",
+  "version": "1.23.0-dev.2",
+  "description": "# Haiagaru 1.23.0-dev.2\n\n## 今回の追加・修正\n\n- スレ内検索の結果判定から投稿日時・曜日を除外しました。黄色い強調とは別に残っていた検索結果タスクも、本文と任意のID・ワッチョイ・名前の対象設定へそろえています。本文に書かれた日付や曜日は引き続き検索できます。\n- 「更新対象に含む」が、スレ末尾の「離すと更新」とジェスチャーによる更新・再取得・巡回でも登録スレの新着本文を取得するよう修正しました。短時間の重複依頼はまとめます。\n- ツールバーの「履歴（ポップアップ）」を「スレ／対象／板／書き込み／画像」のタブへ変更しました。「対象」に登録スレをスレ名・板名で並べ、そのまま選んで開けます。\n- 242等のタイトルメニューで「更新対象に含む」の背景が透ける経路を修正し、通知ボタン等と共通の不透明な操作パネルへまとめました。\n\n## 確認範囲と残確認\n\n191／226／242の隔離エミュレータで、履歴ポップアップ・対象一覧・スレ起動を各34項目、標準の更新／末尾スワイプ／巡回の呼び出しを各11項目、WorkManagerによる対象スレの本文取得指定を各5項目確認しています。先行プレ版の検索結果判定は各48項目確認済みです。外部通信を無効にした試験で、投稿は行っていません。\n\n242の「更新対象に含む」の重なりについては、完成パッチでの報告画面の再確認が未完了です。この表示修正はプレ版での追加確認対象です。今回変更していない本文表示・画像／GIF／動画の広範な再検証は、既存の利用者指定により省略しています。\n\n共有NG／F9対策とエッヂの公開レベルNGは開発中です。エッヂ認証日の記録・共有は含みません。\n\n## 追加ファイルについて\n\nImage NG・画像取得専用VPNをパッチ時に選ぶ場合は、**追加ファイルのダウンロードが必要です**。このページのAssetsから取得してください。\n\n- Image NG：`haiagaru-image-ng.zip`\n- 画像取得専用VPN：`haiagaru-image-vpn-v2.zip`\n\nそれぞれZIPを展開せず、そのままMorpheのファイル選択で指定してください。これらのパッチを使わない場合、追加ファイルは不要です。\n\n## 謝辞\n\nご支援いただいている皆様、ありがとうございます。README掲載の支援者の皆様へ感謝申し上げます。\n\n- yujirox 様\n- ﾜｯﾁｮｲ 8f01-uDul 様\n- toya0717 様\n- MUMEI 様\n- タケヨシキ 様\n- 無名 様\n\n今回のご報告・動作確認・連携へのご協力にも感謝します。\n\n- ｵｲｺﾗﾐﾈｵ 様\n- Red Frame X 様\n- ﾜｯﾁｮｲ 3f3c-gNc7 様\n- chikuwadon 様（外部チェッカーとの連携をご快諾いただき、ありがとうございます）\n- rikunode 様（226／242のDroid＋ツールバー対応）\n\n## 開発継続へのご支援のお願い\n\n開発の継続を応援していただける場合は、よろしければ[GitHubのStar](https://github.com/areteruhiro/Haiagaru-Morphe)だけでもお願いします。励みになります。さらにご支援いただける場合は、以下から寄付を受け付けています。\n\n- [Amazon Gift Card](https://www.amazon.co.jp/gp/product/B004N3APGO) Send to (areteruhiro@gmail.com)\n- [PayPay](https://qr.paypay.ne.jp/p2p01_FSEj08sDQx0enogO)\n\n皆様からのご報告・検証・ご支援が開発の励みになっています。\n\n### 🐛 Bug Fixes\n\n* refresh selected threads from gestures and add history target tab ([a0624fc](https://github.com/areteruhiro/Haiagaru-Morphe/commit/a0624fc2f9d7fb852f3eaa5232a6023e456e6274))",
   "apps": [
     {
       "app_name": "A2chmate",
@@ -29,7 +29,7 @@
             },
             {
               "key": "versionCode",
-              "description": "Defaults to the maximum Android distribution version code (2100000000). Allows switching between supported ChMate versions when package and signing key match. A lower-code APK cannot normally overwrite it. Clear to keep the original version code. Does not add support for unsupported versions."
+              "description": "Defaults to the maximum signed 32-bit version code (2147483647) for sideloaded APKs. This exceeds Google Play's distribution limit. Allows switching between supported ChMate versions when package and signing key match. A lower-code APK cannot normally overwrite it. Clear to keep the original version code. Does not add support for unsupported versions."
             }
           ],
           "compatible_versions": [
@@ -101,17 +101,6 @@
           ]
         },
         {
-          "name": "Migrate ChMate data with Shizuku",
-          "description": "Optionally copy shared data from the original ChMate package using Shizuku.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "0.8.10.191 dev",
-            "0.8.10.226 dev",
-            "0.8.10.242 dev"
-          ]
-        },
-        {
           "name": "Save ChMate crash logs",
           "description": "Save uncaught ChMate crash logs to Download/Haiagaru.",
           "use": true,
@@ -135,12 +124,12 @@
         },
         {
           "name": "画像取得専用VPN（実験用・検証中）",
-          "description": "必要な方だけ選択してください。Releaseのhaiagaru-image-vpn-v2.zipを保存: https://github.com/areteruhiro/Haiagaru-Morphe/releases/download/1.12.0-dev.4/haiagaru-image-vpn-v2.zip → 下のオプションで選択 → パッチ適用後にHaiagaru設定でVPNを有効化。Image NG用ZIPとは別です。展開不要。導入・ソース: https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md",
+          "description": "必要な方だけ選択してください。Releaseのhaiagaru-image-vpn-v2.zipを保存: https://github.com/areteruhiro/Haiagaru-Morphe/releases/latest/download/haiagaru-image-vpn-v2.zip → 下のオプションで選択 → パッチ適用後にHaiagaru設定でVPNを有効化。Image NG用ZIPとは別です。展開不要。導入・ソース: https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md",
           "use": false,
           "options": [
             {
               "key": "imageVpnLibraryFile",
-              "description": "VPN専用ファイル: https://github.com/areteruhiro/Haiagaru-Morphe/releases/download/1.12.0-dev.4/haiagaru-image-vpn-v2.zip Image NG用haiagaru-image-ng.zipは選択しないでください。従来AARも利用可能: https://raw.githubusercontent.com/areteruhiro/Haiagaru-Morphe/79759fb0ab0fa30a6755be13a53546b06d2cdf8d/vpn/image-stack/prebuilt/image-stack.aar 展開不要。https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md"
+              "description": "VPN専用ファイル: https://github.com/areteruhiro/Haiagaru-Morphe/releases/latest/download/haiagaru-image-vpn-v2.zip Image NG用haiagaru-image-ng.zipは選択しないでください。従来AARも利用可能: https://raw.githubusercontent.com/areteruhiro/Haiagaru-Morphe/dev/vpn/image-stack/prebuilt/image-stack.aar 展開不要。https://github.com/areteruhiro/Haiagaru-Morphe/blob/dev/docs/optional-assets.md"
             }
           ],
           "compatible_versions": [
@@ -153,10 +142,10 @@
     }
   ],
   "patches_name": "Haiagaru",
-  "fingerprint": "16333ca26235647cff52baf205102f03f1b3e7867cb7129b7a0d1f43e5a1fdba",
-  "release_notes": "# Haiagaru 1.18.3-dev.1\n\n## 今回の更新\n\n- Haiagaru形式のZIPで「書き込み履歴」を保存する際、スレごとの索引（.idx）も含めるよう修正しました。DAT本文を保存しなくても、自分の書き込みマークなどを保存・復元できます。\n- DATを含むZIPから書き込み履歴だけを復元する場合も、索引を復元し、現在のDAT本文を保持します。\n- 設定バックアップに、ローカル自動バックアップの実行間隔・保持件数・保存項目の選択を追加しました。復元先で選んだ保存フォルダ・ON/OFF・保存済みZIPの管理記録は維持します。\n- 保存項目の名称を「書き込み履歴・レスの書き込みマーク」に変更しました。\n\n今回の索引保存に対応する前のバックアップでは、DATを含めていない場合に索引が保存されていないことがあります。バックアップに存在しないマークは、この更新だけでは取り戻せません。\n\n## 確認範囲と継続調査\n\n191／226／242の隔離エミュレータで、書き込み履歴だけのZIP、DAT入りZIPからの項目別復元、ChMate本体による復元済みマークの読み取り、設定の保存・復元を確認しました。\n\n自動バックアップのON/OFF・保存先の初期化、191→242更新後の返信通知と「ここまで読んだ」の表示は継続調査中です。隔離した同一パッケージの更新検証では設定の保持、通知からのスレ表示、未読位置の表示を確認しましたが、報告と同じ症状は再現しておらず、修正済みには含めていません。\n\n共有NG／F9対策とエッヂの公開レベルNGは開発中です。エッヂ認証日の記録・共有は含みません。\n\n## 追加ファイルについて\n\nImage NG・画像取得専用VPNをパッチ時に選ぶ場合は、**追加ファイルのダウンロードが必要です**。このページのAssetsから取得してください。\n\n- Image NG：`haiagaru-image-ng.zip`\n- 画像取得専用VPN：`haiagaru-image-vpn-v2.zip`\n\nそれぞれZIPを展開せず、そのままMorpheのファイル選択で指定してください。これらのパッチを使わない場合、追加ファイルは不要です。\n\n## 謝辞\n\nご支援いただいている皆様、ありがとうございます。README掲載の支援者の皆様へ感謝申し上げます。\n\n- yujirox 様\n- ﾜｯﾁｮｲ 8f01-uDul 様\n- toya0717 様\n- MUMEI 様\n- タケヨシキ 様\n- 無名 様\n\n今回のご報告・動作確認・連携へのご協力にも感謝します。\n\n- ｵｲｺﾗﾐﾈｵ 様\n- Red Frame X 様\n- ﾜｯﾁｮｲ 3f3c-gNc7 様\n- chikuwadon 様（外部チェッカーとの連携をご快諾いただき、ありがとうございます）\n- rikunode 様（226／242のDroid＋ツールバー対応）\n\n## 開発継続へのご支援のお願い\n\n開発の継続を応援していただける場合は、よろしければ[GitHubのStar](https://github.com/areteruhiro/Haiagaru-Morphe)だけでもお願いします。励みになります。さらにご支援いただける場合は、以下から寄付を受け付けています。\n\n- [Amazon Gift Card](https://www.amazon.co.jp/gp/product/B004N3APGO) Send to (areteruhiro@gmail.com)\n- [PayPay](https://qr.paypay.ne.jp/p2p01_FSEj08sDQx0enogO)\n\n皆様からのご報告・検証・ご支援が開発の励みになっています。\n\n### 🐛 Bug Fixes\n\n* **chmate:** synchronize dialog toggles and archive navigation ([703d5cd](https://github.com/areteruhiro/Haiagaru-Morphe/commit/703d5cd3db6e8c80a1ea401efc0a543d7459429a))\n",
-  "release_tag": "1.18.3-dev.1",
-  "release_date": "2026-11-02T01:12:39Z",
+  "fingerprint": "c6aca1005898fe5cd25929c0ee00b29bdce9998d8ccd0216e84c8d8db228cb86",
+  "release_notes": "# Haiagaru 1.23.0-dev.2\n\n## 今回の追加・修正\n\n- スレ内検索の結果判定から投稿日時・曜日を除外しました。黄色い強調とは別に残っていた検索結果タスクも、本文と任意のID・ワッチョイ・名前の対象設定へそろえています。本文に書かれた日付や曜日は引き続き検索できます。\n- 「更新対象に含む」が、スレ末尾の「離すと更新」とジェスチャーによる更新・再取得・巡回でも登録スレの新着本文を取得するよう修正しました。短時間の重複依頼はまとめます。\n- ツールバーの「履歴（ポップアップ）」を「スレ／対象／板／書き込み／画像」のタブへ変更しました。「対象」に登録スレをスレ名・板名で並べ、そのまま選んで開けます。\n- 242等のタイトルメニューで「更新対象に含む」の背景が透ける経路を修正し、通知ボタン等と共通の不透明な操作パネルへまとめました。\n\n## 確認範囲と残確認\n\n191／226／242の隔離エミュレータで、履歴ポップアップ・対象一覧・スレ起動を各34項目、標準の更新／末尾スワイプ／巡回の呼び出しを各11項目、WorkManagerによる対象スレの本文取得指定を各5項目確認しています。先行プレ版の検索結果判定は各48項目確認済みです。外部通信を無効にした試験で、投稿は行っていません。\n\n242の「更新対象に含む」の重なりについては、完成パッチでの報告画面の再確認が未完了です。この表示修正はプレ版での追加確認対象です。今回変更していない本文表示・画像／GIF／動画の広範な再検証は、既存の利用者指定により省略しています。\n\n共有NG／F9対策とエッヂの公開レベルNGは開発中です。エッヂ認証日の記録・共有は含みません。\n\n## 追加ファイルについて\n\nImage NG・画像取得専用VPNをパッチ時に選ぶ場合は、**追加ファイルのダウンロードが必要です**。このページのAssetsから取得してください。\n\n- Image NG：`haiagaru-image-ng.zip`\n- 画像取得専用VPN：`haiagaru-image-vpn-v2.zip`\n\nそれぞれZIPを展開せず、そのままMorpheのファイル選択で指定してください。これらのパッチを使わない場合、追加ファイルは不要です。\n\n## 謝辞\n\nご支援いただいている皆様、ありがとうございます。README掲載の支援者の皆様へ感謝申し上げます。\n\n- yujirox 様\n- ﾜｯﾁｮｲ 8f01-uDul 様\n- toya0717 様\n- MUMEI 様\n- タケヨシキ 様\n- 無名 様\n\n今回のご報告・動作確認・連携へのご協力にも感謝します。\n\n- ｵｲｺﾗﾐﾈｵ 様\n- Red Frame X 様\n- ﾜｯﾁｮｲ 3f3c-gNc7 様\n- chikuwadon 様（外部チェッカーとの連携をご快諾いただき、ありがとうございます）\n- rikunode 様（226／242のDroid＋ツールバー対応）\n\n## 開発継続へのご支援のお願い\n\n開発の継続を応援していただける場合は、よろしければ[GitHubのStar](https://github.com/areteruhiro/Haiagaru-Morphe)だけでもお願いします。励みになります。さらにご支援いただける場合は、以下から寄付を受け付けています。\n\n- [Amazon Gift Card](https://www.amazon.co.jp/gp/product/B004N3APGO) Send to (areteruhiro@gmail.com)\n- [PayPay](https://qr.paypay.ne.jp/p2p01_FSEj08sDQx0enogO)\n\n皆様からのご報告・検証・ご支援が開発の励みになっています。\n\n### 🐛 Bug Fixes\n\n* refresh selected threads from gestures and add history target tab ([a0624fc](https://github.com/areteruhiro/Haiagaru-Morphe/commit/a0624fc2f9d7fb852f3eaa5232a6023e456e6274))\n",
+  "release_tag": "1.23.0-dev.2",
+  "release_date": "2026-11-04T00:20:42Z",
   "isPreRelease": true,
   "stars": 57,
   "avatarUrl": "https://avatars.githubusercontent.com/u/108941410?v=4&s=128",

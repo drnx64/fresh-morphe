@@ -1,0 +1,40 @@
+{
+  "bundle": "andersonlucasg3-applemusic-dilink",
+  "channel": "stable",
+  "repo_url": "https://github.com/andersonlucasg3/AppleMusic-DiLink",
+  "created_at": "2026-11-03T22:53:10Z",
+  "version": "1.0.3",
+  "description": "## [1.0.3](https://github.com/andersonlucasg3/AppleMusic-DiLink/releases/tag/v1.0.3)\n\nFix startup crash reported on the BYD DiLink (Android 10): the `WindowInsetsControllerCompat` constructor (`x2.W$a`) no longer executes the `WindowInsetsController`-typed delegate on API < 30 — it initializes the impl/window fields directly, so no missing class is resolved on the legacy path. Also declares `apkFileType = XAPK` and the original APK signing fingerprints (1.0.2 feature).",
+  "apps": [
+    {
+      "app_name": "Apple Music",
+      "package": "com.apple.android.music",
+      "patches": [
+        {
+          "name": "Apple Music DiLink manifest",
+          "description": "Lowers minSdkVersion from 30 to 29 (Android 10) and removes the portrait lock of MLIChromeTabActivity.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.0.0"
+          ]
+        },
+        {
+          "name": "Apple Music DiLink support",
+          "description": "Unlocks landscape rotation, lowers the API floor to Android 10 (API 29), backports the API 30 java/androidx calls and bypasses Play Integrity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "patches_name": "Apple Music DiLink Patches",
+  "fingerprint": "8f2ffd83970939dfbc92de204cffafec27c5687a628958a7f2232344dac793e9",
+  "release_notes": "Fix startup crash on API 29: the WindowInsetsControllerCompat constructor no longer executes the WindowInsetsController-typed delegate on API < 30 (initializes impl/window fields directly).",
+  "release_tag": "v1.0.3",
+  "release_date": "2026-11-03T22:53:10Z",
+  "isPreRelease": false
+}

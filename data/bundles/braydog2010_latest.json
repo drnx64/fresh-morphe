@@ -2,9 +2,9 @@
   "bundle": "braydog2010",
   "channel": "latest",
   "repo_url": "https://github.com/BrayDog2010/morphe-patches",
-  "created_at": "2026-11-03T04:18:33",
-  "version": "1.0.0-dev.13",
-  "description": "## [1.0.0-dev.13](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.12...v1.0.0-dev.13) (2026-11-03)\n\n### 🐛 Bug Fixes\n\n* **tiktok:** fixed 47.6.3 ([24f5058](https://github.com/BrayDog2010/morphe-patches/commit/24f50583ce88d8ad1be0b7b593cdfeea794ecb02))\n\n### 🚀 Updated App Support\n\n* **tiktok:** added support for 47.6.3 ([3e1c350](https://github.com/BrayDog2010/morphe-patches/commit/3e1c350b0fd025d126bc7fae95c3ea8f2e924d37))\n* **Venabox Hub:** added support for 1.4.1 and 1.4.3 ([3a64962](https://github.com/BrayDog2010/morphe-patches/commit/3a649624de5537af34293a92b7b4014abc2187da))",
+  "created_at": "2026-11-03T19:51:10",
+  "version": "1.0.0-dev.14",
+  "description": "## [1.0.0-dev.14](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2026-11-03)\n\n### ✨ New Features\n\n* **spotify:** add ad request blocking ([204c009](https://github.com/BrayDog2010/morphe-patches/commit/204c009ae126ed851f09f508311478afb780a5f0))\n* **spotify:** add custom lyrics providers ([3e79d49](https://github.com/BrayDog2010/morphe-patches/commit/3e79d498f38d8049447e84ba09b6e0a4e10c60df))\n\n### 🐛 Bug Fixes\n\n* **spotify:** fix widgets, sharing links and Facebook login on 9.1.94 ([da2bd5e](https://github.com/BrayDog2010/morphe-patches/commit/da2bd5e79dcb6263db6efa9ec94afea13ac6bbab))\n* **Spotify:** fixed spoof device integrity ([9754fc4](https://github.com/BrayDog2010/morphe-patches/commit/9754fc4295abd400c681901a49600324a1695e42))\n\n### 🚀 Updated App Support\n\n* **spotify:** added experimental support for 9.1.94.1929 ([900db33](https://github.com/BrayDog2010/morphe-patches/commit/900db339b015c19fc808f8286871154686a50988))",
   "apps": [
     {
       "app_name": "Venabox Hub - Ani Planet",
@@ -34,16 +34,22 @@
       "package": "com.spotify.music",
       "patches": [
         {
-          "name": "Change lyrics provider",
-          "description": "Changes the lyrics provider to a custom one.",
-          "use": false,
-          "options": [
-            {
-              "key": "lyricsProviderHost",
-              "description": "The domain name or IP address of a custom lyrics provider."
-            }
-          ],
-          "compatible_versions": []
+          "name": "Block ad requests",
+          "description": "Blocks Spotify's ad, ad-logic, upsell and marketing message requests, and requests to ad and tracking hosts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
+        },
+        {
+          "name": "Custom Lyrics Providers",
+          "description": "Replaces the lyrics Spotify returns with synced lyrics from LRCLIB, falling back to Musixmatch when LRCLIB has none.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
         },
         {
           "name": "Custom theme",
@@ -71,35 +77,54 @@
               "description": "The color when accented buttons are pressed."
             }
           ],
-          "compatible_versions": []
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
         },
         {
           "name": "Fix Facebook login",
           "description": "Fix logging in with Facebook when the app is patched by always opening the login in a web browser window.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
         },
         {
           "name": "Fix third party launchers widgets",
           "description": "Fixes Spotify widgets not working in third party launchers, like Nova Launcher.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
+        },
+        {
+          "name": "Premium Account Override",
+          "description": "(DONT NOT USE THIS IF YOU ARE PAYING FOR SPOTIFY PREMIUM) Rewrites the account attributes the server sends so the app sees a Premium account with no ads. Features the server itself restricts, such as very high audio quality, stay unavailable.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
         },
         {
           "name": "Sanitize sharing links",
           "description": "Removes the tracking query parameters from shared links.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
         },
         {
           "name": "Spoof device integrity",
           "description": "Prevents Spotify's third-party fraud/device-integrity from detecting root/tamper signals or reporting device fingerprint and mobile integrity data back to Spotify's servers",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "9.1.94.1929"
+          ]
         }
       ]
     },
@@ -1645,10 +1670,10 @@
     }
   ],
   "patches_name": "BrayDog2010 Patches",
-  "fingerprint": "10b37729ae1486bbae7650cedfb2edba88318462cf7a4c2756d5bd9b6933ddd5",
-  "release_notes": "## [1.0.0-dev.13](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.12...v1.0.0-dev.13) (2026-11-03)\n\n### 🐛 Bug Fixes\n\n* **tiktok:** fixed 47.6.3 ([24f5058](https://github.com/BrayDog2010/morphe-patches/commit/24f50583ce88d8ad1be0b7b593cdfeea794ecb02))\n\n### 🚀 Updated App Support\n\n* **tiktok:** added support for 47.6.3 ([3e1c350](https://github.com/BrayDog2010/morphe-patches/commit/3e1c350b0fd025d126bc7fae95c3ea8f2e924d37))\n* **Venabox Hub:** added support for 1.4.1 and 1.4.3 ([3a64962](https://github.com/BrayDog2010/morphe-patches/commit/3a649624de5537af34293a92b7b4014abc2187da))\n",
-  "release_tag": "v1.0.0-dev.13",
-  "release_date": "2026-11-03T04:20:08Z",
+  "fingerprint": "9b5c5a0bb998d2bca7c5e3373912b5a2c7f346901b5370993d630db1b03f50e1",
+  "release_notes": "## [1.0.0-dev.14](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2026-11-03)\n\n### ✨ New Features\n\n* **spotify:** add ad request blocking ([204c009](https://github.com/BrayDog2010/morphe-patches/commit/204c009ae126ed851f09f508311478afb780a5f0))\n* **spotify:** add custom lyrics providers ([3e79d49](https://github.com/BrayDog2010/morphe-patches/commit/3e79d498f38d8049447e84ba09b6e0a4e10c60df))\n\n### 🐛 Bug Fixes\n\n* **spotify:** fix widgets, sharing links and Facebook login on 9.1.94 ([da2bd5e](https://github.com/BrayDog2010/morphe-patches/commit/da2bd5e79dcb6263db6efa9ec94afea13ac6bbab))\n* **Spotify:** fixed spoof device integrity ([9754fc4](https://github.com/BrayDog2010/morphe-patches/commit/9754fc4295abd400c681901a49600324a1695e42))\n\n### 🚀 Updated App Support\n\n* **spotify:** added experimental support for 9.1.94.1929 ([900db33](https://github.com/BrayDog2010/morphe-patches/commit/900db339b015c19fc808f8286871154686a50988))\n",
+  "release_tag": "v1.0.0-dev.14",
+  "release_date": "2026-11-03T19:53:54Z",
   "isPreRelease": true,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/113742627?v=4",
