@@ -55,6 +55,7 @@ import { openAppDetailModal } from './components/appDetailModal.js'
 import { openBundleHistoryModal } from './components/bundleHistoryModal.js'
 import { renderGlobalSearch } from './components/globalSearch.js'
 import { syncColorGameChip } from './components/colorGame.js'
+import { renderSourceIndicator } from './components/sourceIndicator.js'
 import { showWorkToast } from './components/workToast.js'
 import { preloadAvatars } from './services/iconCache.js'
 import { initIconQueue, runIconQueue } from './services/iconFetchQueue.js'
@@ -73,6 +74,7 @@ store.init({
   bundles: {},
   iconCache: {},
   nameCache: {},
+  developerCache: {},
   repoAvatarMap: {},
   repoBundleImageMap: {},
   changelog: [],
@@ -165,6 +167,9 @@ function renderShell() {
   })
   themeBtn.addEventListener('click', toggleTheme)
   header.querySelector('#header-actions').appendChild(themeBtn)
+
+  // Live/Static source pill — which dataset is answering (see sourceIndicator.js)
+  header.querySelector('#header-actions').insertBefore(renderSourceIndicator(), themeBtn)
 
   // Boot progress bar — determinate top bar + status pill while loadData runs
   const bootProgress = el('div', {
@@ -261,12 +266,13 @@ function setupRoutes() {
     }
   }, 'bundleDetail')
 
-  router.addRoute('/changelog', async () => {
+  router.addRoute('/changelog', async (params) => {
     const { renderChangelog } = await pages.changelog()
     const container = document.getElementById('page-container')
     mount(container, el('div', { class: 'loading-state' }, ['Loading changelog...']))
     await ensureChangelog()
-    renderChangelog(container)
+    // `#/changelog?day=2026-11-03` — the day a Telegram digest link pointed at.
+    renderChangelog(container, params.query)
   }, 'changelog')
 
   router.addRoute('/diff', async () => {
@@ -544,23 +550,27 @@ async function loadData() {
     })
     setBootProgress(65, 'Loading caches…')
 
-    // Icon + name caches — degraded (fallback icons, resolved names) if missing
+    // Icon + name + publisher caches — degraded (fallback icons, resolved
+    // names, namespace publishers) if missing
     const iconCache = {}
     const nameCache = {}
+    const developerCache = {}
     for (const [pkg, entry] of Object.entries(cacheRes)) {
       if (entry && typeof entry === 'object') {
         // Store the downsized CDN variant once here so display, the fetch
         // queue and IndexedDB keys all agree on one canonical URL.
         if (entry.icon_url) iconCache[pkg] = shrinkPlayIconUrl(entry.icon_url)
         if (entry.name) nameCache[pkg] = entry.name
+        if (entry.developer) developerCache[pkg] = entry.developer
       }
     }
     devLog('cache maps', {
       icons: Object.keys(iconCache).length,
       names: Object.keys(nameCache).length,
+      developers: Object.keys(developerCache).length,
       missingIcons: Object.keys(cacheRes || {}).length - Object.keys(iconCache).length,
     })
-    store.merge({ iconCache, nameCache })
+    store.merge({ iconCache, nameCache, developerCache })
     // Hydration is async and must finish before the sweep starts: it is what
     // tells the queue which icons IndexedDB already holds, so progress begins
     // at the real number instead of zero.

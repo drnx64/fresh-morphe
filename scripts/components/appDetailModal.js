@@ -22,7 +22,7 @@ import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { parseBundleKey, makeBundleKey } from '../utils/bundleKey.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
-import { CLOSE_ICON, VERSION_ARROW } from '../utils/svg.js'
+import { CLOSE_ICON, VERSION_ARROW, PLUS_ICON } from '../utils/svg.js'
 
 const PLAY_STORE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M.859 11.981V1.741c0-.672.79-1.098 1.434-.771L12.37 6.09c.662.336.662 1.207 0 1.543l-10.077 5.12c-.644.327-1.434-.099-1.434-.772M9.23 9.23l-8.1-8.101m8.1 3.364l-8.1 8.1"/></svg>'
 
@@ -30,6 +30,17 @@ const PLAY_STORE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="14" heigh
 // freshest. The directory's key order is alphabetical (dev, latest, stable), so
 // relying on it would quietly show dev patches for every app.
 const CHANNEL_DISPLAY_ORDER = ['stable', 'latest', 'dev']
+
+// Deep link into the Morphe patcher. Kept in runtime config so the scheme can
+// change without a rebuild: {package} is replaced with the encoded package id.
+const DEFAULT_MORPHE_DEEP_LINK = 'morphe://add?package={package}'
+
+function morpheDeepLink(pkg) {
+  const template =
+    (typeof window !== 'undefined' && window.FRESH_CONFIG && window.FRESH_CONFIG.morpheDeepLink) ||
+    DEFAULT_MORPHE_DEEP_LINK
+  return String(template).replace('{package}', encodeURIComponent(pkg))
+}
 
 /**
  * Every bundle that ships patches for `pkg`, de-duped by bundle name and
@@ -108,16 +119,59 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
   closeBtn.addEventListener('click', closeModal)
   content.appendChild(closeBtn)
 
+  // ── Add to Morphe ───────────────────────────────────
+  // Top-right, immediately left of the close button. Fires the Morphe deep
+  // link and only claims success when the page actually lost focus; a browser
+  // with no handler stays put, so the button turns into a copy-link fallback.
+  const addBtn = el('button', {
+    class: 'app-detail-morphe-btn',
+    type: 'button',
+    title: `Open ${appName} in Morphe`,
+    'aria-label': `Add ${appName} to Morphe`,
+  })
+  addBtn.innerHTML = `${PLUS_ICON}<span class="app-detail-morphe-label">Add to Morphe</span>`
+  content.appendChild(addBtn)
+
+  let morpheFallbackShown = false
+  function showMorpheFallback() {
+    morpheFallbackShown = true
+    addBtn.classList.add('is-fallback')
+    addBtn.title = 'Morphe is not installed — click to copy the link'
+    addBtn.querySelector('.app-detail-morphe-label').textContent = 'Copy link'
+  }
+  addBtn.addEventListener('click', (event) => {
+    event.stopPropagation()
+    if (morpheFallbackShown) {
+      copyToClipboard(morpheDeepLink(pkg), addBtn)
+      return
+    }
+    let leftPage = false
+    const markLeft = () => { leftPage = true }
+    document.addEventListener('visibilitychange', markLeft, { once: true })
+    window.addEventListener('blur', markLeft, { once: true })
+    window.location.href = morpheDeepLink(pkg)
+    setTimeout(() => {
+      document.removeEventListener('visibilitychange', markLeft)
+      window.removeEventListener('blur', markLeft)
+      if (!leftPage && document.visibilityState !== 'hidden') showMorpheFallback()
+    }, 1400)
+  })
+
   // ── Hero ────────────────────────────────────────────
   const iconHtml = iconUrl
     ? `<img class="app-detail-icon" src="${escHtml(iconUrl)}" alt="" loading="lazy" onerror="this.style.display='none'">`
     : `<div class="app-detail-icon app-detail-icon--fallback">${appName.charAt(0).toUpperCase()}</div>`
+
+  const developer = String(
+    (store.get('developerCache') || {})[pkg] || app.developer || ''
+  ).trim()
 
   const heroEl = el('div', { class: 'app-detail-hero' })
   heroEl.innerHTML = `
     ${iconHtml}
     <div class="app-detail-hero-info">
       <h3 class="app-detail-name">${escHtml(appName)}<span class="app-detail-source"></span></h3>
+      ${developer ? `<span class="app-detail-dev">${escHtml(developer)}</span>` : ''}
       <span class="app-detail-pkg">${escHtml(pkg)}</span>
       <a class="app-detail-playstore" href="${escHtml(getPlayStoreUrl(pkg))}" target="_blank" rel="noopener">
         ${PLAY_STORE_SVG} View on Google Play

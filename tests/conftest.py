@@ -20,6 +20,27 @@ def _no_outbound_notifications(monkeypatch):
         monkeypatch.delenv(key, raising=False)
 
 
+@pytest.fixture(autouse=True)
+def _never_write_real_app_cache(monkeypatch, tmp_path_factory):
+    """Point the app registry at a throwaway file for every test.
+
+    `icon_fetcher` reads its module-level APP_CACHE_PATH at call time, so a test
+    that forgets to patch it would otherwise rewrite the real
+    data/state/app_cache.json. Tests that need a specific path still patch it
+    themselves and win, because the test body runs after this fixture.
+    """
+    scripts_dir = os.path.join(ROOT_DIR, "scripts")
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    try:
+        import icon_fetcher
+    except ImportError:  # pragma: no cover - scripts import is expected to work
+        return
+    guard = tmp_path_factory.mktemp("app-cache-guard") / "app_cache.json"
+    monkeypatch.setattr(icon_fetcher, "APP_CACHE_PATH", str(guard))
+
+
+
 @pytest.fixture(scope="session")
 def source_index():
     with open(os.path.join(DATA_DIR, "bundles", "_index.json"), encoding="utf-8") as fh:

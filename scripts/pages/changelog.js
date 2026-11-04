@@ -1,5 +1,10 @@
 /**
  * Changelog page — historical changelog, collapsed by day.
+ *
+ * The finalized history comes from `changelog.json` (a day only lands there at
+ * the UTC rollover), so the live day being accumulated in `changes` is merged
+ * in front of it — otherwise today's "what's new" is missing from the very
+ * page that is supposed to show it.
  */
 import { el, mount } from '../ui.js'
 import * as store from '../store.js'
@@ -53,7 +58,22 @@ function buildDayBody(bundles, iconCache, nameCache) {
   return fragment
 }
 
-export function renderChangelog(container) {
+/**
+ * Prepend the day currently being accumulated (`changes`) to the finalized
+ * history, unless the history already contains it.
+ * @param {Array<object>} changelog
+ * @returns {Array<object>}
+ */
+function withCurrentDay(changelog) {
+  const changes = store.get('changes')
+  const date = changes?.date
+  const bundles = changes?.affected_bundles
+  if (!date || !Array.isArray(bundles) || bundles.length === 0) return changelog
+  if (changelog.some((day) => day.date === date)) return changelog
+  return [{ date, affected_bundles: bundles, live: true }, ...changelog]
+}
+
+export function renderChangelog(container, query) {
   const page = el('div', { class: 'changelog-page' })
 
   const headingRow = el('div', { class: 'changelog-heading-row' })
@@ -68,7 +88,7 @@ export function renderChangelog(container) {
   hideDevBtn.addEventListener('click', () => {
     if (localStorage.getItem(HIDE_DEV_KEY) === 'true') localStorage.removeItem(HIDE_DEV_KEY)
     else localStorage.setItem(HIDE_DEV_KEY, 'true')
-    renderChangelog(container)
+    renderChangelog(container, query)  // keep the `?day=` deep link across re-renders
   })
   headingRow.appendChild(hideDevBtn)
   page.appendChild(headingRow)
@@ -91,7 +111,7 @@ export function renderChangelog(container) {
   `
   page.appendChild(telegramBanner)
 
-  const changelog = store.get('changelog') || []
+  const changelog = withCurrentDay(store.get('changelog') || [])
 
   if (changelog.length === 0) {
     mount(container, el('div', { class: 'loading-state' }, ['No changelog data available.']))
@@ -104,6 +124,8 @@ export function renderChangelog(container) {
   const contentArea = el('div', { class: 'changelog-content' })
   page.appendChild(contentArea)
   mount(container, page)
+
+  const dayToggles = new Map()
 
   changelog.forEach((day, index) => {
     const bundles = (day.affected_bundles || []).filter((b) => !(hideDev && b.channel === 'dev'))
@@ -155,5 +177,20 @@ export function renderChangelog(container) {
       body,
     ])
     contentArea.appendChild(dayEl)
+    if (day.date) dayToggles.set(day.date, { toggle, dayEl })
   })
+
+  // Deep link (`#/changelog?day=2026-11-03`): open that day and bring it into
+  // view — this is where the Telegram digest's overflow link lands. Two frames,
+  // so the mount and the router's own top-scroll have settled first.
+  const wantedDay = typeof query?.get === 'function' ? query.get('day') : null
+  const target = wantedDay ? dayToggles.get(wantedDay) : null
+  if (target) {
+    target.toggle.click()
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        target.dayEl.scrollIntoView({ block: 'start', behavior: 'auto' })
+      })
+    })
+  }
 }

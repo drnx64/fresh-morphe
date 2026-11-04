@@ -36,8 +36,8 @@ def make_sections(new_bundles=0, new_apps=0, updated_apps=0, apps=2, patches=2):
     }
 
 
-def pack(sections):
-    return wn._pack_blocks(wn._render_blocks(sections))
+def pack(sections, date=None):
+    return wn._pack_blocks(wn._render_blocks(sections, date), date=date)
 
 
 class TestBanner:
@@ -134,8 +134,14 @@ class TestPacking:
         assert "UA19" not in joined
 
     def test_overflow_gets_changelog_pointer(self):
-        chunks = pack(make_sections(new_bundles=8, new_apps=8, updated_apps=8, apps=6, patches=5))
+        chunks = pack(make_sections(new_bundles=8, new_apps=8, updated_apps=8, apps=6, patches=5),
+                      date="2026-11-03")
         assert "more (" in chunks[-1]
+        # Deep-linked: opens the changelog on that exact day, not its top.
+        assert f'href="{wn.SITE_URL}/#/changelog?day=2026-11-03"' in chunks[-1]
+
+    def test_pointer_without_date_keeps_plain_changelog_link(self):
+        chunks = pack(make_sections(new_bundles=8, new_apps=8, updated_apps=8, apps=6, patches=5))
         assert f'href="{wn.SITE_URL}/#/changelog"' in chunks[-1]
 
     def test_under_budget_has_no_pointer(self):

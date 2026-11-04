@@ -12,12 +12,14 @@
 import { el } from '../ui.js'
 import { openModal } from './modal.js'
 import { dateParts, dayHue } from '../utils/format.js'
+import { CHEVRON_DOWN } from '../utils/svg.js'
 import {
   addDays, closeness, dayHex, hexToRgb, hueDistance, hueFromHex, hueHex,
   msUntilNextUtcMidnight, utcISODate,
 } from '../utils/color.js'
 
 const STORAGE_KEY = 'fresh_daily_color'
+const EXPANDED_KEY = 'fresh_color_expanded'
 const CHIP_SLOT_ID = 'color-game-slot'
 const WIN_CLOSENESS = 90
 
@@ -266,7 +268,65 @@ export function syncColorGameChip() {
 
 export function renderColorGame() {
   const host = el('div', { class: 'color-game-host' })
+  // The game is the extra, What's New is the content: it starts collapsed to
+  // one bar and only opens when asked (state remembered across visits).
+  const bar = el('button', {
+    class: 'color-game-bar',
+    type: 'button',
+    'aria-expanded': 'false',
+    'aria-controls': 'color-game-panel',
+  })
+  const panel = el('div', { class: 'color-game-panel', id: 'color-game-panel' })
+  host.append(bar, panel)
   let renderedDate = ''
+  let locked = false
+
+  function isExpanded() {
+    return host.classList.contains('is-expanded')
+  }
+
+  function setExpanded(open) {
+    host.classList.toggle('is-expanded', open)
+    bar.setAttribute('aria-expanded', String(open))
+    try {
+      localStorage.setItem(EXPANDED_KEY, open ? 'true' : 'false')
+    } catch {
+      // Storage can be unavailable (private mode); the toggle still works.
+    }
+  }
+
+  setExpanded(localStorage.getItem(EXPANDED_KEY) === 'true')
+
+  function paintBar(state, today, light) {
+    const hex = dayHex(today, light)
+    const streak = state.streak || 0
+    bar.classList.toggle('is-locked', !!state.pending)
+    bar.replaceChildren(
+      el('span', { class: 'color-game-bar-main' }, [
+        el('span', { class: 'color-game-swatch', style: { background: hex } }),
+        el('span', { class: 'color-game-label' }, ["Today's color"]),
+        el('span', { class: 'color-game-hex' }, [hex]),
+        el('span', {
+          class: 'color-game-streak',
+          dangerouslySetInnerHTML: `${fireSvg(streak)}<span>${streak}</span>`,
+        }),
+        state.pending
+          ? el('span', { class: 'color-game-bar-state' }, [`Locked for ${prettyDate(state.pending.date)}`])
+          : el('span', { class: 'color-game-bar-state' }, [`Streak ${streak} · Best ${state.best || 0}`]),
+      ]),
+      el('span', { class: 'color-game-bar-chevron', 'aria-hidden': 'true', dangerouslySetInnerHTML: CHEVRON_DOWN }),
+    )
+  }
+
+  bar.addEventListener('click', () => {
+    // Locked: the card is gone and the header chip holds the pick, so the bar
+    // opens the detail modal instead of an empty panel.
+    if (locked) {
+      openGameModal()
+      return
+    }
+    setExpanded(!isExpanded())
+  })
 
   function buildHead(state, today, light) {
     const todayHex = dayHex(today, light)
@@ -401,42 +461,47 @@ export function renderColorGame() {
     if (settled.changed) writeState(settled.state)
     state = settled.state
 
+    locked = !!state.pending
+    host.classList.toggle('is-locked', locked)
+    paintBar(state, today, light)
+
     const slot = document.getElementById(CHIP_SLOT_ID)
-    const oldCard = animate ? host.querySelector('.color-game') : null
+    const oldCard = animate ? panel.querySelector('.color-game') : null
     const oldRect = oldCard ? oldCard.getBoundingClientRect() : null
 
     if (state.pending) {
       const chip = buildChip(state, today, light)
       if (slot) slot.replaceChildren(chip)
 
-      // Collapse the inline slot so the page settles at the same pace as the
-      // card flying into the header, instead of jumping up in one frame.
+      // Collapse the panel so the page settles at the same pace as the card
+      // flying into the header, instead of jumping up in one frame. The bar
+      // itself stays: it is the collapsed form of the game.
       if (oldRect) {
-        host.style.height = `${host.offsetHeight}px`
-        host.style.overflow = 'hidden'
-        host.replaceChildren()
+        panel.style.height = `${panel.offsetHeight}px`
+        panel.style.overflow = 'hidden'
+        panel.replaceChildren()
         requestAnimationFrame(() => {
-          host.style.transition = 'height 0.3s var(--ease)'
-          host.style.height = '0px'
+          panel.style.transition = 'height 0.3s var(--ease)'
+          panel.style.height = '0px'
         })
         setTimeout(() => {
-          host.style.transition = ''
-          host.style.height = ''
-          host.style.overflow = ''
+          panel.style.transition = ''
+          panel.style.height = ''
+          panel.style.overflow = ''
         }, 360)
       } else {
-        host.replaceChildren()
+        panel.replaceChildren()
       }
 
       if (oldRect && slot && chip.isConnected) flyToChip(oldCard, oldRect, chip)
       return
     }
 
-    host.style.transition = ''
-    host.style.height = ''
-    host.style.overflow = ''
+    panel.style.transition = ''
+    panel.style.height = ''
+    panel.style.overflow = ''
     if (slot) slot.replaceChildren()
-    host.replaceChildren(buildCard(state, today, light))
+    panel.replaceChildren(buildCard(state, today, light))
   }
 
   // Repaint when a tab left open overnight becomes visible, or when the theme

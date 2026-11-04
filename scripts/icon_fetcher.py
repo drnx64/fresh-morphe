@@ -1,7 +1,8 @@
-"""Fetch app names and icon URLs from Google Play Store.
+"""Fetch app names, icon URLs and publishers from Google Play Store.
 
 Stores URLs only (not base64) — the frontend handles fetching/resizing/caching.
-Unified cache: data/state/app_cache.json maps package -> {name, icon_url}.
+Unified cache: data/state/app_cache.json maps package -> {name, icon_url,
+developer}.
 """
 import re
 import sys
@@ -12,8 +13,10 @@ import urllib.error
 import urllib.request
 from app_metadata import (
     APP_CACHE_PATH, PLAY_SOURCE, apply_icon_overrides, clean_app_name,
-    icon_coverage, icon_negative_days, is_icon_negative, is_real_name,
-    mark_icon_negative, normalize_cache, resolve_name, upsert, valid_icon_url,
+    clean_developer, developer_coverage, ensure_developer, icon_coverage,
+    icon_negative_days, is_developer_unresolved, is_icon_negative, is_real_name,
+    mark_icon_negative, normalize_cache, resolve_developer, resolve_name, upsert,
+    valid_icon_url,
 )
 from state_manager import load_json, save_json
 
@@ -25,9 +28,11 @@ __all__ = [
     "fetch_app_name",
     "enrich_parsed_bundles_with_icons",
     "enrich_parsed_bundles_with_names",
+    "enrich_parsed_bundles_with_developers",
     "enrich_parsed_bundles_with_store_fallbacks",
     "enrich_parsed_bundles_with_apkmirror_fallbacks",
     "apply_resolved_names",
+    "apply_resolved_developers",
     "apply_parsed_bundle_icon_overrides",
     "mark_unresolved_icons",
     "retry_empty_icons",
@@ -64,6 +69,20 @@ HEADERS = {
 _OG_IMAGE_RE = re.compile(r'<meta\s+property="og:image"\s+content="([^"]+)"', re.IGNORECASE)
 _OG_TITLE_RE = re.compile(r'<meta\s+property="og:title"\s+content="([^"]+)"', re.IGNORECASE)
 _TITLE_RE = re.compile(r"<title>([^<]+)</title>", re.IGNORECASE)
+
+# Play renders the publisher as a link to its developer page. The page is a JS
+# app but the anchor is in the served HTML, both absolute and root-relative.
+_DEVELOPER_LINK_RES = (
+    re.compile(
+        r'<a[^>]+href="(?:https://play\.google\.com)?/store/apps/dev(?:eloper)?\?id=[^"]*"[^>]*>(.*?)</a>',
+        re.IGNORECASE | re.DOTALL,
+    ),
+    re.compile(
+        r'itemprop="author"[^>]*>(.*?)</',
+        re.IGNORECASE | re.DOTALL,
+    ),
+)
+_TAG_RE = re.compile(r"<[^>]+>")
 
 
 def _int_env(name, default):
@@ -121,15 +140,34 @@ def _clean_play_store_name(name):
     return clean_app_name(name)
 
 
+def _extract_developer(html):
+    """Read the "Offered by" publisher out of a Play Store page."""
+    for pattern in _DEVELOPER_LINK_RES:
+        match = pattern.search(html or "")
+        if not match:
+            continue
+        text = _TAG_RE.sub(" ", match.group(1))
+        developer = clean_developer(text)
+        if developer:
+            return developer
+    return ""
+
+
 def _fetch_app_details(package_name):
-    """Fetch name + icon URL from Play Store. Returns {name, icon_url} or empty dicts."""
+    """Fetch name, icon URL and publisher from Play Store.
+
+    One request serves all three fields: the publisher anchor is already in the
+    HTML that carries og:title and og:image, so developer tracking costs no
+    extra network traffic.
+    """
     url = PLAY_STORE_URL.format(package_name)
     html = _fetch_page_with_retry(url)
     if not html:
-        return {}, {}
+        return "", "", ""
 
     name = ""
     icon_url = ""
+    developer = ""
 
     # Extract icon URL
     m = _OG_IMAGE_RE.search(html)
@@ -145,7 +183,9 @@ def _fetch_app_details(package_name):
         if m:
             name = _clean_play_store_name(m.group(1).strip())
 
-    return name, icon_url
+    developer = _extract_developer(html)
+
+    return name, icon_url, developer
 
 
 def fetch_app_icon(package_name, skip_cache=False):
@@ -163,15 +203,19 @@ def fetch_app_icon(package_name, skip_cache=False):
             if cached_icon:
                 return cached_icon
 
-    name, icon_url = _fetch_app_details(pkg)
+    name, icon_url, developer = _fetch_app_details(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
     normalize_cache(cache)
     upsert(pkg, cache, name=name, name_source=PLAY_SOURCE,
-           icon_url=icon_url, icon_source=PLAY_SOURCE)
-    if not icon_url:
-        entry = cache.get(pkg)
-        if isinstance(entry, dict):
+           icon_url=icon_url, icon_source=PLAY_SOURCE,
+           developer=developer, developer_source=PLAY_SOURCE)
+    entry = cache.get(pkg)
+    if isinstance(entry, dict):
+        # Bounds both the icon retry window and the developer backfill: one
+        # stamp per details request, successful or not.
+        entry["last_detail_attempt"] = int(time.time())
+        if not icon_url:
             # Remember the miss so the next runs skip this package instead of
             # re-requesting the same 404 every hour.
             entry["last_icon_attempt"] = int(time.time())
@@ -228,6 +272,110 @@ def enrich_parsed_bundles_with_icons(parsed_bundles):
 
         cache = load_json(APP_CACHE_PATH, default={})
 
+    # The details request that produced these icons also carried the publisher.
+    apply_resolved_developers(parsed_bundles, cache)
+    return parsed_bundles
+
+
+DEVELOPER_FETCH_LIMIT_ENV = "DEVELOPER_FETCH_LIMIT"
+DEVELOPER_FETCH_LIMIT_DEFAULT = 40
+
+
+def _developer_fetch_limit():
+    return max(1, _int_env(DEVELOPER_FETCH_LIMIT_ENV, DEVELOPER_FETCH_LIMIT_DEFAULT))
+
+
+def apply_resolved_developers(parsed_bundles, cache=None, persist=None):
+    """Write the best publisher label into bundle app records.
+
+    A Play "Offered by" name wins; everything else gets the package namespace,
+    the same fallback the Apps page uses, so no card is left without a
+    publisher. Namespaces are stamped into the registry with their own
+    provenance, which keeps `is_developer_unresolved` able to queue the package
+    for a later store lookup.
+
+    `persist` writes the registry back. It defaults to True only when the cache
+    was loaded here: callers that pass their own dict own the save, and a test
+    fixture must never reach the real app_cache.json.
+    """
+    if cache is None:
+        cache = load_json(APP_CACHE_PATH, default={})
+        if persist is None:
+            persist = True
+    normalize_cache(cache)
+    changed = False
+    for record in parsed_bundles.values():
+        for app in record.get("apps", []):
+            pkg = app.get("package", "").lower().strip()
+            if not pkg:
+                continue
+            if ensure_developer(pkg, cache):
+                changed = True
+            developer, _source = resolve_developer(pkg, cache)
+            if developer and app.get("developer") != developer:
+                app["developer"] = developer
+    if changed and persist:
+        save_json(APP_CACHE_PATH, cache)
+    return parsed_bundles
+
+
+def enrich_parsed_bundles_with_developers(parsed_bundles):
+    """Backfill Play Store publishers for packages that only have a namespace.
+
+    The icon pass already captures the publisher for every package it fetches;
+    this pass covers the registry left over from before developer tracking
+    existed. It shares the icon retry window, so a package is probed at most
+    once per ICON_RETRY_DAYS, and it is budgeted by DEVELOPER_FETCH_LIMIT so a
+    large backlog is burned down over several hourly runs instead of one long
+    one.
+    """
+    all_packages = set()
+    for record in parsed_bundles.values():
+        for app in record.get("apps", []):
+            pkg = app.get("package", "").lower().strip()
+            if pkg:
+                all_packages.add(pkg)
+
+    cache = load_json(APP_CACHE_PATH, default={})
+    normalize_cache(cache)
+    cutoff = _icon_attempt_cutoff()
+    pending = [
+        p for p in all_packages
+        if is_developer_unresolved(cache.get(p))
+        and ((cache.get(p) or {}).get("last_detail_attempt") or 0) < cutoff
+    ]
+    pending.sort(key=lambda p: (cache.get(p) or {}).get("last_detail_attempt") or 0)
+    limit = _developer_fetch_limit()
+    if len(pending) > limit:
+        print(
+            f"[developers] {len(pending)} packages without a store publisher; "
+            f"fetching {limit} this run ({DEVELOPER_FETCH_LIMIT_ENV})"
+        )
+        pending = pending[:limit]
+
+    if pending:
+        print(f"[developers] Fetching Play Store publishers for {len(pending)} packages...")
+        for i, pkg in enumerate(pending):
+            if i > 0 and i % 10 == 0:
+                print(f"[developers] Progress: {i}/{len(pending)}")
+            _name, _icon, developer = _fetch_app_details(pkg)
+            cache = load_json(APP_CACHE_PATH, default={})
+            normalize_cache(cache)
+            upsert(pkg, cache, developer=developer, developer_source=PLAY_SOURCE)
+            entry = cache.get(pkg)
+            if isinstance(entry, dict):
+                entry["last_detail_attempt"] = int(time.time())
+            save_json(APP_CACHE_PATH, cache)
+            if i < len(pending) - 1:
+                time.sleep(random.uniform(0.3, 0.8))
+
+    cache = load_json(APP_CACHE_PATH, default={})
+    apply_resolved_developers(parsed_bundles, cache, persist=True)
+    coverage = developer_coverage(cache)
+    print(
+        f"[developers] Coverage: {coverage['resolved']}/{coverage['total']} "
+        f"({coverage['percent']}%), {coverage['from_store']} named by a store"
+    )
     return parsed_bundles
 
 
@@ -342,12 +490,16 @@ def fetch_and_cache_app_name(package_name):
             return entry.get("name", "")
         return ""
 
-    name, icon_url = _fetch_app_details(pkg)
+    name, icon_url, developer = _fetch_app_details(pkg)
 
     cache = load_json(APP_CACHE_PATH, default={})
     normalize_cache(cache)
     upsert(pkg, cache, name=name, name_source=PLAY_SOURCE,
-           icon_url=icon_url, icon_source=PLAY_SOURCE)
+           icon_url=icon_url, icon_source=PLAY_SOURCE,
+           developer=developer, developer_source=PLAY_SOURCE)
+    entry = cache.get(pkg)
+    if isinstance(entry, dict):
+        entry["last_detail_attempt"] = int(time.time())
     save_json(APP_CACHE_PATH, cache)
 
     return name or ""
@@ -377,6 +529,7 @@ def enrich_parsed_bundles_with_names(parsed_bundles):
         cache = load_json(APP_CACHE_PATH, default={})
 
     apply_resolved_names(parsed_bundles, cache)
+    apply_resolved_developers(parsed_bundles, cache)
     return parsed_bundles
 
 
@@ -428,6 +581,7 @@ def enrich_parsed_bundles_with_store_fallbacks(parsed_bundles):
 
     save_json(APP_CACHE_PATH, cache)
     apply_resolved_names(parsed_bundles, cache)
+    apply_resolved_developers(parsed_bundles, cache)
     return parsed_bundles
 
 
@@ -451,6 +605,7 @@ def enrich_parsed_bundles_with_apkmirror_fallbacks(parsed_bundles):
 
     save_json(APP_CACHE_PATH, cache)
     apply_resolved_names(parsed_bundles, cache)
+    apply_resolved_developers(parsed_bundles, cache)
     return parsed_bundles
 
 
@@ -462,6 +617,7 @@ def apply_parsed_bundle_icon_overrides(parsed_bundles):
     if applied:
         save_json(APP_CACHE_PATH, cache)
         apply_resolved_names(parsed_bundles, cache)
+        apply_resolved_developers(parsed_bundles, cache)
         print(f"[icons] Applied {applied} manual overrides")
     return parsed_bundles
 
@@ -478,11 +634,14 @@ if __name__ == "__main__":
     elif "--stats" in sys.argv:
         cache = load_json(APP_CACHE_PATH, default={})
         coverage = icon_coverage(cache)
+        developers = developer_coverage(cache)
         print(
             f"Total: {coverage['total']} | with icon: {coverage['resolved']} | "
             f"with name: {sum(1 for v in cache.values() if isinstance(v, dict) and v.get('name'))} | "
             f"missing icon: {coverage['missing']} ({coverage['percent']}% resolved) | "
-            f"unlistable: {coverage['negative']}"
+            f"unlistable: {coverage['negative']} | "
+            f"with developer: {developers['resolved']} "
+            f"({developers['from_store']} named by a store)"
         )
     else:
         test_pkg = "com.instagram.android"

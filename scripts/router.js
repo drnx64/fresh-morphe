@@ -62,15 +62,22 @@ export function getCurrentPath() {
 }
 
 function handleHashChange() {
-  const path = getCurrentPath()
-  if (path === currentRoute) return
-  devLog('route', path)
-  currentRoute = path
+  const fullPath = getCurrentPath()
+  if (fullPath === currentRoute) return
+  devLog('route', fullPath)
+  currentRoute = fullPath
+
+  // `/changelog?day=2026-11-03` — the query carries deep-link intent
+  // (which day a Telegram link opened); the path still picks the route.
+  const queryIndex = fullPath.indexOf('?')
+  const path = queryIndex === -1 ? fullPath : fullPath.slice(0, queryIndex)
+  const query = new URLSearchParams(queryIndex === -1 ? '' : fullPath.slice(queryIndex + 1))
 
   for (const route of routes) {
     const match = path.match(route.pattern)
     if (match) {
       const params = extractParams(route.paramNames, match)
+      params.query = query
       try {
         route.handler(params)
       } catch (e) {

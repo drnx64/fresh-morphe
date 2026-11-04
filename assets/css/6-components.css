@@ -376,6 +376,75 @@
   pointer-events: none;
 }
 
+/* Collapsed form: one tappable bar; the card lives in the panel below it. */
+.color-game-host {
+  margin: 0.55rem 0 0.85rem;
+}
+.color-game-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.75rem;
+  width: 100%;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition:
+    border-color var(--transition-speed),
+    background var(--transition-speed);
+}
+.color-game-bar:hover {
+  border-color: var(--border-hairline-strong);
+}
+.color-game-bar:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.color-game-bar-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.color-game-bar-state {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+.color-game-bar-chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform var(--transition-speed) var(--ease);
+}
+.color-game-host.is-expanded .color-game-bar-chevron {
+  transform: rotate(180deg);
+}
+/* Locked: the card is in the header chip, so the bar opens the modal. */
+.color-game-bar.is-locked .color-game-bar-chevron {
+  display: none;
+}
+.color-game-panel {
+  display: none;
+}
+.color-game-host.is-expanded .color-game-panel {
+  display: block;
+}
+.color-game-host.is-locked .color-game-panel {
+  display: none;
+}
+.color-game-host.is-expanded .color-game {
+  margin: 0.45rem 0 0;
+}
+
 /* Locked-state header chip */
 .header-color-slot {
   display: flex;

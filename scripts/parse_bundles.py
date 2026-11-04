@@ -392,6 +392,15 @@ def parse_all_bundles():
     except Exception as e:
         print(f"[-] APKMirror enrichment failed (non-fatal): {e}")
 
+    # Publishers ("Offered by") arrive with the same Play request as the icon;
+    # this pass backfills the registry built before developer tracking existed.
+    print("\n--- Resolving app developers ---")
+    try:
+        from icon_fetcher import enrich_parsed_bundles_with_developers
+        enrich_parsed_bundles_with_developers(parsed_bundles)
+    except Exception as e:
+        print(f"[-] Developer enrichment failed (non-fatal): {e}")
+
     # Manual overrides win over every automatic source
     try:
         from icon_fetcher import apply_parsed_bundle_icon_overrides

@@ -15,10 +15,15 @@ Icon priority:
   1. verified store icon URL from app_cache.json (Play Store, F-Droid)
   2. none — the frontend draws an initial-letter tile, no request is made
 
+Developer priority:
+  1. Play Store "Offered by" publisher from app_cache.json
+  2. the package namespace (com.simplemobiletools.gallery -> com.simplemobiletools)
+
 app_cache.json is the persistent registry: every entry keeps `name`,
-`icon_url`, the provenance of each (`name_source`, `icon_source`) and
-`updated_at`, so a bad source can be audited and refreshed without guessing.
-The file is already published by the build, so the frontend needs no change.
+`icon_url`, `developer`, the provenance of each (`name_source`, `icon_source`,
+`developer_source`) and `updated_at`, so a bad source can be audited and
+refreshed without guessing. The file is already published by the build, so the
+frontend needs no change.
 """
 import html
 import os
@@ -43,6 +48,9 @@ FDROID_SOURCE = "fdroid"
 BUNDLE_SOURCE = "bundle"
 DERIVED_SOURCE = "derived"
 MANUAL_SOURCE = "manual"
+# Publisher resolved from the package namespace instead of a store page. Kept
+# as provenance so a later Play lookup can still replace it.
+NAMESPACE_SOURCE = "namespace"
 
 ICON_OVERRIDES_PATH = os.path.join(STATE_DIR, "icon_overrides.json")
 
@@ -125,6 +133,110 @@ def is_real_name(name, package_name):
 def _entry_parts(cache, package_name):
     entry = cache.get(package_name)
     return entry if isinstance(entry, dict) else {}
+
+
+# Publisher namespace: the prefix one publisher keeps across its apps, normally
+# two segments (`com.google.android` -> `com.google`), three behind a country
+# code (`jp.co.celsys`). Mirrors scripts/utils/appFamily.js so the phone and the
+# site name the same publisher.
+_COUNTRY_CODE_RE = re.compile(r"^[a-z]{2}$")
+_ORGANISATION_MARKERS = frozenset(
+    {"ac", "co", "com", "edu", "gov", "ne", "net", "or", "org"}
+)
+
+
+def package_namespace(package_name):
+    """Publisher namespace of a package id ('' for an empty id)."""
+    segments = [seg for seg in str(package_name or "").lower().split(".") if seg]
+    if not segments:
+        return ""
+    if len(segments) == 1:
+        return segments[0]
+    behind_country_code = (
+        bool(_COUNTRY_CODE_RE.match(segments[0])) and segments[1] in _ORGANISATION_MARKERS
+    )
+    return ".".join(segments[: 3 if behind_country_code else 2])
+
+
+def clean_developer(name):
+    """Normalize a store "Offered by" value into a display name."""
+    if not isinstance(name, str):
+        return ""
+    text = html.unescape(name)
+    text = _WHITESPACE_RE.sub(" ", text).strip(" \t\r\n·-|")
+    if not text or len(text) > 80:
+        return ""
+    if text.lower() in {"google play", "unknown", "unknown developer", "n/a", "none"}:
+        return ""
+    return text
+
+
+def resolve_developer(package_name, cache=None):
+    """Return `(developer, source)`; always a non-empty label.
+
+    A store-resolved publisher wins. Every package gets the namespace fallback,
+    so the API and the site never print an empty publisher.
+    """
+    pkg = (package_name or "").lower().strip()
+    entry = _entry_parts(cache, pkg) if isinstance(cache, dict) else {}
+    developer = clean_developer(entry.get("developer", ""))
+    if developer:
+        return developer, entry.get("developer_source") or PLAY_SOURCE
+    return package_namespace(pkg), NAMESPACE_SOURCE
+
+
+def is_developer_unresolved(entry):
+    """True when only the namespace fallback is known, so Play can still win."""
+    if not isinstance(entry, dict):
+        return True
+    if clean_developer(entry.get("developer", "")):
+        return entry.get("developer_source") == NAMESPACE_SOURCE
+    return True
+
+
+def ensure_developer(package_name, cache):
+    """Store the namespace fallback when no store has named the publisher.
+
+    Returns True when the cache changed, so callers can decide to persist it.
+    """
+    pkg = (package_name or "").lower().strip()
+    if not pkg or not isinstance(cache, dict):
+        return False
+    entry = cache.get(pkg)
+    if not isinstance(entry, dict):
+        entry = {}
+        cache[pkg] = entry
+    if clean_developer(entry.get("developer", "")):
+        return False
+    namespace = package_namespace(pkg)
+    if not namespace:
+        return False
+    entry["developer"] = namespace
+    entry["developer_source"] = NAMESPACE_SOURCE
+    return True
+
+
+def developer_coverage(cache=None, path=APP_CACHE_PATH):
+    """Summarize publisher resolution for the pipeline log and --stats."""
+    if cache is None:
+        cache = load_cache(path)
+    total = resolved = from_store = 0
+    for entry in cache.values():
+        total += 1
+        if not isinstance(entry, dict):
+            continue
+        developer = clean_developer(entry.get("developer", ""))
+        if developer:
+            resolved += 1
+            if entry.get("developer_source") != NAMESPACE_SOURCE:
+                from_store += 1
+    return {
+        "resolved": resolved,
+        "from_store": from_store,
+        "total": total,
+        "percent": round(resolved * 100.0 / total, 1) if total else 0.0,
+    }
+
 
 
 def resolve_name(package_name, cache=None, bundle_name=""):
@@ -214,6 +326,14 @@ def normalize_cache(cache):
         if stamped is not None and not isinstance(stamped, (int, float)):
             entry.pop("icon_negative_at", None)
             entry_changed = True
+        developer = clean_developer(entry.get("developer", ""))
+        if developer != entry.get("developer", ""):
+            if developer:
+                entry["developer"] = developer
+            else:
+                entry.pop("developer", None)
+                entry.pop("developer_source", None)
+            entry_changed = True
         if entry_changed:
             changed += 1
     return changed
@@ -228,7 +348,8 @@ def load_cache(path=APP_CACHE_PATH):
     return data
 
 
-def upsert(package_name, cache, name="", name_source="", icon_url="", icon_source=""):
+def upsert(package_name, cache, name="", name_source="", icon_url="", icon_source="",
+           developer="", developer_source=""):
     """Record resolved metadata in the registry (mutates `cache` in place).
 
     Empty values never overwrite a previously verified one — sources are
@@ -255,6 +376,11 @@ def upsert(package_name, cache, name="", name_source="", icon_url="", icon_sourc
             entry["icon_url"] = icon_url
             entry["icon_source"] = icon_source or entry.get("icon_source", "")
             changed = True
+    clean_dev = clean_developer(developer)
+    if clean_dev and clean_dev != entry.get("developer"):
+        entry["developer"] = clean_dev
+        entry["developer_source"] = developer_source or entry.get("developer_source", "")
+        changed = True
 
     if changed:
         entry["updated_at"] = int(time.time())
@@ -286,12 +412,14 @@ def apply_icon_overrides(cache, path=ICON_OVERRIDES_PATH):
             continue
         icon_url = valid_icon_url(value.get("icon_url"))
         name = value.get("name", "")
-        if not icon_url and not name:
+        developer = value.get("developer", "")
+        if not icon_url and not name and not developer:
             continue
         upsert(
             pkg, cache,
             name=name, name_source=MANUAL_SOURCE if name else "",
             icon_url=icon_url, icon_source=MANUAL_SOURCE if icon_url else "",
+            developer=developer, developer_source=MANUAL_SOURCE if developer else "",
         )
         applied += 1
     return applied

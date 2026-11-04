@@ -8,7 +8,7 @@
 import { fetchJson } from '../utils/http.js'
 import { API_ENABLED, API_HEADERS, apiUrl, fallbackUrl } from '../config.js'
 import { devLog, devTime } from '../utils/devLog.js'
-import { isApiAvailable, markApiDown } from './apiState.js'
+import { isApiAvailable, markApiDown, markApiUp } from './apiState.js'
 
 const API_TIMEOUT_MS = 5000
 const CHANGELOG_TIMEOUT_MS = 30000
@@ -48,6 +48,7 @@ export async function loadSiteData() {
   if (API_ENABLED) {
     try {
       const data = await loadApi()
+      markApiUp()
       devLog('site data source', 'api', Object.keys(data.index || {}).length, 'bundles')
       done({ source: 'api' })
       return data
@@ -77,6 +78,7 @@ export async function loadChangelog() {
         headers: API_HEADERS,
       })
       if (Array.isArray(data)) {
+        markApiUp()
         devLog('changelog source', 'api', data.length, 'days')
         done({ source: 'api' })
         return data
@@ -84,6 +86,7 @@ export async function loadChangelog() {
     } catch (err) {
       console.warn('[siteData] API changelog unavailable, using static:', err.message)
       devLog('changelog API fallback reason', err.message)
+      markApiDown()
     }
   }
   const data = await fetchJson(fallbackUrl('changelog.json'), [], { timeoutMs: STATIC_TIMEOUT_MS })

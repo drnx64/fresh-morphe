@@ -148,7 +148,8 @@ export function renderGlobalSearch() {
       const bundles = store.get('bundles') || {}
       const nameCache = store.get('nameCache') || {}
       const iconCache = store.get('iconCache') || {}
-      appIndex = buildAppIndex(bundles, nameCache, iconCache)
+      const developerCache = store.get('developerCache') || {}
+      appIndex = buildAppIndex(bundles, nameCache, iconCache, developerCache)
     }
     return appIndex
   }
