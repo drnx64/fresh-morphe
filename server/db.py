@@ -54,11 +54,91 @@ def _migrate(conn):
         conn.commit()
 
 
+# Newest N releases kept per repo. The UI asks for 30; the API clamps to
+# RELEASE_KEEP, and nothing downstream needs more than a page of history.
+RELEASE_KEEP = 3
+
+
+def _table_exists(conn, name):
+    return (
+        conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?", (name,)
+        ).fetchone()
+        is not None
+    )
+
+
+def _dedupe_patches(conn):
+    """Drop repeated (bundle, app, name) patch rows before the unique index.
+
+    Older bundle records repeated a package or a patch, so `upsert_bundle`
+    inserted the same patch — and its `patch_targets` — more than once. The
+    unique index in schema.sql refuses to be created over duplicates, so this
+    runs first on existing databases. The surviving row is the one carrying
+    the most targets (the fully-populated copy); deleting it cascades the
+    extra targets away with the losers.
+    """
+    if not _table_exists(conn, "patches"):
+        return 0
+    cur = conn.execute(
+        """
+        DELETE FROM patches WHERE id IN (
+          SELECT id FROM (
+            SELECT p.id, ROW_NUMBER() OVER (
+              PARTITION BY p.bundle_id, p.app_id, p.name
+              ORDER BY COALESCE(tc.n, 0) DESC, p.id DESC
+            ) AS rn
+            FROM patches p
+            LEFT JOIN (
+              SELECT patch_id, COUNT(*) AS n FROM patch_targets GROUP BY patch_id
+            ) tc ON tc.patch_id = p.id
+          ) WHERE rn > 1
+        )
+        """
+    )
+    return cur.rowcount
+
+
+def prune_releases(conn, keep=RELEASE_KEEP, repo_id=None):
+    """Keep only the newest `keep` releases per repo.
+
+    `release_cache.json` holds up to 15 releases per repository, which grew the
+    phone DB to thousands of mostly-unread bodies. Newest-first by publish date
+    (tag as tie-break) is the same order the API serves.
+    """
+    if keep <= 0:
+        return 0
+    if not _table_exists(conn, "releases"):
+        return 0
+    where = "WHERE repo_id = ?" if repo_id is not None else ""
+    params = (keep,) if repo_id is None else (repo_id, keep)
+    cur = conn.execute(
+        f"""
+        DELETE FROM releases WHERE id IN (
+          SELECT id FROM (
+            SELECT id, ROW_NUMBER() OVER (
+              PARTITION BY repo_id
+              ORDER BY published_at DESC, tag DESC, id DESC
+            ) AS rn
+            FROM releases {where}
+          ) WHERE rn > ?
+        )
+        """,
+        params,
+    )
+    return cur.rowcount
+
+
 def init_db(path=None):
     path = os.path.abspath(path or DB_PATH)
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     conn = connect(path)
     try:
+        # Clear legacy duplicates first: CREATE UNIQUE INDEX fails outright
+        # over rows that violate it.
+        _dedupe_patches(conn)
+        prune_releases(conn)
+        conn.commit()
         with open(SCHEMA_PATH, "r", encoding="utf-8") as fh:
             schema = fh.read()
         conn.executescript(schema)

@@ -81,6 +81,11 @@ CREATE TABLE IF NOT EXISTS patches (
 CREATE INDEX IF NOT EXISTS patches_bundle_idx ON patches(bundle_id);
 CREATE INDEX IF NOT EXISTS patches_app_idx ON patches(app_id);
 CREATE INDEX IF NOT EXISTS patches_name_idx ON patches(name);
+-- One patch row per (bundle, app, name). Source bundle records occasionally
+-- repeat a package or a patch, which used to insert the row — and its targets —
+-- again; db._dedupe_patches() clears existing duplicates before this runs.
+CREATE UNIQUE INDEX IF NOT EXISTS patches_bundle_app_name_idx
+  ON patches(bundle_id, app_id, name);
 
 CREATE TABLE IF NOT EXISTS patch_targets (
   patch_id    INTEGER NOT NULL REFERENCES patches(id) ON DELETE CASCADE,
