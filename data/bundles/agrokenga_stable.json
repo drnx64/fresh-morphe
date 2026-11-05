@@ -2,9 +2,9 @@
   "bundle": "agrokenga",
   "channel": "stable",
   "repo_url": "https://github.com/agrokenga/morphe-patches",
-  "created_at": "2026-11-02T20:06:43Z",
-  "version": "1.0.0",
-  "description": "## 1.0.0 (2026-11-02)\n\n### ✨ New Features\n\n* **iap:** add native libil2cpp probe patch ([9f746fa](https://github.com/[secure]/morphe-patches/commit/9f746fad61a5bf56b6240026bd6584b17c0dc665))\n* **iap:** add PlayFab IAP bypass patch with dynamic fulfillment mocking ([de8ee6a](https://github.com/[secure]/morphe-patches/commit/de8ee6ac874e826983c7fef1c2b5500764ea5ed4))\n* **iap:** add PlayFab IAP bypass patch with mock fulfillment ([c2477bd](https://github.com/[secure]/morphe-patches/commit/c2477bd34c3dc198e5cdef83fb3f9c0d95cfe224))\n\n### 🐛 Bug Fixes\n\n* changed a few configuration files ([4b59ad6](https://github.com/[secure]/morphe-patches/commit/4b59ad68cfc5be2b738755d3889ba768b4e65595))\n* **ci:** authenticate GitHub Packages and gate releases on build ([7b052f0](https://github.com/[secure]/morphe-patches/commit/7b052f0077bc08569e17899709fc12f48a7b4824))\n* **ci:** avoid empty Semaphore condition literals ([0b7cbff](https://github.com/[secure]/morphe-patches/commit/0b7cbff67f32d95f4214b75ca10b4c95db87cbbb))\n* **ci:** correct Semaphore condition quoting ([92f604d](https://github.com/[secure]/morphe-patches/commit/92f604d8887caaf0316958b7b84e98ae4e71173a))\n* **ci:** install Android SDK before Gradle builds ([c55e88a](https://github.com/[secure]/morphe-patches/commit/c55e88afe66b899f4e08f61e4d46b53880f66876))\n* **tooling:** harden patch metadata generation ([dd23dab](https://github.com/[secure]/morphe-patches/commit/dd23dabb4fb499c5cb859f72c6287bb516c067c6))",
+  "created_at": "2026-11-03T07:17:06",
+  "version": "1.1.0-dev.7",
+  "description": "## [1.1.0-dev.7](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.6...v1.1.0-dev.7) (2026-11-03)\n\n### 🐛 Bug Fixes\n\n* **iap:** relax ELF header parsing in full bypass patch ([c8e8f1a](https://github.com/[secure]/morphe-patches/commit/c8e8f1a1e0723bea675549d48acb97114a8d1e5e))",
   "apps": [
     {
       "app_name": "XYZ app",
@@ -28,10 +28,52 @@
       "package": "com.paradoxplaza.kopp2",
       "patches": [
         {
+          "name": "Cheats Screen Unlock",
+          "description": "Makes the in-game Cheats screen reachable by redirecting the Settings -> Credits button to SystemScreen.OpenCheats. Single-player UI only; it does not grant items, currency, or purchases.",
+          "use": false,
+          "options": [
+            {
+              "key": "cheatsScreenUnlockEnable",
+              "description": "Patch SystemScreen.OpenCredits to jump to SystemScreen.OpenCheats. The Credits button then opens the Cheats panel. Disabled by default."
+            }
+          ],
+          "compatible_versions": [
+            "2.21.4"
+          ]
+        },
+        {
           "name": "IAP Bypass Patch",
           "description": "Mocks PlayFab Catalog API for IAP fulfillment without platform billing.",
           "use": false,
           "options": [],
+          "compatible_versions": [
+            "2.21.4"
+          ]
+        },
+        {
+          "name": "IAP Free (All Items)",
+          "description": "Makes all in-game store purchases free by bypassing the PlayFab server and Play Store UI. Patches IAPService.PurchaseBundle to return immediately without calling IStoreController.InitiatePurchase, and patches StoreService.PurchaseItem for in-game store purchases.",
+          "use": false,
+          "options": [
+            {
+              "key": "iapFreeEnable",
+              "description": "Patch IAPService.PurchaseBundle and StoreService.PurchaseItem to bypass the PlayFab server and Play Store UI. Purchases are registered but not automatically granted. Disabled by default."
+            }
+          ],
+          "compatible_versions": [
+            "2.21.4"
+          ]
+        },
+        {
+          "name": "IAP Full Bypass",
+          "description": "Bypasses PlayFab validation and grants items locally, setting price to free.",
+          "use": true,
+          "options": [
+            {
+              "key": "iapFullBypassEnabled",
+              "description": "If false, the patch is inactive."
+            }
+          ],
           "compatible_versions": [
             "2.21.4"
           ]
@@ -49,17 +91,54 @@
           "compatible_versions": [
             "2.21.4"
           ]
+        },
+        {
+          "name": "Native Method Patch Demo",
+          "description": "Replaces the harmless CheatsScreen.ShowCheatAlert method with an immediate return in both libil2cpp.so ABIs. Demonstrates static ELF RVA mapping and byte patching; it does not touch billing, purchases, entitlements, or networking.",
+          "use": false,
+          "options": [
+            {
+              "key": "nativeMethodPatchDemoEnable",
+              "description": "Replace CheatsScreen.ShowCheatAlert with an immediate return. This is a harmless UI alert, not billing or purchase code. Disabled by default."
+            }
+          ],
+          "compatible_versions": [
+            "2.21.4"
+          ]
+        },
+        {
+          "name": "Native Visual Feedback",
+          "description": "Hooks every probed purchase and PlayFab method in libil2cpp.so and logs \"CALLED: <method>\" through NGUIDebug's on-screen overlay. Diagnostic only; it does not change any return value, response, entitlement, or purchase result.",
+          "use": false,
+          "options": [
+            {
+              "key": "nativeVisualFeedbackEnable",
+              "description": "Install diagnostic hooks for the probed purchase and PlayFab methods. The hooks only log; they do not alter return values or purchases. Disabled by default."
+            }
+          ],
+          "compatible_versions": [
+            "2.21.4"
+          ]
+        },
+        {
+          "name": "On-screen Game Log",
+          "description": "Adds a touch-through, auto-scrolling log panel over the lower 30% of the screen, with padding from the screen edges. It shows this process's logcat output (Unity Debug.Log, native and Java logs). Diagnostic only; no game state is changed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.21.4"
+          ]
         }
       ],
       "developer": "com.paradoxplaza"
     }
   ],
   "patches_name": "Agrokenga's Morphe Patches",
-  "fingerprint": "bfdf4a2d87139ab8ad43322641bf928b55b5d303673a5505ea80f35984e87e35",
-  "release_notes": "## 1.0.0 (2026-11-02)\n\n### ✨ New Features\n\n* **iap:** add native libil2cpp probe patch ([9f746fa](https://github.com/[secure]/morphe-patches/commit/9f746fad61a5bf56b6240026bd6584b17c0dc665))\n* **iap:** add PlayFab IAP bypass patch with dynamic fulfillment mocking ([de8ee6a](https://github.com/[secure]/morphe-patches/commit/de8ee6ac874e826983c7fef1c2b5500764ea5ed4))\n* **iap:** add PlayFab IAP bypass patch with mock fulfillment ([c2477bd](https://github.com/[secure]/morphe-patches/commit/c2477bd34c3dc198e5cdef83fb3f9c0d95cfe224))\n\n### 🐛 Bug Fixes\n\n* changed a few configuration files ([4b59ad6](https://github.com/[secure]/morphe-patches/commit/4b59ad68cfc5be2b738755d3889ba768b4e65595))\n* **ci:** authenticate GitHub Packages and gate releases on build ([7b052f0](https://github.com/[secure]/morphe-patches/commit/7b052f0077bc08569e17899709fc12f48a7b4824))\n* **ci:** avoid empty Semaphore condition literals ([0b7cbff](https://github.com/[secure]/morphe-patches/commit/0b7cbff67f32d95f4214b75ca10b4c95db87cbbb))\n* **ci:** correct Semaphore condition quoting ([92f604d](https://github.com/[secure]/morphe-patches/commit/92f604d8887caaf0316958b7b84e98ae4e71173a))\n* **ci:** install Android SDK before Gradle builds ([c55e88a](https://github.com/[secure]/morphe-patches/commit/c55e88afe66b899f4e08f61e4d46b53880f66876))\n* **tooling:** harden patch metadata generation ([dd23dab](https://github.com/[secure]/morphe-patches/commit/dd23dabb4fb499c5cb859f72c6287bb516c067c6))\n",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-11-02T20:06:43Z",
-  "isPreRelease": false,
+  "fingerprint": "f849e6835e0f4e63dad5c6e3f7461af5f2bfc41599233be7e989b0b47b1b9c8b",
+  "release_notes": "## [1.1.0-dev.7](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.6...v1.1.0-dev.7) (2026-11-03)\n\n### 🐛 Bug Fixes\n\n* **iap:** relax ELF header parsing in full bypass patch ([c8e8f1a](https://github.com/[secure]/morphe-patches/commit/c8e8f1a1e0723bea675549d48acb97114a8d1e5e))\n",
+  "release_tag": "v1.1.0-dev.7",
+  "release_date": "2026-11-03T07:17:22Z",
+  "isPreRelease": true,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/13810730?v=4&s=128",
   "repoDescription": "",

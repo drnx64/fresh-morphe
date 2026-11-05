@@ -2,22 +2,42 @@
   "bundle": "na-x-ril",
   "channel": "stable",
   "repo_url": "https://github.com/na-x-ril/onlynazril-patches",
-  "created_at": "2026-10-11T15:43:25Z",
-  "version": "1.4.0",
-  "description": "## [1.4.0](https://github.com/na-x-ril/onlynazril-patches/compare/v1.3.0...v1.4.0) (2026-10-11)\n\n### ✨ New Features\n\n* draw TikTok's text with an imported font ([98ff010](https://github.com/na-x-ril/onlynazril-patches/commit/98ff010e6fcf7e5495dd5cf4e7737de43f0f9a64))\n* **TikTok/Captcha:** Add `Hide CAPTCHA popups` patch ([6e4d708](https://github.com/na-x-ril/onlynazril-patches/commit/6e4d7080e94ead3dc882b0dd75a223d99aaa5956))\n* **TikTok/Comment copy:** Add `Copy comments without username` patch ([44f40ba](https://github.com/na-x-ril/onlynazril-patches/commit/44f40baedbbb7541e3bc32f2539876abe03b5cd6)), closes [Comment#getText](https://github.com/na-x-ril/Comment/issues/getText) [Comment#getUser](https://github.com/na-x-ril/Comment/issues/getUser)",
+  "created_at": "2026-11-05T11:15:57Z",
+  "version": "1.5.0",
+  "description": "## [1.5.0](https://github.com/na-x-ril/onlynazril-patches/compare/v1.4.0...v1.5.0) (2026-11-05)\n\n### 🐛 Bug Fixes\n\n* **TikTok/Custom font:** Compose, Lynx and hybrid pages keep TikTok's own text ([b781efe](https://github.com/na-x-ril/onlynazril-patches/commit/b781efec61a6485c1c47526aa37b1cc8193409f9))\n* **TikTok/Custom font:** Hybrid pages keep their own font ([c6745a6](https://github.com/na-x-ril/onlynazril-patches/commit/c6745a6db2499309d7445e4b2d7c564750b7b286))\n\n### ✨ New Features\n\n* **TikTok/AMOLED:** Add `AMOLED theme` patch ([b98f05a](https://github.com/na-x-ril/onlynazril-patches/commit/b98f05adfee202908c3e904f4de931cacc83ca04))\n* **TikTok:** target 47.7.1 and 47.7.2 and open Tweaks from Home ([821adf9](https://github.com/na-x-ril/onlynazril-patches/commit/821adf9ce4e91cf048f62662253e957f755c1b63))",
   "apps": [
     {
       "app_name": "TikTok",
       "package": "com.zhiliaoapp.musically",
       "patches": [
         {
+          "name": "AMOLED code colours",
+          "description": "Replaces opaque dark surface colours held as constants in code with black. Pulled in by AMOLED theme; does nothing for resources.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "47.7.1",
+            "47.7.2"
+          ]
+        },
+        {
+          "name": "AMOLED theme",
+          "description": "Total AMOLED: every colour whose brightest channel is 0x60 or lower becomes black, alpha kept. Borders and controls lose their separation too; repatch to undo.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "47.7.1",
+            "47.7.2"
+          ]
+        },
+        {
           "name": "Always @handle · region · post time",
           "description": "Shows the @handle, the region and the post time on feed videos and comments, including a video shared into a chat. Each surface and each part has a switch in Tweaks.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
@@ -26,18 +46,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
           "name": "Custom font",
-          "description": "Answers the factory every face TikTok draws with, so an imported font file replaces TikTok's own text on every surface. The switch and the picker are in Tweaks; off by default, and inert until a font is imported.",
+          "description": "Answers every resolver TikTok gets one of its own faces from - the native factory, the Compose loader, the asset loader Lynx reads and the WebView interceptor hybrid pages are fed through - so an imported font file replaces TikTok's own text on every surface. The switch and the picker are in Tweaks; off by default, and inert until a font is imported.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
@@ -46,8 +66,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
@@ -56,8 +76,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
@@ -66,8 +86,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
@@ -76,18 +96,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         },
         {
-          "name": "Tweaks settings row",
-          "description": "Adds the Tweaks row to TikTok settings, where every other patch in this bundle is switched on or off: the @handle stamp and its surfaces, the region, the post time, the comment copy, the captcha, the feed filter, the download, the profile background and the custom font.",
+          "name": "Tweaks screen",
+          "description": "Hosts the Tweaks screen, where every other patch in this bundle is switched on or off: the @handle stamp and its surfaces, the region, the post time, the comment copy, the captcha, the feed filter, the download, the profile background and the custom font. Hold the Home tab in the bottom bar to open it.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "47.0.3",
-            "47.1.4"
+            "47.7.1",
+            "47.7.2"
           ]
         }
       ],
@@ -95,10 +115,10 @@
     }
   ],
   "patches_name": "onlynazril Patches",
-  "fingerprint": "9c8c278f0d042574c11330535342c1506359e86c7d972e99ca2ea52fce18653d",
-  "release_notes": "## [1.4.0](https://github.com/na-x-ril/onlynazril-patches/compare/v1.3.0...v1.4.0) (2026-10-11)\n\n### ✨ New Features\n\n* draw TikTok's text with an imported font ([98ff010](https://github.com/na-x-ril/onlynazril-patches/commit/98ff010e6fcf7e5495dd5cf4e7737de43f0f9a64))\n* **TikTok/Captcha:** Add `Hide CAPTCHA popups` patch ([6e4d708](https://github.com/na-x-ril/onlynazril-patches/commit/6e4d7080e94ead3dc882b0dd75a223d99aaa5956))\n* **TikTok/Comment copy:** Add `Copy comments without username` patch ([44f40ba](https://github.com/na-x-ril/onlynazril-patches/commit/44f40baedbbb7541e3bc32f2539876abe03b5cd6)), closes [Comment#getText](https://github.com/na-x-ril/Comment/issues/getText) [Comment#getUser](https://github.com/na-x-ril/Comment/issues/getUser)\n",
-  "release_tag": "v1.4.0",
-  "release_date": "2026-10-11T15:43:25Z",
+  "fingerprint": "9176730665df0df3524a140e1a0ae8179e9bf458cfd016b2fcf9adc47a51d299",
+  "release_notes": "## [1.5.0](https://github.com/na-x-ril/onlynazril-patches/compare/v1.4.0...v1.5.0) (2026-11-05)\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* **TikTok/Custom font:** Compose, Lynx and hybrid pages keep TikTok's own text ([b781efe](https://github.com/na-x-ril/onlynazril-patches/commit/b781efec61a6485c1c47526aa37b1cc8193409f9))\r\n* **TikTok/Custom font:** Hybrid pages keep their own font ([c6745a6](https://github.com/na-x-ril/onlynazril-patches/commit/c6745a6db2499309d7445e4b2d7c564750b7b286))\r\n\r\n### ✨ New Features\r\n\r\n* **TikTok/AMOLED:** Add `AMOLED theme` patch ([b98f05a](https://github.com/na-x-ril/onlynazril-patches/commit/b98f05adfee202908c3e904f4de931cacc83ca04))\r\n* **TikTok:** target 47.7.1 and 47.7.2 and open Tweaks from Home ([821adf9](https://github.com/na-x-ril/onlynazril-patches/commit/821adf9ce4e91cf048f62662253e957f755c1b63))\r\n\r\n### ⚠️ Breaking Changes \r\n* **TikTok/Tweaks:** Changed the method to open Tweaks settings by long-pressing the Home button.\r\n\r\n### [Add to Moprhe](https://morphe.software/add-source?github=na-x-ril/onlynazril-patches)",
+  "release_tag": "v1.5.0",
+  "release_date": "2026-11-05T11:15:57Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/138718203?v=4",

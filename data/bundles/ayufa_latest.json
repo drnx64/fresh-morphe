@@ -1,0 +1,70 @@
+{
+  "bundle": "ayufa",
+  "channel": "latest",
+  "repo_url": "https://github.com/Ayufa/youtube-custom-patches",
+  "created_at": "2026-11-04T09:57:15",
+  "version": "1.1.0",
+  "description": "## [1.1.0](https://github.com/Ayufa/youtube-custom-patches/compare/v1.0.0...v1.1.0) (2026-11-04)\n\n### ✨ New Features\n\n* Restore the Live latency keeper with a Morphe settings toggle ([812189e](https://github.com/Ayufa/youtube-custom-patches/commit/812189eb8b6d38b0a6e0fb51386ea63340aee267))\n* Support the Live latency keeper on YouTube 21.30.216 as well ([9b1f35b](https://github.com/Ayufa/youtube-custom-patches/commit/9b1f35b04aa0f69a69e28398d43206d1b98e0c10))\n\n### 🐛 Bug Fixes\n\n* Add temporary diagnostic logging to find why the keeper does not seek ([69edf67](https://github.com/Ayufa/youtube-custom-patches/commit/69edf677a4b07ef1b2479b8ea2daf5dc01b3b379))\n* Estimate live lag from wall-clock time instead of the video length ([bfbca52](https://github.com/Ayufa/youtube-custom-patches/commit/bfbca522833b417f166a0db98ec162870165e6f6))",
+  "apps": [
+    {
+      "app_name": "YouTube",
+      "package": "com.google.android.youtube",
+      "patches": [
+        {
+          "name": "Hide live chat clutter",
+          "description": "Hides the pinned message banner and poll cards in live chat. Each can be toggled in Morphe settings (Ayufa patch settings) without re-patching. For YouTube 21.30.216.",
+          "use": false,
+          "options": [
+            {
+              "key": "hideLiveChatPinnedBanner",
+              "description": "Hides the pinned comment (banner) shown above the live chat."
+            },
+            {
+              "key": "hideLiveChatPolls",
+              "description": "Hides poll (questionnaire) cards shown in the live chat."
+            }
+          ],
+          "compatible_versions": [
+            "21.30.216"
+          ]
+        },
+        {
+          "name": "Live latency keeper",
+          "description": "Periodically checks live stream playback and automatically seeks to the live edge when playback has fallen behind. Can be toggled in Morphe settings (Ayufa patch settings) without re-patching. For YouTube 20.26.46 (Android 8.0) and 21.30.216. Requires the official Morphe patches to be applied as well.",
+          "use": false,
+          "options": [
+            {
+              "key": "liveLatencyCheckIntervalSeconds",
+              "description": "How often to check how far live playback is behind the live edge."
+            },
+            {
+              "key": "liveLatencyThresholdSeconds",
+              "description": "Seek to the live edge when playback is behind it by more than this."
+            },
+            {
+              "key": "liveLatencySafetySeconds",
+              "description": "Seek to this many seconds before the live edge, to avoid rebuffering at the very edge."
+            }
+          ],
+          "compatible_versions": [
+            "20.26.46"
+          ]
+        }
+      ],
+      "developer": "com.google"
+    }
+  ],
+  "patches_name": "Ayufa YouTube Patches",
+  "fingerprint": "d9e210a6691bb6239a3b59da6b7a3a4e454543535889ca3946b503ab04ce3961",
+  "release_notes": "## [1.2.0-dev.5](https://github.com/Ayufa/youtube-custom-patches/compare/v1.2.0-dev.4...v1.2.0-dev.5) (2026-11-04)\n\n### ✨ New Features\n\n* Re-sync live playback with a momentary pause and resume ([d74cbb0](https://github.com/Ayufa/youtube-custom-patches/commit/d74cbb04459a09b6fdce36193dc925e6ca0d36e5))\n",
+  "release_tag": "v1.2.0-dev.5",
+  "release_date": "2026-11-04T13:40:42Z",
+  "isPreRelease": true,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/108320745?v=4&s=128",
+  "repoDescription": "Ayufa custom YouTube patches for Morphe (unofficial) - live latency keeper & live chat clutter hider",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}

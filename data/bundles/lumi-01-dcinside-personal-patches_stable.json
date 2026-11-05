@@ -2,8 +2,8 @@
   "bundle": "lumi-01-dcinside-personal-patches",
   "channel": "stable",
   "repo_url": "https://github.com/Lumi-01/dcinside-personal-patches",
-  "created_at": "2026-10-26T16:45:58",
-  "version": "1.2.4",
+  "created_at": "2026-11-05T03:59:30Z",
+  "version": "1.2.6",
   "description": "Experimental DC Inside: cached runtime preference snapshot; version-number gate removed with instruction guards; no quantified new CPU claim",
   "apps": [
     {
@@ -15,55 +15,39 @@
           "description": "Disable app ad loaders and keep the locally signed build usable.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "5.3.6",
-            "5.3.18",
-            "5.3.20"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "글 목록 페이지 표시 설정",
           "description": "앱의 Morphe 설정에서 글 목록과 검색 결과의 Page N 표시를 숨길 수 있습니다.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "5.3.6",
-            "5.3.18",
-            "5.3.20"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "앱 안에서 홈 화면 설정",
           "description": "앱의 Morphe 설정에서 홈 화면 영역을 각각 숨길 수 있습니다.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "5.3.6",
-            "5.3.18",
-            "5.3.20"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "작성자 아이디·IP 정보",
           "description": "앱의 Morphe 설정에서 계정 아이디와 내장 IP 대역표의 추정 정보를 표시합니다.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "5.3.6",
-            "5.3.18",
-            "5.3.20"
-          ]
+          "compatible_versions": []
         }
       ],
       "developer": "com.dcinside"
     }
   ],
   "patches_name": "Lumi DC Inside patches",
-  "fingerprint": "3f6c2280f0dcf98fe9063ca21975bd05eefcac601942b2989f46e3c6713c7ee2",
-  "release_notes": "Reduce runtime settings-query overhead in post/comment/list rendering. Cache the 14 known Morphe boolean options in one volatile snapshot; home filtering reads its six flags together. Keep defaults, persistence, immediate toggles, external preference changes/clear and unknown-key fallback.\r\n\r\nValidation: bundle built and all four patches applied to original DC Inside 5.3.20; Android 15 emulator signed installation, launch and post load checked without crash. Host regression checked 60,000 known-option/home-mask reads with zero SharedPreferences API reads, plus defaults, toggles and reset. No new whole-app CPU percentage or battery saving has been measured. Version-number-free guarded compatibility remains included.\r\n",
-  "release_tag": "v1.2.4",
-  "release_date": "2026-10-26T16:46:01Z",
-  "isPreRelease": true,
+  "fingerprint": "1bc0c1b2793047a5b4c6cc76c3e2b8e2bd48bd1116ff9d168ab149b1a2d955e8",
+  "release_notes": "설정 조회 실패 뒤 시도 시각만으로 재시도를 억제하지 않습니다. 최근 조회 시각이 유효하고 활성 설정 캐시가 있는 경우에만 기존 갱신 제한을 적용합니다. 기기 시간이 과거로 바뀐 경우는 갱신을 허용합니다. IP 목록 로딩 실패·부분 읽기는 캐시에 확정하지 않고 다음 조회에서 30초 간격으로 재시도합니다.\r\n\r\n번들 빌드 및 기준 원본 APK 패치 적용을 확인합니다. 실기 UI·배터리 측정은 하지 않았습니다.\r\n",
+  "release_tag": "v1.2.6",
+  "release_date": "2026-11-05T03:59:30Z",
+  "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/235821756?v=4&s=128",
   "repoDescription": "Experimental DC Inside personal patches for Morphe",

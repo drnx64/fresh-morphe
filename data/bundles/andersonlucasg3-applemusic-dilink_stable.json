@@ -2,14 +2,23 @@
   "bundle": "andersonlucasg3-applemusic-dilink",
   "channel": "stable",
   "repo_url": "https://github.com/andersonlucasg3/AppleMusic-DiLink",
-  "created_at": "2026-11-03T22:53:10Z",
-  "version": "1.0.3",
-  "description": "## [1.0.3](https://github.com/andersonlucasg3/AppleMusic-DiLink/releases/tag/v1.0.3)\n\nFix startup crash reported on the BYD DiLink (Android 10): the `WindowInsetsControllerCompat` constructor (`x2.W$a`) no longer executes the `WindowInsetsController`-typed delegate on API < 30 — it initializes the impl/window fields directly, so no missing class is resolved on the legacy path. Also declares `apkFileType = XAPK` and the original APK signing fingerprints (1.0.2 feature).",
+  "created_at": "2026-11-05T03:21:22",
+  "version": "1.0.8",
+  "description": "## [1.0.8](https://github.com/andersonlucasg3/AppleMusic-DiLink/releases/tag/v1.0.8)\n\nCorrige a seleção do `WindowInsetsCompat` em API 29: a comparação de SDK estava invertida (`if-ge` em vez de `if-lt`), então o app usava o impl de API 30 (`x2/V$i`) e crashava em `WindowInsets.Type.captionBar()` no tema do onboarding. A mesma inversão no MediaRouter2 foi corrigida (o provider era criado em API 29) e o guard do `FullScreenVideoActivity` também. Mantém tudo da 1.0.7. **Em validação no DiLink.**",
   "apps": [
     {
       "app_name": "Apple Music",
       "package": "com.apple.android.music",
       "patches": [
+        {
+          "name": "Apple Music DiLink TLS trust",
+          "description": "Trusts the bundled Apple Root CA (res/raw/apple_ca) for gsd.apple.com only, inside the APK, so the Apple sign-in page loads on a head unit whose system CA store lacks that root. Nothing is installed on the device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.0.0"
+          ]
+        },
         {
           "name": "Apple Music DiLink manifest",
           "description": "Lowers minSdkVersion from 30 to 29 (Android 10) and removes the portrait lock of MLIChromeTabActivity.",
@@ -21,7 +30,7 @@
         },
         {
           "name": "Apple Music DiLink support",
-          "description": "Unlocks landscape rotation, lowers the API floor to Android 10 (API 29), backports the API 30 java/androidx calls and bypasses Play Integrity.",
+          "description": "Unlocks landscape rotation, lowers the API floor to Android 10 (API 29), backports the API 30 java/androidx/accessibility calls and bypasses Play Integrity.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -33,10 +42,10 @@
     }
   ],
   "patches_name": "Apple Music DiLink Patches",
-  "fingerprint": "8f2ffd83970939dfbc92de204cffafec27c5687a628958a7f2232344dac793e9",
-  "release_notes": "Fix startup crash on API 29: the WindowInsetsControllerCompat constructor no longer executes the WindowInsetsController-typed delegate on API < 30 (initializes impl/window fields directly).",
-  "release_tag": "v1.0.3",
-  "release_date": "2026-11-03T22:53:10Z",
+  "fingerprint": "187d147a6fcc0d129cce08c1c38028bcc8b06bbd898734f5387f4919f8e7d963",
+  "release_notes": "## Apple Music DiLink 1.0.8\n\nCorrige a seleção do impl do `WindowInsetsCompat` em API 29. O guard injetado usava\n`if-ge` em vez de `if-lt`, então o app instanciava `x2/V$i` (Impl30) e crashava em\n`WindowInsets.Type.captionBar()` dentro do tema do onboarding.\n\n- `WindowInsetsCompat` passa a usar o impl de API 20 abaixo de 30;\n- o provider MediaRouter2 não é criado abaixo de API 30 (mesma inversão);\n- o guard do `FullScreenVideoActivity` também foi corrigido.\n\nMantém as correções da 1.0.7 e o TLS/acessibilidade da 1.0.4.\n\n**Em validação no DiLink.**\n\n`Patcher-Version: 1.6.0` · Apple Music 7.0.0 (versionCode 1614) · XAPK.\n",
+  "release_tag": "v1.0.8",
+  "release_date": "2026-11-05T03:25:07Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/1627653?v=4&s=128",
