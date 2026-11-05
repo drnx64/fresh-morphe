@@ -128,7 +128,7 @@ def test_details_match_source(migrated, source_index):
     rows = deduped_bundles(source_index)
     conn = connect(str(db_path), readonly=True)
     try:
-        for key, (source_key, _) in rows.items():
+        for key, (source_key, index_entry) in rows.items():
             bundle, channel = key.rsplit(":", 1)
             path = os.path.join(DATA_DIR, "bundles", source_key.replace(":", "_") + ".json")
             with open(path, encoding="utf-8") as fh:
@@ -150,7 +150,12 @@ def test_details_match_source(migrated, source_index):
             assert got["fingerprint"] == expected.get("fingerprint", "")
             assert got["release_tag"] == expected.get("release_tag", "")
             assert got["release_date"] == expected.get("release_date", "")
-            assert got["isPreRelease"] == bool(expected.get("isPreRelease"))
+            # The importer flags a bundle prerelease when *either* source says
+            # so; on Windows the two case-variant index keys share one physical
+            # file, so the record alone can disagree with its index entry.
+            assert got["isPreRelease"] == bool(
+                expected.get("isPreRelease") or index_entry.get("isPreRelease")
+            ), key
     finally:
         conn.close()
 
