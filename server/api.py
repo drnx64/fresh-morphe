@@ -14,7 +14,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, unquote, urlparse
 
 from server.config import API_HOST, API_PORT, DB_PATH, GZIP_MIN_BYTES, PUBLIC_MAX_AGE
-from server.db import connect, get_meta, get_snapshot, table_counts, utc_now
+from server.db import RELEASE_KEEP, connect, get_meta, get_snapshot, table_counts, utc_now
 from server.devlog import dev_logging_enabled
 
 
@@ -168,6 +168,9 @@ def build_detail(conn, bundle, channel):
 
 
 def build_releases(conn, repo_id, limit=50):
+    # The importer only ever keeps RELEASE_KEEP rows per repo; clamp so the
+    # requested window can't imply a longer history than is stored.
+    limit = max(1, min(int(limit or 0), RELEASE_KEEP))
     rows = conn.execute(
         """
         SELECT tag, name, body, prerelease, published_at

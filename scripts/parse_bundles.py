@@ -200,7 +200,12 @@ def validate_and_parse_bundle(bundle_name, channel):
         created_at = datetime.now().isoformat()
 
     # Build a per-package patch list (name, description, versions, options, use)
+    # One row per (package, patch name): bundles built by merging sources list
+    # the same patch twice, and a compatiblePackages list can repeat a package.
+    # Both used to fan out into duplicate rows (and duplicate target rows) in
+    # the phone DB.
     patches_by_package = {}
+    seen_by_package = {}
     for patch in patches:
         if not isinstance(patch, dict):
             continue
@@ -252,6 +257,10 @@ def validate_and_parse_bundle(bundle_name, channel):
 
         for target in target_packages:
             pkg_key = target["pkg"]
+            seen = seen_by_package.setdefault(pkg_key, set())
+            if patch_name in seen:
+                continue
+            seen.add(patch_name)
             entry = dict(patch_record)
             entry["compatible_versions"] = target["versions"]
             patches_by_package.setdefault(pkg_key, []).append(entry)
