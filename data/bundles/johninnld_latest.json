@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "latest",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-05T10:33:02.962Z",
-  "version": "1.40.1",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/fa55a77890f9778790d0f6b3ec22e3d62d400331/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.40.1.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [fa55a77890f9](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/fa55a77890f9778790d0f6b3ec22e3d62d400331). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.40.1](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.40.0...v1.40.1) (2026-11-05)\n\n### 🐛 Bug Fixes\n\n* **Volkskrant:** continue the ordered news feed from each article ([fa55a77](https://gitlab.com/johninnld/nl-morphe-patches/commit/fa55a77890f9778790d0f6b3ec22e3d62d400331))",
+  "created_at": "2026-11-05T18:51:55.048Z",
+  "version": "1.43.3",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/6e934eb3803ad8bde99dca2cdf995bb45360b82a/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.43.3.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [6e934eb3803a](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/6e934eb3803ad8bde99dca2cdf995bb45360b82a). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.43.3](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.43.2...v1.43.3) (2026-11-05)\n\n### 🐛 Bug Fixes\n\n* **AD:** present the Nieuws feed like the other news patches ([a111071](https://gitlab.com/johninnld/nl-morphe-patches/commit/a111071267b760be0ee063825bd911b000cb10d1))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -295,6 +295,15 @@
       "package": "be.persgroep.android.news.mobilead",
       "patches": [
         {
+          "name": "Android Auto nieuws",
+          "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio from the audio bundles the app itself renders. Selecting a headline restores the full ordered feed inside the app, so playback, Up next and premium entitlement follow the app's own player. The replaced Start content is never shown.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.22.0"
+          ]
+        },
+        {
           "name": "Disable tracking",
           "description": "Disables audited native event collectors, queued uploads, analytics re-enable paths, advertising identifiers and FIAM while preserving push, real login, manual feedback and player session synchronization.",
           "use": true,
@@ -460,6 +469,15 @@
       "package": "be.persgroep.android.news.mobilepa",
       "patches": [
         {
+          "name": "Android Auto nieuws",
+          "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio. Selecting a headline starts the ordered feed at that article, with Previous, Next and Up next through the existing car player. Premium audio keeps its entitlement.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.53.1"
+          ]
+        },
+        {
           "name": "Disable tracking",
           "description": "Suppresses native analytics collectors and queued uploads, advertising identifiers, ContentSquare/Heap WebView instrumentation and known web collector requests while preserving content, account and push.",
           "use": true,
@@ -511,6 +529,15 @@
       "app_name": "Trouw - Nieuws & Verdieping",
       "package": "be.persgroep.android.news.mobiletr",
       "patches": [
+        {
+          "name": "Android Auto nieuws",
+          "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio. Selecting a headline starts the ordered feed at that article, with Previous, Next and Up next through the existing car player. Premium audio keeps its entitlement.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.53.1"
+          ]
+        },
         {
           "name": "Disable tracking",
           "description": "Suppresses native analytics collectors and queued uploads, advertising identifiers, ContentSquare/Heap WebView instrumentation and known web collector requests while preserving content, account and push.",
@@ -1074,6 +1101,54 @@
       "developer": "com.google"
     },
     {
+      "app_name": "Gboard - the Google Keyboard",
+      "package": "com.google.android.inputmethod.latin",
+      "patches": [
+        {
+          "name": "Change package name",
+          "description": "Installs Gboard under its own package name, alongside the stock Gboard that most phones have built in. On by default, because a patched copy cannot replace the built-in Gboard.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to install under. Must be a valid Android package name that differs from com.google.android.inputmethod.latin."
+            }
+          ],
+          "compatible_versions": [
+            "18.5.11.993608717-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Custom branding",
+          "description": "Changes Gboard's app name and launcher icon. Choose the Parakeet icon (default), Gboard's original icon or one of five other designs. The name also appears in Android's keyboard list.",
+          "use": false,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher, Android's keyboard list and app information. Leave empty to keep Gboard."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": [
+            "18.5.11.993608717-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Parakeet voice typing",
+          "description": "Adds Gboard settings → Voice typing → Parakeet voice typing. After downloading NVIDIA Parakeet (Moondream's Parakeet Ultra or the original TDT v3), the microphone key transcribes on the phone and recognises Dutch, English and 23 more languages per sentence without switching. Gives the patched Gboard the Parakeet launcher icon.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.5.11.993608717-release-arm64-v8a"
+          ]
+        }
+      ],
+      "developer": "com.google"
+    },
+    {
       "app_name": "Monet Launcher - Android TV",
       "package": "com.klevico.monet",
       "patches": [
@@ -1398,7 +1473,7 @@
         },
         {
           "name": "Home in Android Auto",
-          "description": "Fills the car Home tab with the same Home sections as the phone app, grouped by section title, using the app's existing account. Tracks, mixes and artists play; playlists and albums open. Falls back to SoundCloud's original car Home if the phone Home cannot load.",
+          "description": "Fills the car Home tab with regular cover tiles from the phone's Home, using the app's existing account. Tracks, mixes and artists play; playlists and albums open. Publishes the real playback queue for Up next, with queue item selection. Falls back to SoundCloud's original car Home if the phone Home cannot load.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2853,7 +2928,7 @@
           ]
         }
       ],
-      "developer": "nl.rtl"
+      "developer": "RTL Nederland B.V."
     },
     {
       "app_name": "NU.nl - Nieuws, Sport & meer",
@@ -3149,7 +3224,11 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "b8cd9d0397d256dc68942cb2f5162e919755859d77858f401a0d0032e22fa41d",
+  "fingerprint": "46814dfea031a9504a0a996c00e07687631b3193607c72d5e25f7baa601ccd73",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/6e934eb3803ad8bde99dca2cdf995bb45360b82a/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.43.3.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [6e934eb3803a](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/6e934eb3803ad8bde99dca2cdf995bb45360b82a). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.43.3](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.43.2...v1.43.3) (2026-11-05)\n\n### 🐛 Bug Fixes\n\n* **AD:** present the Nieuws feed like the other news patches ([a111071](https://gitlab.com/johninnld/nl-morphe-patches/commit/a111071267b760be0ee063825bd911b000cb10d1))\n",
+  "release_tag": "v1.43.3",
+  "release_date": "2026-11-05T18:51:55.048Z",
+  "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",

@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "latest",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-05T05:07:46",
-  "version": "2.1.2",
-  "description": "## [2.1.2](https://github.com/ineednotitle/Proteus-Patches/compare/v2.1.1...v2.1.2) (2026-11-05)\n\n### 🐛 Bug Fixes\n\n* **universal:** harden all 24 universal patches ([c8cbf3f](https://github.com/ineednotitle/Proteus-Patches/commit/c8cbf3fb4775299d613439469959a8c0428dd635))\n* **universal:** resolve vendorGroup scope in GmsCore support ([b58d721](https://github.com/ineednotitle/Proteus-Patches/commit/b58d72196e5eba278052b1c34bc4f112efd23690))",
+  "created_at": "2026-11-05T18:38:26",
+  "version": "2.2.2",
+  "description": "## [2.2.2](https://github.com/ineednotitle/Proteus-Patches/compare/v2.2.1...v2.2.2) (2026-11-05)\n\n### ✨ Improvements\n\n* **universal:** optimize all 24 universal patches with shared single-pass manifest helpers, tolerant list parsing, consistent logging and guarded best-effort layers\n* **universal:** make `Remove dangerous permissions` easy to use with 16 category switches, aggressive defaults, keep/extra lists and a legacy exact-list override",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -350,7 +350,7 @@
           ]
         }
       ],
-      "developer": "com.google"
+      "developer": "Google LLC"
     },
     {
       "app_name": "Gboard - the Google Keyboard",
@@ -834,6 +834,63 @@
       "app_name": "Reddit",
       "package": "com.reddit.frontpage",
       "patches": [
+        {
+          "name": "Block AutoMod comments",
+          "description": "Hides all comments from u/AutoModerator, including stickied bot comments. AutoModerator posts are kept. Client-side only; off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Content filters",
+          "description": "Adds patch-time keyword, community, author and flair filters for feed posts (optionally comments), and locally bypasses Reddit's NSFW/spoiler/quarantine gates and over-18 account flags. Server-side filtering still applies. Off by default.",
+          "use": false,
+          "options": [
+            {
+              "key": "redditContentFilterKeywords",
+              "description": "Comma-separated words or phrases hidden from titles, bodies and flairs (case-insensitive, literal match)."
+            },
+            {
+              "key": "redditContentFilterCommunities",
+              "description": "Comma-separated subreddit names, with or without the r/ prefix."
+            },
+            {
+              "key": "redditContentFilterAuthors",
+              "description": "Comma-separated user names, with or without the u/ prefix."
+            },
+            {
+              "key": "redditContentFilterFlairs",
+              "description": "Comma-separated flair texts. Use community::flair to scope a rule to one community."
+            },
+            {
+              "key": "redditContentFilterMatchMode",
+              "description": "Hide a row when any rule matches, or only when every configured category matches."
+            },
+            {
+              "key": "redditContentFilterBypassGates",
+              "description": "Force over-18 account flags and clear local NSFW/spoiler/quarantine blur gates. Server-side filters still apply."
+            },
+            {
+              "key": "redditContentFilterComments",
+              "description": "Apply the keyword/author filters to comment rows in threads as well as feed posts."
+            }
+          ],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
         {
           "name": "Disable Click Tracking",
           "description": "Forces the outbound click-tracking account preference off at the Account deserialization choke point (local; server-side click analytics may still be recorded). Enabled by default.",
@@ -1568,10 +1625,10 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "cd0fe54f24d059b1da32cb4a91e543b84ff788693ab17176ee49eb6a94ee7b3d",
-  "release_notes": "## [2.1.2](https://github.com/ineednotitle/Proteus-Patches/compare/v2.1.1...v2.1.2) (2026-11-05)\n\n### 🐛 Bug Fixes\n\n* **universal:** harden all 24 universal patches ([c8cbf3f](https://github.com/ineednotitle/Proteus-Patches/commit/c8cbf3fb4775299d613439469959a8c0428dd635))\n* **universal:** resolve vendorGroup scope in GmsCore support ([b58d721](https://github.com/ineednotitle/Proteus-Patches/commit/b58d72196e5eba278052b1c34bc4f112efd23690))\n",
-  "release_tag": "v2.1.2",
-  "release_date": "2026-11-05T05:08:49Z",
+  "fingerprint": "3215d6b312679c01b0ae0a9bf3005380f2b3f49c6fb47630bc81934dae9b624f",
+  "release_notes": "## v2.2.2 — Universal patches: optimized & easier to use\n\nAll 24 universal patches now share a single optimization layer:\n\n* `UniversalUtils.kt` — single-pass manifest DOM traversal, tolerant list parsing (`parseTokens` + `RELAXED_LIST_VALIDATOR`), consistent `[Proteus/Universal]` logging and a `guarded()` fail-safe wrapper.\n* Six manifest patches refactored to one DOM pass; every universal patch now emits the shared log prefix.\n\n### `Remove dangerous permissions` (main usability target)\n* Replaced the one long comma-separated option with **16 category switches** (package visibility, phone, accounts, location, contacts, mic, camera, storage, SMS, calendar, sensors, nearby devices, screen-capture detection, ad ID, AdServices, notifications).\n* **All categories ON by default** (aggressive), as selected. The patch remains off by default.\n* New `Permissions to keep` and `Extra permissions to remove` lists, plus a legacy `Advanced: exact removal list` override for existing configs.\n* AdServices is now a toggle instead of an unconditional removal.\n\nAssets:\n* `patches-2.2.2.mpp` — Morphe patch bundle.\n* `proteus-universal-2.2.2.zip` — universal patch sources + updated audit.\n\n`patches-list.json` and README were regenerated from source by CI for this release. Aggressive defaults can break camera, storage, notifications or SMS features; use the keep-list or category switches to exempt them.\n",
+  "release_tag": "v2.2.2",
+  "release_date": "2026-11-05T18:38:26Z",
   "isPreRelease": false,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",
