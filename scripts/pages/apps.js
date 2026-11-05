@@ -7,7 +7,7 @@ import * as store from '../store.js'
 import { buildAppIndex, resolveAppName, getAppIconUrl, renderAppIcon, suggestFuzzy } from '../utils/misc.js'
 import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
-import { groupAppsIntoFamilies } from '../utils/appFamily.js'
+import { groupAppsIntoFamilies, developerLabel } from '../utils/appFamily.js'
 import { featuredApps } from '../utils/popular.js'
 import { renderTodayUpdates } from './todayUpdates.js'
 import { skeletonGrid } from '../components/skeleton.js'
@@ -89,7 +89,7 @@ function buildAppCard(app, iconCache) {
   const card = el('div', { class: 'app-card' })
   const iconHtml = renderAppIcon({ package: app.package, app_name: app.name }, iconCache)
   const bundleCount = app.bundles.length
-  const developer = String(app.developer || '').trim()
+  const developer = developerLabel(app.package, app.developer)
   card.innerHTML = `
     <div class="app-card-main">
       ${iconHtml}
@@ -400,6 +400,14 @@ export function renderApps(container) {
       const q = query.toLowerCase()
       list = list.filter((app) =>
         app.name.toLowerCase().includes(q) || app.package.toLowerCase().includes(q)
+      )
+    } else {
+      // Browse order: cards whose icon we already have lead, then A–Z inside
+      // each tier. Search results stay as typed — a lookup wants rank, not
+      // artwork. Icon downloads landing later re-run this via iconCache.
+      list = [...list].sort(
+        (a, b) =>
+          (a.iconUrl ? 0 : 1) - (b.iconUrl ? 0 : 1) || a.name.localeCompare(b.name)
       )
     }
 

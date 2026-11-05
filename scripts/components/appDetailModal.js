@@ -22,6 +22,7 @@ import { getPlayStoreUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { parseBundleKey, makeBundleKey } from '../utils/bundleKey.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
+import { developerLabel } from '../utils/appFamily.js'
 import { CLOSE_ICON, VERSION_ARROW, PLUS_ICON } from '../utils/svg.js'
 
 const PLAY_STORE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M.859 11.981V1.741c0-.672.79-1.098 1.434-.771L12.37 6.09c.662.336.662 1.207 0 1.543l-10.077 5.12c-.644.327-1.434-.099-1.434-.772M9.23 9.23l-8.1-8.101m8.1 3.364l-8.1 8.1"/></svg>'
@@ -162,9 +163,10 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     ? `<img class="app-detail-icon" src="${escHtml(iconUrl)}" alt="" loading="lazy" onerror="this.style.display='none'">`
     : `<div class="app-detail-icon app-detail-icon--fallback">${appName.charAt(0).toUpperCase()}</div>`
 
-  const developer = String(
-    (store.get('developerCache') || {})[pkg] || app.developer || ''
-  ).trim()
+  const developer = developerLabel(
+    pkg,
+    String((store.get('developerCache') || {})[pkg] || app.developer || '')
+  )
 
   const heroEl = el('div', { class: 'app-detail-hero' })
   heroEl.innerHTML = `

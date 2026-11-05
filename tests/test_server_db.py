@@ -8,7 +8,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.dirname(__file__))
 
-from server_helpers import deduped_bundles, expected_counts, load_source_index
+from server_helpers import deduped_bundles, deduped_record, expected_counts, load_source_index
 
 from server.api import app_detail, build_detail, build_index, build_releases, search_apps
 from server.config import DATA_DIR
@@ -137,7 +137,9 @@ def test_details_match_source(migrated, source_index):
             assert got is not None, key
             # The API adds `developer` (publisher), which bundle source files
             # only carry once the phone has enriched them. Everything else must
-            # match the source record exactly.
+            # match the source record exactly — after the importer's dedupe of
+            # repeated packages/patch names.
+            expected = deduped_record(expected)
             without_developer = lambda app: {k: v for k, v in app.items() if k != "developer"}
             assert [without_developer(a) for a in got["apps"]] == [
                 without_developer(a) for a in expected["apps"]
@@ -306,5 +308,162 @@ def test_schema_init_is_idempotent(tmp_path):
     try:
         assert conn.execute("SELECT value FROM meta WHERE key = 'schema_version'").fetchone()[0] == "1"
         assert table_counts(conn)["bundles"] == 0
+    finally:
+        conn.close()
+
+
+def _make_repo(conn):
+    cur = conn.execute(
+        "INSERT INTO repos(url, url_key, slug) VALUES (?, ?, ?)",
+        ("https://github.com/x/y", "github.com/x/y", "x/y"),
+    )
+    return cur.lastrowid
+
+
+def test_init_db_purges_duplicate_patch_rows(tmp_path):
+    """A legacy DB with repeated (bundle, app, name) patches is cleaned and
+    then protected by the unique index.
+
+    The duplicates used to multiply `patch_targets`; the survivor keeps its
+    targets and the losers' go with them.
+    """
+    path = tmp_path / "dupes.db"
+    init_db(str(path))
+    conn = connect(str(path))
+    try:
+        conn.execute("DROP INDEX patches_bundle_app_name_idx")
+        repo_id = _make_repo(conn)
+        cur = conn.execute(
+            "INSERT INTO bundles(repo_id, bundle, channel) VALUES (?, 'x', 'stable')",
+            (repo_id,),
+        )
+        bundle_id = cur.lastrowid
+        cur = conn.execute("INSERT INTO apps(package, name) VALUES ('com.x', 'X')")
+        app_id = cur.lastrowid
+        target_ids = []
+        for _ in range(3):
+            cur = conn.execute(
+                "INSERT INTO patches(bundle_id, app_id, name) VALUES (?, ?, 'Patch')",
+                (bundle_id, app_id),
+            )
+            patch_id = cur.lastrowid
+            target_ids.append(patch_id)
+            for version in ("1.0", "2.0"):
+                conn.execute(
+                    "INSERT INTO patch_targets(patch_id, version) VALUES (?, ?)",
+                    (patch_id, version),
+                )
+        conn.commit()
+        assert conn.execute("SELECT COUNT(*) FROM patches").fetchone()[0] == 3
+        conn.close()
+
+        init_db(str(path))
+
+        conn = connect(str(path), readonly=True)
+        assert conn.execute("SELECT COUNT(*) FROM patches").fetchone()[0] == 1
+        assert conn.execute("SELECT COUNT(*) FROM patch_targets").fetchone()[0] == 2
+        # The index is in place: a second duplicate insert is refused.
+        with pytest.raises(Exception):
+            conn.execute(
+                "INSERT INTO patches(bundle_id, app_id, name) VALUES (?, ?, 'Patch')",
+                (bundle_id, app_id),
+            )
+    finally:
+        conn.close()
+
+
+def test_release_history_is_capped_per_repo(tmp_path):
+    from server.db import RELEASE_KEEP, prune_releases
+
+    path = tmp_path / "releases.db"
+    init_db(str(path))
+    conn = connect(str(path))
+    try:
+        repo_id = _make_repo(conn)
+        for day in range(1, 9):
+            conn.execute(
+                "INSERT INTO releases(repo_id, tag, published_at) VALUES (?, ?, ?)",
+                (repo_id, f"v{day}", f"2026-10-{day:02d}"),
+            )
+        conn.commit()
+
+        prune_releases(conn)
+        rows = conn.execute(
+            "SELECT tag FROM releases WHERE repo_id = ? ORDER BY published_at DESC",
+            (repo_id,),
+        ).fetchall()
+        assert [r["tag"] for r in rows] == ["v8", "v7", "v6"][:RELEASE_KEEP]
+
+        # An older tag arriving later cannot push out the newest three.
+        from server.import_legacy import upsert_release
+
+        upsert_release(conn, repo_id, "v1", published_at="2026-09-01")
+        assert conn.execute(
+            "SELECT COUNT(*) FROM releases WHERE repo_id = ?", (repo_id,)
+        ).fetchone()[0] == RELEASE_KEEP
+        # ... but a newer one lands and the oldest falls off.
+        upsert_release(conn, repo_id, "v9", published_at="2026-11-01")
+        tags = [
+            r["tag"]
+            for r in conn.execute(
+                "SELECT tag FROM releases WHERE repo_id = ? ORDER BY published_at DESC",
+                (repo_id,),
+            )
+        ]
+        assert tags == ["v9", "v8", "v7"]
+    finally:
+        conn.close()
+
+
+def test_upsert_bundle_skips_repeated_packages_and_patches(tmp_path):
+    """A source record that repeats a package/patch stores each row once."""
+    from server.import_legacy import upsert_bundle
+
+    path = tmp_path / "record.db"
+    init_db(str(path))
+    conn = connect(str(path))
+    try:
+        repo_id = _make_repo(conn)
+        app = {
+            "package": "com.x",
+            "app_name": "X",
+            "patches": [
+                {"name": "Patch", "targets": [{"version": "1.0"}]},
+                {"name": "Patch", "targets": [{"version": "1.0"}]},
+                {"name": "Other", "targets": [{"version": "1.0"}]},
+            ],
+        }
+        record = {"apps": [app, dict(app)], "version": "1.0"}
+        bundle_id = upsert_bundle(
+            conn, repo_id, "x", "stable", record, {"version": "1.0"}, "2026-11-05T00:00:00Z"
+        )
+        conn.commit()
+
+        assert conn.execute(
+            "SELECT COUNT(*) FROM bundle_apps WHERE bundle_id = ?", (bundle_id,)
+        ).fetchone()[0] == 1
+        assert conn.execute(
+            "SELECT COUNT(*) FROM patches WHERE bundle_id = ?", (bundle_id,)
+        ).fetchone()[0] == 2
+        assert conn.execute(
+            "SELECT COUNT(*) FROM patch_targets t JOIN patches p ON p.id = t.patch_id "
+            "WHERE p.bundle_id = ?",
+            (bundle_id,),
+        ).fetchone()[0] == 2
+        assert conn.execute(
+            "SELECT app_count FROM bundles WHERE id = ?", (bundle_id,)
+        ).fetchone()[0] == 1
+    finally:
+        conn.close()
+
+
+def test_build_releases_is_clamped_to_stored_history(migrated):
+    from server.db import RELEASE_KEEP
+
+    db_path, _ = migrated
+    conn = connect(str(db_path), readonly=True)
+    try:
+        repo_id = conn.execute("SELECT repo_id FROM releases LIMIT 1").fetchone()[0]
+        assert len(build_releases(conn, repo_id, limit=200)) <= RELEASE_KEEP
     finally:
         conn.close()

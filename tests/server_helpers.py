@@ -29,6 +29,37 @@ def deduped_bundles(source_index):
     return rows
 
 
+def deduped_record(record):
+    """Mirror the importer's per-record dedupe.
+
+    Some source bundle files repeat a package or a patch name; `upsert_bundle`
+    stores each (app, patch) once, so tests comparing rows to the source must
+    apply the same rule.
+    """
+    out = dict(record)
+    seen_apps = set()
+    apps = []
+    for app in record.get("apps") or []:
+        package = app.get("package") or ""
+        if not package or package in seen_apps:
+            continue
+        seen_apps.add(package)
+        patched = dict(app)
+        seen_patches = set()
+        patches = []
+        for patch in app.get("patches") or []:
+            name = patch.get("name")
+            if not name or name in seen_patches:
+                continue
+            seen_patches.add(name)
+            patches.append(patch)
+        if patches or "patches" not in app:
+            patched["patches"] = patches
+        apps.append(patched)
+    out["apps"] = apps
+    return out
+
+
 def expected_counts(data_dir, source_index=None):
     if source_index is None:
         source_index = load_source_index(data_dir)
@@ -47,8 +78,19 @@ def expected_counts(data_dir, source_index=None):
         path = os.path.join(data_dir, "bundles", key.replace(":", "_") + ".json")
         with open(path, encoding="utf-8") as fh:
             detail = json.load(fh)
+        seen_apps = set()
         for app in detail.get("apps") or []:
-            patches += sum(1 for patch in (app.get("patches") or []) if patch.get("name"))
+            package = app.get("package") or ""
+            if not package or package in seen_apps:
+                continue
+            seen_apps.add(package)
+            # The importer stores one row per (app, patch name).
+            seen_patches = set()
+            for patch in app.get("patches") or []:
+                name = patch.get("name")
+                if name and name not in seen_patches:
+                    seen_patches.add(name)
+                    patches += 1
 
     return {
         "bundles": len(rows),

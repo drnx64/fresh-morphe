@@ -15,7 +15,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from server.config import DATA_DIR, DB_PATH
-from server.db import connect, init_db, json_dumps, set_meta, set_snapshot, table_counts, utc_now
+from server.db import (
+    connect,
+    init_db,
+    json_dumps,
+    prune_releases,
+    set_meta,
+    set_snapshot,
+    table_counts,
+    utc_now,
+)
 
 
 REPO_RE = re.compile(r"^https?://(?:www\.)?(github|gitlab)\.com/([^/]+)/([^/#?]+)", re.I)
@@ -276,14 +285,24 @@ def upsert_bundle(conn, repo_id, bundle, channel, record, index_entry, imported_
     conn.execute("DELETE FROM bundle_apps WHERE bundle_id = ?", (bundle_id,))
 
     apps = record.get("apps") or []
+    # Source records occasionally repeat a package or a patch name; insert each
+    # (app, patch) once so the unique index never sees a conflict and targets
+    # aren't written twice.
+    seen_packages = set()
+    seen_patches = set()
+    app_count = 0
     for position, app in enumerate(apps):
         package = app.get("package") or ""
+        if not package or package in seen_packages:
+            continue
+        seen_packages.add(package)
         app_name = app.get("app_name") or package
         cache = app_cache_get(package)
         developer = cache.get("developer", "") or _package_namespace(package)
         app_id = ensure_app(conn, package, app_name, cache.get("icon_url", ""), developer)
         if not app_id:
             continue
+        app_count += 1
         conn.execute(
             "INSERT OR REPLACE INTO bundle_apps(bundle_id, app_id, name, position) VALUES (?, ?, ?, ?)",
             (bundle_id, app_id, app_name, position),
@@ -292,6 +311,10 @@ def upsert_bundle(conn, repo_id, bundle, channel, record, index_entry, imported_
             patch_name = patch.get("name") or ""
             if not patch_name:
                 continue
+            patch_key = (app_id, patch_name)
+            if patch_key in seen_patches:
+                continue
+            seen_patches.add(patch_key)
             cur = conn.execute(
                 """
                 INSERT INTO patches(
@@ -335,6 +358,9 @@ def upsert_bundle(conn, repo_id, bundle, channel, record, index_entry, imported_
                         (patch_id, str(version)),
                     )
 
+    # Recount from what was actually stored (the record may list duplicates).
+    conn.execute("UPDATE bundles SET app_count = ? WHERE id = ?", (app_count, bundle_id))
+
     return bundle_id
 
 
@@ -354,6 +380,9 @@ def upsert_release(conn, repo_id, tag, body="", prerelease=False, published_at="
         """,
         (repo_id, tag, name, body, 1 if prerelease else 0, published_at, fetched_at),
     )
+    # History is capped at RELEASE_KEEP rows per repo so a repository with a
+    # long release feed can never bloat the phone DB.
+    prune_releases(conn, repo_id=repo_id)
 
 
 # Filled by import_data() so the nested helper can see the app cache without
@@ -524,13 +553,19 @@ def import_data(db_path, data_dir, reset=False):
             if channel == "latest":
                 latest_count += 1
             apps = record.get("apps") or []
-            bundle_app_count += len(apps)
+            # Mirror upsert_bundle's dedupe so stats describe stored rows.
+            seen = set()
             for app in apps:
                 package = app.get("package") or ""
-                if package:
-                    app_packages.add(package)
+                if not package or package in seen:
+                    continue
+                seen.add(package)
+                bundle_app_count += 1
+                app_packages.add(package)
+                seen_patches = set()
                 for patch in app.get("patches") or []:
-                    if patch.get("name"):
+                    if patch.get("name") and patch["name"] not in seen_patches:
+                        seen_patches.add(patch["name"])
                         patch_count += 1
 
             # Make sure the current release is represented even when the

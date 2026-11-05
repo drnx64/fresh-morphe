@@ -124,6 +124,33 @@ export function developerGroupLabel(developerKey, fallback = '') {
 }
 
 /**
+ * Human publisher label for one app: store name when we have it, otherwise a
+ * readable guess from the package namespace.
+ *
+ * The modal/card used to print the raw package id (`com.google.android.yt`)
+ * with nothing else, which tells a user nothing about who ships the app. This
+ * prefers the resolved developer, folds subsidiaries to their parent
+ * (Facebook → Meta, YouTube → Google), and otherwise derives a name from the
+ * namespace tail (`com.reddit.frontpage` → "Reddit").
+ *
+ * @param {string} packageName
+ * @param {string} [developer] - resolved developer, if any
+ * @returns {string} '' only when neither signal exists
+ */
+export function developerLabel(packageName, developer = '') {
+  const raw = String(developer ?? '').trim()
+  const key = normalizeDeveloper(raw)
+  if (key) return developerGroupLabel(key, raw) || raw
+
+  const namespace = packageNamespace(packageName)
+  const tail = namespace.split('.').filter(Boolean).pop() || ''
+  if (!tail) return ''
+  const folded = developerGroupLabel(normalizeDeveloper(tail), '')
+  if (folded) return folded
+  return tail.charAt(0).toUpperCase() + tail.slice(1)
+}
+
+/**
  * Number of leading package segments two names share.
  * @param {string} a
  * @param {string} b

@@ -5,11 +5,25 @@ from config import RELEASE_CACHE_TTL_HOURS
 
 RELEASE_CACHE_PATH = os.path.join(STATE_DIR, "release_cache.json")
 CACHE_TTL_HOURS = RELEASE_CACHE_TTL_HOURS
+# Only the newest few releases per repo are ever shown (the phone DB caps at
+# the same number), so fetch and store that many — the cache is a tracked file
+# and used to reach 6+ MB of unread history.
+RELEASE_KEEP = 3
+
+
+def trim_releases(releases, keep=RELEASE_KEEP):
+    """Keep the newest `keep` releases, newest-first by release date."""
+    if not isinstance(releases, list) or len(releases) <= keep:
+        return releases or []
+    def _key(r):
+        return str((r or {}).get("dateReleased") or "")
+    ordered = sorted(releases, key=_key, reverse=True)
+    return ordered[:keep]
 
 
 def fetch_github_releases(owner, repo, retry=3):
     token = os.environ.get("GITHUB_TOKEN", "")
-    url = f"https://api.github.com/repos/{owner}/{repo}/releases?per_page=15"
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases?per_page={RELEASE_KEEP}"
     for attempt in range(retry):
         req = urllib.request.Request(url)
         if token:
@@ -47,7 +61,7 @@ def fetch_github_releases(owner, repo, retry=3):
 def fetch_gitlab_releases(project_path, retry=3):
     token = os.environ.get("GITLAB_TOKEN", "")
     encoded_path = urllib.parse.quote(project_path, safe="")
-    url = f"https://gitlab.com/api/v4/projects/{encoded_path}/releases?per_page=15"
+    url = f"https://gitlab.com/api/v4/projects/{encoded_path}/releases?per_page={RELEASE_KEEP}"
     for attempt in range(retry):
         req = urllib.request.Request(url)
         if token:
@@ -128,6 +142,11 @@ def update_release_cache(changed_repo_urls=None):
         return
 
     cache = load_json(RELEASE_CACHE_PATH, default={})
+    # Trim legacy entries too: caches written before RELEASE_KEEP existed hold
+    # up to 15 releases per repo.
+    for entry in cache.values():
+        if isinstance(entry, dict) and entry.get("releases"):
+            entry["releases"] = trim_releases(entry["releases"])
     repos = _extract_repos_from_parsed_bundles(parsed_bundles)
     print(f"Found {len(repos)} unique repo URLs across {len(parsed_bundles)} bundles")
 
@@ -201,7 +220,7 @@ def update_release_cache(changed_repo_urls=None):
             repo_url, reason, releases = future.result()
             cache[repo_url] = {
                 "fetched_at": datetime.now(timezone.utc).isoformat(),
-                "releases": releases
+                "releases": trim_releases(releases)
             }
             fetched += 1
 
