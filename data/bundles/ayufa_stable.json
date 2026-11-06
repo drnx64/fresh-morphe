@@ -2,17 +2,101 @@
   "bundle": "ayufa",
   "channel": "stable",
   "repo_url": "https://github.com/Ayufa/youtube-custom-patches",
-  "created_at": "2026-11-04T09:57:15",
-  "version": "1.1.0",
-  "description": "## [1.1.0](https://github.com/Ayufa/youtube-custom-patches/compare/v1.0.0...v1.1.0) (2026-11-04)\n\n### ✨ New Features\n\n* Restore the Live latency keeper with a Morphe settings toggle ([812189e](https://github.com/Ayufa/youtube-custom-patches/commit/812189eb8b6d38b0a6e0fb51386ea63340aee267))\n* Support the Live latency keeper on YouTube 21.30.216 as well ([9b1f35b](https://github.com/Ayufa/youtube-custom-patches/commit/9b1f35b04aa0f69a69e28398d43206d1b98e0c10))\n\n### 🐛 Bug Fixes\n\n* Add temporary diagnostic logging to find why the keeper does not seek ([69edf67](https://github.com/Ayufa/youtube-custom-patches/commit/69edf677a4b07ef1b2479b8ea2daf5dc01b3b379))\n* Estimate live lag from wall-clock time instead of the video length ([bfbca52](https://github.com/Ayufa/youtube-custom-patches/commit/bfbca522833b417f166a0db98ec162870165e6f6))",
+  "created_at": "2026-11-06T06:32:56",
+  "version": "1.2.0",
+  "description": "## [1.2.0](https://github.com/Ayufa/ayufa-patches/compare/v1.1.0...v1.2.0) (2026-11-06)\n\n### ✨ New Features\n\n* add Simeji 23.7 patches (hide ads, promotions, push popups, retention skip, analytics, point entry, review prompts) ([4b0088c](https://github.com/Ayufa/ayufa-patches/commit/4b0088c356ae4472cd4f177cc2f043678dc175d2))\n* Fix live chat input being covered by the on-screen keyboard ([914d178](https://github.com/Ayufa/ayufa-patches/commit/914d17820cc2faff4fe1ada9cddbf887128b4aa7)), closes [#3453](https://github.com/Ayufa/ayufa-patches/issues/3453)\n* Limit the live latency keeper to Android 8 YouTube, free-form interval in minutes ([5dc1f43](https://github.com/Ayufa/ayufa-patches/commit/5dc1f43daee89e9efba3d06518d558a9e2581461))\n* Re-sync live playback with a momentary pause and resume ([d74cbb0](https://github.com/Ayufa/ayufa-patches/commit/d74cbb04459a09b6fdce36193dc925e6ca0d36e5))\n* Rename the bundle to Ayufa Patches, a multi-app custom patch collection ([2d88f9b](https://github.com/Ayufa/ayufa-patches/commit/2d88f9b20c27911a7b189e19945eab038f402c7c))\n* Sync live playback at a fixed interval, adjustable in settings ([2c38d75](https://github.com/Ayufa/ayufa-patches/commit/2c38d75ebf673a2567bfd007b857ae1bb8a4f186))\n\n### 🐛 Bug Fixes\n\n* access method instructions via implementation in Simeji hooks ([becad12](https://github.com/Ayufa/ayufa-patches/commit/becad12e4d3087e8a00cfb5b3493dfada7cd404b))\n* correct RewardedAdShowCallback type in Simeji Hide ads fingerprint ([90d754f](https://github.com/Ayufa/ayufa-patches/commit/90d754f057ffb34b2a567a3a5046d25dbaa9bb45))\n* Do fingerprint matching in the execute block (needs patch context) ([e67bc71](https://github.com/Ayufa/ayufa-patches/commit/e67bc717598da9bb4ee1122f98fb87cc55a33488))\n* keep Simeji statistic init intact in Disable analytics (killed initStatistic crashed the keyboard) ([f92044e](https://github.com/Ayufa/ayufa-patches/commit/f92044e10a2efc98d9a913231658a0094693f9d1))\n* Match the live chat view setup with plain literals ([f73b8eb](https://github.com/Ayufa/ayufa-patches/commit/f73b8eb47c16f0f1c97f159c8579bfb99ac76daa))\n* Ship the keyboard fix inside the clutter patch, and stop padding resets ([b532fcf](https://github.com/Ayufa/ayufa-patches/commit/b532fcfd151f89c3502a249dd315ec900ce18572))",
   "apps": [
+    {
+      "app_name": "Simeji Japanese keyboard+Emoji",
+      "package": "com.adamrocker.android.input.simeji",
+      "patches": [
+        {
+          "name": "Block VIP guide screen",
+          "description": "Prevents the VIP guide screen from opening. Note: this screen is also the in-app subscription purchase screen, so subscribing from inside the app becomes impossible.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Disable analytics reporting",
+          "description": "Stops Simeji's event reporting: every AppsFlyer event entry point and the in-house statistic event dispatch become no-ops, so usage events are no longer sent. The statistic module initialization is deliberately left intact (the keyboard reads its config when the window is shown), and core keyboard, conversion and account features are not touched.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Disable push popups",
+          "description": "Prevents push campaign popup dialogs from appearing on screen. Normal notifications are not affected.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Disable review prompts",
+          "description": "Disables the Google Play rating prompts: both Simeji's own guide dialog and the Play in-app review flow.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Hides ads in Simeji: suggestion bar ads, store entry interstitials and web campaign popups. The central ad gate is forced off, and ad candidates are never fetched or stored.",
+          "use": false,
+          "options": [
+            {
+              "key": "blockRewardedAds",
+              "description": "Also blocks rewarded ads. Some features that are unlocked by watching an ad (for example custom skin trials) stop working, so this is off by default."
+            }
+          ],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Hide point entry",
+          "description": "Hides the Simeji Point entry point, which leads to the point store and its campaign recommendations.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Hide promotions",
+          "description": "Prevents the full-screen promotion activity from opening, so campaign and upsell pages never appear.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        },
+        {
+          "name": "Skip subscription retention screen",
+          "description": "Skips the retention screen shown during VIP subscription cancellation, going straight to the cancellation flow.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "23.7"
+          ]
+        }
+      ],
+      "developer": "バイドゥ株式会社"
+    },
     {
       "app_name": "YouTube",
       "package": "com.google.android.youtube",
       "patches": [
         {
           "name": "Hide live chat clutter",
-          "description": "Hides the pinned message banner and poll cards in live chat. Each can be toggled in Morphe settings (Ayufa patch settings) without re-patching. For YouTube 21.30.216.",
+          "description": "Hides the pinned message banner and poll cards in live chat, and fixes the chat input field being covered by the on-screen keyboard. Each can be toggled in Morphe settings (Ayufa patch settings) without re-patching. For YouTube 21.30.216.",
           "use": false,
           "options": [
             {
@@ -22,6 +106,10 @@
             {
               "key": "hideLiveChatPolls",
               "description": "Hides poll (questionnaire) cards shown in the live chat."
+            },
+            {
+              "key": "fixLiveChatKeyboard",
+              "description": "Fixes the live chat input field being covered by the on-screen keyboard while typing."
             }
           ],
           "compatible_versions": [
@@ -30,20 +118,12 @@
         },
         {
           "name": "Live latency keeper",
-          "description": "Periodically checks live stream playback and automatically seeks to the live edge when playback has fallen behind. Can be toggled in Morphe settings (Ayufa patch settings) without re-patching. For YouTube 20.26.46 (Android 8.0) and 21.30.216. Requires the official Morphe patches to be applied as well.",
+          "description": "At a fixed interval, momentarily pauses and resumes live stream playback so it snaps back to the live edge (the newest position), no matter how far behind it has fallen. The interval (any value from 0 to 120 minutes, typed in directly) and the on/off switch can be changed in Morphe settings (Ayufa patch settings) without re-patching. For YouTube 20.26.46 (Android 8.0) only. Requires the official Morphe patches to be applied as well.",
           "use": false,
           "options": [
             {
-              "key": "liveLatencyCheckIntervalSeconds",
-              "description": "How often to check how far live playback is behind the live edge."
-            },
-            {
-              "key": "liveLatencyThresholdSeconds",
-              "description": "Seek to the live edge when playback is behind it by more than this."
-            },
-            {
-              "key": "liveLatencySafetySeconds",
-              "description": "Seek to this many seconds before the live edge, to avoid rebuffering at the very edge."
+              "key": "liveLatencySyncIntervalMinutes",
+              "description": "How often live playback is snapped back to the newest position with a momentary pause and resume. Used until the interval is changed in Morphe settings (Ayufa patch settings), where any value from 0 to 120 minutes can be typed in."
             }
           ],
           "compatible_versions": [
@@ -55,10 +135,10 @@
     }
   ],
   "patches_name": "Ayufa YouTube Patches",
-  "fingerprint": "ce72b8a1f30ee04b95a383c82172e870cfc36271aac02eab69d6b24df498ed99",
-  "release_notes": "## [1.2.0-dev.5](https://github.com/Ayufa/youtube-custom-patches/compare/v1.2.0-dev.4...v1.2.0-dev.5) (2026-11-04)\n\n### ✨ New Features\n\n* Re-sync live playback with a momentary pause and resume ([d74cbb0](https://github.com/Ayufa/youtube-custom-patches/commit/d74cbb04459a09b6fdce36193dc925e6ca0d36e5))\n",
-  "release_tag": "v1.2.0-dev.5",
-  "release_date": "2026-11-04T13:40:42Z",
+  "fingerprint": "8280ab238f3c3f8eacda85c6185b3db7fb9911afd322e8f71ceba8dab92b1aca",
+  "release_notes": "## [1.3.0-dev.4](https://github.com/Ayufa/ayufa-patches/compare/v1.3.0-dev.3...v1.3.0-dev.4) (2026-11-06)\n\n### ✨ New Features\n\n* **simeji:** runtime settings toggles, VIP spoof and Japanese patch names ([72a734a](https://github.com/Ayufa/ayufa-patches/commit/72a734afa23a94feb11227a7f959cea93a05f03d))\n",
+  "release_tag": "v1.3.0-dev.4",
+  "release_date": "2026-11-06T07:56:28Z",
   "isPreRelease": true,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/108320745?v=4&s=128",

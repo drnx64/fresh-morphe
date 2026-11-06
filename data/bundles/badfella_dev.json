@@ -2,9 +2,9 @@
   "bundle": "badfella",
   "channel": "dev",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-11-01T03:00:00",
-  "version": "1.0.0",
-  "description": "TickTick, Emby, Remote for Android TV, Pep Talk and Wanderlog patches.",
+  "created_at": "2026-11-06T05:09:33",
+  "version": "1.1.0",
+  "description": "## 1.1.0 (2026-11-06)\n\n### ✨ New Features\n\n* support reviewed patch targets without version pins 05fa478\n* **wanderlog:** make dark mode follow the device theme aa6b1a8\n* **wanderlog:** make the theme follow the device dark-mode setting 4cc8368",
   "apps": [
     {
       "app_name": "Emby for Android",
@@ -15,18 +15,14 @@
           "description": "Enables local in-app feature gates using Kirlif's observed approach. Does not grant server Premiere entitlements.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "3.5.72"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "Emby remove Firebase and DataTransport",
           "description": "Removes Firebase/DataTransport SDK classes and manifest components. Disables Firebase push messaging; keeps Cast and billing libraries.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "3.5.72"
-          ]
+          "compatible_versions": []
         }
       ],
       "developer": "com.mb"
@@ -40,9 +36,7 @@
           "description": "Enables local Elite features, labels the profile status and silences unavailable-purchase warnings from background product lookup. Keeps authentication and purchase handling; does not grant server-side access or a subscription.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "2.31.0"
-          ]
+          "compatible_versions": []
         }
       ],
       "developer": "com.peptalk"
@@ -56,36 +50,28 @@
           "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "8.2.4.0"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "Restore notifications",
           "description": "Restores Firebase certificate metadata on re-signed apps, with an Android 17 compatible token setup. Push delivery still requires device testing.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "8.2.4.0"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "Restore reminder alarms",
           "description": "Restores task/reminder alarm scheduling on re-signed apps.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "8.2.4.0"
-          ]
+          "compatible_versions": []
         },
         {
           "name": "TickTick Premium",
           "description": "Enables client-side premium features and limits. Does not grant server-side AI access or a subscription.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "8.2.4.0"
-          ]
+          "compatible_versions": []
         }
       ],
       "developer": "com.ticktick"
@@ -96,12 +82,10 @@
       "patches": [
         {
           "name": "Wanderlog Pro features",
-          "description": "Enables local Pro feature checks, removes subscription prompts and auto-opening paywalls, hides the home Pro star, labels the profile button Pro Activated and brands the billing screen. Keeps the patched bundle in place by disabling Expo OTA updates. Does not grant server-run AI, downloads, flight tracking or a subscription.",
+          "description": "Enables local Pro feature checks, removes subscription prompts and auto-opening paywalls, hides the home Pro star, labels the profile button Pro Activated and brands the billing screen. Makes the app theme follow the device dark-mode setting, because the app's own dark mode entry is Pro-only and the preference is set by Wanderlog's servers on subscription. Keeps the patched bundle in place by disabling Expo OTA updates. Does not grant server-run AI, downloads, flight tracking, Google Maps export or a subscription.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "2.227"
-          ]
+          "compatible_versions": []
         }
       ],
       "developer": "com.wanderlog"
@@ -124,10 +108,10 @@
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "497de476cf958d308e8fe43ab9158da7e369c32e210818f6269d3d43a12f7d3d",
-  "release_notes": "# BadFella Patches 1.0.0\n\nCommunity app patches by BadFella for Morphe Manager.\n\n### Included Apps (9 Patches):\n- **TickTick (8.2.4.0)**: Disable analytics collection, Push notification spoofing, Restore push notifications, Restore reminders.\n- **Emby for Android (3.5.72)**: Emby Premiere unlock for ARM64-v8a and ARMeabi-v7a.\n- **Remote for Android TV (6.1.0)**: Ad-free status and premium capability.\n- **Pep Talk (2.31.0)**: Unlimited access and premium feature unlock.\n- **Wanderlog (2.227)**: Wanderlog Pro feature access.\n\n### How to use with Morphe Manager:\n1. Tap **Add to Morphe** on GitHub or add this source repository: `https://github.com/XBadFellaX/BadFella-Patches`.\n2. Alternatively, download `patches-1.0.0.mpp` below and import it in Morphe Manager under **Sources**.\n",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-11-01T03:01:29Z",
+  "fingerprint": "173fda9feb87748ec16315cc23810607134a212632535cb88afb42bfc63ca753",
+  "release_notes": "## BadFella Patches v1.1.0\n\n### Supported apps and versions\n\n| App | Supported stock input |\n| --- | --- |\n| Wanderlog | 2.227 (build 2026102307) and 2.228 (build 2026110208) APKM |\n| TickTick | 8.2.4.0 APKM |\n| Emby | 3.5.72 APK, ARM64 and ARMv7 |\n| Pep Talk | 2.31.0 XAPK |\n| Remote for Android TV | 6.1.0 (build 45) APKM |\n\n### Changes\n\n* **Wanderlog:** supports 2.227 and 2.228 through the same reviewed bundle path, and the app theme follows the device dark-mode setting.\n* **TickTick, Emby and Pep Talk:** the patches no longer require one exact app version. Each one resolves its reviewed classes, files and anchors during patching and stops with a named error instead of writing at an unrecognised location.\n* **Remote for Android TV:** unchanged and still limited to 6.1.0 (build 45).\n\n### Installation\n\n1. Enable BadFella Patches in Morphe Manager and refresh sources.\n2. Select the unmodified stock APK, APKM or XAPK for the app.\n3. Choose the patches, then patch and install with the existing Manager signing key.\n4. Install as an update. Do not uninstall the app or clear its data.\n\n### Limits\n\n* Patches enable local in-app feature gates only. They do not grant server-side subscriptions, AI features, downloads, flight tracking or Google Maps export.\n* Emby's Firebase and DataTransport removal disables Firebase push messaging; Cast and billing libraries are kept.\n* Wanderlog's Expo OTA updates stay disabled so the patched bundle remains in place.\n* App versions outside the table above are not reviewed. For Wanderlog, TickTick, Emby and Pep Talk an unrecognised build fails closed instead of guessing; Remote for Android TV remains pinned.\n* Release checks cover patch application and output structure against the stock archives. They do not test in-app behaviour on a device.\n",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-11-06T05:10:11Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",
