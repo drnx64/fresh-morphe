@@ -2,9 +2,9 @@
   "bundle": "andersonlucasg3-applemusic-dilink",
   "channel": "latest",
   "repo_url": "https://github.com/andersonlucasg3/AppleMusic-DiLink",
-  "created_at": "2026-11-05T03:21:22",
-  "version": "1.0.8",
-  "description": "## [1.0.8](https://github.com/andersonlucasg3/AppleMusic-DiLink/releases/tag/v1.0.8)\n\nCorrige a seleção do `WindowInsetsCompat` em API 29: a comparação de SDK estava invertida (`if-ge` em vez de `if-lt`), então o app usava o impl de API 30 (`x2/V$i`) e crashava em `WindowInsets.Type.captionBar()` no tema do onboarding. A mesma inversão no MediaRouter2 foi corrigida (o provider era criado em API 29) e o guard do `FullScreenVideoActivity` também. Mantém tudo da 1.0.7. **Em validação no DiLink.**",
+  "created_at": "2026-11-05T20:00:00",
+  "version": "1.1.0",
+  "description": "## [1.1.0](https://github.com/andersonlucasg3/AppleMusic-DiLink/releases/tag/v1.1.0)\n\n**Login e reprodução funcionando no DiLink 3.0 (Android 10/API 29).**\n\n- Assets JS da Apple transpilados para o WebView 74 e servidos pelo APK (`shouldInterceptRequest`).\n- Anisette/ADI nativo substituído por OTP local (GrandSlam V3 para `dsid=-2` e Store AMD V1.5 para `dsid=-1`), com identidade Android provisionada via `apple-auth` embutida no bundle.\n- `Surface.setFrameRate` (API 30) e `IBinder.getSuggestedMaxIpcSizeBytes` (API 30) redirecionados.\n- Instrumentação de debug removida; `android:debuggable` não é mais aplicado.\n\nEntrada: **XAPK** do Apple Music 7.0.0 (APKPure). APKM não é aceito porque o bundle declara `apkFileType = XAPK`.\n\nProblemas conhecidos de UI em API 29: faixa preta na tela de letras, cards cortados à direita em carrosséis e espaçamentos grandes no Ajustes (layout/insets, não accent color).",
   "apps": [
     {
       "app_name": "Apple Music",
@@ -36,16 +36,25 @@
           "compatible_versions": [
             "7.0.0"
           ]
+        },
+        {
+          "name": "Apple Music DiLink web assets",
+          "description": "Embeds Chrome 74-compatible copies of the Apple sign-in JavaScript assets so the sign-in page can run on the DiLink WebView, without a PC at runtime.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.0"
+          ]
         }
       ],
       "developer": "com.apple"
     }
   ],
   "patches_name": "Apple Music DiLink Patches",
-  "fingerprint": "69db83674b694227f7f91967005b90d7b412cdab74f4fb4e3fd495d72400c8be",
-  "release_notes": "## Apple Music DiLink 1.0.8\n\nCorrige a seleção do impl do `WindowInsetsCompat` em API 29. O guard injetado usava\n`if-ge` em vez de `if-lt`, então o app instanciava `x2/V$i` (Impl30) e crashava em\n`WindowInsets.Type.captionBar()` dentro do tema do onboarding.\n\n- `WindowInsetsCompat` passa a usar o impl de API 20 abaixo de 30;\n- o provider MediaRouter2 não é criado abaixo de API 30 (mesma inversão);\n- o guard do `FullScreenVideoActivity` também foi corrigido.\n\nMantém as correções da 1.0.7 e o TLS/acessibilidade da 1.0.4.\n\n**Em validação no DiLink.**\n\n`Patcher-Version: 1.6.0` · Apple Music 7.0.0 (versionCode 1614) · XAPK.\n",
-  "release_tag": "v1.0.8",
-  "release_date": "2026-11-05T03:25:07Z",
+  "fingerprint": "ceb41f5bf0ae13b801770198d199837125b18b4266dacf92eb956ec68a087cf6",
+  "release_notes": "## Apple Music DiLink 1.1.0\n\n**Login e reprodução funcionando no BYD DiLink 3.0 (Android 10 / API 29).**\n\n### O que mudou\n- **JS da Apple transpilado** para o WebView 74 (Chromium 74) e servido pelo próprio APK via\n  `shouldInterceptRequest` — o fluxo de sign-in renderiza e executa.\n- **Anisette/ADI substituído**: o provider nativo (`INativeAnisetteProvider`) foi trocado por\n  geração local de OTP:\n  - GrandSlam (`dsid=-2`): envelope V3 de 28 B (ver 5 + trailer Android 4);\n  - Store / V1.5 (`dsid=-1`): AMD de 24 B (ver 4, sem trailer).\n  Identidade Android provisionada com `apple-auth` (MIT) e embutida no bundle.\n- **`Surface.setFrameRate` (API 30)** e **`IBinder.getSuggestedMaxIpcSizeBytes` (API 30)**\n  redirecionados — elimina o crash do ExoPlayer ao iniciar o playback no Android 10.\n- Instrumentação de debug removida; o manifest não recebe mais `android:debuggable`.\n\n### Como instalar\n- **Morphe Manager:** adicione a source `github.com/andersonlucasg3/AppleMusic-DiLink` e use o\n  **XAPK** do Apple Music 7.0.0 (APKPure). O bundle declara `apkFileType = XAPK`, então\n  arquivos `.apkm` são rejeitados.\n- **Manual:** instale o APK merged `AppleMusic-1.1.0-DiLink.apk` (assinado com `CN=Morphe`);\n  desinstale o Apple Music oficial antes.\n\n### Pendências conhecidas (UI em API 29)\n- Faixa preta na tela de letras.\n- Cards cortados à direita nos carrosséis.\n- Espaçamentos grandes na tela de Ajustes.\n\nSão diferenças de layout/insets, não de accent color.\n",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-11-05T23:04:49Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/1627653?v=4&s=128",
