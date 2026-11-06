@@ -18,7 +18,7 @@ import * as store from '../store.js'
 import {
   resolveAppName, getAppIconUrl, copyToClipboard, getDisplayAvatar, avatarStackHtml,
 } from '../utils/misc.js'
-import { getPlayStoreUrl } from '../utils/url.js'
+import { getPlayStoreUrl, getAppAddMorpheUrl } from '../utils/url.js'
 import { escHtml } from '../utils/html.js'
 import { parseBundleKey, makeBundleKey } from '../utils/bundleKey.js'
 import { ensureBundleKey } from '../services/bundleLoader.js'
@@ -121,18 +121,23 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
   content.appendChild(closeBtn)
 
   // ── Add to Morphe ───────────────────────────────────
-  // Top-right, immediately left of the close button. Fires the Morphe deep
-  // link and only claims success when the page actually lost focus; a browser
-  // with no handler stays put, so the button turns into a copy-link fallback.
-  const addBtn = el('button', {
+  // Top-right, immediately left of the close button: a real href to the
+  // app-aware add-source link (selected bundle's repo + this app's package,
+  // name and icon), so one tap hands the source to Morphe — nothing to copy.
+  // A bundle with no usable repo path keeps the legacy morphe:// deep link
+  // with its copy-link fallback for that one case.
+  const addBtn = el('a', {
     class: 'app-detail-morphe-btn',
-    type: 'button',
-    title: `Open ${appName} in Morphe`,
+    href: morpheDeepLink(pkg),
+    target: '_blank',
+    rel: 'noopener',
+    title: `Add ${appName} to Morphe`,
     'aria-label': `Add ${appName} to Morphe`,
   })
   addBtn.innerHTML = `${PLUS_ICON}<span class="app-detail-morphe-label">Add to Morphe</span>`
   content.appendChild(addBtn)
 
+  let deepLinkFallback = false
   let morpheFallbackShown = false
   function showMorpheFallback() {
     morpheFallbackShown = true
@@ -140,8 +145,29 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
     addBtn.title = 'Morphe is not installed — click to copy the link'
     addBtn.querySelector('.app-detail-morphe-label').textContent = 'Copy link'
   }
+
+  // Re-point the href at the repo of whichever bundle chip is selected.
+  function refreshMorpheLink() {
+    const url = getAppAddMorpheUrl(selected ? selected.repoUrl : '', { pkg, appName, iconUrl })
+    deepLinkFallback = !url
+    morpheFallbackShown = false
+    addBtn.classList.toggle('is-fallback', deepLinkFallback)
+    addBtn.querySelector('.app-detail-morphe-label').textContent = 'Add to Morphe'
+    if (url) {
+      addBtn.href = url
+      addBtn.target = '_blank'
+      addBtn.title = `Add ${appName} to Morphe`
+    } else {
+      addBtn.href = morpheDeepLink(pkg)
+      addBtn.removeAttribute('target')
+      addBtn.title = `Open ${appName} in Morphe`
+    }
+  }
+
   addBtn.addEventListener('click', (event) => {
     event.stopPropagation()
+    if (!deepLinkFallback) return // plain href navigation to morphe.software
+    event.preventDefault()
     if (morpheFallbackShown) {
       copyToClipboard(morpheDeepLink(pkg), addBtn)
       return
@@ -157,6 +183,7 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
       if (!leftPage && document.visibilityState !== 'hidden') showMorpheFallback()
     }, 1400)
   })
+  refreshMorpheLink()
 
   // ── Hero ────────────────────────────────────────────
   const iconHtml = iconUrl
@@ -583,6 +610,7 @@ export function openAppDetailModal({ app, bundleName, channels = [], patchName =
       chip.setAttribute('aria-pressed', String(name === candidate.bundleName))
       chip.classList.toggle('is-active', name === candidate.bundleName)
     }
+    refreshMorpheLink()
     renderSource()
     setupChannels(candidate, { initial })
   }

@@ -97,6 +97,31 @@ export function getAddMorpheUrl(repoUrl) {
   return `https://morphe.software/add-source?${param}=${encodeURIComponent(info.path)}`
 }
 
+/**
+ * App-aware add-source deep link: one app, its bundle's repo, its name and
+ * icon, so Morphe can prefill the source it adds. The owner/repo slash stays
+ * literal (segments are encoded individually) to match the published link
+ * format. Returns '' when the repo URL has no usable path — the caller keeps
+ * its deep-link fallback for that case.
+ * @param {string} repoUrl - bundle.repo_url
+ * @param {Object} [appInfo]
+ * @param {string} [appInfo.pkg] - package id (`app` param)
+ * @param {string} [appInfo.appName] - display name (`appName` param)
+ * @param {string} [appInfo.iconUrl] - remote http(s) icon URL (`appIcon` param)
+ * @returns {string}
+ */
+export function getAppAddMorpheUrl(repoUrl, { pkg = '', appName = '', iconUrl = '' } = {}) {
+  const info = getRepoInfo(repoUrl)
+  if (!info.path) return ''
+  const param = info.isGitLab ? 'gitlab' : 'github'
+  const path = info.path.split('/').map(encodeURIComponent).join('/')
+  const query = [`${param}=${path}`]
+  if (pkg) query.push(`app=${encodeURIComponent(pkg)}`)
+  if (appName) query.push(`appName=${encodeURIComponent(appName)}`)
+  if (iconUrl && /^https?:/i.test(iconUrl)) query.push(`appIcon=${encodeURIComponent(iconUrl)}`)
+  return `https://morphe.software/add-source?${query.join('&')}`
+}
+
 export function getPlayStoreUrl(packageName) {
   return `https://play.google.com/store/apps/details?id=${encodeURIComponent(packageName)}`
 }
