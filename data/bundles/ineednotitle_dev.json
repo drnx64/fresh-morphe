@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "dev",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-05T18:38:26",
-  "version": "2.2.2",
-  "description": "## [2.2.2](https://github.com/ineednotitle/Proteus-Patches/compare/v2.2.1...v2.2.2) (2026-11-05)\n\n### ✨ Improvements\n\n* **universal:** optimize all 24 universal patches with shared single-pass manifest helpers, tolerant list parsing, consistent logging and guarded best-effort layers\n* **universal:** make `Remove dangerous permissions` easy to use with 16 category switches, aggressive defaults, keep/extra lists and a legacy exact-list override",
+  "created_at": "2026-11-06T14:50:47",
+  "version": "2.2.7",
+  "description": "v2.2.7 (pre-release): adds six experimental, off-by-default Brave patches (Remove Unused AI & VPN, Block Telemetry, Clean New Tab, Close Tab In Group Order, Brave Origin, Custom Brave theme) adapted from kveld9/kveld-morphe-patches, unverified on device; Block AutoMod comments detection is broader and the helper logs its status; Show deleted comments logs archive lookup outcomes. Brave patches unverified on device.",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -256,6 +256,212 @@
       "developer": "com.application"
     },
     {
+      "app_name": "Brave Private Web Browser, VPN",
+      "package": "com.brave.browser",
+      "patches": [
+        {
+          "name": "Block Motion Sensors",
+          "description": "Attempts to disable Chromium's Android sensor provider; may also block ambient sensors. Requires device validation.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Block Popups & Ratings",
+          "description": "Disables the identified rating and Brave Ads signup eligibility checks; other dialogs can still appear.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Block Telemetry",
+          "description": "Blocks usage analytics, crash uploads and experiment downloads.",
+          "use": false,
+          "options": [
+            {
+              "key": "blockOffersHost",
+              "description": "Also blocks the shopping offers server. Turn off to keep it."
+            }
+          ],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Brave Origin",
+          "description": "Unlocks Brave Origin feature switches across Rewards, News, Wallet, and VPN.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Clean New Tab",
+          "description": "Removes sponsored wallpapers, news feed and promo cards.",
+          "use": false,
+          "options": [
+            {
+              "key": "hideTopSites",
+              "description": "Removes most-visited tiles for a blank start page."
+            }
+          ],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Close Tab In Group Order",
+          "description": "Selects the previous tab in the tab group when closing a tab.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Custom Brave theme",
+          "description": "Applies custom colors to Brave dark mode chrome, defaulting to pure OLED black for battery saving on OLED screens.",
+          "use": false,
+          "options": [
+            {
+              "key": "backgroundColor",
+              "description": "Opaque hexadecimal color for primary backgrounds and base window chrome. Defaults to pure OLED black (#000000)."
+            },
+            {
+              "key": "surfaceUsesBackground",
+              "description": "When enabled, cards, sheets, and dialogs share the primary background color. When disabled, elevated surfaces use the dedicated surface color below."
+            },
+            {
+              "key": "surfaceColor",
+              "description": "Opaque hexadecimal color for elevated surfaces such as cards, sheets, and dialogs. Defaults to OLED black (#000000); use #1e2029 for visible depth between tiers."
+            },
+            {
+              "key": "textColor",
+              "description": "Opaque hexadecimal color applied to primary text labels. Defaults to Brave light slate ink (#f0f2ff)."
+            },
+            {
+              "key": "accentColor",
+              "description": "Opaque hexadecimal color for interactive highlights, active switches, and links. Defaults to Brave purple-blue accent (#737ade)."
+            },
+            {
+              "key": "disableDynamicColors",
+              "description": "Prevents Android 12+ wallpaper palette extraction from replacing dark surfaces. When disabled, dynamic system colors take precedence."
+            },
+            {
+              "key": "windowBackgroundColor",
+              "description": "Opaque hexadecimal color for root window backgrounds in two-tier surface mode. Defaults to pure black (#000000)."
+            },
+            {
+              "key": "cardColor",
+              "description": "Opaque hexadecimal color for preference item cards in Settings. Defaults to OLED black (#000000); use #1e2029 for visible depth between tiers."
+            },
+            {
+              "key": "enablePreferenceCards",
+              "description": "Wraps settings and preference rows in rounded card shapes when two-tier surfaces are enabled."
+            },
+            {
+              "key": "modulateTextLuminance",
+              "description": "When enabled, scales text brightness across primary, secondary, and disabled tiers using luminance ratios. When disabled, applies the text ink color uniformly."
+            },
+            {
+              "key": "patchMaterialYouRoles",
+              "description": "Rewrites Android system neutral and surface container color roles in values-v31+ directories to theme colors."
+            },
+            {
+              "key": "patchLStarSelectors",
+              "description": "Rewrites tonal luminance selectors in color resources to match custom background and container surfaces."
+            },
+            {
+              "key": "patchVectorDrawables",
+              "description": "Rewrites hardcoded background and container fill colors inside vector drawables to match theme colors."
+            }
+          ],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Preserve last active tab",
+          "description": "Disables the identified new-tab opening-screen override after inactivity. Does not prevent tab unloading under memory pressure.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Remove Extra Languages",
+          "description": "Replaces larger unselected Chromium locale PAKs with the English fallback; gender variants and Android resources are not removed.",
+          "use": false,
+          "options": [
+            {
+              "key": "locales",
+              "description": "Comma-separated language codes such as en-US, fr, hi. English is always kept; choosing a language keeps all its regions."
+            }
+          ],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Remove Unused AI & VPN",
+          "description": "Deletes unused AR and XR files to shrink the app.",
+          "use": false,
+          "options": [
+            {
+              "key": "removeVpnLibrary",
+              "description": "Also deletes the WireGuard library. Brave VPN stops working."
+            }
+          ],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Skip Welcome Screens",
+          "description": "Reports the first-run flow complete; may skip essential consent, search or setup screens.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Stop Background Wakeups",
+          "description": "Disables the identified Chromium background-sync scheduler gate; other wakeups remain and site background sync can break.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Stop Promo Notifications",
+          "description": "Disables identified Chromium tips and retention notification entry points; other notifications may remain.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        },
+        {
+          "name": "Stop Text Sharing with System",
+          "description": "Disables Chromium's OnscreenContentProvider content-capture gate, not every possible text-sharing mechanism.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.98.63"
+          ]
+        }
+      ],
+      "developer": "com.brave"
+    },
+    {
       "app_name": "Google Photos",
       "package": "com.google.android.apps.photos",
       "patches": [
@@ -401,142 +607,6 @@
         }
       ],
       "developer": "JustNewDesigns"
-    },
-    {
-      "app_name": "Meesho: Online Shopping App",
-      "package": "com.meesho.supply",
-      "patches": [
-        {
-          "name": "Allow screenshots & screen recording",
-          "description": "Removes FLAG_SECURE and secure-surface flags from Meesho's windows so screenshots and screen recording work. Payment screens may still capture black.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Block analytics & tracking",
-          "description": "No-ops AppsFlyer, Mixpanel, Facebook App Events, Firebase Analytics, GMS AppMeasurement and Crashlytics logging in Meesho. Push notifications and login/payments keep working.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Bypass forced update",
-          "description": "Neutralizes Play Core's update-availability checks so Meesho does not block usage on a newer version. Running an outdated build may break.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Change package name",
-          "description": "Installs Meesho beside the official app by changing the package, permission names, provider authorities and launcher label. Payments (JusPay), Truecaller/Otpless login, Google sign-in and Shield anti-fraud may not work on the clone.",
-          "use": false,
-          "options": [
-            {
-              "key": "meeshoPackageName",
-              "description": "Package name for the cloned Meesho app."
-            },
-            {
-              "key": "meeshoAppName",
-              "description": "Launcher name for the cloned Meesho app."
-            }
-          ],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Disable in-app popup upsells",
-          "description": "Disables Meesho's InAppPopupActivity so full-screen promo/upsell popups never render. May break a flow that legitimately routes through it — verify first.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Disable reels autoplay",
-          "description": "Stops Meesho's reels from autoplaying muted previews. Opening a reel still plays normally. Heuristic — verify ExoPlayer anchors against the real APK.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Hide sponsored listings & ad slots",
-          "description": "Hides 'Ad'-labelled sponsored products in Meesho's search and feed by forcing app-side boolean ad gates to false. Heuristic — verify anchors against the real APK. Server still serves ads; only client rendering is affected.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Lock exported share-in / bank-link activities",
-          "description": "Makes Meesho's exported SharedTextRedirectionActivity and MyBankActivity non-exported. Internal navigation still works; external apps/links can no longer start them.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Packaging toolkit (signature, install source, MicroG)",
-          "description": "Applies the shared signature, install-source and GmsCore/MicroG patches to Meesho in one step. Does not bypass Play Integrity, Shield or fix payments.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Prefer external browser over Custom Tabs",
-          "description": "Removes Meesho's Custom Tabs service query so browser links can fall back to the normal external browser. No effect if Meesho launches Custom Tabs directly.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Remove dangerous permissions (keep storage & SMS)",
-          "description": "Removes contacts, phone-state, microphone, location, screen-capture detection and advertising-ID permissions from Meesho's manifest. Storage and SMS permissions are kept. Truecaller login, support voice calls and location-based address entry may degrade.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        },
-        {
-          "name": "Stop pull-notification alarms (keep push)",
-          "description": "Disables Meesho's alarm-based pull-notification receivers so the app is not periodically woken to fetch marketing notifications. FCM push keeps working.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "29.7",
-            "29.6"
-          ]
-        }
-      ],
-      "developer": "com.meesho"
     },
     {
       "app_name": "Microsoft Excel: Spreadsheets",
@@ -804,8 +874,17 @@
         },
         {
           "name": "Enable media downloads",
-          "description": "Forces the pin-level download eligibility flag so the Download action is available on every Pin (images and videos).",
+          "description": "Enables the pin-level image download eligibility flag. Use the separate experimental video download patch for supported video Pins.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.41.0"
+          ]
+        },
+        {
+          "name": "Enable video download",
+          "description": "Experimental: enables the download row on video Pins and saves an available MP4. Streaming-only or unavailable videos are reported instead of saved as images.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "14.41.0"
@@ -923,6 +1002,20 @@
           "name": "Remove ads",
           "description": "Hides promoted posts in feeds and banner ads in comment threads.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Show deleted comments",
+          "description": "Shows the original text of comments deleted or removed on Reddit, restored at render time from the free Arctic Shift archive (no API key; falls back to PullPush). Only the ids of deleted comments in the threads you open are sent, and restored text is prefixed with [archived]. Coverage depends on the archive; needs network. Off by default.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "2026.42.0",
@@ -1625,10 +1718,10 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "77b9e2bad97e24dfb0d0bda1ebaba71c752dfa2738c96cdc3b539283fe0c5ea5",
-  "release_notes": "## v2.2.2 — Universal patches: optimized & easier to use\n\nAll 24 universal patches now share a single optimization layer:\n\n* `UniversalUtils.kt` — single-pass manifest DOM traversal, tolerant list parsing (`parseTokens` + `RELAXED_LIST_VALIDATOR`), consistent `[Proteus/Universal]` logging and a `guarded()` fail-safe wrapper.\n* Six manifest patches refactored to one DOM pass; every universal patch now emits the shared log prefix.\n\n### `Remove dangerous permissions` (main usability target)\n* Replaced the one long comma-separated option with **16 category switches** (package visibility, phone, accounts, location, contacts, mic, camera, storage, SMS, calendar, sensors, nearby devices, screen-capture detection, ad ID, AdServices, notifications).\n* **All categories ON by default** (aggressive), as selected. The patch remains off by default.\n* New `Permissions to keep` and `Extra permissions to remove` lists, plus a legacy `Advanced: exact removal list` override for existing configs.\n* AdServices is now a toggle instead of an unconditional removal.\n\nAssets:\n* `patches-2.2.2.mpp` — Morphe patch bundle.\n* `proteus-universal-2.2.2.zip` — universal patch sources + updated audit.\n\n`patches-list.json` and README were regenerated from source by CI for this release. Aggressive defaults can break camera, storage, notifications or SMS features; use the keep-list or category switches to exempt them.\n",
-  "release_tag": "v2.2.2",
-  "release_date": "2026-11-05T18:38:26Z",
+  "fingerprint": "e42e25be69806274bf5227744387bff0825846e1904f8c918dc05525576bdfde",
+  "release_notes": "Proteus Patches v2.2.7 (pre-release)\r\n\r\nThis is the second v2.2.7 build. It replaces the earlier v2.2.7 .mpp with one built from current main (Reddit listing performance fix included). Same version number, same pre-release status; v2.2.3 remains the stable Latest release.\r\n\r\nWhat this pre-release adds and fixes:\r\n\r\n**Brave — six new opt-in patches** (ported from kveld9/kveld-morphe-patches, GPL-3.0, revision 8afd78f0b57964b9ae9a0a387bdd4ae157345707, targeting Brave v1.98.63). All default **off**; all depend on the `extractNativeLibs=true` compatibility patch from v2.2.6 (required to install patched Brave on 16 KB page-size devices). **Experimental and unverified on device** — no Brave APK was available to the author for testing; the targeted builds are the standalone `BraveMonoarm64.apk` / `BraveMonoarm.apk` v1.98.63.\r\n\r\n- **Remove Unused AI & VPN** — stubs the unused AR/XR native libraries (Impress renderer, androidx.xr OpenXR, ARCore) to shrink the APK; option `Remove VPN library` additionally stubs `libwg-go.so` and disables Brave VPN.\r\n- **Block Telemetry** — redirects the identified analytics, crash-upload and experiment endpoints (P3A `star-randsrv`/`collector.bsg`, `usage-ping.brave.com`, WDP `patterns`/`collector`/`star`/`quorum`, `cr.brave.com`, `crashpad.chromium.org`, `variations.brave.com`) to `0.0.0.0` by patching `libchrome.so` at fixed, pre-validated byte offsets (the patch aborts before writing anything on mismatch), strips the Play install-referrer permission, and rewrites the shopping-offers host literals (option `Block offers server`, on by default).\r\n- **Clean New Tab** — forces the sponsored Brave news/stats preference defaults off at runtime (NTP gate preference getters/listeners and layout initialization) so sponsored surfaces do not render; option `Hide shortcut tiles` additionally forces the most-visited tiles list off.\r\n- **Close Tab In Group Order** — preselects the previous tab in the same tab group when the active tab is closed; bulk closes, non-selected tabs, single-tab groups and session restores fall back to stock behavior.\r\n- **Brave Origin** — turns the Brave Origin feature switches (Rewards, News, Wallet, VPN, Leo AI) on by default at the Android resource layer and neutralizes the identified policy gatekeepers and the Leo AI feature flag in bytecode so the switches stick.\r\n- **Custom Brave theme** — rewrites the dark palette, Android system Material You role colors (`values-v31+`), tonal `lStar` luminance selectors and vector drawable background fills; defaults to pure OLED black with slate ink and Brave purple-blue accent; 13 options, colors are validated hex strings (this patcher has no color-picker option).\r\n\r\n**Reddit**\r\n\r\n- **Block AutoMod comments** — broader detection (plain `getKind()`/`getType()`, a wider author getter set) plus a canonical AutoModerator bot-footer fallback when the author getter cannot be resolved; a one-time `filter is live` probe line and throttled drop counters in logcat (`[Proteus][Block AutoMod]`) make the hook observable on-device.\r\n- **Show deleted comments** — outcome logging for every path (rows found, archive ids returned, restored vs. model-rewrite-failed vs. no-archived-copy), so a silent `[deleted]` is diagnosable with `adb logcat | grep -i proteus`. Very recent deletions (hours–days) are often not indexed by the archives yet and will stay `[deleted]`; see the manual coverage check in `docs/REDDIT-DELETED-COMMENTS.md`.\r\n- **Performance (new in this build)** — the three `Listing.children` helpers no longer redo a full reflective traversal of the whole row list on every `getChildren()` read (Compose reads it constantly on the UI path): results are memoized per list instance (identity-keyed, size-guarded LRU, bit-identical output). Fixes the animation/scroll lag reported on patched builds. See `docs/REDDIT-PERFORMANCE.md`. Patch behavior, fingerprints and default-off states are unchanged.\r\n\r\n**Verification**\r\n\r\n- Built and verified with the Morphe Manager v2.3.0 patcher; APK zip integrity and patch-source metadata verified (`verify_android_bundle.py`, `verify_patch_source.py`); `patches-list.json` regenerated (161 patches total); `:patches:testBravePrivacy` and the Pinterest video URL tests pass on CI. Main is green on both CI workflows.\r\n- Nothing in this release has been exercised on a real device; treat every patch as unverified until you test it. The Brave fingerprints and `libchrome.so` offsets are pinned to v1.98.63 standalone APKs.\r\n- v2.2.3 remains the stable Latest release; this is a pre-release.\r\n\r\nKnown limitations: the Reddit comment-thread patches only cover rows rendered through the `Listing.children` choke point; Custom Brave theme rewrites the dark palette only; archived-comment coverage is whatever the archives hold. See `docs/BRAVE.md`, `docs/REDDIT-DELETED-COMMENTS.md` and `docs/REDDIT-PERFORMANCE.md`.\r\n",
+  "release_tag": "v2.2.7",
+  "release_date": "2026-11-06T16:05:02Z",
   "isPreRelease": false,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",

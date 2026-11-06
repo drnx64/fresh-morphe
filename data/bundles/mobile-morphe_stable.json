@@ -2,9 +2,9 @@
   "bundle": "mobile-morphe",
   "channel": "stable",
   "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
-  "created_at": "2026-11-05T20:50:16",
-  "version": "1.0.11",
-  "description": "## [1.0.11](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.10...v1.0.11) (2026-11-05)\n\n\n### Features\n\n* add Plex on Android TV, DealSeek and White House patches, and YouTube TV quality and picture-in-picture fixes ([4f44861](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/4f44861338a0473729178807822e582da9101f98))",
+  "created_at": "2026-11-06T09:38:18",
+  "version": "1.0.12",
+  "description": "## [1.0.12](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.11...v1.0.12) (2026-11-06)\n\n\n### Features\n\n* add C-SPAN, NewsNation, The Daily Wire, USA TODAY, Substack, MLB, NPR, AP News, and NewsBreak, and support Pluto TV on Android TV ([1173da3](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/1173da345c569fefd1b41e4f2989594f8a9cd1fe))\n* add theScore, Shudder, Sundance Now, ESPN betting and prediction-market removal, and WaPo and CNN fixes ([1dcbf4b](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/1dcbf4b74b98ba12c8ae16de695186fc47131e21))",
   "apps": [
     {
       "app_name": "Downloadertablet",
@@ -629,6 +629,126 @@
       "developer": "com.bah"
     },
     {
+      "app_name": "MLB",
+      "package": "com.bamnetworks.mobile.android.gameday.atbat",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Signs in with Google through GmsCore instead of Google Play services.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneApp",
+              "description": "Installs the patched app beside the stock app. When off, the patched app keeps MLB's package name, and the stock app has to be uninstalled first."
+            },
+            {
+              "key": "packageName",
+              "description": "Package name to install the patched app under when Clone app is on."
+            }
+          ],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Hide betting odds",
+          "description": "Removes the betting-odds section from the scores sheet.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Hide surveys and rating prompt",
+          "description": "Stops the Qualtrics surveys and the Play Store rating pop-up.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Mask live ad breaks",
+          "description": "Covers live gambling-ad breaks with a notice.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads before on-demand videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "26.21.0.49"
+          ]
+        }
+      ],
+      "developer": "com.bamnetworks"
+    },
+    {
       "app_name": "Best Buy: Shop tech deals",
       "package": "com.bestbuy.android",
       "patches": [
@@ -921,6 +1041,15 @@
           ]
         },
         {
+          "name": "Faster launch",
+          "description": "Opens the app without waiting to download its feature settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0"
+          ]
+        },
+        {
           "name": "Hide device identifiers",
           "description": "Gives the app a random Android ID and a zeroed advertising ID.",
           "use": false,
@@ -1074,6 +1203,67 @@
         }
       ],
       "developer": "com.cvs"
+    },
+    {
+      "app_name": "Daily Wire",
+      "package": "com.dailywire.thedailywire",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops Segment, comScore, Adjust, the Facebook SDK, and Firebase/Google Analytics.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.5.21"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.5.21"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Signs in with Google through GmsCore instead of Google Play services.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneApp",
+              "description": "Installs the patched app beside the stock app. When off, the patched app keeps The Daily Wire's package name, and the stock app has to be uninstalled first."
+            },
+            {
+              "key": "packageName",
+              "description": "Package name to install the patched app under when Clone app is on."
+            }
+          ],
+          "compatible_versions": [
+            "3.5.21"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.5.21"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the banner ads and their \"Advertisement\" slots, and the pre-roll ads before videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.5.21"
+          ]
+        }
+      ],
+      "developer": "The Daily Wire"
     },
     {
       "app_name": "DealSeek: Coupons & Discounts",
@@ -1271,6 +1461,138 @@
       "developer": "com.disney"
     },
     {
+      "app_name": "Sundance Now: Indie Films",
+      "package": "com.dramafever.docclub",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, attribution, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.0.25.2"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.0.25.2"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.0.25.2"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.0.25.2"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.0.25.2"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "5.0.25.2"
+          ]
+        }
+      ],
+      "developer": "AMC Global Media Inc."
+    },
+    {
+      "app_name": "Shudder: Horror & Thrillers",
+      "package": "com.dramafever.shudder",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, playback measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "10.1.1"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "10.1.1"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "10.1.1"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "10.1.1"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "10.1.1"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "10.1.1"
+          ]
+        }
+      ],
+      "developer": "AMC Global Media Inc."
+    },
+    {
       "app_name": "MGM+",
       "package": "com.epix.epix.now",
       "patches": [
@@ -1404,6 +1726,15 @@
           ]
         },
         {
+          "name": "Hide betting",
+          "description": "Removes odds, sportsbook links and promos, and DraftKings account linking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.29.0"
+          ]
+        },
+        {
           "name": "Hide device identifiers",
           "description": "Gives the app a random Android ID and a zeroed advertising ID.",
           "use": false,
@@ -1455,6 +1786,43 @@
         }
       ],
       "developer": "com.espn"
+    },
+    {
+      "app_name": "theScore: Sports News & Scores",
+      "package": "com.fivemobile.thescore",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, attribution, and identity tracking services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0",
+            "26.15.0"
+          ]
+        }
+      ],
+      "developer": "com.fivemobile"
     },
     {
       "app_name": "FOX One: Live News, Sports, TV",
@@ -1674,6 +2042,15 @@
           ]
         },
         {
+          "name": "Hide prediction markets",
+          "description": "Removes Kalshi and Polymarket market widgets from articles and live blogs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.49.2"
+          ]
+        },
+        {
           "name": "Hide VPN connection",
           "description": "Hides an active VPN from the app's checks on the phone.",
           "use": false,
@@ -1796,7 +2173,7 @@
         },
         {
           "name": "Mask live ad breaks",
-          "description": "Covers and mutes YouTube TV's own ads in live breaks.",
+          "description": "Covers and mutes the ads YouTube TV inserts into live breaks, but not the commercials built into the broadcast.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -2304,6 +2681,70 @@
       "developer": "com.nbcnews"
     },
     {
+      "app_name": "NewsNation",
+      "package": "com.nexstar.newsnation",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the apps' analytics, attribution, and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "510.3.0",
+            "4.71"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "510.3.0",
+            "4.71"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "510.3.0",
+            "4.71"
+          ]
+        },
+        {
+          "name": "Hide rating prompt (Android TV)",
+          "description": "Stops the \"rate this app\" dialog in the Android TV app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.71"
+          ]
+        },
+        {
+          "name": "Skip ads (Android TV)",
+          "description": "Removes the video ads before clips in the Android TV app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.71"
+          ]
+        },
+        {
+          "name": "Skip ads (phone)",
+          "description": "Removes the banner, native, sponsored, and video ads in the phone app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "510.3.0"
+          ]
+        }
+      ],
+      "developer": "Nexstar Inc."
+    },
+    {
       "app_name": "NYTimes: US and Global News",
       "package": "com.nytimes.android",
       "patches": [
@@ -2395,6 +2836,167 @@
         }
       ],
       "developer": "com.nytimes"
+    },
+    {
+      "app_name": "NewsBreak: Local News & Alerts",
+      "package": "com.particlenews.newsbreak",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, attribution, and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Block installed-app scan",
+          "description": "Stops the app from checking which other apps are on your phone and reporting them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Disable NewsBreak AI",
+          "description": "Turns off the Nia AI chat and the Scout reading assistant.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Signs in with Google through GmsCore instead of Google Play services.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneApp",
+              "description": "Installs the patched app beside the stock app. When off, the patched app keeps NewsBreak's package name, and the stock app has to be uninstalled first."
+            },
+            {
+              "key": "packageName",
+              "description": "Package name to install the patched app under when Clone app is on."
+            }
+          ],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Hide AI summaries",
+          "description": "Hides the AI-written summary card on crime and local-alert pages.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Hide My Town intro",
+          "description": "Removes the \"Meet My Town\" pop-up, the My Town tooltip, and the tab's \"new\" badge.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Hide Premium upsells",
+          "description": "Removes the \"Ad-free Reading\" banners, Upgrade buttons, and Premium offers. Leave it off if you pay for Premium.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Removes the \"How are we doing?\" pop-up and the Play Store rating request.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Route traffic through a proxy",
+          "description": "Sends the app's network traffic through a proxy you choose, such as Orbot or a VPN service's SOCKS5 server.",
+          "use": false,
+          "options": [
+            {
+              "key": "proxy",
+              "description": "The proxy address, as socks5://host:port or http://host:port. A SOCKS5 proxy that needs a login is written socks5://user:password@host:port; the login is stored in the patched app."
+            }
+          ],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads in the feed, the app-open and full-screen ads, and the ads in articles.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "26.44.1"
+          ]
+        }
+      ],
+      "developer": "com.particlenews"
     },
     {
       "app_name": "PBS: TV Shows & Documentaries",
@@ -2588,6 +3190,58 @@
         }
       ],
       "developer": "com.plexapp"
+    },
+    {
+      "app_name": "Substack",
+      "package": "com.substack.app",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops Sentry, the Facebook SDK, AppsFlyer, and on-device ad retargeting.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.12.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.12.0"
+          ]
+        },
+        {
+          "name": "Disable screenshot detection",
+          "description": "Stops the app from reacting when you take a screenshot.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.12.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.12.0"
+          ]
+        },
+        {
+          "name": "Hide follow upsell",
+          "description": "Removes the \"Follow\" upsell card in the Notes feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.12.0"
+          ]
+        }
+      ],
+      "developer": "Substack Inc."
     },
     {
       "app_name": "Target: Shop. Style. Save.",
@@ -3177,6 +3831,67 @@
       "developer": "com.usablenet"
     },
     {
+      "app_name": "USA TODAY: US & Breaking News",
+      "package": "com.usatoday.android.news",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, attribution, and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.15.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.15.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "8.15.0"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops the Play Store rating request.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.15.0"
+          ]
+        },
+        {
+          "name": "Hide subscription prompts",
+          "description": "Removes the \"Sale\" bar in articles, the Subscribe links, and the subscription pop-ups.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.15.0"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads in the feeds, articles, galleries, and videos, and the ad-free upsells.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.15.0"
+          ]
+        }
+      ],
+      "developer": "USA TODAY"
+    },
+    {
       "app_name": "Mint Mobile",
       "package": "com.uvnv.mintsim",
       "patches": [
@@ -3399,6 +4114,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3408,6 +4124,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3417,6 +4134,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3426,6 +4144,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3435,6 +4154,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3444,6 +4164,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3453,6 +4174,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         },
@@ -3467,6 +4189,7 @@
             }
           ],
           "compatible_versions": [
+            "7.18.3",
             "7.18.1"
           ]
         }
@@ -4061,12 +4784,12 @@
         },
         {
           "name": "Route traffic through a proxy",
-          "description": "Sends the app's network traffic through a proxy you choose, such as Orbot.",
+          "description": "Sends the app's network traffic through a proxy you choose, such as Orbot or a VPN service's SOCKS5 server.",
           "use": false,
           "options": [
             {
               "key": "proxy",
-              "description": "The proxy address, as socks5://host:port or http://host:port."
+              "description": "The proxy address, as socks5://host:port or http://host:port. A SOCKS5 proxy that needs a login is written socks5://user:password@host:port; the login is stored in the patched app."
             }
           ],
           "compatible_versions": [
@@ -4098,6 +4821,299 @@
         }
       ],
       "developer": "gov.whitehouse"
+    },
+    {
+      "app_name": "Android Auto",
+      "package": "mnn.android",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, attribution, and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Signs in with Google through GmsCore instead of Google Play services.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneApp",
+              "description": "Installs the patched app beside the stock app. When off, the patched app keeps AP News's package name, and the stock app has to be uninstalled first."
+            },
+            {
+              "key": "packageName",
+              "description": "Package name to install the patched app under when Clone app is on."
+            }
+          ],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Hide donate button",
+          "description": "Removes the Donate link from Top Stories and the Donate card from the account screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Route traffic through a proxy",
+          "description": "Sends the app's network traffic through a proxy you choose, such as Orbot or a VPN service's SOCKS5 server.",
+          "use": false,
+          "options": [
+            {
+              "key": "proxy",
+              "description": "The proxy address, as socks5://host:port or http://host:port. A SOCKS5 proxy that needs a login is written socks5://user:password@host:port; the login is stored in the patched app."
+            }
+          ],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads and sponsored rows in the feed and articles, the sticky banner, and the ads before videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "6.31.2 PROD"
+          ]
+        }
+      ],
+      "developer": "mnn.android"
+    },
+    {
+      "app_name": "C-SPAN Now",
+      "package": "org.cspan.app",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the Facebook SDK, Firebase/Google Analytics, and on-device ad retargeting.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.25.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.25.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.25.0"
+          ]
+        },
+        {
+          "name": "Hide promo banners",
+          "description": "Removes C-SPAN's program promo banners above the player and on the Watch tab.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.25.0"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the pre-roll ads before archive and on-demand videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.25.0"
+          ]
+        }
+      ],
+      "developer": "National Cable Satellite Corporation"
+    },
+    {
+      "app_name": "NPR: National & Local News",
+      "package": "org.npr.android.news",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, attribution, and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Fix media connection crash",
+          "description": "Stops the app from closing when Android Auto, the Google app, or another player connects to it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Hide donate buttons",
+          "description": "Hides the Donate buttons in the top bar, on Home, on station pages, and on live streams.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Hide Waze bar",
+          "description": "Turns off the \"Drive with Waze\" bar by default. You can turn it back on in the app's settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Opt out of data sale & sharing",
+          "description": "Rejects all optional cookies on the NPR web pages inside the app and hides the cookie banner.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Route traffic through a proxy",
+          "description": "Sends the app's network traffic through a proxy you choose, such as Orbot or a VPN service's SOCKS5 server.",
+          "use": false,
+          "options": [
+            {
+              "key": "proxy",
+              "description": "The proxy address, as socks5://host:port or http://host:port. A SOCKS5 proxy that needs a login is written socks5://user:password@host:port; the login is stored in the patched app."
+            }
+          ],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the sponsor banners in the feed, the ad spaces in web stories, and the ads before videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "7.10.0"
+          ]
+        }
+      ],
+      "developer": "NPR"
     },
     {
       "app_name": "PlutoTV: Stream Free Movies/TV",
@@ -4233,6 +5249,15 @@
           ]
         },
         {
+          "name": "Hide prediction markets",
+          "description": "Removes Polymarket odds from story cards.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "15.12.0.42675"
+          ]
+        },
+        {
           "name": "Hide VPN connection",
           "description": "Hides an active VPN from the app's checks on the phone.",
           "use": false,
@@ -4278,10 +5303,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "e8b0ea42c44dc34c03d2f86a8eb933c293b610723aa1544092f3ad51580b85df",
-  "release_notes": "## [1.0.11](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.10...v1.0.11) (2026-11-05)\n\n\n### Features\n\n* add Plex on Android TV, DealSeek and White House patches, and YouTube TV quality and picture-in-picture fixes ([4f44861](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/4f44861338a0473729178807822e582da9101f98))\n\n\n\n",
-  "release_tag": "v1.0.11",
-  "release_date": "2026-11-05T20:51:07Z",
+  "fingerprint": "713a08c1582c384cb7da92a939f14f0a83d13e3581339ab6cd41a2d9cf8e1dd6",
+  "release_notes": "## [1.0.12](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.11...v1.0.12) (2026-11-06)\n\n\n### Features\n\n* add C-SPAN, NewsNation, The Daily Wire, USA TODAY, Substack, MLB, NPR, AP News, and NewsBreak, and support Pluto TV on Android TV ([1173da3](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/1173da345c569fefd1b41e4f2989594f8a9cd1fe))\n* add theScore, Shudder, Sundance Now, ESPN betting and prediction-market removal, and WaPo and CNN fixes ([1dcbf4b](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/1dcbf4b74b98ba12c8ae16de695186fc47131e21))\n\n\n\n",
+  "release_tag": "v1.0.12",
+  "release_date": "2026-11-06T09:39:14Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",

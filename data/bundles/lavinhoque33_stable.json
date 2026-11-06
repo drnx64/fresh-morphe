@@ -2,9 +2,9 @@
   "bundle": "lavinhoque33",
   "channel": "stable",
   "repo_url": "https://github.com/lavinhoque33/revanced-patches",
-  "created_at": "2026-11-04T07:07:11",
-  "version": "1.29.1",
-  "description": "## Bug Fixes\n\n### YouTube\n- **Feed card layout, video previews:** A video that plays inside a card in the feed is visible again. The card colour was painted over the video, so you saw only a flat colour with the mute and CC buttons on it. The card keeps its dynamic colour under the title and channel row.\n- **Feed card layout, Shorts shelf:** The autoplaying Short in the Shorts shelf no longer shows as an empty dark box.\n- **Feed card layout, action icons:** The like, comment and save icons keep their colour. A dark tint from another card could stay on an icon when the app reused its view.\n\n## Compatibility\n- YouTube: **21.39.525, 21.13.164, 20.05.46**.\n- YouTube Music: **9.40.51, 9.15.51, 8.30.54**.\n\n[Full changelog](https://github.com/lavinhoque33/revanced-patches/compare/v1.29.0...v1.29.1)",
+  "created_at": "2026-11-06T14:15:09",
+  "version": "1.30.0",
+  "description": "Merged anddea/revanced-patches@dev (89104d55b, v4.4.0-dev.5).\n\n## Features\n\n### YouTube\n- **Built-in downloader, subtitles:** Choose native subtitle languages and SRT or VTT for playlist downloads. A subtitle failure does not stop a video; the batch summary reports saved, skipped and rate-limited tracks.\n- **Built-in downloader, SponsorBlock:** Save SponsorBlock segments with single or playlist downloads and choose the categories below the subtitle row. The built-in player follows your category behavior, including background audio auto-skips and a manual skip button, without cutting the media file.\n- **Built-in downloader, playlist picker:** Select playlist items before queuing them, with thumbnails, durations and an individual video height cap or audio-only choice. Already-downloaded items start unchecked, and the batch keeps its global quality, subtitle and SponsorBlock choices.\n- **Captions:** New Captions patch (secondary caption language, caption scale, stable caption blocks) from upstream.\n- **Translate live chat:** Live chat translation with provider, language, exclusion, style and colour settings from upstream.\n- **Download post images:** A download action for community post images from upstream.\n- **Unlock queue:** The video queue unlock option from upstream (YouTube 20.21 or later).\n- **Navigation bar:** Navigation bar style option, a Watch later navigation item and a reorderable navigation bar from upstream. The hide switches of single navigation buttons are replaced by the navigation bar order setting.\n- **Copy text:** New select text option.\n- **Search comments:** Uses the upstream implementation; the setting stays off by default under Player.\n- **Settings:** New settings indicator and a page padding fix from upstream.\n\n### YouTube Music\n- **Lyrics:** The upstream lyrics rework (line scale, centering, providers, miniplayer lyrics options).\n\n### Both\n- **Translations:** Strings of the fork and upstream in all languages.\n\n## Bug Fixes\n- **YouTube, built-in downloader:** The complete footer stays visible in landscape and at larger font sizes, including the playlist picker. The subtitle row has a CC icon and the SponsorBlock toggle has its shield icon. A dismissed picker ignores late loading results, also after a font size change.\n- **YouTube Music, track crossfade:** Repeat-one detection works again.\n- **Visual preferences icons:** Icons for all new settings.\n\n## Compatibility\n- YouTube: **21.39.525, 21.13.164, 20.05.46**.\n- YouTube Music: **9.40.51, 9.15.51, 8.30.54**.\n\nNot device-verified: the playlist sheet in landscape, a re-seek into a skip-once segment, the background-audio skip, Translate live chat, and the Music translate/romanize buttons.\n\n[Full changelog](https://github.com/lavinhoque33/revanced-patches/compare/v1.29.1...v1.30.0)",
   "apps": [
     {
       "app_name": "YouTube Music",
@@ -754,7 +754,7 @@
         },
         {
           "name": "Third-party lyrics",
-          "description": "Adds an option to show synced lyrics with experience enhancement from 18+ providers in the lyrics panel.",
+          "description": "Adds an option to show synced lyrics with experience enhancement from 19+ providers in the lyrics panel.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -916,6 +916,17 @@
           ]
         },
         {
+          "name": "Captions",
+          "description": "Adds options to disable captions from being automatically enabled, select a preferred and a secondary caption language, add more auto-translate languages, and show captions in stable blocks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.39.525",
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
           "name": "Change form factor",
           "description": "Adds an option to change the UI appearance to a phone, tablet, or automotive device.",
           "use": true,
@@ -972,7 +983,7 @@
         },
         {
           "name": "Copy text",
-          "description": "Adds options to copy the video title and comments by tapping and holding them.",
+          "description": "Adds options to copy the video title and comments, and to select text of video descriptions and posts, by tapping and holding them.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1183,6 +1194,17 @@
         {
           "name": "Disable sign in to TV popup",
           "description": "Adds an option to disable the popup asking to sign into a TV on the same local network.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.39.525",
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Download post images",
+          "description": "Adds a button and a menu item to download the images and GIFs of posts.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1752,7 +1774,7 @@
         },
         {
           "name": "Return YouTube Dislike",
-          "description": "Adds an option to show the dislike count of videos using the Return YouTube Dislike API, and the like count and like percentage on the thumbnails of feed videos.",
+          "description": "Adds an option to show the dislike count of videos using the Return YouTube Dislike API.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2026,6 +2048,17 @@
           ]
         },
         {
+          "name": "Translate live chat",
+          "description": "Adds an option to translate live chat and live chat replay messages.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "21.39.525",
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
           "name": "Translations for YouTube",
           "description": "Add translations or remove string resources.",
           "use": true,
@@ -2043,6 +2076,17 @@
               "description": "A list of string resources to be kept, separated by commas.\nString resources not in the list will be removed from the app.\n\nDefault string resource, English, is not removed."
             }
           ],
+          "compatible_versions": [
+            "21.39.525",
+            "21.13.164",
+            "20.05.46"
+          ]
+        },
+        {
+          "name": "Unlock queue",
+          "description": "Adds an option to unlock YouTube’s video queue.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "21.39.525",
             "21.13.164",
@@ -2118,14 +2162,14 @@
           ]
         }
       ],
-      "developer": "com.google"
+      "developer": "Google LLC"
     }
   ],
   "patches_name": "RVX Patches",
-  "fingerprint": "40e741aaf2574020e1d05d01aeac128cc5adc37c358ccc776bc0a80457365e17",
-  "release_notes": "## Bug Fixes\n\n### YouTube\n- **Feed card layout, video previews:** A video that plays inside a card in the feed is visible again. The card colour was painted over the video, so you saw only a flat colour with the mute and CC buttons on it. The card keeps its dynamic colour under the title and channel row.\n- **Feed card layout, Shorts shelf:** The autoplaying Short in the Shorts shelf no longer shows as an empty dark box.\n- **Feed card layout, action icons:** The like, comment and save icons keep their colour. A dark tint from another card could stay on an icon when the app reused its view.\n\n## Compatibility\n- YouTube: **21.39.525, 21.13.164, 20.05.46**.\n- YouTube Music: **9.40.51, 9.15.51, 8.30.54**.\n\n[Full changelog](https://github.com/lavinhoque33/revanced-patches/compare/v1.29.0...v1.29.1)\n",
-  "release_tag": "v1.29.1",
-  "release_date": "2026-11-04T07:07:22Z",
+  "fingerprint": "92833a7e55b47c87c5e99e22bcc2bd4eb0fab1c210fb1f469634e3ee16410e14",
+  "release_notes": "Merged anddea/revanced-patches@dev (89104d55b, v4.4.0-dev.5).\n\n## Features\n\n### YouTube\n- **Built-in downloader, subtitles:** Choose native subtitle languages and SRT or VTT for playlist downloads. A subtitle failure does not stop a video; the batch summary reports saved, skipped and rate-limited tracks.\n- **Built-in downloader, SponsorBlock:** Save SponsorBlock segments with single or playlist downloads and choose the categories below the subtitle row. The built-in player follows your category behavior, including background audio auto-skips and a manual skip button, without cutting the media file.\n- **Built-in downloader, playlist picker:** Select playlist items before queuing them, with thumbnails, durations and an individual video height cap or audio-only choice. Already-downloaded items start unchecked, and the batch keeps its global quality, subtitle and SponsorBlock choices.\n- **Captions:** New Captions patch (secondary caption language, caption scale, stable caption blocks) from upstream.\n- **Translate live chat:** Live chat translation with provider, language, exclusion, style and colour settings from upstream.\n- **Download post images:** A download action for community post images from upstream.\n- **Unlock queue:** The video queue unlock option from upstream (YouTube 20.21 or later).\n- **Navigation bar:** Navigation bar style option, a Watch later navigation item and a reorderable navigation bar from upstream. The hide switches of single navigation buttons are replaced by the navigation bar order setting.\n- **Copy text:** New select text option.\n- **Search comments:** Uses the upstream implementation; the setting stays off by default under Player.\n- **Settings:** New settings indicator and a page padding fix from upstream.\n\n### YouTube Music\n- **Lyrics:** The upstream lyrics rework (line scale, centering, providers, miniplayer lyrics options).\n\n### Both\n- **Translations:** Strings of the fork and upstream in all languages.\n\n## Bug Fixes\n- **YouTube, built-in downloader:** The complete footer stays visible in landscape and at larger font sizes, including the playlist picker. The subtitle row has a CC icon and the SponsorBlock toggle has its shield icon. A dismissed picker ignores late loading results, also after a font size change.\n- **YouTube Music, track crossfade:** Repeat-one detection works again.\n- **Visual preferences icons:** Icons for all new settings.\n\n## Compatibility\n- YouTube: **21.39.525, 21.13.164, 20.05.46**.\n- YouTube Music: **9.40.51, 9.15.51, 8.30.54**.\n\nNot device-verified: the playlist sheet in landscape, a re-seek into a skip-once segment, the background-audio skip, Translate live chat, and the Music translate/romanize buttons.\n\n[Full changelog](https://github.com/lavinhoque33/revanced-patches/compare/v1.29.1...v1.30.0)\n",
+  "release_tag": "v1.30.0",
+  "release_date": "2026-11-06T14:25:39Z",
   "isPreRelease": false,
   "stars": 15,
   "avatarUrl": "https://avatars.githubusercontent.com/u/14330893?v=4&s=128",
