@@ -63,10 +63,13 @@ def _sync_db(db_path=None):
     from server.import_legacy import import_data
 
     result = import_data(db_path or DB_PATH, DATA_DIR, reset=False)
-    log.info(
+    line = (
         f"DB sync complete: {result['counts']['bundles']} bundles, "
         f"{result['counts']['changes']} change days, version {result['data_version']}"
     )
+    if any(result["pruned"].values()):
+        line += f", pruned {result['pruned']}"
+    log.info(line)
     return result
 
 

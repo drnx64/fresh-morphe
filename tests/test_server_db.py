@@ -71,6 +71,9 @@ def test_import_counts(migrated, source_index):
     assert counts["changes"] == len(expected_days)
     assert counts["repos"] > 0
     assert result["missing_records"] == []
+    # A fresh import has nothing stale: prune only removes rows that left the
+    # index after the DB was built.
+    assert result["pruned"] == {"bundles": 0, "apps": 0, "repos": 0}
 
 
 def test_latest_is_preserved(migrated, source_index):
@@ -195,9 +198,15 @@ def test_fts_is_populated(migrated, source_index):
     conn = connect(str(db_path), readonly=True)
     try:
         assert conn.execute("SELECT COUNT(*) FROM apps_fts").fetchone()[0] == expected["apps"]
-        assert conn.execute("SELECT COUNT(*) FROM patches_fts").fetchone()[0] == expected["patches"]
         rows = conn.execute("SELECT package FROM apps_fts WHERE apps_fts MATCH 'nuvio' LIMIT 5").fetchall()
         assert rows
+        # patches_fts is gone for good: nothing queried it (patch search is
+        # LIKE '%..%', whose leading wildcard cannot use an FTS index) yet its
+        # token index cost ~15 MB. Its shadow tables and triggers go with it.
+        names = {row[0] for row in conn.execute("SELECT name FROM sqlite_master")}
+        assert not any(name.startswith("patches_fts") for name in names)
+        assert "patches_name_idx" not in names
+        assert not {"patches_ai", "patches_ad", "patches_au"} & names
     finally:
         conn.close()
 
@@ -212,6 +221,8 @@ def test_reimport_is_idempotent(migrated):
     assert second["counts"]["patches"] == first["counts"]["patches"]
     assert second["counts"]["releases"] == first["counts"]["releases"]
     assert second["counts"]["changes"] == first["counts"]["changes"]
+    # Re-importing an index that still matches the DB prunes nothing.
+    assert second["pruned"] == {"bundles": 0, "apps": 0, "repos": 0}
 
 
 def test_today_changes_are_stored(migrated):
@@ -470,5 +481,327 @@ def test_build_releases_is_clamped_to_stored_history(migrated):
     try:
         repo_id = conn.execute("SELECT repo_id FROM releases LIMIT 1").fetchone()[0]
         assert len(build_releases(conn, repo_id, limit=200)) <= RELEASE_KEEP
+    finally:
+        conn.close()
+
+
+def _write_mini_data(data_dir, index, details, extra_state=None):
+    """A minimal pipeline data dir: one live bundle, optional state files."""
+    os.makedirs(os.path.join(data_dir, "bundles"), exist_ok=True)
+    os.makedirs(os.path.join(data_dir, "state"), exist_ok=True)
+    with open(os.path.join(data_dir, "bundles", "_index.json"), "w", encoding="utf-8") as fh:
+        json.dump(index, fh)
+    for key, record in details.items():
+        path = os.path.join(data_dir, "bundles", key.replace(":", "_") + ".json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(record, fh)
+    for filename, value in (extra_state or {}).items():
+        with open(os.path.join(data_dir, "state", filename), "w", encoding="utf-8") as fh:
+            json.dump(value, fh)
+
+
+def _mini_bundle(repo_url="https://github.com/live/repo"):
+    entry = {
+        "bundle": "live",
+        "channel": "stable",
+        "version": "1.0",
+        "apps": [],
+        "repo_url": repo_url,
+    }
+    return {"live:stable": entry}, {"live:stable": dict(entry)}
+
+
+def test_prune_removes_stale_bundles_and_theirs(tmp_path):
+    """Rows that leave `_index.json` die on the next import.
+
+    The bundle goes first, then everything only it claimed: its patches (and
+    targets), its bundle_apps links, the app left orphaned, and the repo —
+    with its releases — that lost its last bundle. This is the phone's
+    558-row / 27%-of-patches fix.
+    """
+    data_dir = str(tmp_path / "data")
+    index, details = _mini_bundle()
+    _write_mini_data(data_dir, index, details)
+    db_path = str(tmp_path / "prune.db")
+    import_data(db_path, data_dir, reset=True)
+
+    conn = connect(db_path)
+    try:
+        repo_id = conn.execute(
+            "INSERT INTO repos(url, url_key, slug) VALUES (?, ?, ?)",
+            ("https://github.com/gone/repo", "https://github.com/gone/repo", "gone/repo"),
+        ).lastrowid
+        conn.execute(
+            "INSERT INTO releases(repo_id, tag, published_at) VALUES (?, 'v1', '2026-01-01')",
+            (repo_id,),
+        )
+        bundle_id = conn.execute(
+            "INSERT INTO bundles(repo_id, bundle, channel) VALUES (?, 'gone', 'stable')",
+            (repo_id,),
+        ).lastrowid
+        app_id = conn.execute(
+            "INSERT INTO apps(package, name) VALUES ('com.gone', 'Gone')"
+        ).lastrowid
+        conn.execute(
+            "INSERT INTO bundle_apps(bundle_id, app_id, name) VALUES (?, ?, 'Gone')",
+            (bundle_id, app_id),
+        )
+        patch_id = conn.execute(
+            "INSERT INTO patches(bundle_id, app_id, name) VALUES (?, ?, 'Stale patch')",
+            (bundle_id, app_id),
+        ).lastrowid
+        conn.execute(
+            "INSERT INTO patch_targets(patch_id, version) VALUES (?, '1.0')",
+            (patch_id,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    result = import_data(db_path, data_dir, reset=False)
+
+    assert result["pruned"] == {"bundles": 1, "apps": 1, "repos": 1}
+    conn = connect(db_path, readonly=True)
+    try:
+        probes = {
+            "stale bundle": ("SELECT COUNT(*) FROM bundles WHERE id = ?", (bundle_id,)),
+            "its patch": ("SELECT COUNT(*) FROM patches WHERE id = ?", (patch_id,)),
+            "its targets": ("SELECT COUNT(*) FROM patch_targets WHERE patch_id = ?", (patch_id,)),
+            "its app link": ("SELECT COUNT(*) FROM bundle_apps WHERE bundle_id = ?", (bundle_id,)),
+            "its orphaned app": ("SELECT COUNT(*) FROM apps WHERE id = ?", (app_id,)),
+            "its repo": ("SELECT COUNT(*) FROM repos WHERE id = ?", (repo_id,)),
+            "its releases": ("SELECT COUNT(*) FROM releases WHERE repo_id = ?", (repo_id,)),
+        }
+        for label, (sql, params) in probes.items():
+            assert conn.execute(sql, params).fetchone()[0] == 0, label
+        # The live bundle and its repo are untouched.
+        assert conn.execute(
+            "SELECT COUNT(*) FROM bundles WHERE bundle = 'live' AND channel = 'stable'"
+        ).fetchone()[0] == 1
+        assert conn.execute(
+            "SELECT COUNT(*) FROM repos WHERE url_key = 'https://github.com/live/repo'"
+        ).fetchone()[0] == 1
+    finally:
+        conn.close()
+
+
+def test_prune_spares_worker_tracked_repos(tmp_path):
+    """Repos the worker tracks in `repo_sources` are exempt from pruning.
+
+    The worker feeds those rows from the awesome-morphe mirror — they are not
+    in `_index.json` at all — so deleting them would fight a writer that owns
+    them. An untracked repo with no bundles still goes.
+    """
+    data_dir = str(tmp_path / "data")
+    index, details = _mini_bundle()
+    _write_mini_data(data_dir, index, details)
+    db_path = str(tmp_path / "worker.db")
+    import_data(db_path, data_dir, reset=True)
+
+    conn = connect(db_path)
+    try:
+        # (a) tracked repo whose bundle left the index
+        tracked_id = conn.execute(
+            "INSERT INTO repos(url, url_key, slug) VALUES (?, ?, ?)",
+            ("https://github.com/tracked/one", "https://github.com/tracked/one", "tracked/one"),
+        ).lastrowid
+        conn.execute(
+            "INSERT INTO repo_sources(url_key, branch, hash) VALUES (?, 'main', 'abc')",
+            ("https://github.com/tracked/one",),
+        )
+        tracked_bundle_id = conn.execute(
+            "INSERT INTO bundles(repo_id, bundle, channel) VALUES (?, 'tracked-one', 'stable')",
+            (tracked_id,),
+        ).lastrowid
+        # (b) tracked repo with no bundles at all
+        tracked_two_id = conn.execute(
+            "INSERT INTO repos(url, url_key, slug) VALUES (?, ?, ?)",
+            ("https://github.com/tracked/two", "https://github.com/tracked/two", "tracked/two"),
+        ).lastrowid
+        conn.execute(
+            "INSERT INTO repo_sources(url_key, branch, hash) VALUES (?, 'dev', 'def')",
+            ("https://github.com/tracked/two",),
+        )
+        # (c) untracked repo with no bundles — e.g. left over from an older run
+        dead_id = conn.execute(
+            "INSERT INTO repos(url, url_key, slug) VALUES (?, ?, ?)",
+            ("https://github.com/dead/repo", "https://github.com/dead/repo", "dead/repo"),
+        ).lastrowid
+        conn.commit()
+    finally:
+        conn.close()
+
+    result = import_data(db_path, data_dir, reset=False)
+
+    assert result["pruned"] == {"bundles": 0, "apps": 0, "repos": 1}
+    conn = connect(db_path, readonly=True)
+    try:
+        assert conn.execute(
+            "SELECT COUNT(*) FROM bundles WHERE id = ?", (tracked_bundle_id,)
+        ).fetchone()[0] == 1
+        for repo_id in (tracked_id, tracked_two_id):
+            assert conn.execute(
+                "SELECT COUNT(*) FROM repos WHERE id = ?", (repo_id,)
+            ).fetchone()[0] == 1
+        assert conn.execute("SELECT COUNT(*) FROM repos WHERE id = ?", (dead_id,)).fetchone()[0] == 0
+    finally:
+        conn.close()
+
+
+def test_release_cache_cannot_recreate_missing_repos(tmp_path):
+    """The release loop annotates existing repos only.
+
+    It used to call `ensure_repo`, re-creating repos that had left the index
+    on every run — rows prune would delete again in the same transaction. A
+    repo pinned in `repo_sources` (exempt from prune) makes the difference
+    observable: nothing may conjure it here.
+    """
+    data_dir = str(tmp_path / "data")
+    index, details = _mini_bundle()
+    _write_mini_data(
+        data_dir,
+        index,
+        details,
+        extra_state={
+            "release_cache.json": {
+                "https://github.com/live/repo": {
+                    "fetched_at": 1.0,
+                    "releases": [
+                        {"tag": "v9", "body": "notes", "dateReleased": "2026-01-01"}
+                    ],
+                },
+                "https://github.com/absent/repo": {
+                    "fetched_at": 1.0,
+                    "releases": [
+                        {"tag": "v1", "body": "stale", "dateReleased": "2026-01-01"}
+                    ],
+                },
+            }
+        },
+    )
+    db_path = str(tmp_path / "release-cache.db")
+    import_data(db_path, data_dir, reset=True)
+
+    conn = connect(db_path)
+    try:
+        conn.execute(
+            "INSERT INTO repo_sources(url_key, branch, hash) VALUES ('https://github.com/absent/repo', 'main', 'abc')"
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    import_data(db_path, data_dir, reset=False)
+
+    conn = connect(db_path, readonly=True)
+    try:
+        keys = {row[0] for row in conn.execute("SELECT url_key FROM repos")}
+        assert keys == {"https://github.com/live/repo"}
+        # The live repo still gets its note from the cache.
+        assert conn.execute(
+            "SELECT COUNT(*) FROM releases r JOIN repos rp ON rp.id = r.repo_id "
+            "WHERE rp.url_key = 'https://github.com/live/repo' AND r.tag = 'v9'"
+        ).fetchone()[0] == 1
+        assert conn.execute("SELECT COUNT(*) FROM releases WHERE tag = 'v1'").fetchone()[0] == 0
+    finally:
+        conn.close()
+
+
+def test_vacuum_only_runs_when_the_freelist_is_big(tmp_path):
+    """Prune's freed pages are returned to the OS — but only when it pays.
+
+    The phone DB has no auto_vacuum, so deletions leave ~14 MB on the
+    freelist. The guard makes vacuuming self-limiting: below the threshold
+    (or the min page count, or while locked) it must do nothing.
+    """
+    from server.import_legacy import vacuum_if_needed
+
+    path = tmp_path / "vacuum.db"
+    init_db(str(path))
+    conn = connect(str(path))
+    try:
+        payload = "x" * 300
+        for i in range(4000):
+            conn.execute(
+                "INSERT INTO jobs(started_at, status, stats_json) VALUES (?, 'ok', ?)",
+                (f"2026-10-{i:05d}", payload),
+            )
+        conn.commit()
+        conn.execute("DELETE FROM jobs")
+        conn.commit()
+        free = conn.execute("PRAGMA freelist_count").fetchone()[0]
+        pages = conn.execute("PRAGMA page_count").fetchone()[0]
+        assert free > 64 and free > pages * 0.12, "fixture must exceed the default guard"
+
+        # Skipped: below min_pages, then below threshold. Freelist untouched.
+        assert vacuum_if_needed(conn, threshold=0.12, min_pages=free + 1) == 0
+        assert vacuum_if_needed(conn, threshold=1.0, min_pages=0) == 0
+        assert conn.execute("PRAGMA freelist_count").fetchone()[0] == free
+
+        # Fires: reports the reclaimed page count and empties the freelist.
+        assert vacuum_if_needed(conn, threshold=0.12, min_pages=64) == free
+        assert conn.execute("PRAGMA freelist_count").fetchone()[0] == 0
+        # Now near-empty, the default guard skips it again on the next import.
+        assert vacuum_if_needed(conn) == 0
+    finally:
+        conn.close()
+
+
+def test_init_db_drops_legacy_patches_fts_and_name_index(tmp_path):
+    """Older DBs carry a patches_fts token index nothing ever queried.
+
+    schema.sql stopped creating it, but `CREATE ... IF NOT EXISTS` never
+    removes anything — so `_migrate()` drops the triggers first (they write
+    INTO the FTS table), then the table and the dead patches(name) index.
+    """
+    path = tmp_path / "legacy-fts.db"
+    conn = connect(str(path))
+    try:
+        conn.executescript(
+            """
+            CREATE TABLE patches (
+              id INTEGER PRIMARY KEY,
+              bundle_id INTEGER NOT NULL,
+              app_id INTEGER NOT NULL,
+              name TEXT NOT NULL,
+              description TEXT NOT NULL DEFAULT ''
+            );
+            CREATE TABLE patch_targets (
+              patch_id INTEGER NOT NULL,
+              version TEXT NOT NULL DEFAULT '',
+              version_code TEXT NOT NULL DEFAULT '',
+              min_sdk INTEGER,
+              experimental INTEGER NOT NULL DEFAULT 0,
+              PRIMARY KEY (patch_id, version, version_code)
+            );
+            CREATE INDEX patches_name_idx ON patches(name);
+            CREATE VIRTUAL TABLE patches_fts USING fts5(
+              name, description, content='patches', content_rowid='id'
+            );
+            CREATE TRIGGER patches_ai AFTER INSERT ON patches BEGIN
+              INSERT INTO patches_fts(rowid, name, description)
+              VALUES (new.id, new.name, new.description);
+            END;
+            CREATE TRIGGER patches_ad AFTER DELETE ON patches BEGIN
+              INSERT INTO patches_fts(patches_fts, rowid, name, description)
+              VALUES ('delete', old.id, old.name, old.description);
+            END;
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    init_db(str(path))
+
+    conn = connect(str(path), readonly=True)
+    try:
+        names = {row[0] for row in conn.execute("SELECT name FROM sqlite_master")}
+        assert not any(name.startswith("patches_fts") for name in names)
+        assert "patches_name_idx" not in names
+        assert not {"patches_ai", "patches_ad", "patches_au"} & names
+        # The real tables and the kept apps_fts survive, still in sync.
+        assert "patches" in names and "patch_targets" in names
+        assert "apps_fts" in names and "apps_ai" in names
     finally:
         conn.close()

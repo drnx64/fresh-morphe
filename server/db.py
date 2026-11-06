@@ -44,14 +44,25 @@ def _migrate(conn):
 
     `schema.sql` only runs CREATE TABLE IF NOT EXISTS, so an existing phone DB
     keeps its old column set. Each entry here is idempotent: a column is added
-    only when PRAGMA table_info proves it is missing.
+    only when PRAGMA table_info proves it is missing. Objects schema.sql no
+    longer creates are dropped the same way — DROP ... IF EXISTS is a no-op
+    on databases that never had them.
     """
     columns = {
         row["name"] for row in conn.execute("PRAGMA table_info(apps)").fetchall()
     }
     if "developer" not in columns:
         conn.execute("ALTER TABLE apps ADD COLUMN developer TEXT NOT NULL DEFAULT ''")
-        conn.commit()
+
+    # patches_fts was never queried (patch search is LIKE '%..%', which an FTS
+    # index cannot serve) but its token index held ~15 MB; patches_name_idx was
+    # equally dead. Triggers first — they write INTO patches_fts, so dropping
+    # the table under them would leave them failing on every patch write.
+    for trigger in ("patches_ai", "patches_ad", "patches_au"):
+        conn.execute(f"DROP TRIGGER IF EXISTS {trigger}")
+    conn.execute("DROP TABLE IF EXISTS patches_fts")
+    conn.execute("DROP INDEX IF EXISTS patches_name_idx")
+    conn.commit()
 
 
 # Newest N releases kept per repo. The UI asks for 30; the API clamps to
