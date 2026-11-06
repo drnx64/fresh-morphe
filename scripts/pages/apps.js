@@ -15,35 +15,40 @@ import { skeletonGrid } from '../components/skeleton.js'
 const RENDER_BATCH = 24
 const STACK_FILL_BATCH = 24
 
-// Hover opens a pile where there is a real pointer and room to spare. Touch
-// screens and narrow viewports keep the click path (which is also the keyboard
-// path everywhere) — `(min-width: 1024px)` alone would hijack a touchscreen
-// laptop, `(hover: hover)` alone would open piles mid-scroll on a phone.
-const STACK_HOVER_QUERY = '(hover: hover) and (pointer: fine) and (min-width: 1024px)'
-const STACK_HOVER_OPEN_MS = 120
-const STACK_HOVER_CLOSE_MS = 200
+// Fan geometry in px, by distance from the focused card. The near step is the
+// reference deck's EXPAND_GAP (110px on a 96px card) scaled to our 68px cards,
+// and it shrinks on short bands so distant cards still get room — piecewise
+// spacing keeps the whole family inside the fixed band: no scrollbar, no
+// hover-scroll loops, ever.
+const FAN_NEAR_STEP = 78
+const FAN_FAR_STEP_MIN = 2 // slivers stay hoverable even in a huge family
+const FAN_DENSE_STEP = 40 // below this the fringe drops its text (edges only)
+const FAN_CLOSE_MS = 210 // fade-out before the open classes drop
+const FAN_RESIZE_MS = 120
 
 let unsubscribeBundles = null
-
-/** Cached MediaQueryList; read `.matches` per event so a resize applies at once. */
-let hoverStackMq
-function canHoverStacks() {
-  if (hoverStackMq === undefined) {
-    hoverStackMq = typeof window.matchMedia === 'function'
-      ? window.matchMedia(STACK_HOVER_QUERY)
-      : null
-  }
-  return !!hoverStackMq?.matches
-}
 
 // One pile is open at a time: opening a stack shuts the others. Module-level
 // because the grid is rebuilt on every refill and a stale closer must not
 // outlive the node it closes.
 const stackClosers = new Map()
 
-// Transparent catcher that turns "click anywhere else" into a collapse. Only
-// pinned (click/keyboard) piles get one — a hovered pile already closes when
-// the pointer leaves, and the backdrop would block the next pile's hover.
+// Per-stack fan relayout, refreshed on viewport resize (the band is
+// viewport-height based). Cleared with stackClosers on every refill.
+const fanLayouts = new Map()
+
+let fanResizeTimer = null
+window.addEventListener('resize', () => {
+  if (fanResizeTimer) clearTimeout(fanResizeTimer)
+  fanResizeTimer = setTimeout(() => {
+    fanResizeTimer = null
+    for (const layout of fanLayouts.values()) layout()
+  }, FAN_RESIZE_MS)
+})
+
+// Dim scrim behind an open fan: it turns "click anywhere else" into a
+// collapse and doubles as the backdrop that makes the centered deck read as
+// its own surface over the grid.
 let stackBackdrop = null
 let stackBackdropOwner = ''
 
@@ -63,6 +68,11 @@ function showStackBackdrop(owner, onDismiss) {
     e.preventDefault()
     onDismiss()
   })
+  // Wheel over the scrim would scroll the grid behind the dim; the fan itself
+  // must never scroll either (pinch-zoom stays intact — see touch-action).
+  stackBackdrop.addEventListener('wheel', (e) => {
+    if (!e.ctrlKey) e.preventDefault()
+  }, { passive: false })
   document.body.appendChild(stackBackdrop)
 }
 
@@ -85,7 +95,7 @@ function makeCardInteractive(card, activate) {
   return card
 }
 
-function buildAppCard(app, iconCache) {
+function buildAppCard(app, iconCache, onActivate) {
   const card = el('div', { class: 'app-card' })
   const iconHtml = renderAppIcon({ package: app.package, app_name: app.name }, iconCache)
   const bundleCount = app.bundles.length
@@ -101,7 +111,7 @@ function buildAppCard(app, iconCache) {
       <span class="app-card-bundle-count">${bundleCount} bundle${bundleCount !== 1 ? 's' : ''}</span>
     </div>
   `
-  return makeCardInteractive(card, () => openApp(app))
+  return makeCardInteractive(card, onActivate || (() => openApp(app)))
 }
 
 export function renderApps(container) {
@@ -194,18 +204,21 @@ export function renderApps(container) {
   }
 
   /**
-   * App family: a pile of its own app cards.
+   * App family: a deck of its own app cards.
    *
-   * Collapsed, every card occupies the same spot: the front one is the family's
-   * first app, and each card behind it steps up 7px and shrinks slightly, so
-   * only its top edge shows — the card-stack silhouette, made of real cards
-   * rather than a decorated icon.
+   * Collapsed, every card occupies the same spot in the grid cell: the front
+   * one is the family's first app, each card behind it steps up, shrinks and
+   * tilts slightly, so only its top edge shows — the card-stack silhouette,
+   * made of real cards rather than a decorated icon.
    *
-   * Opening must not resize the grid cell: the pile floats (absolutely
-   * positioned, at the card's own width) over the neighbouring apps and the
-   * cards unpack into a column inside it. On a pointer device with room to
-   * spare a hover opens the pile; everywhere else it is a click, which also
-   * pins it so the list survives the pointer drifting away.
+   * Clicking the pile (never hovering — touch, pointer and keyboard share one
+   * path) opens the deck as a viewport-centered fan: a fixed, height-
+   * constrained box over a dim scrim that never scrolls. The hovered or
+   * clicked card locks to the vertical center of the band; cards before it
+   * fan upward, cards after it downward, symmetrically around it. Distant
+   * cards compress into slivers, so even a 50-app publisher fits the band
+   * without a scrollbar — reach beyond the visible steps by hovering or
+   * tapping a sliver, which pulls that card to the center and re-fans.
    *
    * Only the first four cards are built up front (a 50-app publisher is not
    * free to paint); the rest are appended in batches once the pile opens.
@@ -215,7 +228,6 @@ export function renderApps(container) {
     const count = apps.length
     const pileId = `app-stack-${id.replace(/[^a-z0-9]+/gi, '-')}`
     const stack = el('div', { class: `app-stack ${source === 'developer' ? 'is-publisher' : 'is-namespace'}` })
-    stack.style.setProperty('--count', String(count))
     // Depth of the visible pile, capped at four cards (three peeking edges)
     stack.style.setProperty('--layers', String(Math.min(3, count - 1)))
 
@@ -236,8 +248,21 @@ export function renderApps(container) {
 
     const pile = el('div', { class: 'app-stack-pile', id: pileId, role: 'group', 'aria-label': `${label}, ${count} apps` })
 
+    let built = 0
+    let fanFocus = 0
+
     function buildNote(index) {
-      const card = buildAppCard(apps[index], store.get('iconCache') || {})
+      const member = apps[index]
+      const card = buildAppCard(member, store.get('iconCache') || {}, () => {
+        // Collapsed, the expander owns the click. Open, clicking anything but
+        // the centered card just pulls that card to the middle of the fan.
+        if (!isOpen) return
+        if (index !== fanFocus) {
+          setFanFocus(index)
+          return
+        }
+        openApp(member)
+      })
       card.classList.add('app-stack-note')
       card.style.setProperty('--i', String(index))
       card.style.setProperty('--d', String(Math.min(index, 3)))
@@ -247,10 +272,17 @@ export function renderApps(container) {
           card.appendChild(el('span', { class: 'app-stack-chip', 'aria-hidden': 'true' }, [`+${count - 1}`]))
         }
       }
+      // Hovering a visible card in the open fan makes it the focused one: it
+      // locks to the band's center and the rest re-fan around it. This is a
+      // deliberate target hover — nothing moves unless a card is under the
+      // pointer, and there is no auto-scroll listener anywhere.
+      card.addEventListener('mouseenter', () => {
+        if (isOpen && index !== fanFocus) setFanFocus(index)
+      })
       return card
     }
 
-    let built = 0
+    let filling = false
     function buildUpTo(limit) {
       const end = Math.min(limit, count)
       while (built < end) {
@@ -260,17 +292,93 @@ export function renderApps(container) {
     }
     buildUpTo(4)
 
-    let filling = false
     function fillRemaining() {
       if (filling || built >= count) return
       filling = true
       const fillBatch = () => {
         if (gen !== listGeneration) return
         buildUpTo(built + STACK_FILL_BATCH)
+        layoutFan()
         if (built < count) requestAnimationFrame(fillBatch)
         else filling = false
       }
       requestAnimationFrame(fillBatch)
+    }
+
+    /**
+     * Place every built card in the open fan. Spacing is piecewise by
+     * distance to the focused card: full reference-style gaps nearby
+     * (|Δ| × near), compressed slivers beyond, clamped so the farthest card
+     * lands on the band edge — the whole family stays inside the fixed band
+     * with no scrollbar. Writes `--y` (fan offset + the band-centering term,
+     * so Δ=0 locks the focused card to the vertical center), `--o`, `--s`,
+     * `--z` plus the is-focus/is-far classes and the roving tabindex.
+     */
+    function layoutFan() {
+      if (!isOpen) return
+      const bandH = pile.clientHeight
+      if (!bandH) return // detached (rebuilt mid-refill) — the rAF pass lays it out
+      const cardH = parseFloat(getComputedStyle(stack).getPropertyValue('--card-h')) || 68
+      const half = Math.max(0, (bandH - cardH) / 2)
+      const farthest = Math.max(1, Math.max(fanFocus, built - 1 - fanFocus))
+      // Near steps adapt to the band: the full reference gap where there is
+      // room, tighter on short viewports so the fringe still gets its share
+      // of the edge instead of piling up at it.
+      const near = Math.min(FAN_NEAR_STEP, half * 0.34)
+      const mid = near * 2
+      const room = Math.max(0, half - mid)
+      const farStep = farthest > 2
+        ? Math.min(FAN_NEAR_STEP, Math.max(FAN_FAR_STEP_MIN, room / (farthest - 2)))
+        : FAN_NEAR_STEP
+      // Dense = the family is too big for readable steps: the far cards become
+      // a tight fringe of edges (text would only smear at that spacing).
+      const dense = farStep < FAN_DENSE_STEP
+      stack.classList.toggle('is-dense', dense)
+      const floor = dense ? 0.18 : 0.35
+
+      for (let i = 0; i < built; i++) {
+        const card = pile.children[i]
+        if (!card) continue
+        const delta = i - fanFocus
+        const abs = Math.abs(delta)
+        let y = abs <= 2 ? abs * near : mid + (abs - 2) * farStep
+        // Clamped to the band edge: even a 50-app family lands inside the box
+        // (on a short viewport the outer cards share the last sliver).
+        y = Math.min(y, half)
+        if (delta < 0) y = -y
+        y += half // the focused card sits at the band's vertical center
+
+        let opacity
+        if (abs === 0) opacity = 1
+        else if (abs === 1) opacity = 0.95
+        else if (abs === 2) opacity = 0.75
+        else {
+          const t = farthest > 2 ? (abs - 2) / (farthest - 2) : 1
+          opacity = Math.max(floor, 0.7 - 0.52 * Math.min(1, t))
+        }
+
+        card.style.setProperty('--y', `${y.toFixed(1)}px`)
+        card.style.setProperty('--o', String(opacity))
+        // The reference's target pop: focused card 1.02, the rest 0.98.
+        card.style.setProperty('--s', abs === 0 ? '1.02' : '0.98')
+        card.style.setProperty('--z', String(400 - abs))
+        card.classList.toggle('is-focus', abs === 0)
+        card.classList.toggle('is-far', abs > 2)
+        card.tabIndex = abs === 0 ? 0 : -1
+      }
+    }
+
+    /** Re-center the fan on another card; also moves the caret when asked. */
+    function setFanFocus(index, { moveDomFocus = false } = {}) {
+      const next = Math.max(0, Math.min(count - 1, index))
+      if (next !== fanFocus) {
+        fanFocus = next
+        layoutFan()
+      }
+      if (moveDomFocus) {
+        const card = pile.children[fanFocus]
+        if (card) card.focus({ preventScroll: true })
+      }
     }
 
     // The whole pile is one control while collapsed: the cards inside are inert
@@ -283,93 +391,136 @@ export function renderApps(container) {
       'aria-label': `Expand ${label}, ${count} apps`,
     })
 
-    // Pinned = the user opened it on purpose, so it must not close under them.
-    let pinned = false
-    let hoverTimer = null
+    // One open/close flag drives everything; classes are presentational
+    // (`is-open` is kept through the fade-out so the fan never teleports).
+    let isOpen = false
+    let closeTimer = null
     let onEscape = null
 
-    function clearHoverTimer() {
-      if (hoverTimer) clearTimeout(hoverTimer)
-      hoverTimer = null
+    function clearCloseTimer() {
+      if (closeTimer) {
+        clearTimeout(closeTimer)
+        closeTimer = null
+      }
     }
 
     function setExpanded(open, { via = 'api', force = false } = {}) {
-      if (!force && open === stack.classList.contains('is-open')) {
-        if (open && via === 'click') pinned = true
-        return
-      }
-      clearHoverTimer()
-      if (open && via === 'click') pinned = true
-
-      stack.classList.toggle('is-open', open)
-      for (const control of [expander, caption]) {
-        control.setAttribute('aria-expanded', open ? 'true' : 'false')
-      }
-      // Collapsed cards and the caption must not be tabbable; the expander owns
-      // the interaction until the pile is open.
-      pile.toggleAttribute('inert', !open)
-      caption.tabIndex = open ? 0 : -1
-      caption.setAttribute('aria-hidden', open ? 'false' : 'true')
+      if (!force && open === isOpen) return
 
       if (open) {
+        clearCloseTimer()
+        stack.classList.remove('is-closing')
+        isOpen = true
+        stack.classList.add('is-open')
+        fanFocus = 0
+        for (const control of [expander, caption]) {
+          control.setAttribute('aria-expanded', 'true')
+        }
+        // Collapsed cards and the caption must not be tabbable; the expander
+        // owns the interaction until the pile is open.
+        pile.toggleAttribute('inert', false)
+        caption.tabIndex = 0
+        caption.setAttribute('aria-hidden', 'false')
+
         // One pile at a time — a second one would overlap the first
         for (const [otherId, close] of stackClosers) {
           if (otherId !== id) close()
         }
         stackClosers.set(id, () => setExpanded(false, { via: 'elsewhere' }))
         openStacks.add(id)
-        if (pinned) showStackBackdrop(id, () => setExpanded(false, { via: 'outside' }))
+        fanLayouts.set(id, layoutFan)
+        // The fan is open to everyone now: a dim scrim doubles as the
+        // click-away catcher (a hovered pile no longer closes on pointer-out —
+        // click, Escape or the caption do).
+        showStackBackdrop(id, () => setExpanded(false, { via: 'outside' }))
+        // Measure the band and place the cards now, then once more next frame:
+        // a stack rebuilt during a refill lays out while still detached.
+        layoutFan()
+        requestAnimationFrame(layoutFan)
         fillRemaining()
         onEscape = (e) => {
           if (e.key === 'Escape') setExpanded(false, { via: 'escape' })
         }
         document.addEventListener('keydown', onEscape)
-        // Hover must not steal the caret; a deliberate open hands focus to the
-        // collapse control, which is the first thing inside the overlay.
+        // A deliberate open hands focus to the collapse control, the first
+        // thing inside the fan.
         if (via === 'click') caption.focus({ preventScroll: true })
       } else {
+        // The fan fades out in place first (is-closing keeps the open layout
+        // while opacity drops); the class swap at the end of the timer lets
+        // the pile settle back into the grid cell under the fade-in.
+        const wasOpen = stack.classList.contains('is-open')
+        if (wasOpen) stack.classList.add('is-closing')
+        isOpen = false
         openStacks.delete(id)
         stackClosers.delete(id)
-        pinned = false
-        dropStackBackdrop(id)
+        fanLayouts.delete(id)
+        for (const control of [expander, caption]) {
+          control.setAttribute('aria-expanded', 'false')
+        }
+        // Collapsed cards and the caption must not be tabbable; the expander
+        // owns the interaction until the pile is open.
+        pile.toggleAttribute('inert', true)
+        caption.tabIndex = -1
+        caption.setAttribute('aria-hidden', 'true')
+        // The scrim fades with the fan; if another pile opened meanwhile it
+        // owns the backdrop already (owner guard inside dropStackBackdrop).
+        const scrim = stackBackdropOwner === id ? stackBackdrop : null
+        if (wasOpen && scrim) {
+          scrim.classList.add('is-out')
+          setTimeout(() => {
+            if (stackBackdrop === scrim) dropStackBackdrop(id)
+          }, FAN_CLOSE_MS)
+        } else {
+          dropStackBackdrop(id)
+        }
         if (onEscape) {
           document.removeEventListener('keydown', onEscape)
           onEscape = null
         }
-        // The cards are about to go inert; focus would fall back to <body>
+        // The cards are about to go inert; focus would fall back to <body>.
+        // is-closing puts the expander back on screen for this.
         if (stack.contains(document.activeElement)) expander.focus({ preventScroll: true })
+        if (wasOpen) {
+          clearCloseTimer()
+          closeTimer = setTimeout(() => {
+            closeTimer = null
+            if (isOpen) return // reopened while fading
+            stack.classList.remove('is-open', 'is-closing')
+          }, FAN_CLOSE_MS)
+        }
       }
     }
 
-    expander.addEventListener('click', () => {
-      clearHoverTimer()
-      setExpanded(true, { via: 'click' })
-    })
+    expander.addEventListener('click', () => setExpanded(true, { via: 'click' }))
     caption.addEventListener('click', () => setExpanded(false, { via: 'click' }))
 
-    // Hover intent: 120ms in, 200ms out. The grace on the way out is what lets
-    // the pointer travel from the card into the open list without it snapping
-    // shut — the overlay starts where the peeking edges were, so there is no gap
-    // to cross. `is-open` is checked because the timer may fire after a click.
-    stack.addEventListener('mouseenter', () => {
-      if (pinned || stack.classList.contains('is-open') || !canHoverStacks()) return
-      clearHoverTimer()
-      hoverTimer = setTimeout(() => {
-        if (gen === listGeneration) setExpanded(true, { via: 'hover' })
-      }, STACK_HOVER_OPEN_MS)
-    })
-    stack.addEventListener('mouseleave', () => {
-      clearHoverTimer()
-      if (pinned || !stack.classList.contains('is-open')) return
-      hoverTimer = setTimeout(() => {
-        if (gen === listGeneration) setExpanded(false, { via: 'hover' })
-      }, STACK_HOVER_CLOSE_MS)
-    })
-
     // Caption and pile ride in one box: collapsed it sits in flow, open it floats
+    // viewport-centered over the scrim
     const overlay = el('div', { class: 'app-stack-overlay' })
     overlay.appendChild(el('div', { class: 'app-stack-caption-wrap' }, [caption]))
     overlay.appendChild(pile)
+
+    // Keyboard fan control: arrows walk the focus one card at a time, Home and
+    // End jump to the deck's head and tail. Enter/Space on the focused card
+    // open the app (the card's own key handler), Escape collapses the pile.
+    overlay.addEventListener('keydown', (e) => {
+      if (!isOpen) return
+      let next = null
+      if (e.key === 'ArrowDown') next = Math.min(fanFocus + 1, built - 1)
+      else if (e.key === 'ArrowUp') next = Math.max(fanFocus - 1, 0)
+      else if (e.key === 'Home') next = 0
+      else if (e.key === 'End') next = built - 1
+      else return
+      e.preventDefault()
+      setFanFocus(next, { moveDomFocus: true })
+    })
+
+    // The fan never scrolls: wheel gestures over it must not scroll the page
+    // behind the scrim either (pinch-zoom stays intact).
+    overlay.addEventListener('wheel', (e) => {
+      if (!e.ctrlKey) e.preventDefault()
+    }, { passive: false })
 
     stack.appendChild(overlay)
     stack.appendChild(expander)
@@ -382,8 +533,10 @@ export function renderApps(container) {
   function renderAppsList(query = '') {
     const gen = ++listGeneration
     grid.replaceChildren()
-    // The old stacks are detached: their closers and any backdrop go with them
+    // The old stacks are detached: their closers, fan layouts and any backdrop
+    // go with them
     stackClosers.clear()
+    fanLayouts.clear()
     dropStackBackdrop()
 
     if (query) featuredEl.hidden = true
@@ -475,8 +628,10 @@ export function renderApps(container) {
       unsubscribeBundles()
       for (const off of unsubCacheKeys) off()
       unsubCacheKeys = []
-      // A pinned pile's backdrop lives on <body>, outliving the page
+      // An open pile's backdrop lives on <body>, outliving the page
       dropStackBackdrop()
+      stackClosers.clear()
+      fanLayouts.clear()
       return
     }
     rebuildIndex()
