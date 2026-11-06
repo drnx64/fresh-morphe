@@ -80,7 +80,8 @@ CREATE TABLE IF NOT EXISTS patches (
 );
 CREATE INDEX IF NOT EXISTS patches_bundle_idx ON patches(bundle_id);
 CREATE INDEX IF NOT EXISTS patches_app_idx ON patches(app_id);
-CREATE INDEX IF NOT EXISTS patches_name_idx ON patches(name);
+-- No index on patches(name): every patch-name filter is a LIKE '%..%'
+-- (leading wildcard can never use it) and 1.8 MB bought nothing.
 -- One patch row per (bundle, app, name). Source bundle records occasionally
 -- repeat a package or a patch, which used to insert the row — and its targets —
 -- again; db._dedupe_patches() clears existing duplicates before this runs.
@@ -162,23 +163,6 @@ CREATE TRIGGER IF NOT EXISTS apps_au AFTER UPDATE ON apps BEGIN
   INSERT INTO apps_fts(rowid, package, name) VALUES (new.id, new.package, new.name);
 END;
 
-CREATE VIRTUAL TABLE IF NOT EXISTS patches_fts USING fts5(
-  name,
-  description,
-  content='patches',
-  content_rowid='id'
-);
-CREATE TRIGGER IF NOT EXISTS patches_ai AFTER INSERT ON patches BEGIN
-  INSERT INTO patches_fts(rowid, name, description)
-  VALUES (new.id, new.name, new.description);
-END;
-CREATE TRIGGER IF NOT EXISTS patches_ad AFTER DELETE ON patches BEGIN
-  INSERT INTO patches_fts(patches_fts, rowid, name, description)
-  VALUES ('delete', old.id, old.name, old.description);
-END;
-CREATE TRIGGER IF NOT EXISTS patches_au AFTER UPDATE ON patches BEGIN
-  INSERT INTO patches_fts(patches_fts, rowid, name, description)
-  VALUES ('delete', old.id, old.name, old.description);
-  INSERT INTO patches_fts(rowid, name, description)
-  VALUES (new.id, new.name, new.description);
-END;
+-- No patches_fts here: nothing ever queried it (patch search is LIKE-based,
+-- whose leading wildcard cannot use an FTS index) yet its token index cost
+-- ~15 MB. db._migrate() drops it from databases created before this commit.

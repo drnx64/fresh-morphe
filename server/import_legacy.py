@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import re
+import sqlite3
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -488,6 +489,90 @@ def sync_changes(conn, data_dir, now=None):
     }
 
 
+def prune_stale(conn, index):
+    """Delete bundle rows that left `_index.json`, and what they orphaned.
+
+    `import_data(reset=False)` only ever upserts, so a repository that stopped
+    publishing kept its bundle rows — and every patch under them — until a
+    manual `--reset` (558 of 2143 rows on the phone, 27% of all patch rows).
+    Bundles belonging to repos the worker tracks in `repo_sources` are exempt:
+    those rows are the worker's, fed by the mirror rather than the index.
+    Cascades (patches, patch_targets, bundle_apps, releases) do the rest, and
+    apps/repos left with nothing are removed in the same transaction.
+
+    Returns how many rows each table lost.
+    """
+    # Mirror the bundle loop's key parsing and channel normalization so the
+    # live set holds exactly what the loop (re)inserts above.
+    live = set()
+    for key, entry in index.items():
+        bundle = entry.get("bundle") or key.rsplit(":", 1)[0]
+        channel = entry.get("channel") or key.rsplit(":", 1)[-1]
+        if channel not in BUNDLE_CHANNELS:
+            channel = "stable"
+        live.add((bundle, channel))
+
+    worker_keys = {
+        row[0] for row in conn.execute("SELECT DISTINCT url_key FROM repo_sources")
+    }
+    # The live set is ~1600 tuples — too many bindings for one statement
+    # (SQLITE_MAX_VARIABLE_NUMBER is 999) — so match it in Python and delete
+    # the stale ids in chunks.
+    stale_ids = [
+        row["id"]
+        for row in conn.execute(
+            "SELECT b.id, b.bundle, b.channel, r.url_key "
+            "FROM bundles b LEFT JOIN repos r ON r.id = b.repo_id"
+        )
+        if (row["bundle"], row["channel"]) not in live
+        and row["url_key"] not in worker_keys
+    ]
+    removed_bundles = 0
+    for start in range(0, len(stale_ids), 500):
+        chunk = stale_ids[start:start + 500]
+        placeholders = ",".join("?" * len(chunk))
+        removed_bundles += conn.execute(
+            f"DELETE FROM bundles WHERE id IN ({placeholders})", chunk
+        ).rowcount
+
+    # Apps no live bundle claims, then repos with no bundles left. Both are
+    # exempt from nothing: a worker-tracked repo with zero bundles is kept
+    # (the worker owns that row and may repopulate it), releases cascade.
+    removed_apps = conn.execute(
+        "DELETE FROM apps WHERE NOT EXISTS ("
+        "  SELECT 1 FROM bundle_apps ba WHERE ba.app_id = apps.id)"
+    ).rowcount
+    removed_repos = conn.execute(
+        "DELETE FROM repos WHERE NOT EXISTS ("
+        "  SELECT 1 FROM bundles b WHERE b.repo_id = repos.id)"
+        " AND url_key NOT IN (SELECT url_key FROM repo_sources)"
+    ).rowcount
+    return {"bundles": removed_bundles, "apps": removed_apps, "repos": removed_repos}
+
+
+def vacuum_if_needed(conn, threshold=0.12, min_pages=64):
+    """Return freed pages to the OS once deletions leave real slack.
+
+    The phone DB has no auto_vacuum, so prune only moves pages onto the
+    freelist (~14 MB sat there). VACUUM only when the freelist is over
+    `threshold` of the file and at least `min_pages` big, so quiet hourly
+    imports don't pay for it; the guard makes it self-limiting (after one run
+    the freelist is ~0 and it won't run again until more is deleted).
+    Concurrent readers/writer may hold the lock past busy_timeout — skip
+    rather than fail the import. Returns the page count that was reclaimed,
+    or 0 when skipped/locked.
+    """
+    pages = conn.execute("PRAGMA page_count").fetchone()[0]
+    free = conn.execute("PRAGMA freelist_count").fetchone()[0]
+    if free < min_pages or free < pages * threshold:
+        return 0
+    try:
+        conn.execute("VACUUM")
+    except sqlite3.Error:
+        return 0
+    return free
+
+
 def import_data(db_path, data_dir, reset=False):
     global _APP_CACHE
     data_dir = os.path.abspath(data_dir)
@@ -586,10 +671,18 @@ def import_data(db_path, data_dir, reset=False):
         release_count = 0
         for url, cache in release_cache.items():
             repo_url = normalize_url(url)
-            cache_entry = repo_cache_by_key.get(repo_url.lower(), (None, {}))[1]
-            repo_id = ensure_repo(conn, repo_url, cache_entry, {})
-            if not repo_id:
+            if not repo_url:
                 continue
+            # Lookup only: the bundle loop above already ensured every repo the
+            # index knows about. Calling ensure_repo here used to re-create
+            # repos that left the index on every run — rows prune_stale() would
+            # then delete again in the same transaction.
+            row = conn.execute(
+                "SELECT id FROM repos WHERE url_key = ?", (repo_url.lower(),)
+            ).fetchone()
+            if not row:
+                continue
+            repo_id = row["id"]
             fetched_at = as_float(cache.get("fetched_at"))
             for release in cache.get("releases") or []:
                 tag = release.get("tag") or ""
@@ -606,6 +699,8 @@ def import_data(db_path, data_dir, reset=False):
                     name=release.get("name") or "",
                 )
                 release_count += 1
+
+        pruned = prune_stale(conn, index)
 
         sync_changes(conn, data_dir, imported_at)
 
@@ -664,6 +759,7 @@ def import_data(db_path, data_dir, reset=False):
             "latest": latest_count,
             "changelog_days": len(changelog),
             "missing_detail_files": len(missing_records),
+            "pruned": pruned,
             "data_version": data_version,
         }
         conn.execute(
@@ -671,6 +767,9 @@ def import_data(db_path, data_dir, reset=False):
             (imported_at, utc_now(), json_dumps(stats)),
         )
 
+    # Outside the transaction: VACUUM cannot run in one. Returns the prune
+    # deletions' freelist pages to the OS (self-limiting, lock-tolerant).
+    vacuum_if_needed(conn)
     counts = table_counts(conn)
     conn.close()
     return {
@@ -678,6 +777,7 @@ def import_data(db_path, data_dir, reset=False):
         "data_version": data_version,
         "counts": counts,
         "stats": stats,
+        "pruned": pruned,
         "missing_records": missing_records,
     }
 
@@ -696,6 +796,8 @@ def main(argv=None):
     else:
         print(f"[import] wrote {result['db']} (data_version {result['data_version']})")
         print("[import] counts:", result["counts"])
+        if any(result["pruned"].values()):
+            print("[import] pruned stale rows:", result["pruned"])
         if result["missing_records"]:
             print(f"[import] warning: {len(result['missing_records'])} records skipped")
             for key in result["missing_records"][:10]:
