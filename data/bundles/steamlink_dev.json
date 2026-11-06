@@ -2,9 +2,9 @@
   "bundle": "steamlink",
   "channel": "dev",
   "repo_url": "https://github.com/AngelDark92/steamlink-patches",
-  "created_at": "2026-11-04T11:59:19",
-  "version": "2.6.0",
-  "description": "## [2.6.0](https://github.com/AngelDark92/xr-porting-hub/compare/v2.5.0...v2.6.0) (2026-11-04)\n\n### 🐛 Bug Fixes\n\n* Refactor patches: Remove swapchain enlarge and atlas surface patches ([449512d](https://github.com/AngelDark92/xr-porting-hub/commit/449512d293c9a2c00c9373b2800010eac1c49af3))\n* retire and remove the GXR spacewarp layer ([a2ba13d](https://github.com/AngelDark92/xr-porting-hub/commit/a2ba13d7f6a51149b12cf862449a26b1445069e5))\n\n### ✨ New Features\n\n* Add StockQuadCompositionPatchTest for validating stock quad composition patch functionality ([0db8d35](https://github.com/AngelDark92/xr-porting-hub/commit/0db8d3561c27ecc7ef0b4fb8f1b0259292e1376a))\n* Add unit tests for HybridCodec and ResolutionLayer patches ([ec77494](https://github.com/AngelDark92/xr-porting-hub/commit/ec7749441acc16c22ff4d117dc969326f63367d9))\n* added support for 5002527 (beta) ([cd37edd](https://github.com/AngelDark92/xr-porting-hub/commit/cd37eddf05339b0ef7d7cfc03fee852a96fc8183))",
+  "created_at": "2026-11-06T20:39:03",
+  "version": "2.7.0",
+  "description": "## [2.7.0](https://github.com/AngelDark92/xr-porting-hub/compare/v2.6.0...v2.7.0) (2026-11-06)\n\n### ✨ New Features\n\n* retire Alpha-0 and Appear on top, promote stock quad, merge network optimizations ([b2077dd](https://github.com/AngelDark92/xr-porting-hub/commit/b2077dd73d47f50d4a391a1288e4b07981f5b2c5))",
   "apps": [
     {
       "app_name": "4XVR",
@@ -162,27 +162,9 @@
       "package": "com.valvesoftware.steamlinkvr",
       "patches": [
         {
-          "name": "Alpha-0 high-resolution trigger",
-          "description": "Fully transparent high-resolution trigger quad that keeps Valve's native projection layout and formats untouched. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363, 2.0.24/5002395.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.0.20"
-          ]
-        },
-        {
           "name": "Android XR native permission names",
           "description": "Swaps the built-in Oculus face and eye permission names for Android XR ones. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.0.20"
-          ]
-        },
-        {
-          "name": "Appear on top (legacy)",
-          "description": "Lets Steam Link draw its panel over other screens (legacy fallback). Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "2.0.20"
@@ -308,20 +290,11 @@
         },
         {
           "name": "Network Optimizations",
-          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.20 (5001712, 5001812).",
+          "description": "Keeps streaming smooth after packet loss. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "2.0.20"
-          ]
-        },
-        {
-          "name": "Network Optimizations (optional)",
-          "description": "Keeps streaming smooth after packet loss. Builds: 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363, 2.0.24/5002395.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "2.0.21"
           ]
         },
         {
@@ -366,6 +339,15 @@
         {
           "name": "Startup splash and XR launch mode (before 5002322)",
           "description": "Adds the launch splash and full-space VR start mode. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Stock quad composition",
+          "description": "Rebuilds Steam Link's projection layers as eye-aware stock-style quads in a separate OpenXR layer. Builds: 2.0.20 (5001712, 5001812), 2.0.21/5001968, 2.0.22/5002244, 2.0.23/5002363, 2.0.24/5002395.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -436,10 +418,10 @@
     }
   ],
   "patches_name": "Steam Link GalaxyXR Patches",
-  "fingerprint": "b4d52240216a7ba07752660ebe08ce57bfffdf039e60e82d879139314e760ed4",
-  "release_notes": "## [2.6.0](https://github.com/AngelDark92/xr-porting-hub/compare/v2.5.0...v2.6.0) (2026-11-04)\n\n### 🐛 Bug Fixes\n\n* Refactor patches: Remove swapchain enlarge and atlas surface patches ([449512d](https://github.com/AngelDark92/xr-porting-hub/commit/449512d293c9a2c00c9373b2800010eac1c49af3))\n* retire and remove the GXR spacewarp layer ([a2ba13d](https://github.com/AngelDark92/xr-porting-hub/commit/a2ba13d7f6a51149b12cf862449a26b1445069e5))\n\n### ✨ New Features\n\n* Add StockQuadCompositionPatchTest for validating stock quad composition patch functionality ([0db8d35](https://github.com/AngelDark92/xr-porting-hub/commit/0db8d3561c27ecc7ef0b4fb8f1b0259292e1376a))\n* Add unit tests for HybridCodec and ResolutionLayer patches ([ec77494](https://github.com/AngelDark92/xr-porting-hub/commit/ec7749441acc16c22ff4d117dc969326f63367d9))\n* added support for 5002527 (beta) ([cd37edd](https://github.com/AngelDark92/xr-porting-hub/commit/cd37eddf05339b0ef7d7cfc03fee852a96fc8183))\n",
-  "release_tag": "v2.6.0",
-  "release_date": "2026-11-04T12:00:19Z",
+  "fingerprint": "21438df8d2a361df257f0f84005fc3fe448c3b2f473a14fdbaf7dce810c256ba",
+  "release_notes": "## [2.7.0](https://github.com/AngelDark92/xr-porting-hub/compare/v2.6.0...v2.7.0) (2026-11-06)\n\n### ✨ New Features\n\n* retire Alpha-0 and Appear on top, promote stock quad, merge network optimizations ([b2077dd](https://github.com/AngelDark92/xr-porting-hub/commit/b2077dd73d47f50d4a391a1288e4b07981f5b2c5))\n",
+  "release_tag": "v2.7.0",
+  "release_date": "2026-11-06T20:39:44Z",
   "isPreRelease": false,
   "stars": 14,
   "avatarUrl": "https://avatars.githubusercontent.com/u/53372897?v=4",
