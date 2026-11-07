@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "latest",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-07T04:23:07",
+  "created_at": "2026-11-07T11:49:48",
   "version": "2.2.8",
-  "description": "v2.2.8 (pre-release): universal 'Disable video autoplay (ExoPlayer/Media3)' heuristic (literal setPlayWhenReady(true)->false; off by default; unverified); app-scoped Mint/Hindustan Times entries for 'Block analytics & tracking SDKs', 'Disable video autoplay (ExoPlayer)' and 'Prefer external browser over Custom Tabs'; Indian-market tracker markers (WebEngage, CleverTap, Flurry, Branch, Kochava); Mint & Hindustan Times analysis doc. No APK decompiled — no binary-specific patches yet; premium unlocks are server-side and not possible. v2.2.7 content included (Brave patches, Reddit fixes, Amazon AMOLED dark, listing performance fix).",
+  "description": "v2.2.8 (pre-release): adds Meesho (com.meesho.shopping, XAPK splits, targets 29.9/29.8/29.7/29.6/29.5) app-scoped entries — 'Meesho: Block analytics & tracking SDKs', 'Meesho: Disable video autoplay (ExoPlayer)', 'Meesho: Prefer external browser over Custom Tabs' (same heuristics, off by default, unverified on device) — plus docs/MEESHO.md. Amazon AMOLED resource pass restricted to android: framework attributes (fixes 'Unknown attribute name: colorSurface' build failure on mShop 32.19.0.300); Mereframe diagnostic crash log now records app versionName/versionCode; native-integrity bypass logs its planting. 2026-11-06 build included universal ExoPlayer autoplay heuristic, Mint/HT scoped entries, Indian-market tracker markers, HT analysis doc, v2.2.7 content (Brave, Reddit, Amazon AMOLED). No APK decompiled for Meesho — sponsored-suppression/AMOLED for Meesho pending the APK; Premium unlocks are server-side and impossible. Unverified on device.",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -572,7 +572,7 @@
           ]
         }
       ],
-      "developer": "com.google"
+      "developer": "Google LLC"
     },
     {
       "app_name": "Hindustan Times: News & ePaper",
@@ -678,6 +678,52 @@
         }
       ],
       "developer": "JustNewDesigns"
+    },
+    {
+      "app_name": "Meesho",
+      "package": "com.meesho.shopping",
+      "patches": [
+        {
+          "name": "Meesho: Block analytics & tracking SDKs",
+          "description": "Blocks Meesho's analytics & tracking SDKs (Firebase Analytics, AppsFlyer,\nAdjust, Facebook AppEvents, WebEngage, CleverTap and similar) using the\nsame universal heuristic as 'Block analytics & tracking SDKs'.\n\nApplies to com.meesho.shopping only. Heuristic; obfuscated or\nreflection-based reporting is not covered. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "29.9",
+            "29.8",
+            "29.7",
+            "29.6",
+            "29.5"
+          ]
+        },
+        {
+          "name": "Meesho: Disable video autoplay (ExoPlayer)",
+          "description": "Stops video autoplay in the Meesho feed and product videos (ExoPlayer/Media3)\nusing the same heuristic as 'Disable video autoplay (ExoPlayer/Media3)'.\n\nApplies to com.meesho.shopping only. Heuristic; see the universal entry\nfor limitations. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "29.9",
+            "29.8",
+            "29.7",
+            "29.6",
+            "29.5"
+          ]
+        },
+        {
+          "name": "Meesho: Prefer external browser over Custom Tabs",
+          "description": "Opens links in the default external browser instead of an in-app Custom\nTab, using the same rewrite as the universal 'Prefer external browser\nover Custom Tabs' patch.\n\nApplies to com.meesho.shopping only. Covers Custom Tabs /\nCustomTabsIntent call sites only. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "29.9",
+            "29.8",
+            "29.7",
+            "29.6",
+            "29.5"
+          ]
+        }
+      ],
+      "developer": "com.meesho"
     },
     {
       "app_name": "Microsoft Excel: Spreadsheets",
@@ -962,7 +1008,7 @@
           ]
         }
       ],
-      "developer": "com.pinterest"
+      "developer": "Pinterest"
     },
     {
       "app_name": "Proxyman - Capture HTTPS",
@@ -1789,10 +1835,10 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "e15203d8605181b4512d1c144a1b0f6f96e3253d0a8973888ba696df07c9b169",
-  "release_notes": "v2.2.8 (pre-release) — 2026-11-07 (re-cut)\n\nWhat's in this build (supersedes the earlier v2.2.8 assets):\n\n- New universal patch: \"Disable video autoplay (ExoPlayer/Media3)\" — flips\n  literal setPlayWhenReady(true) call sites to false. Heuristic; reflection or\n  obfuscated player setup is not covered; may stop playback entirely in apps\n  whose only play path is such a literal (turn it off if videos never start).\n  Off by default; unverified on device.\n- New app-scoped entries (off by default; unverified on device):\n  - \"Mint: Block analytics & tracking SDKs\" — com.htmedia.mint (5.7.5, 5.8.4)\n  - \"Hindustan Times: Block analytics & tracking SDKs\" — com.ht.news (4.9.16)\n  - \"Mint: Disable video autoplay (ExoPlayer)\"\n  - \"Hindustan Times: Disable video autoplay (ExoPlayer)\"\n  - \"Mint: Prefer external browser over Custom Tabs\"\n  - \"Hindustan Times: Prefer external browser over Custom Tabs\"\n- Indian-market tracker markers in the universal analytics patch: WebEngage,\n  CleverTap, Flurry, Branch, Kochava.\n- New analysis doc in-repo: docs/HT-NEWS-APPS.md — candidate patches and\n  exactly what decompiling the APKs must confirm.\n- Everything from the v2.2.7 re-replace: Amazon Shopping/India AMOLED dark\n  mode, Reddit listing performance fix, six experimental off-by-default Brave\n  patches (adapted from kveld9/kveld-morphe-patches), Reddit AutoMod detection\n  broadening, \"Show deleted comments\" lookup logging.\n\nKnown limitations:\n- Brave patches are unverified on device.\n- ExoPlayer autoplay heuristic, Amazon AMOLED and the Reddit listing fix are\n  unverified on device.\n- No binary-specific Mint/HT patches yet — they require the APKs\n  (see docs/HT-NEWS-APPS.md). Not attempted: sponsored/in-feed ad suppression,\n  ePaper cleanup, AMOLED reading surface, rating-nag removal.\n- \"Mint Premium\" / \"HT Premium\" cannot be unlocked by a client-side patch:\n  premium content is served behind server-side entitlement.\n- CompatibleWith lists cover the store versions observed on 2026-11-06 only.\n\nv2.2.4 remains the latest full release. All v2.2.5+ builds are pre-releases, unchanged.\n",
+  "fingerprint": "70de1d8190fc53a65dd5f4f2c4bf5e1d546293e45e64ff119bfe6837896efb98",
+  "release_notes": "v2.2.8 (pre-release) — 2026-11-07 (re-cut #5)\n\nNew in this build (supersedes the earlier v2.2.8 assets):\n\n- Meesho (com.meesho.shopping) support — XAPK split bundles; app-scoped entries,\n  off by default, unverified on device:\n  - \"Meesho: Block analytics & tracking SDKs\"\n  - \"Meesho: Disable video autoplay (ExoPlayer)\"\n  - \"Meesho: Prefer external browser over Custom Tabs\"\n  Targets: 29.9, 29.8, 29.7 (vc 872), 29.6 (vc 870), 29.5 (vc 868) — store builds\n  observed 2026-11-06/07. No APK decompiled — no sponsored-suppression, AMOLED,\n  or integrity-gate patches yet. See docs/MEESHO.md.\n- Plus, unchanged from the previous re-cut: Amazon AMOLED resource-encoder fix\n  (android:-framework attributes only — resolves the mShop 32.19.0.300\n  \"Unknown attribute name: colorSurface\" build failure); Mereframe diagnostic\n  crash log now records app versionName/versionCode; the native-integrity\n  bypass logs when its catch is planted.\n- Plus everything from earlier re-cuts: universal Disable video autoplay\n  (ExoPlayer/Media3) heuristic; Mint/HT app-scoped entries (Block analytics,\n  Disable autoplay, Prefer external browser); Indian-market tracker markers;\n  the Mint & Hindustan Times analysis doc; all v2.2.7 content (Amazon AMOLED,\n  Reddit listing fix, Brave patches).\n\nKnown limitations: everything is unverified on device; no binary-specific\nMeesho patches until the APK is provided; Premium unlocks are server-side and\nimpossible; the Meesho compatibility list covers only the versions above.\nv2.2.4 remains the latest full release. All v2.2.5+ builds are pre-releases, unchanged.\n",
   "release_tag": "v2.2.8",
-  "release_date": "2026-11-07T04:28:31Z",
+  "release_date": "2026-11-07T11:55:22Z",
   "isPreRelease": true,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",

@@ -2,9 +2,9 @@
   "bundle": "6zev",
   "channel": "latest",
   "repo_url": "https://github.com/6zev/morphe-patches",
-  "created_at": "2026-11-07T06:32:05",
-  "version": "1.6.3",
-  "description": "## [1.6.3](https://github.com/6zev/morphe-patches/compare/v1.6.2...v1.6.3) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* reuse prepared Looper in ADB server ([c81126a](https://github.com/6zev/morphe-patches/commit/c81126a9f4d85e619405178f34bcd1e77d786eba))",
+  "created_at": "2026-11-07T11:55:18",
+  "version": "1.6.4",
+  "description": "## [1.6.4](https://github.com/6zev/morphe-patches/compare/v1.6.3...v1.6.4) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* patch ARM64 server self-stop calls ([843251e](https://github.com/6zev/morphe-patches/commit/843251e372546d202226cb1c361ab600791651d9))",
   "apps": [
     {
       "app_name": "tvQuickActions Pro",
@@ -41,7 +41,7 @@
         },
         {
           "name": "Unlock native engine",
-          "description": "Patches the native engine libraries so that they run on a re-signed APK. The anti-tamper constructor of libd.so that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work. The only `system()` call of liba.so, which force-stops the app when the ADB speed-up server loads it, is turned into no-ops as well, which is what stops the app from killing itself in a loop.",
+          "description": "Patches the native engine libraries so that they run on a re-signed APK. The anti-tamper constructor of libd.so that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work. The server-only liba.so self-stop calls are also disabled for ARM32 and ARM64 so ADB speed-up does not terminate the app.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -63,10 +63,10 @@
     }
   ],
   "patches_name": "tvQuickActions Patches",
-  "fingerprint": "11f90ddeb96af872ea552780bc8dfe4aa5e27b1f529ce73406723f78c87e7609",
-  "release_notes": "## [1.6.3](https://github.com/6zev/morphe-patches/compare/v1.6.2...v1.6.3) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* reuse prepared Looper in ADB server ([c81126a](https://github.com/6zev/morphe-patches/commit/c81126a9f4d85e619405178f34bcd1e77d786eba))\n",
-  "release_tag": "v1.6.3",
-  "release_date": "2026-11-07T06:32:51Z",
+  "fingerprint": "9b502188552ab4b896952250f8240b93df08361c70b2edd3dd40d618899a5af1",
+  "release_notes": "## [1.6.4](https://github.com/6zev/morphe-patches/compare/v1.6.3...v1.6.4) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* patch ARM64 server self-stop calls ([843251e](https://github.com/6zev/morphe-patches/commit/843251e372546d202226cb1c361ab600791651d9))\n",
+  "release_tag": "v1.6.4",
+  "release_date": "2026-11-07T11:55:57Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/264537056?v=4&s=128",

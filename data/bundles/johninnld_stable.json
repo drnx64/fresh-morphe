@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-07T05:36:12.476Z",
-  "version": "1.49.2",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/08435d4de18835ad622d2bc62e751607f0468a32/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.49.2.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [08435d4de188](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/08435d4de18835ad622d2bc62e751607f0468a32). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.49.2](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.49.1...v1.49.2) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **AliExpress:** remove advertising and game campaign surfaces ([7246206](https://gitlab.com/johninnld/nl-morphe-patches/commit/7246206278b170d1995af8bda7118e354b553b15))\n",
+  "created_at": "2026-11-07T13:25:26.430Z",
+  "version": "1.53.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/311f3f4667daca217cf2c2c20258f701c09c3862/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [311f3f4667da](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/311f3f4667daca217cf2c2c20258f701c09c3862). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.52.2...v1.53.0) (2026-11-07)\n\n### ✨ Features\n\n* **Google Maps:** Adds full support for Google Maps 26.44.06.1006895251, with all existing Maps patches ported and applying together. ([311f3f4](https://gitlab.com/johninnld/nl-morphe-patches/commit/311f3f4667daca217cf2c2c20258f701c09c3862))",
   "apps": [
     {
       "app_name": "Stable",
@@ -12,11 +12,17 @@
       "patches": [
         {
           "name": "Android Auto Up next",
-          "description": "Publishes Myspoti's actual playback queue with titles, artists, artwork and the current occurrence. Android Auto and DriveDeck can display and select upcoming playlist and radio tracks through the existing player.",
+          "description": "Myspoti 2.4.0 publishes its current and upcoming playlist/radio queue with metadata and queue selection itself; on 2.3.0 this patch exports that queue. It also lets every Android Auto host, or only the host packages you list, browse the library and control that queue.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "allowedHostPackages",
+              "description": "Leave empty to allow every Android Auto host, including third-party systems. Otherwise enter comma-separated host app package names; every other app is denied browsing. Include Android Auto itself in the list when you restrict it. Repatch to change this list."
+            }
+          ],
           "compatible_versions": [
-            "2.3.0"
+            "2.3.0",
+            "2.4.0"
           ]
         },
         {
@@ -797,6 +803,38 @@
       "developer": "com.alibaba"
     },
     {
+      "app_name": "Apple Music",
+      "package": "com.apple.android.music",
+      "patches": [
+        {
+          "name": "Allow custom Android Auto hosts",
+          "description": "Lets Apple Music's car media browser accept a third-party Android Auto host such as DriveDeck or Gearslip and use its Android Auto root. Apple Music's account, catalogue and playback services are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.0.0"
+          ]
+        }
+      ],
+      "developer": "Apple"
+    },
+    {
+      "app_name": "TIDAL Music: HiFi sound",
+      "package": "com.aspiro.tidal",
+      "patches": [
+        {
+          "name": "Allow custom Android Auto hosts",
+          "description": "Lets TIDAL's car media browser accept a third-party Android Auto host such as DriveDeck or Gearslip. Only the host admission check changes; TIDAL's accounts, subscription, catalogue and playback services stay active.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.216.0"
+          ]
+        }
+      ],
+      "developer": "com.aspiro"
+    },
+    {
       "app_name": "bol",
       "package": "com.bol.shop",
       "patches": [
@@ -944,7 +982,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -953,7 +991,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -962,7 +1000,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -971,7 +1009,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -980,7 +1018,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -989,7 +1027,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -998,7 +1036,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1007,7 +1045,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1016,7 +1054,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1025,7 +1063,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1043,7 +1081,7 @@
             }
           ],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1057,7 +1095,7 @@
             }
           ],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1066,7 +1104,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1075,7 +1113,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1084,7 +1122,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1093,7 +1131,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1102,7 +1140,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1116,7 +1154,7 @@
             }
           ],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1125,7 +1163,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1134,7 +1172,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1143,7 +1181,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1152,7 +1190,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1161,7 +1199,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1170,7 +1208,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1179,7 +1217,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1188,7 +1226,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1197,7 +1235,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1206,7 +1244,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1215,7 +1253,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Use the system voice for navigation",
+          "description": "Uses the phone's selected text-to-speech engine for Maps navigation instead of requiring Google TTS. Select DriveDeck in Android's text-to-speech settings to hear Maps with the local DriveDeck voice. If no system engine is ready, Maps keeps its original voice.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.43.05.1002020710",
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1224,7 +1272,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         },
         {
@@ -1233,7 +1281,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.05.1002020710"
+            "26.44.06.1006895251"
           ]
         }
       ],
@@ -1358,7 +1406,7 @@
           ]
         }
       ],
-      "developer": "com.google"
+      "developer": "Google LLC"
     },
     {
       "app_name": "Monet Launcher - Android TV",
@@ -1751,6 +1799,211 @@
       "developer": "com.spocky"
     },
     {
+      "app_name": "Spotify: Music and Podcasts",
+      "package": "com.spotify.music",
+      "patches": [
+        {
+          "name": "Android Auto support",
+          "description": "Makes Spotify's car media browser, Home and Library work with DriveDeck, Gearslip or another compatible Android Auto host, including the bundled car service. Spotify's account, catalogue and playback services are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Android Auto Up next",
+          "description": "Publishes the player's real upcoming tracks to the media session on accounts whose peek-next restriction would otherwise hide the car's Up next list.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Block popup ads",
+          "description": "Blocks fullscreen promotions (\"Pendragon\" messages) shown when opening the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Changes the package name and app name so the patched app can be installed alongside the original Spotify app.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name of the patched app. It must differ from the original one."
+            },
+            {
+              "key": "appName",
+              "description": "The name shown in the launcher."
+            }
+          ],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Disable ad breaks",
+          "description": "Disables the ad slots that play ads between songs. Experimental.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Fix third party launchers widgets",
+          "description": "Allows the Spotify widgets to be added to third party launchers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Force play order",
+          "description": "Sends shuffle=false in the app's SetShuffleState request so albums and playlists play in order. The native player may still apply a server restriction; shuffle-on is sacrificed while this patch is enabled.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide ad sections",
+          "description": "Removes brand ad sections from the home and search page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide download buttons",
+          "description": "Hides the download button on tracks, albums, playlists and podcasts. Downloads, offline cache and account entitlements are unchanged; only the control is removed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide playlist ads",
+          "description": "Removes ads embedded into playlists.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide premium context-menu rows",
+          "description": "Removes Download and Start a Jam (and the related premium-only Jam rows) from song, album and playlist context menus. Playback, library and sharing actions stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide premium settings sections",
+          "description": "Removes Advertising, Download quality, Downloads and streaming, Offline, Storage and DJ sections from Settings. Playback, account, social and car settings stay.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide Premium tab",
+          "description": "Removes the \"Premium\" tab from the bottom navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide shuffle controls",
+          "description": "Removes the shuffle and Smart Shuffle buttons. Spotify Free still enforces its shuffled queue, so the controls cannot hold an off state; playback, queue and library actions remain.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide video ads",
+          "description": "Disables the video ad plugin of the now playing view.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Hide video shelves",
+          "description": "Drops video/watch sections from Spotify's resolved Home feed, so video podcast and music-video shelves are not shown.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Remove shuffle restriction",
+          "description": "Stops the Free 'Want to control how you listen?' upsell and lets the app use normal play order/shuffle controls. The account tier and server-side playback rules are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Sanitize sharing links",
+          "description": "Removes the tracking parameters (si, utm_source) from shared and copied links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Show Premium in the account row",
+          "description": "Displays Premium instead of Free account/Free plan on the account and plan rows. This is a label change only; the account tier and every entitlement stay unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Skip audio ads",
+          "description": "Asks Spotify's own player to skip an audio ad through its media-session next command, and mutes the stream only when the player refuses. Enabling \"Device broadcast status\" in the Spotify settings improves the ad detection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        },
+        {
+          "name": "Use the Premium plan icon",
+          "description": "Shows the bundled premium logo on the account/plan row instead of the white Spotify glyph. Label-only change; the account tier and entitlements are untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0.26"
+          ]
+        }
+      ],
+      "developer": "com.spotify"
+    },
+    {
       "app_name": "Buienradar - weer",
       "package": "com.supportware.buienradar",
       "patches": [
@@ -2030,7 +2283,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2039,7 +2293,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2053,7 +2308,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2067,7 +2323,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2076,7 +2333,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2090,7 +2348,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2116,7 +2375,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2130,7 +2390,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2139,7 +2400,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2153,7 +2415,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2162,7 +2425,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2180,7 +2444,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2198,7 +2463,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2207,7 +2473,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2221,7 +2488,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2230,7 +2498,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2239,7 +2508,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2253,7 +2523,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2287,7 +2558,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2325,7 +2597,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2347,7 +2620,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2356,7 +2630,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2365,7 +2640,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2374,7 +2650,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2383,7 +2660,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2392,7 +2670,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2401,7 +2680,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2410,7 +2690,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2419,7 +2700,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2428,7 +2710,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2453,7 +2736,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2462,7 +2746,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2471,7 +2756,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2480,7 +2766,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2502,7 +2789,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2516,7 +2804,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2530,7 +2819,8 @@
             }
           ],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
           ]
         },
         {
@@ -2539,7 +2829,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.26.90.901"
+            "5.26.90.901",
+            "5.27.0.1"
+          ]
+        },
+        {
+          "name": "Use the system voice for navigation",
+          "description": "Speaks Waze navigation chunks through the phone's selected text-to-speech engine instead of Waze's downloaded voice recordings. Waze already supplies the chunk text, so no speech recognition is needed. Select DriveDeck as the system engine to hear the local DriveDeck voice; otherwise the original voice remains the fallback.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.27.0.1"
           ]
         },
         {
@@ -2612,6 +2912,22 @@
         }
       ],
       "developer": "com.xs2theworld"
+    },
+    {
+      "app_name": "Deezer: Music & Podcast Player",
+      "package": "deezer.android.app",
+      "patches": [
+        {
+          "name": "Allow custom Android Auto hosts",
+          "description": "Lets Deezer's car media browser accept a third-party Android Auto host such as DriveDeck or Gearslip. Deezer's account, catalogue and playback services are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.0.26.3"
+          ]
+        }
+      ],
+      "developer": "Deezer Music"
     },
     {
       "app_name": "De Tijd",
@@ -2886,6 +3202,15 @@
           "options": [],
           "compatible_versions": [
             "14.17",
+            "15.0"
+          ]
+        },
+        {
+          "name": "Use the system voice for navigation",
+          "description": "Speaks Flitsmeister navigation directions through the phone's selected text-to-speech engine instead of requiring Google TTS. Select DriveDeck as the system engine to hear the local DriveDeck voice; otherwise the voice the driver chose remains in use.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
             "15.0"
           ]
         }
@@ -3503,10 +3828,10 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "67db993704296b253e5cf43b58a88f84590cb73bc0f5381ee795d87f1013cddd",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/08435d4de18835ad622d2bc62e751607f0468a32/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.49.2.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [08435d4de188](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/08435d4de18835ad622d2bc62e751607f0468a32). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.49.2](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.49.1...v1.49.2) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **AliExpress:** remove advertising and game campaign surfaces ([7246206](https://gitlab.com/johninnld/nl-morphe-patches/commit/7246206278b170d1995af8bda7118e354b553b15))\n",
-  "release_tag": "v1.49.2",
-  "release_date": "2026-11-07T05:36:12.476Z",
+  "fingerprint": "908cfabf5bbbad5559ef06e2faa49862e3892b85d234f340c76db7ae93a84cd8",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/d19268c9c29d974ae3cd9c62a435f5353df251e2/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.3.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [d19268c9c29d](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/d19268c9c29d974ae3cd9c62a435f5353df251e2). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.3](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.53.2...v1.53.3) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **Spotify:** publish the safe video filter under a new patch name ([539ed24](https://gitlab.com/johninnld/nl-morphe-patches/commit/539ed2438c6c99528c108c6c22901d47b6e9fc9a))\n",
+  "release_tag": "v1.53.3",
+  "release_date": "2026-11-07T15:19:53.532Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",

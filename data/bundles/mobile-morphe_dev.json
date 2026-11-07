@@ -2,9 +2,9 @@
   "bundle": "mobile-morphe",
   "channel": "dev",
   "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
-  "created_at": "2026-11-07T00:43:19",
-  "version": "1.0.13",
-  "description": "## [1.0.13](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.12...v1.0.13) (2026-11-07)\n\n\n### Bug Fixes\n\n* say which build to patch for Pluto TV, Starz, and Disney+ on Android TV ([a3cc7ea](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/a3cc7ea04ed28d2da29739c6af95acd315b3d36a))",
+  "created_at": "2026-11-07T09:52:41",
+  "version": "1.0.14",
+  "description": "## [1.0.14](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.13...v1.0.14) (2026-11-07)\n\n\n### Bug Fixes\n\n* let Pluto TV's Block analytics patch apply when the app has no DNS lookups to block ([842166d](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/842166dfc1b79935f941de5db328265c54b035e6))\n* resume Pluto TV at the right spot, and add a blocking level to its Block analytics patch ([3794c91](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/3794c9155842fcc4a4b64d7bed29c0128d937d06))",
   "apps": [
     {
       "app_name": "Downloadertablet",
@@ -1906,7 +1906,7 @@
           ]
         }
       ],
-      "developer": "com.fox"
+      "developer": "Fox Digital Services, LLC"
     },
     {
       "app_name": "FOX LOCAL: Live News & Weather",
@@ -4417,6 +4417,90 @@
       "developer": "com.wbd"
     },
     {
+      "app_name": "HBO Max: Stream TV & Movies",
+      "package": "com.wbd.stream",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Hide VPN connection",
+          "description": "Hides an active VPN from the app's checks on the phone.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Remove social sign-in (phone)",
+          "description": "Keeps Sign in with Google turned off. The Android TV app has no such option, so this does nothing there.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Report Wi-Fi connection",
+          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Blocks HBO Max's ad servers, so videos play without ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        },
+        {
+          "name": "Spoof carrier",
+          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "use": false,
+          "options": [
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+            }
+          ],
+          "compatible_versions": [
+            "22.0.0.321"
+          ]
+        }
+      ],
+      "developer": "com.wbd"
+    },
+    {
       "app_name": "Xfinity",
       "package": "com.xfinity.digitalhome",
       "patches": [
@@ -5259,7 +5343,12 @@
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "blockingLevel",
+              "description": "Relaxed keeps the two Pluto TV services that save your place, so Continue Watching keeps working. Aggressive blocks them too, so Pluto TV does not remember where you stopped."
+            }
+          ],
           "compatible_versions": [
             "17.3.0"
           ]
@@ -5439,10 +5528,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "919845aa5f92c812b2b3168c3783655b017aea14c5e32de25181c642c92d3dc5",
-  "release_notes": "## [1.0.14-dev.5](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.14-dev.4...v1.0.14-dev.5) (2026-11-07)\n\n\n### Features\n\n* add Truth Social ([a59fc13](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/a59fc135ef84f86f9da88617582c849473e42ae9))\n\n\n\n",
-  "release_tag": "v1.0.14-dev.5",
-  "release_date": "2026-11-07T07:11:08Z",
+  "fingerprint": "2b0f2d476abc7aa4e772cb58ff01757fc4a0a7be060bd43c116feb44a6444df9",
+  "release_notes": "## [1.0.15-dev.3](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.15-dev.2...v1.0.15-dev.3) (2026-11-07)\n\n\n### Features\n\n* support HBO Max as the Play Store installs it (com.wbd.stream) ([d8c0d22](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/d8c0d22ff0bfa83b67f4b7b94e47fadb63731563))\n\n\n\n",
+  "release_tag": "v1.0.15-dev.3",
+  "release_date": "2026-11-07T10:25:41Z",
   "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",
