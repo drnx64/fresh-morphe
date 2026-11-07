@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "dev",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-06T18:05:35",
+  "created_at": "2026-11-07T04:23:07",
   "version": "2.2.8",
-  "description": "v2.2.8 (pre-release): extends the universal 'Block analytics & tracking SDKs' marker list with Indian-market and push-engagement trackers (WebEngage, CleverTap, Flurry, Branch, Kochava); adds app-scoped entries 'Mint: Block analytics & tracking SDKs' and 'Hindustan Times: Block analytics & tracking SDKs' (same universal heuristic, off by default, unverified on device; no APK was decompiled); adds a Mint & Hindustan Times analysis doc. v2.2.7 content included (Brave patches, Reddit fixes, Amazon AMOLED dark, listing performance fix). No binary-specific Mint/HT patches until the APKs are provided. Brave patches unverified on device.",
+  "description": "v2.2.8 (pre-release): universal 'Disable video autoplay (ExoPlayer/Media3)' heuristic (literal setPlayWhenReady(true)->false; off by default; unverified); app-scoped Mint/Hindustan Times entries for 'Block analytics & tracking SDKs', 'Disable video autoplay (ExoPlayer)' and 'Prefer external browser over Custom Tabs'; Indian-market tracker markers (WebEngage, CleverTap, Flurry, Branch, Kochava); Mint & Hindustan Times analysis doc. No APK decompiled — no binary-specific patches yet; premium unlocks are server-side and not possible. v2.2.7 content included (Brave patches, Reddit fixes, Amazon AMOLED dark, listing performance fix).",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -586,6 +586,24 @@
           "compatible_versions": [
             "4.9.16"
           ]
+        },
+        {
+          "name": "Hindustan Times: Disable video autoplay (ExoPlayer)",
+          "description": "Stops video autoplay in the Hindustan Times feed/article bodies\n(ExoPlayer/Media3) using the same heuristic as 'Disable video autoplay\n(ExoPlayer/Media3)'.\n\nApplies to com.ht.news only. Heuristic; see the universal entry for\nlimitations. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.9.16"
+          ]
+        },
+        {
+          "name": "Hindustan Times: Prefer external browser over Custom Tabs",
+          "description": "Opens links in the default external browser instead of an in-app Custom\nTab, using the same rewrite as the universal 'Prefer external browser\nover Custom Tabs' patch.\n\nApplies to com.ht.news only. Some article WebViews are not affected —\nthis covers Custom Tabs / CustomTabsIntent call sites only.\nUnverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.9.16"
+          ]
         }
       ],
       "developer": "HT Media Ltd"
@@ -597,6 +615,26 @@
         {
           "name": "Mint: Block analytics & tracking SDKs",
           "description": "Blocks Mint's analytics & tracking SDKs (Firebase Analytics, AppsFlyer, Adjust,\nWebEngage, CleverTap and similar) using the same universal heuristic as\n'Block analytics & tracking SDKs'.\n\nApplies to com.htmedia.mint only. Heuristic; obfuscated or reflection-based\nreporting is not covered. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.7.5",
+            "5.8.4"
+          ]
+        },
+        {
+          "name": "Mint: Disable video autoplay (ExoPlayer)",
+          "description": "Stops video autoplay in the Mint feed/article bodies (ExoPlayer/Media3)\nusing the same heuristic as 'Disable video autoplay (ExoPlayer/Media3)'.\n\nApplies to com.htmedia.mint only. Heuristic; see the universal entry for\nlimitations. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.7.5",
+            "5.8.4"
+          ]
+        },
+        {
+          "name": "Mint: Prefer external browser over Custom Tabs",
+          "description": "Opens links in the default external browser instead of an in-app Custom\nTab, using the same rewrite as the universal 'Prefer external browser\nover Custom Tabs' patch.\n\nApplies to com.htmedia.mint only. Some article WebViews are not affected\n— this covers Custom Tabs / CustomTabsIntent call sites only.\nUnverified on device.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -1751,10 +1789,10 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "47b68d097314d534d7a2926d79bd0e0f97aa2e34482912ad66933e5fad99e2b5",
-  "release_notes": "v2.2.8 (pre-release) — 2026-11-06 (re-cut)\n\nWhat's in this build (supersedes the earlier v2.2.8 asset):\n\n- New app-scoped patch entries, off by default, unverified on device:\n  - \"Mint: Block analytics & tracking SDKs\" — com.htmedia.mint (5.7.5, 5.8.4)\n  - \"Hindustan Times: Block analytics & tracking SDKs\" — com.ht.news (4.9.16)\n  Both apply the same universal heuristic as \"Block analytics & tracking SDKs\" —\n  Firebase Analytics, AppsFlyer, Adjust, Facebook AppEvents, Segment, Amplitude,\n  Mixpanel, Localytics, Countly, UrbanAirship, plus WebEngage, CleverTap, Flurry,\n  Branch and Kochava (Indian-market / push-engagement markers added in this\n  release). No APK was decompiled; there are no app-specific fingerprints in this\n  build.\n- New analysis doc in-repo: docs/HT-NEWS-APPS.md — candidates for full binary-\n  specific patches (autoplay, sponsored-content suppression, ePaper, nags, AMOLED)\n  and exactly what the APK must confirm.\n- Everything from the v2.2.7 re-replace: Amazon Shopping/India AMOLED dark mode,\n  Reddit listing performance fix, six experimental off-by-default Brave patches\n  (adapted from kveld9/kveld-morphe-patches), Reddit AutoMod detection broadening,\n  \"Show deleted comments\" lookup logging.\n\nKnown limitations:\n- Brave patches are unverified on device.\n- Amazon AMOLED changes and the Reddit listing performance fix are unverified on device.\n- No binary-specific Mint/HT patches yet — they require the APKs (see docs/HT-NEWS-APPS.md).\n- \"Mint Premium\" / \"HT Premium\" cannot be unlocked by a client-side patch: premium\n  content is served behind server-side entitlement.\n- The compatibleWith lists for the HT apps only cover the store versions observed\n  on 2026-11-06 (Mint 5.7.5 / 5.8.4; HT 4.9.16).\n\nv2.2.4 remains the latest full release. All v2.2.5+ builds are pre-releases, unchanged.\n",
+  "fingerprint": "67cc41c470558d7c4ea565370d8668a1010bbac4fe5a03d591a37510d2101dbb",
+  "release_notes": "v2.2.8 (pre-release) — 2026-11-07 (re-cut)\n\nWhat's in this build (supersedes the earlier v2.2.8 assets):\n\n- New universal patch: \"Disable video autoplay (ExoPlayer/Media3)\" — flips\n  literal setPlayWhenReady(true) call sites to false. Heuristic; reflection or\n  obfuscated player setup is not covered; may stop playback entirely in apps\n  whose only play path is such a literal (turn it off if videos never start).\n  Off by default; unverified on device.\n- New app-scoped entries (off by default; unverified on device):\n  - \"Mint: Block analytics & tracking SDKs\" — com.htmedia.mint (5.7.5, 5.8.4)\n  - \"Hindustan Times: Block analytics & tracking SDKs\" — com.ht.news (4.9.16)\n  - \"Mint: Disable video autoplay (ExoPlayer)\"\n  - \"Hindustan Times: Disable video autoplay (ExoPlayer)\"\n  - \"Mint: Prefer external browser over Custom Tabs\"\n  - \"Hindustan Times: Prefer external browser over Custom Tabs\"\n- Indian-market tracker markers in the universal analytics patch: WebEngage,\n  CleverTap, Flurry, Branch, Kochava.\n- New analysis doc in-repo: docs/HT-NEWS-APPS.md — candidate patches and\n  exactly what decompiling the APKs must confirm.\n- Everything from the v2.2.7 re-replace: Amazon Shopping/India AMOLED dark\n  mode, Reddit listing performance fix, six experimental off-by-default Brave\n  patches (adapted from kveld9/kveld-morphe-patches), Reddit AutoMod detection\n  broadening, \"Show deleted comments\" lookup logging.\n\nKnown limitations:\n- Brave patches are unverified on device.\n- ExoPlayer autoplay heuristic, Amazon AMOLED and the Reddit listing fix are\n  unverified on device.\n- No binary-specific Mint/HT patches yet — they require the APKs\n  (see docs/HT-NEWS-APPS.md). Not attempted: sponsored/in-feed ad suppression,\n  ePaper cleanup, AMOLED reading surface, rating-nag removal.\n- \"Mint Premium\" / \"HT Premium\" cannot be unlocked by a client-side patch:\n  premium content is served behind server-side entitlement.\n- CompatibleWith lists cover the store versions observed on 2026-11-06 only.\n\nv2.2.4 remains the latest full release. All v2.2.5+ builds are pre-releases, unchanged.\n",
   "release_tag": "v2.2.8",
-  "release_date": "2026-11-06T18:15:30Z",
+  "release_date": "2026-11-07T04:28:31Z",
   "isPreRelease": true,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",

@@ -2,9 +2,9 @@
   "bundle": "toidicakhia-morphe",
   "channel": "latest",
   "repo_url": "https://github.com/toidicakhia/morphe-app-patches",
-  "created_at": "2026-10-30T13:33:58",
-  "version": "1.5.0",
-  "description": "## [1.5.0](https://github.com/toidicakhia/morphe-app-patches/compare/v1.4.1...v1.5.0) (2026-10-30)\n\n### ✨ New Features\n\n* add Universal Copy Unlock Plus patch ([60f5057](https://github.com/toidicakhia/morphe-app-patches/commit/60f50574c1e7f5368065824aa6393c6c343b1143))",
+  "created_at": "2026-11-07T04:44:14",
+  "version": "1.6.0",
+  "description": "## [1.6.0](https://github.com/toidicakhia/morphe-app-patches/compare/v1.5.0...v1.6.0) (2026-11-07)\n\n### ✨ New Features\n\n* **universal copy:** support 7.2.0 and remove Internet permission ([04b8b1b](https://github.com/toidicakhia/morphe-app-patches/commit/04b8b1be9d71103f9aa4be8b6896bbab35f5d1ef))",
   "apps": [
     {
       "app_name": "HTTP Sniffer",
@@ -29,11 +29,11 @@
       "patches": [
         {
           "name": "Unlock Plus",
-          "description": "Unlocks Universal Copy Plus: removes ads and upgrade prompts, and bypasses the PairIP license check so the patched app starts.",
+          "description": "Unlocks Universal Copy Plus: removes ads, upgrade prompts and the Internet permission, and bypasses the PairIP license check so the patched app starts.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.1.0"
+            "7.2.0"
           ]
         }
       ],
@@ -78,67 +78,8 @@
       "package": "com.dubox.drive",
       "patches": [
         {
-          "name": "Clone app",
-          "description": "Installs TeraBox as a separate app alongside the original, with its own account. Each copy needs a different clone number.",
-          "use": false,
-          "options": [
-            {
-              "key": "packageName",
-              "description": "Package name of this copy."
-            }
-          ],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        },
-        {
-          "name": "Fix Google login",
-          "description": "Makes Sign in with Google work in the patched app, where it would otherwise fail. Works as soon as you patch it in, with no switch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        },
-        {
           "name": "Hide ads",
           "description": "Blocks feed, banner, interstitial, app-open and video player ads on every page except Benefits, where rewarded ads stay available.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        },
-        {
-          "name": "Hide consent form",
-          "description": "Hides the ad consent form shown at startup.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        },
-        {
-          "name": "Hide promotions",
-          "description": "Hides Premium upgrade cards and banners, prize and campaign cards, speed-up prompts, floating invites, and sale, coupon and promotional popups.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        },
-        {
-          "name": "Hide video recommendations",
-          "description": "Hides the recommended videos below the video player.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        },
-        {
-          "name": "Unlock Premium Plus",
-          "description": "Unlocks HD up to original quality, playback speeds up to 3x and video uploads. HD buffers faster over parallel connections.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -197,13 +138,74 @@
         }
       ],
       "developer": "cz.mroczis"
+    },
+    {
+      "app_name": "VTV Go - TV Mọi nơi, Mọi lúc",
+      "package": "vn.vtv.vtvgo",
+      "patches": [
+        {
+          "name": "Block Product Ad Banners",
+          "description": "Points the product-ad API endpoint at a non-existent path so in-app ad banners are not loaded. Best effort: ads embedded in content responses are not affected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.11.05"
+          ]
+        },
+        {
+          "name": "Disable Analytics / Telemetry",
+          "description": "Disables Firebase Analytics, Crashlytics and Performance, stops Sentry uploads and turns off Facebook app events. The firebase_data_collection_default_enabled flag also prevents the SDKs from re-enabling collection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.11.05"
+          ]
+        },
+        {
+          "name": "Remove Ad ID Permissions",
+          "description": "Removes the advertising ID, Privacy Sandbox ad-services and Play install-referrer permissions. Device identification used for device management is left untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.11.05"
+          ]
+        },
+        {
+          "name": "Remove Calendar Permissions",
+          "description": "Removes calendar read/write permissions. Programme reminders will no longer work.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "12.11.05"
+          ]
+        },
+        {
+          "name": "Remove Video Ads",
+          "description": "Removes VTVGo pre-roll, mid-roll, welcome TVC and other VAST/IMA ads by rejecting ad requests before playback starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.11.05"
+          ]
+        },
+        {
+          "name": "Trust User Certificates",
+          "description": "Adds user-installed CA certificates to the network security config so native traffic can be inspected with a debugging proxy. Flutter's Dart HTTP stack keeps its own trust store.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "12.11.05"
+          ]
+        }
+      ],
+      "developer": "VTV Digital Center"
     }
   ],
   "patches_name": "App Patches",
-  "fingerprint": "138f24d2853fcab7e263d63361b4f49e35b5f0b336325bfbb06ff267a21d55fc",
-  "release_notes": "## [1.5.0](https://github.com/toidicakhia/morphe-app-patches/compare/v1.4.1...v1.5.0) (2026-10-30)\n\n### ✨ New Features\n\n* add Universal Copy Unlock Plus patch ([60f5057](https://github.com/toidicakhia/morphe-app-patches/commit/60f50574c1e7f5368065824aa6393c6c343b1143))\n",
-  "release_tag": "v1.5.0",
-  "release_date": "2026-10-30T13:34:45Z",
+  "fingerprint": "2adabaff999197394f29fcf16bd565bdb7e89878ab5ca7aa2e738a6660f156bf",
+  "release_notes": "## [1.6.0](https://github.com/toidicakhia/morphe-app-patches/compare/v1.5.0...v1.6.0) (2026-11-07)\n\n### ✨ New Features\n\n* **universal copy:** support 7.2.0 and remove Internet permission ([04b8b1b](https://github.com/toidicakhia/morphe-app-patches/commit/04b8b1be9d71103f9aa4be8b6896bbab35f5d1ef))\n",
+  "release_tag": "v1.6.0",
+  "release_date": "2026-11-07T04:45:05Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/108525966?v=4&s=128",
