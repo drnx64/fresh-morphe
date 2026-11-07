@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "latest",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-07T11:49:48",
-  "version": "2.2.8",
-  "description": "v2.2.8 (pre-release): adds Meesho (com.meesho.shopping, XAPK splits, targets 29.9/29.8/29.7/29.6/29.5) app-scoped entries — 'Meesho: Block analytics & tracking SDKs', 'Meesho: Disable video autoplay (ExoPlayer)', 'Meesho: Prefer external browser over Custom Tabs' (same heuristics, off by default, unverified on device) — plus docs/MEESHO.md. Amazon AMOLED resource pass restricted to android: framework attributes (fixes 'Unknown attribute name: colorSurface' build failure on mShop 32.19.0.300); Mereframe diagnostic crash log now records app versionName/versionCode; native-integrity bypass logs its planting. 2026-11-06 build included universal ExoPlayer autoplay heuristic, Mint/HT scoped entries, Indian-market tracker markers, HT analysis doc, v2.2.7 content (Brave, Reddit, Amazon AMOLED). No APK decompiled for Meesho — sponsored-suppression/AMOLED for Meesho pending the APK; Premium unlocks are server-side and impossible. Unverified on device.",
+  "created_at": "2026-11-07T17:52:48",
+  "version": "2.2.9",
+  "description": "v2.2.9 (pre-release, re-cut #3 - supersedes re-cut #2). Re-cut #2 shipped a patch-time crash in 'Bypass native integrity checks' on device (PatchException Collection is empty): the injected invoke-static had six source registers, exceeding the five-register limit of the regular opcode form; it now uses invoke-static/range, mirroring the original wrapper. Everything else from re-cut #2 unchanged - All open issues resolution (#22 AMOLED framework-only attributes + Google Photos fix, #21 Amazon native feed video autoplay patch, #5 Mereframe JVM try/catch bypass + Spoof install source superclass-chain walk). 137 patch entries / 174 appearances. No device verification yet. Latest full release remains v2.2.4; v2.2.8 unchanged.",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -206,6 +206,15 @@
           "name": "Remove ads",
           "description": "Hides sponsored and ad content in Amazon Shopping via CSS injection.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100"
+          ]
+        },
+        {
+          "name": "Amazon: Stop feed video autoplay",
+          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "32.18.0.100"
@@ -931,7 +940,7 @@
           ]
         }
       ],
-      "developer": "com.mubi"
+      "developer": "MUBI"
     },
     {
       "app_name": "ChatGPT",
@@ -1170,6 +1179,20 @@
             "2026.24.0",
             "2026.10.0"
           ]
+        },
+        {
+          "name": "Reddit: Diagnostic crash log",
+          "description": "DIAGNOSTIC ONLY - writes the full stack trace to Downloads/reddit-crash-*.txt when the app crashes, for remote diagnosis. Off by default; enable when asked to produce a crash log. Installs on the first account sync after launch; crashes before that are not captured. Chain-forwards to the original crash handler.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
         }
       ],
       "developer": "com.reddit"
@@ -1343,6 +1366,16 @@
           "name": "Remove ads",
           "description": "Hides sponsored and ad content in Amazon Shopping via CSS injection.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.300",
+            "32.19.0.300"
+          ]
+        },
+        {
+          "name": "Amazon: Stop feed video autoplay",
+          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "32.18.0.300",
@@ -1835,10 +1868,10 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "70de1d8190fc53a65dd5f4f2c4bf5e1d546293e45e64ff119bfe6837896efb98",
-  "release_notes": "v2.2.8 (pre-release) — 2026-11-07 (re-cut #5)\n\nNew in this build (supersedes the earlier v2.2.8 assets):\n\n- Meesho (com.meesho.shopping) support — XAPK split bundles; app-scoped entries,\n  off by default, unverified on device:\n  - \"Meesho: Block analytics & tracking SDKs\"\n  - \"Meesho: Disable video autoplay (ExoPlayer)\"\n  - \"Meesho: Prefer external browser over Custom Tabs\"\n  Targets: 29.9, 29.8, 29.7 (vc 872), 29.6 (vc 870), 29.5 (vc 868) — store builds\n  observed 2026-11-06/07. No APK decompiled — no sponsored-suppression, AMOLED,\n  or integrity-gate patches yet. See docs/MEESHO.md.\n- Plus, unchanged from the previous re-cut: Amazon AMOLED resource-encoder fix\n  (android:-framework attributes only — resolves the mShop 32.19.0.300\n  \"Unknown attribute name: colorSurface\" build failure); Mereframe diagnostic\n  crash log now records app versionName/versionCode; the native-integrity\n  bypass logs when its catch is planted.\n- Plus everything from earlier re-cuts: universal Disable video autoplay\n  (ExoPlayer/Media3) heuristic; Mint/HT app-scoped entries (Block analytics,\n  Disable autoplay, Prefer external browser); Indian-market tracker markers;\n  the Mint & Hindustan Times analysis doc; all v2.2.7 content (Amazon AMOLED,\n  Reddit listing fix, Brave patches).\n\nKnown limitations: everything is unverified on device; no binary-specific\nMeesho patches until the APK is provided; Premium unlocks are server-side and\nimpossible; the Meesho compatibility list covers only the versions above.\nv2.2.4 remains the latest full release. All v2.2.5+ builds are pre-releases, unchanged.\n",
-  "release_tag": "v2.2.8",
-  "release_date": "2026-11-07T11:55:22Z",
+  "fingerprint": "35bad5e8a90a8af47a3276b683db6f72c6d1d615cbe59abffdb70e6a593878d1",
+  "release_notes": "Proteus Patches v2.2.9 (pre-release, re-cut #3) - published 2026-11-07\n\nRe-cut #3 fixes the on-device patch-time crash reported for Mereframe 0.8.4\n(Manager 2.5.0 / Patcher 2.3.0, realme RMX5110, Android 16):\n\n- Bypass native integrity checks: injected invoke-static carried six source\n  registers, exceeding the five-register limit of the regular opcode form\n  (35c). The inline-smali compiler left the dummy method unbuildable, so\n  addInstructions threw PatchException \"Collection is empty\"\n  (Caused by: NoSuchElementException at InlineSmaliCompiler.compile).\n  The call now uses invoke-static/range {p0 .. p5} (same register sequence,\n  range form), exactly the pattern the original wrapper used. Crash class\n  eliminated. Repo-wide audit: no other injections carry more than five\n  source registers.\n\nEverything else from re-cut #2 is unchanged:\n\n- #22 Amazon India patching error: AMOLED resource pass now writes ONLY\n  android: framework attributes with a hard guard (Google Photos AMOLED\n  patch carried the identical defect and was fixed the same way).\n- #21 Amazon India video ads: NEW patch Amazon: Stop feed video autoplay\n  (default off) - flips literal setPlayWhenReady(true) to false in native\n  ExoPlayer/Media3 players. See docs/AMAZON.md.\n- #5 Mereframe 0.8.4: bypass now calls the session JNI inside a real JVM\n  try/catch in the extension (MereframeIntegrityHook) - the inline .catch\n  was silently dropped before. Spoof install source Layer 2 resolves the\n  Application family by walking the superclass chain (androidx parents such\n  as LifecycleProcess are no longer missed). Signature-hook presence is\n  enforced by the bundle verifier (two-tier: strict for nested dex\n  payloads, advisory otherwise).\n- Reddit save-flow stability: Remove ads Layer 3 constant return-void\n  entry kill; Layer 5 kept ON by decision; off-by-default Reddit:\n  Diagnostic crash log.\n- 137 patch entries / 174 appearances. Unit tests 15/15. CI-built. No\n  on-device verification yet. v2.2.8 unchanged. Latest full release remains\n  v2.2.4 (see note: Latest currently resolves to v2.2.7 because v2.2.7 is\n  flagged as a full release on GitHub).\n",
+  "release_tag": "v2.2.9",
+  "release_date": "2026-11-07T17:56:48Z",
   "isPreRelease": true,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",

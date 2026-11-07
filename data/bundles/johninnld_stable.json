@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-07T13:25:26.430Z",
-  "version": "1.53.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/311f3f4667daca217cf2c2c20258f701c09c3862/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [311f3f4667da](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/311f3f4667daca217cf2c2c20258f701c09c3862). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.52.2...v1.53.0) (2026-11-07)\n\n### ✨ Features\n\n* **Google Maps:** Adds full support for Google Maps 26.44.06.1006895251, with all existing Maps patches ported and applying together. ([311f3f4](https://gitlab.com/johninnld/nl-morphe-patches/commit/311f3f4667daca217cf2c2c20258f701c09c3862))",
+  "created_at": "2026-11-07T22:29:45.935Z",
+  "version": "1.53.7",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/5c3ad43afc26ba8be7f17ca68fcb9e4eefcb8b86/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.7.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [5c3ad43afc26](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/5c3ad43afc26ba8be7f17ca68fcb9e4eefcb8b86). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.7](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.53.6...v1.53.7) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **Google Maps:** Hides the \"More from this app\" section title in every 26.44 account-sheet binder, so the legacy layout cannot bring it back. ([5c3ad43](https://gitlab.com/johninnld/nl-morphe-patches/commit/5c3ad43afc26ba8be7f17ca68fcb9e4eefcb8b86))",
   "apps": [
     {
       "app_name": "Stable",
@@ -1947,9 +1947,9 @@
           ]
         },
         {
-          "name": "Hide video shelves",
+          "name": "Hide video shelves (safe)",
           "description": "Drops video/watch sections from Spotify's resolved Home feed, so video podcast and music-video shelves are not shown.",
-          "use": false,
+          "use": true,
           "options": [],
           "compatible_versions": [
             "9.2.0.26"
@@ -2918,8 +2918,44 @@
       "package": "deezer.android.app",
       "patches": [
         {
-          "name": "Allow custom Android Auto hosts",
-          "description": "Lets Deezer's car media browser accept a third-party Android Auto host such as DriveDeck or Gearslip. Deezer's account, catalogue and playback services are unchanged.",
+          "name": "Allow any Android Auto host",
+          "description": "Lets Deezer's car media browser accept any Android Auto host, including DriveDeck, Gearslip and hosts outside Deezer's package/signature allow-list. Home, Library, Recently played and Explore stay browsable and Deezer's own Up next queue is used. Account, catalogue and playback services are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.0.26.3"
+          ]
+        },
+        {
+          "name": "Disable tracking",
+          "description": "Disables the inventoried Deezer analytics and attribution collectors: Adjust initialization and events, Segment event delivery and its Braze destination, the Firebase Analytics/Crashlytics/Performance/Sessions collectors, Facebook automatic app events and advertising IDs. Sign-in, catalogue, playback and functional notifications are retained.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.0.26.3"
+          ]
+        },
+        {
+          "name": "Enable full streaming",
+          "description": "Keeps full-track playback enabled for the signed-in account: removes the preview and device-limit blocks, keeps offline/radio rights, disables the streaming time limit and leaves unlicensed catalogue entries playable through Deezer's own media service. Account, catalogue and playback transport are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.0.26.3"
+          ]
+        },
+        {
+          "name": "Remove advertising",
+          "description": "Disables Deezer's banner, native, audio and preroll advertising: no ad configuration is exposed to the placement logic, playback continues without an ad break, and the audio-ad launcher cannot receive its ad payload. Playback, catalogue and account services are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.0.26.3"
+          ]
+        },
+        {
+          "name": "Remove subscription paywalls",
+          "description": "Stops the Premium tab and the startup Premium surface from blocking the app, redirecting the startup Premium activity to Home, and closes the artist paywall, trial-start and offer-dialog activities after their normal lifecycle starts. Account, sign-in and catalogue services are unchanged.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -3828,10 +3864,10 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "908cfabf5bbbad5559ef06e2faa49862e3892b85d234f340c76db7ae93a84cd8",
-  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/d19268c9c29d974ae3cd9c62a435f5353df251e2/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.3.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [d19268c9c29d](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/d19268c9c29d974ae3cd9c62a435f5353df251e2). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.3](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.53.2...v1.53.3) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **Spotify:** publish the safe video filter under a new patch name ([539ed24](https://gitlab.com/johninnld/nl-morphe-patches/commit/539ed2438c6c99528c108c6c22901d47b6e9fc9a))\n",
-  "release_tag": "v1.53.3",
-  "release_date": "2026-11-07T15:19:53.532Z",
+  "fingerprint": "975b6229f22fe6a39fa9cd94619aa2b920298f128066405719d56a529e54dd89",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/5c3ad43afc26ba8be7f17ca68fcb9e4eefcb8b86/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.7.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [5c3ad43afc26](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/5c3ad43afc26ba8be7f17ca68fcb9e4eefcb8b86). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.7](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.53.6...v1.53.7) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **Google Maps:** Hides the \"More from this app\" section title in every 26.44 account-sheet binder, so the legacy layout cannot bring it back. ([5c3ad43](https://gitlab.com/johninnld/nl-morphe-patches/commit/5c3ad43afc26ba8be7f17ca68fcb9e4eefcb8b86))",
+  "release_tag": "v1.53.7",
+  "release_date": "2026-11-07T22:29:45.935Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",

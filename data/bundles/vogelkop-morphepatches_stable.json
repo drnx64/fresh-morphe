@@ -1,0 +1,190 @@
+{
+  "bundle": "vogelkop-morphepatches",
+  "channel": "stable",
+  "repo_url": "https://github.com/maniesh-NR/Vogelkop-MorphePatches",
+  "created_at": "2026-11-07T15:40:00",
+  "version": "1.2.0",
+  "description": "## v1.2.0 — fixes the \"stuck on the welcome splash\" bug\n\nOpera Beta (and stable) Play builds download their Chromium engine on first run. When that setup failed on a re-signed (patched) APK, the app sat on the purple welcome splash forever and showed only a black screen afterwards. v1.2.0 fixes this in two layers:\n\n- **Spoof app signature** (new, all three apps): the app now sees Opera's original \"Opera Software\" signing certificate instead of the Morphe key (PackageInfo.CREATOR parcel proxy, ApkSignatureKillerEx lineage). This removes the certificate-gated failure of the first-run engine download. The official certificate (SHA-256 5d6afbf8…b8) is bundled.\n- **Ignore browser boot failures** (new, Opera & Opera Beta): if the first-run engine boot (MainLibraryBoot) still fails, its failure announcements are converted into success notifications so the welcome screen can never deadlock again.\n- The bundle is renamed to **Vogelkop patches** and now ships its own source icon (the Vogelkop bowerbird logo).\n\n### Also in this release\n- Google Play Protect's \"scan the app\" prompt on install is expected for every sideloaded APK and is not caused by the patches; see the README.\n- Patch sources: added `extensions/` (runtime hook, no-stdlib Kotlin) and `tools/build_extension.sh` (rebuilds `extensions/extension.mpe` without the Android SDK).\n\n### Import\nAdd as patch source: https://morphe.software/add-source?github=maniesh-NR/Vogelkop-MorphePatches",
+  "apps": [
+    {
+      "app_name": "Opera: Private Web Browser",
+      "package": "com.opera.browser",
+      "patches": [
+        {
+          "name": "Disable Acceptable Ads whitelist",
+          "description": "Replaces Opera's hidden partner whitelists (Google/Yandex measurement, Taboola, gambling and shopping affiliates, AppsFlyer/Adjust/Kochava/CJ tracking domains) with empty filter lists, so the built-in ad blocker actually blocks them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "103.3.5234.91185"
+          ]
+        },
+        {
+          "name": "Disable ad modules",
+          "description": "Prevents Opera from loading its bundled third-party ad network modules (Liftoff/Vungle, Mintegral, Pangle/ByteDance) by breaking the reflective class lookup used by the ad mediation layer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "103.3.5234.91185"
+          ]
+        },
+        {
+          "name": "Hide broken installation dialog",
+          "description": "Prevents the \"Your app installation appears to be broken. Try to uninstall and reinstall\" dialog from blocking startup. The dialog is Opera's crash-recovery nag (it also appears on unmodified installs after a crash or inside app-cloning tools), not a signature check, and its reinstall advice cannot fix a patched build.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "103.3.5234.91185"
+          ]
+        },
+        {
+          "name": "Ignore browser boot failures",
+          "description": "Stops a failed first-run engine boot (MainLibraryBoot) from deadlocking the welcome screen. Opera announces boot failures (engine download or Chromium start) to the welcome flow, which used to call the now-hidden \"broken installation\" dialog and then wait forever. The announcements are converted into success notifications so startup always continues. Pair with \"Spoof app signature\", which fixes the underlying certificate-gated engine download.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "103.3.5234.91185"
+          ]
+        },
+        {
+          "name": "Remove sponsored Speed Dial",
+          "description": "Stops sponsored/partner tiles from appearing on the start page by making Opera's suggested-sites database queries return no rows. Regular Speed Dial entries and bookmarks are not affected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "103.3.5234.91185"
+          ]
+        },
+        {
+          "name": "Spoof app signature",
+          "description": "Makes the app see the original Opera signing certificate after Morphe re-signs it. Opera's first run downloads its Chromium engine (MainLibraryBoot) and re-signed APKs can fail that setup with a foreign certificate, which previously left the app stuck on the welcome splash. Does not bypass Play Integrity hardware attestation.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Leave blank to read the package name from the app manifest."
+            },
+            {
+              "key": "signature",
+              "description": "Leave blank to use the bundled official Opera certificate. Only set this if you are patching a build signed with a different vendor key. Get it with: apksigner verify --print-certs app.apk"
+            }
+          ],
+          "compatible_versions": [
+            "103.3.5234.91185"
+          ]
+        }
+      ],
+      "developer": "Opera"
+    },
+    {
+      "app_name": "Opera browser beta with AI",
+      "package": "com.opera.browser.beta",
+      "patches": [
+        {
+          "name": "Disable Acceptable Ads whitelist",
+          "description": "Replaces Opera's hidden partner whitelists (Google/Yandex measurement, Taboola, gambling and shopping affiliates, AppsFlyer/Adjust/Kochava/CJ tracking domains) with empty filter lists, so the built-in ad blocker actually blocks them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "104.0.5262.91143"
+          ]
+        },
+        {
+          "name": "Disable ad modules",
+          "description": "Prevents Opera from loading its bundled third-party ad network modules (Liftoff/Vungle, Mintegral, Pangle/ByteDance) by breaking the reflective class lookup used by the ad mediation layer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "104.0.5262.91143"
+          ]
+        },
+        {
+          "name": "Hide broken installation dialog",
+          "description": "Prevents the \"Your app installation appears to be broken. Try to uninstall and reinstall\" dialog from blocking startup. The dialog is Opera's crash-recovery nag (it also appears on unmodified installs after a crash or inside app-cloning tools), not a signature check, and its reinstall advice cannot fix a patched build.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "104.0.5262.91143"
+          ]
+        },
+        {
+          "name": "Ignore browser boot failures",
+          "description": "Stops a failed first-run engine boot (MainLibraryBoot) from deadlocking the welcome screen. Opera announces boot failures (engine download or Chromium start) to the welcome flow, which used to call the now-hidden \"broken installation\" dialog and then wait forever. The announcements are converted into success notifications so startup always continues. Pair with \"Spoof app signature\", which fixes the underlying certificate-gated engine download.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "104.0.5262.91143"
+          ]
+        },
+        {
+          "name": "Remove sponsored Speed Dial",
+          "description": "Stops sponsored/partner tiles from appearing on the start page by making Opera's suggested-sites database queries return no rows. Regular Speed Dial entries and bookmarks are not affected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "104.0.5262.91143"
+          ]
+        },
+        {
+          "name": "Spoof app signature",
+          "description": "Makes the app see the original Opera signing certificate after Morphe re-signs it. Opera's first run downloads its Chromium engine (MainLibraryBoot) and re-signed APKs can fail that setup with a foreign certificate, which previously left the app stuck on the welcome splash. Does not bypass Play Integrity hardware attestation.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Leave blank to read the package name from the app manifest."
+            },
+            {
+              "key": "signature",
+              "description": "Leave blank to use the bundled official Opera certificate. Only set this if you are patching a build signed with a different vendor key. Get it with: apksigner verify --print-certs app.apk"
+            }
+          ],
+          "compatible_versions": [
+            "104.0.5262.91143"
+          ]
+        }
+      ],
+      "developer": "Opera"
+    },
+    {
+      "app_name": "Opera GX: Gaming Browser",
+      "package": "com.opera.gx",
+      "patches": [
+        {
+          "name": "Remove sponsored Speed Dial",
+          "description": "Removes sponsored tiles (Eneba, Instant Gaming, Amazon and other affiliate links routed through operagx.gg) from Opera GX's preloaded start page, keeping the organic default tiles.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.3.18"
+          ]
+        },
+        {
+          "name": "Spoof app signature",
+          "description": "Makes the app see the original Opera signing certificate after Morphe re-signs it. Opera's first run downloads its Chromium engine (MainLibraryBoot) and re-signed APKs can fail that setup with a foreign certificate, which previously left the app stuck on the welcome splash. Does not bypass Play Integrity hardware attestation.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Leave blank to read the package name from the app manifest."
+            },
+            {
+              "key": "signature",
+              "description": "Leave blank to use the bundled official Opera certificate. Only set this if you are patching a build signed with a different vendor key. Get it with: apksigner verify --print-certs app.apk"
+            }
+          ],
+          "compatible_versions": [
+            "3.3.18"
+          ]
+        }
+      ],
+      "developer": "com.opera"
+    }
+  ],
+  "patches_name": "Vogelkop patches",
+  "fingerprint": "0e894281ae474e0cbbae4c70ef23859f7692a23efd32568bfd36ed2156c403a0",
+  "release_notes": "## What's fixed\n\n**Opera Beta stuck on the purple welcome splash / black screen after restart** — this release fixes it in two layers:\n\n1. **`Spoof app signature`** (new, all three apps) — after Morphe re-signs an APK, Opera's first-run engine download (\"MainLibraryBoot\": Play builds fetch their Chromium engine at first start) can reject a build that reports a foreign certificate. A tiny extension now presents Opera's original vendor certificate (SHA-256 `5d6afbf8…b8`, extracted from the official `ftp.opera.com` build) to every in-app signature read.\n2. **`Ignore browser boot failures`** (new, Opera & Opera Beta) — if the first-run engine boot still fails (e.g. offline first start), its failure announcements are converted into success notifications, so the welcome screen can never deadlock again.\n\n> **About the Play Protect prompt** — the \"scan this app\" / lockscreen code dialog appears for *every* sideloaded APK signed by an unknown key. It is part of the installer, not of these patches, and cannot be patched away. See the README for details.\n\n## Also in this release\n\n- The bundle is renamed to **Vogelkop patches** (was \"Morphe patches for opera\" / \"Vogelkop Morphe Patches\").\n- Morphe Manager now shows the **Vogelkop bowerbird logo** as the source icon (a `patches-bundle.png` sits next to `patches-bundle.json` in the repo root).\n- All structural fingerprints were re-verified on Opera stable 103.3.5234.91185, Opera Beta 104.0.5262.91143 and Opera GX 3.3.18; full write-up in [`evidence/ANALYSIS.md` §6](https://github.com/maniesh-NR/Vogelkop-MorphePatches/blob/main/evidence/ANALYSIS.md).\n- Signing key: unchanged from v1.1.2 (`morphe-signing.pub`, fingerprint `3243 98b0 95c8 b7f4`).\n\n## Install\n\nAdd as patch source: https://morphe.software/add-source?github=maniesh-NR/Vogelkop-MorphePatches\n\n## Files\n\n- `patches-1.2.0.mpp` — the patch bundle (contains `classes.dex` + the extension, Ed25519-signed, `MorpheSig1` ZIP comment)\n- `SHA256SUMS.txt` — checksums of all release artifacts\n\n> **Supersedes v1.1.1 and older** — v1.1.x did not contain the splash fix. Older releases are kept for reference only; do not install them.",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-11-07T15:41:21Z",
+  "isPreRelease": false
+}

@@ -2,9 +2,9 @@
   "bundle": "imxeren",
   "channel": "dev",
   "repo_url": "https://gitlab.com/IMXEren/mix-patches",
-  "created_at": "2026-11-06T16:40:00.220Z",
-  "version": "2.0.0-dev.7",
-  "description": "## [2.0.0-dev.7](https://gitlab.com/IMXEren/mix-patches/compare/v2.0.0-dev.6...v2.0.0-dev.7) (2026-11-06)\n\n### 🐛 Bug Fixes\n\n* **reddit-sync:** keep capped comment video previews at their aspect ratio ([5a14fb2](https://gitlab.com/IMXEren/mix-patches/commit/5a14fb299cf5e87d4ab4d2db2308822404215a43))\n* **reddit-sync:** keep each account's web session across failed logins and switches ([8cbcc58](https://gitlab.com/IMXEren/mix-patches/commit/8cbcc588069f4e74e62aa31bd0cd16535889f9af))\n* **reddit-sync:** load the web transport from a page Reddit's edge accepts ([d4ac8b4](https://gitlab.com/IMXEren/mix-patches/commit/d4ac8b4ae60b821e46555aaa80598b5584190221))\n* **reddit-sync:** redraw inline videos when the window regains focus ([1d066bf](https://gitlab.com/IMXEren/mix-patches/commit/1d066bf99c2bc4c658a3469e39439615ffcb2faa))\n\n### ✨ New Features\n\n* **reddit-sync:** upload media to Reddit ([654242a](https://gitlab.com/IMXEren/mix-patches/commit/654242a67e436ac7e0b9d33db2072148b71f6cba))\n",
+  "created_at": "2026-11-07T21:33:06.724Z",
+  "version": "2.0.0-dev.9",
+  "description": "## [2.0.0-dev.9](https://gitlab.com/IMXEren/mix-patches/compare/v2.0.0-dev.8...v2.0.0-dev.9) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **reddit-sync:** always show a post on its own page ([866181b](https://gitlab.com/IMXEren/mix-patches/commit/866181b3dfc4a690cd097001b015771feeeff029))\n* **reddit-sync:** load the remaining comments of large threads ([2eaf754](https://gitlab.com/IMXEren/mix-patches/commit/2eaf7541bd3a501590de51c728ced63e39bf0fde))\n* **reddit-sync:** restore load-more comments and skip filtered archive lookups ([6b9e556](https://gitlab.com/IMXEren/mix-patches/commit/6b9e556d37f91be39de897c1737e1401ce7dbd8d))\n* **reddit-sync:** restore removed posts in subreddit feeds ([36ad4f3](https://gitlab.com/IMXEren/mix-patches/commit/36ad4f39b637811457b7521704af199b6613c9dd))\n\n### ✨ New Features\n\n* **reddit-sync:** fill empty subreddit About and Wiki ([85adffb](https://gitlab.com/IMXEren/mix-patches/commit/85adffbeb4443fd3f21b027b91830fd8e93cfec0))\n* **reddit-sync:** show subreddit weekly stats and highlights ([69575b0](https://gitlab.com/IMXEren/mix-patches/commit/69575b0dffdc37654a94f3c7a30aa7ee6649ae95))\n",
   "apps": [
     {
       "app_name": "iPay Sri Lanka",
@@ -84,15 +84,6 @@
         {
           "name": "Fix /s/ links",
           "description": "",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "v23.06.30-13:39"
-          ]
-        },
-        {
-          "name": "Fix blocked Reddit API requests",
-          "description": "Retries Reddit's network-security blocks through the matching web session; dedicated endpoint fixes may answer requests first.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -190,6 +181,15 @@
           ]
         },
         {
+          "name": "Fix subreddit About and Wiki",
+          "description": "Fills empty About and Wiki pages from the subreddit's sidebar widgets and wiki pages.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Fix video downloads",
           "description": "Fixes a bug in Sync's MPD parser resulting in only the audio-track being saved.",
           "use": true,
@@ -271,6 +271,24 @@
           ]
         },
         {
+          "name": "Show subreddit highlights",
+          "description": "Pins the subreddit's community highlights atop its hot feed, as on the website.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Show subreddit weekly stats",
+          "description": "Shows weekly visitors and contributions in place of the online count Reddit no longer returns.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Spoof client",
           "description": "Restores functionality of the app by using custom client ID. Configure the client in Morphe Settings.",
           "use": true,
@@ -327,6 +345,15 @@
           "compatible_versions": [
             "v23.06.30-13:39"
           ]
+        },
+        {
+          "name": "Use Reddit web session",
+          "description": "Keeps a Reddit website session per account for features the app's API access cannot reach, and retries requests Reddit blocks through it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
         }
       ],
       "developer": "com.laurencedawson"
@@ -374,7 +401,11 @@
     }
   ],
   "patches_name": "Mix Patches",
-  "fingerprint": "7ee6dbe15712726e325275c7b34c930fac87d87bdea4e9473c252b144b305311",
+  "fingerprint": "05330fe5b9525ef93d4631d47bd9c4785794091418582d9ff38218c8df48de60",
+  "release_notes": "## [2.0.0-dev.9](https://gitlab.com/IMXEren/mix-patches/compare/v2.0.0-dev.8...v2.0.0-dev.9) (2026-11-07)\n\n### 🐛 Bug Fixes\n\n* **reddit-sync:** always show a post on its own page ([866181b](https://gitlab.com/IMXEren/mix-patches/commit/866181b3dfc4a690cd097001b015771feeeff029))\n* **reddit-sync:** load the remaining comments of large threads ([2eaf754](https://gitlab.com/IMXEren/mix-patches/commit/2eaf7541bd3a501590de51c728ced63e39bf0fde))\n* **reddit-sync:** restore load-more comments and skip filtered archive lookups ([6b9e556](https://gitlab.com/IMXEren/mix-patches/commit/6b9e556d37f91be39de897c1737e1401ce7dbd8d))\n* **reddit-sync:** restore removed posts in subreddit feeds ([36ad4f3](https://gitlab.com/IMXEren/mix-patches/commit/36ad4f39b637811457b7521704af199b6613c9dd))\n\n### ✨ New Features\n\n* **reddit-sync:** fill empty subreddit About and Wiki ([85adffb](https://gitlab.com/IMXEren/mix-patches/commit/85adffbeb4443fd3f21b027b91830fd8e93cfec0))\n* **reddit-sync:** show subreddit weekly stats and highlights ([69575b0](https://gitlab.com/IMXEren/mix-patches/commit/69575b0dffdc37654a94f3c7a30aa7ee6649ae95))\n",
+  "release_tag": "v2.0.0-dev.9",
+  "release_date": "2026-11-07T21:33:06.724Z",
+  "isPreRelease": true,
   "stars": 6,
   "avatarUrl": "",
   "repoDescription": "Mix Patches",
