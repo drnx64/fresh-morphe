@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "latest",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-08T09:51:38.364Z",
-  "version": "1.53.10",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/f7b2bc50390501b3e38a83dff58902d99d54eef4/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.53.10.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [f7b2bc503905](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/f7b2bc50390501b3e38a83dff58902d99d54eef4). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.53.10](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.53.9...v1.53.10) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **release:** stop the local-release fixture leaking a node helper ([f4353a9](https://gitlab.com/johninnld/nl-morphe-patches/commit/f4353a97a1aeacd7a8288228865fea67e33d4044))\n",
+  "created_at": "2026-11-08T17:37:41.521Z",
+  "version": "1.56.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/f91ab8e99ad886ef6d478ed65d50c2ff3db3a975/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.56.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [f91ab8e99ad8](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/f91ab8e99ad886ef6d478ed65d50c2ff3db3a975). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.56.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.55.0...v1.56.0) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **General:** stop publishing the Spotify patches ([aab20ba](https://gitlab.com/johninnld/nl-morphe-patches/commit/aab20ba245bd369e8cd9442f73f67451f1ad0f8f))\n* **release:** accept maps trailer alias ([c55a677](https://gitlab.com/johninnld/nl-morphe-patches/commit/c55a67755fad99750b3b7949df6c5272e2b6d78f))\n* **release:** exclude GitGud from automated releases ([f1b7eb1](https://gitlab.com/johninnld/nl-morphe-patches/commit/f1b7eb11caf41957234879232ee89dcbfd9adb4f))\n\n### ✨ New Features\n\n* **Deezer:** remove premium UI and branding ([83b35e4](https://gitlab.com/johninnld/nl-morphe-patches/commit/83b35e412dd164777c7667684da67c379d2cf702))\n\n### 🔧 Improvements\n\n* **Google Maps:** harden guidance hold ownership and Exit refresh ([51a90f8](https://gitlab.com/johninnld/nl-morphe-patches/commit/51a90f8e6d38ff8842457707d907ef6fa6f72563))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -1159,7 +1159,7 @@
         },
         {
           "name": "Native navigation for Gearslip and Android Auto",
-          "description": "Shows this patched Maps app's live native map with app-owned car UI and standard navigation controls that Android Auto and compatible hosts can arrange.",
+          "description": "Keeps Maps' native map and navigation engine, and supplies routing, ETA, destination lists and route-preview cards for Android Auto and compatible hosts to arrange around their controls and dock.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1799,193 +1799,6 @@
       "developer": "com.spocky"
     },
     {
-      "app_name": "Spotify: Music and Podcasts",
-      "package": "com.spotify.music",
-      "patches": [
-        {
-          "name": "Android Auto support",
-          "description": "Makes Spotify's car media browser, Home and Library work with DriveDeck, Gearslip or another compatible Android Auto host, including the bundled car service. Spotify's account, catalogue and playback services are unchanged.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Android Auto Up next",
-          "description": "Publishes the player's real upcoming tracks to the media session on accounts whose peek-next restriction would otherwise hide the car's Up next list.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Block popup ads",
-          "description": "Blocks fullscreen promotions (\"Pendragon\" messages) shown when opening the app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Change package name",
-          "description": "Changes the package name and app name so the patched app can be installed alongside the original Spotify app.",
-          "use": false,
-          "options": [
-            {
-              "key": "packageName",
-              "description": "The package name of the patched app. It must differ from the original one."
-            },
-            {
-              "key": "appName",
-              "description": "The name shown in the launcher."
-            }
-          ],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Disable ad breaks",
-          "description": "Disables the ad slots that play ads between songs. Experimental.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Force play order",
-          "description": "Sends shuffle=false in the app's SetShuffleState request so albums and playlists play in order. The native player may still apply a server restriction; shuffle-on is sacrificed while this patch is enabled.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide ad sections",
-          "description": "Removes brand ad sections from the home and search page.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide download buttons",
-          "description": "Hides the download button on tracks, albums, playlists and podcasts. Downloads, offline cache and account entitlements are unchanged; only the control is removed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide playlist ads",
-          "description": "Removes ads embedded into playlists.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide premium context-menu rows",
-          "description": "Removes Download and Start a Jam (and the related premium-only Jam rows) from song, album and playlist context menus. Playback, library and sharing actions stay.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide premium settings sections",
-          "description": "Removes Advertising, Download quality, Downloads and streaming, Offline, Storage and DJ sections from Settings. Playback, account, social and car settings stay.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide Premium tab",
-          "description": "Removes the \"Premium\" tab from the bottom navigation bar.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide shuffle controls",
-          "description": "Removes the shuffle and Smart Shuffle buttons. Spotify Free still enforces its shuffled queue, so the controls cannot hold an off state; playback, queue and library actions remain.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide video ads",
-          "description": "Disables the video ad plugin of the now playing view.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Hide video shelves (safe)",
-          "description": "Drops video/watch sections from Spotify's resolved Home feed, so video podcast and music-video shelves are not shown.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Remove shuffle restriction",
-          "description": "Stops the Free 'Want to control how you listen?' upsell and lets the app use normal play order/shuffle controls. The account tier and server-side playback rules are unchanged.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Sanitize sharing links",
-          "description": "Removes the tracking parameters (si, utm_source) from shared and copied links.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Show Premium in the account row",
-          "description": "Displays Premium instead of Free account/Free plan on the account and plan rows. This is a label change only; the account tier and every entitlement stay unchanged.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
-        {
-          "name": "Skip audio ads",
-          "description": "Asks Spotify's own player to skip an audio ad through its media-session next command, and mutes the stream only when the player refuses. Enabling \"Device broadcast status\" in the Spotify settings improves the ad detection.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        }
-      ],
-      "developer": "com.spotify"
-    },
-    {
       "app_name": "Buienradar - weer",
       "package": "com.supportware.buienradar",
       "patches": [
@@ -2069,7 +1882,7 @@
           ]
         }
       ],
-      "developer": "com.talpa"
+      "developer": "Talpa Network B.V."
     },
     {
       "app_name": "DS Nieuws",
@@ -2936,6 +2749,15 @@
           ]
         },
         {
+          "name": "Remove premium upsell UI",
+          "description": "Removes the Premium tab from the bottom navigation bar, the Get Premium button on the user profile, the conversion banner and Plan management row in Settings, and shows the free account plan as Deezer Premium. Account, catalogue, playback and the remaining Settings items are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.0.26.3"
+          ]
+        },
+        {
           "name": "Remove subscription paywalls",
           "description": "Stops the startup plans page from blocking the app by treating the account as not waiting for payment and skipping the no-freemium startup redirect, stops the Premium tab and the startup Premium surface from blocking the app, redirecting the startup Premium activity to Home, and closes the artist paywall, trial-start and offer-dialog activities after their normal lifecycle starts. Account, sign-in and catalogue services are unchanged.",
           "use": true,
@@ -3414,7 +3236,7 @@
           ]
         }
       ],
-      "developer": "nl.omroepbrabant"
+      "developer": "Omroep Brabant"
     },
     {
       "app_name": "Omroep West: TV & Radio West",
@@ -3846,7 +3668,11 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "19db09f69f4afaf9327e647ee7ca9cd00f341de1eb0a3d8b9c6605dd0fe85fb0",
+  "fingerprint": "b080d3157bd853b97778ec5034f6daf45bc853a6b3e1aafae4d9a34ea4fe729a",
+  "release_notes": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/f91ab8e99ad886ef6d478ed65d50c2ff3db3a975/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.56.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [f91ab8e99ad8](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/f91ab8e99ad886ef6d478ed65d50c2ff3db3a975). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.56.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.55.0...v1.56.0) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **General:** stop publishing the Spotify patches ([aab20ba](https://gitlab.com/johninnld/nl-morphe-patches/commit/aab20ba245bd369e8cd9442f73f67451f1ad0f8f))\n* **release:** accept maps trailer alias ([c55a677](https://gitlab.com/johninnld/nl-morphe-patches/commit/c55a67755fad99750b3b7949df6c5272e2b6d78f))\n* **release:** exclude GitGud from automated releases ([f1b7eb1](https://gitlab.com/johninnld/nl-morphe-patches/commit/f1b7eb11caf41957234879232ee89dcbfd9adb4f))\n\n### ✨ New Features\n\n* **Deezer:** remove premium UI and branding ([83b35e4](https://gitlab.com/johninnld/nl-morphe-patches/commit/83b35e412dd164777c7667684da67c379d2cf702))\n\n### 🔧 Improvements\n\n* **Google Maps:** harden guidance hold ownership and Exit refresh ([51a90f8](https://gitlab.com/johninnld/nl-morphe-patches/commit/51a90f8e6d38ff8842457707d907ef6fa6f72563))\n",
+  "release_tag": "v1.56.0",
+  "release_date": "2026-11-08T17:37:41.521Z",
+  "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",
