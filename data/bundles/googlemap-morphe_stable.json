@@ -1,0 +1,98 @@
+{
+  "bundle": "googlemap-morphe",
+  "channel": "stable",
+  "repo_url": "https://github.com/shuili1013/GoogleMap-Morphe",
+  "created_at": "2026-11-08T07:00:49",
+  "version": "1.0.1",
+  "description": "Google Maps 26.44.06.1006895251: native Android Auto navigation with two-wheeler routes. Includes the required Dutch App Patches (JohninNL, GPLv3) Maps patches. Requires this project's MicroG-RE build. See README.",
+  "apps": [
+    {
+      "app_name": "Google Maps",
+      "package": "com.google.android.apps.maps",
+      "patches": [
+        {
+          "name": "Add microG-RE support",
+          "description": "Signs in to your Google account through microG-RE (MicroG-RE or ReVanced GmsCore), keeping the name from Change app name. Not for root installs; for original microG, use Add original microG support.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Allow any travel mode on Android Auto",
+          "description": "26.44.06.1006895251 only. Android Auto no longer refuses navigation for its travel mode: driving routes navigate as driving and two-wheeler routes as two-wheeler, without \"switch to ... directions\".",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Always two-wheeler on Android Auto",
+          "description": "26.44.06.1006895251 only. Android Auto treats two-wheeler (motorcycle) as its supported mode, so destinations searched on the head unit default to two-wheeler routes. Use with \"Allow any travel mode on Android Auto\" so driving routes are still accepted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Bypass Play Services checks",
+          "description": "Makes Maps' bundled Play services signature and availability checks always pass, so it runs re-signed and with Play services disabled or absent, and lets it load tiles, search and routing by sending Google's own package and certificate in the identity headers the Maps backend checks. Where Play services rejects the re-signed app, Maps degrades instead of crashing. Also skips Google's \"isn't Play Protect certified\" page, and with no Play services at all uses Android's own Cronet so the map still loads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Change package name",
+          "description": "Installs alongside stock Google Maps under its own package name. On by default, because stock Maps comes built into most phones and cannot be replaced by a patched copy.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to install under. Must be a valid Android package name. Left at org.ungoogled.android.apps.maps, Add microG-RE support installs under org.ungoogled.android.apps.maps.microg instead and Add original microG support keeps com.google.android.apps.maps."
+            }
+          ],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Native navigation for Gearslip and Android Auto",
+          "description": "Shows this patched Maps app's live native map with app-owned car UI and standard navigation controls that Android Auto and compatible hosts can arrange.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Skip private Android Auto car connection",
+          "description": "26.44.06.1006895251 only. Stops a re-signed Maps from crashing when Android Auto rejects its private car-service call (\"Wrong signature\"). Needed for native navigation on Android Auto.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        }
+      ],
+      "developer": "com.google"
+    }
+  ],
+  "patches_name": "shuili1013",
+  "fingerprint": "46b1bf1d134d328be1d4ccc9332ec88ec32f0cb5c58081102e6f85facbc865a3",
+  "release_notes": "Same patches as v1.0.0; the repository and the Morphe source name are now **Maps-AA-AnyMode-Morphe**. Requires [this version of MicroG-RE](https://github.com/shuili1013/MicroG-RE/releases/tag/v7.3.0-maps-fix). See the README for setup.",
+  "release_tag": "v1.0.1",
+  "release_date": "2026-11-08T07:00:51Z",
+  "isPreRelease": false,
+  "stars": 1,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/99980772?v=4&s=128",
+  "repoDescription": " Morphe patches for Google Maps: native Android Auto navigation in any travel mode, including two-wheeler (motorcycle) routes.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}

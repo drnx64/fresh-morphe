@@ -2,67 +2,17 @@
   "bundle": "8uvu",
   "channel": "stable",
   "repo_url": "https://github.com/8uvu/cenotaph-patches",
-  "created_at": "2026-11-07T18:26:19Z",
-  "version": "2.12.1",
-  "description": "Cenotaph: standalone Morphe patches for Instagram. Chat wallpaper, chat tint, colour map, bubble corners, local font, DM streaks, theme picker, settings app and a Piko settings row. Every patch registers itself with the runtime, and both settings screens render one shared schema. Built for Instagram 447.0.0.55.81 (385311895).",
+  "created_at": "2026-11-08T11:17:53Z",
+  "version": "2.13.1",
+  "description": "Cenotaph v1: a rebuilt Instagram patch bundle that ships only features hooked into Instagram's own code. Four patches: runtime, settings app, the DM thread anchor (hooks the root-view handler that resolves the message list) and chat wallpaper (replaces the bitmap in the app's own thread background setter). Built for Instagram 447.0.0.55.81 (385311895) and 439.0.0.37.89 (384510792).",
   "apps": [
     {
       "app_name": "Instagram",
       "package": "com.instagram.android",
       "patches": [
         {
-          "name": "Cenotaph - Bubble corners",
-          "description": "Sets the corner radius of rounded chat surfaces from Cenotaph Settings (0 = square).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81",
-            "439.0.0.37.89"
-          ]
-        },
-        {
-          "name": "Cenotaph - Category in Piko Settings",
-          "description": "Adds a Cenotaph category screen to Piko Settings (wallpaper, tint, bubbles, font, privacy). No-op unless Piko is fused alongside.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81",
-            "439.0.0.37.89"
-          ]
-        },
-        {
-          "name": "Cenotaph - Chat wallpaper",
-          "description": "Background image behind DM threads, plus chat tint and hiding the Seen-by line. Configure in Cenotaph Settings.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81",
-            "439.0.0.37.89"
-          ]
-        },
-        {
-          "name": "Cenotaph - Colour map",
-          "description": "Remaps UI colours to a local palette from hex pairs in Cenotaph Settings. Local only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81",
-            "439.0.0.37.89"
-          ]
-        },
-        {
-          "name": "Cenotaph - DM streaks",
-          "description": "Fire badge per conversation, on the thread header, plus a summary next to Messages. Counted locally.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "447.0.0.55.81",
-            "439.0.0.37.89"
-          ]
-        },
-        {
-          "name": "Cenotaph - Local chat font",
-          "description": "Applies a local .ttf/.otf to chat text from Cenotaph Settings. Local only.",
+          "name": "Cenotaph - Chat wallpaper hook",
+          "description": "Feeds Cenotaph's wallpaper into Instagram's own thread background image, where the app sets it.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -82,7 +32,7 @@
         },
         {
           "name": "Cenotaph - Settings app",
-          "description": "Adds the Cenotaph Settings launcher icon: wallpaper, colour map, bubbles, font, streaks.",
+          "description": "Adds the Cenotaph Settings launcher icon. It lists only the features this bundle actually hooks.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -91,8 +41,8 @@
           ]
         },
         {
-          "name": "Cenotaph - Theme picker",
-          "description": "+ button on the chat theme preview: pick a wallpaper override for that thread (local only).",
+          "name": "Cenotaph - Thread anchor (required)",
+          "description": "Hooks the DM thread screen and hands its root view to the other Cenotaph patches. Leave it enabled.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -105,9 +55,16 @@
     }
   ],
   "patches_name": "Cenotaph",
-  "fingerprint": "95334603e81c3ca0d36d38a6d87adeae214910f58aca828a1fb15bc84f03400b",
-  "release_notes": "- Settings row reads \"Gallery picker, reset\"\n- Design notes removed\n- README rewritten as a single page\n\nVerified on the 439 APKM: 9/9 patches applied, every feature registration call present, settings activity in the manifest.",
-  "release_tag": "v2.12.1",
-  "release_date": "2026-11-07T18:26:19Z",
-  "isPreRelease": false
+  "fingerprint": "0b0181f3812b5ea35299b10304c8fbb881fb87e471750f8f37dbe742c524eb49",
+  "release_notes": "Wallpaper is now drawn by Instagram itself: the bundle hooks the app's own thread background setter and substitutes the user's image for the bitmap it is about to hand to its ImageView. New patch \"Cenotaph - Chat wallpaper hook\" (11 patches total). Thread anchor unchanged.",
+  "release_tag": "v2.13.1",
+  "release_date": "2026-11-08T11:17:53Z",
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/195597975?v=4&s=128",
+  "repoDescription": "Cenotaph — standalone Morphe patches for Instagram: chat wallpaper, chat tint, colour map, bubble corners, local font, DM streaks and a theme picker. Built for Instagram 447.0.0.55.81.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

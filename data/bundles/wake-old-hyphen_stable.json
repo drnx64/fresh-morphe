@@ -12,12 +12,16 @@
       "patches": [
         {
           "name": "AMOLED dark theme",
-          "description": "Makes TikTok's dark mode backgrounds pure black, or a dark color you pick in this patch's options. Black lets OLED screens switch those pixels off. Light mode doesn't change. It's built in while patching, so only patching again without it undoes it.",
+          "description": "Makes TikTok's dark mode backgrounds pure black, or a dark color you pick in this patch's options. Black lets OLED screens switch those pixels off. Light mode doesn't change. The AMOLED dark mode switch in Hushfeed settings > App starts on, and turning it off brings TikTok's own dark grays back.",
           "use": false,
           "options": [
             {
               "key": "backgroundColor",
               "description": "Pick a color, or type a solid color code like #000000. Black lets OLED screens turn those pixels off completely."
+            },
+            {
+              "key": "amoled_dark_mode",
+              "description": ""
             }
           ],
           "compatible_versions": [
@@ -26,12 +30,20 @@
         },
         {
           "name": "Accent color",
-          "description": "Swaps the red of TikTok's main buttons and red text for blue, green, purple, orange, teal or a color code you type in this patch's options, or for the color of the phone's wallpaper theme on Android 12 and up. Unread dots and counts change with it. Warnings stay red, and so can icons with the red drawn in. It's built in while patching, so only patching again without it undoes it.",
+          "description": "Swaps the red of TikTok's main buttons and red text for blue, green, purple, orange, teal or a color code you type in this patch's options, or for the color of the phone's wallpaper theme on Android 12 and up. Unread dots and counts change with it. Warnings stay red, and so can icons with the red drawn in. The feed's like heart and save bookmark can take colors of their own. It's built in while patching, so only patching again without it undoes it.",
           "use": false,
           "options": [
             {
               "key": "accentColor",
               "description": "Pick a preset, or type a solid color code like #2D7FF9. TikTok original leaves the red as it is. TikTok's lighter and darker reds follow the color you pick."
+            },
+            {
+              "key": "likeColor",
+              "description": "The heart on a video you liked, in the feed and in its tap animation. TikTok original leaves it red. It works in light, dark and AMOLED alike, with or without a new accent."
+            },
+            {
+              "key": "saveColor",
+              "description": "The bookmark on a video you saved to Favorites, in the feed and in its animation. TikTok original leaves it yellow."
             },
             {
               "key": "followWallpaper",
@@ -268,6 +280,10 @@
             },
             {
               "key": "sound_grid_sort",
+              "description": ""
+            },
+            {
+              "key": "liked_jump_to_date",
               "description": ""
             }
           ],
@@ -614,6 +630,10 @@
               "description": ""
             },
             {
+              "key": "hide_comment_avatars",
+              "description": ""
+            },
+            {
               "key": "comment_search",
               "description": ""
             },
@@ -671,6 +691,14 @@
             },
             {
               "key": "compact_comment_header",
+              "description": ""
+            },
+            {
+              "key": "hide_comment_close_button",
+              "description": ""
+            },
+            {
+              "key": "hide_comment_expand_button",
               "description": ""
             },
             {
@@ -1694,7 +1722,7 @@
         },
         {
           "name": "Hide feed search button",
-          "description": "Removes the search button from the top right of the feed, for a cleaner screen. Starts off. Turn it on in Hushfeed settings > Feed screen.",
+          "description": "Removes the search button from the top right of the feed and the one over the video while comments are open. Starts off. Turn it on in Hushfeed settings > Feed screen.",
           "use": true,
           "options": [
             {
@@ -1726,11 +1754,15 @@
         },
         {
           "name": "Hide inbox items",
-          "description": "Lets you hide Inbox rows you don't use, like message requests, TikTok Shop and the stories row, plus call buttons and suggested replies in chats. Each has its own switch. Also offers search in loaded Activity notifications and TikTok's Main, Requests, Unread and Starred tabs on any account, and a way to rebuild message search. Starts off. Turn it on in Hushfeed settings > Inbox.",
+          "description": "Lets you hide Inbox rows you don't use, like message requests, TikTok Shop, the stories row and the On this day memory in it, plus call buttons and suggested replies in chats. Each has its own switch. Also offers search in loaded Activity notifications and TikTok's Main, Requests, Unread and Starred tabs on any account, and a way to rebuild message search. Starts off. Turn it on in Hushfeed settings > Inbox.",
           "use": true,
           "options": [
             {
               "key": "hide_inbox_stories",
+              "description": ""
+            },
+            {
+              "key": "hide_inbox_on_this_day",
               "description": ""
             },
             {
@@ -2021,7 +2053,23 @@
               "description": ""
             },
             {
+              "key": "invisible_controls_button",
+              "description": ""
+            },
+            {
+              "key": "invisible_controls_on",
+              "description": ""
+            },
+            {
+              "key": "invisible_controls_keep_caption",
+              "description": ""
+            },
+            {
               "key": "see_through_bottom_bar",
+              "description": ""
+            },
+            {
+              "key": "see_through_video_in_window",
               "description": ""
             },
             {
@@ -2038,6 +2086,10 @@
             },
             {
               "key": "glass_video_blur",
+              "description": ""
+            },
+            {
+              "key": "glass_refraction",
               "description": ""
             },
             {
@@ -2395,6 +2447,10 @@
             },
             {
               "key": "offer_live_clear_screen",
+              "description": ""
+            },
+            {
+              "key": "keep_live_clear_screen",
               "description": ""
             },
             {
@@ -2770,6 +2826,10 @@
               "description": ""
             },
             {
+              "key": "hold_speed_custom",
+              "description": ""
+            },
+            {
               "key": "hold_speed_slide",
               "description": ""
             },
@@ -2862,6 +2922,10 @@
             {
               "key": "simspoof_feed_real",
               "description": ""
+            },
+            {
+              "key": "live_feed_countries",
+              "description": ""
             }
           ],
           "compatible_versions": [
@@ -2914,6 +2978,18 @@
             },
             {
               "key": "hide_live_ring",
+              "description": ""
+            },
+            {
+              "key": "hide_rings_feed",
+              "description": ""
+            },
+            {
+              "key": "hide_rings_comments",
+              "description": ""
+            },
+            {
+              "key": "hide_rings_profiles",
               "description": ""
             },
             {
@@ -2973,6 +3049,10 @@
           "options": [
             {
               "key": "report_newer_phone_to_effects",
+              "description": ""
+            },
+            {
+              "key": "effect_phone_model",
               "description": ""
             }
           ],
@@ -3102,6 +3182,22 @@
             {
               "key": "settings_as_list",
               "description": ""
+            },
+            {
+              "key": "startup_message",
+              "description": ""
+            },
+            {
+              "key": "startup_message_title",
+              "description": ""
+            },
+            {
+              "key": "startup_message_text",
+              "description": ""
+            },
+            {
+              "key": "startup_message_dismissible",
+              "description": ""
             }
           ],
           "compatible_versions": [
@@ -3131,6 +3227,10 @@
             },
             {
               "key": "share_tap_copies_link",
+              "description": ""
+            },
+            {
+              "key": "hide_share_new_group",
               "description": ""
             },
             {
@@ -3694,8 +3794,8 @@
     }
   ],
   "patches_name": "Hushfeed",
-  "fingerprint": "7d3bce7bb4428e51c8e8d3803a165ef7de2a7cc4f54d52fedf74657dfb94d2a1",
-  "release_notes": "**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0",
+  "fingerprint": "95c37da5ce66ef806609ffacd4bdccc7dfa28fd0c8726a4d0b5d6781b8166573",
+  "release_notes": "**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0\n\n**Full Changelog**: https://github.com/Wake-Old-Hyphen/hushfeed/compare/v0.80.0...v0.81.0",
   "release_tag": "v0.81.0",
   "release_date": "2026-11-06T03:01:35Z",
   "isPreRelease": false,

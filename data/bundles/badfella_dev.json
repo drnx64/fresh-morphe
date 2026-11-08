@@ -2,10 +2,322 @@
   "bundle": "badfella",
   "channel": "dev",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-11-06T05:09:33",
-  "version": "1.1.0",
-  "description": "## 1.1.0 (2026-11-06)\n\n### ✨ New Features\n\n* support reviewed patch targets without version pins 05fa478\n* **wanderlog:** make dark mode follow the device theme aa6b1a8\n* **wanderlog:** make the theme follow the device dark-mode setting 4cc8368",
+  "created_at": "2026-11-08T05:16:33",
+  "version": "1.2.0",
+  "description": "## 1.2.0 (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **linkedin:** comprehensively eliminate promoted, boosted, and sponsored feed content (v1.2.0-dev.13) b0246b8\n* **linkedin:** describe boosted and label-only promoted coverage 3efbf11\n* **linkedin:** eliminate feed scroll jitter and visual flicker (v1.2.0-dev.11) 802494b\n* **linkedin:** filter ads at the feed collection boundary 6fcaf21\n* **linkedin:** filter sponsored items in SDUI Compose feed (v1.2.0-dev.8) 85951fc\n* **linkedin:** filter the parsed feed page before it reaches the paged list 1f9dcf8\n* **linkedin:** remove boosted and label-only promoted posts from the feed 4e66a05\n* **linkedin:** remove promoted ads and video carousels from the feed 9534f84\n\n### ✨ New Features\n\n* **linkedin:** add LinkedIn 4.1.1271 feed filters and navigation options c741941\n* **linkedin:** add missing Fakh patches and restore customizable navigation (v1.2.0-dev.10) daa6e59\n* **linkedin:** full AMOLED pitch black theme and fix default-enabled behavior (v1.2.0-dev.12) 4aadb58, closes #000000 #0D0D0D #1A1A1A\n* **linkedin:** import complete 22-patch suite and add version-agnostic support (v1.2.0-dev.9) 9be6d86",
   "apps": [
+    {
+      "app_name": "LinkedIn: Community & Network",
+      "package": "com.linkedin.android",
+      "patches": [
+        {
+          "name": "Anonymous profile viewing",
+          "description": "Adds an option (off by default, experimental) to visit profiles without being listed in \"Who viewed your profile\": the analytics events of profile pages are not sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Block tracking",
+          "description": "Adds an option (off by default) to stop sending most LinkedIn analytics events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Copy text",
+          "description": "Long press a post, comment or any other text to select and copy it in place, like on Reddit.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Customize navigation bar",
+          "description": "Takes the bottom navigation buttons you pick off the bar, such as My Network, Post, Notifications, Jobs, Video or News. Each page still opens from the Menu and from links. Restart LinkedIn after changing the selection.",
+          "use": true,
+          "options": [
+            {
+              "key": "hide_my_network",
+              "description": "Removes the My Network button from the bottom navigation bar."
+            },
+            {
+              "key": "hide_post",
+              "description": "Removes the center Post button from the bottom navigation bar."
+            },
+            {
+              "key": "hide_notifications",
+              "description": "Removes the Notifications button from the bottom navigation bar."
+            },
+            {
+              "key": "hide_jobs",
+              "description": "Removes the Jobs button from the bottom navigation bar."
+            },
+            {
+              "key": "hide_video",
+              "description": "Removes the Video button from the bottom navigation bar."
+            },
+            {
+              "key": "hide_news",
+              "description": "Removes the News button from the bottom navigation bar."
+            }
+          ],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Disable double-tap like",
+          "description": "Stops double tapping a post or photo from liking it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Download media",
+          "description": "Adds a download button to the full screen photo, video and document viewer. Documents (PDFs and carousels) are saved as one PDF.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Expand posts",
+          "description": "Adds an option (off by default, turned on in BadFella Patches) to show posts expanded by default. Tapping the text collapses them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Feed filters",
+          "description": "Adds optional filters (off by default, turned on in BadFella Patches): focus mode, celebrations, job cards, reposts, posts from others' activity, \"Recommended for you\", video posts, games, the \"New posts\" pill and \"See translation\".",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Glass navigation bar",
+          "description": "Draws the navigation bar as a floating, translucent capsule.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Makes \"Continue with Google\" work in patched LinkedIn by signing in through microG RE (GmsCore) instead of Google Play services. Needs microG RE installed and signed in to a Google account.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Hide Premium upsells",
+          "description": "Removes Premium and AI upsell cards and banners, including on profiles and the Me panel.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes promoted, boosted and sponsored posts from the feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Hide bottom tabs",
+          "description": "Adds switches to take My Network and Jobs out of the bottom bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Hide promoted jobs",
+          "description": "Removes promoted job listings from the Jobs tab and job search.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Hide suggested posts",
+          "description": "Removes \"Suggested\" posts from outside your network from the feed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Keep feed on reopen",
+          "description": "Keeps your place in the feed when you come back to LinkedIn, instead of reloading it. Pull down or tap the \"New posts\" button to load new posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Material You",
+          "description": "Uses your wallpaper's colors (Android 12+): the accent color instead of LinkedIn blue and the green of selected filters, and Material 3 surface colors for backgrounds, cards, bars and borders. Some screens drawn by LinkedIn's servers may keep their own colors.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Messaging",
+          "description": "Hides sponsored messages, and adds an optional ghost mode that does not send typing indicators or read status.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "More tab",
+          "description": "Lets you hide items of the More tab (Puzzle games, Groups, Events, Newsletters), or list them at the bottom of the profile menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Navigation bar",
+          "description": "Adds options (turned on in BadFella Patches) to hide the More, Jobs, Network and Notifications tabs of the navigation bar, its count badges and its labels.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Open links directly",
+          "description": "Opens external links without LinkedIn's safety/go warning page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Pitch black",
+          "description": "Replaces the gray backgrounds of dark mode with black, and cards with a slightly lighter black, across the entire app. Takes effect when the system is in dark mode. Works with or without Material You.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Post menu items",
+          "description": "Adds Copy text, Download photos and videos, and Save document as PDF to the ⋯ menu of posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Remove gaps and dividers",
+          "description": "Removes the gray gaps between posts and the dividers between list items, so the feed and lists are one flat surface.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Sanitize share links",
+          "description": "Removes tracking parameters from LinkedIn links when they are copied or shared.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Swipe between feeds",
+          "description": "Swipe left and right on the home feed to switch between For you and Network, like on X.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Swipe between tabs",
+          "description": "Swipe sideways to go to the next or previous tab of the navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Tap to hide in viewers",
+          "description": "Tap a video or document in full screen to hide the caption and buttons, like photos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        }
+      ],
+      "developer": "com.linkedin"
+    },
     {
       "app_name": "Emby for Android",
       "package": "com.mb.android",
@@ -108,10 +420,10 @@
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "173fda9feb87748ec16315cc23810607134a212632535cb88afb42bfc63ca753",
-  "release_notes": "## BadFella Patches v1.1.0\n\n### Supported apps and versions\n\n| App | Supported stock input |\n| --- | --- |\n| Wanderlog | 2.227 (build 2026102307) and 2.228 (build 2026110208) APKM |\n| TickTick | 8.2.4.0 APKM |\n| Emby | 3.5.72 APK, ARM64 and ARMv7 |\n| Pep Talk | 2.31.0 XAPK |\n| Remote for Android TV | 6.1.0 (build 45) APKM |\n\n### Changes\n\n* **Wanderlog:** supports 2.227 and 2.228 through the same reviewed bundle path, and the app theme follows the device dark-mode setting.\n* **TickTick, Emby and Pep Talk:** the patches no longer require one exact app version. Each one resolves its reviewed classes, files and anchors during patching and stops with a named error instead of writing at an unrecognised location.\n* **Remote for Android TV:** unchanged and still limited to 6.1.0 (build 45).\n\n### Installation\n\n1. Enable BadFella Patches in Morphe Manager and refresh sources.\n2. Select the unmodified stock APK, APKM or XAPK for the app.\n3. Choose the patches, then patch and install with the existing Manager signing key.\n4. Install as an update. Do not uninstall the app or clear its data.\n\n### Limits\n\n* Patches enable local in-app feature gates only. They do not grant server-side subscriptions, AI features, downloads, flight tracking or Google Maps export.\n* Emby's Firebase and DataTransport removal disables Firebase push messaging; Cast and billing libraries are kept.\n* Wanderlog's Expo OTA updates stay disabled so the patched bundle remains in place.\n* App versions outside the table above are not reviewed. For Wanderlog, TickTick, Emby and Pep Talk an unrecognised build fails closed instead of guessing; Remote for Android TV remains pinned.\n* Release checks cover patch application and output structure against the stock archives. They do not test in-app behaviour on a device.\n",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-11-06T05:10:11Z",
+  "fingerprint": "1fc4238f441a5610892167d388a50d84dc0a25a0f50496e58608fbca6d9d14a1",
+  "release_notes": "## BadFella Patches v1.2.0\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** comprehensively eliminate promoted, boosted, and sponsored feed content (v1.2.0-dev.13) b0246b8\n* **LinkedIn:** describe boosted and label-only promoted coverage 3efbf11\n* **LinkedIn:** eliminate feed scroll jitter and visual flicker (v1.2.0-dev.11) 802494b\n* **LinkedIn:** filter ads at the feed collection boundary 6fcaf21\n* **LinkedIn:** filter sponsored items in SDUI Compose feed (v1.2.0-dev.8) 85951fc\n* **LinkedIn:** filter the parsed feed page before it reaches the paged list 1f9dcf8\n* **LinkedIn:** remove boosted and label-only promoted posts from the feed 4e66a05\n* **LinkedIn:** remove promoted ads and video carousels from the feed 9534f84\n\n### ✨ New Features\n\n* **LinkedIn:** add LinkedIn 4.1.1271 feed filters and navigation options c741941\n* **LinkedIn:** add missing Fakh patches and restore customizable navigation (v1.2.0-dev.10) daa6e59\n* **LinkedIn:** full AMOLED pitch black theme and fix default-enabled behavior (v1.2.0-dev.12) 4aadb58, closes #000000 #0D0D0D #1A1A1A\n* **LinkedIn:** import complete 22-patch suite and add version-agnostic support (v1.2.0-dev.9) 9be6d86\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-11-08T05:17:14Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",
