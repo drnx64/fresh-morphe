@@ -23,8 +23,9 @@
 | Phone watchdog | `sh deploy/termux/watchdog.sh` | Cron every 2 min; revives a dead API, ngrok, worker loop, or discovery loop. Silent when healthy, logs to `logs/watchdog.log`. |
 | Import legacy data | `python -m server.import_legacy --reset` | Rebuild `data/fresh.db` from `data/` (falls back to `data/morphe.db` until migrated). |
 | Export static API | `python -m server.static_export` | Writes `data/exports/v1/` for GitHub Pages fallback. |
-| Push work | `.\gh-tool.ps1 -m "add chips" -t f -s u --pr --auto-merge` | Branch → commit → PR → auto-merge in one call. `-t`/`-s` expand commit shortcuts (`f`=feat, `fx`=fix, `u`=ui); `--dry-run -v` prints every command. `-All` skips paths listed in `.gh-toolignore` (the case-variant `data/bundles/*.json` duplicates); `-Amend` rewrites the last commit. |
-| Inspect / review | `.\gh-tool.ps1 -Status`, `-Log`, `-Diff -Stat`, `-PrStatus`, `-Watch` | Read-only verbs; one per call. `-Switch`/`-Checkout`/`-Sync` move branches, `-Restore -Staged` unstages, `-Grep`/`-Show`/`-CheckIgnore` read. PR verbs default to the current branch's PR (open or merged); `-PrNumber n` picks another. |
+| Push work | `ght -m "add chips" -t f -s u --pr --auto-merge` | Branch → commit → PR → auto-merge in one call. `-t`/`-s` expand commit shortcuts (`f`=feat, `fx`=fix, `u`=ui); `--dry-run -v` prints every command. `-All` skips paths listed in `.gh-toolignore` (the case-variant `data/bundles/*.json` duplicates); `-Amend` rewrites the last commit. Add `-Account <id>` to push, open the PR, and merge as another GitHub account. |
+| Inspect / review | `ght -Status`, `-Log`, `-Diff -Stat`, `-PrStatus`, `-Watch` | Read-only verbs; one per call. `-Switch`/`-Checkout`/`-Sync` move branches, `-Restore -Staged` unstages, `-Grep`/`-Show`/`-CheckIgnore` read. PR verbs default to the current branch's PR (open or merged); `-PrNumber n` picks another. |
+| GitHub accounts | `ght -Accounts`, `-Accounts -SetActive <id>`, `-Accounts -TokenFor <id>`, `-Accounts -Verify` | The tool lives outside every repo at `C:\Users\ADMIN\Projects\.opencode\gh-tool.ps1` (the `ght` function in the PowerShell profile wraps it), so the identity is chosen per run: `-Account drnx64` / `-Account chqrlzz-dev`. PATs live in `.opencode\gh-accounts.json` and are never printed; with no account selected the repo `.env` `GITHUB_TOKEN` is used as before. |
 
 ### Verification order
 
@@ -58,6 +59,7 @@ If no changes and no day rollover, pipeline exits silently after step 3. `write_
 
 ## Key gotchas
 
+- **`gh-tool.ps1` is global, not part of this repo.** It lives at `C:\Users\ADMIN\Projects\.opencode\gh-tool.ps1` with its PAT store `gh-accounts.json` beside it, called through the `ght` function in the PowerShell profile (`gh-tool.ps1` was removed from this repo in 2.0.0). `-Account drnx64` / `-Account chqrlzz-dev` picks the identity for one run; the account PAT then authenticates the GitHub API, `git push`/`fetch` (a one-off credential helper — never a URL, never git config), and the commit author when `gitName`/`gitEmail` are set. With no account selected the legacy `.env` `GITHUB_TOKEN` is used and push keeps using the normal git credentials. `ght -Accounts` lists and edits the store; a PAT is only ever pasted with `-Accounts -TokenFor <id>` (hidden prompt) and is masked in every log line.
 - **`docs/` is the build output and is gitignored.** `npm run build` generates it. Never edit manually, never commit it. CI pushes it to the `gh-pages` branch.
 - **`data/raw/` and `data/output/` are gitignored.** Large generated files.
 - **`data/state/` is partially gitignored.** `current_snapshot.json`, `previous_snapshot.json`, `external_repos.json`, `last_tg_msg.json` are gitignored. Caches (`app_cache.json`, `daily_buffer.json`, `last_run.json`, `patches_names_cache.json`, `release_cache.json`) are tracked.
