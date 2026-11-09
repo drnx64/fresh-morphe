@@ -2,9 +2,9 @@
   "bundle": "mwbra130",
   "channel": "dev",
   "repo_url": "https://github.com/mwbra130/Retro-Bowl-College",
-  "created_at": "2026-11-09T03:42:15",
-  "version": "1.67.3",
-  "description": "## [1.67.3](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.67.2...v1.67.3) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **droidcam:** restore decrypted .data in arm64 native libs, fixing crash on Stop ([37ee498](https://github.com/mwbra130/Retro-Bowl-College/commit/37ee4984c4fa195f91807fb33ad2b19241c4b5b2))",
+  "created_at": "2026-11-09T20:20:27",
+  "version": "1.68.3",
+  "description": "## [1.68.3](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.68.2...v1.68.3) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **businessx:** mark 6.5.2 target experimental (Testing-stage app) ([28b867f](https://github.com/mwbra130/Retro-Bowl-College/commit/28b867fa6d17c6acb58fc0dcaf28a63e14b0ef84))\n* **diskwala:** mark 27.3 target experimental (Testing-stage app) ([730d381](https://github.com/mwbra130/Retro-Bowl-College/commit/730d3811a76dffb7931489d5d237d75ef10951a0))\n* **notes:** mark 2.2.2 target experimental ([4e9bf89](https://github.com/mwbra130/Retro-Bowl-College/commit/4e9bf89b2a5ee65d492d274353c6390bb853214a))\n* **pikaspot:** mark 1.4.5 target experimental (Testing-stage app) ([5ca59e6](https://github.com/mwbra130/Retro-Bowl-College/commit/5ca59e67020f02bc8e7b2be77c439ac6eb982fb8))",
   "apps": [
     {
       "app_name": "Hermit — Lite Apps Browser",
@@ -46,6 +46,99 @@
         }
       ],
       "developer": "Dev47Apps"
+    },
+    {
+      "app_name": "DiskWala",
+      "package": "com.diskwalaapp",
+      "patches": [
+        {
+          "name": "Bypass PairIP application checks",
+          "description": "Required for re-signed builds: PairIP's Application class runs the signature and license checks at startup. This rewrites that one method so it only registers the app context and never calls either check, instead of relying on the checks themselves being stubbed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends non-Play installs to a Play Store block page. Disables that check, its verdict handler, both block-page launchers, the delayed shutdown, and the block activity itself so the patched app can open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Change installer source",
+          "description": "Spoofs the installer source so the app appears to be installed from Google Play everywhere it is read. Pre-selected companion for the DiskWala patch set — keep it on.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageInstallerName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Disable PairIP license activity",
+          "description": "Required for re-signed builds: removes PairIP's LicenseActivity from the manifest entirely, so the Play Store block page and license error dialog can never be shown, whatever tries to open them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Stubs AppLovin, AdMob, InMobi and other ad SDKs at the bytecode level to prevent ads from loading without breaking the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Disable forced update",
+          "description": "Bypasses PairIP license check ('Download from Play Store'), Play Integrity, and signature verification to allow modified and sideloaded app usage.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Turns on Premium (no ads, real file names, HD downloads, faster streaming) as if subscribed. Keep the pre-selected PairIP bypass patches on — a re-signed build cannot pass PairIP's startup license check without them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Patch native libraries",
+          "description": "Neutralizes PairIP traps in native .so libraries and patches Hermes bundle. Also applies the standalone-install manifest fixes (real Application class, original component factory, native library extraction) and removes the stock baseline profiles.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        },
+        {
+          "name": "Unlock premium",
+          "description": "Makes RevenueCat entitlements appear active so ads-free and premium features are unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "27.3"
+          ]
+        }
+      ],
+      "developer": "DiskWala"
     },
     {
       "app_name": "Google Messages",
@@ -110,6 +203,58 @@
       "developer": "Baday Production"
     },
     {
+      "app_name": "Web Video Cast | Browser to TV",
+      "package": "com.instantbits.cast.webvideo",
+      "patches": [
+        {
+          "name": "Bypass PairIP application checks",
+          "description": "Required for re-signed builds: PairIP's Application class runs the signature and license checks at startup. This rewrites that one method so it only registers the app context and never calls either check, instead of relying on the checks themselves being stubbed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0"
+          ]
+        },
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends non-Play installs to a Play Store block page. Disables that check, its verdict handler, both block-page launchers, the delayed shutdown, and the block activity itself so the patched app can open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0"
+          ]
+        },
+        {
+          "name": "Bypass PairIP signature check",
+          "description": "Required for re-signed builds: PairIP checks the APK signature at startup and crashes the app on launch when it is not the developer's. Disables that one check so the patched app can start.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0"
+          ]
+        },
+        {
+          "name": "Disable PairIP license activity",
+          "description": "Required for re-signed builds: removes PairIP's LicenseActivity from the manifest entirely, so the Play Store block page and license error dialog can never be shown, whatever tries to open them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0"
+          ]
+        },
+        {
+          "name": "Unlock premium",
+          "description": "Unlocks Web Video Caster Premium (ad removal, ad block, bookmarks, queue and the other premium features). No real purchase is made.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0"
+          ]
+        }
+      ],
+      "developer": "InstantBits Inc"
+    },
+    {
       "app_name": "Notification light for Samsung",
       "package": "com.jamworks.alwaysondisplay",
       "patches": [
@@ -151,6 +296,31 @@
       "developer": "com.jrtstudio"
     },
     {
+      "app_name": "X-plore File Manager",
+      "package": "com.lonelycatgames.xplore",
+      "patches": [
+        {
+          "name": "Bypass PairIP signature check",
+          "description": "Required for re-signed builds: PairIP verifies the app's signing certificate at startup and kills the app if it isn't the Play signature. This disables that one check so the patched app can open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.52.02"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks all premium features and removes ads by enabling the app's top donation tier state (the Dinner tier) — no purchase is made.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.52.02"
+          ]
+        }
+      ],
+      "developer": "com.lonelycatgames"
+    },
+    {
       "app_name": "Lossless Video Cutter",
       "package": "com.losslessvideocutter",
       "patches": [
@@ -181,6 +351,45 @@
       "developer": "immovable force"
     },
     {
+      "app_name": "RainViewer: Live Weather Radar",
+      "package": "com.lucky_apps.rainviewer",
+      "patches": [
+        {
+          "name": "Bypass integrity check",
+          "description": "Stops the Play Integrity (Raindrop) verdict from blocking the app. If the app already shows App Blocked, reinstall it fresh after patching.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Change installer source",
+          "description": "Spoofs the installer source so the app appears to be installed from an app store.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageInstallerName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks RainViewer Pro. Use with Change installer source.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.4.1"
+          ]
+        }
+      ],
+      "developer": "com.lucky_apps"
+    },
+    {
       "app_name": "Poweramp Music Player",
       "package": "com.maxmpz.audioplayer",
       "patches": [
@@ -194,7 +403,7 @@
           ]
         }
       ],
-      "developer": "com.maxmpz"
+      "developer": "Poweramp Software Design (Max MP)"
     },
     {
       "app_name": "Games In One - Watch Games",
@@ -243,6 +452,47 @@
         }
       ],
       "developer": "com.nicedayapps"
+    },
+    {
+      "app_name": "Vehico - Vehicle management",
+      "package": "com.optimageeks.vehico_app",
+      "patches": [
+        {
+          "name": "Remove ads",
+          "description": "Stops banner and interstitial ads from loading (Google Mobile Ads).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2.31"
+          ]
+        }
+      ],
+      "developer": "OptimaGeeks LLC"
+    },
+    {
+      "app_name": "Pika! Spot - Dynamic animation",
+      "package": "com.pika.dynamicisland",
+      "patches": [
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends unlicensed installs to a Play Store block page. Disables that check, its verdict handler and both block-page launchers so the patched app can open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.5"
+          ]
+        },
+        {
+          "name": "Enable Lifetime VIP",
+          "description": "Turns on the lifetime Life Member (SVIP) state: no ads and every animated theme applies for free, with no expiry — the VIP screen reads Level: SVIP and Status: life member. Needs the stock Pika! Spot 1.4.5 XAPK.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.5"
+          ]
+        }
+      ],
+      "developer": "Pika! Studio"
     },
     {
       "app_name": "Happy Color®: Color by Number",
@@ -302,6 +552,159 @@
         }
       ],
       "developer": "Bearbit Studios B.V."
+    },
+    {
+      "app_name": "Daily Sales Profit & Inventory",
+      "package": "com.shrey_businessx.android",
+      "patches": [
+        {
+          "name": "Change installer source",
+          "description": "Spoofs the installer source so the app appears to be installed from Google Play. Required for BusinessX: its PairIP local installer check is live, so a re-signed build fails the license check without it — keep it on.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageInstallerName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "6.5.2"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Grants Premium's on-device features: inventory & sales export (PDF/Excel/CSV), full sales history and trends, shop sharing, no ads, and Google Drive backup. BusinessX Cloud backup/sync are authorized on the developer's server and may still require a real subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.5.2"
+          ]
+        }
+      ],
+      "developer": "Shrey Jain"
+    },
+    {
+      "app_name": "Strava: Run, Bike, Walk",
+      "package": "com.strava",
+      "patches": [
+        {
+          "name": "Add settings",
+          "description": "Long-press the Home tab in Strava's bottom bar to open 'Morphe patch settings'. Lets you toggle feed cleanup, route trim, bottom bar tabs and the launcher name/icon at runtime, without re-patching.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "486.9"
+          ]
+        },
+        {
+          "name": "Custom app name and icon",
+          "description": "Changes the app's displayed name and launcher icon. The icon choices are Strava's own built-in alternate icons, plus an accent-colored one. Name and icon can later be switched at runtime from the patch settings screen.",
+          "use": false,
+          "options": [
+            {
+              "key": "appName",
+              "description": "The custom name the launcher can show. The original name stays available in the patch settings screen."
+            },
+            {
+              "key": "appIcon",
+              "description": "The launcher icon. Uses Strava's own built-in alternate icons, plus an accent-colored one."
+            }
+          ],
+          "compatible_versions": [
+            "486.9"
+          ]
+        },
+        {
+          "name": "Custom theme colors",
+          "description": "Replaces Strava's brand orange (#FC5200) accent color in the app's native screens with a color of your choice.",
+          "use": false,
+          "options": [
+            {
+              "key": "accentColor",
+              "description": "The accent color that replaces Strava orange."
+            }
+          ],
+          "compatible_versions": [
+            "486.9"
+          ]
+        },
+        {
+          "name": "Enable password login",
+          "description": "Shows the email and password login option instead of forcing the one-time email code flow. Your password is still checked by Strava's servers exactly as in the official app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "486.9"
+          ]
+        },
+        {
+          "name": "Hide feed elements",
+          "description": "Hides who-to-follow suggestions, suggested challenges and other clutter cards from the activity feed. Requires the 'Hide subscription promotions' patch, which provides the shared feed filtering.",
+          "use": false,
+          "options": [
+            {
+              "key": "followSuggestions",
+              "description": "Popular athletes, followers, people near you etc."
+            },
+            {
+              "key": "challengeSuggestions",
+              "description": "Random challenges Strava wants you to join."
+            },
+            {
+              "key": "joinChallenge",
+              "description": "Challenges your follows have joined."
+            },
+            {
+              "key": "joinClub",
+              "description": "Clubs your follows have joined."
+            },
+            {
+              "key": "activityLookback",
+              "description": "Your activity from X years ago"
+            },
+            {
+              "key": "localEvents",
+              "description": "The 'See what events are happening' local events carousel."
+            }
+          ],
+          "compatible_versions": [
+            "486.9"
+          ]
+        },
+        {
+          "name": "Hide subscription promotions",
+          "description": "Hides subscription upsell modules and promotional cards from the feed and other modular screens. UI cleanup only: does not unlock any paid features.",
+          "use": true,
+          "options": [
+            {
+              "key": "upselling",
+              "description": "Elements that suggest you subscribe."
+            },
+            {
+              "key": "promo",
+              "description": "Elements that promote features, challenges, clubs, etc."
+            }
+          ],
+          "compatible_versions": [
+            "486.9"
+          ]
+        },
+        {
+          "name": "Local route privacy trim",
+          "description": "Trims extra route distance from both ends of the activity map on this device only, on top of Strava's own privacy filtering. Display-only: recorded and uploaded data are unchanged, and other people still see the activity exactly as your Strava privacy settings dictate.",
+          "use": false,
+          "options": [
+            {
+              "key": "trimMeters",
+              "description": "Extra meters of route hidden from each end of the activity map on this device."
+            }
+          ],
+          "compatible_versions": [
+            "486.9"
+          ]
+        }
+      ],
+      "developer": "com.strava"
     },
     {
       "app_name": "Cifra Club Tuner",
@@ -366,6 +769,36 @@
         }
       ],
       "developer": "Swift Apps."
+    },
+    {
+      "app_name": "Yin Yang Minimalist Launcher",
+      "package": "com.yinyang.launcher",
+      "patches": [
+        {
+          "name": "Change installer source",
+          "description": "Spoofs the installer source so the app appears to be installed from Google Play. Required for Yin Yang Launcher: its PairIP local installer check is live, so a re-signed build fails the license check without it — keep it on.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageInstallerName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "5.13.1"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Unlocks Yin Yang Pro for free, as if the Lifetime purchase were bought: all clocks, fonts, live wallpapers and icons. Also enable the Change installer source patch (pre-selected) — it is required for the patched app to pass the license check.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.13.1"
+          ]
+        }
+      ],
+      "developer": "QuietMind Creations"
     },
     {
       "app_name": "Crossy Road",
@@ -465,10 +898,10 @@
     }
   ],
   "patches_name": "Zdrgon's Morphe Patches",
-  "fingerprint": "5cc9f4ebade9a829bc307b7dc887c3971ce86118089d2020d35b48c246d984f1",
-  "release_notes": "## [1.67.3](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.67.2...v1.67.3) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **droidcam:** restore decrypted .data in arm64 native libs, fixing crash on Stop ([37ee498](https://github.com/mwbra130/Retro-Bowl-College/commit/37ee4984c4fa195f91807fb33ad2b19241c4b5b2))\n",
-  "release_tag": "v1.67.3",
-  "release_date": "2026-11-09T03:43:09Z",
+  "fingerprint": "fae40acd9cb0acc7ec6c62c76f53786f7a7773b2c1f06cfbcdc2f9a69bf5ba84",
+  "release_notes": "## [1.68.3](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.68.2...v1.68.3) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **businessx:** mark 6.5.2 target experimental (Testing-stage app) ([28b867f](https://github.com/mwbra130/Retro-Bowl-College/commit/28b867fa6d17c6acb58fc0dcaf28a63e14b0ef84))\n* **diskwala:** mark 27.3 target experimental (Testing-stage app) ([730d381](https://github.com/mwbra130/Retro-Bowl-College/commit/730d3811a76dffb7931489d5d237d75ef10951a0))\n* **notes:** mark 2.2.2 target experimental ([4e9bf89](https://github.com/mwbra130/Retro-Bowl-College/commit/4e9bf89b2a5ee65d492d274353c6390bb853214a))\n* **pikaspot:** mark 1.4.5 target experimental (Testing-stage app) ([5ca59e6](https://github.com/mwbra130/Retro-Bowl-College/commit/5ca59e67020f02bc8e7b2be77c439ac6eb982fb8))\n",
+  "release_tag": "v1.68.3",
+  "release_date": "2026-11-09T20:21:23Z",
   "isPreRelease": false,
   "stars": 8,
   "avatarUrl": "https://avatars.githubusercontent.com/u/226181625?v=4&s=128",

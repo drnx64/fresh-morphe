@@ -2,9 +2,9 @@
   "bundle": "rashkash103",
   "channel": "dev",
   "repo_url": "https://github.com/RashKash103/sync-up",
-  "created_at": "2026-10-31T01:13:04",
-  "version": "1.9.4",
-  "description": "## [1.9.4](https://github.com/RashKash103/sync-up/compare/v1.9.3...v1.9.4) (2026-10-31)\n\n### 🐛 Bug Fixes\n\n* Validate Reddit share link destinations before sending credentials ([#30](https://github.com/RashKash103/sync-up/issues/30)) ([2d8ed03](https://github.com/RashKash103/sync-up/commit/2d8ed033d8a9ffd4e3022ad1fee4dd8f4a176be4))",
+  "created_at": "2026-11-09T18:46:18",
+  "version": "1.10.0",
+  "description": "## [1.10.0](https://github.com/RashKash103/sync-up/compare/v1.9.4...v1.10.0) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* Do not let a credit or an icon stop the app signing in ([7b68258](https://github.com/RashKash103/sync-up/commit/7b68258dd0fcaae513e350823e9b7198f6307bcc))\n* Give the Sync Up rows icons, plainer wording and a credit ([8c2f16d](https://github.com/RashKash103/sync-up/commit/8c2f16ddbeb61eec684e037c62077be6a2f12c77))\n* Keep the client credentials and the account PIN out of Sync's backup ([2f764e1](https://github.com/RashKash103/sync-up/commit/2f764e163ff502edcda486909a18a67aa3f948a1))\n* Keep to methods every supported Android has ([c15b8b6](https://github.com/RashKash103/sync-up/commit/c15b8b63c28858577c0b7f39f75f98c943e5ad7e))\n* Put the PIN up after the app has a window to put it on ([e210549](https://github.com/RashKash103/sync-up/commit/e210549a86a49b3e8aaa870b97a8aa8b5877c97e))\n* Stop the PIN being asked twice when changing account ([0b46629](https://github.com/RashKash103/sync-up/commit/0b46629aff92eb765dedc6689f337e12adb97184))\n* Take the PIN back off the way into the app ([1925e57](https://github.com/RashKash103/sync-up/commit/1925e57144650e32d2bb2d66194355f170705a46))\n\n### ✨ New Features\n\n* Ask for the OAuth client ID when the app has none ([fb1ed85](https://github.com/RashKash103/sync-up/commit/fb1ed8567459ca45b4c39d8dda86c2280a9db09e))\n* Ask for the PIN when the app opens, or instead of a fingerprint ([8c471d8](https://github.com/RashKash103/sync-up/commit/8c471d8f66f1d564eaccd4614af563ce4ce62242))\n* Ask for the PIN when the app opens, over a screen it has built ([a1b27d5](https://github.com/RashKash103/sync-up/commit/a1b27d51c14f713f729e428dd79f96d520c89057))\n* Lock an account with a PIN ([42e0e20](https://github.com/RashKash103/sync-up/commit/42e0e209b9b18d73dd2baad27713072fa6689e2f))\n* Set the client id, redirect URI and user agent in the app ([7ed1ff6](https://github.com/RashKash103/sync-up/commit/7ed1ff6d87f0d4ffd319cb8fe44001992430714b))\n* Show the feed while a post is swiped away ([e42431f](https://github.com/RashKash103/sync-up/commit/e42431f179bee2faef380af217bf47f17491a290))",
   "apps": [
     {
       "app_name": "Sync for reddit",
@@ -164,6 +164,15 @@
           ]
         },
         {
+          "name": "Lock an account with a PIN",
+          "description": "Adds a PIN to the Security settings that is asked for when an account is opened and, if you like, when the app is opened, beside or instead of Sync's fingerprint lock.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Make an address in a post tappable",
           "description": "Draws a bare address in a post's body as a link.",
           "use": true,
@@ -236,6 +245,15 @@
           ]
         },
         {
+          "name": "Show the feed while a post is swiped away",
+          "description": "Draws the screen behind a post as it is dragged aside, which is otherwise left black.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Show videos posted in comments",
           "description": "Draws a video posted in a comment in the comment, and plays it when tapped.",
           "use": true,
@@ -251,21 +269,30 @@
           "options": [
             {
               "key": "client-id",
-              "description": "The Reddit OAuth client ID. Refer to Sync Up documentation for more information on what to put here."
+              "description": "The Reddit OAuth client ID. Refer to Sync Up documentation for more information on what to put here. It can be left empty and set in the app afterwards, under Settings > Everything else > Sync Up client; the app cannot sign in until one is given in one place or the other."
             },
             {
               "key": "redirect-uri",
-              "description": "The Reddit OAuth redirect URI. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's redirect URI."
+              "description": "The Reddit OAuth redirect URI. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's redirect URI. It can also be changed in the app, under Settings > Everything else > Sync Up client."
             },
             {
               "key": "user-agent",
-              "description": "The app's user agent. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's user agent."
+              "description": "The app's user agent. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's user agent. It can also be changed in the app, under Settings > Everything else > Sync Up client."
             },
             {
               "key": "imgur-client-id",
               "description": "What to identify as when uploading a picture to Imgur. Sync's own has run out of its daily allowance, so uploading fails until this is one of your own; refer to Sync Up documentation for how to get one."
             }
           ],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Stop the toolbar menus closing the app",
+          "description": "Keeps Sync open when the sort or overflow button in the toolbar is tapped, which closes it on some devices.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "v23.06.30-13:39"
           ]
@@ -296,470 +323,16 @@
           "compatible_versions": [
             "v23.06.30-13:39"
           ]
-        }
-      ],
-      "developer": "com.laurencedawson"
-    },
-    {
-      "app_name": "Sync for Reddit Dev",
-      "package": "com.laurencedawson.reddit_sync.dev",
-      "patches": [
-        {
-          "name": "Add archive links to menus",
-          "description": "Adds Wayback Machine and archive.today options to the menus behind a post and behind a link.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Automatically undelete Imgur media",
-          "description": "Loads Imgur images and videos that no longer exist from the Wayback Machine.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Automatically undelete Reddit content",
-          "description": "Restores the text of removed posts and comments, and the names of deleted authors, from Project Arctic Shift.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Disable Sync for Lemmy bottom sheet",
-          "description": "Disables the bottom sheet at the startup that asks you to signup to \"Sync for Lemmy\".",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix /s/ links",
-          "description": "Opens Reddit's shortened /s/ share links in the app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Imgur links",
-          "description": "Resolves Imgur links in the app instead of through Sync's proxy, which no longer exists.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Redgifs API",
-          "description": "Fixes loading RedGifs media, which RedGifs otherwise refuses.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix loading more comments",
-          "description": "Loads the comments behind a \"view more\" from the thread instead of the endpoint Reddit stopped answering.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix opening albums",
-          "description": "Looks a post up through Reddit's thread endpoint instead of the one Reddit stopped answering, which is what an album is opened by.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix post thumbnails",
-          "description": "Fixes loading post thumbnails by correcting their URLs.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix revealing spoilers",
-          "description": "Opens a spoiler where it sits when it is tapped, which Sync otherwise answers with \"Missing post information\".",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix video downloads",
-          "description": "Fixes a bug in Sync's MPD parser resulting in only the audio-track being saved.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Gestures for the video player",
-          "description": "Double tap a video or GIF to play or pause it rather than zoom, drag sideways to seek, and drag up or down after a double tap for volume.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Keep the links in the text of a post",
-          "description": "Keeps the formatting and links in the body shown under a post, which Sync otherwise discards.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Keep transparency in a picture",
-          "description": "Draws the transparent parts of a picture opened in the viewer as the background behind it rather than as white.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Load threads whose text contains a dollar sign",
-          "description": "Stops a thread failing to load when the text in it contains a dollar sign.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Make an address in a post tappable",
-          "description": "Draws a bare address in a post's body as a link.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Modify login WebView",
-          "description": "Modify the WebView used for logging into reddit to prevent login issues",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "More actions on the floating button",
-          "description": "Puts up to four of Sync's own actions beside the feed's floating button.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Recover post thumbnails from the archive",
-          "description": "Loads a post's thumbnail from the Wayback Machine when its Reddit preview has been purged.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Redirect Gfycat links to RedGifs",
-          "description": "Loads Gfycat links from RedGifs, including the autoplaying video Sync asks its own proxy for.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show a hidden profile from the archive",
-          "description": "Fills in a profile from Project Arctic Shift when Reddit answers with nothing.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show a subreddit's banner on its feed",
-          "description": "Draws the banner a subreddit sets at the top of its posts, rather than only on its About page.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show media in a comment where it sits",
-          "description": "Draws a link in a comment as the picture or video it points at rather than as a chip naming where it goes.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show videos posted in comments",
-          "description": "Draws a video posted in a comment in the comment, and plays it when tapped.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Spoof client",
-          "description": "Restores functionality of the app by using custom client ID.",
-          "use": true,
-          "options": [
-            {
-              "key": "client-id",
-              "description": "The Reddit OAuth client ID. Refer to Sync Up documentation for more information on what to put here."
-            },
-            {
-              "key": "redirect-uri",
-              "description": "The Reddit OAuth redirect URI. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's redirect URI."
-            },
-            {
-              "key": "user-agent",
-              "description": "The app's user agent. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's user agent."
-            },
-            {
-              "key": "imgur-client-id",
-              "description": "What to identify as when uploading a picture to Imgur. Sync's own has run out of its daily allowance, so uploading fails until this is one of your own; refer to Sync Up documentation for how to get one."
-            }
-          ],
-          "compatible_versions": []
-        },
-        {
-          "name": "Translate posts and comments",
-          "description": "Translates a post or comment where it sits, on this device or through DeepL or Google Cloud.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Unlock Sync Ultra",
-          "description": "Turns on the Sync Ultra features that work on the device alone, and removes the offers to buy it.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Use /user/ endpoint",
-          "description": "Replaces the deprecated /u profile endpoint with /user.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        }
-      ],
-      "developer": "com.laurencedawson"
-    },
-    {
-      "app_name": "Sync for Reddit Pro",
-      "package": "com.laurencedawson.reddit_sync.pro",
-      "patches": [
-        {
-          "name": "Add archive links to menus",
-          "description": "Adds Wayback Machine and archive.today options to the menus behind a post and behind a link.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Automatically undelete Imgur media",
-          "description": "Loads Imgur images and videos that no longer exist from the Wayback Machine.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Automatically undelete Reddit content",
-          "description": "Restores the text of removed posts and comments, and the names of deleted authors, from Project Arctic Shift.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Disable Sync for Lemmy bottom sheet",
-          "description": "Disables the bottom sheet at the startup that asks you to signup to \"Sync for Lemmy\".",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix /s/ links",
-          "description": "Opens Reddit's shortened /s/ share links in the app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Imgur links",
-          "description": "Resolves Imgur links in the app instead of through Sync's proxy, which no longer exists.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Redgifs API",
-          "description": "Fixes loading RedGifs media, which RedGifs otherwise refuses.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix loading more comments",
-          "description": "Loads the comments behind a \"view more\" from the thread instead of the endpoint Reddit stopped answering.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix opening albums",
-          "description": "Looks a post up through Reddit's thread endpoint instead of the one Reddit stopped answering, which is what an album is opened by.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix post thumbnails",
-          "description": "Fixes loading post thumbnails by correcting their URLs.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix revealing spoilers",
-          "description": "Opens a spoiler where it sits when it is tapped, which Sync otherwise answers with \"Missing post information\".",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix video downloads",
-          "description": "Fixes a bug in Sync's MPD parser resulting in only the audio-track being saved.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Gestures for the video player",
-          "description": "Double tap a video or GIF to play or pause it rather than zoom, drag sideways to seek, and drag up or down after a double tap for volume.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Keep the links in the text of a post",
-          "description": "Keeps the formatting and links in the body shown under a post, which Sync otherwise discards.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Keep transparency in a picture",
-          "description": "Draws the transparent parts of a picture opened in the viewer as the background behind it rather than as white.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Load threads whose text contains a dollar sign",
-          "description": "Stops a thread failing to load when the text in it contains a dollar sign.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Make an address in a post tappable",
-          "description": "Draws a bare address in a post's body as a link.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Modify login WebView",
-          "description": "Modify the WebView used for logging into reddit to prevent login issues",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "More actions on the floating button",
-          "description": "Puts up to four of Sync's own actions beside the feed's floating button.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Recover post thumbnails from the archive",
-          "description": "Loads a post's thumbnail from the Wayback Machine when its Reddit preview has been purged.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Redirect Gfycat links to RedGifs",
-          "description": "Loads Gfycat links from RedGifs, including the autoplaying video Sync asks its own proxy for.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show a hidden profile from the archive",
-          "description": "Fills in a profile from Project Arctic Shift when Reddit answers with nothing.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show a subreddit's banner on its feed",
-          "description": "Draws the banner a subreddit sets at the top of its posts, rather than only on its About page.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show media in a comment where it sits",
-          "description": "Draws a link in a comment as the picture or video it points at rather than as a chip naming where it goes.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Show videos posted in comments",
-          "description": "Draws a video posted in a comment in the comment, and plays it when tapped.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Spoof client",
-          "description": "Restores functionality of the app by using custom client ID.",
-          "use": true,
-          "options": [
-            {
-              "key": "client-id",
-              "description": "The Reddit OAuth client ID. Refer to Sync Up documentation for more information on what to put here."
-            },
-            {
-              "key": "redirect-uri",
-              "description": "The Reddit OAuth redirect URI. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's redirect URI."
-            },
-            {
-              "key": "user-agent",
-              "description": "The app's user agent. Refer to Sync Up documentation for more information on what to put here. Default value is RedReader's user agent."
-            },
-            {
-              "key": "imgur-client-id",
-              "description": "What to identify as when uploading a picture to Imgur. Sync's own has run out of its daily allowance, so uploading fails until this is one of your own; refer to Sync Up documentation for how to get one."
-            }
-          ],
-          "compatible_versions": []
-        },
-        {
-          "name": "Translate posts and comments",
-          "description": "Translates a post or comment where it sits, on this device or through DeepL or Google Cloud.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Unlock Sync Ultra",
-          "description": "Turns on the Sync Ultra features that work on the device alone, and removes the offers to buy it.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Use /user/ endpoint",
-          "description": "Replaces the deprecated /u profile endpoint with /user.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
         }
       ],
       "developer": "com.laurencedawson"
     }
   ],
   "patches_name": "Sync Up",
-  "fingerprint": "2cad739898f843e8d752e1d9d6c5b7cb98db6c94077c21331d208422bee21af3",
-  "release_notes": "## [1.9.4](https://github.com/RashKash103/sync-up/compare/v1.9.3...v1.9.4) (2026-10-31)\n\n### 🐛 Bug Fixes\n\n* Validate Reddit share link destinations before sending credentials ([#30](https://github.com/RashKash103/sync-up/issues/30)) ([2d8ed03](https://github.com/RashKash103/sync-up/commit/2d8ed033d8a9ffd4e3022ad1fee4dd8f4a176be4))\n",
-  "release_tag": "v1.9.4",
-  "release_date": "2026-10-31T01:13:45Z",
+  "fingerprint": "bf5b9b34e27b53c4077e8952cadc751e66ca8b3857b7b9ca30cc4c65d57b7889",
+  "release_notes": "## [1.10.0](https://github.com/RashKash103/sync-up/compare/v1.9.4...v1.10.0) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* Do not let a credit or an icon stop the app signing in ([7b68258](https://github.com/RashKash103/sync-up/commit/7b68258dd0fcaae513e350823e9b7198f6307bcc))\n* Give the Sync Up rows icons, plainer wording and a credit ([8c2f16d](https://github.com/RashKash103/sync-up/commit/8c2f16ddbeb61eec684e037c62077be6a2f12c77))\n* Keep the client credentials and the account PIN out of Sync's backup ([2f764e1](https://github.com/RashKash103/sync-up/commit/2f764e163ff502edcda486909a18a67aa3f948a1))\n* Keep to methods every supported Android has ([c15b8b6](https://github.com/RashKash103/sync-up/commit/c15b8b63c28858577c0b7f39f75f98c943e5ad7e))\n* Put the PIN up after the app has a window to put it on ([e210549](https://github.com/RashKash103/sync-up/commit/e210549a86a49b3e8aaa870b97a8aa8b5877c97e))\n* Stop the PIN being asked twice when changing account ([0b46629](https://github.com/RashKash103/sync-up/commit/0b46629aff92eb765dedc6689f337e12adb97184))\n* Take the PIN back off the way into the app ([1925e57](https://github.com/RashKash103/sync-up/commit/1925e57144650e32d2bb2d66194355f170705a46))\n\n### ✨ New Features\n\n* Ask for the OAuth client ID when the app has none ([fb1ed85](https://github.com/RashKash103/sync-up/commit/fb1ed8567459ca45b4c39d8dda86c2280a9db09e))\n* Ask for the PIN when the app opens, or instead of a fingerprint ([8c471d8](https://github.com/RashKash103/sync-up/commit/8c471d8f66f1d564eaccd4614af563ce4ce62242))\n* Ask for the PIN when the app opens, over a screen it has built ([a1b27d5](https://github.com/RashKash103/sync-up/commit/a1b27d51c14f713f729e428dd79f96d520c89057))\n* Lock an account with a PIN ([42e0e20](https://github.com/RashKash103/sync-up/commit/42e0e209b9b18d73dd2baad27713072fa6689e2f))\n* Set the client id, redirect URI and user agent in the app ([7ed1ff6](https://github.com/RashKash103/sync-up/commit/7ed1ff6d87f0d4ffd319cb8fe44001992430714b))\n* Show the feed while a post is swiped away ([e42431f](https://github.com/RashKash103/sync-up/commit/e42431f179bee2faef380af217bf47f17491a290))\n",
+  "release_tag": "v1.10.0",
+  "release_date": "2026-11-09T18:47:26Z",
   "isPreRelease": false,
   "stars": 7,
   "avatarUrl": "https://avatars.githubusercontent.com/u/17362324?v=4&s=128",

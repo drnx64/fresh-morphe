@@ -2,10 +2,255 @@
   "bundle": "pdb_patch",
   "channel": "latest",
   "repo_url": "https://github.com/madushas/pdb_patch",
-  "created_at": "2026-11-01T22:06:49",
-  "version": "0.5.8",
-  "description": "## [0.5.8](https://github.com/madushas/morphe-patches-custom/compare/v0.5.7...v0.5.8) (2026-11-02)\n\n### 🧹 Changes\n* fix(pdb): soul history newest-first + honest Chat/Profile pill (channel pre-check off-thread); PdbTools.DB_EXECUTOR public ([7c54d92](https://github.com/madushas/morphe-patches-custom/commit/7c54d92))",
+  "created_at": "2026-11-09T20:39:03",
+  "version": "0.5.9",
+  "description": "## [0.5.9](https://github.com/madushas/morphe-patches-custom/compare/v0.5.8...v0.5.9) (2026-11-10)\n\n### ✨ New Features\n* add patch support for Hutch, Material Capsule, Nike Run Club, Fitbit/Health, adidas Running and TextNow ([e717b96](https://github.com/madushas/morphe-patches-custom/commit/e717b96))",
   "apps": [
+    {
+      "app_name": "TextNow",
+      "package": "com.enflick.android.textnow",
+      "patches": [
+        {
+          "name": "Disable ad SDK",
+          "description": "No-ops the Google Mobile Ads initialisation so the ad SDK never starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0.1"
+          ]
+        },
+        {
+          "name": "Disable tracker components",
+          "description": "Disables Crashlytics, Google Analytics v3, Firebase measurement and Flurry components and sets the Firebase/GA collection opt-outs. FCM push is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0.1"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "No-ops the Adjust (attribution) and Flurry (analytics) SDK initialisers so no tracking payload is collected or sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0.1"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Disables every ad-network component TextNow declares (AdMarvel, Amazon, AppNext, Google Mobile Ads, MoPub) and strips the ad-ID / ad-services / install-referrer permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.0.1"
+          ]
+        }
+      ],
+      "developer": "com.enflick"
+    },
+    {
+      "app_name": "Fitbit",
+      "package": "com.fitbit.fitbitmobile",
+      "patches": [
+        {
+          "name": "Disable trackers",
+          "description": "Disables Google Analytics for Firebase measurement components, switches Crashlytics and Firebase/Google-Analytics collection off via the official opt-out flags, and removes the install-referrer permission. FCM push is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.11.1.health-mobile-1104134730-1009077909"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Fitbit ships no ad SDK or ad placement; this additionally disables any ad-SDK auto-init provider and removes the advertising-ID / ad-services / install-referrer permissions so no advertising ID is exposed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.11.1.health-mobile-1104134730-1009077909"
+          ]
+        }
+      ],
+      "developer": "com.fitbit"
+    },
+    {
+      "app_name": "Nike Run Club - Running Coach",
+      "package": "com.nike.plusgps",
+      "patches": [
+        {
+          "name": "Disable tracker components",
+          "description": "Disables Adobe's extension-discovery service and messaging activities and sets the Firebase Analytics collection opt-outs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.80.0"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "Disables Adobe (Omniture) analytics by stopping the Adobe Experience Platform extension registration, so no tracking payload is built or sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.80.0"
+          ]
+        },
+        {
+          "name": "Enable dark mode",
+          "description": "Turns on Nike Run Club's built-in dark theme by forcing the DefaultDesignManager colour-mode gate, so the Compose UI renders dark.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.80.0"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Nike Run Club ships no ad SDK or placement; this disables any ad-SDK auto-init provider and removes the advertising-ID / ad-services / referrer permissions so no advertising ID is exposed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.80.0"
+          ]
+        }
+      ],
+      "developer": "Nike, Inc."
+    },
+    {
+      "app_name": "Hutch App",
+      "package": "com.omobio.etisalatone",
+      "patches": [
+        {
+          "name": "Disable SSL pinning",
+          "description": "Unpins the react-native-ssl-pinning OkHttp client so HTTPS traffic can be intercepted, and trusts user-installed CAs (targetSdk 35). Normal TLS validation stays intact.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.1"
+          ]
+        },
+        {
+          "name": "Disable security checks",
+          "description": "Stops Hutch from refusing to run on rooted, adb-enabled, developer-options or emulator devices. The device-integrity probes (jail-monkey + react-native-device-info) all answer \"clean\".",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.1"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "Disables Google Analytics for Firebase collection (the app's only third-party analytics) and removes the advertising-ID permissions. Push notifications keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.1"
+          ]
+        }
+      ],
+      "developer": "Hutch Sri Lanka"
+    },
+    {
+      "app_name": "Material Capsule: Island-Style",
+      "package": "com.pryshedko.mtisland",
+      "patches": [
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Disables Material Capsule's PairIP / Play licence verification so the app runs after Morphe re-signs it. Restores the real Application class (com.pryshedko.mtisland.App).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.3"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "Disables Google Analytics for Firebase measurement and switches off Firebase Analytics / Advertising-ID data collection via the official opt-out flags.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.3"
+          ]
+        },
+        {
+          "name": "Mock Pro (client-side)",
+          "description": "Forces the client-side Pro entitlement (custom colors, card/anim controls, full-size player, app search, widgets, gestures). Material Capsule's premium is a local flag derived from a Play purchase query and stored AES-encrypted on-device — it is NOT server-re-validated, so the whole set opens. No purchase is fabricated; real purchases and restore still work.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.3"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Material Capsule ships no ad SDK or ad placement; this additionally disables any ad-SDK auto-init provider and removes the advertising-ID / ad-services permissions so no advertising ID is exposed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.3"
+          ]
+        }
+      ],
+      "developer": "com.pryshedko"
+    },
+    {
+      "app_name": "adidas Running: Run tracker",
+      "package": "com.runtastic.android",
+      "patches": [
+        {
+          "name": "Bypass PairIP",
+          "description": "Disables adidas Running's PairIP licence/VM verification, restores the real Application class and bakes the VM's runtime strings (captured from the original app's heap) so Firebase etc. initialize cleanly. NOTE: adidas runs the full PairIP VM whose startup program is the tamper check — the patched app boots past the licence gate but the VM-virtualized init methods cannot be restored without native reverse engineering, so the app may crash after launch. See docs/adidas.md.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.12.1",
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "Disable tracker components",
+          "description": "Disables the Google Analytics measurement receiver/services and the Adjust lifecycle provider, and sets the Firebase/Google Analytics collection opt-outs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.12.1",
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "No-ops the Adjust SDK's event/lifecycle entry points so no attribution or analytics payload is buffered or sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.12.1",
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "Enable dark mode",
+          "description": "Forces adidas Running into its built-in night theme (RtBaseTheme.Dark) by setting AppCompatDelegate night mode at app startup.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.12.1",
+            "14.4.0"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "adidas Running ships no ad-serving SDK; this denies the advertising ID and the Privacy-Sandbox ad services and removes the install-referrer permission.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.12.1",
+            "14.4.0"
+          ]
+        }
+      ],
+      "developer": "adidas"
+    },
     {
       "app_name": "Strava: Run, Bike, Walk",
       "package": "com.strava",
@@ -374,10 +619,10 @@
     }
   ],
   "patches_name": "Pdb Patches",
-  "fingerprint": "6800cf659e41c484c4a5d37cde8a1a369afd93d16bd068d4bd5021ef616fe6ca",
-  "release_notes": "## [0.5.8](https://github.com/madushas/morphe-patches-custom/compare/v0.5.7...v0.5.8) (2026-11-02)\n\n### 🧹 Changes\n* fix(pdb): soul history newest-first + honest Chat/Profile pill (channel pre-check off-thread); PdbTools.DB_EXECUTOR public ([7c54d92](https://github.com/madushas/morphe-patches-custom/commit/7c54d92))\n",
-  "release_tag": "v0.5.8",
-  "release_date": "2026-11-01T22:06:55Z",
+  "fingerprint": "ecd358ec02468c77b1f113744d96c7571727efa0fa242e4483c58c26ba6046ba",
+  "release_notes": "## [0.5.9](https://github.com/madushas/morphe-patches-custom/compare/v0.5.8...v0.5.9) (2026-11-10)\n\n### ✨ New Features\n* add patch support for Hutch, Material Capsule, Nike Run Club, Fitbit/Health, adidas Running and TextNow ([e717b96](https://github.com/madushas/morphe-patches-custom/commit/e717b96))\n",
+  "release_tag": "v0.5.9",
+  "release_date": "2026-11-09T20:40:34Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/44031016?v=4&s=128",

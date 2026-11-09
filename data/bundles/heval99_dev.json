@@ -2,9 +2,9 @@
   "bundle": "heval99",
   "channel": "dev",
   "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
-  "created_at": "2026-11-09T00:23:32",
-  "version": "2.3.0-dev.4",
-  "description": "## 2.3.0-dev.4 (2026-11-09)\n\n### 📱 365Scores `15.0.0`\n- New: Spoiler-free mode\n\n### 📱 FotMob `241.18134.20261030`\n- New: Spoiler-free mode\n- New: Choose what Spoiler-free mode hides in Patch settings\n\n### 📱 Sofascore `26.10.26`\n- New: Spoiler-free mode\n- Fixed: Describe the spoiler-free master switch accurately\n\n### 📱 Truecaller `26.43.5`\n- New: Disable Who viewed me\n- New: Hide all referral offers, add Disable Who viewed me and more privacy switches\n\n### 🔧 Other\n- Fixed: Apply Firebase telemetry switches in bytecode\n\n**Download:** [patches-2.3.0-dev.4.mpp](https://github.com/heval99/Heval-Morphe-Patches/releases/download/v2.3.0-dev.4/patches-2.3.0-dev.4.mpp)",
+  "created_at": "2026-11-09T19:33:36",
+  "version": "2.3.0-dev.6",
+  "description": "## 2.3.0-dev.6 (2026-11-09)\n\n### 📱 FotMob `241.18134.20261030`\n- New: Make AMOLED black a Patch settings switch\n\n### 📱 Mango Launcher `1.64`\n- Fixed: Keep Pro unlocked after the Play Billing purchase query\n\n### 📱 Truecaller `26.43.5`\n- New: Hide promotions also turns off the Gold gift promo\n\n### ⬆️ Updated apps\n| App | From | To |\n|---|---|---|\n| DRTV | `4.39.0` | `4.40.4` |\n\n### 🔧 Other\n- New: Add profiles, export and import\n- New: Add a one-tap Calm mode preset\n- New: Show AMOLED black as a read-only row in Sofascore and 365Scores\n\n**Download:** [patches-2.3.0-dev.6.mpp](https://github.com/heval99/Heval-Morphe-Patches/releases/download/v2.3.0-dev.6/patches-2.3.0-dev.6.mpp)",
   "apps": [
     {
       "app_name": "TV Smarters Player Expert",
@@ -345,6 +345,10 @@
             {
               "key": "dohUrl",
               "description": "The https address of the DNS-over-HTTPS resolver the browser must use."
+            },
+            {
+              "key": "customDohUrl",
+              "description": "Optional. Your own https address, for example a NextDNS address (https://dns.nextdns.io/<id>). When filled in it replaces the resolver chosen above; leave it empty to use that one."
             },
             {
               "key": "dohMode",
@@ -808,7 +812,7 @@
           ]
         }
       ],
-      "developer": "com.guardian"
+      "developer": "Guardian News & Media Ltd"
     },
     {
       "app_name": "Hevy - Gym Log Workout Tracker",
@@ -996,6 +1000,15 @@
       "app_name": "FotMob - Soccer Live Scores",
       "package": "com.mobilefootie.wc2010",
       "patches": [
+        {
+          "name": "AMOLED black",
+          "description": "Makes the dark theme pure black on OLED screens. Can be turned off in Patch settings.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "241.18134.20261030"
+          ]
+        },
         {
           "name": "Disable FotMob+ promo popup",
           "description": "Disables the FotMob+ promo popup.",
@@ -1460,6 +1473,15 @@
       "package": "com.scores365",
       "patches": [
         {
+          "name": "AMOLED black",
+          "description": "Makes the dark theme pure black on OLED screens.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "15.0.0"
+          ]
+        },
+        {
           "name": "Disable ads",
           "description": "Removes all ads.",
           "use": true,
@@ -1496,6 +1518,33 @@
               "description": "Package name of the patched app. Keep the original to install over the existing app. A different name installs next to it, but can break features that are tied to the original package name."
             }
           ],
+          "compatible_versions": [
+            "15.0.0"
+          ]
+        },
+        {
+          "name": "Hide competitions",
+          "description": "Hides the competitions you pick in Patch settings from the match lists.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "15.0.0"
+          ]
+        },
+        {
+          "name": "Hide countries",
+          "description": "Hides every competition of the countries you pick in Patch settings from the match lists.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "15.0.0"
+          ]
+        },
+        {
+          "name": "Patch settings",
+          "description": "Adds a screen to turn supported features on or off.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "15.0.0"
           ]
@@ -1577,6 +1626,15 @@
       "app_name": "Sofascore: Live Sports Scores",
       "package": "com.sofascore.results",
       "patches": [
+        {
+          "name": "AMOLED black",
+          "description": "Makes the dark theme pure black on OLED screens.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.10.26"
+          ]
+        },
         {
           "name": "Animation speed",
           "description": "Adds switches to turn off or speed up animations.",
@@ -2388,7 +2446,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.39.0"
+            "4.40.4"
           ]
         },
         {
@@ -2397,7 +2455,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.39.0"
+            "4.40.4"
           ]
         },
         {
@@ -2406,7 +2464,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.39.0"
+            "4.40.4"
           ]
         }
       ],
@@ -3208,6 +3266,10 @@
               "description": "The https address of the DNS-over-HTTPS resolver the browser must use."
             },
             {
+              "key": "customDohUrl",
+              "description": "Optional. Your own https address, for example a NextDNS address (https://dns.nextdns.io/<id>). When filled in it replaces the resolver chosen above; leave it empty to use that one."
+            },
+            {
               "key": "dohMode",
               "description": "Strict never uses the normal DNS, so nothing loads while the resolver is unreachable. Fallback is easier to get around."
             }
@@ -3294,6 +3356,10 @@
             {
               "key": "dohUrl",
               "description": "The https address of the DNS-over-HTTPS resolver the browser must use."
+            },
+            {
+              "key": "customDohUrl",
+              "description": "Optional. Your own https address, for example a NextDNS address (https://dns.nextdns.io/<id>). When filled in it replaces the resolver chosen above; leave it empty to use that one."
             },
             {
               "key": "dohMode",
@@ -3549,10 +3615,10 @@
     }
   ],
   "patches_name": "heval patches",
-  "fingerprint": "e9f2d6e28fe59b73018d34146e609824b787f7bdeffd7366951bd8765f5235f2",
-  "release_notes": "## 2.3.0-dev.4 (2026-11-09)\n\n### 📱 365Scores `15.0.0`\n- New: Spoiler-free mode\n\n### 📱 FotMob `241.18134.20261030`\n- New: Spoiler-free mode\n- New: Choose what Spoiler-free mode hides in Patch settings\n\n### 📱 Sofascore `26.10.26`\n- New: Spoiler-free mode\n- Fixed: Describe the spoiler-free master switch accurately\n\n### 📱 Truecaller `26.43.5`\n- New: Disable Who viewed me\n- New: Hide all referral offers, add Disable Who viewed me and more privacy switches\n\n### 🔧 Other\n- Fixed: Apply Firebase telemetry switches in bytecode\n\n**Download:** [patches-2.3.0-dev.4.mpp](https://github.com/heval99/Heval-Morphe-Patches/releases/download/v2.3.0-dev.4/patches-2.3.0-dev.4.mpp)",
-  "release_tag": "v2.3.0-dev.4",
-  "release_date": "2026-11-09T00:29:39Z",
+  "fingerprint": "bcc0fa152f7ad54960139747947eca6197050ad779a942f1b06b09f5ab7f5276",
+  "release_notes": "## 2.3.0-dev.6 (2026-11-09)\n\n### 📱 FotMob `241.18134.20261030`\n- New: Make AMOLED black a Patch settings switch\n\n### 📱 Mango Launcher `1.64`\n- Fixed: Keep Pro unlocked after the Play Billing purchase query\n\n### 📱 Truecaller `26.43.5`\n- New: Hide promotions also turns off the Gold gift promo\n\n### ⬆️ Updated apps\n| App | From | To |\n|---|---|---|\n| DRTV | `4.39.0` | `4.40.4` |\n\n### 🔧 Other\n- New: Add profiles, export and import\n- New: Add a one-tap Calm mode preset\n- New: Show AMOLED black as a read-only row in Sofascore and 365Scores\n\n**Download:** [patches-2.3.0-dev.6.mpp](https://github.com/heval99/Heval-Morphe-Patches/releases/download/v2.3.0-dev.6/patches-2.3.0-dev.6.mpp)",
+  "release_tag": "v2.3.0-dev.6",
+  "release_date": "2026-11-09T19:37:57Z",
   "isPreRelease": true,
   "stars": 76,
   "avatarUrl": "https://avatars.githubusercontent.com/u/111246900?v=4",

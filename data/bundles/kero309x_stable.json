@@ -1,18 +1,18 @@
 {
   "bundle": "kero309x",
   "channel": "stable",
-  "repo_url": "https://github.com/Kero309x/Kero309x-patches",
-  "created_at": "2026-10-06T15:32:23",
-  "version": "1.3.4",
-  "description": "## [1.3.4](https://github.com/Kero309x/Kero309x-patches/compare/v1.3.3...v1.3.4) (2026-10-06)\n\n### 🐛 Bug Fixes\n\n* match the fingerprints against the verified 8.0.28 signatures ([f90c5c0](https://github.com/Kero309x/Kero309x-patches/commit/f90c5c04b293a49c6f779a49d7ca129891f3991f))",
+  "repo_url": "https://github.com/Kero309x/Kero309x-Patches",
+  "created_at": "2026-11-09T12:41:57",
+  "version": "0.1.2",
+  "description": "## Kero309x Patches 0.1.2 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. Anghami 8.0.28 is the first registered target on the Morphe framework.\n\n- First release built by `buildAndroid`, so the bundle carries `classes.dex` and can be loaded by Morphe Manager. Releases `0.1.0` and `0.1.1` were built without DEX and only serve Morphe Desktop.\n- First signed release. The `.mpp` carries an Ed25519 signature in its `MorpheSig1` trailer, and `patches-bundle.json` publishes the matching `public_key`, so a bundle altered after publication can be rejected.\n- No behaviour change to any of the twenty patches.\n\n### Verification\n\n- 20 patches, all default-enabled.\n- 20/20 PASS against the stock 8.0.28 build (fingerprint, apply and recompile).\n- Published artefact re-checked after the release: 112 entries, `classes.dex` of 99,480 bytes, a signature whose public key equals the committed `morphe-signing.pub`, and a SHA-256 matching the value below.\n- No device or emulator is available yet, so there is no runtime behavioural verification.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.2.mpp` directly.\n\n### Integrity\n\nSHA-256: `47B177D75EF06CA5E34497B8005DB0415B57A10C9A5C41B7F049C127BE6FEDFD`\n\nLicence: GPL-3.0-only.",
   "apps": [
     {
       "app_name": "Anghami: Play music & Podcasts",
       "package": "com.anghami",
       "patches": [
         {
-          "name": "Allow Screenshots",
-          "description": "Bypasses secure window restrictions to allow screenshots and screen recording across the app.",
+          "name": "Block ads between tracks",
+          "description": "Stops the player from inserting audio and video advertisements between tracks.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -20,8 +20,8 @@
           ]
         },
         {
-          "name": "Block Audio Ads",
-          "description": "Prevents audio advertisements between songs and treats playback tracks as ad-free.",
+          "name": "Unlimited track skips",
+          "description": "Removes the client-side limit on skipping tracks.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -29,8 +29,8 @@
           ]
         },
         {
-          "name": "Block Promotional Popups",
-          "description": "Blocks startup popup offers, promotional flyers, and marketing dialogs.",
+          "name": "Unlock lyrics",
+          "description": "Opens the lyrics screen for every account instead of showing the subscription prompt.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -38,8 +38,8 @@
           ]
         },
         {
-          "name": "Disable Analytics & Crash Logging",
-          "description": "Disables third-party trackers (Braze, Adjust, Firebase, Google, Bugsnag), in-house Silo tracking, and listening telemetry.",
+          "name": "Disable forced shuffle",
+          "description": "Plays a list in its own order instead of turning it into a shuffled radio queue for accounts without Plus.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -47,8 +47,8 @@
           ]
         },
         {
-          "name": "Disable Forced Shuffle",
-          "description": "Disables forced shuffle mode on playlists and radio, enabling full on-demand song selection.",
+          "name": "Hide shuffle badges",
+          "description": "Stops list cards, rows and headers from drawing the badge that marks shuffled playback.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -56,8 +56,8 @@
           ]
         },
         {
-          "name": "Disable In-App Rating",
-          "description": "Disables the in-app review dialogs and 'Love us? Rate us!' rating prompts.",
+          "name": "Hide premium feature buttons",
+          "description": "Stops the player and the queue rows from drawing the karaoke upsell button.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -65,8 +65,8 @@
           ]
         },
         {
-          "name": "Expand Download Limits",
-          "description": "Removes local offline storage caps and disables limited-plan quota checks.",
+          "name": "Allow screenshots",
+          "description": "Stops the player, the live radio screen and the main screen from marking their windows as secure, so screenshots and screen recording capture them.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -74,8 +74,8 @@
           ]
         },
         {
-          "name": "Hide Gold Upsell",
-          "description": "Hides Gold-tier promotional sections and unsupported server-gated features.",
+          "name": "Show profile Plus badge",
+          "description": "Draws the subscription badge on your own profile and on the account row without changing what the account is entitled to.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -83,8 +83,8 @@
           ]
         },
         {
-          "name": "Hide Premium Feature Buttons",
-          "description": "Hides locked upsell buttons including Sing Along (Karaoke) and AI Mix triggers.",
+          "name": "Plus entitlement state",
+          "description": "Reports the account as a paying subscriber to every local check that derives that state.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -92,8 +92,8 @@
           ]
         },
         {
-          "name": "Hide Shuffle Badges",
-          "description": "Hides 'Plays in shuffle' badges from playlists, album headers, and feed rows.",
+          "name": "Hide Gold upsell",
+          "description": "Hides the Gold call to action that section headers can show.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -101,8 +101,8 @@
           ]
         },
         {
-          "name": "Hide Upgrade Banners",
-          "description": "Hides navigation upgrade tab, header promo banners, and feed subscription upsell cards.",
+          "name": "Hide upgrade banners",
+          "description": "Removes the navigation entry, promo bar, feed cells, downloads notice and settings or library rows that advertise a subscription upgrade.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -110,8 +110,8 @@
           ]
         },
         {
-          "name": "Remove Sponsored Content",
-          "description": "Hides sponsored cards, recommended promotions in Car Mode, and radar sponsored content.",
+          "name": "Lift download limits",
+          "description": "Stops the client refusing downloads because of the plan check, the collection restriction or the offline count.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -119,8 +119,8 @@
           ]
         },
         {
-          "name": "Show Profile Plus Badge",
-          "description": "Displays the official Plus badge on your profile header and account settings.",
+          "name": "Disable analytics",
+          "description": "Stops the app starting its analytics, attribution and crash reporting SDKs and sending events to them.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -128,8 +128,8 @@
           ]
         },
         {
-          "name": "Spoof App Signature",
-          "description": "Emulates official application signature headers to preserve API authorization compatibility.",
+          "name": "Hide sponsored content",
+          "description": "Removes the sponsored label from song rows and cards, and the sponsor banner from the in-car screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -137,8 +137,8 @@
           ]
         },
         {
-          "name": "Unlimited Track Skips",
-          "description": "Removes song skip limitations and queue navigation restrictions.",
+          "name": "Block promotional popups",
+          "description": "Stops the popup and full-screen promotional overlays from being drawn over the app.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -146,8 +146,8 @@
           ]
         },
         {
-          "name": "Unlock Full Lyrics",
-          "description": "Enables full synced lyrics display and removes paywall banners on song lyrics.",
+          "name": "Disable the rating prompt",
+          "description": "Stops Anghami from asking you to rate the app, in both its own dialog and the Play review sheet.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -155,8 +155,35 @@
           ]
         },
         {
-          "name": "Unlock Plus Experience",
-          "description": "Enables client-side Plus features, eliminates free-tier playback restrictions, and enables offline UI mode.",
+          "name": "Stock signature assertion",
+          "description": "Derives the request signature from the store build's certificate instead of the installed one.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.0.28"
+          ]
+        },
+        {
+          "name": "Hide in-feed ad banners",
+          "description": "Stops lists from inserting advertising banners between their cells.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.0.28"
+          ]
+        },
+        {
+          "name": "Ignore the forced update requirement",
+          "description": "Stops the client from showing the blocking update dialog when the server marks this build as outdated.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.0.28"
+          ]
+        },
+        {
+          "name": "Disable first-party Silo telemetry",
+          "description": "Stops the application reporting playback, navigation and device data to Anghami's own Silo telemetry.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -167,13 +194,10 @@
       "developer": "com.anghami"
     }
   ],
-  "patches_name": "Kero309x Morphe Patches",
-  "fingerprint": "193cc16e2eea6c137e92170a6abd96b3990f8475aac4ef6ab6b4af3b369d34e2",
-  "stars": 1,
-  "avatarUrl": "https://avatars.githubusercontent.com/u/55901942?v=4&s=128",
-  "repoDescription": "Custom extension patch bundle for the Morphe framework.",
-  "isArchived": false,
-  "isFork": false,
-  "forkParent": "",
-  "bundleImageUrl": ""
+  "patches_name": "Kero309x Patches",
+  "fingerprint": "2cc77463707d6aeeae6b469f66b353e1c4d490925bb2802fd97da362b36a8e1a",
+  "release_notes": "## Kero309x Patches 0.1.2 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. Anghami 8.0.28 is the first registered target on the Morphe framework.\n\n- First release built by `buildAndroid`, so the bundle carries `classes.dex` and can be loaded by Morphe Manager. Releases `0.1.0` and `0.1.1` were built without DEX and only serve Morphe Desktop.\n- First signed release. The `.mpp` carries an Ed25519 signature in its `MorpheSig1` trailer, and `patches-bundle.json` publishes the matching `public_key`, so a bundle altered after publication can be rejected.\n- No behaviour change to any of the twenty patches.\n\n### Verification\n\n- 20 patches, all default-enabled.\n- 20/20 PASS against the stock 8.0.28 build (fingerprint, apply and recompile).\n- Published artefact re-checked after the release: 112 entries, `classes.dex` of 99,480 bytes, a signature whose public key equals the committed `morphe-signing.pub`, and a SHA-256 matching the value below.\n- No device or emulator is available yet, so there is no runtime behavioural verification.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.2.mpp` directly.\n\n### Integrity\n\nSHA-256: `47B177D75EF06CA5E34497B8005DB0415B57A10C9A5C41B7F049C127BE6FEDFD`\n\nLicence: GPL-3.0-only.\n",
+  "release_tag": "v0.1.2",
+  "release_date": "2026-11-09T12:41:57Z",
+  "isPreRelease": true
 }
