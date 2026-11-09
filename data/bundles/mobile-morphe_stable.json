@@ -2,9 +2,9 @@
   "bundle": "mobile-morphe",
   "channel": "stable",
   "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
-  "created_at": "2026-11-08T00:30:46",
-  "version": "1.0.16",
-  "description": "## [1.0.16](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.15...v1.0.16) (2026-11-08)\n\n\n### Bug Fixes\n\n* let YouTube TV's GmsCore support patch apply to 10.45.0, where Google moved the Android ID lookup ([5e21acc](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/5e21accfcf41e7c134fb1bb413aa9a87b7483794))",
+  "created_at": "2026-11-09T02:22:07",
+  "version": "1.0.19",
+  "description": "## [1.0.19](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.18...v1.0.19) (2026-11-09)\n\n\n### Bug Fixes\n\n* accept only the phone build of Disney+ 26.20.0+rc3-2026.11.02, and offer the Android TV build of HBO Max on Android 11 TVs ([1ef60e9](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/1ef60e920c9d22b634cd93118cf54da6204c6863))",
   "apps": [
     {
       "app_name": "Downloadertablet",
@@ -175,7 +175,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -184,7 +184,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -193,7 +193,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -202,7 +202,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -211,7 +211,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -220,7 +220,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -229,7 +229,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -238,7 +238,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         },
         {
@@ -252,7 +252,7 @@
             }
           ],
           "compatible_versions": [
-            "3.0.480.457"
+            "3.0.480.647"
           ]
         }
       ],
@@ -440,6 +440,28 @@
       "package": "com.apple.atve.androidtv.appletv",
       "patches": [
         {
+          "name": "Auto-skip",
+          "description": "Skips the parts you choose: Apple's promos for other titles, recaps, and intros.",
+          "use": true,
+          "options": [
+            {
+              "key": "skipPromos",
+              "description": "Skips Apple's promos for other titles that play before a show or movie."
+            },
+            {
+              "key": "skipRecaps",
+              "description": "Skips the recap of earlier episodes."
+            },
+            {
+              "key": "skipIntros",
+              "description": "Skips a show's opening titles."
+            }
+          ],
+          "compatible_versions": [
+            "3.0.0"
+          ]
+        },
+        {
           "name": "Auto-skip (Android TV)",
           "description": "Presses Skip for you on the parts you choose: Apple's promos for other titles, recaps, and intros.",
           "use": true,
@@ -471,8 +493,26 @@
           ]
         },
         {
+          "name": "Block analytics & tracking (Android TV)",
+          "description": "Reduces Apple's usage metrics and stops playback reports in the Android TV app. The app also stops downloading updates to its screens between app updates.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "17.0.2"
+          ]
+        },
+        {
           "name": "Disable auto-updates",
           "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.0.0"
+          ]
+        },
+        {
+          "name": "Disable up next",
+          "description": "Lets the credits play full screen, instead of shrinking the video into a corner to show the next episode or a recommendation.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -489,10 +529,69 @@
           ]
         },
         {
+          "name": "Hide player overlays",
+          "description": "Hides the overlays you choose: the rating card when a title starts, product placement notices, and photosensitivity and high-motion warnings.",
+          "use": false,
+          "options": [
+            {
+              "key": "hideRatingCard",
+              "description": "Hides the age rating and content advisories shown when a title starts."
+            },
+            {
+              "key": "hideProductPlacement",
+              "description": "Hides the notice that a title contains paid product placement."
+            },
+            {
+              "key": "hideHealthWarnings",
+              "description": "Hides the photosensitivity and high-motion warnings."
+            }
+          ],
+          "compatible_versions": [
+            "3.0.0"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops the \"Enjoying Apple TV?\" review prompt.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.0.0"
+          ]
+        },
+        {
           "name": "Hide rating prompt (Android TV)",
           "description": "Stops the review prompt from Google Play in the Android TV app.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "17.0.2"
+          ]
+        },
+        {
+          "name": "Show release times",
+          "description": "Shows the time in your time zone when an upcoming episode or title is released.",
+          "use": true,
+          "options": [
+            {
+              "key": "timeFormat",
+              "description": "Shows times in 12-hour or 24-hour format, or as the device is set."
+            }
+          ],
+          "compatible_versions": [
+            "3.0.0"
+          ]
+        },
+        {
+          "name": "Show release times (Android TV)",
+          "description": "Shows the day and time in your time zone when an upcoming episode or title is released.",
+          "use": true,
+          "options": [
+            {
+              "key": "timeFormat",
+              "description": "Shows times in 12-hour or 24-hour format."
+            }
+          ],
           "compatible_versions": [
             "17.0.2"
           ]
@@ -1047,7 +1146,7 @@
           ]
         }
       ],
-      "developer": "com.cbs"
+      "developer": "CBS Interactive, Inc."
     },
     {
       "app_name": "CNN: Live & Breaking News",
@@ -2431,6 +2530,25 @@
           ]
         },
         {
+          "name": "GmsCore support",
+          "description": "Signs in with Google through GmsCore instead of Google Play services.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneApp",
+              "description": "Installs the patched app beside the stock app. When off, the patched app keeps JustWatch's package name, and the stock app has to be uninstalled first."
+            },
+            {
+              "key": "packageName",
+              "description": "Package name to install the patched app under when Clone app is on."
+            }
+          ],
+          "compatible_versions": [
+            "26.44.2",
+            "26.43.8"
+          ]
+        },
+        {
           "name": "Hide device identifiers",
           "description": "Gives the app a random Android ID and a zeroed advertising ID.",
           "use": false,
@@ -2451,6 +2569,26 @@
           ]
         },
         {
+          "name": "Hide unavailable titles",
+          "description": "Hides Watchlist titles that are not on the services you picked. With All picked, hides titles that no service offers, except unreleased titles.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.2",
+            "26.43.8"
+          ]
+        },
+        {
+          "name": "Hide watched titles",
+          "description": "Hides movies you marked as seen and shows you are caught up on from the Watchlist.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.44.2",
+            "26.43.8"
+          ]
+        },
+        {
           "name": "Spoof carrier",
           "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
           "use": false,
@@ -2460,6 +2598,16 @@
               "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
             }
           ],
+          "compatible_versions": [
+            "26.44.2",
+            "26.43.8"
+          ]
+        },
+        {
+          "name": "Streaming titles only",
+          "description": "Shows only titles you can stream on a subscription or for free on the Watchlist. Titles you can only rent or buy are hidden. Picking a Types filter in the app overrides this.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "26.44.2",
             "26.43.8"
@@ -5577,10 +5725,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "c6c73e0c635a9488c3af41f6d90133aa0d59f946bc354511ced9a748123bcf4f",
-  "release_notes": "## [1.0.16](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.15...v1.0.16) (2026-11-08)\n\n\n### Bug Fixes\n\n* let YouTube TV's GmsCore support patch apply to 10.45.0, where Google moved the Android ID lookup ([5e21acc](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/5e21accfcf41e7c134fb1bb413aa9a87b7483794))\n\n\n\n",
-  "release_tag": "v1.0.16",
-  "release_date": "2026-11-08T00:31:35Z",
+  "fingerprint": "991bdf2af6f37318dea268917d814dba0aca53fdc27325e615eeb9b0d0fd7f19",
+  "release_notes": "## [1.0.19](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.0.18...v1.0.19) (2026-11-09)\n\n\n### Bug Fixes\n\n* accept only the phone build of Disney+ 26.20.0+rc3-2026.11.02, and offer the Android TV build of HBO Max on Android 11 TVs ([1ef60e9](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/1ef60e920c9d22b634cd93118cf54da6204c6863))\n* offer the Android TV build of HBO Max under the Play Store package name ([6d37589](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/6d375899930a21cc780f6b586d446dac63222eff))\n\n\n\n",
+  "release_tag": "v1.0.19",
+  "release_date": "2026-11-09T02:44:55Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",

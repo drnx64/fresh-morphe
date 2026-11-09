@@ -2,9 +2,9 @@
   "bundle": "mwbra130",
   "channel": "latest",
   "repo_url": "https://github.com/mwbra130/Retro-Bowl-College",
-  "created_at": "2026-11-08T20:10:40",
-  "version": "1.65.1",
-  "description": "## [1.65.1](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.65.0...v1.65.1) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **googlemessages:** trim OLED black mode to core schemes after launch crash ([20455d9](https://github.com/mwbra130/Retro-Bowl-College/commit/20455d9085f82b5028eb876d5cf57c4cf979365e))",
+  "created_at": "2026-11-09T02:31:50",
+  "version": "1.67.0",
+  "description": "## [1.67.0](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.66.1...v1.67.0) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **droidcam:** silence PairIP license check entry point on 10.0 ([0b1eec5](https://github.com/mwbra130/Retro-Bowl-College/commit/0b1eec5e4a4c21311e31c865f26fa73bb4ba57c9))\n\n### ✨ New Features\n\n* **droidcam:** port PairIP bypass and Pro unlock to DroidCam 10.0 ([93b4261](https://github.com/mwbra130/Retro-Bowl-College/commit/93b426103e01a763c933ee7faf7e4d8fcab87b52))",
   "apps": [
     {
       "app_name": "Hermit — Lite Apps Browser",
@@ -28,29 +28,38 @@
       "patches": [
         {
           "name": "Disable PairIP protection",
-          "description": "Lets the patched app run: replaces PairIP's VM startup with harvested vault/handle data and removes the signature check and license dialog. Requires 'Disable PairIP protection (runtime files)'. DroidCam 9.0 only.",
+          "description": "Lets the patched app run: replaces PairIP's VM startup with harvested vault/handle data and removes the signature check and license dialog. Requires 'Disable PairIP protection (runtime files)'. DroidCam 10.0 only.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.0"
+            "10.0"
           ]
         },
         {
           "name": "Disable PairIP protection (runtime files)",
-          "description": "Swaps the VM-encrypted native libraries (libmjpg, libmdns) for decrypted builds that 'Disable PairIP protection' needs. Enable both together. DroidCam 9.0 only.",
+          "description": "Swaps the VM-encrypted native libraries (libmjpg, libmdns) for decrypted builds that 'Disable PairIP protection' needs. Enable both together. DroidCam 10.0 only.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.0"
+            "10.0"
+          ]
+        },
+        {
+          "name": "Fix camera streaming",
+          "description": "Fixes the black preview / no video in patched builds: the service is handed the original app's signature data, so the PC client's video requests are accepted exactly as with the stock app. Requires 'Disable PairIP protection'. DroidCam 10.0 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.0"
           ]
         },
         {
           "name": "Unlock Pro",
-          "description": "Unlocks DroidCam Pro (HD/4K, no watermark, all options): the license verdict is forced to Pro and renews itself at every silent re-check. Requires 'Disable PairIP protection'. DroidCam 9.0 only.",
+          "description": "Unlocks DroidCam Pro (HD/4K, no watermark, all options): the license verdict is forced to Pro and renews itself at every silent re-check. Requires 'Disable PairIP protection'. DroidCam 10.0 only.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.0"
+            "10.0"
           ]
         }
       ],
@@ -117,6 +126,31 @@
         }
       ],
       "developer": "Baday Production"
+    },
+    {
+      "app_name": "Notification light for Samsung",
+      "package": "com.jamworks.alwaysondisplay",
+      "patches": [
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends unlicensed installs to a Play Store block page. Disables that check, its verdict handler and both block-page launchers so the patched app can open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.10"
+          ]
+        },
+        {
+          "name": "Enable Pro",
+          "description": "Turns on the app's Pro state (no promo ads, premium light effects, custom app and contact colors, every setting) with the permanence of the one-time purchase.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.10"
+          ]
+        }
+      ],
+      "developer": "Jawomo"
     },
     {
       "app_name": "Rocket Player",
@@ -449,10 +483,10 @@
     }
   ],
   "patches_name": "Zdrgon's Morphe Patches",
-  "fingerprint": "22ce830287ce23d5191454095b2b17955714fa442e2d7893b3061c3fedc47c95",
-  "release_notes": "## [1.65.1](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.65.0...v1.65.1) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **googlemessages:** trim OLED black mode to core schemes after launch crash ([20455d9](https://github.com/mwbra130/Retro-Bowl-College/commit/20455d9085f82b5028eb876d5cf57c4cf979365e))\n",
-  "release_tag": "v1.65.1",
-  "release_date": "2026-11-08T20:11:23Z",
+  "fingerprint": "7473d9e99aac5ec31a4d18aa6a8aceb491950b74d7fe67b292f470a387084c02",
+  "release_notes": "## [1.67.0](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.66.1...v1.67.0) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **droidcam:** silence PairIP license check entry point on 10.0 ([0b1eec5](https://github.com/mwbra130/Retro-Bowl-College/commit/0b1eec5e4a4c21311e31c865f26fa73bb4ba57c9))\n\n### ✨ New Features\n\n* **droidcam:** port PairIP bypass and Pro unlock to DroidCam 10.0 ([93b4261](https://github.com/mwbra130/Retro-Bowl-College/commit/93b426103e01a763c933ee7faf7e4d8fcab87b52))\n",
+  "release_tag": "v1.67.0",
+  "release_date": "2026-11-09T02:32:30Z",
   "isPreRelease": false,
   "stars": 8,
   "avatarUrl": "https://avatars.githubusercontent.com/u/226181625?v=4&s=128",

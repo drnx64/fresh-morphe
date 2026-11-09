@@ -2,9 +2,9 @@
   "bundle": "chiggi",
   "channel": "latest",
   "repo_url": "https://github.com/durgesh0505/chiggi_morphe_patches",
-  "created_at": "2026-10-18T13:48:15",
-  "version": "1.25.0",
-  "description": "## [1.25.0](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.24.0...v1.25.0) (2026-10-18)\n\n### ✨ New Features\n\n* **zombiecatcher:** add unlimited coins and plutonium ([5828697](https://github.com/durgesh0505/chiggi_morphe_patches/commit/58286973bdf786979bc9a6c37d8b5866a5181f58))",
+  "created_at": "2026-11-09T02:00:19",
+  "version": "1.27.2",
+  "description": "## [1.27.2](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.27.1...v1.27.2) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **capcut:** enable template API redirect ([3218b93](https://github.com/durgesh0505/chiggi_morphe_patches/commit/3218b933e9386ee7a335d78b0b6c0c1e4af0b4b9))",
   "apps": [
     {
       "app_name": "CrazyGames: Play 2500+ Games",
@@ -368,6 +368,212 @@
         }
       ],
       "developer": "com.kakarod"
+    },
+    {
+      "app_name": "CapCut - Video Editor",
+      "package": "com.lemon.lvoverseas",
+      "patches": [
+        {
+          "name": "Block All Login Screens",
+          "description": "Stops the central login action and reports cancellation to its callback. Server-session features become unavailable instead of opening login.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Block Telemetry & Trackers",
+          "description": "Neutralizes Google AppMeasurement, AppsFlyer, ByteDance AppLog, APM/Slardar, Gecko, Pitaya, BDTuring, and UserGrowth event dispatchers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Bypass Effects Region Restriction",
+          "description": "Fixes effects, transitions, and templates failing to load (ByteDance Shark WAF block) by spoofing device_platform to 'windows' and resetting deviceId in effect requests.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Bypass GeoBlock Region Restriction",
+          "description": "Forces CapCut GeoBlock config lists (cert, dock, entrance, page, scheme) to empty so region-blocked surfaces stay enabled. Server-refused content may still fail to load.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Bypass Signature Check",
+          "description": "Spoofs the official APK signature, suppresses local and server-driven cracking notices, prevents cracking-verdict persistence, and disables Godzilla and PGL integrity gates so re-signed builds are not blocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Bypass Unsafe Package Modal",
+          "description": "Replaces the unsafe-package modal fallback URL in the Lynx schema defaults with the real template portal URL so region-blocked or untrusted-client fallbacks open templates instead of the blocking security notice.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Change Package Name",
+          "description": "Changes CapCut's manifest package and package-bound authorities, permissions, actions, schemes, hosts, and instrumentation targets for side-by-side install. Login, deep links, and server identity may break.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Disable Forced Update",
+          "description": "Disables CapCut's server-driven update popup gate.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Do Not Persist Cracking Verdict",
+          "description": "Stops CapCut from persisting server cracking verdicts in the local crackingInfo preferences. Automatically included by Bypass Signature Check.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Hide VPN and Proxy Flags",
+          "description": "Reports VPN/proxy flags false without touching TTNet VPN routing or network IDs. Server IP reputation remains visible.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Locale Assets Slimmer",
+          "description": "Strips unselected CapCut asset locale bundles (assets/locales/*.json) from the APK. English is always preserved. For res/values-* string tables use the canonical universal Remove Extra Languages patch.",
+          "use": false,
+          "options": [
+            {
+              "key": "locales",
+              "description": "Comma-separated language codes to preserve (e.g. 'en, es, pt, fr, de'). Base fallback and English are always retained."
+            }
+          ],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Neutralize Play Billing",
+          "description": "Stubs Google Play Billing client calls and disables billing manifest components for graceful degradation on devices without GMS.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Redirect API to v2 Boot",
+          "description": "Redirects blocked editor, template-category/feed, commerce, and passport requests to official v2-boot endpoints so template tabs load without waiting for the default-host timeout.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Remove Ads",
+          "description": "Disables CapCut ad configuration and splash gates, then completes export and template reward-ad callbacks through the app's supported auto-skip result.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Remove Login Prompts",
+          "description": "Suppresses cold-start and export login prompts. Cloud, AI and social server features still require a real session.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Remove Watermark",
+          "description": "Forces CapCut watermark-removal gates and default ending gate to allow export without watermark or outro.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Spoof Region to USA",
+          "description": "Reports US app, carrier, SIM, network and locale regions. Use with a US VPN; the server still sees the source IP. Does not alter stateful store_region echoes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Ported from kveld9/kveld-extra-morphe-patches (GPLv3). Forces CapCut VIP gates to return true (SubscribeImpl, PayVipImpl, UserVipInfo, UserDetailInfo, VipUserServiceImpl, SubscribeCloudImpl) plus central account status flags (BusinessManager). Cloud-gated assets may still fail.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium Templates",
+          "description": "Unlocks CapCut 20.0.0 premium template gates and removes the logged-out template lock. Ported from kveld9/kveld-extra-morphe-patches (GPLv3), with corrected 20.0.0 R8 mappings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Unlock Ultra HD Export",
+          "description": "Forces CapCut Ultra HD / high-resolution export gates to unlocked so 4K export options stay available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        },
+        {
+          "name": "Unlock Ultra Plan",
+          "description": "Reports CapCut Ultra as the active locally purchased tier, sets a non-expiring local benefit end date, and disables renewal, cancellation, trial, and expiry-warning states. Server-side credits and cloud entitlements are not granted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.0.0"
+          ]
+        }
+      ],
+      "developer": "Bytedance Pte. Ltd."
     },
     {
       "app_name": "Does not Commute",
@@ -860,10 +1066,10 @@
     }
   ],
   "patches_name": "Chiggi Patches",
-  "fingerprint": "b30a4ec2c17a7ce3f27eacc45a526d6e7eaf425c92a49431e0cf2e8866db8ad7",
-  "release_notes": "## [1.25.0](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.24.0...v1.25.0) (2026-10-18)\n\n### ✨ New Features\n\n* **zombiecatcher:** add unlimited coins and plutonium ([5828697](https://github.com/durgesh0505/chiggi_morphe_patches/commit/58286973bdf786979bc9a6c37d8b5866a5181f58))\n",
-  "release_tag": "v1.25.0",
-  "release_date": "2026-10-18T13:48:32Z",
+  "fingerprint": "f4295ae6fcaf3e9c94ac634227734452b45af08c4c09ccc1b31d131959697981",
+  "release_notes": "## [1.27.2](https://github.com/durgesh0505/chiggi_morphe_patches/compare/v1.27.1...v1.27.2) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **capcut:** enable template API redirect ([3218b93](https://github.com/durgesh0505/chiggi_morphe_patches/commit/3218b933e9386ee7a335d78b0b6c0c1e4af0b4b9))\n",
+  "release_tag": "v1.27.2",
+  "release_date": "2026-11-09T02:00:35Z",
   "isPreRelease": false,
   "stars": 51,
   "avatarUrl": "https://avatars.githubusercontent.com/u/60478892?v=4",
