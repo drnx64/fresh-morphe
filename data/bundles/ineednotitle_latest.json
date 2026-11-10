@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "latest",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-07T17:52:48",
-  "version": "2.2.9",
-  "description": "v2.2.9 (pre-release, re-cut #3 - supersedes re-cut #2). Re-cut #2 shipped a patch-time crash in 'Bypass native integrity checks' on device (PatchException Collection is empty): the injected invoke-static had six source registers, exceeding the five-register limit of the regular opcode form; it now uses invoke-static/range, mirroring the original wrapper. Everything else from re-cut #2 unchanged - All open issues resolution (#22 AMOLED framework-only attributes + Google Photos fix, #21 Amazon native feed video autoplay patch, #5 Mereframe JVM try/catch bypass + Spoof install source superclass-chain walk). 137 patch entries / 174 appearances. No device verification yet. Latest full release remains v2.2.4; v2.2.8 unchanged.",
+  "created_at": "2026-11-10T13:13:09",
+  "version": "2.2.10",
+  "description": "v2.2.10 (pre-release re-cut #2; replaces the earlier v2.2.10 assets). Reddit: Show deleted posts and comments now restores comments rendered through a nested CommentTombstone by detecting bodyPreview/tombstone markdown and rewriting both the body and tombstone; the external-browser patch accepts rotated obfuscated helper classes on 2026.39-2026.42; plus Hide read posts, Hide crossposts, Hide live streams and Reddit-scoped Disable video autoplay. Mereframe: Unlock Pro features patches the authoritative entitlement accessor Qu.k. Verified by applying every Reddit patch to 2026.42.0, unit-testing deleted-comment detection/replacement, and applying the external-browser patch to 2026.39.0-2026.41.0; no on-device runtime verification yet. 142 patch entries / 179 appearances / 31 apps.",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -53,7 +53,7 @@
         },
         {
           "name": "Bypass native integrity checks",
-          "description": "libunnamed_raw.so JNI-throws 'app integrity check failed' on re-signed builds, killing camera session start (preview) - observed via diagnostic crash log. This patch catches the throw at the session-opening wrapper and substitutes a valid session result. Required together with 'Allow re-signed/sideloaded installs'.",
+          "description": "libunnamed_raw.so JNI-throws 'app integrity check failed' on re-signed builds, killing camera session start (preview) - observed via diagnostic crash log. This patch calls the session-opening wrapper inside a real JVM try/catch (extension) and substitutes a well-formed session result on failure. Required together with 'Allow re-signed/sideloaded installs'.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -71,7 +71,7 @@
         },
         {
           "name": "Unlock Pro features",
-          "description": "Includes every registered feature in the resolved feature set by dropping the ownership check at the entitlement resolver (nv.e). LOCAL client-side effect only. WARNING (kept off by default): on at least one device (realme/Android 16) enabling the single registered Pro feature crashes capture - the Pro pipeline path is gated by this flag and we cannot verify its safety side. Enable only if you specifically want the Pro toolset; the app works fully (RAW capture incl.) with just 'Allow re-signed installs'.",
+          "description": "Returns every registered feature from the entitlement accessor (Qu.k) so all Pro gates resolve unlocked. LOCAL client-side effect only. WARNING (kept off by default): on at least one device (realme/Android 16) enabling the single registered Pro feature crashes capture - the Pro pipeline path is gated by this flag and we cannot verify its safety side. Enable only if you specifically want the Pro toolset; the app works fully (RAW capture incl.) with just 'Allow re-signed installs'.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -101,6 +101,15 @@
       "app_name": "Amazon Shopping",
       "package": "com.amazon.mshop.android.shopping",
       "patches": [
+        {
+          "name": "Amazon: Stop feed video autoplay",
+          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100"
+          ]
+        },
         {
           "name": "Dark mode",
           "description": "Force dark mode for Amazon Shopping.",
@@ -210,15 +219,6 @@
           "compatible_versions": [
             "32.18.0.100"
           ]
-        },
-        {
-          "name": "Amazon: Stop feed video autoplay",
-          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "32.18.0.100"
-          ]
         }
       ],
       "developer": "com.amazon"
@@ -237,7 +237,7 @@
           ]
         }
       ],
-      "developer": "com.anthropic"
+      "developer": "Anthropic PBC"
     },
     {
       "app_name": "District: Movies Events Dining",
@@ -262,7 +262,7 @@
           ]
         }
       ],
-      "developer": "com.application"
+      "developer": "Zomato"
     },
     {
       "app_name": "Brave Private Web Browser, VPN",
@@ -1111,8 +1111,92 @@
           ]
         },
         {
+          "name": "Disable Reddit video autoplay",
+          "description": "Forces Reddit's video autoplay preference to 'Never' so videos only play after a tap. Scoped to Reddit; off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
           "name": "Employee Debug Flags",
           "description": "Spoofs is_employee locally at the Account JSON adapter, exposing Reddit's internal employee/debug UI menus (mostly non-functional without the employee backend, and a few may misbehave — enable for exploration only). Off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Hide crossposts",
+          "description": "Hides crossposts in feeds and listings, keeping ordinary posts and comments. Client-side only; off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Hide live streams",
+          "description": "Hides live streams and broadcasts in feeds and listings. Client-side only; off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Hide read posts",
+          "description": "Hides posts Reddit has marked as read/visited in feeds and listings. Client-side only; off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Open Reddit links in external browser",
+          "description": "Opens outbound Reddit links in the default external browser instead of Reddit's in-app Custom Tab. Falls back to the in-app tab if launching fails. Off by default.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.0",
+            "2026.41.0",
+            "2026.40.0",
+            "2026.39.0",
+            "2026.24.0",
+            "2026.10.0"
+          ]
+        },
+        {
+          "name": "Reddit: Diagnostic crash log",
+          "description": "DIAGNOSTIC ONLY - writes the full stack trace to Downloads/reddit-crash-*.txt when the app crashes, for remote diagnosis. Off by default; enable when asked to produce a crash log. Installs on the first account sync after launch; crashes before that are not captured. Chain-forwards to the original crash handler.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -1139,8 +1223,8 @@
           ]
         },
         {
-          "name": "Show deleted comments",
-          "description": "Shows the original text of comments deleted or removed on Reddit, restored at render time from the free Arctic Shift archive (no API key; falls back to PullPush). Only the ids of deleted comments in the threads you open are sent, and restored text is prefixed with [archived]. Coverage depends on the archive; needs network. Off by default.",
+          "name": "Show deleted posts and comments",
+          "description": "Shows the original text of posts and comments deleted or removed on Reddit, restored at render time from the free Arctic Shift archive (no API key; falls back to PullPush). Only the ids of deleted rows in the listings you open are sent, and restored text is prefixed with [archived]. Coverage depends on the archive; needs network. Off by default.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -1170,20 +1254,6 @@
           "name": "Unlock Premium",
           "description": "Flips the local isGold/has_gold_subscription account flags at the JSON adapter to enable Reddit Premium UI (custom icons, premium screens). Server-side perks cannot be unlocked.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.42.0",
-            "2026.41.0",
-            "2026.40.0",
-            "2026.39.0",
-            "2026.24.0",
-            "2026.10.0"
-          ]
-        },
-        {
-          "name": "Reddit: Diagnostic crash log",
-          "description": "DIAGNOSTIC ONLY - writes the full stack trace to Downloads/reddit-crash-*.txt when the app crashes, for remote diagnosis. Off by default; enable when asked to produce a crash log. Installs on the first account sync after launch; crashes before that are not captured. Chain-forwards to the original crash handler.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "2026.42.0",
@@ -1254,6 +1324,16 @@
       "app_name": "Amazon India",
       "package": "in.amazon.mshop.android.shopping",
       "patches": [
+        {
+          "name": "Amazon: Stop feed video autoplay",
+          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.300",
+            "32.19.0.300"
+          ]
+        },
         {
           "name": "Dark mode",
           "description": "Force dark mode for Amazon Shopping.",
@@ -1366,16 +1446,6 @@
           "name": "Remove ads",
           "description": "Hides sponsored and ad content in Amazon Shopping via CSS injection.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "32.18.0.300",
-            "32.19.0.300"
-          ]
-        },
-        {
-          "name": "Amazon: Stop feed video autoplay",
-          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "32.18.0.300",
@@ -1868,10 +1938,10 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "35bad5e8a90a8af47a3276b683db6f72c6d1d615cbe59abffdb70e6a593878d1",
-  "release_notes": "Proteus Patches v2.2.9 (pre-release, re-cut #3) - published 2026-11-07\n\nRe-cut #3 fixes the on-device patch-time crash reported for Mereframe 0.8.4\n(Manager 2.5.0 / Patcher 2.3.0, realme RMX5110, Android 16):\n\n- Bypass native integrity checks: injected invoke-static carried six source\n  registers, exceeding the five-register limit of the regular opcode form\n  (35c). The inline-smali compiler left the dummy method unbuildable, so\n  addInstructions threw PatchException \"Collection is empty\"\n  (Caused by: NoSuchElementException at InlineSmaliCompiler.compile).\n  The call now uses invoke-static/range {p0 .. p5} (same register sequence,\n  range form), exactly the pattern the original wrapper used. Crash class\n  eliminated. Repo-wide audit: no other injections carry more than five\n  source registers.\n\nEverything else from re-cut #2 is unchanged:\n\n- #22 Amazon India patching error: AMOLED resource pass now writes ONLY\n  android: framework attributes with a hard guard (Google Photos AMOLED\n  patch carried the identical defect and was fixed the same way).\n- #21 Amazon India video ads: NEW patch Amazon: Stop feed video autoplay\n  (default off) - flips literal setPlayWhenReady(true) to false in native\n  ExoPlayer/Media3 players. See docs/AMAZON.md.\n- #5 Mereframe 0.8.4: bypass now calls the session JNI inside a real JVM\n  try/catch in the extension (MereframeIntegrityHook) - the inline .catch\n  was silently dropped before. Spoof install source Layer 2 resolves the\n  Application family by walking the superclass chain (androidx parents such\n  as LifecycleProcess are no longer missed). Signature-hook presence is\n  enforced by the bundle verifier (two-tier: strict for nested dex\n  payloads, advisory otherwise).\n- Reddit save-flow stability: Remove ads Layer 3 constant return-void\n  entry kill; Layer 5 kept ON by decision; off-by-default Reddit:\n  Diagnostic crash log.\n- 137 patch entries / 174 appearances. Unit tests 15/15. CI-built. No\n  on-device verification yet. v2.2.8 unchanged. Latest full release remains\n  v2.2.4 (see note: Latest currently resolves to v2.2.7 because v2.2.7 is\n  flagged as a full release on GitHub).\n",
-  "release_tag": "v2.2.9",
-  "release_date": "2026-11-07T17:56:48Z",
+  "fingerprint": "b28c9026453a72e751c722ddb69c83b841ce84418b3632c660e1ecb086f3758c",
+  "release_notes": "Proteus Patches v2.2.10 (pre-release re-cut #2)\n\n## Re-cut fixes\n- **Show deleted posts and comments** now restores comments that Reddit renders from a nested `CommentTombstone`. Current builds may leave `Comment.body` empty and keep `[deleted]`/`[removed]` only in the tombstone, so the previous body-only replacement was invisible. The helper now detects `body`, `bodyPreview`, and tombstone `markdown`/`richtext`, restores the visible text, and clears the richtext placeholder. Added unit coverage for detection and replacement.\n- **Open Reddit links in external browser** now accepts the rotated obfuscated helper parameter classes used across Reddit 2026.39-2026.42, so patching no longer fails on 2026.41.0.\n- Verified by applying all 14 Reddit patches to 2026.42.0 and the external-browser patch to 2026.39.0, 2026.40.0 and 2026.41.0 with Morphe Desktop. No on-device runtime verification yet.\n\n## Reddit 2026.42.0\n- New: **Hide read posts**, **Hide crossposts**, **Hide live streams** listing filters (off by default)\n- New: **Disable Reddit video autoplay**\n- New: **Open Reddit links in external browser**\n- New: **Show deleted posts and comments** — restores deleted content via Arctic Shift/PullPush (off by default)\n\n## Mereframe 0.8.4 (vc 118)\n- **Unlock Pro features** rewritten to patch `Qu.k`, the authoritative registered-feature accessor, so every Pro gate resolves unlocked (off by default)\n\n## Verification\nBundle builds and passes the Android bundle/patch-source verifiers. The rebuilt DEX was checked with `dexdump`, and the deleted-comment helper detection/replacement paths have unit coverage.\n\n> This is a pre-release re-cut of v2.2.10. Clients that already downloaded the earlier v2.2.10 asset will re-download because the source timestamp changed.\n",
+  "release_tag": "v2.2.10",
+  "release_date": "2026-11-10T12:12:56Z",
   "isPreRelease": true,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",

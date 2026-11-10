@@ -192,10 +192,89 @@
         }
       ],
       "developer": "com.anghami"
+    },
+    {
+      "app_name": "Ana Vodafone",
+      "package": "com.emeint.android.myservices",
+      "patches": [
+        {
+          "name": "Skip the store licence check",
+          "description": "Stops the bundled licence client from validating the installation before the application starts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Disable the forced update requirement",
+          "description": "Stops the client from blocking the app, or opening the store, when the server marks this build as outdated.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Disable usage tracking",
+          "description": "Stops the app reporting its usage, social-media, survey and experiment events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Ignore the server's remote wipe and forced logout",
+          "description": "Stops a silent push from clearing the app's data or logging the account out.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Hide the promotional card",
+          "description": "Stops the home, recharge and payment screens from drawing the promotional gift card.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Remove the saved account limit",
+          "description": "Lets the app keep more than five accounts and switch between all of them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Disable certificate pinning",
+          "description": "Stops the app refusing servers whose certificate is not one of its two pinned keys.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        },
+        {
+          "name": "Keep the password of each account",
+          "description": "Stops the app forgetting the password of an account, so it stops asking for it every time.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
+        }
+      ],
+      "developer": "Vodafone Egypt͏"
     }
   ],
   "patches_name": "Kero309x Patches",
-  "fingerprint": "479216bacd3061812c5c9abba87fa9b216063929b0b9bc4704e1984d94e8eb90",
+  "fingerprint": "d7d03fbb99bd1c11b7a997f959e3d3e0061aa03a604b3b49546e7fcd08ff1ae0",
   "release_notes": "## Kero309x Patches 0.1.2 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. Anghami 8.0.28 is the first registered target on the Morphe framework.\n\n- First release built by `buildAndroid`, so the bundle carries `classes.dex` and can be loaded by Morphe Manager. Releases `0.1.0` and `0.1.1` were built without DEX and only serve Morphe Desktop.\n- First signed release. The `.mpp` carries an Ed25519 signature in its `MorpheSig1` trailer, and `patches-bundle.json` publishes the matching `public_key`, so a bundle altered after publication can be rejected.\n- No behaviour change to any of the twenty patches.\n\n### Verification\n\n- 20 patches, all default-enabled.\n- 20/20 PASS against the stock 8.0.28 build (fingerprint, apply and recompile).\n- Published artefact re-checked after the release: 112 entries, `classes.dex` of 99,480 bytes, a signature whose public key equals the committed `morphe-signing.pub`, and a SHA-256 matching the value below.\n- No device or emulator is available yet, so there is no runtime behavioural verification.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.2.mpp` directly.\n\n### Integrity\n\nSHA-256: `47B177D75EF06CA5E34497B8005DB0415B57A10C9A5C41B7F049C127BE6FEDFD`\n\nLicence: GPL-3.0-only.\n",
   "release_tag": "v0.1.2",
   "release_date": "2026-11-09T12:41:57Z",

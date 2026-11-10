@@ -2,9 +2,9 @@
   "bundle": "6zev",
   "channel": "stable",
   "repo_url": "https://github.com/6zev/morphe-patches",
-  "created_at": "2026-11-08T02:37:08",
-  "version": "1.6.8",
-  "description": "## [1.6.8](https://github.com/6zev/morphe-patches/compare/v1.6.7...v1.6.8) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* replace Looper.prepare() with invoke-static myLooper to satisfy verifier type requirements ([3d6c794](https://github.com/6zev/morphe-patches/commit/3d6c7946dade822065ff26dcbf89b2160bc9a97a))",
+  "created_at": "2026-11-10T08:57:42",
+  "version": "1.6.9",
+  "description": "## [1.6.9](https://github.com/6zev/morphe-patches/compare/v1.6.8...v1.6.9) (2026-11-10)\n\n### 🐛 Bug Fixes\n\n* keep ADB input working without the speed-up server ([0f08d21](https://github.com/6zev/morphe-patches/commit/0f08d21746f02a18d183b3a7de9aac1455ecad2b))",
   "apps": [
     {
       "app_name": "tvQuickActions Pro",
@@ -21,8 +21,8 @@
           ]
         },
         {
-          "name": "Initialize ADB server Looper",
-          "description": "Neutralizes the redundant Looper.prepare() call from the ADB server main entry point.",
+          "name": "Input without the ADB server",
+          "description": "Keeps key, pointer and gamepad input working when the \"ADB speed up\" server is not running. The app only asks whether speed-up is enabled, not whether the server it starts as the shell user on localhost:15000 is up, and it drops the request without falling back when the port is closed - so numpad keys and mouse input do nothing. Each of those requests is now gated on the app's own port probe, and the injection site's ordinary path runs while no server is listening.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -63,10 +63,10 @@
     }
   ],
   "patches_name": "tvQuickActions Patches",
-  "fingerprint": "dcdbecc31140f134f1040a98edbe965972594fd0c7c8f41ea57770dd9ef0614b",
-  "release_notes": "## [1.6.8](https://github.com/6zev/morphe-patches/compare/v1.6.7...v1.6.8) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* replace Looper.prepare() with invoke-static myLooper to satisfy verifier type requirements ([3d6c794](https://github.com/6zev/morphe-patches/commit/3d6c7946dade822065ff26dcbf89b2160bc9a97a))\n",
-  "release_tag": "v1.6.8",
-  "release_date": "2026-11-08T02:37:55Z",
+  "fingerprint": "5be88cb59b0a7fd46aed235864b614e242d0683c539fd37f19a7909018fb6795",
+  "release_notes": "## [1.6.9](https://github.com/6zev/morphe-patches/compare/v1.6.8...v1.6.9) (2026-11-10)\n\n### 🐛 Bug Fixes\n\n* keep ADB input working without the speed-up server ([0f08d21](https://github.com/6zev/morphe-patches/commit/0f08d21746f02a18d183b3a7de9aac1455ecad2b))\n",
+  "release_tag": "v1.6.9",
+  "release_date": "2026-11-10T08:58:17Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/264537056?v=4&s=128",
