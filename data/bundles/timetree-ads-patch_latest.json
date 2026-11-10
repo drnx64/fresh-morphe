@@ -1,0 +1,44 @@
+{
+  "bundle": "timetree-ads-patch",
+  "channel": "latest",
+  "repo_url": "https://github.com/Rico957/timetree-ads-patch",
+  "created_at": "2026-11-09T14:42:47",
+  "version": "1.0.5",
+  "description": "TimeTree ad remover 1.0.5",
+  "apps": [
+    {
+      "app_name": "TimeTree - Shared Calendar",
+      "package": "works.jubilee.timetree",
+      "patches": [
+        {
+          "name": "Disable ad slot flags",
+          "description": "Forces every boolean in the server-driven AdsConfigModel to false, so no ad slot is created at all. Reads the fields at patch time, so it is not tied to obfuscated field names.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Remove in-app ads",
+          "description": "Emits AdsAdModel.Empty for every ad placement, so calendar banners, in-feed ad cards and premium-upsell ad slots are never rendered. Anchored on unobfuscated domain types and reuses the app's own method ids.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Remove splash/open ads",
+          "description": "Forces the splash ad screen to take its built-in \"no ad to show\" path, so no full screen ad covers the app on cold start.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "TimeTree, Inc."
+    }
+  ],
+  "patches_name": "TimeTree Ad Remover",
+  "fingerprint": "d1139ef296fa6cdce2f5733df6cb7712e02c9e59cb8e33e00fe20c4530c29e96",
+  "release_notes": "**Full Changelog**: https://github.com/Rico957/timetree-ads-patch/compare/v1.0.4...v1.0.5",
+  "release_tag": "v1.0.5",
+  "release_date": "2026-11-09T14:42:51Z",
+  "isPreRelease": false
+}

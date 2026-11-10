@@ -1,0 +1,46 @@
+{
+  "bundle": "jo",
+  "channel": "latest",
+  "repo_url": "https://gitlab.com/JoPatches/jo-patches",
+  "created_at": "2026-11-09T12:34:58.577Z",
+  "version": "1.4.1",
+  "description": "Second public release - the first one could not be loaded by Morphe (no DEX in the bundle).\n\n## Fixed\n- The bundle now contains classes.dex, so Morphe shows the patches again instead of 0 possible patches.\n\n## Changed\n- The source is now called Jo's Patches and is meant for more apps; Memorize Pi Digits is the first entry.\n- Custom source icon.\n\n## Patches\n- **Remove home screen ads** - blocks the AdMob banner on the home screen.\n- **Bypass PairIP license check** - needed for a sideloaded install.\n- **Remove cross-promotion (Prime Button and game icons)** - removes the Prime Button and the six side-panel game icons from the Unity menu.\n\n**Target:** com.unknownprojectx.pi 11.01 (versionCode 11010), XAPK, arm64-v8a\n\n## Install as a Morphe source\nhttps://morphe.software/add-source?gitlab=JoPatches/jo-patches",
+  "apps": [
+    {
+      "app_name": "Memorize Pi Digits - 3.14π",
+      "package": "com.unknownprojectx.pi",
+      "patches": [
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Disables the Play PairIP license check that forces a re-signed build to the Play Store on launch. Required for a sideloaded (non-root) install of the patched APK.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.01"
+          ]
+        },
+        {
+          "name": "Remove cross-promotion (Prime Button and game icons)",
+          "description": "Removes the \"Prime Button\" and the six side-panel game icons from the Unity menu scenes (data.unity3d). The objects are deactivated and scaled to zero, so the menu scripts cannot bring them back at runtime. AdMob banner, interstitial and rewarded ads are not touched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.01"
+          ]
+        },
+        {
+          "name": "Remove home screen ads",
+          "description": "Removes the AdMob banner ads shown on the home screen pages. All Java entry points (DeviceManager, AdManager, AdmobAdapter) are blocked, so no banner view is created or shown. The area simply shows the black Unity background afterwards.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "11.01"
+          ]
+        }
+      ],
+      "developer": "UnknownProjectX"
+    }
+  ],
+  "patches_name": "JoPatches",
+  "fingerprint": "b9f360739c8947f32b84ceacea95441ceafbc017313040e7a96503f52d78ad07"
+}

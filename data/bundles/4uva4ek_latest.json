@@ -1,0 +1,121 @@
+{
+  "bundle": "4uva4ek",
+  "channel": "latest",
+  "repo_url": "https://github.com/4uva4ek/galaxyxr-steamlink-patches",
+  "created_at": "2026-11-06T18:12:01",
+  "version": "1.1.0",
+  "description": "Eight existing 4uva4ek patches: controllers, Galaxy XR vendor driver and OpenXR BOOST. Exact beta 2.0.24/5002527 plus retained earlier builds. Host patching validated; beta gameplay not yet validated.",
+  "apps": [
+    {
+      "app_name": "Steam Link",
+      "package": "com.valvesoftware.steamlinkvr",
+      "patches": [
+        {
+          "name": "Controller grip haptics through Shizuku",
+          "description": "Sends controller vibration to the grip motor instead of the trigger. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527. This needs Shizuku running with permission granted; without it vibration stays stock. Details: https://github.com/4uva4ek.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller pose extrapolation",
+          "description": "Predicts controller poses to the moment the app asks and smooths out jitter. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527. Details: https://github.com/4uva4ek.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller pose time (experimental)",
+          "description": "Dates each controller pose by its sample time; the runtime labels poses 28.82 ms late. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527. Needs: not with Controller pose extrapolation or the HAL pose patch. Details: https://github.com/4uva4ek.",
+          "use": false,
+          "options": [
+            {
+              "key": "compensationMs",
+              "description": "How far before the runtime's label each controller pose is dated. Lower values shorten SteamVR's prediction: steadier, but the hands trail slightly. Higher values lengthen it: more responsive, but fast moves can overshoot and jerk. 0 ms sends the runtime's label unchanged; 29 ms is closest to the true sample time. Default: 5 ms. Allowed range: 0 to 30 ms. Change it with adb shell setprop debug.gxr.pose_time.lead_us <microseconds> without repatching."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Controller throw angle (experimental)",
+          "description": "Adjusts thrown-object direction with an additional controller-local angle. Builds: 2.0.23/5002363, 2.0.24 (5002395, 5002527). Needs: Controller velocity frame; not with the HAL pose patch. Details: https://github.com/4uva4ek.",
+          "use": false,
+          "options": [
+            {
+              "key": "throwAngleDegrees",
+              "description": "Extra rotation of linear velocity around the controller's local X axis. Default: 13 degrees. Range: 0 to 50. Zero keeps the existing correction. Applies throughout motion, not only on release; leaves angular velocity and timing unchanged."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Controller tracking from the controller HAL through Shizuku",
+          "description": "Reads controller poses from the headset HAL, removing about 35 ms of lag. This needs Shizuku; without it tracking stays stock. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527. Angular velocity is local to the grip pose on 2.0.23/5002363 and in the base space on older builds. Details: https://github.com/4uva4ek.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.23"
+          ]
+        },
+        {
+          "name": "Controller velocity frame",
+          "description": "Fixes thrown-object directions by rotating controller speeds into the frame SteamVR expects. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527. Angular velocity is local to the streamed pose on 2.0.23/5002363 and in the base space on older builds; measured on 2.0.23/5002363. Details: https://github.com/4uva4ek.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "Galaxy XR SteamVR driver (galaxyxr)",
+          "description": "Sets Galaxy XR names in SteamVR; needs the PC-side Galaxy XR VRLink Setup. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527.",
+          "use": false,
+          "options": [
+            {
+              "key": "offsetPositionCm",
+              "description": "Offsets the controller position from your grip point, in cm: x right, y up, z backward (negative = forward). Default is calibrated on Galaxy XR. Stock Quest Touch value is -0.7,-3.416,-9.607."
+            },
+            {
+              "key": "offsetRotationDeg",
+              "description": "Rotates the controller model around your grip point, in degrees: x pitch, y yaw, z roll. Stock Quest Touch value is -20.6,0,0."
+            }
+          ],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        },
+        {
+          "name": "OpenXR CPU and GPU BOOST (experimental)",
+          "description": "Asks OpenXR for the CPU and GPU BOOST hint at session start; unsupported devices continue without it. Builds: 5001712, 5001812, 5001968, 5002244, 5002363, 5002395, 5002527.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.0.20"
+          ]
+        }
+      ],
+      "developer": "com.valvesoftware"
+    }
+  ],
+  "patches_name": "Galaxy XR Steam Link Patches",
+  "fingerprint": "3a166eb4cf836cc9048246274841841c6ab3f86f1b52b0bae3a19e2b11905267",
+  "release_notes": "Restores two omitted 4uva4ek patches, bringing the independent source to eight public features.\n\n- **Galaxy XR SteamVR driver (galaxyxr)**: original HMD/controller identities, vendor resource paths and configurable grip offsets. Requires the PC-side Galaxy XR VRLink Setup. Default off.\n- **OpenXR CPU and GPU BOOST (experimental)**: original OpenXR performance-hint layer. Default off.\n- Both support exact beta **2.0.24/5002527** and retain 5001712, 5001812, 5001968, 5002244, 5002363 and 5002395.\n- The original six controller patches retain their defaults and options.\n- The driver patch directly edits config assets, without pulling in upstream Device identity or launch patches. Unknown packages/builds remain inert. Both assets are validated before either is written.\n- Source timestamp formatting retains the Unnamed fix.\n\nHost patching is verified separately from gameplay. No fresh beta gameplay, driver connection or BOOST performance measurement is claimed. Update the existing source in Morphe; no new repository is needed.\n",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-11-06T18:12:28Z",
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/12079064?v=4&s=128",
+  "repoDescription": "4uva4ek controller patches for Steam Link VR on Galaxy XR. Independent source compatible with Morphe.",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
+}
