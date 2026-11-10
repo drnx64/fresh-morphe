@@ -2,9 +2,9 @@
   "bundle": "ajstrick81-androidtv",
   "channel": "latest",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-11-08T00:50:51",
-  "version": "1.51.0",
-  "description": "# [1.51.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.50.3...v1.51.0) (2026-11-08)\n\n\n### Features\n\n* **primevideo:** build the ad-strip hook for arm64-v8a as well as armeabi-v7a ([fd7603b](https://github.com/ajstrick81/morphe-androidtv-patches/commit/fd7603be1e6653546fa1c56451c063778d91206b)), closes [#error](https://github.com/ajstrick81/morphe-androidtv-patches/issues/error) [260/#282](https://github.com/ajstrick81/morphe-androidtv-patches/issues/282)\n* **primevideo:** ship the v16 chapteringAdBreak inline patch (rescued from a stash) ([d4d6196](https://github.com/ajstrick81/morphe-androidtv-patches/commit/d4d6196fbccade07dc9a7e171c1d9512fe8de7a9)), closes [#310](https://github.com/ajstrick81/morphe-androidtv-patches/issues/310)\n* **primevideo:** support 6.24.7 / 6.24.13 (v16) as experimental targets ([2212d68](https://github.com/ajstrick81/morphe-androidtv-patches/commit/2212d68868ed8c1bbc93f2e5e73387909b7287f4))",
+  "created_at": "2026-11-10T17:15:00",
+  "version": "1.52.0",
+  "description": "# [1.52.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.51.0...v1.52.0) (2026-11-10)\n\n\n### Features\n\n* **vix:** support 4.52.0_tv and remove server-stitched pre-roll ads ([6826310](https://github.com/ajstrick81/morphe-androidtv-patches/commit/6826310fbc924c9597b363b686df4e361d8f97c0)), closes [#315](https://github.com/ajstrick81/morphe-androidtv-patches/issues/315) [#315](https://github.com/ajstrick81/morphe-androidtv-patches/issues/315)",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -388,6 +388,19 @@
       "package": "com.univision.prendetv",
       "patches": [
         {
+          "name": "Log player URLs (debug)",
+          "description": "Research aid, off by default: writes every URL the media player and the LuraPlayer SDK open to the device's local logcat (tag VIXURL). Nothing is sent anywhere.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.46.0_tv",
+            "4.47.2_tv",
+            "4.50.1_tv",
+            "4.51.0_tv",
+            "4.52.0_tv"
+          ]
+        },
+        {
           "name": "Override certificate pinning",
           "description": "Allows HTTPS traffic inspection tools like AdGuard Premium to intercept app connections. Enables ViX live (Lura SSAI) ad suppression when used alongside AdGuard Premium. Security trade-off: the app will also trust ANY user-installed CA; turn it off if you don't use an HTTPS-filtering proxy.",
           "use": true,
@@ -396,19 +409,21 @@
             "4.46.0_tv",
             "4.47.2_tv",
             "4.50.1_tv",
-            "4.51.0_tv"
+            "4.51.0_tv",
+            "4.52.0_tv"
           ]
         },
         {
           "name": "Skip ads",
-          "description": "Suppresses ViX ad delivery by emptying the LuraPlayer ad-break schedule — both the client-side VMAP breaks (third-party ads) and the first-party house / cross-promo breaks — so no ad-periods are inserted into the timeline, and by preventing the Innovid SSAI ad overlay from mounting.",
+          "description": "Suppresses ViX ad delivery by emptying the LuraPlayer ad-break schedule — both the client-side VMAP breaks (third-party ads) and the first-party house / cross-promo breaks — so no ad-periods are inserted into the timeline, by removing the ad periods the server stitches into on-demand stream manifests, and by preventing the Innovid SSAI ad overlay from mounting.",
           "use": true,
           "options": [],
           "compatible_versions": [
             "4.46.0_tv",
             "4.47.2_tv",
             "4.50.1_tv",
-            "4.51.0_tv"
+            "4.51.0_tv",
+            "4.52.0_tv"
           ]
         }
       ],
@@ -622,10 +637,10 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "d54cc57dea9639e71f0ed308418eeca4828f1bb5876a4a92f4748151e1cf2f18",
-  "release_notes": "# [1.50.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.49.0...v1.50.0) (2026-11-07)\n\n\n### Bug Fixes\n\n* **disney:** drop Disney+ targets cut off by server-side version enforcement ([195a904](https://github.com/ajstrick81/morphe-androidtv-patches/commit/195a904eb0711c1283ce428878ed252106a42131)), closes [#302](https://github.com/ajstrick81/morphe-androidtv-patches/issues/302)\n* **disney:** scope Suppress Household Prompt to the build it is pinned to ([#289](https://github.com/ajstrick81/morphe-androidtv-patches/issues/289)) ([17dad4c](https://github.com/ajstrick81/morphe-androidtv-patches/commit/17dad4c77b095946441ed1596bd003020d3bcfe0))\n\n\n### Features\n\n* **disney:** add experimental Disney+ 26.20.0+rc3-2026.11.02 target ([753fa9d](https://github.com/ajstrick81/morphe-androidtv-patches/commit/753fa9dfce86d0d8c04cc2d335dea102b93d690a)), closes [#167](https://github.com/ajstrick81/morphe-androidtv-patches/issues/167)\n* **disney:** support Disney+ 26.20.0+rc3-2026.11.02 ([770bb00](https://github.com/ajstrick81/morphe-androidtv-patches/commit/770bb00847048291d7eaca5b3a35e8b28310bd7f)), closes [#167](https://github.com/ajstrick81/morphe-androidtv-patches/issues/167)\n\n\n\n",
-  "release_tag": "v1.50.0",
-  "release_date": "2026-11-07T14:55:19Z",
+  "fingerprint": "1e62b1bb47f7fa33f06fd2768ee083f4ce62abf8ec60d1a82edf09a15ebac1ae",
+  "release_notes": "# [1.52.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.51.0...v1.52.0) (2026-11-10)\n\n\n### Features\n\n* **vix:** support 4.52.0_tv and remove server-stitched pre-roll ads ([6826310](https://github.com/ajstrick81/morphe-androidtv-patches/commit/6826310fbc924c9597b363b686df4e361d8f97c0)), closes [#315](https://github.com/ajstrick81/morphe-androidtv-patches/issues/315) [#315](https://github.com/ajstrick81/morphe-androidtv-patches/issues/315)\n\n\n\n",
+  "release_tag": "v1.52.0",
+  "release_date": "2026-11-10T17:15:14Z",
   "isPreRelease": false,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",

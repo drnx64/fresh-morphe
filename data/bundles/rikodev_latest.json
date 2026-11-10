@@ -2,10 +2,166 @@
   "bundle": "rikodev",
   "channel": "latest",
   "repo_url": "https://github.com/RikoDEV/morphed-pl",
-  "created_at": "2026-11-08T15:09:42",
-  "version": "1.6.1",
-  "description": "## [1.6.1](https://github.com/RikoDEV/morphed-pl/compare/v1.6.0...v1.6.1) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* reported eduVulcan bugs ([129c422](https://github.com/RikoDEV/morphed-pl/commit/129c422e96c0fbfd7b89c02704314dec911da47c))",
+  "created_at": "2026-11-10T20:35:17",
+  "version": "1.7.0",
+  "description": "## [1.7.0](https://github.com/RikoDEV/morphed-pl/compare/v1.6.1...v1.7.0) (2026-11-10)\n\n### ✨ New Features\n\n* add Lidl Plus patches ([44bf376](https://github.com/RikoDEV/morphed-pl/commit/44bf376e14bf62d7f3a295ab63a6b11fe3dd9f67))",
   "apps": [
+    {
+      "app_name": "Lidl Plus",
+      "package": "com.lidl.eci.lidlplus",
+      "patches": [
+        {
+          "name": "Auto claim coupons",
+          "description": "Activates every coupon that needs no article choice as soon as the coupon list loads. Each activation is the app's own \"Activate\" action, and refusals stay silent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Block telemetry",
+          "description": "Blocks Firebase Analytics, Crashlytics and Performance, AppsFlyer, Adjust, Marketing Cloud analytics, the app's own event tracker (including the one used by the React Native screens) and the digital leaflet activity reports.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Custom Google Maps key",
+          "description": "Replaces the app's Google Maps API key. The original key is locked to the developer's signing certificate, so maps stay grey in a re-signed app. Use a key you own that allows the app's package name and the SHA-1 of the key the patched app is signed with.",
+          "use": false,
+          "options": [
+            {
+              "key": "mapApiKey",
+              "description": "A Maps SDK for Android key, starting with AIza."
+            }
+          ],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Dark mode",
+          "description": "Makes Lidl Plus follow the system dark theme. Android's Force Dark darkens the window, native and React Native screens, and the Compose screens are recoloured through their paints. The loyalty card and code screens stay light so their QR codes keep scanning, and the launch screen turns dark.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide home shortcuts",
+          "description": "Removes the round shortcut bubbles at the top of the home screen (WorldOfNeeds), the product catalog categories (productCatalog) and the small blue business model chips under the store header (businessModels).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide info cards",
+          "description": "Removes the dismissible info cards (tipcards) from the home screen, such as the verify data, notifications and location prompts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide leaflets",
+          "description": "Removes the leaflet (brochures and digital leaflet) carousels from the home screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide offers and promotions",
+          "description": "Removes the offers and promotions carousels from the home screen. The Coupons tab is unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide online shop cards",
+          "description": "Removes every online shop card from the home screen: the shop teaser, search, campaign and Deal of the Day variants (onlineshop1cx*).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide online shop tab",
+          "description": "Removes the link to the online shop from the bottom navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide product carousels",
+          "description": "Removes the featured products, recommended products and product catalog starting page modules from the home screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide product of the day",
+          "description": "Removes the online shop Deal of the Day card from the home screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide promo banners and messages",
+          "description": "Removes Lidl's promo banners, video banners and the home message from the home screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide recipes and inspirations",
+          "description": "Removes the recipes carousel and the product showcase (inspiration) carousels from the home screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide sponsored ads",
+          "description": "Removes the sponsored brand deal slots (brandDeals_slot_a and brandDeals_slot_b) from the home screen. Their ad requests and view tracking are never made.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        },
+        {
+          "name": "Hide store header",
+          "description": "Removes the usual store header (store name, opening hours and store picker) from the home screen.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "17.13.6"
+          ]
+        }
+      ],
+      "developer": "Lidl"
+    },
     {
       "app_name": "eduVULCAN",
       "package": "pl.edu.vulcan.hebe.ce",
@@ -40,6 +196,20 @@
           "description": "Blocks app analytics, Firebase Analytics, Crashlytics and Performance, Microsoft Clarity session recording, Adjust, Facebook app events and Synerise event tracking.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "4.23.1"
+          ]
+        },
+        {
+          "name": "Custom Google Maps key",
+          "description": "Replaces the app's Google Maps API key. The original key is locked to the developer's signing certificate, so maps stay grey in a re-signed app. Use a key you own that allows the app's package name and the SHA-1 of the key the patched app is signed with.",
+          "use": false,
+          "options": [
+            {
+              "key": "mapApiKey",
+              "description": "A Maps SDK for Android key, starting with AIza."
+            }
+          ],
           "compatible_versions": [
             "4.23.1"
           ]
@@ -189,6 +359,20 @@
           ]
         },
         {
+          "name": "Custom Google Maps key",
+          "description": "Replaces the app's Google Maps API key. The original key is locked to the developer's signing certificate, so maps stay grey in a re-signed app. Use a key you own that allows the app's package name and the SHA-1 of the key the patched app is signed with.",
+          "use": false,
+          "options": [
+            {
+              "key": "mapApiKey",
+              "description": "A Maps SDK for Android key, starting with AIza."
+            }
+          ],
+          "compatible_versions": [
+            "4.50.0"
+          ]
+        },
+        {
           "name": "Spoof signing certificate",
           "description": "Reports Żabka's original signing certificate to Firebase, so login works after the app is re-signed by patching.",
           "use": true,
@@ -202,10 +386,10 @@
     }
   ],
   "patches_name": "Morphed PL",
-  "fingerprint": "adafa41581acb554125ab2dffd14016491a8658a9a1101f5ec1e4f6fda1969ff",
-  "release_notes": "## [1.6.1](https://github.com/RikoDEV/morphed-pl/compare/v1.6.0...v1.6.1) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* reported eduVulcan bugs ([129c422](https://github.com/RikoDEV/morphed-pl/commit/129c422e96c0fbfd7b89c02704314dec911da47c))\n",
-  "release_tag": "v1.6.1",
-  "release_date": "2026-11-08T15:10:07Z",
+  "fingerprint": "fc0cfe03c7578816732603ee1411157177efe3574d7d72a54e8fbebb85b8e604",
+  "release_notes": "## [1.7.0](https://github.com/RikoDEV/morphed-pl/compare/v1.6.1...v1.7.0) (2026-11-10)\r\n\r\n### ✨ New Features\r\n\r\n* add Lidl Plus patches ([44bf376](https://github.com/RikoDEV/morphed-pl/commit/44bf376e14bf62d7f3a295ab63a6b11fe3dd9f67))\r\n\r\n| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |\r\n|----------|----------------|-----------|\r\n| [Auto claim coupons](#auto-claim-coupons) | Activates every coupon that needs no article choice as soon as the coupon list loads. Each activation is the app's own \"Activate\" action, and refusals stay silent. |  |\r\n| [Block telemetry](#block-telemetry) | Blocks Firebase Analytics, Crashlytics and Performance, AppsFlyer, Adjust, Marketing Cloud analytics, the app's own event tracker (including the one used by the React Native screens) and the digital leaflet activity reports. |  |\r\n| [Custom Google Maps key](#custom-google-maps-key) | Replaces the app's Google Maps API key. The original key is locked to the developer's signing certificate, so maps stay grey in a re-signed app. Use a key you own that allows the app's package name and the SHA-1 of the key the patched app is signed with. | • Google Maps API key |\r\n| [Dark mode](#dark-mode) | Makes Lidl Plus follow the system dark theme. Android's Force Dark darkens the window, native and React Native screens, and the Compose screens are recoloured through their paints. The loyalty card and code screens stay light so their QR codes keep scanning, and the launch screen turns dark. |  |\r\n| [Hide home shortcuts](#hide-home-shortcuts) | Removes the round shortcut bubbles at the top of the home screen (WorldOfNeeds), the product catalog categories (productCatalog) and the small blue business model chips under the store header (businessModels). |  |\r\n| [Hide info cards](#hide-info-cards) | Removes the dismissible info cards (tipcards) from the home screen, such as the verify data, notifications and location prompts. |  |\r\n| [Hide leaflets](#hide-leaflets) | Removes the leaflet (brochures and digital leaflet) carousels from the home screen. |  |\r\n| [Hide offers and promotions](#hide-offers-and-promotions) | Removes the offers and promotions carousels from the home screen. The Coupons tab is unchanged. |  |\r\n| [Hide online shop cards](#hide-online-shop-cards) | Removes every online shop card from the home screen: the shop teaser, search, campaign and Deal of the Day variants (onlineshop1cx*). |  |\r\n| [Hide online shop tab](#hide-online-shop-tab) | Removes the link to the online shop from the bottom navigation bar. |  |\r\n| [Hide product carousels](#hide-product-carousels) | Removes the featured products, recommended products and product catalog starting page modules from the home screen. |  |\r\n| [Hide product of the day](#hide-product-of-the-day) | Removes the online shop Deal of the Day card from the home screen. |  |\r\n| [Hide promo banners and messages](#hide-promo-banners-and-messages) | Removes Lidl's promo banners, video banners and the home message from the home screen. |  |\r\n| [Hide recipes and inspirations](#hide-recipes-and-inspirations) | Removes the recipes carousel and the product showcase (inspiration) carousels from the home screen. |  |\r\n| [Hide sponsored ads](#hide-sponsored-ads) | Removes the sponsored brand deal slots (brandDeals_slot_a and brandDeals_slot_b) from the home screen. Their ad requests and view tracking are never made. |  |\r\n| [Hide store header](#hide-store-header) | Removes the usual store header (store name, opening hours and store picker) from the home screen. |  |\r\n\r\n### ⚠️ Things to know\r\n* For auto claiming coupons you need to open coupons tab first. Toast will show start and summary.\r\n* Map not working like in other patched apps, added universal Google Maps API key patch if you need it.",
+  "release_tag": "v1.7.0",
+  "release_date": "2026-11-10T20:35:44Z",
   "isPreRelease": false,
   "stars": 7,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18230443?v=4",

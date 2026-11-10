@@ -2,8 +2,8 @@
   "bundle": "gemini-microg",
   "channel": "stable",
   "repo_url": "https://github.com/ryuya0124/gemini-microg-patches",
-  "created_at": "2026-11-03T02:01:27",
-  "version": "0.2.0",
+  "created_at": "2026-11-10T12:32:34",
+  "version": "0.3.0",
   "description": "Gemini login and Samsung Secure Folder support with microG",
   "apps": [
     {
@@ -19,7 +19,7 @@
         },
         {
           "name": "Gemini Standalone Support",
-          "description": "Gemini アプリの AndroidManifest.xml から Split APK 制約（requiredSplitTypes等）を除去し単体インストール可能にします。",
+          "description": "Geminiのsplit APK制約を除去します。Gemini本体機能には別途クローン版Googleアプリが必要です。",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -120,10 +120,10 @@
     }
   ],
   "patches_name": "ryuya0124",
-  "fingerprint": "b9ea2081c041a7cfdb54cb910c73cbb5c70d6658e8f835189c0f67edd2c2cbcb",
-  "release_notes": "# v0.2.0\n\nGoogle 17.70.11.ve.arm64とGemini 1.0.995038376に対応。microG利用時にGoogleアプリ内の「Play Protect認定を受けていません」画面へ転送される経路を修正しました。端末自体の認定状態は変更しません。\n\n- バージョン別フック定義・APKハッシュ・探索記録を追加。\n- 新版のMainActivityレジスタ構成とプロセス名の戻り箇所変更に対応。\n- 旧版Google 17.54.18にも認定画面転送の修正を定義（旧版の元APKによる再ビルドは今回未実行）。\n- 新版3APKビルド、分岐/資格判定/警告転送のDEX検証、MPP検証を実施。\n- SM-S948Q、microG 7.3.0、user 150に再インストール後、ユーザーが警告消失・内部サービス復旧後のチャット送受信を確認。通常領域・強制停止・端末再起動は新版で未再検証。\n\n配布物はパッチ集MPPです。元APKと署名キーは含みません。既存アプリの更新には同じ署名キーが必要です。公式Clone appとリソースsplitの処理についてはREADMEを参照してください。\n\n認定警告の転送だけでなく、同チェックが無効化した内部サービスもアプリ本来の復旧経路で回復します。初回の更新後に一度アプリが閉じた場合は開き直してください。復旧後の送信・返答をユーザーが確認済みです。\n",
-  "release_tag": "v0.2.0",
-  "release_date": "2026-11-03T02:09:23Z",
+  "fingerprint": "8a674a720a558eca9dca4bd63c6274833e1dfe6001acc56e266c07b12fcbfabb",
+  "release_notes": "# v0.3.0\n\nGoogle 17.72.17.ve.arm64に対応。GeminiのGoogleクローン検出宣言漏れを修正し、更新時のフック候補をDexKitで探索するホスト解析ツールを追加しました。\n\n- Gemini連携先変更パッチが、クローン版GoogleをManifest queriesに追加するリソース処理へ依存するよう変更。検出宣言は1件に保ちます。\n- Standalone Supportはsplit APK制約の除去であり、Googleアプリ本体が別途必要であることを説明に明記。\n- 新版のWeb転送条件と23レジスタのMainActivityに対応。別のnullable Boolean条件を書き換えないよう命令構造・分岐先を検証。\n- DexKit 2.3.0の9探索ルール、JSONレポート、版間比較、同一入力キャッシュを追加。MPP/端末にはDexKitを含めません。\n- Geminiの入力版は1.0.995038376のまま。元Googleなしの条件でのIssue #7再現・解消は未確認。\n\n検証: 元APK3点からのビルド、既存DEX検証、trampoline分岐対応、修正前/後のManifest検証、DexKit旧版/新版探索とキャッシュ使用。セキュアフォルダ実機結果は確認後に追記します。\n",
+  "release_tag": "v0.3.0",
+  "release_date": "2026-11-10T12:38:09Z",
   "isPreRelease": false,
   "stars": 13,
   "avatarUrl": "https://avatars.githubusercontent.com/u/79310875?v=4",

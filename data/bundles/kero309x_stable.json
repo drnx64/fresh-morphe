@@ -2,9 +2,9 @@
   "bundle": "kero309x",
   "channel": "stable",
   "repo_url": "https://github.com/Kero309x/Kero309x-Patches",
-  "created_at": "2026-11-09T12:41:57",
-  "version": "0.1.2",
-  "description": "## Kero309x Patches 0.1.2 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. Anghami 8.0.28 is the first registered target on the Morphe framework.\n\n- First release built by `buildAndroid`, so the bundle carries `classes.dex` and can be loaded by Morphe Manager. Releases `0.1.0` and `0.1.1` were built without DEX and only serve Morphe Desktop.\n- First signed release. The `.mpp` carries an Ed25519 signature in its `MorpheSig1` trailer, and `patches-bundle.json` publishes the matching `public_key`, so a bundle altered after publication can be rejected.\n- No behaviour change to any of the twenty patches.\n\n### Verification\n\n- 20 patches, all default-enabled.\n- 20/20 PASS against the stock 8.0.28 build (fingerprint, apply and recompile).\n- Published artefact re-checked after the release: 112 entries, `classes.dex` of 99,480 bytes, a signature whose public key equals the committed `morphe-signing.pub`, and a SHA-256 matching the value below.\n- No device or emulator is available yet, so there is no runtime behavioural verification.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.2.mpp` directly.\n\n### Integrity\n\nSHA-256: `47B177D75EF06CA5E34497B8005DB0415B57A10C9A5C41B7F049C127BE6FEDFD`\n\nLicence: GPL-3.0-only.",
+  "created_at": "2026-11-10T20:25:13",
+  "version": "0.1.4",
+  "description": "## Kero309x Patches 0.1.4 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. This release completes the Ana Vodafone behaviours and corrects the password one.\n\n### New behaviour\n\n- **Allow screenshots** - the application hides every screen it opens from screenshots and screen recordings through a security library it embeds. This removes that protection, so a screenshot shows the screen.\n\n### Corrected behaviour\n\n- **Keep the password of each account** - the previous release removed the write of the password of the login, which would have lost the password the user typed whenever the token did not carry one. The patch now writes the password only when the login carries one and keeps the password of the signed token otherwise.\n\n### Verification\n\n- 29 patches, all enabled by default.\n- 20/20 PASS against the stock Anghami 8.0.28 build.\n- 9/9 PASS against the stock Ana Vodafone 2026.11.1 build.\n- Every injected edit was confirmed in the decompiled patched output.\n- No device or emulator was available, so there is no runtime behavioural verification yet.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.4.mpp` directly.\n\n### Integrity\n\nSHA-256: `751FDE19FB9E1079A0D564B1C9510C0671E0A095BB929B204FC253661EE9BBD7`\n\nThe bundle is signed with Ed25519; the matching public key is published in `patches-bundle.json`.\n\nLicence: GPL-3.0-only.\n",
   "apps": [
     {
       "app_name": "Anghami: Play music & Podcasts",
@@ -268,16 +268,25 @@
           "compatible_versions": [
             "2026.11.1"
           ]
+        },
+        {
+          "name": "Allow screenshots",
+          "description": "Stops the app hiding its screens from screenshots and screen recordings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1"
+          ]
         }
       ],
       "developer": "Vodafone Egypt͏"
     }
   ],
   "patches_name": "Kero309x Patches",
-  "fingerprint": "83a7ed1bb6b3e3e1464beacd01f35aaee26bc1d3cf192ca002989ffa53208cd6",
-  "release_notes": "## Kero309x Patches 0.1.2 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. Anghami 8.0.28 is the first registered target on the Morphe framework.\n\n- First release built by `buildAndroid`, so the bundle carries `classes.dex` and can be loaded by Morphe Manager. Releases `0.1.0` and `0.1.1` were built without DEX and only serve Morphe Desktop.\n- First signed release. The `.mpp` carries an Ed25519 signature in its `MorpheSig1` trailer, and `patches-bundle.json` publishes the matching `public_key`, so a bundle altered after publication can be rejected.\n- No behaviour change to any of the twenty patches.\n\n### Verification\n\n- 20 patches, all default-enabled.\n- 20/20 PASS against the stock 8.0.28 build (fingerprint, apply and recompile).\n- Published artefact re-checked after the release: 112 entries, `classes.dex` of 99,480 bytes, a signature whose public key equals the committed `morphe-signing.pub`, and a SHA-256 matching the value below.\n- No device or emulator is available yet, so there is no runtime behavioural verification.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.2.mpp` directly.\n\n### Integrity\n\nSHA-256: `47B177D75EF06CA5E34497B8005DB0415B57A10C9A5C41B7F049C127BE6FEDFD`\n\nLicence: GPL-3.0-only.\n",
-  "release_tag": "v0.1.2",
-  "release_date": "2026-11-09T12:41:57Z",
+  "fingerprint": "82f6faf8e24e5ced6e8a9d65196de06574dfd09364289369047ef240f7c52220",
+  "release_notes": "## Kero309x Patches 0.1.4 (pre-alpha)\n\nIndependent, clean-room patch bundle, built for multiple applications. This release completes the Ana Vodafone behaviours and corrects the password one.\n\n### New behaviour\n\n- **Allow screenshots** - the application hides every screen it opens from screenshots and screen recordings through a security library it embeds. This removes that protection, so a screenshot shows the screen.\n\n### Corrected behaviour\n\n- **Keep the password of each account** - the previous release removed the write of the password of the login, which would have lost the password the user typed whenever the token did not carry one. The patch now writes the password only when the login carries one and keeps the password of the signed token otherwise.\n\n### Verification\n\n- 29 patches, all enabled by default.\n- 20/20 PASS against the stock Anghami 8.0.28 build.\n- 9/9 PASS against the stock Ana Vodafone 2026.11.1 build.\n- Every injected edit was confirmed in the decompiled patched output.\n- No device or emulator was available, so there is no runtime behavioural verification yet.\n\n### Install\n\nAdd `Kero309x/Kero309x-Patches` as a patch source in Morphe Manager and enable pre-releases, or install the attached `Kero309x-Patches-0.1.4.mpp` directly.\n\n### Integrity\n\nSHA-256: `751FDE19FB9E1079A0D564B1C9510C0671E0A095BB929B204FC253661EE9BBD7`\n\nThe bundle is signed with Ed25519; the matching public key is published in `patches-bundle.json`.\n\nLicence: GPL-3.0-only.\n",
+  "release_tag": "v0.1.4",
+  "release_date": "2026-11-10T20:25:13Z",
   "isPreRelease": true,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/55901942?v=4&s=128",
