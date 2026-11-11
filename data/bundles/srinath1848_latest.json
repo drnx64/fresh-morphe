@@ -2,9 +2,9 @@
   "bundle": "srinath1848",
   "channel": "latest",
   "repo_url": "https://github.com/srinath1848/nobrokerhood-patches",
-  "created_at": "2026-11-10T13:46:58",
-  "version": "1.7.0",
-  "description": "## [1.7.0](https://github.com/srinath1848/nobrokerhood-patches/compare/v1.6.1...v1.7.0) (2026-11-10)\n\n### ✨ New Features\n\n* guard NoBrokerHood notification click browser routes ([17d7737](https://github.com/srinath1848/nobrokerhood-patches/commit/17d7737b24ac83160760add5a3e9d00520bc1d98))",
+  "created_at": "2026-11-11T07:28:33",
+  "version": "1.9.0",
+  "description": "## [1.9.0](https://github.com/srinath1848/nobrokerhood-patches/compare/v1.8.0...v1.9.0) (2026-11-11)\n\n### ✨ New Features\n\n* consolidate homepage billboard and island ad removal ([3712ed9](https://github.com/srinath1848/nobrokerhood-patches/commit/3712ed985cdc1aac014468471be48ad5839a532f))",
   "apps": [
     {
       "app_name": "NoBrokerHood:Smart Society App",
@@ -13,42 +13,6 @@
         {
           "name": "NoBrokerHood: Default browser, block known ad hosts (experimental)",
           "description": "Keep default-browser support but block known Multipl and Innovid ad-tracking hosts.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide app-bar banners (experimental)",
-          "description": "Empty app-bar banner entries; may leave a layout placeholder.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide app-bar island row (test)",
-          "description": "Skip the AppBarIsland.kt horizontal row. May hide non-ad items.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide app-bar response cards (experimental)",
-          "description": "Remove app-bar advertising card data before creating banner state.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide default post-approval card (experimental)",
-          "description": "Hide the fallback ad card after entry approval. Null handling is untested.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -83,53 +47,8 @@
           ]
         },
         {
-          "name": "NoBrokerHood: Hide home-discover carousel (experimental)",
-          "description": "Hide cards in the homepage discover carousel; may hide non-ad items too.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
           "name": "NoBrokerHood: Hide homepage billboard",
-          "description": "Hide the homepage top billboard by clearing TopAdState during construction.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide homepage top ads (experimental)",
-          "description": "Supply an empty top-ad list and disable its loading/expanded state.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide island promotional strip (experimental)",
-          "description": "Hide homepage items marked ISLAND_BANNER; test against the blue Domino's strip.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide post-approval ad card (experimental)",
-          "description": "Hide the sponsored card shown after entry approval or pre-approval (3.6.11).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.6.11"
-          ]
-        },
-        {
-          "name": "NoBrokerHood: Hide post-approval multimedia ads",
-          "description": "Suppress image, GIF, video and Lottie ad cards after approval, without blocking the approval status.",
+          "description": "Clear both top-billboard state and app-bar banner state to hide rotating top ads.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -146,8 +65,8 @@
           ]
         },
         {
-          "name": "NoBrokerHood: Hide promotional side tab (experimental)",
-          "description": "Suppress the draggable multimedia promotion card; verify on-device.",
+          "name": "NoBrokerHood: Hide visitor promotional island",
+          "description": "Suppress AppBarIsland single-card and horizontal promotional rendering (experimental).",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -164,6 +83,15 @@
           ]
         },
         {
+          "name": "NoBrokerHood: Skip post-approval ad container (experimental)",
+          "description": "Do not initialize the image/video ad RecyclerView after entry approval; preserve approval details.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.6.11"
+          ]
+        },
+        {
           "name": "NoBrokerHood: Stop full-screen permission nag",
           "description": "Stop the home-screen full-screen alert reminder without changing permissions.",
           "use": false,
@@ -174,7 +102,7 @@
         },
         {
           "name": "NoBrokerHood: Stop promotional browser launches from notifications",
-          "description": "Prevent notification-triggered browser ad routes; retain security alerts and in-app event metadata (experimental).",
+          "description": "Clear advertising click metadata and browser-directed routes from notification intents, preserving security-event fields (experimental).",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -186,10 +114,10 @@
     }
   ],
   "patches_name": "NoBrokerHood Community Patches",
-  "fingerprint": "6d42bbfcb2e88aa76d9fcf73d2f1a30cad581185c8e17e48eac86356bb7041f8",
-  "release_notes": "## [1.7.0](https://github.com/srinath1848/nobrokerhood-patches/compare/v1.6.1...v1.7.0) (2026-11-10)\n\n### ✨ New Features\n\n* guard NoBrokerHood notification click browser routes ([17d7737](https://github.com/srinath1848/nobrokerhood-patches/commit/17d7737b24ac83160760add5a3e9d00520bc1d98))\n",
-  "release_tag": "v1.7.0",
-  "release_date": "2026-11-10T13:47:37Z",
+  "fingerprint": "00eafd7b91918f677c3c3d1819af359f60121afc298b9def6314b6c622de8b14",
+  "release_notes": "## [1.9.0](https://github.com/srinath1848/nobrokerhood-patches/compare/v1.8.0...v1.9.0) (2026-11-11)\n\n### ✨ New Features\n\n* consolidate homepage billboard and island ad removal ([3712ed9](https://github.com/srinath1848/nobrokerhood-patches/commit/3712ed985cdc1aac014468471be48ad5839a532f))\n",
+  "release_tag": "v1.9.0",
+  "release_date": "2026-11-11T07:29:09Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/194255301?v=4&s=128",

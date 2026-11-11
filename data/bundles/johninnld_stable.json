@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-10T19:46:07.940Z",
-  "version": "1.59.1",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/1ff52a13bfd48846190e7a888b7fd1ee370454bc/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.59.1.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [1ff52a13bfd4](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/1ff52a13bfd48846190e7a888b7fd1ee370454bc). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.59.1](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.59.0...v1.59.1) (2026-11-10)\n\n### 🐛 Bug Fixes\n\n* **Flitsmeister:** ready warning audio by default and keep FM pills stable ([63ae580](https://gitlab.com/johninnld/nl-morphe-patches/commit/63ae580eb151ed9383b41380c9b685d714d109d3))\n* **Google Maps:** log each car action tap and why Maps refused it ([4e6b4e5](https://gitlab.com/johninnld/nl-morphe-patches/commit/4e6b4e5fc976d32b26246010a0d83074f24ad462))\n* **Google Maps:** ready warning audio by default and keep FM pills stable ([63ae580](https://gitlab.com/johninnld/nl-morphe-patches/commit/63ae580eb151ed9383b41380c9b685d714d109d3))\n* **release:** let the workspace proof finish under unrelated process churn ([abf06eb](https://gitlab.com/johninnld/nl-morphe-patches/commit/abf06eb865bc25c55312a47709e802abfa9bb403))\n* **release:** scan each observed process once instead of awaiting a churn-free instant ([cece6f2](https://gitlab.com/johninnld/nl-morphe-patches/commit/cece6f2ad9db72a3cd5b2fb5098395ed0b5a1aa6))\n* **Vela Maps:** ready warning audio by default and keep FM pills stable ([63ae580](https://gitlab.com/johninnld/nl-morphe-patches/commit/63ae580eb151ed9383b41380c9b685d714d109d3))\n",
+  "created_at": "2026-11-11T05:15:36.492Z",
+  "version": "1.62.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/9fac12f8fce9cc5640f263c28aa3b259b58a03d1/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.62.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [9fac12f8fce9](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/9fac12f8fce9cc5640f263c28aa3b259b58a03d1). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.62.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.61.0...v1.62.0) (2026-11-11)\n\n### ✨ New Features\n\n* **Google Maps:** show speed and warnings as matching pills on the phone and the car ([00f73d8](https://gitlab.com/johninnld/nl-morphe-patches/commit/00f73d8bc00d7bcf4ac3bf4f59f01fea0a088e7f))\n* **Vela Maps:** show speed and warnings as matching pills on the phone and the car ([00f73d8](https://gitlab.com/johninnld/nl-morphe-patches/commit/00f73d8bc00d7bcf4ac3bf4f59f01fea0a088e7f))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -97,8 +97,8 @@
       "package": "app.vela",
       "patches": [
         {
-          "name": "External speed controls",
-          "description": "Use De-Waze or Flitsmeister speed, limits, road warnings and partial average-zone progress in Vela and Android Auto, with native fallback, silent provider startup and automatic engine recovery.",
+          "name": "Receive alerts from a third-party application",
+          "description": "Receives road warnings, current speed, speed limits and average-zone progress from a third-party application through an extendable provider interface, in Vela and on Android Auto, with native fallback, silent provider startup and automatic engine recovery. Today it supports the patched Waze (De-Waze) and Flitsmeister from Dutch App Patches (gitlab.com/johninnld/nl-morphe-patches); further providers can be added.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1158,8 +1158,8 @@
           ]
         },
         {
-          "name": "Native navigation for Gearslip and Android Auto",
-          "description": "Keeps Maps' native map and navigation engine, and supplies routing, ETA, destination lists and route-preview cards for Android Auto and compatible hosts to arrange around their controls and dock.",
+          "name": "Native navigation for any Android Auto host",
+          "description": "Shows Maps' own car interface, as in Google's Android Auto, on any Android Auto compatible host: Google's Android Auto and community hosts such as DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE. Maps draws its map, turn and ETA cards, buttons, search, settings and route panels itself; the host shows the screen, passes touches through and supplies its keyboard for typing.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1187,6 +1187,15 @@
         {
           "name": "Proxy",
           "description": "Adds a Proxy screen to Customization that sends Maps' own traffic, map data included, through an HTTP proxy -- for example Orbot's (127.0.0.1:8118) to use Tor. Map data never falls back to a direct connection: if the proxy stops, Maps stops loading. Needs a recent Play services network engine (Cronet); Maps warns when it cannot take the proxy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Receive alerts from a third-party application",
+          "description": "Receives road alerts, current speed, speed limits and average-speed zones from a third-party application through an extendable provider interface, and shows them as map pins, car pills, chimes and voice. Today it supports the patched Waze (De-Waze) and Flitsmeister from Dutch App Patches (gitlab.com/johninnld/nl-morphe-patches), plus bearinmind's Waze Share alerts with Maps feed; further providers can be added. Choose a provider in Waze & external data source; external data is off by default. Updated patched providers start silently and are monitored while Maps is in use. Complete provider setup and location permissions once.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1263,15 +1272,6 @@
           "options": [],
           "compatible_versions": [
             "26.43.05.1002020710",
-            "26.44.06.1006895251"
-          ]
-        },
-        {
-          "name": "Waze alerts",
-          "description": "Shows nearby Waze and Flitsmeister alerts as map pins with ahead-of-you chimes and notes. Supports our navigation broadcasts for current speed, speed limits and average-speed zones, plus bearinmind's Waze Share alerts with Maps feed. Choose a provider in Waze & external data source; external data is off by default. Updated patched providers start silently and are monitored while Maps is in use. Complete provider setup and location permissions once.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
             "26.44.06.1006895251"
           ]
         },
@@ -2216,6 +2216,16 @@
           ]
         },
         {
+          "name": "Allow any Android Auto host",
+          "description": "Lets any Android Auto compatible host connect to Waze's car screens, including DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE, whatever its package name or signing key. Google's Android Auto keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.26.90.901",
+            "5.27.0.1"
+          ]
+        },
+        {
           "name": "Allow high refresh rate",
           "description": "Lets Waze select supported phone display modes up to an adjustable ceiling. Does not guarantee rendering FPS.",
           "use": false,
@@ -2742,16 +2752,6 @@
           ]
         },
         {
-          "name": "Support Gearslip",
-          "description": "Accepts Gearslip and DriveDeck as car hosts by package name, whichever key signed them, so a patched Gearslip keeps working. Other hosts keep Android Auto host validation.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.26.90.901",
-            "5.27.0.1"
-          ]
-        },
-        {
           "name": "Use the system voice for navigation",
           "description": "Speaks Waze navigation chunks through the phone's selected text-to-speech engine instead of Waze's downloaded voice recordings. Waze already supplies the chunk text, so no speech recognition is needed. Select DriveDeck as the system engine to hear the local DriveDeck voice; otherwise the original voice remains the fallback.",
           "use": false,
@@ -3074,6 +3074,16 @@
       "package": "nl.flitsmeister",
       "patches": [
         {
+          "name": "Allow any Android Auto host",
+          "description": "Lets any Android Auto compatible host connect to Flitsmeister's car screens, including DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE, whatever its package name or signing key. Google's Android Auto keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.17",
+            "15.0"
+          ]
+        },
+        {
           "name": "Broadcast navigation data",
           "description": "Shares current speed, road limits, road alerts and approaching/active average-speed zones with compatible local apps, also in the background without an overlay, with a silent startup and health API for Maps/Vela.",
           "use": true,
@@ -3141,16 +3151,6 @@
         {
           "name": "Hide Pro notices",
           "description": "Hides automatic Pro promotions, Pro/Plus badges and Android Auto upsells while retaining settings, avatar data and genuine account/readiness states.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.17",
-            "15.0"
-          ]
-        },
-        {
-          "name": "Support Gearslip and DriveDeck",
-          "description": "Accepts Gearslip and DriveDeck as car hosts by package name, whichever key signed them, so DriveDeck works without the original Gearslip installed. Other hosts keep Android Auto host validation.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -3791,7 +3791,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "1ec2e7c3289aebf576f1a6924066794542c03933c6a2ee20f91a4d8ff24bd528",
+  "fingerprint": "40d0ea39e848acf522ab69970635944ec390f366f75bc169fbd75baf3d04c31d",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",
