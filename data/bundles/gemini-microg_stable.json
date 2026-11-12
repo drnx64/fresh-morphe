@@ -2,14 +2,21 @@
   "bundle": "gemini-microg",
   "channel": "stable",
   "repo_url": "https://github.com/ryuya0124/gemini-microg-patches",
-  "created_at": "2026-11-10T12:32:34",
-  "version": "0.3.0",
+  "created_at": "2026-11-12T10:26:39",
+  "version": "0.3.3",
   "description": "Gemini login and Samsung Secure Folder support with microG",
   "apps": [
     {
       "app_name": "Google Gemini",
       "package": "com.google.android.apps.bard",
       "patches": [
+        {
+          "name": "Automatic Clone Setup",
+          "description": "Automatically creates the fixed .morphe clone and isolates its permissions and providers. No official Clone app or Expert mode configuration is required.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
         {
           "name": "Gemini Redirect to Cloned Google App",
           "description": "Gemini アプリからの連携先 Google アプリをクローン版（com.google.android.googlequicksearchbox.morphe）へリダイレクトします。",
@@ -33,21 +40,21 @@
       "patches": [
         {
           "name": "Account ID Fallback for Clone",
-          "description": "AGSA アカウント名から Account ID への変換失敗例外（flgu）を防止し、デフォルト AccountId でフォールバックします。",
+          "description": "UNSUPPORTED historical experiment. Do not select: breaks account synchronization/login. Patching will stop if enabled.",
           "use": false,
           "options": [],
           "compatible_versions": []
         },
         {
           "name": "Account Switch Lock Bypass",
-          "description": "アカウント切り替えロックのタイムアウトをスキップし、スプラッシュ画面からの即時初期化を可能にします。",
+          "description": "UNSUPPORTED historical experiment. Do not select: breaks account synchronization/login. Patching will stop if enabled.",
           "use": false,
           "options": [],
           "compatible_versions": []
         },
         {
           "name": "Account Sync Binder Loop Fix",
-          "description": "AccountSyncService へのバインド失敗による無限リトライと Binder リミットクラッシュを防止します。",
+          "description": "UNSUPPORTED historical experiment. Do not select: breaks account synchronization/login. Patching will stop if enabled.",
           "use": false,
           "options": [],
           "compatible_versions": []
@@ -60,6 +67,13 @@
           "compatible_versions": []
         },
         {
+          "name": "Automatic Clone Setup",
+          "description": "Automatically creates the fixed .morphe clone and isolates its permissions and providers. No official Clone app or Expert mode configuration is required.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Bypass Work Profile Gemini Restriction",
           "description": "セキュアフォルダ（Work Profile）環境下でGeminiネイティブUIの起動を拒否しWeb版へリダイレクトする制限をバイパスします。",
           "use": true,
@@ -67,8 +81,8 @@
           "compatible_versions": []
         },
         {
-          "name": "GmsCore Bytecode Redirect (MicroG RE 7.0.0)",
-          "description": "Google アプリ内部の GMS パッケージ名・権限・Provider authority を MicroG RE へリダイレクトします。",
+          "name": "GmsCore Bytecode Redirect (MicroG RE)",
+          "description": "Redirects GMS package/permissions/provider references to app.revanced.android.gms. Tested with microG RE 7.3.0; the previous 7.0.0 title was not a version requirement.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -89,7 +103,7 @@
         },
         {
           "name": "Google App Package Clone Support",
-          "description": "クローン版 Google アプリ内の完全一致パッケージ名を .morphe へリダイレクトします。",
+          "description": "Redirects Google package and owned permission references to .morphe. Automatic Clone Setup handles package, permission and provider isolation with the default selection.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -120,10 +134,10 @@
     }
   ],
   "patches_name": "ryuya0124",
-  "fingerprint": "8a674a720a558eca9dca4bd63c6274833e1dfe6001acc56e266c07b12fcbfabb",
-  "release_notes": "# v0.3.0\n\nGoogle 17.72.17.ve.arm64に対応。GeminiのGoogleクローン検出宣言漏れを修正し、更新時のフック候補をDexKitで探索するホスト解析ツールを追加しました。\n\n- Gemini連携先変更パッチが、クローン版GoogleをManifest queriesに追加するリソース処理へ依存するよう変更。検出宣言は1件に保ちます。\n- Standalone Supportはsplit APK制約の除去であり、Googleアプリ本体が別途必要であることを説明に明記。\n- 新版のWeb転送条件と23レジスタのMainActivityに対応。別のnullable Boolean条件を書き換えないよう命令構造・分岐先を検証。\n- DexKit 2.3.0の9探索ルール、JSONレポート、版間比較、同一入力キャッシュを追加。MPP/端末にはDexKitを含めません。\n- Geminiの入力版は1.0.995038376のまま。元Googleなしの条件でのIssue #7再現・解消は未確認。\n\n検証: 元APK3点からのビルド、既存DEX検証、trampoline分岐対応、修正前/後のManifest検証、DexKit旧版/新版探索とキャッシュ使用。セキュアフォルダ実機結果は確認後に追記します。\n",
-  "release_tag": "v0.3.0",
-  "release_date": "2026-11-10T12:38:09Z",
+  "fingerprint": "e7c0f138d9f9e84a80aff79bf376e85c4e1e87f7cfceae78af6e01aeefa6854e",
+  "release_notes": "# v0.3.3\n\n- Fix Google crashing at startup after patching with Morphe Manager.\n",
+  "release_tag": "v0.3.3",
+  "release_date": "2026-11-12T10:43:59Z",
   "isPreRelease": false,
   "stars": 13,
   "avatarUrl": "https://avatars.githubusercontent.com/u/79310875?v=4",

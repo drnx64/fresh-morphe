@@ -2,14 +2,24 @@
   "bundle": "badfella",
   "channel": "latest",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-11-08T05:16:33",
-  "version": "1.2.0",
-  "description": "## 1.2.0 (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* **linkedin:** comprehensively eliminate promoted, boosted, and sponsored feed content (v1.2.0-dev.13) b0246b8\n* **linkedin:** describe boosted and label-only promoted coverage 3efbf11\n* **linkedin:** eliminate feed scroll jitter and visual flicker (v1.2.0-dev.11) 802494b\n* **linkedin:** filter ads at the feed collection boundary 6fcaf21\n* **linkedin:** filter sponsored items in SDUI Compose feed (v1.2.0-dev.8) 85951fc\n* **linkedin:** filter the parsed feed page before it reaches the paged list 1f9dcf8\n* **linkedin:** remove boosted and label-only promoted posts from the feed 4e66a05\n* **linkedin:** remove promoted ads and video carousels from the feed 9534f84\n\n### ✨ New Features\n\n* **linkedin:** add LinkedIn 4.1.1271 feed filters and navigation options c741941\n* **linkedin:** add missing Fakh patches and restore customizable navigation (v1.2.0-dev.10) daa6e59\n* **linkedin:** full AMOLED pitch black theme and fix default-enabled behavior (v1.2.0-dev.12) 4aadb58, closes #000000 #0D0D0D #1A1A1A\n* **linkedin:** import complete 22-patch suite and add version-agnostic support (v1.2.0-dev.9) 9be6d86",
+  "created_at": "2026-11-12T01:16:14",
+  "version": "1.3.0",
+  "description": "## 1.3.0 (2026-11-12)\n\n### ✨ New Features\n\n* **torrent search revolution:** add the local Pro patch for Torrent Search Revolution V2 2.3.5, covering thirteen local Pro checks across search ads, banners, native ads and Pro settings to unlock the full offline search experience and remove ads while retaining startup callbacks\n* **ticktick:** support TickTick 8.3.0.1 (build 8301) across TickTick Premium, Disable analytics collection, Restore notifications and Restore reminder alarms by finding the reviewed bytecode shapes instead of the class names R8 renamed, and declare 8.3.0.1 as an explicit target so Morphe can fetch that exact version\n* **linkedin:** add the Install next to LinkedIn patch for LinkedIn 4.1.1271 and 4.1.1267, which installs the patched build as a second app with its own package name, home screen name and data, so both the copy and the installed LinkedIn can be signed in side by side\n* **linkedin:** add a Dark app icon option, Material bottom navigation icons, an Icon-only post actions option, Copy post text and an Always show navigation bar option\n* **linkedin:** float the glass navigation bar above the system navigation bar, with the screen showing through the room under it, and slide it fully off screen while scrolling\n\n### 🐛 Bug Fixes\n\n* **linkedin:** keep the Install next to LinkedIn copy's microG spoofed package name as LinkedIn's own, so Continue with Google signs in instead of reporting an account abnormality\n* **linkedin:** center the tab icons and labels inside the glass navigation bar capsule\n* **linkedin:** decode bottom bar icon resources before replacing them\n* **linkedin:** close an empty Premium upsell full-page takeover instead of leaving a blank screen\n* **linkedin:** resolve the My Network tab from the visible tab row when swiping between feeds\n\n### 🗑️ Removed\n\n* **ultimea:** remove the experimental Pitch black, Hide Explorer tab and Custom font patches and the font files bundled only for them\n\n### Notes\n\n* Patch the unmodified APKs in Morphe Manager. Keep the same Manager signing key when updating an existing patched installation.\n* TickTick Premium and the Torrent Search Revolution local Pro patch change local app behavior only; they do not grant a Pro Key, a subscription or a server entitlement.\n* The Install next to LinkedIn copy starts with empty data and needs its own sign-in. Select GmsCore support to sign in with Google through microG RE.",
   "apps": [
     {
       "app_name": "LinkedIn: Community & Network",
       "package": "com.linkedin.android",
       "patches": [
+        {
+          "name": "Always show navigation bar",
+          "description": "Adds an option in BadFella Patches to keep the navigation bar on screen while you scroll.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
         {
           "name": "Anonymous profile viewing",
           "description": "Adds an option (off by default, experimental) to visit profiles without being listed in \"Who viewed your profile\": the analytics events of profile pages are not sent.",
@@ -23,6 +33,16 @@
         {
           "name": "Block tracking",
           "description": "Adds an option (off by default) to stop sending most LinkedIn analytics events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Copy post text",
+          "description": "Long pressing a post's text copies all of it, including the part behind \"...more\".",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -70,6 +90,16 @@
               "description": "Removes the News button from the bottom navigation bar."
             }
           ],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Dark app icon",
+          "description": "Black launcher icon with the white \"in\", instead of LinkedIn's blue. Chosen when patching: a launcher icon cannot switch with dark mode on its own.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "4.1.1267",
             "4.1.1271"
@@ -186,6 +216,35 @@
           ]
         },
         {
+          "name": "Icon-only post actions",
+          "description": "Adds a switch in BadFella Patches to show the Like, Comment, Repost and Send buttons under posts without their labels.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Install next to LinkedIn",
+          "description": "Installs this build as a second LinkedIn beside your normal one, with its own data and sign-in. Pick its package name and app name in the patch's options. Works as soon as you patch it in.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The second LinkedIn's package. Each part starts with a letter, with dots between the parts, and it can't be LinkedIn's own."
+            },
+            {
+              "key": "appName",
+              "description": "The name under the second LinkedIn's icon. It starts with a letter and holds up to 50 characters."
+            }
+          ],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
           "name": "Keep feed on reopen",
           "description": "Keeps your place in the feed when you come back to LinkedIn, instead of reloading it. Pull down or tap the \"New posts\" button to load new posts.",
           "use": true,
@@ -200,6 +259,21 @@
           "description": "Uses your wallpaper's colors (Android 12+): the accent color instead of LinkedIn blue and the green of selected filters, and Material 3 surface colors for backgrounds, cards, bars and borders. Some screens drawn by LinkedIn's servers may keep their own colors.",
           "use": false,
           "options": [],
+          "compatible_versions": [
+            "4.1.1267",
+            "4.1.1271"
+          ]
+        },
+        {
+          "name": "Material icons in the bottom bar",
+          "description": "Replaces LinkedIn's Home, My Network, Notifications, Jobs and Video tab icons with Material icons (filled when selected, outlined otherwise). Chosen when patching.",
+          "use": false,
+          "options": [
+            {
+              "key": "materialIcons",
+              "description": "Use Google's Material icons for the bottom bar tabs instead of LinkedIn's own."
+            }
+          ],
           "compatible_versions": [
             "4.1.1267",
             "4.1.1271"
@@ -351,7 +425,7 @@
           "compatible_versions": []
         }
       ],
-      "developer": "com.peptalk"
+      "developer": "Dark Knight Inc."
     },
     {
       "app_name": "TickTick:To Do List & Calendar",
@@ -362,28 +436,36 @@
           "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "8.3.0.1"
+          ]
         },
         {
           "name": "Restore notifications",
           "description": "Restores Firebase certificate metadata on re-signed apps, with an Android 17 compatible token setup. Push delivery still requires device testing.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "8.3.0.1"
+          ]
         },
         {
           "name": "Restore reminder alarms",
           "description": "Restores task/reminder alarm scheduling on re-signed apps.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "8.3.0.1"
+          ]
         },
         {
           "name": "TickTick Premium",
           "description": "Enables client-side premium features and limits. Does not grant server-side AI access or a subscription.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "8.3.0.1"
+          ]
         }
       ],
       "developer": "com.ticktick"
@@ -417,13 +499,27 @@
         }
       ],
       "developer": "tech.simha"
+    },
+    {
+      "app_name": "Torrent Search Revolution",
+      "package": "torrent.search.revolutionv2",
+      "patches": [
+        {
+          "name": "Torrent Search Revolution local Pro",
+          "description": "Enables the local Pro/ad-free branches, including search, native and banner ads and Pro settings. Preserves startup callbacks. Reviewed on 2.3.5; changed app bytecode requires review. Does not grant a Pro Key subscription or server entitlement.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "TMK Mobile Developers"
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "065f492d71d088492da2abfbf8e495fd3baa7e9ba80e16b62cdcd53320c9dcb6",
-  "release_notes": "## BadFella Patches v1.2.0\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** comprehensively eliminate promoted, boosted, and sponsored feed content (v1.2.0-dev.13) b0246b8\n* **LinkedIn:** describe boosted and label-only promoted coverage 3efbf11\n* **LinkedIn:** eliminate feed scroll jitter and visual flicker (v1.2.0-dev.11) 802494b\n* **LinkedIn:** filter ads at the feed collection boundary 6fcaf21\n* **LinkedIn:** filter sponsored items in SDUI Compose feed (v1.2.0-dev.8) 85951fc\n* **LinkedIn:** filter the parsed feed page before it reaches the paged list 1f9dcf8\n* **LinkedIn:** remove boosted and label-only promoted posts from the feed 4e66a05\n* **LinkedIn:** remove promoted ads and video carousels from the feed 9534f84\n\n### ✨ New Features\n\n* **LinkedIn:** add LinkedIn 4.1.1271 feed filters and navigation options c741941\n* **LinkedIn:** add missing Fakh patches and restore customizable navigation (v1.2.0-dev.10) daa6e59\n* **LinkedIn:** full AMOLED pitch black theme and fix default-enabled behavior (v1.2.0-dev.12) 4aadb58, closes #000000 #0D0D0D #1A1A1A\n* **LinkedIn:** import complete 22-patch suite and add version-agnostic support (v1.2.0-dev.9) 9be6d86\n",
-  "release_tag": "v1.2.0",
-  "release_date": "2026-11-08T05:17:14Z",
+  "fingerprint": "5f3aa7717fb6f850a43b45c6d3a4ed40b6bc60ddffedbf7de9e823c602184ac5",
+  "release_notes": "## BadFella Patches v1.3.0\n\nStable bundle for Morphe Manager 2.2.0 or later, with 44 patches across LinkedIn, TickTick, Emby, Remote for Android TV, Pep Talk, Wanderlog and Torrent Search Revolution V2.\n\n### ✨ New Features\n\n* **Torrent Search Revolution V2:** add the local Pro patch for 2.3.5, covering thirteen local Pro checks across search ads, banners, native ads and Pro settings to unlock the full offline search experience and remove ads while retaining startup callbacks.\n* **TickTick:** support TickTick 8.3.0.1 (build 8301) across TickTick Premium, Disable analytics collection, Restore notifications and Restore reminder alarms by finding the reviewed bytecode shapes instead of the class names R8 renamed, and declare 8.3.0.1 as an explicit target so Morphe can fetch that exact version.\n* **LinkedIn:** add Install next to LinkedIn for 4.1.1271 and 4.1.1267, which installs the patched build as a second app with its own package name, home screen name and data, so both the copy and the installed LinkedIn can be signed in side by side.\n* **LinkedIn:** add a Dark app icon option, Material bottom navigation icons, an Icon-only post actions option, Copy post text and an Always show navigation bar option.\n* **LinkedIn:** float the glass navigation bar above the system navigation bar and slide it fully off screen while scrolling.\n\n### 🐛 Bug Fixes\n\n* **LinkedIn:** keep the Install next to LinkedIn copy's microG spoofed package name as LinkedIn's own, so Continue with Google signs in instead of reporting an account abnormality.\n* **LinkedIn:** center the tab icons and labels inside the glass navigation bar capsule.\n* **LinkedIn:** decode bottom bar icon resources before replacing them.\n* **LinkedIn:** close an empty Premium upsell full-page takeover instead of leaving a blank screen.\n* **LinkedIn:** resolve the My Network tab from the visible tab row when swiping between feeds.\n\n### 🗑️ Removed\n\n* **Ultimea:** remove the experimental Pitch black, Hide Explorer tab and Custom font patches and the font files bundled only for them.\n\n### Installation\n\n1. Install Morphe Manager 2.2.0 or later.\n2. Add this repository as a source and refresh, or download `patches-1.3.0.mpp` below and import it from the Sources screen.\n3. Patch the unmodified APK. Keep the same Manager signing key when updating an existing patched installation.\n\n### Notes\n\n* TickTick Premium and the Torrent Search Revolution local Pro patch change local app behavior only; they do not grant a Pro Key, a subscription or a server entitlement.\n* The Install next to LinkedIn copy starts with empty data and needs its own sign-in. Select GmsCore support to sign in with Google through microG RE.\n",
+  "release_tag": "v1.3.0",
+  "release_date": "2026-11-12T07:20:24Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",

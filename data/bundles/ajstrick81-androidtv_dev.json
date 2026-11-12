@@ -2,9 +2,9 @@
   "bundle": "ajstrick81-androidtv",
   "channel": "dev",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-11-10T21:05:12",
-  "version": "1.52.1",
-  "description": "## [1.52.1](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.52.0...v1.52.1) (2026-11-10)\n\n\n### Bug Fixes\n\n* **pluto:** strip v17 channel bumpers and reordered creative paths ([#298](https://github.com/ajstrick81/morphe-androidtv-patches/issues/298)) ([77ad227](https://github.com/ajstrick81/morphe-androidtv-patches/commit/77ad2270584a5961b621d017269bbaf19173ba22)), closes [#144](https://github.com/ajstrick81/morphe-androidtv-patches/issues/144)",
+  "created_at": "2026-11-11T16:04:43",
+  "version": "1.53.0",
+  "description": "# [1.53.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.52.1...v1.53.0) (2026-11-11)\n\n\n### Features\n\n* **netflix:** add opt-in legacy engine for TVs that crash at launch ([#317](https://github.com/ajstrick81/morphe-androidtv-patches/issues/317)) ([2bdc276](https://github.com/ajstrick81/morphe-androidtv-patches/commit/2bdc276f0fd63a5548a45e68b21abb70a3b282c3)), closes [#241](https://github.com/ajstrick81/morphe-androidtv-patches/issues/241)",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -273,6 +273,15 @@
           "name": "Remove Netflix ads (bundle engine)",
           "description": "Bundles the in-process ad-kill script (killads.js) and its loader into the app. This is the ad remover: at launch the app runs the script itself (script mode — no PC, no root, no frida server) and empties Netflix's ad breaks (pre-roll, mid-roll) and the pause-screen ad overlay. Pairs with the loader patch. Default ON.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028"
+          ]
+        },
+        {
+          "name": "Remove Netflix ads (legacy engine)",
+          "description": "Only for TVs where the patched Netflix clone crashes right at launch with the default ad remover (seen on some Android 12 devices, e.g. TiVo Stream 4K and some Philips TVs). Swaps the in-process ad-kill engine for an older build (frida-gadget 16.2.1) that those devices tolerate; the ad-kill script itself is unchanged. Select it IN ADDITION to the two default \"Remove Netflix ads\" patches. Leave it off if the default patch works for you. Opt-in / experimental.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "13.0.1 build 25028"
@@ -637,10 +646,10 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "e783711e0d672c9b34bd52fc447bb9e31e64155e47f3c1bac2494013053052a3",
-  "release_notes": "# [1.52.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.51.0...v1.52.0) (2026-11-10)\n\n\n### Features\n\n* **vix:** support 4.52.0_tv and remove server-stitched pre-roll ads ([6826310](https://github.com/ajstrick81/morphe-androidtv-patches/commit/6826310fbc924c9597b363b686df4e361d8f97c0)), closes [#315](https://github.com/ajstrick81/morphe-androidtv-patches/issues/315) [#315](https://github.com/ajstrick81/morphe-androidtv-patches/issues/315)\n\n\n\n",
-  "release_tag": "v1.52.0",
-  "release_date": "2026-11-10T17:15:14Z",
+  "fingerprint": "2f1d8d866714f0152dc1330593fda77974ed34ad357c797887573d1087c38c42",
+  "release_notes": "# [1.53.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.52.1...v1.53.0) (2026-11-11)\n\n\n### Features\n\n* **netflix:** add opt-in legacy engine for TVs that crash at launch ([#317](https://github.com/ajstrick81/morphe-androidtv-patches/issues/317)) ([2bdc276](https://github.com/ajstrick81/morphe-androidtv-patches/commit/2bdc276f0fd63a5548a45e68b21abb70a3b282c3)), closes [#241](https://github.com/ajstrick81/morphe-androidtv-patches/issues/241)\n\n\n\n",
+  "release_tag": "v1.53.0",
+  "release_date": "2026-11-11T16:04:59Z",
   "isPreRelease": false,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",

@@ -2,50 +2,14 @@
   "bundle": "globberry",
   "channel": "latest",
   "repo_url": "https://github.com/Globberry/morphe-patches",
-  "created_at": "2026-11-11T07:30:00",
-  "version": "1.4.1",
-  "description": "## [1.4.1](https://github.com/Globberry/morphe-patches/compare/v1.4.0...v1.4.1) (2026-11-11)\n\n### 🐛 Bug Fixes\n\n* [Export] suite - remove the crashy LP4eSlPPu patch, make every patch ([9178d3b](https://github.com/Globberry/morphe-patches/commit/9178d3b611fd13fda2e38ecef8f48f598c971973))",
+  "created_at": "2026-11-12T03:58:14",
+  "version": "1.7.5",
+  "description": "## [1.7.5](https://github.com/Globberry/morphe-patches/compare/v1.7.4...v1.7.5) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* refresh repository metadata and README ([876a6af](https://github.com/Globberry/morphe-patches/commit/876a6afb2d9bb0206936473bf7af863590457a6e))",
   "apps": [
     {
       "app_name": "Keyflow - mobile editing app",
       "package": "com.angkin.keyflow",
       "patches": [
-        {
-          "name": "Keyflow Export Pro Gate Bypass",
-          "description": "Allows exporting projects that use Pro features by bypassing the Pro gate in the export pipeline.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "Keyflow Trusted Signer Bypass",
-          "description": "Always report the app signature as trusted so Pro is not reset when opening a project or exporting.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "Keyflow byYKY0yXO Signer Bypass",
-          "description": "Return a dummy signer identity string during export so the export path does not fail on re-signed APKs.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "Keyflow f6olX Goto Fix",
-          "description": "Replaces failure goto sites in f6olX with nop so all code paths reach Premium (Keyflow 1.5.10 export).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
         {
           "name": "PairIP License Check",
           "description": "Neuters PairIP license verification so the app runs without a valid license.",
@@ -57,7 +21,7 @@
         },
         {
           "name": "Pro Unlock",
-          "description": "Forces all Pro features enabled and replaces the Google Play confirmation with a fake success, so ad surfaces never appear.",
+          "description": "Forces all Pro features enabled, keeps Pro active after signer checks, and unlocks Pro exports (including the paid-export receipt check).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -66,7 +30,7 @@
         },
         {
           "name": "Signer Identity",
-          "description": "Forces the app's signer identity to match the original publisher certificate.",
+          "description": "Forces the app's signer identity, signature checks, and signer-identity string to match the original publisher certificate.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -74,89 +38,8 @@
           ]
         },
         {
-          "name": "[ALL] PairIP License Check",
-          "description": "Neuters PairIP license verification using fingerprint matching (version-robust).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[ALL] Pro Unlock",
-          "description": "Forces all Pro features enabled using fingerprint matching (version-robust for method name changes).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[ALL] Signer Identity",
-          "description": "Forces the app's signer identity to match the original publisher certificate (fingerprint-based, version-robust).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 1 kts6dAU4 Gate",
-          "description": "Always allow Pro features in the export Pro gate (Lkts6dAU4.NMGZ06).",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 2 kts6dAU4 Throw",
-          "description": "Do not throw the Pro-required exception (LwNKvkk7) during export.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 3 y88yfJ73C Allow",
-          "description": "Always let the export pass the LCtCUGg.y88yfJ73C abort check.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 4 ZFJe6vx50 Skip",
-          "description": "Never take the export-abort branch in LZFJe6vx50.invoke.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 5 kCg72Z4t State",
-          "description": "Publish PLAYING instead of PRO_REQUIRED/ERROR as export state.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 6 LCWcMAXf Error",
-          "description": "Replace the pre-export error message with an empty string.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "1.5.10"
-          ]
-        },
-        {
-          "name": "[Export] 7 LsvcJNUbK3 Allow",
-          "description": "Always allow the LsvcJNUbK3 sub-check of the export Pro gate.",
+          "name": "[Export] 12 Purchase Allow",
+          "description": "Always accept the paid-export purchase check (LP0JcGi9.MeOIJuj).",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -186,10 +69,10 @@
     }
   ],
   "patches_name": "Keyflow Patches",
-  "fingerprint": "17a67745575431580669cde5847ad485c18e0504e62181876da530d408bc7a7a",
-  "release_notes": "## [1.4.1](https://github.com/Globberry/morphe-patches/compare/v1.4.0...v1.4.1) (2026-11-11)\n\n### 🐛 Bug Fixes\n\n* [Export] suite - remove the crashy LP4eSlPPu patch, make every patch ([9178d3b](https://github.com/Globberry/morphe-patches/commit/9178d3b611fd13fda2e38ecef8f48f598c971973))\n",
-  "release_tag": "v1.4.1",
-  "release_date": "2026-11-11T07:30:50Z",
+  "fingerprint": "28c5eb1c82fad5304e2de74a5fa91facc78b2988296441482051905d0eb8341c",
+  "release_notes": "## [1.7.5](https://github.com/Globberry/morphe-patches/compare/v1.7.4...v1.7.5) (2026-11-12)\r\n\r\n### 🐛 Bug Fixes\r\n\r\n* refresh repository metadata and README ([876a6af](https://github.com/Globberry/morphe-patches/commit/876a6afb2d9bb0206936473bf7af863590457a6e))",
+  "release_tag": "v1.7.5",
+  "release_date": "2026-11-12T04:02:30Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/220804566?v=4&s=128",

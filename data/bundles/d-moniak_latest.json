@@ -2,9 +2,9 @@
   "bundle": "d-moniak",
   "channel": "latest",
   "repo_url": "https://github.com/SatanMerde/D-moniakPatches",
-  "created_at": "2026-11-10T07:52:37",
-  "version": "1.72.0",
-  "description": "## [1.72.0](https://github.com/SatanMerde/D-moniakPatches/compare/v1.71.1...v1.72.0) (2026-11-10)\n\n### ✨ New Features\n\n* **hotstar:** neutralize SGAI ad servers and SCTE live cricket ad pods ([f83c453](https://github.com/SatanMerde/D-moniakPatches/commit/f83c453f95556ad53f92c05097940c9cc1f3d2e7))",
+  "created_at": "2026-11-11T17:13:35",
+  "version": "1.73.1",
+  "description": "## [1.73.1](https://github.com/SatanMerde/D-moniakPatches/compare/v1.73.0...v1.73.1) (2026-11-11)\n\n### 🐛 Bug Fixes\n\n* **picturemushroom:** bypass splash connection error trap and enforce network readiness ([91dc950](https://github.com/SatanMerde/D-moniakPatches/commit/91dc9501e4f42fbd380c170b99a2b2797436afcb))",
   "apps": [
     {
       "app_name": "Moises: The Musician's AI App",
@@ -72,6 +72,40 @@
         }
       ],
       "developer": "au.com.shiftyjelly"
+    },
+    {
+      "app_name": "MT Manager",
+      "package": "bin.mt.plus",
+      "patches": [
+        {
+          "name": "Bypass Signature and Installer Verification - MT Manager (Experimental)",
+          "description": "Spoofs Google Play Store installation source and neutralizes Java-side APK signature and package verification checks in MT Manager. NOTE: Native integrity checks via libmtprotect.so may still require system-level signature spoofing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.26.11"
+          ]
+        },
+        {
+          "name": "Remove Ads and Update Prompts - MT Manager (Experimental)",
+          "description": "Removes in-app promotional banners and interstitial advertisements, disables forced update dialogs, and suppresses upgrade nag screens across MT Manager.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.26.11"
+          ]
+        },
+        {
+          "name": "Unlock VIP Features and Themes - MT Manager (Experimental)",
+          "description": "Unlocks MT Manager VIP capabilities (batch rename, advanced DEX and Arsc editors, syntax highlighting, XML text search and replace, VIP themes) by hooking VIP privilege getters, expiration checks, and Google Play Billing. WARNING: MT Manager incorporates native MTProtect anti-tamper (libmtprotect.so).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.26.11"
+          ]
+        }
+      ],
+      "developer": "bin.mt"
     },
     {
       "app_name": "Proton Mail: Encrypted Email",
@@ -226,34 +260,94 @@
       "patches": [
         {
           "name": "AMOLED Dark Theme - Claude AI (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Forces deep AMOLED pure black theme for Claude AI, optimizing contrast and reducing battery consumption on OLED displays.",
+          "description": "Forces deep AMOLED pure black theme for Claude AI, optimizing contrast and reducing battery consumption on OLED displays.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "1.261109.19"
+          ]
         },
         {
           "name": "Bypass Input Length & Upload Limits - Claude AI (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Removes client-side message input text length truncation and allows pasting massive codebases or prompts without mobile UI lag in Claude AI.",
+          "description": "Removes client-side message input text length truncation and allows pasting massive codebases or prompts without mobile UI lag in Claude AI.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "1.261109.19"
+          ]
+        },
+        {
+          "name": "Bypass Play Integrity & Installer Check - Claude AI (Experimental)",
+          "description": "Spoofs Google Play Store (com.android.vending) installation source and neutralizes client-side Play Integrity attestation during sign-in and session initialization.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.261109.19"
+          ]
         },
         {
           "name": "Disable Telemetry & Tracking - Claude AI (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Disables client-side analytical telemetry, performance metrics reporting, and tracker SDK calls in Claude AI.",
+          "description": "Disables client-side analytical telemetry, performance metrics reporting, and tracker SDK calls in Claude AI.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "1.261109.19"
+          ]
         },
         {
           "name": "Export Full Chat & Copy Markdown - Claude AI (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Enables full conversation history export to Markdown, copying entire discussion threads with intact code blocks directly to clipboard in Claude AI.",
+          "description": "Enables full conversation history export to Markdown, copying entire discussion threads with intact code blocks directly to clipboard in Claude AI.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "1.261109.19"
+          ]
         }
       ],
       "developer": "Anthropic PBC"
+    },
+    {
+      "app_name": "MacroDroid - Device Automation",
+      "package": "com.arlosoft.macrodroid",
+      "patches": [
+        {
+          "name": "Ad-Free and Remove Upgrade Nags - MacroDroid (Experimental)",
+          "description": "Removes banner and interstitial advertisements, disables Pro upgrade nag screens (AdvertActivity, MacroDroidProAdvertActivity2), and suppresses rewarded advert prompts across MacroDroid.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.5"
+          ]
+        },
+        {
+          "name": "Allow Screenshots and Scenes Capture - MacroDroid (Experimental)",
+          "description": "Removes FLAG_SECURE window flags from MacroDroid password prompts, variable value dialogs, and custom scene screens, permitting screen captures and screen recording without black screen blocking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.5"
+          ]
+        },
+        {
+          "name": "Unlimited Macros and Import - MacroDroid (Experimental)",
+          "description": "Removes the free-tier restriction limiting users to 5 macros. Enables creating, running, and importing an unlimited number of active automation macros and action blocks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.5"
+          ]
+        },
+        {
+          "name": "Unlock Pro and Unlimited Features - MacroDroid (Experimental)",
+          "description": "Bypasses Google Play Billing verification for MacroDroid Pro, unlocks all Pro-exclusive actions, triggers, and constraints, and enables full automation features without restriction.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.5"
+          ]
+        }
+      ],
+      "developer": "ArloSoft"
     },
     {
       "app_name": "TIDAL Music: HiFi sound",
@@ -539,31 +633,55 @@
     },
     {
       "app_name": "DeepL Translate",
-      "package": "com.deepl.mobile.android",
+      "package": "com.deepl.mobiletranslator",
       "patches": [
         {
-          "name": "Unlock Pro & Formality - DeepL (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Hooks Google Play Billing to bypass in-app purchase verification for DeepL Pro (tone and formality selection, extended translation limits, and dictionary features).",
+          "name": "Disable Analytics and Telemetry - DeepL (Experimental)",
+          "description": "Suppresses DAP (Data Analytics Pipeline), Statsig experimentation client, Sentry crash reporting, and usage tracking in DeepL to reduce data sent to DeepL servers.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "26.45"
+          ]
         },
         {
-          "name": "Unlock Unlimited Document & PDF Translations - DeepL (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Removes the monthly document translation limit (PDF, DOCX, PPTX), unlocks higher file size thresholds, and enables full document layout preservation in DeepL.",
+          "name": "Unlock Pro - DeepL (Experimental)",
+          "description": "Hooks Google Play Billing to bypass in-app purchase verification for DeepL Pro. Unlocks tone and formality selection, extended translation limits, and advanced dictionary features.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "26.45"
+          ]
         },
         {
-          "name": "Unlock Unlimited Glossaries & Writing Styles - DeepL (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Unlocks unlimited custom glossary terminology pairs and enables advanced professional writing styles (Academic, Technical, Casual, Business) in DeepL.",
+          "name": "Unlock Unlimited Document and PDF Translations - DeepL (Experimental)",
+          "description": "Removes the monthly document translation limit (PDF, DOCX, PPTX), unlocks higher file size thresholds, and enables full document layout preservation in DeepL.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "26.45"
+          ]
+        },
+        {
+          "name": "Unlock Unlimited Glossaries and Writing Styles - DeepL (Experimental)",
+          "description": "Unlocks unlimited custom glossary terminology pairs and enables advanced professional writing styles (Academic, Technical, Casual, Business) in DeepL.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.45"
+          ]
+        },
+        {
+          "name": "Unlock Voice Conversations and Transcript Pro - DeepL (Experimental)",
+          "description": "Unlocks DeepL Voice (real-time speech translation), multi-party Conversation mode, group voice sessions, and Voice Pro transcript features normally gated behind a paid plan.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.45"
+          ]
         }
       ],
-      "developer": "com.deepl"
+      "developer": "DeepL SE"
     },
     {
       "app_name": "Free Fire MAX x NARUTO",
@@ -827,7 +945,7 @@
           "compatible_versions": []
         }
       ],
-      "developer": "com.flightradar24free"
+      "developer": "Flightradar24 AB"
     },
     {
       "app_name": "Genius — Song Lyrics Finder",
@@ -842,6 +960,40 @@
         }
       ],
       "developer": "Genius Media Group, Inc."
+    },
+    {
+      "app_name": "Picture Mushroom - Mushroom ID",
+      "package": "com.glority.picturemushroom",
+      "patches": [
+        {
+          "name": "Ad-Free & Clean Experience - Picture Mushroom (Experimental)",
+          "description": "Removes in-app banner ads, interstitials, rewarded ad popups, and sponsored cards in Picture Mushroom.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.10.0"
+          ]
+        },
+        {
+          "name": "Allow Screenshots & Screen Recording - Picture Mushroom (Experimental)",
+          "description": "Disables Android FLAG_SECURE window restrictions to allow screenshots and screen recording across all Picture Mushroom identification screens and guides.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.10.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium & VIP - Picture Mushroom (Experimental)",
+          "description": "Unlocks Gold and Platinum VIP features in Picture Mushroom, including unlimited mushroom identifications, advanced edibility and toxicity guidance, foraging maps, mushroom book encyclopedia, AI chatbot consultations, removes subscription paywall prompts, and eliminates the startup network connection error trap.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.10.0"
+          ]
+        }
+      ],
+      "developer": "com.glority"
     },
     {
       "app_name": "Goodreads: Book Tracker & More",
@@ -1026,742 +1178,954 @@
           "description": "⚠️ [En cours de développement / Non testé] Overrides the feed flyout 'Play next in queue' with the Morphe video queue.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Alternative thumbnails - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to replace video thumbnails using the DeArrow API or image captures from the video.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Ambient mode - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to bypass power saving restrictions for Ambient mode and disable it entirely or in fullscreen.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "App refresh rate - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the app refresh rate.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Background & PiP Playback - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Enables background audio playback when the screen is locked or switching between apps, and unlocks Picture-in-Picture (PiP) mode without YouTube Premium.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
-          "name": "Block Video & Feed Ads - YouTube (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Strips pre-roll and mid-roll video advertisements, home feed sponsored cards, search result ads, shorts ads, and info card promos in YouTube.",
+          "name": "Block Video and Feed Ads - YouTube (Experimental)",
+          "description": "Strips pre-roll and mid-roll video advertisements, home feed sponsored cards, search result ads, Shorts ads, and info card promos in YouTube.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Bypass image region restrictions - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to use a different host for user avatar and channel images and can fix missing images that are blocked in some countries.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Bypass link redirects - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to bypass redirects and open the original link directly.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Captions - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable captions from being automatically enabled or to set caption cookies.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Change form factor - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the UI appearance to a phone, tablet, or automotive device.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Change header - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the header logo in the top left corner of the app.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Change start page - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to set which page the app opens in instead of the homepage.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Channel search - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to search inside the channel that is currently open instead of searching all of YouTube.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Check watch history domain name resolution - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Checks if the device DNS server is preventing user watch history from being saved.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Copy Video URL With Timestamp - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Adds a convenient option to copy the current video URL with the exact playback timestamp (?t=...) directly to the clipboard.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Copy video link - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to display buttons in the video player to copy video links.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Custom Playback Speed & High-Res Audio - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Unlocks speed slider up to 3.0x/5.0x and forces highest audio bitrate (Opus 160kbps / 256kbps) and default highest video resolution (1080p/1440p/4K) on Wi-Fi and Cellular.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Custom branding - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to change the app icon and app name. For mounted (root) installations the branding is applied while patching, because it cannot be changed from the app settings.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Custom player overlay opacity - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the opacity of the video player background when player controls are visible.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Declutter UI & Remove Shorts - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Hides Shorts tab from bottom navigation bar, hides Shorts shelf from Home and Subscriptions feeds, hides Create button (+), hides Playables, and removes End Screen suggestions.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable DRC Audio (Dynamic Range Compression) - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Disables dynamic range compression (DRC) in YouTube's audio engine, restoring original uncompressed audio dynamics, punchy bass, and full volume without artificial normalization.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable DRC audio - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable DRC (Dynamic Range Compression) audio.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable QUIC Protocol - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Disables Google's experimental QUIC (HTTP/3) UDP network protocol in YouTube, forcing reliable HTTP/2 TCP streams to bypass carrier and ISP video throttling.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable Shorts resuming on startup - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable Shorts from resuming on app startup when Shorts were last being watched.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable auto feed refresh - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to stop feeds from refreshing automatically after they become outdated.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable double tap actions - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable player double tap gestures.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable fullscreen gestures - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to selectively disable gestures for entering and exiting fullscreen mode, and to disable pinch-to-zoom.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable haptic feedback - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable haptic feedback in the player for various actions.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable layout updates - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable server side layout updates and use an older UI.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable player popup panels - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable panels (such as live chat) from opening automatically.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable playlist autoplay - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to stop a playlist from automatically advancing to the next video.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable rolling number animations - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to disable rolling number animations of video view count, user likes, and upload time.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable scrolling speed limit - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to remove limits of how fast the home and subscription feed can be scrolled.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable sign in to TV popup - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to disable the popups asking to sign into or connect to a TV on the same local network.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Disable video codecs - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to disable or force HDR, and to disable VP9 codecs.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Double tap to seek - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds additional double-tap to seek values to the YouTube settings menu.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Downloads - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds support to download videos with an external downloader app using the in-app download button or a video player action button.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Enable debugging - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options for debugging and exporting Morphe logs to the clipboard.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Exit fullscreen mode - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to automatically exit fullscreen mode when a video reaches the end.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Fix Video Playback Buffer & Freeze - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Bypasses Google's video stream throttling and 1:00 min playback buffering freezes by spoofing client payload parameters (iOS/Android VR/TV client identifiers).",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Fix Watch History & DNS Resolution - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Fixes broken or paused watch history when using private DNS, Pi-hole, or adblocking resolvers by rerouting playback tracking endpoints directly to fallback servers.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Force Original Audio Language (Bypass Auto-Dubbing) - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Forces YouTube to automatically play the creator's original authentic audio track, bypassing unwanted AI/human auto-dubbed voiceovers and language translations.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Force fullscreen landscape - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to rotate the player to landscape when entering fullscreen mode on tablets and other large screen devices.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Force original audio - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to always use the original audio track.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Fullscreen video scale - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to stretch or zoom videos to fill the screen in fullscreen mode.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "GmsCore Support - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Redirects Google Play Services and account authentication calls to GmsCore (MicroG / app.revanced.android.gms) to allow logging in to YouTube without root.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide Endscreen Cards & Suggestions - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Hides floating endscreen cards, suggested video boxes, channel stickers, and overlay elements that clutter the end of videos.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide Player Overlay Buttons (Cast, Autoplay, Remix) - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Hides unwanted player overlay buttons including Chromecast icon (prevents accidental casting), Autoplay toggle, Remix button, and Thanks button.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide Shorts components - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide components related to Shorts.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide ads - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide general ads, Premium promotions and video ads.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide autoplay preview - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide the autoplay preview at the end of videos.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide end screen cards - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide suggested video cards at the end of videos.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide end screen suggested video - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide the suggested video at the end of videos.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide info cards - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide info cards that creators add in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide layout components - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide general layout components.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide player flyout menu components - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide menu components that appear when pressing the gear icon in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide player overlay buttons - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide the player Cast, Autoplay, Captions, Previous & Next buttons, and to hide or change the opacity of the player control buttons background.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide related video overlay - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide the related video overlay shown when swiping up in fullscreen.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide related videos - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide related videos.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide status bar - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide the system status bar. Swipe down from the top edge to show it for a moment.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide timestamp - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide the timestamp in the bottom left of the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Hide video action buttons - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide video action buttons in fullscreen and portrait modes.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Loop video - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to loop videos and display loop video button in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Media notification controls - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to disable the seekbar and previous/next buttons in the media notification and headphone controls.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Miniplayer - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to change the in-app minimized player. Patching 21.28.206 and lower has more miniplayer types to choose from.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Mute button - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to show a player button that mutes the video audio.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Navigation bar - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to hide and change the bottom navigation bar (such as the Shorts button) and the upper navigation toolbar.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Network proxy - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds settings to route supported network requests through an HTTP or HTTPS proxy. Including this patch may cause connectivity problems on certain devices",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Old Video Quality Menu - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Restores the classic direct video resolution menu (2160p, 1440p, 1080p, 720p, 480p), bypassing Google's simplified and confusing 'Higher picture quality / Data saver' sub-menus.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Open Shorts in regular player - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to open Shorts in the regular video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Open channel of live avatar - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to prevent a channel's current live video from opening when tapping its avatar.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Open links externally - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to always open links in your browser instead of with the in-app browser.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Open system share sheet - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to always open the system share sheet instead of the in-app share sheet.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Open videos fullscreen - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to automatically open videos in fullscreen portrait or landscape mode.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Override YouTube Music buttons - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Overrides YouTube Music buttons to open Morphe Music or any compatible third-party client.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Picture-in-picture button - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to display a picture-in-picture button in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Play all - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to play all the videos from a channel and to display play all button in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Playback buffer - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the video playback buffer size.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Playback in feeds - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds the 'Playback in feeds' setting of YouTube to the Morphe settings, where it is always available even if YouTube hides it.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Playback speed - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to customize available playback speeds, set a default playback speed, and show a speed dialog button in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Player icon style - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the style of the player button icons.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "PoToken provider - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds option to get PoToken using an external PoToken minter app.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Pure AMOLED Black Theme - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Injects pure pitch-black (#000000) into YouTube player controls, navigation bars, comments bottom sheets, and panels for AMOLED battery saving.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Reload video - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to display reload video button in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Remember Video Quality - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Forces and locks preferred default video resolution (such as 1080p, 1440p, or 4K) separately for Wi-Fi and mobile cellular networks, overriding YouTube's adaptive downscaling.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Remember live stream playback position - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to remember the playback position of an ongoing live stream and resume from there when reopening that live stream.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Remove background playback restrictions - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Removes restrictions on background playback, including playing kids videos in the background.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Remove viewer discretion dialog - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to remove the dialog that appears when opening a video that has been age-restricted by accepting it automatically. This does not bypass the age restriction.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Restore original titles - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to show the original video titles, video descriptions and channel descriptions instead of the auto-translated ones.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Return YouTube Dislike - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Restores public dislike counts and like/dislike ratio bars on YouTube videos and Shorts using the official Return YouTube Dislike (RYD) API.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Sanitize sharing links - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Removes the tracking query parameters from shared links.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Save to Watch later - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to display save to Watch later button in the video player.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Seekbar - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to show old seekbar thumbnails, disable precise seeking when swiping up on the seekbar, slide to seek instead of playing at 2x speed when pressing and holding, tapping the player seekbar to seek, hiding the video player seekbar, enabling seeking in live streams, and expanding the live stream DVR duration.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Settings menu filter - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to hide items on the standard YouTube settings screen by their visible name.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Shorts autoplay - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to automatically play the next Short.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Shorts icon style - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to change the style of the Shorts action button icons.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Sound Boost (Audio Gain Amplification) - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Amplifies YouTube audio playback volume with software gain booster up to 200% for quiet videos, recordings, and podcasts.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "SponsorBlock - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Automatically detects and skips sponsored video segments, sponsor intros/outros, self-promotions, interaction reminders, and filler music in YouTube videos via the community SponsorBlock API.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Spoof app version - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to trick the app into thinking you are running an older version.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Spoof device dimensions - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds an option to spoof the device dimensions which can unlock higher video qualities.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Spoof video streams - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to spoof the client video streams to fix playback.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Swipe Controls - YouTube (Experimental)",
           "description": "⚠️ [Experimental / Untested] Enables intuitive vertical swipe gestures during fullscreen video playback to adjust volume (right side) and brightness (left side).",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Theme - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options for theming, and settings to change the app foreground and background colors.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Video quality - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds options to set default video qualities and always use the advanced video quality menu.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Voice over translation - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds additional voice over languages using text-to-speech synchronized to the video playback.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         },
         {
           "name": "Wide search bar - YouTube (Experimental)",
           "description": "⚠️ [En cours de développement / Non testé] Adds a wide search bar to the top of the home and subscription feed.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "21.44.539"
+          ]
         }
       ],
       "developer": "Google LLC"
@@ -1841,7 +2205,7 @@
           "compatible_versions": []
         }
       ],
-      "developer": "com.halfbrick"
+      "developer": "Halfbrick Studios"
     },
     {
       "app_name": "HEVY — Ruteo de camiones",
@@ -3481,6 +3845,40 @@
       "developer": "Apple Inc."
     },
     {
+      "app_name": "ShroomID: Mushroom Identifier",
+      "package": "com.shroomid",
+      "patches": [
+        {
+          "name": "Ad-Free & Clean Experience - ShroomID (Experimental)",
+          "description": "Removes in-app Google Mobile Ads (interstitial, rewarded, and banner ads) for an uninterrupted mushroom foraging experience.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.52.3"
+          ]
+        },
+        {
+          "name": "Allow Screenshots & Screen Recording - ShroomID (Experimental)",
+          "description": "Disables Android FLAG_SECURE window restrictions to allow screenshots and screen recording across all ShroomID mushroom identification and field guide screens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.52.3"
+          ]
+        },
+        {
+          "name": "Unlock Premium & Pro - ShroomID (Experimental)",
+          "description": "Unlocks full lifetime Premium & Pro subscription features in ShroomID, including AI mushroom identification, detailed edibility guides, spore prints, offline database access, and removes Adapty paywalls.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.52.3"
+          ]
+        }
+      ],
+      "developer": "ZH Creations"
+    },
+    {
       "app_name": "SILT",
       "package": "com.snapbreak.silt",
       "patches": [
@@ -3510,32 +3908,40 @@
       "package": "com.snapchat.android",
       "patches": [
         {
-          "name": "AMOLED Dark Theme & Declutter - Snapchat (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Injects pure OLED pitch black (#000000) into Snapchat chat screens and hides sponsored Discover tiles and intrusive Spotlight ads.",
+          "name": "AMOLED Dark Theme and Declutter - Snapchat (Experimental)",
+          "description": "Forces pure OLED black backgrounds for chats and conversation screens, disables commercial ad inserts in Stories and Spotlight, and hides sponsored Discover tiles. WARNING: Experimental patch with account suspension risks.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "14.31.0.56"
+          ]
         },
         {
-          "name": "Allow Screenshots & Anti-Screen Security - Snapchat (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Removes FLAG_SECURE restrictions on Snapchat chat and media viewer activities, allowing screen capture without black screen restrictions.",
+          "name": "Allow Screenshots and Anti-Screen Security - Snapchat (Experimental)",
+          "description": "Removes FLAG_SECURE window restrictions and neutralizes client-side screenshot detection triggers on Snapchat chat and media viewers. WARNING: Snapchat enforces aggressive native integrity and attestation checks (libclient.so) with high risk of account suspension.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "14.31.0.56"
+          ]
         },
         {
-          "name": "Start on Chat & Battery Saver - Snapchat (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Configures Snapchat to launch directly on the Chat conversation feed instead of opening the battery-draining camera viewfinder on startup.",
+          "name": "Start on Chat and Battery Saver - Snapchat (Experimental)",
+          "description": "Configures Snapchat to open directly on the Chat conversation feed instead of initializing the camera viewfinder on startup, saving battery. WARNING: Experimental patch with account suspension risks.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "14.31.0.56"
+          ]
         },
         {
           "name": "Unlock Snapchat+ Features - Snapchat (Experimental)",
-          "description": "⚠️ [Experimental / Untested] Unlocks client-side Snapchat+ UI features: custom app icons, post-view emojis, best friends pin badges, and dark mode controls.",
+          "description": "Unlocks client-side Snapchat+ UI features including custom app icons, post-view emojis, best friends pin badges, and dark appearance controls. Server-side features remain unverified. WARNING: Experimental patch with account suspension risks.",
           "use": true,
           "options": [],
-          "compatible_versions": []
+          "compatible_versions": [
+            "14.31.0.56"
+          ]
         }
       ],
       "developer": "com.snapchat"
@@ -4609,10 +5015,10 @@
     }
   ],
   "patches_name": "D-moniak Patches",
-  "fingerprint": "56878c3cab3458f9a4fe5908e47d42c4294d08a426d3747f07b2b1aa124d125a",
-  "release_notes": "## [1.71.1](https://github.com/SatanMerde/D-moniakPatches/compare/v1.71.0...v1.71.1) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **hotstar:** resolve app crash by removing fatal blacklist nulling and experimental codec overrides ([cb5ab25](https://github.com/SatanMerde/D-moniakPatches/commit/cb5ab25304e778d25e74e7f1f3857f7526be17f9))\n",
-  "release_tag": "v1.71.1",
-  "release_date": "2026-11-09T09:11:23Z",
+  "fingerprint": "62dcfbf8c7238e0f6a5f1930fee5781f8237da89992fef89f40a493fd6ce1b9e",
+  "release_notes": "## [1.73.1](https://github.com/SatanMerde/D-moniakPatches/compare/v1.73.0...v1.73.1) (2026-11-11)\n\n### 🐛 Bug Fixes\n\n* **picturemushroom:** bypass splash connection error trap and enforce network readiness ([91dc950](https://github.com/SatanMerde/D-moniakPatches/commit/91dc9501e4f42fbd380c170b99a2b2797436afcb))\n",
+  "release_tag": "v1.73.1",
+  "release_date": "2026-11-11T17:14:38Z",
   "isPreRelease": false,
   "stars": 16,
   "avatarUrl": "https://avatars.githubusercontent.com/u/216173197?v=4",

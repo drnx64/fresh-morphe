@@ -2,9 +2,9 @@
   "bundle": "fangkampanat",
   "channel": "latest",
   "repo_url": "https://github.com/fangkampanat/google-maps-automotive-patches",
-  "created_at": "2026-11-09T12:50:55",
-  "version": "0.1.6",
-  "description": "Runs the Android Automotive build of Google Maps (26.10.120003.E) on BYD DiLink 3 head units (Android 10) with MicroG-RE 7.3.0: sign-in, map, search, navigation and voice, UI density, driver side and color scheme settings, 3D buildings in the map layers, the car's battery for EV routing (on by default on the tested BYD Dolphin) and the battery to arrive with at charging stops and at the destination, Send to car from phone Maps with a car name you choose, an in-app problem report that is sent only after you review it, a daily check for a newer release, and a safe mode with feature switches. The app is named \"Maps\" unless you set another name in the App name option. BYD battery, Send to car, the BYD location flicker fix, BYD navigation volume and 3D buildings are separate patches. Requires Morphe Desktop 2.1.0 or newer.",
+  "created_at": "2026-11-11T14:47:22",
+  "version": "0.1.7",
+  "description": "Runs the Android Automotive build of Google Maps (26.10.120003.E) on BYD DiLink 3 head units (Android 10) with MicroG-RE 7.3.0: sign-in, map, search, navigation and voice, UI density, language, driver side and color scheme settings, 3D buildings in the map layers, the car's battery for EV routing (on by default on the tested BYD Dolphin and on BYD model ids 128 and 138) and the battery to arrive with at charging stops and at the destination, Send to car from phone Maps with a car name you choose, an in-app problem report that is sent only after you review it, a daily check for a newer release, and a safe mode with feature switches. The app is named \"Maps\" unless you set another name in the App name option. BYD battery, Send to car, the BYD location flicker fix, BYD navigation volume and 3D buildings are separate patches. Requires Morphe Desktop 2.1.0 or newer.",
   "apps": [
     {
       "app_name": "Google Maps",
@@ -19,7 +19,7 @@
         },
         {
           "name": "BYD battery (EV)",
-          "description": "Feeds the BYD battery into Maps' EV routing (battery on arrival, chargers). On by default on the tested BYD Dolphin, off with an \"untested\" notice on other BYD models; a Settings row turns it on or off and sets the battery to arrive with at charging stops and at the destination.",
+          "description": "Feeds the BYD battery into Maps' EV routing (battery on arrival, chargers). On by default on the tested BYD Dolphin and on BYD model ids 128 and 138, where owners' reports show it working; off with an \"untested\" notice on other BYD models and on DiLink 5. A Settings row turns it on or off and sets the battery to arrive with at charging stops and at the destination.",
           "use": true,
           "options": [],
           "compatible_versions": []
@@ -40,7 +40,7 @@
         },
         {
           "name": "Google Maps Automotive for MicroG-RE",
-          "description": "Runs Google Maps for Android Automotive on Android 10 with MicroG-RE 7.3.0, named \"Maps\" unless the App name option says otherwise. Adds UI density, driver side and color scheme settings, a problem report, an update check and a safe mode.",
+          "description": "Runs Google Maps for Android Automotive on Android 10 with MicroG-RE 7.3.0, named \"Maps\" unless the App name option says otherwise. Adds UI density, language, driver side and color scheme settings, a problem report, an update check and a safe mode.",
           "use": true,
           "options": [
             {
@@ -62,10 +62,10 @@
     }
   ],
   "patches_name": "Maps Automotive Patches",
-  "fingerprint": "4fddbc964e5a1b20c68f117f80b262f9bcb86457950552c99518f6f9961bb3a7",
-  "release_notes": "### New\n\n- **Color scheme** in Settings: Auto, Day or Night. BYD keeps the head unit in night mode, so Maps showed night colors all day. Auto uses night colors only while the low beam is on.\n- **Updates** in Settings: Once a day the app checks for a new release (you can turn this off) and posts one silent notification per version. Patch new versions with Morphe Desktop.\n\n### BYD battery\n\n- On cars with BYD's energy table, Maps plans with that table adjusted for your car. The app measures what the A/C and electronics draw while the car stands, and compares the battery each guided route uses with Maps' forecast.\n- The dialog also shows battery health and temperature, Maps' forecast against arrival for recent guided drives, and **Export records**.\n\n### Send to car\n\n- The Settings row checks MicroG-RE's battery whitelist, push registration and the network, and shows the car's name and the last trip received.\n- Problem reports also show what Send to car depends on.\n- Keep MicroG-RE's **Device registration** on and turn off Maps in BYD's **Disable Autostart** (README, Install).\n\nNeeds Morphe Desktop 2.1.0 or newer.\n\nTested on a BYD Dolphin (DiLink 3.0, Android 10) with Google Maps (Android Automotive) 26.10.120003.E and MicroG-RE 7.3.0. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.6.mpp` SHA-256: `4caaa279ad10e6771680b04d15f31b161ea5c42b80b238425770a026cd47e0e7`\n",
-  "release_tag": "v0.1.6",
-  "release_date": "2026-11-09T16:20:48Z",
+  "fingerprint": "d82592d64c83f37a3d398fe638afeaa8695084efc56e0b85eb557f7c7d7cdce8",
+  "release_notes": "### New\n\n- **Language** in Settings: System, English or ไทย for this app, whatever the head unit's language. Maps' own screens, the app's dialogs and Report Maps follow it after a restart.\n- Shorter BYD battery, Send to car, Updates and Report Maps screens that put the main answer first. The problem report still has every detail.\n\n### BYD battery\n\n- On by default for BYD model ids 128 and 138 too, where owners' reports show it working. On other models and on DiLink 5 it still starts off.\n- The dialog shows the capacity as usable and from the car's readings, so Maps shows the same battery % as the car. It is usually a few percent below the spec sheet (#12).\n- The app ignores an A/C and electronics draw above 2.5 kW measured while the car stands, in case another model reports its current on a different scale.\n\n### Send to car\n\n- The app asks MicroG-RE to reconnect its push connection when Maps starts or comes into view, every 3 minutes while it is on screen, and from the status check. This should cut the trips that came minutes late while the connection was down. It also reaches a MicroG-RE that the head unit force-stopped, as some DiLink 5 units do (#12).\n- The app retries a trip link for up to 30 s after a cold start, and keeps a trip that arrives while Maps' screen closes.\n- The status check shows the last push from Google and a trip that is waiting in a notification.\n\n### Fixes\n\n- Without the ADB step, MicroG-RE's battery dialog showed raw text keys at every start (#9). It now says what to set, in English or Thai, and OK closes it.\n- **Driver side** Auto also reads the steering wheel position that DiLink 5 head units report (#4). Not tested here.\n- A system crash when a Maps screen resumes on a display that is gone no longer counts toward safe mode, because turning features off does not prevent it.\n\nNeeds Morphe Desktop 2.1.0 or newer.\n\nTested on a BYD Dolphin (DiLink 3.0, Android 10) with Google Maps (Android Automotive) 26.10.120003.E and MicroG-RE 7.3.0. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.7.mpp` SHA-256: `64564fea35afaf80959e55a857fc7861bd6ef52f24a5ba3bbb01bcb037432299`\n",
+  "release_tag": "v0.1.7",
+  "release_date": "2026-11-11T15:44:08Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/11970624?v=4&s=128",

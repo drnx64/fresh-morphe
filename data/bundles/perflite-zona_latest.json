@@ -2,9 +2,9 @@
   "bundle": "perflite-zona",
   "channel": "latest",
   "repo_url": "https://github.com/PerfLite/morphe-patches-zona",
-  "created_at": "2026-11-01T10:48:00",
-  "version": "1.2.4",
-  "description": "Патчи к FreeZona World. В версии 1.2.4 добавлена поддержка FreeZona 3.0.77 (1077), исправлена смена ориентации в ландшафт (Force landscape player) для версии 3.0.77, устранена ошибка перекрашивания иконки в отдельном приложении, безопасно отключена аналитика AppMetrica без падения приложения, а также выполнен переход на Morphe Patcher 2.0.0.",
+  "created_at": "2026-11-11T13:42:00",
+  "version": "1.2.5",
+  "description": "Патчи к FreeZona World. В версии 1.2.5 добавлена поддержка FreeZona 3.0.78 (1078), обновлены хуки выбора качества и ориентации под изменённую схему обфускации R8, оптимизировано отключение телеметрии и аналитики.",
   "apps": [
     {
       "app_name": "Zona",
@@ -18,7 +18,8 @@
           "compatible_versions": [
             "3.0.75",
             "3.0.76",
-            "3.0.77"
+            "3.0.77",
+            "3.0.78"
           ]
         },
         {
@@ -29,7 +30,8 @@
           "compatible_versions": [
             "3.0.75",
             "3.0.76",
-            "3.0.77"
+            "3.0.77",
+            "3.0.78"
           ]
         },
         {
@@ -57,7 +59,8 @@
           "compatible_versions": [
             "3.0.75",
             "3.0.76",
-            "3.0.77"
+            "3.0.77",
+            "3.0.78"
           ]
         },
         {
@@ -73,7 +76,8 @@
           "compatible_versions": [
             "3.0.75",
             "3.0.76",
-            "3.0.77"
+            "3.0.77",
+            "3.0.78"
           ]
         },
         {
@@ -101,7 +105,8 @@
           "compatible_versions": [
             "3.0.75",
             "3.0.76",
-            "3.0.77"
+            "3.0.77",
+            "3.0.78"
           ]
         }
       ],
@@ -109,10 +114,10 @@
     }
   ],
   "patches_name": "Zona Patches",
-  "fingerprint": "701537dd800ba8a8771e761b61d26283aa5e10cd3a67d5b486cea5e299ace2f5",
-  "release_notes": "## 🇬🇧 English\n\n### What's new\n- Support for FreeZona World `3.0.77` (versionCode 1077)\n- Migration to Morphe Patcher 2.0.0\n- Streamlined patches exclusively tailored for FreeZona World\n\n### Fixes\n- Fixed orientation handling in Force landscape player for FreeZona 3.0.77 (support orientation constant 6)\n- Fixed app startup crash by keeping AppMetrica SDK activation intact while safely blocking telemetry report methods\n- Fixed adaptive launcher icon recoloring in \"Install as a separate app\" for FreeZona 3.0.77 (`res/Qr.xml`, `res/0w.xml`)\n\n---\n\n## 🇷🇺 Русский\n\n### Что нового\n- Добавлена поддержка FreeZona World `3.0.77` (код версии 1077)\n- Переход на Morphe Patcher 2.0.0\n- Патчи оптимизированы исключительно под FreeZona World (удалены избыточные дублирующие патчи)\n\n### Исправления\n- Исправлено переключение в альбомную ориентацию (Force landscape player) для FreeZona 3.0.77 (обработка константы 6)\n- Устранён вылет при запуске приложения: активация AppMetrica SDK сохранена, а сбор и отправка телеметрии безопасно заглушены\n- Исправлено перекрашивание адаптивной иконки в патче «Установка отдельным приложением» для FreeZona 3.0.77 (`res/Qr.xml`, `res/0w.xml`)\n\n---\n\n**Full changelog / Полный список изменений:** https://github.com/PerfLite/morphe-patches-zona/compare/v1.2.3...v1.2.4\n",
-  "release_tag": "v1.2.4",
-  "release_date": "2026-11-01T05:55:03Z",
+  "fingerprint": "002b4b219350b84b1c2ab9f84f794aea82a98d2fb178683cd689ee3c7d317223",
+  "release_notes": "## 🇬🇧 English\n\n### What's new\n- Support for FreeZona World `3.0.78` (versionCode 1078)\n- Adapted patch anchors to R8 obfuscator changes (repositioned class and method mappings)\n\n### Fixes\n- Fixed Preferred quality priority hooks for FreeZona 3.0.78 (added `Ly1c$a;->a` resolution filter, `Lv5e;-><init>` quality constructor, and updated stream evaluation loop string)\n- Fixed Force landscape player to handle lambda method references (`Lbrc;->invoke()Ljava/lang/Object;`)\n- Fixed Disable analytics hooks to support modified ClickHouse sender signatures and dispatcher class structure\n\n---\n\n## 🇷🇺 Русский\n\n### Что нового\n- Добавлена поддержка FreeZona World `3.0.78` (код версии 1078)\n- Адаптированы хуки патчей под обновлённую схему обфускации R8\n\n### Исправления\n- Исправлен патч «Приоритет качества» (Preferred quality priority) для FreeZona 3.0.78: добавлены хуки парсера разрешения `Ly1c$a;->a`, конструктора `Lv5e;-><init>` и обновлена сигнатурная строка цикла оценки стримов\n- Исправлен патч «Автоповорот в ландшафт» (Force landscape player): снято ограничение на возвращаемый тип для поддержки лямбды `Lbrc;->invoke()` в 3.0.78\n- Исправлен патч «Отключение аналитики» (Disable analytics): обновлены правила поиска диспетчера аналитики и отправителя ClickHouse с учётом статических методов и изменённого количества аргументов\n\n---\n\n**Full changelog / Полный список изменений:** https://github.com/PerfLite/morphe-patches-zona/compare/v1.2.4...v1.2.5\n",
+  "release_tag": "v1.2.5",
+  "release_date": "2026-11-11T09:03:11Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/96340456?v=4&s=128",

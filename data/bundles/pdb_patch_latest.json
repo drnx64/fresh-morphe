@@ -2,10 +2,59 @@
   "bundle": "pdb_patch",
   "channel": "latest",
   "repo_url": "https://github.com/madushas/pdb_patch",
-  "created_at": "2026-11-09T20:39:03",
-  "version": "0.5.9",
-  "description": "## [0.5.9](https://github.com/madushas/morphe-patches-custom/compare/v0.5.8...v0.5.9) (2026-11-10)\n\n### ✨ New Features\n* add patch support for Hutch, Material Capsule, Nike Run Club, Fitbit/Health, adidas Running and TextNow ([e717b96](https://github.com/madushas/morphe-patches-custom/commit/e717b96))",
+  "created_at": "2026-11-12T01:28:50",
+  "version": "0.6.0",
+  "description": "## [0.6.0](https://github.com/madushas/morphe-patches-custom/compare/v0.5.9...v0.6.0) (2026-11-12)\n\n### ✨ New Features\n* five new app patch sets, fail-closed guards, category metadata, tooling ([dbcbf86](https://github.com/madushas/morphe-patches-custom/commit/dbcbf86))\n\n### 🧹 Changes\n* fix(strava): close the upsell leak with a shape predicate and chokepoints ([1468ef7](https://github.com/madushas/morphe-patches-custom/commit/1468ef7))\n* security: remove hardcoded account email/name from tools/pdblogin ([be5317e](https://github.com/madushas/morphe-patches-custom/commit/be5317e))",
   "apps": [
+    {
+      "app_name": "Proton VPN: Fast & Secure VPN",
+      "package": "ch.protonvpn.android",
+      "patches": [
+        {
+          "name": "Disable telemetry (Sentry)",
+          "description": "Stops Proton VPN's Sentry crash/telemetry reporting and disables the large-metrics sampling multiplier. Accounts and VPN stay unaffected.",
+          "use": true,
+          "options": [
+            {
+              "key": "protonDisableTelemetry",
+              "description": "Disable Sentry reporting and Proton's large-metrics sampling."
+            }
+          ],
+          "compatible_versions": [
+            "5.20.98.0"
+          ]
+        },
+        {
+          "name": "Remove server-change delay",
+          "description": "Sets the \"change server\" wait to zero and raises the attempt limit, so you can switch VPN servers freely.",
+          "use": true,
+          "options": [
+            {
+              "key": "protonRemoveServerChangeDelay",
+              "description": "No wait and no attempt cap when changing VPN servers."
+            }
+          ],
+          "compatible_versions": [
+            "5.20.98.0"
+          ]
+        },
+        {
+          "name": "Unlock Proton Plus features",
+          "description": "Makes the client treat the account as Proton Plus: unlocks the settings features, NetShield levels and the connection limit. Server-side plan enforcement (Plus-only servers) cannot be changed by a client patch.",
+          "use": true,
+          "options": [
+            {
+              "key": "protonUnlockPlusFeatures",
+              "description": "Treat the account as Proton Plus in the client (features, NetShield levels and the device/connection limit)."
+            }
+          ],
+          "compatible_versions": [
+            "5.20.98.0"
+          ]
+        }
+      ],
+      "developer": "Proton AG"
+    },
     {
       "app_name": "TextNow",
       "package": "com.enflick.android.textnow",
@@ -75,6 +124,92 @@
       "developer": "com.fitbit"
     },
     {
+      "app_name": "Glassdoor | Jobs & Careers",
+      "package": "com.glassdoor.app",
+      "patches": [
+        {
+          "name": "Bypass PairIP",
+          "description": "Disables Glassdoor's PairIP integrity/licence verification (full VM + native check), restores the real Application class, removes the licence activity, and restores the runtime strings the VM would have provided.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.15.1"
+          ]
+        },
+        {
+          "name": "Disable AppsFlyer",
+          "description": "No-ops AppsFlyer's start() and logEvent() entry points, so no install attribution or analytics events are sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.15.1"
+          ]
+        },
+        {
+          "name": "Disable tracker components",
+          "description": "Disables the AppsFlyer install-referrer receiver/provider and any Google measurement component, turns Crashlytics and Firebase/Google-Analytics collection off, and removes the install-referrer permission. FCM push is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.15.1"
+          ]
+        },
+        {
+          "name": "Fix launcher theme (PairIP VM)",
+          "description": "Points the launcher activity at the AppCompat @style/AppTheme instead of the splash theme, whose runtime theme-swap lives in the removed PairIP VM.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "13.15.1"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Removes the advertising-ID, ad-services and install-referrer permissions (and disables any ad-SDK init provider). Glassdoor ships no third-party ad SDK.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.15.1"
+          ]
+        }
+      ],
+      "developer": "Indeed, Inc."
+    },
+    {
+      "app_name": "Microsoft Teams",
+      "package": "com.microsoft.teams",
+      "patches": [
+        {
+          "name": "Disable AppCenter telemetry",
+          "description": "No-ops Microsoft AppCenter's SDK bootstrap (configureAndStartServices / startServices) so the bundled telemetry/crash SDK never initialises.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1416/1.0.0.2026202302"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Microsoft Teams ships no ad SDK; this strips the advertising-ID, ad-services and install-referrer permissions and disables any ad-SDK init provider.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1416/1.0.0.2026202302"
+          ]
+        },
+        {
+          "name": "Unbloat (trim manifest)",
+          "description": "Removes the third-party launcher-badge permission zoo Teams declares (Samsung/HTC/Sony/Huawei/OPPO/badger), which only add manifest bulk.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1416/1.0.0.2026202302"
+          ]
+        }
+      ],
+      "developer": "Microsoft Corporation"
+    },
+    {
       "app_name": "Nike Run Club - Running Coach",
       "package": "com.nike.plusgps",
       "patches": [
@@ -84,7 +219,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.80.0"
+            "4.80.0",
+            "4.80.1"
           ]
         },
         {
@@ -93,7 +229,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.80.0"
+            "4.80.0",
+            "4.80.1"
           ]
         },
         {
@@ -102,7 +239,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.80.0"
+            "4.80.0",
+            "4.80.1"
           ]
         },
         {
@@ -111,7 +249,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.80.0"
+            "4.80.0",
+            "4.80.1"
           ]
         }
       ],
@@ -150,6 +289,54 @@
         }
       ],
       "developer": "Hutch Sri Lanka"
+    },
+    {
+      "app_name": "Shima: Dynamic Island",
+      "package": "com.piyush.island",
+      "patches": [
+        {
+          "name": "Bypass PairIP",
+          "description": "Disables Shima+'s PairIP licence/trial verification, restores the real Application class and removes the licence activity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.5.1"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "Adds the official analytics/Crashlytics collection opt-out flags, disables any Google measurement component and removes the install-referrer permission. Shima+ itself ships no telemetry SDK.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.5.1"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Shima+ ships no ad SDK or ad placement; this additionally disables any ad-SDK auto-init provider and removes the advertising-ID / ad-services / install-referrer permissions so no advertising ID is exposed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.5.1"
+          ]
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Forces every \"pro_unlock\" entitlement check to true, unlocking the client-side Pro features without touching the signed purchase store.",
+          "use": true,
+          "options": [
+            {
+              "key": "shimaUnlockPro",
+              "description": "Force all pro_unlock entitlement checks to true."
+            }
+          ],
+          "compatible_versions": [
+            "0.5.1"
+          ]
+        }
+      ],
+      "developer": "Piyush M."
     },
     {
       "app_name": "Material Capsule: Island-Style",
@@ -322,8 +509,8 @@
           ]
         },
         {
-          "name": "Remove Data Peek upsells",
-          "description": "Removes server-driven subscription upsells (Data Peek carousel, replay card, prediction banner, SubPreview banners, Maps explore card) with runtime toggles in Extra Settings, and strips the Settings Subscriptions section.",
+          "name": "Remove telemetry",
+          "description": "Strips Sentry, Embrace and Facebook analytics, disables Firebase analytics, and empties the advertising ID (push notifications keep working).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -334,8 +521,8 @@
           ]
         },
         {
-          "name": "Remove telemetry",
-          "description": "Strips Sentry, Embrace and Facebook analytics, disables Firebase analytics, and empties the advertising ID (push notifications keep working).",
+          "name": "Remove upsells & promos",
+          "description": "Removes Strava's subscription upsells and promos: server-driven modular upsells (matched by an upsell-shape predicate so new server types stay covered), subscription bottom-sheet upsells, and the dedicated upsell screens (Year in Sport 2026, Best Efforts Data Peek, Device Connect). Runtime toggles in Extra Settings; the Settings Subscriptions section is stripped.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -359,6 +546,40 @@
         }
       ],
       "developer": "com.strava"
+    },
+    {
+      "app_name": "Jooble — Job Search App",
+      "package": "jooble.org",
+      "patches": [
+        {
+          "name": "Disable AppsFlyer",
+          "description": "No-ops AppsFlyer's start() and logEvent() entry points, so no install attribution or analytics events are sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.47.0"
+          ]
+        },
+        {
+          "name": "Disable trackers",
+          "description": "Disables AppsFlyer/Facebook/Google measurement components, switches Facebook app events and Firebase/Crashlytics/Google-Analytics collection off, and removes the install-referrer permission. Push notifications are kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.47.0"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Stops Google Mobile Ads from initialising (removes the AdMob app id) and strips the advertising-ID, ad-services and install-referrer permissions. Ad slots in the Flutter UI cannot be removed, but they no longer fill.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.47.0"
+          ]
+        }
+      ],
+      "developer": "Jooble"
     },
     {
       "app_name": "MyDialog",
@@ -619,10 +840,10 @@
     }
   ],
   "patches_name": "Pdb Patches",
-  "fingerprint": "ecd358ec02468c77b1f113744d96c7571727efa0fa242e4483c58c26ba6046ba",
-  "release_notes": "## [0.5.9](https://github.com/madushas/morphe-patches-custom/compare/v0.5.8...v0.5.9) (2026-11-10)\n\n### ✨ New Features\n* add patch support for Hutch, Material Capsule, Nike Run Club, Fitbit/Health, adidas Running and TextNow ([e717b96](https://github.com/madushas/morphe-patches-custom/commit/e717b96))\n",
-  "release_tag": "v0.5.9",
-  "release_date": "2026-11-09T20:40:34Z",
+  "fingerprint": "fc7ae68fec09e83689aa1517117cb5ebcd4f67831ff0052433c062991b1395e0",
+  "release_notes": "## [0.6.0](https://github.com/madushas/morphe-patches-custom/compare/v0.5.9...v0.6.0) (2026-11-12)\n\n### ✨ New Features\n* five new app patch sets, fail-closed guards, category metadata, tooling ([dbcbf86](https://github.com/madushas/morphe-patches-custom/commit/dbcbf86))\n\n### 🧹 Changes\n* fix(strava): close the upsell leak with a shape predicate and chokepoints ([1468ef7](https://github.com/madushas/morphe-patches-custom/commit/1468ef7))\n* security: remove hardcoded account email/name from tools/pdblogin ([be5317e](https://github.com/madushas/morphe-patches-custom/commit/be5317e))\n",
+  "release_tag": "v0.6.0",
+  "release_date": "2026-11-12T01:28:57Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/44031016?v=4&s=128",
