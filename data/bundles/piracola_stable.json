@@ -2,9 +2,9 @@
   "bundle": "piracola",
   "channel": "stable",
   "repo_url": "https://github.com/Piracola/Pixiv-Patched",
-  "created_at": "2026-11-11T12:39:49",
-  "version": "1.6.0",
-  "description": "## [1.6.0](https://github.com/Piracola/Pixiv-Patched/compare/v1.5.0...v1.6.0) (2026-11-11)\n\n### ✨ New Features\n\n* **searchranking:** fill the popular tab from the free preview or local bookmark order ([d29e422](https://github.com/Piracola/Pixiv-Patched/commit/d29e4226b9d0b7b5343d5f4290461571f8370f22))",
+  "created_at": "2026-11-12T16:29:53",
+  "version": "1.7.2",
+  "description": "## [1.7.2](https://github.com/Piracola/Pixiv-Patched/compare/v1.7.1...v1.7.2) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* **ui:** draw the settings groups as rounded cards ([f5ce60c](https://github.com/Piracola/Pixiv-Patched/commit/f5ce60c9266090eb61dde54ae07181ae313ae730))",
   "apps": [
     {
       "app_name": "pixiv",
@@ -12,47 +12,62 @@
       "patches": [
         {
           "name": "Pixiv AI Work Flagger",
-          "description": "Identifies AI-generated works, dims thumbnails with an [AI] badge (or hides them completely), displays a full-width warning banner below the top toolbar on artwork detail, adds title [AI] pill, auto-blocks AI artists, and provides in-app settings with tag editor.",
+          "description": "Identifies AI-generated works from Pixiv's illustAiType field, dims their thumbnails with an [AI] badge or hides them, adds a warning banner and an [AI] title pill on the detail screen, and can auto-block AI artists or drop works whose tags match a blacklist. Adjustable in the Pixiv-Patched page.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv Adblocker",
-          "description": "Eliminates bottom advertising banners and interstitials across all screens without layout padding, suppresses rate-this-app dialogs, and hides sponsored works in feeds.",
+          "description": "Removes the bottom banner frame on every screen, blocks AppLovin interstitials, suppresses rate-this-app dialogs, and hides sponsored works in feeds and on the illustration detail screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
+          ]
+        },
+        {
+          "name": "Pixiv Bookmark Threshold",
+          "description": "Drops works below the chosen bookmark count from search results on the device, for illusts and novels alike, and tops a short page up from the following pages so it does not turn blank. The request itself is left alone, so the floor works with search words in any language. Adjustable in the Pixiv-Patched page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv Browsing History",
-          "description": "Records the illustrations, manga and novels opened in the app into an on-device browsing history, and shows it in the app's own history screen (manga and novels apart) instead of Pixiv's server-side list.",
+          "description": "Records the illustrations, manga and novels opened in the app into a history kept on the device, and takes over Pixiv's history screen with it (manga and novels on separate tabs).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv Downloader",
-          "description": "Adds a button to the illustration and manga detail view to download original full-quality artwork directly to your Photos library with clean metadata filenames.",
+          "description": "Adds a save button to the illustration and manga detail screen that writes the original artwork to Pictures/Pixiv, named after the work id, title and author. Android 9 and older save into the app's private folder.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv Enhanced Viewer & Instant Zoom",
-          "description": "Displays the standard-resolution artwork as an instant placeholder while the full-resolution image loads, allows immediate pinch-to-zoom/pan preserving zoom coordinates upon high-res load, and shows a discreet loading indicator.",
+          "description": "Shows the standard-resolution artwork as an instant placeholder while the full-resolution image loads, so pinch-to-zoom and panning work right away and keep their position when the full image replaces the placeholder.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
@@ -61,16 +76,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv OLED Dark Theme",
-          "description": "Overrides dark gray surface and background colors with pure pitch black (#ff000000) for OLED battery savings and true high-contrast dark mode.",
+          "description": "Overrides the dark theme's surface and background colours with pure black (#ff000000).",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
@@ -79,16 +96,18 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv Popular Search Unlock",
-          "description": "Fakes the premium flag in the search pager so the app asks for popular_desc. Pixiv still answers a free account with date order, so use Pixiv Popular Search Trial instead.",
+          "description": "Fakes the premium flag in the search pager so the app asks for popular_desc. Pixiv still answers a free account with date order.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
@@ -97,25 +116,28 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv Search Ranking",
-          "description": "Fills the Popular search tab on a free account: either with Pixiv's free popularity preview (about 30 works) or by re-sorting the page by bookmark count. Selected in the Pixiv-Patched page.",
-          "use": false,
+          "description": "Fills the Popular search tab on a free account with Pixiv's free popularity preview (about 30 illusts or novels), for both illust and novel search. Adjustable in the Pixiv-Patched page.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         },
         {
           "name": "Pixiv-Patched Drawer Entry",
-          "description": "Adds a Pixiv-Patched item to Pixiv's home drawer that opens a page with the state of every patch, the AI work settings and the browsing history kept on this device.",
+          "description": "Adds a Pixiv-Patched item to Pixiv's home drawer. The page it opens holds the AI work display settings, the popular-search ranking and the bookmark threshold, shows the state of the other patches, and lists the browsing history kept on this device.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.202.1"
+            "6.202.1",
+            "6.203.0"
           ]
         }
       ],
@@ -123,10 +145,10 @@
     }
   ],
   "patches_name": "PixivPatched",
-  "fingerprint": "85b8634d6cef1be6162ad4ff9ba63a3f2931d345218fce355b1d3c2286f472d6",
-  "release_notes": "## [1.6.0](https://github.com/Piracola/Pixiv-Patched/compare/v1.5.0...v1.6.0) (2026-11-11)\n\n### ✨ New Features\n\n* **searchranking:** fill the popular tab from the free preview or local bookmark order ([d29e422](https://github.com/Piracola/Pixiv-Patched/commit/d29e4226b9d0b7b5343d5f4290461571f8370f22))\n",
-  "release_tag": "v1.6.0",
-  "release_date": "2026-11-11T12:40:45Z",
+  "fingerprint": "b193479e1f9d94db6ffda882af9d23cdb59a560ef2b16109d272deb76a6e9b27",
+  "release_notes": "## [1.7.2](https://github.com/Piracola/Pixiv-Patched/compare/v1.7.1...v1.7.2) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* **ui:** draw the settings groups as rounded cards ([f5ce60c](https://github.com/Piracola/Pixiv-Patched/commit/f5ce60c9266090eb61dde54ae07181ae313ae730))\n",
+  "release_tag": "v1.7.2",
+  "release_date": "2026-11-12T16:30:41Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/116626041?v=4&s=128",

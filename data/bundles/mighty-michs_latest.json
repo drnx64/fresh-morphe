@@ -2,9 +2,9 @@
   "bundle": "mighty-michs",
   "channel": "latest",
   "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
-  "created_at": "2026-11-08T08:23:32",
+  "created_at": "2026-11-12T13:17:05",
   "version": "1.14.0",
-  "description": "## [1.14.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.13.0...v1.14.0) (2026-11-08)\n\nBug fixes and new app patches. See GitHub release notes for details.",
+  "description": "## [1.15.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.14.1...v1.15.0) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* point patches-bundle.json to existing v1.14.0 asset after 1.14.1 removal [skip ci] ([4c4c6c0](https://github.com/mich111discord/MightyMichs-Patches/commit/4c4c6c0fc19c8cae875f97bbd788ddc7a03fdb0a))\n* **screentranslate:** bypass PairIP Play install gate ([#49](https://github.com/mich111discord/MightyMichs-Patches/issues/49)) [skip ci] ([11c652d](https://github.com/mich111discord/MightyMichs-Patches/commit/11c652def7d049f476631126c04eb4804b24a413))\n* **whatsapp:** App icon adaptive XML must not reference missing ic_launcher [skip ci] ([cea9c9e](https://github.com/mich111discord/MightyMichs-Patches/commit/cea9c9eac3ff98bd07e1529f3d1288d0aade5b0b))\n\n### ✨ New Features\n\n* **whatsapp:** App icon can load PNG from phone storage [skip ci] ([4ecef12](https://github.com/mich111discord/MightyMichs-Patches/commit/4ecef1251878df1a38e2a6e08a81943a43c5f116))",
   "apps": [
     {
       "app_name": "Audio Editor & Music Editor",
@@ -506,6 +506,20 @@
       "package": "com.spaceship.screen.textcopy",
       "patches": [
         {
+          "name": "Bypass Play install gate",
+          "description": "Skips PairIP / Play installer checks that block sideloaded Screen Translate builds with the \"Get this app from Play\" dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.5.00112",
+            "v7.5.00112",
+            "7.3.10123",
+            "v7.3.10123",
+            "7.3.00961",
+            "v7.3.00961"
+          ]
+        },
+        {
           "name": "Unlock Premium Features",
           "description": "Unlocks Screen Translate Premium features and disables premium-only gates.",
           "use": true,
@@ -623,12 +637,16 @@
       "patches": [
         {
           "name": "App icon",
-          "description": "Choose a classic or premium-style launcher icon.",
+          "description": "Choose a classic / premium launcher icon, or pick a PNG from your phone.",
           "use": false,
           "options": [
             {
               "key": "iconStyle",
-              "description": "Icon shown on your home screen."
+              "description": "Preset icon, or Custom file to use the PNG option below."
+            },
+            {
+              "key": "customIconFile",
+              "description": "Pick a square PNG from your phone (transparent background recommended). Used when Style is Custom file, or whenever a path is set. Ideal size ~432×432 px (xxxhdpi); the same file is copied to all densities."
             }
           ],
           "compatible_versions": [
@@ -683,6 +701,22 @@
             {
               "key": "always",
               "description": "Always disable read receipts, ignoring the in-app toggle."
+            }
+          ],
+          "compatible_versions": [
+            "2.26.43.75",
+            "2.26.43.74",
+            "2.26.43.72"
+          ]
+        },
+        {
+          "name": "Remove Meta AI",
+          "description": "Hides Meta AI on the chats home screen (FAB / pill), related hub entry points, and common feature gates. Does not delete existing Meta AI chats.",
+          "use": true,
+          "options": [
+            {
+              "key": "aggressive",
+              "description": "Also force extra ()Z methods in Meta-AI-anchored classes. May hide unrelated AI experiments; leave off unless the FAB still shows."
             }
           ],
           "compatible_versions": [
@@ -831,7 +865,7 @@
           ]
         }
       ],
-      "developer": "mymusic.offlinemusicplayer"
+      "developer": "Dairy App & Notes & Audio Editor & Voice Recorder"
     },
     {
       "app_name": "Telegram",
@@ -981,7 +1015,7 @@
     }
   ],
   "patches_name": "MightyMich's Patches",
-  "fingerprint": "c1ee03f7ac59568d62a52a49c04e609a98e96ee6942be216be2b26cbbe76a133",
+  "fingerprint": "39d5504c5cd97de4f5cf84ecca4413c714c06988d1c82e4db82636d2ce3a11b5",
   "release_notes": "## [1.14.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.13.0...v1.14.0) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* fixed Inshot Patch ([55f3247](https://github.com/mich111discord/MightyMichs-Patches/commit/55f3247a798a08b550c664f26832a7180385dee5))\n* fixed sideme patches ([fb997c5](https://github.com/mich111discord/MightyMichs-Patches/commit/fb997c539c2e821e24a1c3c1272d17e6cc902c5c))\n* screen translate fix ([272b3d6](https://github.com/mich111discord/MightyMichs-Patches/commit/272b3d60a658dbdadb50bfb0ff0cb8379fd1c4b2))\n\n### ✨ New Features\n\n* added Adobe Premier Premium patch ([ab765b1](https://github.com/mich111discord/MightyMichs-Patches/commit/ab765b145ffd80e783dd5fa144b7039e4c726db7))\n* Added DramaBox unlock premium ([d066acc](https://github.com/mich111discord/MightyMichs-Patches/commit/d066acc22a70d7f32222cf4d306bd0e60b20177d))\n* Added DramaWave unlock premium ([1b6dc3d](https://github.com/mich111discord/MightyMichs-Patches/commit/1b6dc3db25f65fc1de995217050c0152de808390))\n* Added finch unlock plus patch ([07adccd](https://github.com/mich111discord/MightyMichs-Patches/commit/07adccd8e4ff4e7cc29f2f86f2529c83343c7046))\n* Added IDrama unlock premium ([0b100bc](https://github.com/mich111discord/MightyMichs-Patches/commit/0b100bc567c570f966d9f6e0301a17fbb51b9889))\n* Added MyDrama unlock premium ([831416e](https://github.com/mich111discord/MightyMichs-Patches/commit/831416e10f2ec67c6caeef61c579332842d99480))\n* Added Whatsapp patches + mod settings ([3297496](https://github.com/mich111discord/MightyMichs-Patches/commit/32974963a2bbbb3bef90991e69be512078690ce8))\n",
   "release_tag": "v1.14.0",
   "release_date": "2026-11-08T08:23:32Z",

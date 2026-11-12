@@ -2,97 +2,48 @@
   "bundle": "pdb_patch",
   "channel": "stable",
   "repo_url": "https://github.com/madushas/pdb_patch",
-  "created_at": "2026-11-12T01:28:50",
-  "version": "0.6.0",
-  "description": "## [0.6.0](https://github.com/madushas/morphe-patches-custom/compare/v0.5.9...v0.6.0) (2026-11-12)\n\n### ✨ New Features\n* five new app patch sets, fail-closed guards, category metadata, tooling ([dbcbf86](https://github.com/madushas/morphe-patches-custom/commit/dbcbf86))\n\n### 🧹 Changes\n* fix(strava): close the upsell leak with a shape predicate and chokepoints ([1468ef7](https://github.com/madushas/morphe-patches-custom/commit/1468ef7))\n* security: remove hardcoded account email/name from tools/pdblogin ([be5317e](https://github.com/madushas/morphe-patches-custom/commit/be5317e))",
+  "created_at": "2026-11-12T20:38:33",
+  "version": "0.7.0",
+  "description": "## [0.7.0](https://github.com/madushas/morphe-patches-custom/compare/v0.6.0...v0.7.0) (2026-11-13)\n\n* Bundle maintenance release.",
   "apps": [
-    {
-      "app_name": "Proton VPN: Fast & Secure VPN",
-      "package": "ch.protonvpn.android",
-      "patches": [
-        {
-          "name": "Disable telemetry (Sentry)",
-          "description": "Stops Proton VPN's Sentry crash/telemetry reporting and disables the large-metrics sampling multiplier. Accounts and VPN stay unaffected.",
-          "use": true,
-          "options": [
-            {
-              "key": "protonDisableTelemetry",
-              "description": "Disable Sentry reporting and Proton's large-metrics sampling."
-            }
-          ],
-          "compatible_versions": [
-            "5.20.98.0"
-          ]
-        },
-        {
-          "name": "Remove server-change delay",
-          "description": "Sets the \"change server\" wait to zero and raises the attempt limit, so you can switch VPN servers freely.",
-          "use": true,
-          "options": [
-            {
-              "key": "protonRemoveServerChangeDelay",
-              "description": "No wait and no attempt cap when changing VPN servers."
-            }
-          ],
-          "compatible_versions": [
-            "5.20.98.0"
-          ]
-        },
-        {
-          "name": "Unlock Proton Plus features",
-          "description": "Makes the client treat the account as Proton Plus: unlocks the settings features, NetShield levels and the connection limit. Server-side plan enforcement (Plus-only servers) cannot be changed by a client patch.",
-          "use": true,
-          "options": [
-            {
-              "key": "protonUnlockPlusFeatures",
-              "description": "Treat the account as Proton Plus in the client (features, NetShield levels and the device/connection limit)."
-            }
-          ],
-          "compatible_versions": [
-            "5.20.98.0"
-          ]
-        }
-      ],
-      "developer": "Proton AG"
-    },
     {
       "app_name": "TextNow",
       "package": "com.enflick.android.textnow",
       "patches": [
         {
           "name": "Disable ad SDK",
-          "description": "No-ops the Google Mobile Ads initialisation so the ad SDK never starts.",
+          "description": "Disables every partner ad-SDK initializer TextNow runs (Facebook Audience Network, Amazon, Fyber/DT Exchange, InMobi, Nimbus, LiveRamp, The Trade Desk) at its own isEnabled() gate, so no ad SDK ever initialises.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.1.0.1"
+            "26.45.0.0"
           ]
         },
         {
           "name": "Disable tracker components",
-          "description": "Disables Crashlytics, Google Analytics v3, Firebase measurement and Flurry components and sets the Firebase/GA collection opt-outs. FCM push is kept.",
+          "description": "Disables Firebase measurement, the AppsFlyer install-referrer provider and Facebook auto-init components, and sets the Firebase/GA/Facebook collection opt-outs. FCM push is kept.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.1.0.1"
+            "26.45.0.0"
           ]
         },
         {
           "name": "Disable trackers",
-          "description": "No-ops the Adjust (attribution) and Flurry (analytics) SDK initialisers so no tracking payload is collected or sent.",
+          "description": "No-ops AppsFlyer's implementation entry points (start, logEvent) so the attribution SDK never starts and no attribution or analytics event is sent.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.1.0.1"
+            "26.45.0.0"
           ]
         },
         {
           "name": "Remove ads",
-          "description": "Disables every ad-network component TextNow declares (AdMarvel, Amazon, AppNext, Google Mobile Ads, MoPub) and strips the ad-ID / ad-services / install-referrer permissions.",
+          "description": "Disables every ad-network component TextNow declares (Facebook Audience Network, Amazon APS/DTB) and strips the ad-ID / ad-services / install-referrer permissions.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.1.0.1"
+            "26.45.0.0"
           ]
         }
       ],
@@ -840,10 +791,10 @@
     }
   ],
   "patches_name": "Pdb Patches",
-  "fingerprint": "3ff4e9dd319a37a028e035f7803a48eb6d7c41b916ba3bef3759b11453398e90",
-  "release_notes": "## [0.6.0](https://github.com/madushas/morphe-patches-custom/compare/v0.5.9...v0.6.0) (2026-11-12)\n\n### ✨ New Features\n* five new app patch sets, fail-closed guards, category metadata, tooling ([dbcbf86](https://github.com/madushas/morphe-patches-custom/commit/dbcbf86))\n\n### 🧹 Changes\n* fix(strava): close the upsell leak with a shape predicate and chokepoints ([1468ef7](https://github.com/madushas/morphe-patches-custom/commit/1468ef7))\n* security: remove hardcoded account email/name from tools/pdblogin ([be5317e](https://github.com/madushas/morphe-patches-custom/commit/be5317e))\n",
-  "release_tag": "v0.6.0",
-  "release_date": "2026-11-12T01:28:57Z",
+  "fingerprint": "52d3105d59cd65736231da96ef9b0ae51bf6cc84b6af53bf9ff6d9485bc57251",
+  "release_notes": "## [0.7.0](https://github.com/madushas/morphe-patches-custom/compare/v0.6.0...v0.7.0) (2026-11-13)\n\n* Bundle maintenance release.\n",
+  "release_tag": "v0.7.0",
+  "release_date": "2026-11-12T20:38:39Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/44031016?v=4&s=128",

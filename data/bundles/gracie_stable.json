@@ -2,8 +2,8 @@
   "bundle": "gracie",
   "channel": "stable",
   "repo_url": "https://github.com/Sabrina-Moonlight/gracie-patches",
-  "created_at": "2026-11-12T03:17:15",
-  "version": "1.0.81",
+  "created_at": "2026-11-12T20:48:31",
+  "version": "1.0.90",
   "description": "Patches for apps I like",
   "apps": [
     {
@@ -11,8 +11,8 @@
       "package": "com.bimiboo.kids.doctor.games",
       "patches": [
         {
-          "name": "Unlock subscription (IL2CPP native)",
-          "description": "Forces Unity IL2CPP access getters (HasThisAppPurchase, IsOwnedSharedActive, offline grants, IsFullAccess, IsActive) to true in lib/arm64-v8a/libil2cpp.so. Required together with Unlock subscription (Java / SharedSub).",
+          "name": "Unlock subscription",
+          "description": "Unlocks the full subscription.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -20,8 +20,8 @@
           ]
         },
         {
-          "name": "Unlock subscription (Java / SharedSub)",
-          "description": "Unlocks BB Pass shared subscription on the Java/JNI side and marks Play purchases as owned. Activates local SharedSub state when the game starts. Must be used together with Unlock subscription (IL2CPP native).",
+          "name": "Unlock subscription (IL2CPP native)",
+          "description": "Forces Unity IL2CPP access getters (HasThisAppPurchase, IsOwnedSharedActive, offline grants, IsFullAccess, IsActive) to true in lib/arm64-v8a/libil2cpp.so. Required together with Unlock subscription (Java / SharedSub).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -36,26 +36,8 @@
       "package": "com.jndapp.glass.widgets",
       "patches": [
         {
-          "name": "Disable Pairip",
-          "description": "Restores the normal app entry and recovers offline method bodies so the app can keep running.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.2"
-          ]
-        },
-        {
-          "name": "Local Preference",
-          "description": "Uses a local preference so optional widget features stay available offline.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.2"
-          ]
-        },
-        {
-          "name": "Remove Pairip Protection",
-          "description": "Skips PairIP license checks and the delayed process exit.",
+          "name": "Unlock premium",
+          "description": "Unlocks premium features.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -70,17 +52,8 @@
       "package": "com.jndapp.minimal.widgets",
       "patches": [
         {
-          "name": "Disable Pairip",
-          "description": "Skips the local license and integrity checks so the app can keep running offline.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.2.11"
-          ]
-        },
-        {
-          "name": "Local Preference",
-          "description": "Uses a local preference so optional widget features stay available offline.",
+          "name": "Unlock premium",
+          "description": "Unlocks premium features.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -95,8 +68,8 @@
       "package": "com.remi.widget",
       "patches": [
         {
-          "name": "Local Features",
-          "description": "Uses a local preference so optional widget features stay available offline.",
+          "name": "Unlock premium",
+          "description": "Unlocks premium features.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -111,8 +84,8 @@
       "package": "com.saban.glassy.glasswidgets.themes",
       "patches": [
         {
-          "name": "Local Premium",
-          "description": "Uses a local preference so premium widgets and no-ads stay available offline.",
+          "name": "Unlock premium",
+          "description": "Unlocks premium features.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -123,12 +96,28 @@
       "developer": "SABAN"
     },
     {
+      "app_name": "Sound Assistant",
+      "package": "com.samsung.android.soundassistant",
+      "patches": [
+        {
+          "name": "Keep sound during ads",
+          "description": "Prevents media from pausing when ads play.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.5.00.2"
+          ]
+        }
+      ],
+      "developer": "com.samsung"
+    },
+    {
       "app_name": "ThemeMix: Themes & Widgets",
       "package": "com.themezy.theme.iconwidgets",
       "patches": [
         {
-          "name": "Disable Pairip",
-          "description": "Skips the local license check so the app can keep running offline.",
+          "name": "Hide ads",
+          "description": "Hides ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -136,17 +125,8 @@
           ]
         },
         {
-          "name": "Hide Ads",
-          "description": "Turns off every ad gate and every show/preload path in Themezy.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.0.9"
-          ]
-        },
-        {
-          "name": "Unlock Local",
-          "description": "Marks icons, wallpapers and widgets as unlocked so only Add/Apply shows, never Unlock.",
+          "name": "Unlock premium",
+          "description": "Unlocks premium content.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -161,17 +141,8 @@
       "package": "de.twokit.screen.recording.app",
       "patches": [
         {
-          "name": "Disable Pairip",
-          "description": "Skips the local license and integrity checks so the app can keep running offline.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.11"
-          ]
-        },
-        {
-          "name": "Pro Options",
-          "description": "Uses a local preference so optional Pro options stay available.",
+          "name": "Unlock pro",
+          "description": "Unlocks pro features.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -182,21 +153,26 @@
       "developer": "2kit consulting"
     },
     {
+      "app_name": "Hamster Life: My Pet Escape",
+      "package": "gg.sunday.hamsterescape",
+      "patches": [
+        {
+          "name": "Unlock purchases",
+          "description": "Unlocks No Ads, skins, and trails; suppresses the weekly subscription paywall.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "Sunday.gg"
+    },
+    {
       "app_name": "Quick Settings",
       "package": "it.simonesestito.ntiles",
       "patches": [
         {
-          "name": "Disable Pairip",
-          "description": "Skips the local license and integrity checks so the app can keep running offline.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.0.3-17888438"
-          ]
-        },
-        {
-          "name": "Hide Ads Preference",
-          "description": "Uses a local preference so interstitial and banner ads stay off.",
+          "name": "Hide ads",
+          "description": "Hides ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -211,8 +187,8 @@
       "package": "net.mm2d.android.orientationfaker",
       "patches": [
         {
-          "name": "Disable Ads",
-          "description": "Removes ads from Orientation Control.",
+          "name": "Hide ads",
+          "description": "Hides ads.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -224,10 +200,10 @@
     }
   ],
   "patches_name": "Gracie's Patches",
-  "fingerprint": "c23e2e285e26c252225570b5ff55e75a0b3f9326e49ce1eb34ba907753205f67",
-  "release_notes": "**Full Changelog**: https://github.com/Sabrina-Moonlight/gracie-patches/compare/v1.0.80...v1.0.81",
-  "release_tag": "v1.0.81",
-  "release_date": "2026-11-12T03:17:18Z",
+  "fingerprint": "348e6310edac3e619c9733adccf607a70597132e7b467885e1a9816fa24428d2",
+  "release_notes": "**Full Changelog**: https://github.com/Sabrina-Moonlight/gracie-patches/compare/v1.0.90...v1.0.91",
+  "release_tag": "v1.0.91",
+  "release_date": "2026-11-12T20:57:03Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/352689645?v=4&s=128",

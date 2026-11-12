@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "latest",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-10T13:13:09",
-  "version": "2.2.10",
-  "description": "v2.2.10 (pre-release re-cut #2; replaces the earlier v2.2.10 assets). Reddit: Show deleted posts and comments now restores comments rendered through a nested CommentTombstone by detecting bodyPreview/tombstone markdown and rewriting both the body and tombstone; the external-browser patch accepts rotated obfuscated helper classes on 2026.39-2026.42; plus Hide read posts, Hide crossposts, Hide live streams and Reddit-scoped Disable video autoplay. Mereframe: Unlock Pro features patches the authoritative entitlement accessor Qu.k. Verified by applying every Reddit patch to 2026.42.0, unit-testing deleted-comment detection/replacement, and applying the external-browser patch to 2026.39.0-2026.41.0; no on-device runtime verification yet. 142 patch entries / 179 appearances / 31 apps.",
+  "created_at": "2026-11-12T16:29:17",
+  "version": "2.3.0",
+  "description": "## [2.3.0](https://github.com/[secure]/Proteus-Patches/compare/v2.2.10...v2.3.0) (2026-11-12)\n\n### ✨ New Features\n\n* **release:** expand Proton Pass and Gboard patches for v2.2.10 ([2de3200](https://github.com/[secure]/Proteus-Patches/commit/2de3200757447185ba8eaa9dd127d85e4d807b2c))",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -572,12 +572,23 @@
       "package": "com.google.android.inputmethod.latin",
       "patches": [
         {
-          "name": "Offline-only voice typing & telemetry reduction",
-          "description": "On Gboard 18.5.4.993608717 arm64, routes core voice typing only through the on-device\nrecognizers and returns no recognizer when a local provider/model is unavailable (no\nonline fallback). Disables Agentic Dictation's server/batch retry path, reduces selected\nmetrics/telemetry and disables app backup. INTERNET and unrelated network features are\nretained; this is best-effort telemetry reduction, not a guarantee of zero Google traffic.\n\nRequires the appropriate offline speech model/provider to be installed. Without one,\nvoice typing is unavailable by design. Agentic Dictation is disabled.",
+          "name": "Disable Bluetooth voice routing",
+          "description": "Treats every Bluetooth audio device as an unusable car device so Gboard voice typing keeps using the built-in microphone.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "18.5.4.993608717-release-arm64-v8a"
+            "18.5.4.993608717-release-arm64-v8a",
+            "18.5.4.993608717-release-armeabi-v7a"
+          ]
+        },
+        {
+          "name": "Offline-only voice typing & telemetry reduction",
+          "description": "On Gboard 18.5.4.993608717 arm/arm64, routes core voice typing only through the on-device\nrecognizers and returns no recognizer when a local provider/model is unavailable (no\nonline fallback). Disables Agentic Dictation's server/batch retry path, reduces selected\nmetrics/telemetry and disables app backup. INTERNET and unrelated network features are\nretained; this is best-effort telemetry reduction, not a guarantee of zero Google traffic.\n\nRequires the appropriate offline speech model/provider to be installed. Without one,\nvoice typing is unavailable by design. Agentic Dictation is disabled.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "18.5.4.993608717-release-arm64-v8a",
+            "18.5.4.993608717-release-armeabi-v7a"
           ]
         }
       ],
@@ -1909,6 +1920,94 @@
       "package": "proton.android.pass",
       "patches": [
         {
+          "name": "Allow screenshots",
+          "description": "Removes FLAG_SECURE from Proton Pass activities, allowing screenshots and screen recording.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Disable app lock",
+          "description": "Forces Proton Pass app lock and biometric authentication into the disabled/authenticated state and prevents auto-lock timeouts.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Disable clipboard auto-clear",
+          "description": "Forces the clipboard clear delay to Never so copied passwords and aliases are not removed automatically.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Suppress telemetry",
+          "description": "Disables Proton Pass telemetry event dispatch, listeners and repository upload entry points.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Unlock Unlimited Plan",
+          "description": "Forces Proton Pass Plus plan with all limits removed and paid features unlocked.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        }
+      ],
+      "developer": "proton.android"
+    },
+    {
+      "app_name": "Proton Pass: Password Manager",
+      "package": "proton.android.pass.fdroid",
+      "patches": [
+        {
+          "name": "Allow screenshots",
+          "description": "Removes FLAG_SECURE from Proton Pass activities, allowing screenshots and screen recording.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Disable app lock",
+          "description": "Forces Proton Pass app lock and biometric authentication into the disabled/authenticated state and prevents auto-lock timeouts.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Disable clipboard auto-clear",
+          "description": "Forces the clipboard clear delay to Never so copied passwords and aliases are not removed automatically.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
+          "name": "Suppress telemetry",
+          "description": "Disables Proton Pass telemetry event dispatch, listeners and repository upload entry points.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.41.3"
+          ]
+        },
+        {
           "name": "Unlock Unlimited Plan",
           "description": "Forces Proton Pass Plus plan with all limits removed and paid features unlocked.",
           "use": true,
@@ -1938,11 +2037,11 @@
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "b28c9026453a72e751c722ddb69c83b841ce84418b3632c660e1ecb086f3758c",
-  "release_notes": "Proteus Patches v2.2.10 (pre-release re-cut #2)\n\n## Re-cut fixes\n- **Show deleted posts and comments** now restores comments that Reddit renders from a nested `CommentTombstone`. Current builds may leave `Comment.body` empty and keep `[deleted]`/`[removed]` only in the tombstone, so the previous body-only replacement was invisible. The helper now detects `body`, `bodyPreview`, and tombstone `markdown`/`richtext`, restores the visible text, and clears the richtext placeholder. Added unit coverage for detection and replacement.\n- **Open Reddit links in external browser** now accepts the rotated obfuscated helper parameter classes used across Reddit 2026.39-2026.42, so patching no longer fails on 2026.41.0.\n- Verified by applying all 14 Reddit patches to 2026.42.0 and the external-browser patch to 2026.39.0, 2026.40.0 and 2026.41.0 with Morphe Desktop. No on-device runtime verification yet.\n\n## Reddit 2026.42.0\n- New: **Hide read posts**, **Hide crossposts**, **Hide live streams** listing filters (off by default)\n- New: **Disable Reddit video autoplay**\n- New: **Open Reddit links in external browser**\n- New: **Show deleted posts and comments** — restores deleted content via Arctic Shift/PullPush (off by default)\n\n## Mereframe 0.8.4 (vc 118)\n- **Unlock Pro features** rewritten to patch `Qu.k`, the authoritative registered-feature accessor, so every Pro gate resolves unlocked (off by default)\n\n## Verification\nBundle builds and passes the Android bundle/patch-source verifiers. The rebuilt DEX was checked with `dexdump`, and the deleted-comment helper detection/replacement paths have unit coverage.\n\n> This is a pre-release re-cut of v2.2.10. Clients that already downloaded the earlier v2.2.10 asset will re-download because the source timestamp changed.\n",
-  "release_tag": "v2.2.10",
-  "release_date": "2026-11-10T12:12:56Z",
-  "isPreRelease": true,
+  "fingerprint": "dc613799dabfbe8a9ba716b626e945ce2766731df55a9adb97b015f02d20a906",
+  "release_notes": "## [2.3.0](https://github.com/[secure]/Proteus-Patches/compare/v2.2.10...v2.3.0) (2026-11-12)\n\n### ✨ New Features\n\n* **release:** expand Proton Pass and Gboard patches for v2.2.10 ([2de3200](https://github.com/[secure]/Proteus-Patches/commit/2de3200757447185ba8eaa9dd127d85e4d807b2c))\n",
+  "release_tag": "v2.3.0",
+  "release_date": "2026-11-12T16:30:32Z",
+  "isPreRelease": false,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",
   "repoDescription": "Unlock your digital freedom. Free yourself from Big tech Corporations ",
