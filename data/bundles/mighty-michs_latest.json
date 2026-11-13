@@ -2,9 +2,9 @@
   "bundle": "mighty-michs",
   "channel": "latest",
   "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
-  "created_at": "2026-11-12T13:17:05",
-  "version": "1.14.0",
-  "description": "## [1.15.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.14.1...v1.15.0) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* point patches-bundle.json to existing v1.14.0 asset after 1.14.1 removal [skip ci] ([4c4c6c0](https://github.com/mich111discord/MightyMichs-Patches/commit/4c4c6c0fc19c8cae875f97bbd788ddc7a03fdb0a))\n* **screentranslate:** bypass PairIP Play install gate ([#49](https://github.com/mich111discord/MightyMichs-Patches/issues/49)) [skip ci] ([11c652d](https://github.com/mich111discord/MightyMichs-Patches/commit/11c652def7d049f476631126c04eb4804b24a413))\n* **whatsapp:** App icon adaptive XML must not reference missing ic_launcher [skip ci] ([cea9c9e](https://github.com/mich111discord/MightyMichs-Patches/commit/cea9c9eac3ff98bd07e1529f3d1288d0aade5b0b))\n\n### ✨ New Features\n\n* **whatsapp:** App icon can load PNG from phone storage [skip ci] ([4ecef12](https://github.com/mich111discord/MightyMichs-Patches/commit/4ecef1251878df1a38e2a6e08a81943a43c5f116))",
+  "created_at": "2026-11-13T12:08:11",
+  "version": "1.16.0",
+  "description": "## [1.16.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.15.0...v1.16.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* Fixed Idrama Unlock Premium patch ([1c239ff](https://github.com/mich111discord/MightyMichs-Patches/commit/1c239ffccc5df0665d47b57dfa9807b6bc12dba2))\n* Fixed unlock premium for Dramawave ([7ea021c](https://github.com/mich111discord/MightyMichs-Patches/commit/7ea021cc0f734804702207ca464a3a4204294284))\n* whatsapp fix ([2d52264](https://github.com/mich111discord/MightyMichs-Patches/commit/2d52264a9efb465feea1ff320f8c603b050c2ddb))\n\n### ✨ New Features\n\n* add MT Manager, Pou, CCleaner telemetry, ESET, Mago, TikTok, PairIP, InShot engine, WhatsApp icon patches ([56f9a2d](https://github.com/mich111discord/MightyMichs-Patches/commit/56f9a2d0fe4fdeb65b6b13fd4e0120564e035d1a))\n* CCleaner Unlock Premium, ESET Enable Premium, MT Manager Unlock/SkipLogin ([186c1a5](https://github.com/mich111discord/MightyMichs-Patches/commit/186c1a5acd47a5eeee7c2f222ce0b7c9d19f31a6))\n* MT Manager SkipLogin patch ([93a5bcc](https://github.com/mich111discord/MightyMichs-Patches/commit/93a5bcc3fe4ba562ae8bdbb322cba6715cf1b1c7))\n* release pending patches (MT Manager, Pou, CCleaner, PairIP, TikTok, InShot, ESET, WhatsApp icon) ([ead1b7e](https://github.com/mich111discord/MightyMichs-Patches/commit/ead1b7e1ed0fea8d235b3077c15e1af4628d0d23))",
   "apps": [
     {
       "app_name": "Audio Editor & Music Editor",
@@ -22,6 +22,45 @@
         }
       ],
       "developer": "Dairy App & Notes & Audio Editor & Voice Recorder"
+    },
+    {
+      "app_name": "MT Manager",
+      "package": "bin.mt.plus",
+      "patches": [
+        {
+          "name": "Skip MT account login (Experimental)",
+          "description": "Tries to skip the MT account login wall so local features work offline. Server-synced cloud features will still need a real account.",
+          "use": true,
+          "options": [
+            {
+              "key": "treatAsLoggedIn",
+              "description": "Force login-state getters to true (logged in). If the app misbehaves, try turning this off and only blocking the login prompt."
+            }
+          ],
+          "compatible_versions": [
+            "2.26.10",
+            "2.26.9",
+            "2.26.8"
+          ]
+        },
+        {
+          "name": "Unlock Premium (Experimental)",
+          "description": "Best-effort local VIP unlock (activation flags + VIP protocol UI). MTProtector may still gate some features in native code.",
+          "use": true,
+          "options": [
+            {
+              "key": "aggressive",
+              "description": "Also force extra small ()Z methods in VIP-anchored classes. May break unrelated checks; leave off unless needed."
+            }
+          ],
+          "compatible_versions": [
+            "2.26.10",
+            "2.26.9",
+            "2.26.8"
+          ]
+        }
+      ],
+      "developer": "bin.mt"
     },
     {
       "app_name": "CalendPal: Calendar Planner",
@@ -223,7 +262,7 @@
       "patches": [
         {
           "name": "Unlock Premium",
-          "description": "Forces local VIP / VIP Pro checks for DramaWave playback and benefits.",
+          "description": "Forces DramaWave VIP / VIP Pro local checks (UserInfo and related flags).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -286,7 +325,7 @@
       "patches": [
         {
           "name": "Unlock Premium",
-          "description": "Forces local VIP checks so locked episodes and VIP benefits open (client-side; some titles may still need a server unlock).",
+          "description": "Forces local VIP checks (isVip / isVipVideo / benefits) so locked episodes and VIP UI open on the client.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -420,6 +459,31 @@
       "developer": "NewLeaf Publishing"
     },
     {
+      "app_name": "CCleaner – Phone Cleaner",
+      "package": "com.piriform.ccleaner",
+      "patches": [
+        {
+          "name": "Disable Telemetry",
+          "description": "Disables analytics and telemetry event tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.0"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Unlocks CCleaner Premium / Pro features (Ultimate Multi + Lifetime style).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.08.0"
+          ]
+        }
+      ],
+      "developer": "Piriform"
+    },
+    {
       "app_name": "VivaCut",
       "package": "com.quvideo.vivacut",
       "patches": [
@@ -542,7 +606,7 @@
       "patches": [
         {
           "name": "Unlock Premium",
-          "description": "Forces DramaBox VIP checks (UserInfo / LoginService / isVip helpers) so premium content unlocks on the client.",
+          "description": "Forces DramaBox VIP checks (UserInfo, LoginResult, SubInfo) so premium UI and local gates unlock. Server-locked episodes may still apply.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -613,7 +677,7 @@
           ]
         }
       ],
-      "developer": "com.videoplayer"
+      "developer": "Arc Video Player"
     },
     {
       "app_name": "Wearfit Pro",
@@ -650,6 +714,7 @@
             }
           ],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -657,15 +722,16 @@
         },
         {
           "name": "Keep deleted messages",
-          "description": "Show messages that were deleted for everyone. May need a fingerprint update after WhatsApp upgrades.",
+          "description": "Show messages that were deleted for everyone. Client-side only; already-wiped history cannot be restored.",
           "use": true,
           "options": [
             {
               "key": "highlight",
-              "description": "Mark deleted messages so they are easier to spot."
+              "description": "Reserved for future UI tinting of kept-deleted rows."
             }
           ],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -677,6 +743,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -688,6 +755,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -704,6 +772,7 @@
             }
           ],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -720,6 +789,7 @@
             }
           ],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -731,6 +801,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -742,6 +813,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -753,6 +825,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "2.26.43.76",
             "2.26.43.75",
             "2.26.43.74",
             "2.26.43.72"
@@ -796,8 +869,8 @@
       "package": "me.pou.app",
       "patches": [
         {
-          "name": "Unlimited coins",
-          "description": "Forces Pou's coin balance getter to a very large value so shop and unlock checks always pass (local save).",
+          "name": "Unlimited Coins",
+          "description": "Gives unlimited coins in Pou.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1011,14 +1084,14 @@
           ]
         }
       ],
-      "developer": "voicechanger.voiceeffects"
+      "developer": "Dairy App & Notes & Audio Editor & Voice Recorder"
     }
   ],
   "patches_name": "MightyMich's Patches",
-  "fingerprint": "39d5504c5cd97de4f5cf84ecca4413c714c06988d1c82e4db82636d2ce3a11b5",
-  "release_notes": "## [1.14.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.13.0...v1.14.0) (2026-11-08)\n\n### 🐛 Bug Fixes\n\n* fixed Inshot Patch ([55f3247](https://github.com/mich111discord/MightyMichs-Patches/commit/55f3247a798a08b550c664f26832a7180385dee5))\n* fixed sideme patches ([fb997c5](https://github.com/mich111discord/MightyMichs-Patches/commit/fb997c539c2e821e24a1c3c1272d17e6cc902c5c))\n* screen translate fix ([272b3d6](https://github.com/mich111discord/MightyMichs-Patches/commit/272b3d60a658dbdadb50bfb0ff0cb8379fd1c4b2))\n\n### ✨ New Features\n\n* added Adobe Premier Premium patch ([ab765b1](https://github.com/mich111discord/MightyMichs-Patches/commit/ab765b145ffd80e783dd5fa144b7039e4c726db7))\n* Added DramaBox unlock premium ([d066acc](https://github.com/mich111discord/MightyMichs-Patches/commit/d066acc22a70d7f32222cf4d306bd0e60b20177d))\n* Added DramaWave unlock premium ([1b6dc3d](https://github.com/mich111discord/MightyMichs-Patches/commit/1b6dc3db25f65fc1de995217050c0152de808390))\n* Added finch unlock plus patch ([07adccd](https://github.com/mich111discord/MightyMichs-Patches/commit/07adccd8e4ff4e7cc29f2f86f2529c83343c7046))\n* Added IDrama unlock premium ([0b100bc](https://github.com/mich111discord/MightyMichs-Patches/commit/0b100bc567c570f966d9f6e0301a17fbb51b9889))\n* Added MyDrama unlock premium ([831416e](https://github.com/mich111discord/MightyMichs-Patches/commit/831416e10f2ec67c6caeef61c579332842d99480))\n* Added Whatsapp patches + mod settings ([3297496](https://github.com/mich111discord/MightyMichs-Patches/commit/32974963a2bbbb3bef90991e69be512078690ce8))\n",
-  "release_tag": "v1.14.0",
-  "release_date": "2026-11-08T08:23:32Z",
+  "fingerprint": "c7b7fe961764b03ca5f65f76145cc41c652783478f813f7f3c1aed04a3a55fac",
+  "release_notes": "## [1.16.0](https://github.com/mich111discord/MightyMichs-Patches/compare/v1.15.0...v1.16.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* Fixed Idrama Unlock Premium patch ([1c239ff](https://github.com/mich111discord/MightyMichs-Patches/commit/1c239ffccc5df0665d47b57dfa9807b6bc12dba2))\n* Fixed unlock premium for Dramawave ([7ea021c](https://github.com/mich111discord/MightyMichs-Patches/commit/7ea021cc0f734804702207ca464a3a4204294284))\n* whatsapp fix ([2d52264](https://github.com/mich111discord/MightyMichs-Patches/commit/2d52264a9efb465feea1ff320f8c603b050c2ddb))\n\n### ✨ New Features\n\n* add MT Manager, Pou, CCleaner telemetry, ESET, Mago, TikTok, PairIP, InShot engine, WhatsApp icon patches ([56f9a2d](https://github.com/mich111discord/MightyMichs-Patches/commit/56f9a2d0fe4fdeb65b6b13fd4e0120564e035d1a))\n* CCleaner Unlock Premium, ESET Enable Premium, MT Manager Unlock/SkipLogin ([186c1a5](https://github.com/mich111discord/MightyMichs-Patches/commit/186c1a5acd47a5eeee7c2f222ce0b7c9d19f31a6))\n* MT Manager SkipLogin patch ([93a5bcc](https://github.com/mich111discord/MightyMichs-Patches/commit/93a5bcc3fe4ba562ae8bdbb322cba6715cf1b1c7))\n* release pending patches (MT Manager, Pou, CCleaner, PairIP, TikTok, InShot, ESET, WhatsApp icon) ([ead1b7e](https://github.com/mich111discord/MightyMichs-Patches/commit/ead1b7e1ed0fea8d235b3077c15e1af4628d0d23))\n",
+  "release_tag": "v1.16.0",
+  "release_date": "2026-11-13T12:08:51Z",
   "isPreRelease": false,
   "stars": 16,
   "avatarUrl": "https://avatars.githubusercontent.com/u/141028293?v=4",

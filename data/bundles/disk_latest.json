@@ -1,0 +1,104 @@
+{
+  "bundle": "disk",
+  "channel": "latest",
+  "repo_url": "https://github.com/uta-a/disk",
+  "created_at": "2026-11-13T09:54:10",
+  "version": "0.2.0",
+  "description": "# Changelog\n\n## 0.2.0 — 2026-11-13\n\n### 変更\n\n- プロジェクト名を disk から Cadence に変更。patch名、Discord内の設定画面の表示、ログのマーカー（`[cadence]`）も変わる。GitHubのリポジトリは`uta-a/cadence`。\n- 設定の保存先を`cadence/settings-v1.json`に変更。0.1.0の設定は引き継がず、更新後は全機能がオフに戻る。\n- 設定画面をDiscordの行・スイッチ・ラジオ・ボタンの部品で描き、メッセージ・表示・プライバシー・情報のカテゴリに分けた。「Venus から移植した機能」の見出しはなくした。\n- 端末表示を、文字（PC/M）ではなくDiscordの端末アイコンで出すようにした。アイコンの部品がまだ読み込まれていないと文字表示に落ちていた。\n- メッセージ欄の名前横にも端末アイコンを出す。サーバータグとロビータグの枠に1つずつ、最大2つ。本物のサーバータグがある作成者はその枠を残す。\n\n### 削除\n\n- Venus由来の13機能を削除: 削除・ピン留めの確認省略、リンクとファイルを常に信頼、最初のメッセージへ移動、ダブルタップ操作、高画質画像、すべて既読、返信メンション初期オフ、ボイスメッセージ保存、サーバー情報、非表示チャンネル情報、削除・編集履歴。\n- コンパクト表示と、Fake Nitroの名前付きリンクの設定を削除。絵文字とスタンプは常にURLをそのまま送る。\n\n### 既知の未確認点\n\n- メッセージ欄で、サーバータグを持つオンラインの作成者（アイコンはロビータグ枠の1つだけ）。\n- Web・VRの端末アイコンと、ライトテーマでの見た目。\n- 設定画面のUI smokeツールの実行。\n- Morphe Managerでの0.2.0の適用（実機へは開発用ビルドで導入して確認）。\n\n## 0.1.0 — 2026-11-12\n\n最初の公開版です。対応はDiscord Android 352.17 Stableのみです。\n\n### 追加\n\n- Discord Android 352.17 Stableへのランタイム注入と同梱バンドルへの固定。\n- Discord内のdisk設定画面、端末内保存、診断ログ。\n- Fake Nitroの絵文字・スタンプリンク送信、ピッカー対応、画像サイズと名前付きリンクの設定。\n- Platform Indicatorのアバターバッジ、DM行・ヘッダー・メンバー一覧・プロフィール名のバッジ、メッセージ名の端末ラベル。場所別設定を保存。\n- JS analytics、広告ID、Sentry、AppsFlyerを止める個別patch。\n- タップ記録と端末内TelemetryRingへの書き込みを止める`Disable telemetry and touch logging`（Venusの対象一覧を参考にした一部移植）。\n- Venus由来の削除・ピン確認省略、リンクとファイルの警告省略。\n- 最初のメッセージへ移動、ダブルタップ返信・編集、別スイッチのトリプルタップ削除。\n- 高画質画像、サーバーとDMの一括既読。\n- 返信メンションの初期オフ。返信欄の手動切替は維持。\n- ボイスメッセージ保存。Discord標準のダウンローダーでOgg Opusを保存。\n- サーバー情報。長押しメニューから読み込み済みの基本情報を表示。\n- 非表示チャンネルの読み取り専用メタデータ表示。権限や履歴取得は変更しない。\n- 削除・編集前の本文を起動中だけ保持する履歴ビューア。上限・消去・アカウント分離を実装。\n\n### 修正\n\n- Fake Nitroを組み込んでいないビルドで送信フックを入れないようにした。\n- 返信ラッパーの元関数を分離し、実機で返信欄が出ない問題を修正した。\n- DM既読化のリクエスト・スパム除外APIが使えない場合は処理を止める。\n- 構築できないMessagesHandlersや読み取り専用のハンドラは元のまま維持する。\n- 診断処理の失敗や元アクションの例外で操作を二重実行しない。\n\n### 配布前の準備\n\n- 通常ビルドとsmokeビルドを区別するビルド情報。\n- DEX・バージョン・ビルド情報・ライセンスと帰属表記を検査するローカル配布準備ツール。MPP単体にもライセンスとNOTICEを同梱。\n- MPP、Morpheメタデータ、ライセンスとSHA-256一覧をまとめる準備用ワークフロー。公開操作は含まない。\n\n### 既知の未確認点\n\n実機（Android 13）で、全機能を有効にした上書き更新・設定復元・テレメトリー停止後の通常動作、通話中の端末表示、実際の閲覧拒否チャンネル、相手からの削除の記録は確認済みです。次の経路は単体テストのみで、実機では確認していません。\n\n- グループDMと浅い返信（通知タブの「👋」）での返信メンション初期オフ。\n- 実際の不審ファイルに対するファイル警告の省略。\n- 履歴の一括削除（`MESSAGE_DELETE_BULK`）と、実ログアウト時の消去。\n- Morphe Managerのリモートソース追加（Add to Morphe）。\n\n### v0.1に含めないもの\n\n- Venusの未移植機能（Bulk delete、Hide blocked、Translate、Clean channel names、Fast delete channelsなど）と、部分移植した機能の残り（チャット内の削除履歴、非表示チャンネルの一覧混在、サーバー情報の友達一覧、jank・TTI計測の停止）。一覧は`docs/VENUS-PORT.md`。\n\n確認範囲と制限は `docs/VENUS-PORT.md` と `docs/RELEASE.md` を参照してください。\n",
+  "apps": [
+    {
+      "app_name": "Discord - Talk, Play, Hang Out",
+      "package": "com.discord",
+      "patches": [
+        {
+          "name": "Cadence",
+          "description": "Inject the Cadence runtime and its settings screen into the APK bundle.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Disable advertising ID",
+          "description": "Report no Google advertising ID to Discord's JavaScript.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Disable analytics",
+          "description": "Drop Discord's JavaScript analytics events before they are queued.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Disable crash reporting",
+          "description": "Never start the Sentry SDK, so crash and error reports are not sent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Disable install attribution",
+          "description": "Never start AppsFlyer or send its events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Disable telemetry and touch logging",
+          "description": "Never record taps or the on-device telemetry log (based on Venus Patches).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Fake Nitro",
+          "description": "Send emojis that need Nitro as image links. Off until enabled in the Cadence settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "Platform Indicator",
+          "description": "Show which devices a user is connected from next to their avatar. Off until enabled in the Cadence settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        },
+        {
+          "name": "bundle pin",
+          "description": "Always load the bundle packaged in the APK instead of a downloaded or cached OTA bundle.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "352.17 - Stable"
+          ]
+        }
+      ],
+      "developer": "Discord Inc."
+    }
+  ],
+  "patches_name": "Cadence",
+  "fingerprint": "65cd0f154636aace1b1b8663ffa7b2fc929934f84810877fd60938cd44fa8744",
+  "release_notes": "\n### 変更\n\n- プロジェクト名を disk から Cadence に変更。patch名、Discord内の設定画面の表示、ログのマーカー（`[cadence]`）も変わる。GitHubのリポジトリは`uta-a/cadence`。\n- 設定の保存先を`cadence/settings-v1.json`に変更。0.1.0の設定は引き継がず、更新後は全機能がオフに戻る。\n- 設定画面をDiscordの行・スイッチ・ラジオ・ボタンの部品で描き、メッセージ・表示・プライバシー・情報のカテゴリに分けた。「Venus から移植した機能」の見出しはなくした。\n- 端末表示を、文字（PC/M）ではなくDiscordの端末アイコンで出すようにした。アイコンの部品がまだ読み込まれていないと文字表示に落ちていた。\n- メッセージ欄の名前横にも端末アイコンを出す。サーバータグとロビータグの枠に1つずつ、最大2つ。本物のサーバータグがある作成者はその枠を残す。\n\n### 削除\n\n- Venus由来の13機能を削除: 削除・ピン留めの確認省略、リンクとファイルを常に信頼、最初のメッセージへ移動、ダブルタップ操作、高画質画像、すべて既読、返信メンション初期オフ、ボイスメッセージ保存、サーバー情報、非表示チャンネル情報、削除・編集履歴。\n- コンパクト表示と、Fake Nitroの名前付きリンクの設定を削除。絵文字とスタンプは常にURLをそのまま送る。\n\n### 既知の未確認点\n\n- メッセージ欄で、サーバータグを持つオンラインの作成者（アイコンはロビータグ枠の1つだけ）。\n- Web・VRの端末アイコンと、ライトテーマでの見た目。\n- 設定画面のUI smokeツールの実行。\n- Morphe Managerでの0.2.0の適用（実機へは開発用ビルドで導入して確認）。\n\n\n対応はDiscord Android 352.17 Stableのみです。0.1.0から更新すると設定が初期化され、全機能がオフに戻ります。\n\n`SHA256SUMS`で配布物を検証できます。\n",
+  "release_tag": "v0.2.0",
+  "release_date": "2026-11-13T09:55:55Z",
+  "isPreRelease": false
+}

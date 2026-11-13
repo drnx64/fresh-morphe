@@ -2,10 +2,40 @@
   "bundle": "xiondigital",
   "channel": "stable",
   "repo_url": "https://github.com/XiONDiGiTaL/MorphePatches",
-  "created_at": "2026-11-06T03:48:55",
-  "version": "1.1.1",
-  "description": "## [1.1.1](https://github.com/XiONDiGiTaL/MorphePatches/compare/v1.1.0...v1.1.1) (2026-11-06)\n\n### 🚀 Updated App Support\n\n* **tandem:** support Tandem 6.12.0 alongside 6.38.0 ([7df07ac](https://github.com/XiONDiGiTaL/MorphePatches/commit/7df07acfaf39adec55dfd3f0ed4a5035c5dc661a))",
+  "created_at": "2026-11-13T06:35:05",
+  "version": "0.1.0",
+  "description": "Baseline release: one bundle carrying every patch for every supported app.",
   "apps": [
+    {
+      "app_name": "Amazon A to Z",
+      "package": "com.amazon.atozm",
+      "patches": [
+        {
+          "name": "Clone package",
+          "description": "Installs the patched build under its own application id (app.xiondigital.atoz by default), so it can sit next to the official Amazon A to Z instead of replacing it. Renames the provider authorities, the app's runtime permission and the launcher label, and drops the Amazon SDK permission declarations a re-signed build cannot own. Off by default: a clone starts empty, and Play services, FCM targeting, attestation and verified App Links stay bound to the original package.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Application id the patched build installs as. Must not be com.amazon.atozm."
+            },
+            {
+              "key": "appName",
+              "description": "Launcher label of the clone."
+            }
+          ],
+          "compatible_versions": []
+        },
+        {
+          "name": "Force dark mode",
+          "description": "Turns on Amazon A to Z's night mode before the first screen is created and opts the app into Android's automatic dark transform, so the interface is dark even when the phone is set to light mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "Amazon Mobile LLC"
+    },
     {
       "app_name": "Tandem: Language exchange",
       "package": "net.tandem",
@@ -70,10 +100,10 @@
     }
   ],
   "patches_name": "XiONDiGiTaL Patches",
-  "fingerprint": "23064f3ff263b571854af626410fbf8c50c97f7ff80d375c7861229555f13974",
-  "release_notes": "## [1.1.1](https://github.com/XiONDiGiTaL/MorphePatches/compare/v1.1.0...v1.1.1) (2026-11-06)\n\n### 🚀 Updated App Support\n\n* **tandem:** support Tandem 6.12.0 alongside 6.38.0 ([7df07ac](https://github.com/XiONDiGiTaL/MorphePatches/commit/7df07acfaf39adec55dfd3f0ed4a5035c5dc661a))\n",
-  "release_tag": "v1.1.1",
-  "release_date": "2026-11-06T03:49:21Z",
+  "fingerprint": "634821ae9c642a1362206c569e2a7e37a593a4d6c1fcacbb49c14f712dc87e03",
+  "release_notes": "Baseline release. One bundle, every supported app: five Tandem patches and two Amazon A to Z patches. Versions from here move by one patch at a time.",
+  "release_tag": "v0.1.0",
+  "release_date": "2026-11-13T06:35:10Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/53795273?v=4&s=128",

@@ -2,8 +2,8 @@
   "bundle": "fangkampanat",
   "channel": "stable",
   "repo_url": "https://github.com/fangkampanat/google-maps-automotive-patches",
-  "created_at": "2026-11-11T14:47:22",
-  "version": "0.1.7",
+  "created_at": "2026-11-13T16:32:02",
+  "version": "0.1.8",
   "description": "Runs the Android Automotive build of Google Maps (26.10.120003.E) on BYD DiLink 3 head units (Android 10) with MicroG-RE 7.3.0: sign-in, map, search, navigation and voice, UI density, language, driver side and color scheme settings, 3D buildings in the map layers, the car's battery for EV routing (on by default on the tested BYD Dolphin and on BYD model ids 128 and 138) and the battery to arrive with at charging stops and at the destination, Send to car from phone Maps with a car name you choose, an in-app problem report that is sent only after you review it, a daily check for a newer release, and a safe mode with feature switches. The app is named \"Maps\" unless you set another name in the App name option. BYD battery, Send to car, the BYD location flicker fix, BYD navigation volume and 3D buildings are separate patches. Requires Morphe Desktop 2.1.0 or newer.",
   "apps": [
     {
@@ -14,6 +14,13 @@
           "name": "3D buildings",
           "description": "Adds Maps' own 3D buildings to the map layers. Google hides them in this app.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Android 9 (API 28)",
+          "description": "Test builds for Android 9 head units (issue #11): lets the app install and start on Android 9. Tested on one Android 9 head unit; BYD head units do not need it.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -62,10 +69,10 @@
     }
   ],
   "patches_name": "Maps Automotive Patches",
-  "fingerprint": "91c4eb2935e0270f7ee7e95af8fef2581ae1e111d1c3c93e262d30594ca64a22",
-  "release_notes": "### New\n\n- **Language** in Settings: System, English or ไทย for this app, whatever the head unit's language. Maps' own screens, the app's dialogs and Report Maps follow it after a restart.\n- Shorter BYD battery, Send to car, Updates and Report Maps screens that put the main answer first. The problem report still has every detail.\n\n### BYD battery\n\n- On by default for BYD model ids 128 and 138 too, where owners' reports show it working. On other models and on DiLink 5 it still starts off.\n- The dialog shows the capacity as usable and from the car's readings, so Maps shows the same battery % as the car. It is usually a few percent below the spec sheet (#12).\n- The app ignores an A/C and electronics draw above 2.5 kW measured while the car stands, in case another model reports its current on a different scale.\n\n### Send to car\n\n- The app asks MicroG-RE to reconnect its push connection when Maps starts or comes into view, every 3 minutes while it is on screen, and from the status check. This should cut the trips that came minutes late while the connection was down. It also reaches a MicroG-RE that the head unit force-stopped, as some DiLink 5 units do (#12).\n- The app retries a trip link for up to 30 s after a cold start, and keeps a trip that arrives while Maps' screen closes.\n- The status check shows the last push from Google and a trip that is waiting in a notification.\n\n### Fixes\n\n- Without the ADB step, MicroG-RE's battery dialog showed raw text keys at every start (#9). It now says what to set, in English or Thai, and OK closes it.\n- **Driver side** Auto also reads the steering wheel position that DiLink 5 head units report (#4). Not tested here.\n- A system crash when a Maps screen resumes on a display that is gone no longer counts toward safe mode, because turning features off does not prevent it.\n\nNeeds Morphe Desktop 2.1.0 or newer.\n\nTested on a BYD Dolphin (DiLink 3.0, Android 10) with Google Maps (Android Automotive) 26.10.120003.E and MicroG-RE 7.3.0. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.7.mpp` SHA-256: `64564fea35afaf80959e55a857fc7861bd6ef52f24a5ba3bbb01bcb037432299`\n",
-  "release_tag": "v0.1.7",
-  "release_date": "2026-11-11T15:44:08Z",
+  "fingerprint": "a9af48291d7f35a9dec835372eb201e7aacc130eb88d151bc4b7963592f15539",
+  "release_notes": "### New\n\n- **Updates** can install the next release in the app after you confirm, and your settings stay. Android asks once to allow Maps to install apps. This needs Maps from the ready-made APK (BYD Files); you still install 0.1.8 itself by hand.\n- **Color scheme** has Auto (time), night colors between two times you set (18:00 to 06:00 by default).\n- **Android 9 (API 28)** is a new patch, off by default, for the Android 9 head unit in #11. BYD head units don't need it.\n\n### Fixes\n\n- After Maps moved to another display, a popup could crash it.\n- QR code dialogs no longer squeeze their text in split screen.\n- On a launcher's own display, Maps keeps the launcher's density (tested on a simulated display only).\n- Dialogs and Report Maps texts on head units that are not BYD no longer mention BYD.\n\nNeeds Morphe Desktop 2.1.0 or newer.\n\nTested on a BYD Dolphin (DiLink 3.0, Android 10) with Google Maps (Android Automotive) 26.10.120003.E and MicroG-RE 7.3.0. Other BYD models are untested, and BYD battery does not support plug-in hybrids (DM-i).\n\nSetup: [README](https://github.com/fangkampanat/google-maps-automotive-patches#install).\n\n`patches-0.1.8.mpp` SHA-256: `fed3915a562d751a119f9817c28f018c870cb3fe0323ece3148bd8410ba8a7b3`\n",
+  "release_tag": "v0.1.8",
+  "release_date": "2026-11-13T16:54:14Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/11970624?v=4&s=128",

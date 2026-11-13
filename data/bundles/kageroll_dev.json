@@ -2,9 +2,9 @@
   "bundle": "kageroll",
   "channel": "dev",
   "repo_url": "https://github.com/Ikuradachi/Kageroll",
-  "created_at": "2026-11-07T04:37:46",
-  "version": "1.3.0",
-  "description": "## [1.3.0](https://github.com/Ikuradachi/Kageroll/compare/v1.2.0...v1.3.0) (2026-11-07)\n\n### ✨ New Features\n\n* unlock and expand playback speed controls ([3c966bc](https://github.com/Ikuradachi/Kageroll/commit/3c966bc3ad3992dbc4c0f56e51bf64085fc950a0))",
+  "created_at": "2026-11-13T03:30:57",
+  "version": "1.4.0",
+  "description": "## [1.4.0](https://github.com/Ikuradachi/Kageroll/compare/v1.3.0...v1.4.0) (2026-11-13)\n\n### ✨ New Features\n\n* add performance bloat and background service patches ([536107c](https://github.com/Ikuradachi/Kageroll/commit/536107c63d54d2e3e8911a9aac9eb24e911eba10))\n\n### 🐛 Bug Fixes\n\n* support for v3.129.1, broken disabletelemetry and suppressbloatworkers patch ([ee83706](https://github.com/Ikuradachi/Kageroll/commit/ee837064624fc827ac1d012ae6f696b2247035a5))",
   "apps": [
     {
       "app_name": "Crunchyroll: Anime Streaming",
@@ -17,17 +17,30 @@
           "options": [],
           "compatible_versions": [
             "3.127.0",
-            "3.128.0"
+            "3.128.0",
+            "3.129.1"
+          ]
+        },
+        {
+          "name": "Disable background services",
+          "description": "Disables background broadcast receivers, schedulers, widget polling, Firebase session service binding, and DataTransport JobScheduler tasks to eliminate background wakeups and idle battery drain.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0",
+            "3.128.0",
+            "3.129.1"
           ]
         },
         {
           "name": "Disable telemetry",
-          "description": "Blocks Segment and Mux events, disables Firebase Analytics after consent updates, denies automatic Crashlytics uploads and selects disabled Datadog setup. SDK initialization, queued Segment events, local metadata, Firebase collection before consent updates, local crash recording and explicit report submission remain; independent Braze and Singular behavior is unchanged.",
-          "use": false,
+          "description": "Blocks Segment and Mux events, disables periodic telemetry loops and flush timers (Mux 1000ms playback poll, Segment 30s flush, Braze push flush alarms, Datadog upload thread), disables Firebase Analytics after consent updates, denies automatic Crashlytics uploads and selects disabled Datadog setup.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "3.127.0",
-            "3.128.0"
+            "3.128.0",
+            "3.129.1"
           ]
         },
         {
@@ -37,7 +50,8 @@
           "options": [],
           "compatible_versions": [
             "3.127.0",
-            "3.128.0"
+            "3.128.0",
+            "3.129.1"
           ]
         },
         {
@@ -47,7 +61,8 @@
           "options": [],
           "compatible_versions": [
             "3.127.0",
-            "3.128.0"
+            "3.128.0",
+            "3.129.1"
           ]
         },
         {
@@ -78,7 +93,19 @@
           ],
           "compatible_versions": [
             "3.127.0",
-            "3.128.0"
+            "3.128.0",
+            "3.129.1"
+          ]
+        },
+        {
+          "name": "Suppress bloat workers",
+          "description": "Forces Google Engage, Continue Watching, Datadog, and OneTrust CMP background workers to return success immediately without performing network requests, disk I/O, or image prefetching.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.127.0",
+            "3.128.0",
+            "3.129.1"
           ]
         }
       ],
@@ -86,10 +113,10 @@
     }
   ],
   "patches_name": "Kageroll",
-  "fingerprint": "592045f613ed810497fe523838951e9cb6d1cbb8161b50a6c9275fb22ab34f63",
-  "release_notes": "## [1.3.0](https://github.com/Ikuradachi/Kageroll/compare/v1.2.0...v1.3.0) (2026-11-07)\n\n### ✨ New Features\n\n* unlock and expand playback speed controls ([3c966bc](https://github.com/Ikuradachi/Kageroll/commit/3c966bc3ad3992dbc4c0f56e51bf64085fc950a0))\n",
-  "release_tag": "v1.3.0",
-  "release_date": "2026-11-07T04:38:33Z",
+  "fingerprint": "28c095abced9d76907d022c23eba2149e152e861b98e5e4087bed6b39910863b",
+  "release_notes": "## [1.4.0](https://github.com/Ikuradachi/Kageroll/compare/v1.3.0...v1.4.0) (2026-11-13)\n\n### ✨ New Features\n\n* add performance bloat and background service patches ([536107c](https://github.com/Ikuradachi/Kageroll/commit/536107c63d54d2e3e8911a9aac9eb24e911eba10))\n\n### 🐛 Bug Fixes\n\n* support for v3.129.1, broken disabletelemetry and suppressbloatworkers patch ([ee83706](https://github.com/Ikuradachi/Kageroll/commit/ee837064624fc827ac1d012ae6f696b2247035a5))\n",
+  "release_tag": "v1.4.0",
+  "release_date": "2026-11-13T03:31:35Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/93316768?v=4&s=128",

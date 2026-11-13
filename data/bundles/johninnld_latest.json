@@ -2,17 +2,24 @@
   "bundle": "johninnld",
   "channel": "latest",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-13T00:55:12.338Z",
-  "version": "1.72.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/b80ebfae74fde9a2b16c6a72c82ab7e9d9f51dd5/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.72.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [b80ebfae74fd](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/b80ebfae74fde9a2b16c6a72c82ab7e9d9f51dd5). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.72.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.71.3...v1.72.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* **Gboard:** make Rambler stop after silence read its setting and listen for speech ([63b5347](https://gitlab.com/johninnld/nl-morphe-patches/commit/63b5347e0d7beb9436e8c1833ff2f5cdf7e04f3f))\n\n### ✨ New Features\n\n* **Gboard:** Rambler stops after 3 seconds of silence by default ([9e1f996](https://gitlab.com/johninnld/nl-morphe-patches/commit/9e1f996c374d04095ba7937248e21e1a8e96e1f5))\n",
+  "created_at": "2026-11-13T09:00:37.810Z",
+  "version": "1.76.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/0336fd0ca24ec5b3f2322914f96afaa7fdc5d4cb/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.76.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [0336fd0ca24e](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/0336fd0ca24ec5b3f2322914f96afaa7fdc5d4cb). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.76.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.75.0...v1.76.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* **Gboard:** copy the recognised text instead of its object ([b7385eb](https://gitlab.com/johninnld/nl-morphe-patches/commit/b7385eb108b8b2cbc27888a91c9fe3ca9b7c7f12))\n* **Gboard:** load the OCR engine from a read-only library file ([46a5ba2](https://gitlab.com/johninnld/nl-morphe-patches/commit/46a5ba262fe542a0c1ffa1f6d41434a07de17eb4))\n* **Gboard:** stop asking Play Services about the OCR engine ([2f156e1](https://gitlab.com/johninnld/nl-morphe-patches/commit/2f156e12040466ff38170eb198695a550f11424f))\n\n### ✨ New Features\n\n* **Gboard:** recognise text from an image you pick ([a4a721a](https://gitlab.com/johninnld/nl-morphe-patches/commit/a4a721a5a1778d9119293f709706fd2053dacbee))\n",
   "apps": [
     {
       "app_name": "Stable",
       "package": "app.myspoti.stable",
       "patches": [
         {
+          "name": "Allow any Android Auto host",
+          "description": "Lets any Android Auto compatible host connect to Myspoti's library and playback, including DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE, whatever its package name or signing key. Google's Android Auto keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Android Auto Up next",
-          "description": "Myspoti 2.4.0 publishes its current and upcoming playlist/radio queue with metadata and queue selection itself; on 2.3.0 this patch exports that queue. It also lets every Android Auto host, or only the host packages you list, browse the library and control that queue.",
+          "description": "Myspoti 2.4.x and Orpheon publish their current and upcoming playlist/radio queue with metadata and queue selection themselves; on Myspoti 2.3.0 this patch exports that queue. It also lets every Android Auto host, or only the host packages you list, browse the library and control that queue.",
           "use": false,
           "options": [
             {
@@ -22,12 +29,13 @@
           ],
           "compatible_versions": [
             "2.3.0",
-            "2.4.0"
+            "2.4.0",
+            "2.4.1"
           ]
         },
         {
           "name": "Custom branding",
-          "description": "Changes Myspoti's launcher icon and app name. Choose from six bundled icons or keep the original.",
+          "description": "Changes the Myspoti or Orpheon launcher icon and app name. Choose from six bundled icons or keep the original.",
           "use": false,
           "options": [
             {
@@ -40,21 +48,53 @@
             }
           ],
           "compatible_versions": []
+        }
+      ],
+      "developer": "app.myspoti"
+    },
+    {
+      "app_name": "Orpheon",
+      "package": "app.orpheon.beta",
+      "patches": [
+        {
+          "name": "Allow any Android Auto host",
+          "description": "Lets any Android Auto compatible host connect to Myspoti's library and playback, including DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE, whatever its package name or signing key. Google's Android Auto keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
         },
         {
-          "name": "Gearslip personal library",
-          "description": "Allows the configured Gearslip host to use Myspoti's signed-in library, search and playback while retaining Android caller verification.",
-          "use": true,
+          "name": "Android Auto Up next",
+          "description": "Myspoti 2.4.x and Orpheon publish their current and upcoming playlist/radio queue with metadata and queue selection themselves; on Myspoti 2.3.0 this patch exports that queue. It also lets every Android Auto host, or only the host packages you list, browse the library and control that queue.",
+          "use": false,
           "options": [
             {
-              "key": "packageNames",
-              "description": "Comma-separated Gearslip or DriveDeck host packages. Myspoti retains its UID ownership checks for browsing and search."
+              "key": "allowedHostPackages",
+              "description": "Leave empty to allow every Android Auto host, including third-party systems. Otherwise enter comma-separated host app package names; every other app is denied browsing. Include Android Auto itself in the list when you restrict it. Repatch to change this list."
+            }
+          ],
+          "compatible_versions": [
+            "1.0.0-beta.1"
+          ]
+        },
+        {
+          "name": "Custom branding",
+          "description": "Changes the Myspoti or Orpheon launcher icon and app name. Choose from six bundled icons or keep the original.",
+          "use": false,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep the original name."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching. Original keeps Myspoti's current icon."
             }
           ],
           "compatible_versions": []
         }
       ],
-      "developer": "app.myspoti"
+      "developer": "app.orpheon"
     },
     {
       "app_name": "Gearslip",
@@ -1311,6 +1351,26 @@
       "package": "com.google.android.inputmethod.latin",
       "patches": [
         {
+          "name": "Add Gboard Signature Bypass",
+          "description": "Bypass Gboard's own APK signature whitelist so a patched, re-signed Gboard can use features that verify the signer, such as themes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "AI Writing Tools",
+          "description": "Enables Gboard's Writing tools: proofread, rewrite and tone changes on selected text, in every language and keyboard.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
           "name": "Change package name",
           "description": "Installs Gboard under its own package name, alongside the stock Gboard that most phones have built in. On by default, because a patched copy cannot replace the built-in Gboard.",
           "use": true,
@@ -1321,6 +1381,7 @@
             }
           ],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1330,6 +1391,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1339,6 +1401,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1357,6 +1420,47 @@
             }
           ],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Custom Theme",
+          "description": "Import custom ZIP themes from Gboard's own theme screen and browse ready-made theme packs, downloaded on demand and verified by checksum. Adds the INTERNET permission.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Enable OCR / Scan Text",
+          "description": "Enables Gboard's Scan Text camera entry point and runs it with an OCR engine bundled in the patch, so it works without Play Services. Latin text only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Frosted Glass",
+          "description": "Add live background blur and custom theme transparency to the keyboard, with separate background and key opacity and an option to extend into the navigation bar. Blur needs Android 12 or newer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "G Logo on Spacebar",
+          "description": "Show a built-in icon or your own PNG, WebP, or JPEG on the spacebar. Keep its original colors or choose a single color, adjust its size, and hide the language label.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1366,6 +1470,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Key Shape Selection",
+          "description": "Enables Gboard's Key shape option in theme details, so a theme's keys can follow the theme's own shape instead of being forced square.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1375,6 +1490,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1384,6 +1500,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1393,6 +1510,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1402,6 +1520,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1411,6 +1530,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1420,6 +1540,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1429,6 +1550,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1438,6 +1560,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1447,6 +1570,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
+            "18.6.3.1002251336-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Rounded Keyboard Panel",
+          "description": "Customize which corners of the keyboard panel are rounded, and set the top and bottom radii separately. Applies to whichever theme is active.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1456,6 +1590,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1465,6 +1600,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         },
@@ -1474,6 +1610,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "18.6.3.1002251336-release-armeabi-v7a",
             "18.6.3.1002251336-release-arm64-v8a"
           ]
         }
@@ -3594,7 +3731,7 @@
           ]
         }
       ],
-      "developer": "nl.sanomamedia"
+      "developer": "DPG Media"
     },
     {
       "app_name": "KIJK",
@@ -3696,7 +3833,7 @@
           ]
         }
       ],
-      "developer": "nl.uitzendinggemist"
+      "developer": "NPO"
     },
     {
       "app_name": "VI | Voetbal International",
@@ -3863,7 +4000,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "7112517598578d145bcfddaccc0273839cc9d68d89fe23c8d2f5779a6c0a9f3a",
+  "fingerprint": "310ba26b00f9fef806cf3667e8df2442b1f57a617d6052cf3a57b496dec5605c",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",
