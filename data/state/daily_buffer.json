@@ -1,7 +1,7 @@
 {
   "date": "2026-11-14",
-  "lastChecked": "2026-11-14T19:32:22Z",
-  "scan_counter": 2,
+  "lastChecked": "2026-11-14T23:11:31Z",
+  "scan_counter": 3,
   "affected_bundles": {
     "johninnld:stable": {
       "bundle": "johninnld",
@@ -111,10 +111,52 @@
         {
           "app_name": "Videoland",
           "package": "nl.rtl.videoland.v2",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
-            "patches_removed": [],
+            "patches_added": [
+              {
+                "name": "Disable tracking (Android - v116.4)",
+                "description": "Disables inspected Tealium, Snowplow, NPAW, advertising ID, New Relic, Salesforce analytics and automatic Google/Facebook measurement, including queued CCT uploads. Preserves functional account, media and notification services."
+              },
+              {
+                "name": "Disable tracking (Android TV - v118)",
+                "description": "Disables inspected Tealium, Snowplow, NPAW, advertising-ID, New Relic and automatic Google/Facebook measurement paths, including queued CCT uploads. Functional services remain; full traffic acceptance is pending."
+              },
+              {
+                "name": "Hide ads (Android - v116.4)",
+                "description": "Suppresses inspected video, banner and pause-ad requests and uses a supplied live fallback when available. Ad-supported playback and stitched streams require runtime feedback."
+              },
+              {
+                "name": "Hide ads (Android TV - v118)",
+                "description": "Suppresses client video, banner and pause-ad requests. Uses the supplied live fallback when Yospace resource creation is omitted. Ad-supported playback and server-side coverage need feedback."
+              },
+              {
+                "name": "Hide unavailable content (Android TV - v118)",
+                "description": "Hides subscription-required catalogue entries and action buttons, and removes empty seasons. Preserves content available to the current account and other access checks."
+              },
+              {
+                "name": "Skip consent screens (Android - v116.4)",
+                "description": "Includes tracking controls. Saves OneTrust's real Reject All choice after SDK readiness and skips automatic notification setup. Notifications default off; manual privacy and notification settings remain available."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Disable tracking",
+                "description": "Disables inspected Tealium, Snowplow, NPAW, advertising ID, New Relic, Salesforce analytics and automatic Google/Facebook measurement, including queued CCT uploads. Preserves functional account, media and notification services."
+              },
+              {
+                "name": "Hide ads",
+                "description": "Suppresses inspected video, banner and pause-ad requests and uses a supplied live fallback when available. Ad-supported playback and stitched streams require runtime feedback."
+              },
+              {
+                "name": "Hide unavailable content",
+                "description": "Hides subscription-required catalogue entries and action buttons, and removes empty seasons. Preserves content available to the current account and other access checks."
+              },
+              {
+                "name": "Skip consent screens",
+                "description": "Includes tracking controls. Saves OneTrust's real Reject All choice after SDK readiness and skips automatic notification setup. Notifications default off; manual privacy and notification settings remain available."
+              }
+            ],
             "patches_modified": [
               {
                 "name": "Hide unavailable content",
@@ -126,7 +168,8 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         },
         {
@@ -191,7 +234,12 @@
           "package": "be.persgroep.android.news.mobiledm",
           "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Android Auto nieuws",
+                "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio. Selecting a headline starts the ordered feed at that article, with Previous, Next and Up next through the existing car player. Premium audio keeps its entitlement."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -232,7 +280,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         },
         {
@@ -266,7 +315,20 @@
           "package": "com.klevico.monet",
           "badge_type": "UPDATED APP",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Individual Nuvio catalog rows",
+                "description": "Choose individual published catalogs in Monet's Content picker, with the publisher's identity and refresh independent of Recommendations. Requires a catalog publisher such as NuvioTV. Enable only one catalog source patch; enabling both fails by design."
+              },
+              {
+                "name": "Unlimited displayed cards",
+                "description": "Remove the 20-card limit from Displayed Cards. Add -10, +10 and Max to the original themed picker, preserving its layout and single-card steps."
+              },
+              {
+                "name": "Unlock Premium",
+                "description": "Unlocks Monet's local premium features. Billing and license storage stay native; only the local evaluator's false return changes."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -279,7 +341,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         },
         {
@@ -310,6 +373,139 @@
           "scan_numbers": [
             2
           ]
+        },
+        {
+          "app_name": "HLN.be",
+          "package": "be.persgroep.android.news.mobilehln",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Android Auto nieuws",
+                "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio from the audio bundles the app itself renders. Selecting a headline restores the full ordered feed inside the app, so playback, Up next and premium entitlement follow the app's own player. The replaced Start content is never shown."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable tracking",
+                "description": "Disables audited native event collectors, queued uploads, analytics re-enable paths, advertising identifiers and FIAM while preserving push, real login, manual feedback and player session synchronization.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium banner",
+                "description": "Suppresses automatic marketing templates and Premium markers while retaining LIVE labels, editorial promotions and manual account navigation.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide ads",
+                "description": "Filters commercial feed/article rows and disables banner technologies, video advertising and game prerolls using existing no-ad feature paths while preserving editorial media.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide empty listening carousel",
+                "description": "Hides the blank Luister verder loading row and its invalid placeholder links. Real listening history, podcast carousels and playback remain available.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Read full articles",
+                "description": "Requests complete article components through the shipped article API and completes both marketing resolvers with their supported empty results, preserving account and purchase state.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Skip consent screens",
+                "description": "Skips automatic consent, startup login and topic-notification prompts. Defaults to guest reading and manual notification opt-in while retaining city selection, saved choices and manual login/privacy controls.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Podimo - Podcasts & Audiobooks",
+          "package": "com.podimo",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Android Auto show grid browse",
+                "description": "Rebuilds the Android Auto browse around podcast series and opens it to every car client. The For-you episode sections become grids of series covers; opening a series lists its episodes newest-first through the app's own paginated query, so playback, queueing and entitlement keep running through unmodified Podimo code. The library tab disappears for guests with nothing saved locally. Any media-browser client may connect: the app's certificate-pinned caller allowlist is replaced with a lookup that serves the full section tree to every caller, including Android Automotive, desktop head units and aftermarket clients."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Guest session playback host",
+                "description": "Points the app's production GraphQL API at Podimo's website host (https://graphql.podimo.com/graphql). The Android gateway host (https://graphql.pdm-gateway.com) rejected guest-session playback requests with HTTP 403 in the supplied analysis, while the website host served the app's own guest registration, profile and single-episode playback operations and returned signed full-length audio for Premium-labelled episodes to a fresh, unregistered guest with a FREE subscription. With this patch the app registers its guest session and requests playback URLs through the verified host; transport security, authentication headers, request signing and error handling stay untouched. Staging and localhost routes are not affected.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Premium playback",
+                "description": "Replaces every Premium button with the app's existing play button and lets its normal play action run for Premium, Premium Plus, Premium-only episodes and exclusive podcasts, including without an account. The app derives the button, the paywall navigation and the playback permission from one user access validator; this patch returns its typed success result at that single boundary, so the episode rows render the standard play button and the play action reaches the app's own signed playback query. The server still decides whether to return a playback URL, and account data, profile fields and subscription states are not modified. The top-left \"Start free trial\" promotion pill and its sibling upsell labels are hidden with the app's own invisible banner.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "NPO Start",
+          "package": "nl.uitzendinggemist",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable tracking (Android & Android TV - v48.2-2405)",
+                "description": "Stops NPO Tag/Topspin/DAM, STER targeting, Bitmovin/Sentry collection, Cast diagnostics and Google telemetry collection/uploads, including queued batches. Preserves playback, authentication and functional Cast controls."
+              },
+              {
+                "name": "Fix PairIP startup (Android & Android TV - v48.2-2405)",
+                "description": "Restores build-specific startup data, lifecycle helpers, authentication and media/network callbacks. Preserves genuine token and entitlement checks and retains other protected native callbacks."
+              },
+              {
+                "name": "Hide ads (Android & Android TV - v48.2-2405)",
+                "description": "Suppresses nullable preroll inputs and the optional IMA ad loader. Uses the player's existing content-only path while retaining real content, DRM, subtitles and player state."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Disable tracking",
+                "description": "Stops NPO Tag/Topspin/DAM, STER targeting, Bitmovin/Sentry collection, Cast diagnostics and Google telemetry collection/uploads, including queued batches. Preserves playback, authentication and functional Cast controls."
+              },
+              {
+                "name": "Fix PairIP startup",
+                "description": "Restores build-specific startup data, lifecycle helpers, authentication and media/network callbacks. Preserves genuine token and entitlement checks and retains other protected native callbacks."
+              },
+              {
+                "name": "Hide ads",
+                "description": "Suppresses nullable preroll inputs and the optional IMA ad loader. Uses the player's existing content-only path while retaining real content, DRM, subtitles and player state."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
         }
       ],
       "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
@@ -318,7 +514,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.76.0",
-      "new_version": "1.89.0",
+      "new_version": "1.90.2",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -430,10 +626,52 @@
         {
           "app_name": "Videoland",
           "package": "nl.rtl.videoland.v2",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
-            "patches_removed": [],
+            "patches_added": [
+              {
+                "name": "Disable tracking (Android - v116.4)",
+                "description": "Disables inspected Tealium, Snowplow, NPAW, advertising ID, New Relic, Salesforce analytics and automatic Google/Facebook measurement, including queued CCT uploads. Preserves functional account, media and notification services."
+              },
+              {
+                "name": "Disable tracking (Android TV - v118)",
+                "description": "Disables inspected Tealium, Snowplow, NPAW, advertising-ID, New Relic and automatic Google/Facebook measurement paths, including queued CCT uploads. Functional services remain; full traffic acceptance is pending."
+              },
+              {
+                "name": "Hide ads (Android - v116.4)",
+                "description": "Suppresses inspected video, banner and pause-ad requests and uses a supplied live fallback when available. Ad-supported playback and stitched streams require runtime feedback."
+              },
+              {
+                "name": "Hide ads (Android TV - v118)",
+                "description": "Suppresses client video, banner and pause-ad requests. Uses the supplied live fallback when Yospace resource creation is omitted. Ad-supported playback and server-side coverage need feedback."
+              },
+              {
+                "name": "Hide unavailable content (Android TV - v118)",
+                "description": "Hides subscription-required catalogue entries and action buttons, and removes empty seasons. Preserves content available to the current account and other access checks."
+              },
+              {
+                "name": "Skip consent screens (Android - v116.4)",
+                "description": "Includes tracking controls. Saves OneTrust's real Reject All choice after SDK readiness and skips automatic notification setup. Notifications default off; manual privacy and notification settings remain available."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Disable tracking",
+                "description": "Disables inspected Tealium, Snowplow, NPAW, advertising ID, New Relic, Salesforce analytics and automatic Google/Facebook measurement, including queued CCT uploads. Preserves functional account, media and notification services."
+              },
+              {
+                "name": "Hide ads",
+                "description": "Suppresses inspected video, banner and pause-ad requests and uses a supplied live fallback when available. Ad-supported playback and stitched streams require runtime feedback."
+              },
+              {
+                "name": "Hide unavailable content",
+                "description": "Hides subscription-required catalogue entries and action buttons, and removes empty seasons. Preserves content available to the current account and other access checks."
+              },
+              {
+                "name": "Skip consent screens",
+                "description": "Includes tracking controls. Saves OneTrust's real Reject All choice after SDK readiness and skips automatic notification setup. Notifications default off; manual privacy and notification settings remain available."
+              }
+            ],
             "patches_modified": [
               {
                 "name": "Hide unavailable content",
@@ -445,7 +683,8 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         },
         {
@@ -510,7 +749,12 @@
           "package": "be.persgroep.android.news.mobiledm",
           "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Android Auto nieuws",
+                "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio. Selecting a headline starts the ordered feed at that article, with Previous, Next and Up next through the existing car player. Premium audio keeps its entitlement."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -551,7 +795,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         },
         {
@@ -585,7 +830,20 @@
           "package": "com.klevico.monet",
           "badge_type": "UPDATED APP",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Individual Nuvio catalog rows",
+                "description": "Choose individual published catalogs in Monet's Content picker, with the publisher's identity and refresh independent of Recommendations. Requires a catalog publisher such as NuvioTV. Enable only one catalog source patch; enabling both fails by design."
+              },
+              {
+                "name": "Unlimited displayed cards",
+                "description": "Remove the 20-card limit from Displayed Cards. Add -10, +10 and Max to the original themed picker, preserving its layout and single-card steps."
+              },
+              {
+                "name": "Unlock Premium",
+                "description": "Unlocks Monet's local premium features. Billing and license storage stay native; only the local evaluator's false return changes."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -598,7 +856,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         },
         {
@@ -629,6 +888,139 @@
           "scan_numbers": [
             2
           ]
+        },
+        {
+          "app_name": "HLN.be",
+          "package": "be.persgroep.android.news.mobilehln",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Android Auto nieuws",
+                "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio from the audio bundles the app itself renders. Selecting a headline restores the full ordered feed inside the app, so playback, Up next and premium entitlement follow the app's own player. The replaced Start content is never shown."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable tracking",
+                "description": "Disables audited native event collectors, queued uploads, analytics re-enable paths, advertising identifiers and FIAM while preserving push, real login, manual feedback and player session synchronization.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium banner",
+                "description": "Suppresses automatic marketing templates and Premium markers while retaining LIVE labels, editorial promotions and manual account navigation.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide ads",
+                "description": "Filters commercial feed/article rows and disables banner technologies, video advertising and game prerolls using existing no-ad feature paths while preserving editorial media.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide empty listening carousel",
+                "description": "Hides the blank Luister verder loading row and its invalid placeholder links. Real listening history, podcast carousels and playback remain available.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Read full articles",
+                "description": "Requests complete article components through the shipped article API and completes both marketing resolvers with their supported empty results, preserving account and purchase state.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Skip consent screens",
+                "description": "Skips automatic consent, startup login and topic-notification prompts. Defaults to guest reading and manual notification opt-in while retaining city selection, saved choices and manual login/privacy controls.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Podimo - Podcasts & Audiobooks",
+          "package": "com.podimo",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Android Auto show grid browse",
+                "description": "Rebuilds the Android Auto browse around podcast series and opens it to every car client. The For-you episode sections become grids of series covers; opening a series lists its episodes newest-first through the app's own paginated query, so playback, queueing and entitlement keep running through unmodified Podimo code. The library tab disappears for guests with nothing saved locally. Any media-browser client may connect: the app's certificate-pinned caller allowlist is replaced with a lookup that serves the full section tree to every caller, including Android Automotive, desktop head units and aftermarket clients."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Guest session playback host",
+                "description": "Points the app's production GraphQL API at Podimo's website host (https://graphql.podimo.com/graphql). The Android gateway host (https://graphql.pdm-gateway.com) rejected guest-session playback requests with HTTP 403 in the supplied analysis, while the website host served the app's own guest registration, profile and single-episode playback operations and returned signed full-length audio for Premium-labelled episodes to a fresh, unregistered guest with a FREE subscription. With this patch the app registers its guest session and requests playback URLs through the verified host; transport security, authentication headers, request signing and error handling stay untouched. Staging and localhost routes are not affected.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Unlock Premium playback",
+                "description": "Replaces every Premium button with the app's existing play button and lets its normal play action run for Premium, Premium Plus, Premium-only episodes and exclusive podcasts, including without an account. The app derives the button, the paywall navigation and the playback permission from one user access validator; this patch returns its typed success result at that single boundary, so the episode rows render the standard play button and the play action reaches the app's own signed playback query. The server still decides whether to return a playback URL, and account data, profile fields and subscription states are not modified. The top-left \"Start free trial\" promotion pill and its sibling upsell labels are hidden with the app's own invisible banner.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "NPO Start",
+          "package": "nl.uitzendinggemist",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable tracking (Android & Android TV - v48.2-2405)",
+                "description": "Stops NPO Tag/Topspin/DAM, STER targeting, Bitmovin/Sentry collection, Cast diagnostics and Google telemetry collection/uploads, including queued batches. Preserves playback, authentication and functional Cast controls."
+              },
+              {
+                "name": "Fix PairIP startup (Android & Android TV - v48.2-2405)",
+                "description": "Restores build-specific startup data, lifecycle helpers, authentication and media/network callbacks. Preserves genuine token and entitlement checks and retains other protected native callbacks."
+              },
+              {
+                "name": "Hide ads (Android & Android TV - v48.2-2405)",
+                "description": "Suppresses nullable preroll inputs and the optional IMA ad loader. Uses the player's existing content-only path while retaining real content, DRM, subtitles and player state."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Disable tracking",
+                "description": "Stops NPO Tag/Topspin/DAM, STER targeting, Bitmovin/Sentry collection, Cast diagnostics and Google telemetry collection/uploads, including queued batches. Preserves playback, authentication and functional Cast controls."
+              },
+              {
+                "name": "Fix PairIP startup",
+                "description": "Restores build-specific startup data, lifecycle helpers, authentication and media/network callbacks. Preserves genuine token and entitlement checks and retains other protected native callbacks."
+              },
+              {
+                "name": "Hide ads",
+                "description": "Suppresses nullable preroll inputs and the optional IMA ad loader. Uses the player's existing content-only path while retaining real content, DRM, subtitles and player state."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
         }
       ],
       "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
@@ -637,7 +1029,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.76.0",
-      "new_version": "1.89.0",
+      "new_version": "1.90.2",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5643,13 +6035,30 @@
               {
                 "name": "Choose what the bottom bar shows",
                 "description": "Lets each item on the bottom navigation bar — Posts, Actions, Explore and Inbox — be left alone, taken off, or replaced with one of the actions from Sync's own actions sheet, and adds one further button beside them. Covers the navigation rail used in tablet mode as well."
+              },
+              {
+                "name": "Clone Sync app",
+                "description": "Changes the app package name so that the app can be installed more than once, with \".morphe\" appended to it unless another name is given. Each cloned install needs a package name of its own. Use this rather than the universal \"Clone app\" patch, which leaves the app unable to read or write anything once its providers are renamed, and select only one of the two."
+              },
+              {
+                "name": "Play a YouTube video where Sync's player cannot",
+                "description": "Plays the video in a web view when Sync's YouTube player fails to start, which it now always does: the player asks the official YouTube app for a service Google has removed. Covers the player in a link's sheet and the full screen one."
+              },
+              {
+                "name": "Repair a gallery Reddit says has failed",
+                "description": "Finds the pictures of a gallery that opens empty because Reddit marked them as failed, by asking i.redd.it for them, and leaves a gallery with nothing wrong untouched."
+              },
+              {
+                "name": "Stack a link post's picture over its title in columns",
+                "description": "Draws a link post's picture across the top of its card with the title underneath where the feed is in more than one column, instead of beside the title in the width that is left over."
               }
             ],
             "patches_removed": [],
             "patches_modified": []
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         }
       ],
@@ -5659,7 +6068,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.11.0",
-      "new_version": "1.12.0",
+      "new_version": "1.14.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5677,13 +6086,30 @@
               {
                 "name": "Choose what the bottom bar shows",
                 "description": "Lets each item on the bottom navigation bar — Posts, Actions, Explore and Inbox — be left alone, taken off, or replaced with one of the actions from Sync's own actions sheet, and adds one further button beside them. Covers the navigation rail used in tablet mode as well."
+              },
+              {
+                "name": "Clone Sync app",
+                "description": "Changes the app package name so that the app can be installed more than once, with \".morphe\" appended to it unless another name is given. Each cloned install needs a package name of its own. Use this rather than the universal \"Clone app\" patch, which leaves the app unable to read or write anything once its providers are renamed, and select only one of the two."
+              },
+              {
+                "name": "Play a YouTube video where Sync's player cannot",
+                "description": "Plays the video in a web view when Sync's YouTube player fails to start, which it now always does: the player asks the official YouTube app for a service Google has removed. Covers the player in a link's sheet and the full screen one."
+              },
+              {
+                "name": "Repair a gallery Reddit says has failed",
+                "description": "Finds the pictures of a gallery that opens empty because Reddit marked them as failed, by asking i.redd.it for them, and leaves a gallery with nothing wrong untouched."
+              },
+              {
+                "name": "Stack a link post's picture over its title in columns",
+                "description": "Draws a link post's picture across the top of its card with the title underneath where the feed is in more than one column, instead of beside the title in the width that is left over."
               }
             ],
             "patches_removed": [],
             "patches_modified": []
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         }
       ],
@@ -5693,7 +6119,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.11.0",
-      "new_version": "1.12.0",
+      "new_version": "1.14.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5711,13 +6137,30 @@
               {
                 "name": "Choose what the bottom bar shows",
                 "description": "Lets each item on the bottom navigation bar — Posts, Actions, Explore and Inbox — be left alone, taken off, or replaced with one of the actions from Sync's own actions sheet, and adds one further button beside them. Covers the navigation rail used in tablet mode as well."
+              },
+              {
+                "name": "Clone Sync app",
+                "description": "Changes the app package name so that the app can be installed more than once, with \".morphe\" appended to it unless another name is given. Each cloned install needs a package name of its own. Use this rather than the universal \"Clone app\" patch, which leaves the app unable to read or write anything once its providers are renamed, and select only one of the two."
+              },
+              {
+                "name": "Play a YouTube video where Sync's player cannot",
+                "description": "Plays the video in a web view when Sync's YouTube player fails to start, which it now always does: the player asks the official YouTube app for a service Google has removed. Covers the player in a link's sheet and the full screen one."
+              },
+              {
+                "name": "Repair a gallery Reddit says has failed",
+                "description": "Finds the pictures of a gallery that opens empty because Reddit marked them as failed, by asking i.redd.it for them, and leaves a gallery with nothing wrong untouched."
+              },
+              {
+                "name": "Stack a link post's picture over its title in columns",
+                "description": "Draws a link post's picture across the top of its card with the title underneath where the feed is in more than one column, instead of beside the title in the width that is left over."
               }
             ],
             "patches_removed": [],
             "patches_modified": []
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         }
       ],
@@ -5727,7 +6170,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.11.0",
-      "new_version": "1.12.0",
+      "new_version": "1.14.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -7476,6 +7919,125 @@
           },
           "scan_numbers": [
             1
+          ]
+        },
+        {
+          "app_name": "RetailMeNot: Rewards & Codes",
+          "package": "com.whaleshark.retailmenot",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block Bluetooth scanning",
+                "description": "Stops the app from scanning for Bluetooth devices and beacons, and hides paired devices.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Block analytics & tracking",
+                "description": "Stops AppsFlyer, Snowplow, Datadog, and Firebase Analytics.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Block background location",
+                "description": "Removes the app's access to your location while it is closed or in the background.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Dark mode",
+                "description": "Lets Android darken the app while the phone is in dark mode. Android picks the colors, so some screens may look different from a designed dark theme.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable Pairip license check",
+                "description": "Lets the patched app start by skipping Google's Pairip license check.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable auto-updates",
+                "description": "Stops the Play Store from replacing the patched app with the official version.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide VPN connection",
+                "description": "Hides an active VPN from the app's checks on the phone.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Wi-Fi networks",
+                "description": "Hides nearby Wi-Fi networks and the name of your network from the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide cell tower info",
+                "description": "Hides the cell towers your phone sees from the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide device identifiers",
+                "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide rating prompt",
+                "description": "Stops Google Play's rate-this-app sheet.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide surveys",
+                "description": "Removes the in-app survey card.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Remove location access",
+                "description": "Keeps the app from reading your location, even when location access is allowed.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof carrier",
+                "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Strip affiliate links",
+                "description": "Opens store links without affiliate tags or click tracking. RetailMeNot cash back needs those, so cash back stops working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
           ]
         }
       ],
@@ -10425,6 +10987,125 @@
           "scan_numbers": [
             1
           ]
+        },
+        {
+          "app_name": "RetailMeNot: Rewards & Codes",
+          "package": "com.whaleshark.retailmenot",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block Bluetooth scanning",
+                "description": "Stops the app from scanning for Bluetooth devices and beacons, and hides paired devices.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Block analytics & tracking",
+                "description": "Stops AppsFlyer, Snowplow, Datadog, and Firebase Analytics.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Block background location",
+                "description": "Removes the app's access to your location while it is closed or in the background.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Dark mode",
+                "description": "Lets Android darken the app while the phone is in dark mode. Android picks the colors, so some screens may look different from a designed dark theme.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable Pairip license check",
+                "description": "Lets the patched app start by skipping Google's Pairip license check.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable auto-updates",
+                "description": "Stops the Play Store from replacing the patched app with the official version.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide VPN connection",
+                "description": "Hides an active VPN from the app's checks on the phone.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Wi-Fi networks",
+                "description": "Hides nearby Wi-Fi networks and the name of your network from the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide cell tower info",
+                "description": "Hides the cell towers your phone sees from the app.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide device identifiers",
+                "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide rating prompt",
+                "description": "Stops Google Play's rate-this-app sheet.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide surveys",
+                "description": "Removes the in-app survey card.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Remove location access",
+                "description": "Keeps the app from reading your location, even when location access is allowed.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Spoof carrier",
+                "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Strip affiliate links",
+                "description": "Opens store links without affiliate tags or click tracking. RetailMeNot cash back needs those, so cash back stops working.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
         }
       ],
       "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
@@ -11545,6 +12226,14 @@
               {
                 "name": "Hide Inbox updates",
                 "description": "Leaves the Updates section out of your Inbox, so it doesn't load. The pin ideas Pinterest puts there go, and so do the activity updates in that section. Your messages stay. Starts off. Turn it on in HushPinterest settings > Notifications."
+              },
+              {
+                "name": "Expand board list",
+                "description": "Opens the Save to sheet all the way up when you save a pin, so more of your boards show without dragging it. Starts off. Turn it on in HushPinterest settings > Interface."
+              },
+              {
+                "name": "Hide suggested boards",
+                "description": "Hides the board Pinterest suggests under your own boards when you save a pin, such as one it offers to make for you. Your boards and Profile stay. Starts off. Turn it on in HushPinterest settings > Interface."
               }
             ],
             "patches_removed": [],
@@ -11793,15 +12482,18 @@
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
       "repo_url": "https://github.com/SysAdminDoc/HushPinterest",
       "patches_name": "HushPinterest",
-      "extra_badges": [],
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
       "previous_version": "0.0.13",
-      "new_version": "0.0.13",
+      "new_version": "0.0.14",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -11823,6 +12515,14 @@
               {
                 "name": "Hide Inbox updates",
                 "description": "Leaves the Updates section out of your Inbox, so it doesn't load. The pin ideas Pinterest puts there go, and so do the activity updates in that section. Your messages stay. Starts off. Turn it on in HushPinterest settings > Notifications."
+              },
+              {
+                "name": "Expand board list",
+                "description": "Opens the Save to sheet all the way up when you save a pin, so more of your boards show without dragging it. Starts off. Turn it on in HushPinterest settings > Interface."
+              },
+              {
+                "name": "Hide suggested boards",
+                "description": "Hides the board Pinterest suggests under your own boards when you save a pin, such as one it offers to make for you. Your boards and Profile stay. Starts off. Turn it on in HushPinterest settings > Interface."
               }
             ],
             "patches_removed": [],
@@ -12071,15 +12771,18 @@
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
       "repo_url": "https://github.com/SysAdminDoc/HushPinterest",
       "patches_name": "HushPinterest",
-      "extra_badges": [],
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
       "previous_version": "0.0.13",
-      "new_version": "0.0.13",
+      "new_version": "0.0.14",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -12159,9 +12862,14 @@
         {
           "app_name": "Facebook",
           "package": "com.facebook.katana",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Post menu items",
+                "description": "Lets you hide rows you never use from a post's three-dot menu, such as Interested, Not interested or Cast, so you can't tap them by accident. Nothing is hidden until you pick. Choose them in Hushfacebook settings > News feed."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -12204,12 +12912,44 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Ask before a like",
+                "description": "Switches that make a tap on Like under a post, beside a reel or under a comment, or on Follow in a post or beside a reel, ask first, and only Continue goes ahead, so a stray tap doesn't like or follow. All five start off. Turn them on in Hushfacebook settings > News feed, Reels and Watch, and Comments and writing.",
+                "previous_description": "Switches that make a tap on Like under a post, beside a reel or under a comment ask first, and only Continue likes or unlikes it, so a stray tap doesn't. All three start off. Turn them on in Hushfacebook settings > News feed, Reels and Watch, and Comments and writing.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Clone install under another package name",
+                "description": "Installs a second copy of Facebook beside the first under its own package name and app name, for a phone where Facebook came preinstalled and a patched one won't install over it. Hushfacebook settings open in the copy the same way. It isn't selected by default because push notifications may not reach the copy, and you only need it for a second Facebook. Turn on Expert mode in Manager to pick it. Works as soon as you patch it in, with no switch.",
+                "changes": [
+                  "options: +1 option, -1 option"
+                ]
+              },
+              {
+                "name": "Double tap to skip",
+                "description": "A double tap on the left or right edge of a reel or video skips back or forward 10 seconds, or 5 on one under 30 seconds. Starts off. Turn it on in Hushfacebook settings > Reels and Watch. Hide the skip seconds there, also off, keeps the +5s or -10s off the screen while the skip still works.",
+                "previous_description": "A double tap on the left or right edge of a reel or video skips back or forward 10 seconds, or 5 on one under 30 seconds. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide post prompts",
+                "description": "Removes the strip Facebook adds to some posts, like \"Are you interested in this post?\", \"Show less\" or follow suggestions, so posts look less cluttered. No gap is left. On by default. Turn it off in Hushfacebook settings > News feed. Six more switches there, Hide the Follow link on posts, Hide the Subscribe link on posts, Hide the Join button on posts, Hide the X on posts, Hide counts on posts and Hide the reaction preview on posts, start off.",
+                "previous_description": "Removes the strip Facebook adds to some posts, like \"Are you interested in this post?\", \"Show less\" or follow suggestions, so posts look less cluttered. No gap is left. On by default. Turn it off in Hushfacebook settings > News feed. Five more switches there, Hide the Follow and Subscribe links on posts, Hide the Join button on posts, Hide the X on posts, Hide counts on posts and Hide the reaction preview on posts, start off.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
@@ -12229,9 +12969,14 @@
         {
           "app_name": "Facebook",
           "package": "com.facebook.katana",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Post menu items",
+                "description": "Lets you hide rows you never use from a post's three-dot menu, such as Interested, Not interested or Cast, so you can't tap them by accident. Nothing is hidden until you pick. Choose them in Hushfacebook settings > News feed."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -12274,12 +13019,44 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Ask before a like",
+                "description": "Switches that make a tap on Like under a post, beside a reel or under a comment, or on Follow in a post or beside a reel, ask first, and only Continue goes ahead, so a stray tap doesn't like or follow. All five start off. Turn them on in Hushfacebook settings > News feed, Reels and Watch, and Comments and writing.",
+                "previous_description": "Switches that make a tap on Like under a post, beside a reel or under a comment ask first, and only Continue likes or unlikes it, so a stray tap doesn't. All three start off. Turn them on in Hushfacebook settings > News feed, Reels and Watch, and Comments and writing.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Clone install under another package name",
+                "description": "Installs a second copy of Facebook beside the first under its own package name and app name, for a phone where Facebook came preinstalled and a patched one won't install over it. Hushfacebook settings open in the copy the same way. It isn't selected by default because push notifications may not reach the copy, and you only need it for a second Facebook. Turn on Expert mode in Manager to pick it. Works as soon as you patch it in, with no switch.",
+                "changes": [
+                  "options: +1 option, -1 option"
+                ]
+              },
+              {
+                "name": "Double tap to skip",
+                "description": "A double tap on the left or right edge of a reel or video skips back or forward 10 seconds, or 5 on one under 30 seconds. Starts off. Turn it on in Hushfacebook settings > Reels and Watch. Hide the skip seconds there, also off, keeps the +5s or -10s off the screen while the skip still works.",
+                "previous_description": "A double tap on the left or right edge of a reel or video skips back or forward 10 seconds, or 5 on one under 30 seconds. Starts off. Turn it on in Hushfacebook settings > Reels and Watch.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide post prompts",
+                "description": "Removes the strip Facebook adds to some posts, like \"Are you interested in this post?\", \"Show less\" or follow suggestions, so posts look less cluttered. No gap is left. On by default. Turn it off in Hushfacebook settings > News feed. Six more switches there, Hide the Follow link on posts, Hide the Subscribe link on posts, Hide the Join button on posts, Hide the X on posts, Hide counts on posts and Hide the reaction preview on posts, start off.",
+                "previous_description": "Removes the strip Facebook adds to some posts, like \"Are you interested in this post?\", \"Show less\" or follow suggestions, so posts look less cluttered. No gap is left. On by default. Turn it off in Hushfacebook settings > News feed. Five more switches there, Hide the Follow and Subscribe links on posts, Hide the Join button on posts, Hide the X on posts, Hide counts on posts and Hide the reaction preview on posts, start off.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
@@ -12406,7 +13183,8 @@
           "badge_type": "NEW APP",
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
@@ -16197,6 +16975,106 @@
           "scan_numbers": [
             2
           ]
+        },
+        {
+          "app_name": "LiveScore: Live Sports Scores",
+          "package": "com.livescore",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables analytics, tracking and crash reporting."
+              },
+              {
+                "name": "Hide betting content",
+                "description": "Hides odds and betting content."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "AiScore - Live Sports Scores",
+          "package": "com.onesports.score",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable ads",
+                "description": "Removes ads."
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Disables analytics and ad tracking."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "OneFootball Live Soccer scores",
+          "package": "de.motain.iliga",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables analytics, attribution and crash reporting."
+              },
+              {
+                "name": "Hide betting content",
+                "description": "Hides the betting cards."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Flashscore",
+          "package": "eu.livesport.flashscore_com",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "AMOLED black",
+                "description": "Makes the dark theme pure black on OLED screens."
+              },
+              {
+                "name": "Hide competitions",
+                "description": "Hides matches of the competitions you pick."
+              },
+              {
+                "name": "Hide match polls",
+                "description": "Hides the polls on match pages."
+              },
+              {
+                "name": "Hide news",
+                "description": "Hides news in match lists and on team pages."
+              },
+              {
+                "name": "Spoiler-free mode",
+                "description": "Lets you hide scores and alerts for matches you mark."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
         }
       ],
       "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
@@ -16205,7 +17083,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "2.4.0-dev.1",
-      "new_version": "2.4.0-dev.3",
+      "new_version": "3.0.0-dev.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -16721,6 +17599,106 @@
           "scan_numbers": [
             2
           ]
+        },
+        {
+          "app_name": "LiveScore: Live Sports Scores",
+          "package": "com.livescore",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables analytics, tracking and crash reporting."
+              },
+              {
+                "name": "Hide betting content",
+                "description": "Hides odds and betting content."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "AiScore - Live Sports Scores",
+          "package": "com.onesports.score",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable ads",
+                "description": "Removes ads."
+              },
+              {
+                "name": "Disable telemetry",
+                "description": "Disables analytics and ad tracking."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "OneFootball Live Soccer scores",
+          "package": "de.motain.iliga",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable telemetry",
+                "description": "Disables analytics, attribution and crash reporting."
+              },
+              {
+                "name": "Hide betting content",
+                "description": "Hides the betting cards."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Flashscore",
+          "package": "eu.livesport.flashscore_com",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "AMOLED black",
+                "description": "Makes the dark theme pure black on OLED screens."
+              },
+              {
+                "name": "Hide competitions",
+                "description": "Hides matches of the competitions you pick."
+              },
+              {
+                "name": "Hide match polls",
+                "description": "Hides the polls on match pages."
+              },
+              {
+                "name": "Hide news",
+                "description": "Hides news in match lists and on team pages."
+              },
+              {
+                "name": "Spoiler-free mode",
+                "description": "Lets you hide scores and alerts for matches you mark."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
         }
       ],
       "repo_url": "https://github.com/heval99/Heval-Morphe-Patches",
@@ -16729,7 +17707,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "2.4.0-dev.1",
-      "new_version": "2.4.0-dev.3",
+      "new_version": "3.0.0-dev.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -19970,15 +20948,37 @@
           "package": "com.darkdeveloper.kawaiianimes",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            2
-          ]
+            2,
+            3
+          ],
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Firma original en PackageManager (V29)",
+                "description": "La proteccion nativa lee la firma del APK via PackageManager y el servidor valida proofs calculados con la firma ORIGINAL. Este patch instala un proxy del PackageManager que devuelve la firma original, para que la libreria nativa genere proofs validos y el catalogo cargue con el APK re-firmado. Debe usarse sin eliminar las librerias nativas."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Compatibilidad con integridad nativa (V29)",
+                "description": "La app firma sus peticiones al catalogo con libprotection.so, que verifica la firma del APK. Al re-firmar con Morphe ese chequeo falla y el gate queda en false: la app degrada sus rutas y el catalogo puede quedarse cargando. Este patch neutraliza el chequeo (la comparacion siempre da valida) conservando la carga de la lib nativa y el manejo de errores original. Requiere no eliminar las librerias nativas del APK.",
+                "previous_description": "La app firma sus peticiones al catalogo con libprotection.so, que verifica la firma del APK. Al re-firmar con Morphe ese gate queda en false. Este patch carga la lib nativa y fuerza el gate a true sin ejecutar el chequeo, para que el app use las rutas de proteccion normales. Pruebalo solo si la app se cierra al arrancar o el catalogo no carga con los demas patches.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          }
         }
       ],
       "repo_url": "https://github.com/hiroshiren86-sketch/morphe-patches-personal",
       "patches_name": "Patches personales",
-      "extra_badges": [],
-      "previous_version": "",
-      "new_version": "1.0.0-dev.3",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0-dev.3",
+      "new_version": "1.0.0-dev.5",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -19992,15 +20992,37 @@
           "package": "com.darkdeveloper.kawaiianimes",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            2
-          ]
+            2,
+            3
+          ],
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Firma original en PackageManager (V29)",
+                "description": "La proteccion nativa lee la firma del APK via PackageManager y el servidor valida proofs calculados con la firma ORIGINAL. Este patch instala un proxy del PackageManager que devuelve la firma original, para que la libreria nativa genere proofs validos y el catalogo cargue con el APK re-firmado. Debe usarse sin eliminar las librerias nativas."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Compatibilidad con integridad nativa (V29)",
+                "description": "La app firma sus peticiones al catalogo con libprotection.so, que verifica la firma del APK. Al re-firmar con Morphe ese chequeo falla y el gate queda en false: la app degrada sus rutas y el catalogo puede quedarse cargando. Este patch neutraliza el chequeo (la comparacion siempre da valida) conservando la carga de la lib nativa y el manejo de errores original. Requiere no eliminar las librerias nativas del APK.",
+                "previous_description": "La app firma sus peticiones al catalogo con libprotection.so, que verifica la firma del APK. Al re-firmar con Morphe ese gate queda en false. Este patch carga la lib nativa y fuerza el gate a true sin ejecutar el chequeo, para que el app use las rutas de proteccion normales. Pruebalo solo si la app se cierra al arrancar o el catalogo no carga con los demas patches.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          }
         }
       ],
       "repo_url": "https://github.com/hiroshiren86-sketch/morphe-patches-personal",
       "patches_name": "Patches personales",
-      "extra_badges": [],
-      "previous_version": "",
-      "new_version": "1.0.0-dev.3",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0-dev.3",
+      "new_version": "1.0.0-dev.5",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -21685,11 +22707,21 @@
                 "changes": [
                   "options: +1 option"
                 ]
+              },
+              {
+                "name": "LIVE controls",
+                "description": "Stops a LIVE in the feed from opening by itself after a countdown. It can show a LIVE's exact viewer count instead of a rounded one, offer a quality choice and clear screen in more LIVE rooms, and keep your quality pick after TikTok restarts. Starts off. Turn it on in Hushfeed settings > Playback. It also keeps a LIVE in the feed from showing the Service+ row of the LIVE before it (or hides that row altogether), can hide the AI summary on LIVE previews, and can add a Record button to a LIVE room that saves what you watch from when you tap it.",
+                "previous_description": "Stops a LIVE in the feed from opening by itself after a countdown. It can show a LIVE's exact viewer count instead of a rounded one, offer a quality choice and clear screen in more LIVE rooms, and keep your quality pick after TikTok restarts. Starts off. Turn it on in Hushfeed settings > Playback. It also keeps a LIVE in the feed from showing the Service+ row of the LIVE before it (or hides that row altogether), and can add a Record button to a LIVE room that saves what you watch from when you tap it.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -21768,11 +22800,21 @@
                 "changes": [
                   "options: +1 option"
                 ]
+              },
+              {
+                "name": "LIVE controls",
+                "description": "Stops a LIVE in the feed from opening by itself after a countdown. It can show a LIVE's exact viewer count instead of a rounded one, offer a quality choice and clear screen in more LIVE rooms, and keep your quality pick after TikTok restarts. Starts off. Turn it on in Hushfeed settings > Playback. It also keeps a LIVE in the feed from showing the Service+ row of the LIVE before it (or hides that row altogether), can hide the AI summary on LIVE previews, and can add a Record button to a LIVE room that saves what you watch from when you tap it.",
+                "previous_description": "Stops a LIVE in the feed from opening by itself after a countdown. It can show a LIVE's exact viewer count instead of a rounded one, offer a quality choice and clear screen in more LIVE rooms, and keep your quality pick after TikTok restarts. Starts off. Turn it on in Hushfeed settings > Playback. It also keeps a LIVE in the feed from showing the Service+ row of the LIVE before it (or hides that row altogether), and can add a Record button to a LIVE room that saves what you watch from when you tap it.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -24381,6 +25423,1086 @@
       "extra_badges": [],
       "previous_version": "",
       "new_version": "1.2.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "badfella:dev": {
+      "bundle": "badfella",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Science News Daily",
+          "package": "com.appsfornexus.dailysciencenews",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "LinkedIn: Community & Network",
+          "package": "com.linkedin.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Always show navigation bar",
+                "description": "Adds an option in BadFella Patches to keep the navigation bar on screen while you scroll.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Anonymous profile viewing",
+                "description": "Adds an option (off by default, experimental) to visit profiles without being listed in \"Who viewed your profile\": the analytics events of profile pages are not sent.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Block tracking",
+                "description": "Adds an option (off by default) to stop sending most LinkedIn analytics events.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Copy post text",
+                "description": "Long pressing a post's text copies all of it, including the part behind \"...more\".",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Copy text",
+                "description": "Long press a post, comment or any other text to select and copy it in place, like on Reddit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Customize navigation bar",
+                "description": "Takes the bottom navigation buttons you pick off the bar, such as My Network, Post, Notifications, Jobs, Video or News. Each page still opens from the Menu and from links. Restart LinkedIn after changing the selection.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Dark app icon",
+                "description": "Black launcher icon with the white \"in\", instead of LinkedIn's blue. Chosen when patching: a launcher icon cannot switch with dark mode on its own.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable double-tap like",
+                "description": "Stops double tapping a post or photo from liking it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Download media",
+                "description": "Adds a download button to the full screen photo, video and document viewer. Documents (PDFs and carousels) are saved as one PDF.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Expand posts",
+                "description": "Adds an option (off by default, turned on in BadFella Patches) to show posts expanded by default. Tapping the text collapses them.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Feed filters",
+                "description": "Adds optional filters (off by default, turned on in BadFella Patches): focus mode, celebrations, job cards, reposts, posts from others' activity, \"Recommended for you\", video posts, games, the \"New posts\" pill and \"See translation\".",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Glass navigation bar",
+                "description": "Draws the navigation bar as a floating, translucent capsule with a spring selection pill and no press ripple.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Makes \"Continue with Google\" work in patched LinkedIn by signing in through microG RE (GmsCore) instead of Google Play services. Needs microG RE installed and signed in to a Google account.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium upsells",
+                "description": "Removes Premium and AI upsell cards and banners, including on profiles and the Me panel.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide ads",
+                "description": "Removes promoted, boosted and sponsored posts from the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide bottom tabs",
+                "description": "Adds switches to take My Network and Jobs out of the bottom bar.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide promoted jobs",
+                "description": "Removes promoted job listings from the Jobs tab and job search.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide suggested posts",
+                "description": "Removes \"Suggested\" posts from outside your network from the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Icon-only post actions",
+                "description": "Adds a switch in BadFella Patches to show the Like, Comment, Repost and Send buttons under posts without their labels.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Install next to LinkedIn",
+                "description": "Installs this build as a second LinkedIn beside your normal one, with its own data and sign-in. Pick its package name and app name in the patch's options. Works as soon as you patch it in.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Keep feed on reopen",
+                "description": "Keeps your place in the feed when you come back to LinkedIn, instead of reloading it. Pull down or tap the \"New posts\" button to load new posts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Material You",
+                "description": "Uses wallpaper colors (Android 12+) or a preset/custom accent color (Android 10+) instead of LinkedIn blue and the green of selected filters, and Material 3 surface colors for backgrounds, cards, bars and borders. Some screens drawn by LinkedIn's servers may keep their own colors.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Material icons in the bottom bar",
+                "description": "Replaces LinkedIn's Home, My Network, Notifications, Jobs and Video tab icons with Material icons (filled when selected, outlined otherwise). Chosen when patching.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Messaging",
+                "description": "Hides sponsored messages, and adds an optional ghost mode that does not send typing indicators or read status.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "More tab",
+                "description": "Lets you hide items of the More tab (Puzzle games, Groups, Events, Newsletters), or list them at the bottom of the profile menu.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Navigation bar",
+                "description": "Adds options (turned on in BadFella Patches) to hide the More, Jobs, Network and Notifications tabs of the navigation bar, its count badges and its labels.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Open links directly",
+                "description": "Opens external links without LinkedIn's safety/go warning page.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Pitch black",
+                "description": "Replaces the gray backgrounds of dark mode with black, and cards with a slightly lighter black, across the entire app. Takes effect when the system is in dark mode. Works with or without Material You.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Post menu items",
+                "description": "Adds Copy text, Download photos and videos, and Save document as PDF to the ⋯ menu of posts, each with its own icon.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove gaps and dividers",
+                "description": "Removes the gray gaps between posts and the dividers between list items, so the feed and lists are one flat surface.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Sanitize share links",
+                "description": "Removes tracking parameters from LinkedIn links when they are copied or shared.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Swipe between feeds",
+                "description": "Swipe left and right on the home feed to switch between For you and Network, like on X.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Swipe between tabs",
+                "description": "Swipe sideways to go to the next or previous tab of the navigation bar.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Tap to hide in viewers",
+                "description": "Tap a video or document in full screen to hide the caption and buttons, like photos.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "ChatGPT",
+          "package": "com.openai.chatgpt",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "TickTick:To Do List & Calendar",
+          "package": "com.ticktick.task",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable analytics collection",
+                "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore notifications",
+                "description": "Restores Firebase certificate metadata on re-signed apps, with an Android 17 compatible token setup. Push delivery still requires device testing.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore reminder alarms",
+                "description": "Restores task/reminder alarm scheduling on re-signed apps.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "TickTick Premium",
+                "description": "Enables client-side premium features and limits. Does not grant server-side AI access or a subscription.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "BoldVoice - Accent Training",
+          "package": "com.wellocution.androidapp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
+      "patches_name": "BadFella Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.0",
+      "new_version": "1.5.0-dev.11",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "badfella:latest": {
+      "bundle": "badfella",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Science News Daily",
+          "package": "com.appsfornexus.dailysciencenews",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "LinkedIn: Community & Network",
+          "package": "com.linkedin.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Always show navigation bar",
+                "description": "Adds an option in BadFella Patches to keep the navigation bar on screen while you scroll.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Anonymous profile viewing",
+                "description": "Adds an option (off by default, experimental) to visit profiles without being listed in \"Who viewed your profile\": the analytics events of profile pages are not sent.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Block tracking",
+                "description": "Adds an option (off by default) to stop sending most LinkedIn analytics events.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Copy post text",
+                "description": "Long pressing a post's text copies all of it, including the part behind \"...more\".",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Copy text",
+                "description": "Long press a post, comment or any other text to select and copy it in place, like on Reddit.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Customize navigation bar",
+                "description": "Takes the bottom navigation buttons you pick off the bar, such as My Network, Post, Notifications, Jobs, Video or News. Each page still opens from the Menu and from links. Restart LinkedIn after changing the selection.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Dark app icon",
+                "description": "Black launcher icon with the white \"in\", instead of LinkedIn's blue. Chosen when patching: a launcher icon cannot switch with dark mode on its own.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Disable double-tap like",
+                "description": "Stops double tapping a post or photo from liking it.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Download media",
+                "description": "Adds a download button to the full screen photo, video and document viewer. Documents (PDFs and carousels) are saved as one PDF.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Expand posts",
+                "description": "Adds an option (off by default, turned on in BadFella Patches) to show posts expanded by default. Tapping the text collapses them.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Feed filters",
+                "description": "Adds optional filters (off by default, turned on in BadFella Patches): focus mode, celebrations, job cards, reposts, posts from others' activity, \"Recommended for you\", video posts, games, the \"New posts\" pill and \"See translation\".",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Glass navigation bar",
+                "description": "Draws the navigation bar as a floating, translucent capsule with a spring selection pill and no press ripple.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "GmsCore support",
+                "description": "Makes \"Continue with Google\" work in patched LinkedIn by signing in through microG RE (GmsCore) instead of Google Play services. Needs microG RE installed and signed in to a Google account.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium upsells",
+                "description": "Removes Premium and AI upsell cards and banners, including on profiles and the Me panel.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide ads",
+                "description": "Removes promoted, boosted and sponsored posts from the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide bottom tabs",
+                "description": "Adds switches to take My Network and Jobs out of the bottom bar.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide promoted jobs",
+                "description": "Removes promoted job listings from the Jobs tab and job search.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Hide suggested posts",
+                "description": "Removes \"Suggested\" posts from outside your network from the feed.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Icon-only post actions",
+                "description": "Adds a switch in BadFella Patches to show the Like, Comment, Repost and Send buttons under posts without their labels.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Install next to LinkedIn",
+                "description": "Installs this build as a second LinkedIn beside your normal one, with its own data and sign-in. Pick its package name and app name in the patch's options. Works as soon as you patch it in.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Keep feed on reopen",
+                "description": "Keeps your place in the feed when you come back to LinkedIn, instead of reloading it. Pull down or tap the \"New posts\" button to load new posts.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Material You",
+                "description": "Uses wallpaper colors (Android 12+) or a preset/custom accent color (Android 10+) instead of LinkedIn blue and the green of selected filters, and Material 3 surface colors for backgrounds, cards, bars and borders. Some screens drawn by LinkedIn's servers may keep their own colors.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Material icons in the bottom bar",
+                "description": "Replaces LinkedIn's Home, My Network, Notifications, Jobs and Video tab icons with Material icons (filled when selected, outlined otherwise). Chosen when patching.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Messaging",
+                "description": "Hides sponsored messages, and adds an optional ghost mode that does not send typing indicators or read status.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "More tab",
+                "description": "Lets you hide items of the More tab (Puzzle games, Groups, Events, Newsletters), or list them at the bottom of the profile menu.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Navigation bar",
+                "description": "Adds options (turned on in BadFella Patches) to hide the More, Jobs, Network and Notifications tabs of the navigation bar, its count badges and its labels.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Open links directly",
+                "description": "Opens external links without LinkedIn's safety/go warning page.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Pitch black",
+                "description": "Replaces the gray backgrounds of dark mode with black, and cards with a slightly lighter black, across the entire app. Takes effect when the system is in dark mode. Works with or without Material You.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Post menu items",
+                "description": "Adds Copy text, Download photos and videos, and Save document as PDF to the ⋯ menu of posts, each with its own icon.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Remove gaps and dividers",
+                "description": "Removes the gray gaps between posts and the dividers between list items, so the feed and lists are one flat surface.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Sanitize share links",
+                "description": "Removes tracking parameters from LinkedIn links when they are copied or shared.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Swipe between feeds",
+                "description": "Swipe left and right on the home feed to switch between For you and Network, like on X.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Swipe between tabs",
+                "description": "Swipe sideways to go to the next or previous tab of the navigation bar.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              },
+              {
+                "name": "Tap to hide in viewers",
+                "description": "Tap a video or document in full screen to hide the caption and buttons, like photos.",
+                "changes": [
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "ChatGPT",
+          "package": "com.openai.chatgpt",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "TickTick:To Do List & Calendar",
+          "package": "com.ticktick.task",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Disable analytics collection",
+                "description": "Disables declared analytics and crash collection and removes advertising permissions. Keeps Firebase Messaging and location permissions. Does not guarantee zero tracking.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore notifications",
+                "description": "Restores Firebase certificate metadata on re-signed apps, with an Android 17 compatible token setup. Push delivery still requires device testing.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Restore reminder alarms",
+                "description": "Restores task/reminder alarm scheduling on re-signed apps.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "TickTick Premium",
+                "description": "Enables client-side premium features and limits. Does not grant server-side AI access or a subscription.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "BoldVoice - Accent Training",
+          "package": "com.wellocution.androidapp",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
+      "patches_name": "BadFella Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.4.0",
+      "new_version": "1.5.0-dev.11",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "sey-morphe:stable": {
+      "bundle": "sey-morphe",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "KICK: Live Streaming",
+          "package": "com.kick.mobile",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "DEFAULT HOME DESTINATION",
+                "description": "Opens the chosen tab (Home, Categories, Live, Following or Settings) automatically when KICK starts. Pick it in SEYTTINGS. Requires the SEYTTINGS patch."
+              },
+              {
+                "name": "STOP ON MINIMIZE",
+                "description": "Stops playback (audio/video) when the app is minimized or exited, so nothing keeps playing in the background. Open a stream again to resume playback. Toggle it in SEYTTINGS. Requires the SEYTTINGS patch."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/seythegamer/sey-morphe-patches",
+      "patches_name": "seythegamer",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.4",
+      "new_version": "1.2.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "sey-morphe:latest": {
+      "bundle": "sey-morphe",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "KICK: Live Streaming",
+          "package": "com.kick.mobile",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "DEFAULT HOME DESTINATION",
+                "description": "Opens the chosen tab (Home, Categories, Live, Following or Settings) automatically when KICK starts. Pick it in SEYTTINGS. Requires the SEYTTINGS patch."
+              },
+              {
+                "name": "STOP ON MINIMIZE",
+                "description": "Stops playback (audio/video) when the app is minimized or exited, so nothing keeps playing in the background. Open a stream again to resume playback. Toggle it in SEYTTINGS. Requires the SEYTTINGS patch."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/seythegamer/sey-morphe-patches",
+      "patches_name": "seythegamer",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.4",
+      "new_version": "1.2.5",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "jo-patches-jo:stable": {
+      "bundle": "jo-patches-jo",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Material Capsule: Island-Style",
+          "package": "com.pryshedko.mtisland",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Memorize Pi Digits - 3.14π",
+          "package": "com.unknownprojectx.pi",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://gitlab.com/JoPatches/jo-patches",
+      "patches_name": "JoPatches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.6.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "jo-patches-jo:latest": {
+      "bundle": "jo-patches-jo",
+      "channel": "latest",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Material Capsule: Island-Style",
+          "package": "com.pryshedko.mtisland",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Memorize Pi Digits - 3.14π",
+          "package": "com.unknownprojectx.pi",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://gitlab.com/JoPatches/jo-patches",
+      "patches_name": "JoPatches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "1.6.2",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mighty-morphing:stable": {
+      "bundle": "mighty-morphing",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Joey",
+          "package": "o.o.joey",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Seasonal sidebar banner",
+                "description": "Shows a picture in the sidebar header that changes with the season, or one you choose. If you set it back to Joey's image, any picture Joey had already saved is still there and gets used again."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Backup and restore",
+                "description": "Save Joey and Morphe settings to a file and restore them later, including splash, theme, fonts, comments, and show and hide. Log in to the same Reddit account before restoring subscriptions. Access via Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3: Morphe settings covers splash, theme, comments, and show and hide] Save Joey settings to a file and restore them later. Log in to the same Reddit account before restoring subscriptions. Access via Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Inline comment media",
+                "description": "Shows GIFs, pictures, subreddit emojis and Reddit videos in comments instead of links. Tap to open, drag left or right to resize, and scroll past them as normal. YouTube links use a 16:9 preview with the title. Extra settings in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3: Scroll up or down on comment images, GIFs, and videos] Shows GIFs, pictures, subreddit emojis and reddit videos inline in the comments instead of as links. Tap to open. Drag left or right to resize, as usual. YouTube links use a 16:9 preview with the title. Extra settings to tweak in Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Modern UI",
+                "description": "[v1.4.0: Post actions editor for the post bar and ⋮ menu. Full screen media, optionally opening without controls. New album viewer with thumbnails, grid and captions. Separate Modern fonts. Sidebar subreddit search keyboard fixed. Performance improvements, comparably smooth to Joey or better.] A cleaner layout for Joey, on by default, with a choice of themes. Joey's own themes and colours are off while it's on, and Classic Joey can be switched back on any time. Posts use one compact list with adjustable post style, details and images. Settings in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3.7: AMOLED black now appears in settings. v1.3.6: Classic Joey can be turned back on. The Joey bird image in sidebar can be toggled on when using ModernUI. Performance improvements for Modern UI. Post style settings are back, without post layout, thumbnail side, or corner roundness. Thumbnail post style ui fixes.] With ModernUI layout turned on (on by default) Joey's own themes and colour changes are turned off. ModernUI layout patch includes Aqua (default), Blue, Purple, Coral, Mint, Gold, Amber, Black, Sky, and AMOLED black themes and can be set in Joey Settings - Morphe Settings. Posts use one compact list, so card and compact are no longer separate. Various customisable UI options are in Morphe Settings. The media viewer has its first UI tweaks in this release, including bigger icons and a full screen view.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Show/Hide",
+                "description": "Choose which comment editor buttons, sidebar entries, subreddit toolbar items and post actions are shown, and drag to reorder them. What doesn't fit on a post goes in its menu. Adjust in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3: Drag the handle to reorder] Choose which comment editor buttons, sidebar entries, subreddit toolbar items, and post actions are shown. What does not fit on a post goes in its menu. Adjust viewable options in Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Splash Screen",
+                "description": "[v1.4.0: Match theme keeps your chosen animation.] Logo inspired by u/otheast. Logo, colours and animation can be customised, follow your theme, or the animation can be turned off, in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3.5: Animation can be turned off] Logo inspired by u/otheast. Animation and colours are fully customisable in Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/ZoomSass/Mighty-Morphing",
+      "patches_name": "Mighty Morphing Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.3.8",
+      "new_version": "1.4.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mighty-morphing:latest": {
+      "bundle": "mighty-morphing",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Joey",
+          "package": "o.o.joey",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Seasonal sidebar banner",
+                "description": "Shows a picture in the sidebar header that changes with the season, or one you choose. If you set it back to Joey's image, any picture Joey had already saved is still there and gets used again."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Backup and restore",
+                "description": "Save Joey and Morphe settings to a file and restore them later, including splash, theme, fonts, comments, and show and hide. Log in to the same Reddit account before restoring subscriptions. Access via Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3: Morphe settings covers splash, theme, comments, and show and hide] Save Joey settings to a file and restore them later. Log in to the same Reddit account before restoring subscriptions. Access via Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Inline comment media",
+                "description": "Shows GIFs, pictures, subreddit emojis and Reddit videos in comments instead of links. Tap to open, drag left or right to resize, and scroll past them as normal. YouTube links use a 16:9 preview with the title. Extra settings in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3: Scroll up or down on comment images, GIFs, and videos] Shows GIFs, pictures, subreddit emojis and reddit videos inline in the comments instead of as links. Tap to open. Drag left or right to resize, as usual. YouTube links use a 16:9 preview with the title. Extra settings to tweak in Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Modern UI",
+                "description": "[v1.4.0: Post actions editor for the post bar and ⋮ menu. Full screen media, optionally opening without controls. New album viewer with thumbnails, grid and captions. Separate Modern fonts. Sidebar subreddit search keyboard fixed. Performance improvements, comparably smooth to Joey or better.] A cleaner layout for Joey, on by default, with a choice of themes. Joey's own themes and colours are off while it's on, and Classic Joey can be switched back on any time. Posts use one compact list with adjustable post style, details and images. Settings in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3.7: AMOLED black now appears in settings. v1.3.6: Classic Joey can be turned back on. The Joey bird image in sidebar can be toggled on when using ModernUI. Performance improvements for Modern UI. Post style settings are back, without post layout, thumbnail side, or corner roundness. Thumbnail post style ui fixes.] With ModernUI layout turned on (on by default) Joey's own themes and colour changes are turned off. ModernUI layout patch includes Aqua (default), Blue, Purple, Coral, Mint, Gold, Amber, Black, Sky, and AMOLED black themes and can be set in Joey Settings - Morphe Settings. Posts use one compact list, so card and compact are no longer separate. Various customisable UI options are in Morphe Settings. The media viewer has its first UI tweaks in this release, including bigger icons and a full screen view.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Show/Hide",
+                "description": "Choose which comment editor buttons, sidebar entries, subreddit toolbar items and post actions are shown, and drag to reorder them. What doesn't fit on a post goes in its menu. Adjust in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3: Drag the handle to reorder] Choose which comment editor buttons, sidebar entries, subreddit toolbar items, and post actions are shown. What does not fit on a post goes in its menu. Adjust viewable options in Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Splash Screen",
+                "description": "[v1.4.0: Match theme keeps your chosen animation.] Logo inspired by u/otheast. Logo, colours and animation can be customised, follow your theme, or the animation can be turned off, in Joey Settings - Morphe Settings.",
+                "previous_description": "[v1.3.5: Animation can be turned off] Logo inspired by u/otheast. Animation and colours are fully customisable in Joey Settings - Morphe Settings.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/ZoomSass/Mighty-Morphing",
+      "patches_name": "Mighty Morphing Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.3.8",
+      "new_version": "1.4.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "spookyexe:dev": {
+      "bundle": "spookyexe",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Beeline",
+          "package": "co.beeline",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Beeline telemetry",
+                "description": "Stops Beeline from sending usage and crash telemetry to remote servers.\n\nDisables:\n- Segment Analytics (track / screen / identify events)\n- Firebase Analytics (logEvent)\n- Firebase Crashlytics (log messages, recorded exceptions)\n- Mapbox map telemetry (events collection switched off at the SDK level)\n\nDoes not affect app functionality — only telemetry collection is\nsuppressed. Navigation, routing, maps and Plus features all keep working."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Beeline Plus features",
+                "description": "Unlocks Beeline plus features such as round-trip generation, live traffic and premium map types.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/spookyexe/morphe-patches",
+      "patches_name": "Spooky Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "spookyexe:stable": {
+      "bundle": "spookyexe",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Beeline",
+          "package": "co.beeline",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Beeline telemetry",
+                "description": "Stops Beeline from sending usage and crash telemetry to remote servers.\n\nDisables:\n- Segment Analytics (track / screen / identify events)\n- Firebase Analytics (logEvent)\n- Firebase Crashlytics (log messages, recorded exceptions)\n- Mapbox map telemetry (events collection switched off at the SDK level)\n\nDoes not affect app functionality — only telemetry collection is\nsuppressed. Navigation, routing, maps and Plus features all keep working."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Beeline Plus features",
+                "description": "Unlocks Beeline plus features such as round-trip generation, live traffic and premium map types.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/spookyexe/morphe-patches",
+      "patches_name": "Spooky Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "spookyexe:latest": {
+      "bundle": "spookyexe",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Beeline",
+          "package": "co.beeline",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable Beeline telemetry",
+                "description": "Stops Beeline from sending usage and crash telemetry to remote servers.\n\nDisables:\n- Segment Analytics (track / screen / identify events)\n- Firebase Analytics (logEvent)\n- Firebase Crashlytics (log messages, recorded exceptions)\n- Mapbox map telemetry (events collection switched off at the SDK level)\n\nDoes not affect app functionality — only telemetry collection is\nsuppressed. Navigation, routing, maps and Plus features all keep working."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Beeline Plus features",
+                "description": "Unlocks Beeline plus features such as round-trip generation, live traffic and premium map types.",
+                "changes": [
+                  "versions: +2 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/spookyexe/morphe-patches",
+      "patches_name": "Spooky Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.1",
       "avatarUrl": "",
       "bundleImageUrl": ""
     }

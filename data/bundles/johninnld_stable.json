@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-14T14:15:36.545Z",
-  "version": "1.89.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/4171678563149893caa259e341e0463d491718ba/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.89.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [417167856314](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/4171678563149893caa259e341e0463d491718ba). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.89.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.88.0...v1.89.0) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* **General:** remove the Google Messages patches ([806e94f](https://gitlab.com/johninnld/nl-morphe-patches/commit/806e94fa6f5c8e72eb859b65ed07dad13c88df04))\n\n### ✨ New Features\n\n* **AT4K Launcher:** support latest 1.3 and 1.1.1 originals ([1ae3be9](https://gitlab.com/johninnld/nl-morphe-patches/commit/1ae3be9c43fc50e6daf03efef1213ea9b667185d))\n* **Monet Android TV:** support latest 1.3 and 1.1.1 originals ([1ae3be9](https://gitlab.com/johninnld/nl-morphe-patches/commit/1ae3be9c43fc50e6daf03efef1213ea9b667185d))\n",
+  "created_at": "2026-11-14T22:12:45.494Z",
+  "version": "1.90.2",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/3937651733bb793beba0f65e242a959ae0564a3e/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.90.2.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [3937651733bb](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/3937651733bb793beba0f65e242a959ae0564a3e). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.90.2](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.90.1...v1.90.2) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* **HLN:** support 9.23.3 in the Android Auto, ads, tracking and consent patches ([dd26a5a](https://gitlab.com/johninnld/nl-morphe-patches/commit/dd26a5a796dd85c9aaf71860b167da10bf40ace5))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -407,6 +407,16 @@
       "package": "be.persgroep.android.news.mobiledm",
       "patches": [
         {
+          "name": "Android Auto nieuws",
+          "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio. Selecting a headline starts the ordered feed at that article, with Previous, Next and Up next through the existing car player. Premium audio keeps its entitlement.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.53.1",
+            "7.55.0"
+          ]
+        },
+        {
           "name": "Disable tracking",
           "description": "Suppresses native analytics collectors and queued uploads, advertising identifiers, ContentSquare/Heap WebView instrumentation and known web collector requests while preserving content, account and push.",
           "use": true,
@@ -464,12 +474,21 @@
       "package": "be.persgroep.android.news.mobilehln",
       "patches": [
         {
+          "name": "Android Auto nieuws",
+          "description": "Makes Nieuws the primary Android Auto tab with publisher-supplied spoken audio from the audio bundles the app itself renders. Selecting a headline restores the full ordered feed inside the app, so playback, Up next and premium entitlement follow the app's own player. The replaced Start content is never shown.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.23.3"
+          ]
+        },
+        {
           "name": "Disable tracking",
           "description": "Disables audited native event collectors, queued uploads, analytics re-enable paths, advertising identifiers and FIAM while preserving push, real login, manual feedback and player session synchronization.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.22.0"
+            "9.23.3"
           ]
         },
         {
@@ -478,7 +497,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.22.0"
+            "9.23.3"
           ]
         },
         {
@@ -487,7 +506,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.22.0"
+            "9.23.3"
           ]
         },
         {
@@ -496,7 +515,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.22.0"
+            "9.23.3"
           ]
         },
         {
@@ -505,7 +524,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.22.0"
+            "9.23.3"
           ]
         },
         {
@@ -514,7 +533,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "9.22.0"
+            "9.23.3"
           ]
         }
       ],
@@ -1799,9 +1818,36 @@
       "package": "com.klevico.monet",
       "patches": [
         {
-          "name": "Individual Wuplay catalog rows",
-          "description": "Choose individual published Wuplay catalogs in Monet's Content picker, with Wuplay icons and refresh independent of Recommendations. Requires Wuplay's catalog publisher.",
+          "name": "Individual Nuvio catalog rows",
+          "description": "Choose individual published catalogs in Monet's Content picker, with the publisher's identity and refresh independent of Recommendations. Requires a catalog publisher such as NuvioTV. Enable only one catalog source patch; enabling both fails by design.",
           "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.1"
+          ]
+        },
+        {
+          "name": "Individual Wuplay catalog rows",
+          "description": "Choose individual published Wuplay catalogs in Monet's Content picker, with Wuplay icons and refresh independent of Recommendations. Requires Wuplay's catalog publisher. Enable only one catalog source patch; enabling both fails by design.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.1"
+          ]
+        },
+        {
+          "name": "Unlimited displayed cards",
+          "description": "Remove the 20-card limit from Displayed Cards. Add -10, +10 and Max to the original themed picker, preserving its layout and single-card steps.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.1"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Unlocks Monet's local premium features. Billing and license storage stay native; only the local evaluator's false return changes.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "1.1.1"
@@ -2153,12 +2199,21 @@
       "package": "com.podimo",
       "patches": [
         {
+          "name": "Android Auto show grid browse",
+          "description": "Rebuilds the Android Auto browse around podcast series and opens it to every car client. The For-you episode sections become grids of series covers; opening a series lists its episodes newest-first through the app's own paginated query, so playback, queueing and entitlement keep running through unmodified Podimo code. The library tab disappears for guests with nothing saved locally. Any media-browser client may connect: the app's certificate-pinned caller allowlist is replaced with a lookup that serves the full section tree to every caller, including Android Automotive, desktop head units and aftermarket clients.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.7.0"
+          ]
+        },
+        {
           "name": "Guest session playback host",
           "description": "Points the app's production GraphQL API at Podimo's website host (https://graphql.podimo.com/graphql). The Android gateway host (https://graphql.pdm-gateway.com) rejected guest-session playback requests with HTTP 403 in the supplied analysis, while the website host served the app's own guest registration, profile and single-episode playback operations and returned signed full-length audio for Premium-labelled episodes to a fresh, unregistered guest with a FREE subscription. With this patch the app registers its guest session and requests playback URLs through the verified host; transport security, authentication headers, request signing and error handling stay untouched. Staging and localhost routes are not affected.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.5.1"
+            "3.7.0"
           ]
         },
         {
@@ -2167,7 +2222,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.5.1"
+            "3.7.0"
           ]
         }
       ],
@@ -3969,7 +4024,7 @@
       "package": "nl.rtl.videoland.v2",
       "patches": [
         {
-          "name": "Disable tracking",
+          "name": "Disable tracking (Android - v116.4)",
           "description": "Disables inspected Tealium, Snowplow, NPAW, advertising ID, New Relic, Salesforce analytics and automatic Google/Facebook measurement, including queued CCT uploads. Preserves functional account, media and notification services.",
           "use": true,
           "options": [],
@@ -3978,7 +4033,16 @@
           ]
         },
         {
-          "name": "Hide ads",
+          "name": "Disable tracking (Android TV - v118)",
+          "description": "Disables inspected Tealium, Snowplow, NPAW, advertising-ID, New Relic and automatic Google/Facebook measurement paths, including queued CCT uploads. Functional services remain; full traffic acceptance is pending.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.118.0"
+          ]
+        },
+        {
+          "name": "Hide ads (Android - v116.4)",
           "description": "Suppresses inspected video, banner and pause-ad requests and uses a supplied live fallback when available. Ad-supported playback and stitched streams require runtime feedback.",
           "use": true,
           "options": [],
@@ -3987,7 +4051,16 @@
           ]
         },
         {
-          "name": "Hide unavailable content",
+          "name": "Hide ads (Android TV - v118)",
+          "description": "Suppresses client video, banner and pause-ad requests. Uses the supplied live fallback when Yospace resource creation is omitted. Ad-supported playback and server-side coverage need feedback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.118.0"
+          ]
+        },
+        {
+          "name": "Hide unavailable content (Android TV - v118)",
           "description": "Hides subscription-required catalogue entries and action buttons, and removes empty seasons. Preserves content available to the current account and other access checks.",
           "use": true,
           "options": [],
@@ -3996,7 +4069,7 @@
           ]
         },
         {
-          "name": "Skip consent screens",
+          "name": "Skip consent screens (Android - v116.4)",
           "description": "Includes tracking controls. Saves OneTrust's real Reject All choice after SDK readiness and skips automatic notification setup. Notifications default off; manual privacy and notification settings remain available.",
           "use": true,
           "options": [],
@@ -4123,7 +4196,7 @@
       "package": "nl.uitzendinggemist",
       "patches": [
         {
-          "name": "Disable tracking",
+          "name": "Disable tracking (Android & Android TV - v48.2-2405)",
           "description": "Stops NPO Tag/Topspin/DAM, STER targeting, Bitmovin/Sentry collection, Cast diagnostics and Google telemetry collection/uploads, including queued batches. Preserves playback, authentication and functional Cast controls.",
           "use": true,
           "options": [],
@@ -4132,7 +4205,7 @@
           ]
         },
         {
-          "name": "Fix PairIP startup",
+          "name": "Fix PairIP startup (Android & Android TV - v48.2-2405)",
           "description": "Restores build-specific startup data, lifecycle helpers, authentication and media/network callbacks. Preserves genuine token and entitlement checks and retains other protected native callbacks.",
           "use": true,
           "options": [],
@@ -4141,7 +4214,7 @@
           ]
         },
         {
-          "name": "Hide ads",
+          "name": "Hide ads (Android & Android TV - v48.2-2405)",
           "description": "Suppresses nullable preroll inputs and the optional IMA ad loader. Uses the player's existing content-only path while retaining real content, DRM, subtitles and player state.",
           "use": true,
           "options": [],
@@ -4340,7 +4413,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "2ccb5a948828de84ecbd6da6151e59cd1c13e395d81f2f3e9d3c6c7efc8120f3",
+  "fingerprint": "0df5151522a6ccc015f141487d810ca10ca079bc085bc654b4628e49cc30299c",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",

@@ -2,9 +2,9 @@
   "bundle": "rashkash103",
   "channel": "stable",
   "repo_url": "https://github.com/RashKash103/sync-up",
-  "created_at": "2026-11-13T21:00:16",
-  "version": "1.12.0",
-  "description": "## [1.12.0](https://github.com/RashKash103/sync-up/compare/v1.11.0...v1.12.0) (2026-11-13)\n\n### ✨ New Features\n\n* Choose what the bottom navigation bar shows ([a01e428](https://github.com/RashKash103/sync-up/commit/a01e42891e0622a71406c0b52ea3b8686217fe9e)), closes [#47](https://github.com/RashKash103/sync-up/issues/47)",
+  "created_at": "2026-11-14T20:26:46",
+  "version": "1.14.0",
+  "description": "## [1.14.0](https://github.com/RashKash103/sync-up/compare/v1.13.0...v1.14.0) (2026-11-14)\n\n### ✨ New Features\n\n* Repair a gallery Reddit says has failed ([d4775f9](https://github.com/RashKash103/sync-up/commit/d4775f9c21e47eb0251d9e2db87397aa4a14b936)), closes [#49](https://github.com/RashKash103/sync-up/issues/49)",
   "apps": [
     {
       "app_name": "Sync for reddit",
@@ -42,6 +42,32 @@
           "description": "Lets each item on the bottom navigation bar — Posts, Actions, Explore and Inbox — be left alone, taken off, or replaced with one of the actions from Sync's own actions sheet, and adds one further button beside them. Covers the navigation rail used in tablet mode as well.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Clone Sync app",
+          "description": "Changes the app package name so that the app can be installed more than once, with \".morphe\" appended to it unless another name is given. Each cloned install needs a package name of its own. Use this rather than the universal \"Clone app\" patch, which leaves the app unable to read or write anything once its providers are renamed, and select only one of the two.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "Package name to use for the cloned app."
+            },
+            {
+              "key": "updatePermissions",
+              "description": "Update custom permissions declared by the app. Fixes installation conflicts, but can break features in certain apps."
+            },
+            {
+              "key": "updateProviders",
+              "description": "Update provider names declared by the app. Needed to install a clone beside the copy it was cloned from, since two installed apps may not declare the same provider. The addresses in the app's own code are rewritten to match."
+            },
+            {
+              "key": "appName",
+              "description": "What the cloned app is called on the home screen, so that it can be told apart from the copy it was cloned from. Left empty, it keeps the name it had."
+            }
+          ],
           "compatible_versions": [
             "v23.06.30-13:39"
           ]
@@ -218,6 +244,15 @@
           ]
         },
         {
+          "name": "Play a YouTube video where Sync's player cannot",
+          "description": "Plays the video in a web view when Sync's YouTube player fails to start, which it now always does: the player asks the official YouTube app for a service Google has removed. Covers the player in a link's sheet and the full screen one.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Recover post thumbnails from the archive",
           "description": "Loads a post's thumbnail from the Wayback Machine when its Reddit preview has been purged.",
           "use": true,
@@ -229,6 +264,15 @@
         {
           "name": "Redirect Gfycat links to RedGifs",
           "description": "Loads Gfycat links from RedGifs, including the autoplaying video Sync asks its own proxy for.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Repair a gallery Reddit says has failed",
+          "description": "Finds the pictures of a gallery that opens empty because Reddit marked them as failed, by asking i.redd.it for them, and leaves a gallery with nothing wrong untouched.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -307,6 +351,15 @@
           ]
         },
         {
+          "name": "Stack a link post's picture over its title in columns",
+          "description": "Draws a link post's picture across the top of its card with the title underneath where the feed is in more than one column, instead of beside the title in the width that is left over.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Stop the toolbar menus closing the app",
           "description": "Keeps Sync open when the sort or overflow button in the toolbar is tapped, which closes it on some devices.",
           "use": true,
@@ -356,10 +409,10 @@
     }
   ],
   "patches_name": "Sync Up",
-  "fingerprint": "fb6122823afc0a14b8001eb05a8b736219a9d801f33c7aae0fa3a4cf92fcb36b",
-  "release_notes": "## [1.12.0](https://github.com/RashKash103/sync-up/compare/v1.11.0...v1.12.0) (2026-11-13)\n\n### ✨ New Features\n\n* Choose what the bottom navigation bar shows ([a01e428](https://github.com/RashKash103/sync-up/commit/a01e42891e0622a71406c0b52ea3b8686217fe9e)), closes [#47](https://github.com/RashKash103/sync-up/issues/47)\n",
-  "release_tag": "v1.12.0",
-  "release_date": "2026-11-13T21:01:30Z",
+  "fingerprint": "31ad924e6d176c864309b5000acddd34295451fbdd503631e9d64d7210211cac",
+  "release_notes": "## [1.14.0](https://github.com/RashKash103/sync-up/compare/v1.13.0...v1.14.0) (2026-11-14)\n\n### ✨ New Features\n\n* Repair a gallery Reddit says has failed ([d4775f9](https://github.com/RashKash103/sync-up/commit/d4775f9c21e47eb0251d9e2db87397aa4a14b936)), closes [#49](https://github.com/RashKash103/sync-up/issues/49)\n",
+  "release_tag": "v1.14.0",
+  "release_date": "2026-11-14T20:27:33Z",
   "isPreRelease": false,
   "stars": 7,
   "avatarUrl": "https://avatars.githubusercontent.com/u/17362324?v=4&s=128",
