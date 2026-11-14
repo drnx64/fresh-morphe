@@ -2,9 +2,9 @@
   "bundle": "ineednotitle",
   "channel": "latest",
   "repo_url": "https://github.com/ineednotitle/Proteus-Patches",
-  "created_at": "2026-11-12T16:29:17",
-  "version": "2.3.0",
-  "description": "## [2.3.0](https://github.com/[secure]/Proteus-Patches/compare/v2.2.10...v2.3.0) (2026-11-12)\n\n### ✨ New Features\n\n* **release:** expand Proton Pass and Gboard patches for v2.2.10 ([2de3200](https://github.com/[secure]/Proteus-Patches/commit/2de3200757447185ba8eaa9dd127d85e4d807b2c))",
+  "created_at": "2026-11-14T17:52:32",
+  "version": "2.3.1",
+  "description": "v2.3.1 (pre-release re-cut; replaces the earlier v2.3.1 assets). New apps: Table Notes (vivekagarwal.playwithdb 20261111) premium unlock for PDF/Word/Excel export, publishing and the paid set, with the AdMob banner/interstitial slots skipped; Netflix (Android TV, com.netflix.ninja) clone, CertCheck, household-prompt, network-fingerprint and in-process ad-remover patch set ported from ajstrick81/morphe-androidtv-patches (GPL-3.0). Fixes: the Mereframe wrapper sweep now preserves each guarded wrapper's array-length contract (p/a/V/m expect 3 elements, T expects 12) and keeps the catch handler outside its own try range, so the develop/encode path stops silently producing nothing (\"RAW is safe\" but it didn't develop, issue #34); Reddit comment TreeData is discovered by constructor shape so Show deleted posts and comments applies on both 2026.42.0 builds (issue #35); Amazon Business + screenshot detection from PR #31 are in the bundle. Verified by building the Android bundle, applying the Table Notes and Mereframe patches to the real APKs and dumping the patched DEX; on-device runtime verification of the new app patches is still pending.",
   "apps": [
     {
       "app_name": "Inure App Manager (Trial)",
@@ -53,7 +53,7 @@
         },
         {
           "name": "Bypass native integrity checks",
-          "description": "libunnamed_raw.so JNI-throws 'app integrity check failed' on re-signed builds, killing camera session start (preview) - observed via diagnostic crash log. This patch calls the session-opening wrapper inside a real JVM try/catch (extension) and substitutes a well-formed session result on failure. Required together with 'Allow re-signed/sideloaded installs'.",
+          "description": "Neutralizes libunnamed_raw.so's five ARM64 self-integrity gates (BTI/PAC-safe) and wraps the session-opening plus every other native-calling bridge wrapper in a real JVM try/catch that fails open on integrity errors. Required together with 'Allow re-signed/sideloaded installs'.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -71,7 +71,7 @@
         },
         {
           "name": "Unlock Pro features",
-          "description": "Returns every registered feature from the entitlement accessor (Qu.k) so all Pro gates resolve unlocked. LOCAL client-side effect only. WARNING (kept off by default): on at least one device (realme/Android 16) enabling the single registered Pro feature crashes capture - the Pro pipeline path is gated by this flag and we cannot verify its safety side. Enable only if you specifically want the Pro toolset; the app works fully (RAW capture incl.) with just 'Allow re-signed installs'.",
+          "description": "Unlocks all Mereframe Pro features locally across both the Kotlin entitlement resolver (Qu.k/m) and the native license/session verifier (Bf1c089 + libunnamed_raw.so), eliminating paywall popups and capture/editor SecurityException crashes. Pair with 'Allow re-signed/sideloaded installs' and 'Bypass native integrity checks'.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -98,8 +98,8 @@
       "developer": "Proton AG"
     },
     {
-      "app_name": "Amazon Shopping",
-      "package": "com.amazon.mshop.android.shopping",
+      "app_name": "Amazon Business",
+      "package": "com.amazon.mshop.android.business.shopping",
       "patches": [
         {
           "name": "Amazon: Stop feed video autoplay",
@@ -107,7 +107,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -121,7 +122,18 @@
             }
           ],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
+          ]
+        },
+        {
+          "name": "Disable screenshot detection",
+          "description": "Prevents the app from detecting screenshots and displaying the share popup on Android 14+.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -130,7 +142,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -139,7 +152,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -148,7 +162,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -157,7 +172,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -166,7 +182,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -208,7 +225,8 @@
             }
           ],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
           ]
         },
         {
@@ -217,7 +235,153 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "32.18.0.100"
+            "32.19.0.451",
+            "32.20.0.451"
+          ]
+        }
+      ],
+      "developer": "com.amazon"
+    },
+    {
+      "app_name": "Amazon Shopping",
+      "package": "com.amazon.mshop.android.shopping",
+      "patches": [
+        {
+          "name": "Amazon: Stop feed video autoplay",
+          "description": "Stops Amazon's home-feed native video units (live promotional videos,\nreview carousels, sponsored reels) from starting on their own, using\nthe same setPlayWhenReady(true) → false heuristic as the universal\n'Disable video autoplay (ExoPlayer/Media3)' patch.\n\nCovers native ExoPlayer/Media3 players only — NOT the in-app WebView\npages (use the default-on 'Disable video autoplay' patch for those),\nand NOT WebView CSS-injected ad blocks (use 'Remove ads'). Heuristic:\nreflection or obfuscated player setup is not covered. Can stop playback\nentirely in apps whose only play path is a flipped literal call — turn\nit off if videos never start. Unverified on device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Dark mode",
+          "description": "Force dark mode for Amazon Shopping.",
+          "use": true,
+          "options": [
+            {
+              "key": "amazonDarkMode",
+              "description": "Off / Follow system / Always on."
+            }
+          ],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Disable screenshot detection",
+          "description": "Prevents the app from detecting screenshots and displaying the share popup on Android 14+.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Disable search suggestions tracking",
+          "description": "Prevents search keypress and focus events from being sent with suggestion requests.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Disable video autoplay",
+          "description": "Prevents videos from autoplaying in Amazon's in-app WebView pages.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Fix Amazon manifest conflicts",
+          "description": "Updates shared Amazon permissions so other Amazon apps can coexist.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Hide Rufus tab",
+          "description": "Removes the Rufus AI assistant tab from Amazon's bottom navigation bar.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Open links in browser",
+          "description": "Opens non-Amazon URLs in the default browser instead of the in-app WebView.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Price history charts",
+          "description": "Injects Keepa and CamelCamelCamel price history charts on Amazon product pages.",
+          "use": true,
+          "options": [
+            {
+              "key": "amazonPriceChartPeriod",
+              "description": "Default time range for the price history charts."
+            },
+            {
+              "key": "amazonPriceChartToggle",
+              "description": "Add period buttons under each chart to switch views."
+            },
+            {
+              "key": "amazonPriceChartTogglePeriods",
+              "description": "Which periods appear in the toggle buttons."
+            },
+            {
+              "key": "amazonKeepaSeries",
+              "description": "Which price series the Keepa chart shows."
+            },
+            {
+              "key": "amazonCccChartType",
+              "description": "Which price lines the CCC chart shows."
+            },
+            {
+              "key": "amazonCccHideZero",
+              "description": "Omit flat zero-price segments on the CCC chart."
+            },
+            {
+              "key": "amazonChartSize",
+              "description": "Width of the CCC chart image (Keepa renders at a fixed size)."
+            },
+            {
+              "key": "amazonChartsCollapsed",
+              "description": "Render the charts inside a collapsed section; tap to expand."
+            }
+          ],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Hides sponsored and ad content in Amazon Shopping via CSS injection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "32.18.0.100",
+            "32.19.0.100"
           ]
         }
       ],
@@ -666,6 +830,271 @@
       "developer": "HT Media Ltd"
     },
     {
+      "app_name": "Instagram",
+      "package": "com.instagram.android",
+      "patches": [
+        {
+          "name": "Bypass signature check",
+          "description": "Bypasses Instagram's internal provider signature verification after patching.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Change like animation",
+          "description": "Lets you choose one of Instagram's built-in double-tap like animations, or pick a random one per session, from the Proteus settings dialog. Experimental on builds where Instagram renamed the animation classes.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Clone",
+          "description": "Changes the package name and the app name so you can install the patched app alongside the official Instagram app. Caution: Do not combine with the universal \"Change package name\" patch.",
+          "use": false,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "A new package name for the patched app."
+            },
+            {
+              "key": "appName",
+              "description": "A new app name (label). Entering \"Instagram\" will skip changing the app name."
+            }
+          ],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Disable Reels scrolling",
+          "description": "Disables the endless scrolling behavior in Instagram Reels, preventing swiping to the next Reel. Note: On a clean install, the 'Tip' animation may appear but will stop on its own after a few seconds.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Disable story auto flipping",
+          "description": "Disable stories automatically flipping/skipping after some seconds.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Disable video autoplay",
+          "description": "Disable video autoplay from feed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Ghost mode",
+          "description": "Hides typing indicators, prevents DM read receipts, and best-effort blocks story view receipts. Controlled at runtime from the Proteus settings button.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide Instants",
+          "description": "Hides Instants from DMs page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide Reels save button",
+          "description": "Hides the save button from Reels.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide Threads profile button",
+          "description": "Hides the Threads button from the profile page action bar (top right of the profile page).",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Removes ads from the Instagram feed and stories.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide all stories",
+          "description": "Hides all stories from the tray in the feed page. You may need to clean app data after the initial use of this patch to see its effects.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide explore feed",
+          "description": "Hides posts and reels from the explore/search page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide feed content",
+          "description": "Hide the feed content, leaving only stories in the home page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide navigation buttons",
+          "description": "Hides navigation bar buttons, such as the Reels and Create button. Choose what button to hide using the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideHome",
+              "description": "Permanently hides the Home button. App starts at next available tab."
+            },
+            {
+              "key": "hideReels",
+              "description": "Permanently hides the Reels button."
+            },
+            {
+              "key": "hideDirect",
+              "description": "Permanently hides the Direct button."
+            },
+            {
+              "key": "hideSearch",
+              "description": "Permanently hides the Search button."
+            },
+            {
+              "key": "hideProfile",
+              "description": "Permanently hides the Profile button."
+            },
+            {
+              "key": "hideCreate",
+              "description": "Permanently hides the Create button."
+            }
+          ],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide notes tray",
+          "description": "Hides the notes tray from the direct tab.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide reshare button",
+          "description": "Hides the reshare button from both posts and reels.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Hide suggested content",
+          "description": "Choose the suggested content to hide using the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideSuggestedReels",
+              "description": "Hides suggested reels from feed and reels tab."
+            },
+            {
+              "key": "hideSuggestedStories",
+              "description": "Hides suggested stories/users from story tray."
+            },
+            {
+              "key": "hideHighlightStories",
+              "description": "Hides highlighted stories from story tray, sponsored stories which have no set expiration."
+            },
+            {
+              "key": "hideSuggestedAccount",
+              "description": "Hides suggested accounts from the list of followers and from other profiles."
+            }
+          ],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Limit feed to following profiles",
+          "description": "Filters the home feed to display only chronological content from profiles you follow.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Proteus settings",
+          "description": "Adds settings and Ghost Mode buttons to the Instagram feed action bar. The dialog controls the runtime options of the other Instagram patches.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Reels double-tap seek",
+          "description": "Enables double-tap skip/rewind controls in Reels. The controls can be disabled at runtime from the Proteus settings button.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Reels playback speed menu",
+          "description": "Adds Instagram's playback-speed menu to the Reels overflow menu. The speed can be changed at runtime from the Proteus settings button.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        },
+        {
+          "name": "Remove build expired popup",
+          "description": "Removes the popup that appears after a while when the app version ages.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "439.0.0.37.89"
+          ]
+        }
+      ],
+      "developer": "Instagram"
+    },
+    {
       "app_name": "Everything Widgets",
       "package": "com.jndapp.nothing.widgets.pack",
       "patches": [
@@ -700,12 +1129,12 @@
       "developer": "JustNewDesigns"
     },
     {
-      "app_name": "Meesho",
-      "package": "com.meesho.shopping",
+      "app_name": "Meesho: Online Shopping App",
+      "package": "com.meesho.supply",
       "patches": [
         {
           "name": "Meesho: Block analytics & tracking SDKs",
-          "description": "Blocks Meesho's analytics & tracking SDKs (Firebase Analytics, AppsFlyer,\nAdjust, Facebook AppEvents, WebEngage, CleverTap and similar) using the\nsame universal heuristic as 'Block analytics & tracking SDKs'.\n\nApplies to com.meesho.shopping only. Heuristic; obfuscated or\nreflection-based reporting is not covered. Unverified on device.",
+          "description": "Blocks Meesho's analytics & tracking SDKs (Firebase Analytics, AppsFlyer,\nAdjust, Facebook AppEvents, WebEngage, CleverTap and similar) using the\nsame universal heuristic as 'Block analytics & tracking SDKs'.\n\nApplies to com.meesho.supply only. Heuristic; obfuscated or\nreflection-based reporting is not covered. Unverified on device.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -718,7 +1147,7 @@
         },
         {
           "name": "Meesho: Disable video autoplay (ExoPlayer)",
-          "description": "Stops video autoplay in the Meesho feed and product videos (ExoPlayer/Media3)\nusing the same heuristic as 'Disable video autoplay (ExoPlayer/Media3)'.\n\nApplies to com.meesho.shopping only. Heuristic; see the universal entry\nfor limitations. Unverified on device.",
+          "description": "Stops video autoplay in the Meesho feed and product videos (ExoPlayer/Media3)\nusing the same heuristic as 'Disable video autoplay (ExoPlayer/Media3)'.\n\nApplies to com.meesho.supply only. Heuristic; see the universal entry\nfor limitations. Unverified on device.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -731,7 +1160,7 @@
         },
         {
           "name": "Meesho: Prefer external browser over Custom Tabs",
-          "description": "Opens links in the default external browser instead of an in-app Custom\nTab, using the same rewrite as the universal 'Prefer external browser\nover Custom Tabs' patch.\n\nApplies to com.meesho.shopping only. Covers Custom Tabs /\nCustomTabsIntent call sites only. Unverified on device.",
+          "description": "Opens links in the default external browser instead of an in-app Custom\nTab, using the same rewrite as the universal 'Prefer external browser\nover Custom Tabs' patch.\n\nApplies to com.meesho.supply only. Covers Custom Tabs /\nCustomTabsIntent call sites only. Unverified on device.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -743,7 +1172,7 @@
           ]
         }
       ],
-      "developer": "com.meesho"
+      "developer": "Meesho"
     },
     {
       "app_name": "Microsoft Excel: Spreadsheets",
@@ -952,6 +1381,79 @@
         }
       ],
       "developer": "MUBI"
+    },
+    {
+      "app_name": "Netflix",
+      "package": "com.netflix.ninja",
+      "patches": [
+        {
+          "name": "Clone Netflix",
+          "description": "Installs the patched Netflix as a separate app alongside the stock one (package suffix .clone), instead of replacing it. Required on devices where Netflix is a preinstalled system app that can't be uninstalled (most Android TV boxes, Google TV, Fire TV). Keep the stock Netflix installed + enabled — the clone borrows its signature to pass Netflix's native tamper check (stock auto-updating is fine). You just launch the clone instead. Recommended: leave ON.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028",
+            "13.2.1 build 27207",
+            "13.2.2 build 27250"
+          ]
+        },
+        {
+          "name": "Disable Netflix CertCheck",
+          "description": "Neutralises Netflix's DexGuard signing-certificate anti-tamper check so a re-signed build doesn't self-crash on launch. Required for every Netflix patch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028",
+            "13.2.1 build 27207",
+            "13.2.2 build 27250"
+          ]
+        },
+        {
+          "name": "Minimize Network Fingerprint",
+          "description": "Blanks the local IP / MAC / Wi-Fi SSID the Netflix app reports about your network (keeps interface name/type) and stops the app from reporting your advertising ID (GAID) in its ad-collection telemetry. Reduces network + ad fingerprinting. Does NOT stop the server-side \"I'm traveling\"/household check (that's driven by your public IP — use a VPN for that). Opt-in / experimental; test on-device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028",
+            "13.2.1 build 27207",
+            "13.2.2 build 27250"
+          ]
+        },
+        {
+          "name": "Remove Netflix ads (bundle engine)",
+          "description": "Bundles the in-process ad-kill script (killads.js) and its loader into the app. This is the ad remover: at launch the app runs the script itself (script mode — no PC, no root, no frida server) and empties Netflix's ad breaks (pre-roll, mid-roll) and the pause-screen ad overlay. Pairs with the loader patch. Default ON.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028",
+            "13.2.1 build 27207",
+            "13.2.2 build 27250"
+          ]
+        },
+        {
+          "name": "Remove Netflix ads (loader)",
+          "description": "Arms the ad remover: injects the startup call that loads the in-process ad-kill engine (bundled by the companion patch) as early as possible, so ads are emptied before playback. Requires the bundle-engine patch. Default ON.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028",
+            "13.2.1 build 27207",
+            "13.2.2 build 27250"
+          ]
+        },
+        {
+          "name": "Suppress Household Prompt",
+          "description": "Hides the Netflix \"you're traveling\" / update-your-household prompt by keeping the client from activating the misdetection challenge session. Does NOT change what Netflix's servers detect (that's driven by your public IP — use a VPN for that); it only suppresses the on-screen prompt. Opt-in / experimental; only takes visible effect when the account would otherwise be prompted.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "13.0.1 build 25028",
+            "13.2.1 build 27207",
+            "13.2.2 build 27250"
+          ]
+        }
+      ],
+      "developer": "com.netflix"
     },
     {
       "app_name": "ChatGPT",
@@ -1355,6 +1857,16 @@
               "description": "Off / Follow system / Always on."
             }
           ],
+          "compatible_versions": [
+            "32.18.0.300",
+            "32.19.0.300"
+          ]
+        },
+        {
+          "name": "Disable screenshot detection",
+          "description": "Prevents the app from detecting screenshots and displaying the share popup on Android 14+.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "32.18.0.300",
             "32.19.0.300"
@@ -2034,14 +2546,30 @@
         }
       ],
       "developer": "tv.trakt"
+    },
+    {
+      "app_name": "Table Notes - Mobile Excel",
+      "package": "vivekagarwal.playwithdb",
+      "patches": [
+        {
+          "name": "Table Notes: Unlock premium",
+          "description": "Unlocks Table Notes premium: PDF / Word / Excel export, publishing and\nthe paid feature set, and removes the premium-tier ad slots (banner and\ninterstitial). Also suppresses the paywall.\n\nVerified against 20261111. Does not touch Firebase sync of your own\ntables; the app simply believes every entitlement is owned.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "20261111"
+          ]
+        }
+      ],
+      "developer": "Solution Developers"
     }
   ],
   "patches_name": "Proteus Patches",
-  "fingerprint": "dc613799dabfbe8a9ba716b626e945ce2766731df55a9adb97b015f02d20a906",
-  "release_notes": "## [2.3.0](https://github.com/[secure]/Proteus-Patches/compare/v2.2.10...v2.3.0) (2026-11-12)\n\n### ✨ New Features\n\n* **release:** expand Proton Pass and Gboard patches for v2.2.10 ([2de3200](https://github.com/[secure]/Proteus-Patches/commit/2de3200757447185ba8eaa9dd127d85e4d807b2c))\n",
-  "release_tag": "v2.3.0",
-  "release_date": "2026-11-12T16:30:32Z",
-  "isPreRelease": false,
+  "fingerprint": "8d9af1004e3c4c40734985439ada09d1a6d80dd363349c577a83fae13c3f2dbc",
+  "release_notes": "## Proteus Patches v2.3.1 (pre-release re-cut)\n\nThis re-cut replaces the earlier v2.3.1 asset. It ships the remaining issue work and stays a **pre-release** until the new app patches are verified on-device.\n\n### ✨ New app support\n\n- **Table Notes** (`vivekagarwal.playwithdb`, **20261111**) — *Table Notes: Unlock premium* forces the five entitlement flags and `App.f = mo6.BUSINESS` at the end of `App.<clinit>`, so the PDF / Word / Excel export sheet opens instead of the paywall, publishing and the paid feature set unlock, and the AdMob banner/interstitial slots are skipped. Off by default. ([#29](https://github.com/ineednotitle/Proteus-Patches/issues/29))\n- **Netflix (Android TV)** (`com.netflix.ninja`, **13.0.1 build 25028**; 13.2.x experimental) — clone, CertCheck, household-prompt suppression, network-fingerprint minimisation and the in-process ad remover, ported from [ajstrick81/morphe-androidtv-patches](https://github.com/ajstrick81/morphe-androidtv-patches) (GPL-3.0). Off-by-default entries marked experimental.\n\n### 🐛 Fixes\n\n- **Mereframe** — array-returning wrappers now fail open with the array length their own validation demands (`p`/`a`/`V`/`m` need 3 elements, `T` needs 12) instead of a fixed two-element array, and the catch handler no longer sits inside its own try range (a re-thrown non-integrity `Throwable` used to loop in the handler). This is the \"RAW is safe, but it didn't develop / video is 0:00\" failure mode after the crash fix. ([#34](https://github.com/ineednotitle/Proteus-Patches/issues/34))\n- **Mereframe** — the `Ul.X` paywall funnel is short-circuited so Pro features no longer fall through to the upsell sheet.\n- **Reddit** — comment TreeData is discovered by constructor shape, so **Show deleted posts and comments** applies on both 2026.42.0 builds (`Lc5l0` and `Lm5l0`). ([#35](https://github.com/ineednotitle/Proteus-Patches/issues/35))\n- **Amazon** — Amazon Business compatibility and the screenshot-detection patch from [PR #31](https://github.com/ineednotitle/Proteus-Patches/pull/31) are in the bundle.\n\n### Verification\n\n- Bundle built and verified with the repo's `verify_patch_source.py` / `verify_android_bundle.py`.\n- Table Notes patch applied to the real **20261111** APK; the patched `App.<clinit>` was dumped and ends with the five `sput-boolean` writes and `App.f = mo6.BUSINESS`.\n- Mereframe patches applied to the real **0.8.4 (vc 118)** XAPK; 47 bridge wrappers guarded, the patched `p` handler calls `failOpenLongArrayN(Throwable, 3)` and its try range covers the original body only.\n- On-device runtime verification of the new app patches (Table Notes export, Netflix playback, Mereframe develop) is still pending — hence **pre-release**.\n\n| | |\n|---|---|\n| Asset | `patches-2.3.1.mpp` |\n| SHA-256 | `8329af33d90dfd18555f8058360e71ac2599216dbe705cbd7f3d47f09c34921c` |\n| Size | 10,561,273 bytes |\n| Patches | 229 across 34 apps |\n",
+  "release_tag": "v2.3.1",
+  "release_date": "2026-11-14T15:00:21Z",
+  "isPreRelease": true,
   "stars": 5,
   "avatarUrl": "https://avatars.githubusercontent.com/u/100122698?v=4&s=128",
   "repoDescription": "Unlock your digital freedom. Free yourself from Big tech Corporations ",

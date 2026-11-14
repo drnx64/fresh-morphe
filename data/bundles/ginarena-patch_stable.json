@@ -2,10 +2,113 @@
   "bundle": "ginarena-patch",
   "channel": "stable",
   "repo_url": "https://github.com/sagarkhansau19-svg/GinArena-patch",
-  "created_at": "2026-11-09T00:43:30",
-  "version": "2.10.1",
-  "description": "## [2.10.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.10.0...v2.10.1) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **cricfy:** improve search and playback patch details ([4853980](https://github.com/ginDoki19/GinArena-patch/commit/485398033e916b9267e3f17734021eea6137cc56))",
+  "created_at": "2026-11-14T14:57:26",
+  "version": "2.11.1",
+  "description": "## [2.11.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.11.0...v2.11.1) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* **wps:** make the master switch the first card and name it clearly ([1bf6aea](https://github.com/ginDoki19/GinArena-patch/commit/1bf6aeaf249b06584ad9d063b4ce587041b8321e))",
   "apps": [
+    {
+      "app_name": "WPS Office-PDF, Word, Sheet",
+      "package": "cn.wps.moffice_eng",
+      "patches": [
+        {
+          "name": "Google sign-in via MicroG RE",
+          "description": "Makes Google sign-in work on a re-signed WPS by signing in as the original app. Needs MicroG RE installed with a Google account added. WPS account login is unaffected.",
+          "use": false,
+          "options": [
+            {
+              "key": "spoofOriginalIdentity",
+              "description": "Tells MicroG the app's original name and signature, which is what makes Google accept the sign-in."
+            },
+            {
+              "key": "routeGoogleServices",
+              "description": "Points WPS's Play services calls at MicroG instead of Google."
+            },
+            {
+              "key": "forceGmsAvailability",
+              "description": "MicroG fails Google's signature check, so this answers the availability check with yes."
+            },
+            {
+              "key": "routePush",
+              "description": "Sends push notifications through MicroG so they keep arriving."
+            },
+            {
+              "key": "addMicrogQueries",
+              "description": "Makes both Play services packages visible on Android 11+, so sign-in can reach MicroG. Stock WPS declares neither, so leaving this on changes nothing else."
+            }
+          ],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        },
+        {
+          "name": "Unlock premium features",
+          "description": "Opens the paid tools - PDF, export, editing, fonts and templates - by answering the app's payment checks. Every part has its own switch, so you choose what is unlocked. Sign in first: signed out, WPS reports no membership at all.",
+          "use": true,
+          "options": [
+            {
+              "key": "bypassPrivilegeInterceptor",
+              "description": "Answers every premium check with \"yes\". This is the switch that actually unlocks the app - the options below it only tidy up what it produces."
+            },
+            {
+              "key": "unlockPremiumIdentity",
+              "description": "Shows your account as Premium, so upgrade banners and price cards go away."
+            },
+            {
+              "key": "unlockMemberLevel",
+              "description": "Tells the app you have a Pro membership, which opens the menu entries locked behind it."
+            },
+            {
+              "key": "unlockPrivilegeChecks",
+              "description": "Answers \"do I own this?\" with yes, so premium fonts, templates and PDF tools open."
+            },
+            {
+              "key": "removeAds",
+              "description": "Tells the app you are ad-free, so banner and full-screen ads are never requested."
+            },
+            {
+              "key": "hideOwnedPrivilegeDialog",
+              "description": "Stops the popup that says you are already a WPS Premium user."
+            },
+            {
+              "key": "bypassAsyncPrivilegeChecks",
+              "description": "Removes the \"Upgrade to WPS Membership\" banner shown above the tool pages. It can invent usage counters, so it stays off until you want it."
+            },
+            {
+              "key": "denyAiPrivileges",
+              "description": "Answers every AI request as not owned. Use it only if an AI tool keeps loading forever."
+            },
+            {
+              "key": "reportAdGateOffline",
+              "description": "Tells the app ads are off before it contacts the server, so those requests never start."
+            },
+            {
+              "key": "passSignatureCheck",
+              "description": "Only analytics reads this. It does not affect premium, ads or sign-in."
+            }
+          ],
+          "compatible_versions": [
+            "26.11.0"
+          ]
+        }
+      ],
+      "developer": "cn.wps"
+    },
+    {
+      "app_name": "AdGuard for Android 4.16.0 alpha",
+      "package": "com.adguard.android",
+      "patches": [
+        {
+          "name": "Unlock AdGuard Premium",
+          "description": "Opens the paid features and removes the license prompts. The app then reports a lifetime family license, so no purchase screen appears.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.15.2"
+          ]
+        }
+      ],
+      "developer": "com.adguard"
+    },
     {
       "app_name": "Decompile App : Apktool & Jadx",
       "package": "com.apktools.app.decompile",
@@ -463,10 +566,10 @@
     }
   ],
   "patches_name": "GinArena Patch",
-  "fingerprint": "ac6a7e9cf0c56e46437b9f6e78da33c6152bfd93f68dfa257e448e9d9173f7e4",
-  "release_notes": "## [2.10.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.10.0...v2.10.1) (2026-11-09)\r\n## 🎉 GinArena Patch v2.10.1\r\n\r\nThis update improves CRICFy search, updates Daylio's premium patch, and clarifies playback patch descriptions.\r\n\r\n### 🔎 CRICFy TV search\r\n\r\n- Added **Fix search keyboard focus** for **CRICFy TV 7.4** (build 54), enabled by default.\r\n- Helps open the search keyboard on Android TV and keeps it connected during category searches on phones and TV, including when there are no results.\r\n- Clears the TV search when navigating or closing search.\r\n\r\n### ✨ Daylio\r\n\r\n- **Enable premium** for **Daylio 1.71.1** (build 289) is no longer marked experimental and is now enabled by default. You can turn it off when patching.\r\n- Premium status is enabled locally; this is not a purchase. Account- or server-dependent features may not work.\r\n\r\n### 📺 Clearer playback patch descriptions\r\n\r\n- Updated the **Hide playback controls at stream open** and **Improve Android TV playback controls** descriptions for CRICFy TV, Playfy TV, CricZ TV, PlayZ TV, CrexiFy TV, and SK Tech TV.\r\n- The descriptions clarify the existing behavior: controls can be hidden when opening a stream or switching between embedded and fullscreen playback, while the TV patch helps with remote focus and the seekbar. These are description updates, not new playback-control changes.\r\n- Some live streams do not support seeking, even when the seekbar is accessible.\r\n\r\n### 📦 How to update\r\n\r\nRefresh the GinArena patch source in Morphe Manager, then patch a fresh stock app with the new patches. To update an existing patched installation, use the same Morphe signing key. If Android reports a signature conflict, back up your data before considering an uninstall.\r\n\r\n**Full changes:** [v2.10.0 → v2.10.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.10.0...v2.10.1)\r\n\r\n",
-  "release_tag": "v2.10.1",
-  "release_date": "2026-11-09T00:44:08Z",
+  "fingerprint": "a25d8f487110fc0120ae5e24debb7ea3df910efe11330e68fc780d182e2a57b5",
+  "release_notes": "## [2.11.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.11.0...v2.11.1) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* **wps:** make the master switch the first card and name it clearly ([1bf6aea](https://github.com/ginDoki19/GinArena-patch/commit/1bf6aeaf249b06584ad9d063b4ce587041b8321e))\n",
+  "release_tag": "v2.11.1",
+  "release_date": "2026-11-14T14:58:20Z",
   "isPreRelease": false,
   "stars": 12,
   "avatarUrl": "https://avatars.githubusercontent.com/u/249589406?v=4&s=128",

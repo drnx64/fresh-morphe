@@ -2,10 +2,53 @@
   "bundle": "lokesh-sparrow",
   "channel": "stable",
   "repo_url": "https://github.com/lokesh-sparrow/loki-patches",
-  "created_at": "2026-11-13T15:52:45",
-  "version": "2.1.2",
-  "description": "### Fixes\n- GmsCore support: LinkedIn push notifications work again. Google refused the patched app's push registration, so no notification ever arrived; it now registers with MicroG-RE like the original app.\n\n**23 patches in total.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#patches).",
+  "created_at": "2026-11-14T19:08:48",
+  "version": "3.0.1",
+  "description": "## 3.0.1 (2026-11-14)\n\n### Fixes\n- **Doc Scanner:** GmsCore support (Doc Scanner): the description says text recognition (OCR), not receipt OCR, and that it needs Play services.\n- **Truecaller:** Enable premium features (Truecaller): the description says the after-call screen has a switch in Loki Patches › Calls.\n\n**36 patches for 4 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
   "apps": [
+    {
+      "app_name": "Document Scanner - PDF Creator",
+      "package": "com.cv.docscanner",
+      "patches": [
+        {
+          "name": "Allow clone",
+          "description": "Lets the app run under a package name made by the Change package name patch: the app compares its own package name with the original at start-up and shuts itself down when they differ.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.9.9"
+          ]
+        },
+        {
+          "name": "Declutter",
+          "description": "Removes the promo banner on the home screen and the cross-promotion and cloud-login cards on the save-success screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.9.9"
+          ]
+        },
+        {
+          "name": "Enable premium features",
+          "description": "Turns on the app's paid features (unlimited scans, cloud upload, OCR, PDF passwords, compression, signatures, themes). The app skips its ad slots for paid users, so the ads go away with them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.9.9"
+          ]
+        },
+        {
+          "name": "GmsCore support (Doc Scanner)",
+          "description": "MicroG-RE integration for Doc Scanner: routes Google sign-in and Google Drive through MicroG-RE instead of Google Play services, and keeps ML Kit's module loader on real Play services so text recognition (OCR) keeps working on phones with Play services. MicroG-RE has to be installed and signed in to a Google account.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.9.9"
+          ]
+        }
+      ],
+      "developer": "LUFICK TECHNOLOGY PRIVATE LIMITED"
+    },
     {
       "app_name": "LinkedIn: Community & Network",
       "package": "com.linkedin.android",
@@ -100,7 +143,7 @@
         },
         {
           "name": "GmsCore support",
-          "description": "Routes \"Continue with Google\" through microG RE (GmsCore) instead of Google Play services, so signing in works in patched LinkedIn. microG RE has to be installed and signed in to a Google account.",
+          "description": "Routes \"Continue with Google\" and Firebase push through MicroG-RE (GmsCore) instead of Google Play services. Signs the FCM registration with LinkedIn's original certificate, so notifications still arrive on a re-signed build. MicroG-RE has to be installed and signed in to a Google account.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -265,13 +308,90 @@
         }
       ],
       "developer": "com.linkedin"
+    },
+    {
+      "app_name": "Splitwise",
+      "package": "com.splitwise.splitwisemobile",
+      "patches": [
+        {
+          "name": "AMOLED black (Splitwise)",
+          "description": "Real black instead of dark grey in Splitwise's dark mode: backgrounds, screens, bottom sheets, the status and navigation bars and the group charts. Cards stay a shade lighter so they stand out. AMOLED screens switch black pixels off, which saves battery. Light mode is unchanged. Can be switched off in Loki Patches > Appearance.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.1"
+          ]
+        },
+        {
+          "name": "Enable premium features (Splitwise)",
+          "description": "Treats the account as Pro and switches on the paid features: unlimited expense entries, search, charts, spreadsheet export, currency conversion, group totals history and stats, default splits, reminders, balance alerts, trip dates, larger receipt images and itemization.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.1"
+          ]
+        },
+        {
+          "name": "GmsCore support (Splitwise)",
+          "description": "MicroG-RE integration for Splitwise: routes Google sign-in and Google Drive through MicroG-RE instead of Google Play services, and keeps ML Kit's module loader on real Play services so receipt OCR keeps working. MicroG-RE has to be installed and signed in to a Google account.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.11.1"
+          ]
+        },
+        {
+          "name": "Hide Pro ads and upsells",
+          "description": "Removes the full-screen ad after adding an expense, the ad in Activity, the Pro diamond, the Pro account and Pro Duo cards, the Pro Pass prompts, the Pro tour screen, the hiring promo and the rate-the-app prompt.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.11.1"
+          ]
+        },
+        {
+          "name": "Remove analytics and crash reporting",
+          "description": "Turns off Firebase Analytics, Crashlytics and the advertising-ID collection the app declares in its manifest.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.11.1"
+          ]
+        }
+      ],
+      "developer": "com.splitwise"
+    },
+    {
+      "app_name": "Truecaller: Phone Call Blocker",
+      "package": "com.truecaller",
+      "patches": [
+        {
+          "name": "Enable premium features (Truecaller)",
+          "description": "Makes every premium feature the app decides on the device available, and the plan read as active instead of Free, and hides the after-call screen (switch in Loki Patches > Calls). Features whose content comes from Truecaller's servers (who viewed me, caller ID for unknown numbers, fraud insurance) open but stay empty - their data is not in the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.43.5"
+          ]
+        },
+        {
+          "name": "GmsCore support (Truecaller)",
+          "description": "Routes Google sign-in, the Google Drive backup of contacts and call logs, and Firebase push through MicroG-RE (GmsCore) instead of Google Play services. Signs the FCM registration with Truecaller's original certificate, so notifications still arrive on a re-signed build. MicroG-RE has to be installed and signed in to a Google account.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.43.5"
+          ]
+        }
+      ],
+      "developer": "com.truecaller"
     }
   ],
   "patches_name": "Loki Patches",
-  "fingerprint": "7980439985be70b84977f7e14bd922eb65783c2a7c223c7d86c28300b1a41102",
-  "release_notes": "### New Features\n- Dark app icon: optional black launcher icon (off by default).\n\n### Fixes\n- Swipe between feeds: My Network tabs now switch reliably on every screen size, including Catch up after Search.\n\n**23 patches in total.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#patches).\n",
-  "release_tag": "v2.1.0",
-  "release_date": "2026-11-10T09:56:51Z",
+  "fingerprint": "c40754aa2f4cb1f4dd4155f183af06c1b535a119e181d802162734e9fea69a92",
+  "release_notes": "### Fixes\n- **Doc Scanner:** GmsCore support (Doc Scanner): the description says text recognition (OCR), not receipt OCR, and that it needs Play services.\n- **Truecaller:** Enable premium features (Truecaller): the description says the after-call screen has a switch in Loki Patches › Calls.\n\n**36 patches for 4 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).\n",
+  "release_tag": "v3.0.1",
+  "release_date": "2026-11-14T19:09:33Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/144280457?v=4&s=128",
