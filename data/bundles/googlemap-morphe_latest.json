@@ -2,8 +2,8 @@
   "bundle": "googlemap-morphe",
   "channel": "latest",
   "repo_url": "https://github.com/shuili1013/GoogleMap-Morphe",
-  "created_at": "2026-11-08T07:00:49",
-  "version": "1.0.1",
+  "created_at": "2026-11-14T11:30:00",
+  "version": "1.0.3",
   "description": "Google Maps 26.44.06.1006895251: native Android Auto navigation with two-wheeler routes. Includes the required Dutch App Patches (JohninNL, GPLv3) Maps patches. Requires this project's MicroG-RE build. See README.",
   "apps": [
     {
@@ -31,6 +31,15 @@
         {
           "name": "Always two-wheeler on Android Auto",
           "description": "26.44.06.1006895251 only. Android Auto treats two-wheeler (motorcycle) as its supported mode, so destinations searched on the head unit default to two-wheeler routes. Use with \"Allow any travel mode on Android Auto\" so driving routes are still accepted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.44.06.1006895251"
+          ]
+        },
+        {
+          "name": "Android Auto template-only app",
+          "description": "26.44.06.1006895251 only. Declares the patched Maps as a navigation (template) app only and removes legacy projection entry points that caused the real head unit to fall back to messaging. This does not bypass the observed package validator denial.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -83,10 +92,10 @@
     }
   ],
   "patches_name": "shuili1013",
-  "fingerprint": "60f11a2b34e8441a1f415c93b68dd4d4d846b0a7d1c970d5be00b0dd6e00c993",
-  "release_notes": "Same patches as v1.0.0; the repository and the Morphe source name are now **Maps-AA-AnyMode-Morphe**. Requires [this version of MicroG-RE](https://github.com/shuili1013/MicroG-RE/releases/tag/v7.3.0-maps-fix). See the README for setup.",
-  "release_tag": "v1.0.1",
-  "release_date": "2026-11-08T07:00:51Z",
+  "fingerprint": "79007d03e2ec3eda4d096650529c0ffb6a76043b321e8a30dc9768fd45b0e288",
+  "release_notes": "Adds the `Android Auto template-only app` patch and documents the install route that works on a physical head unit.\n\n## What changed\n\n- **New patch `Android Auto template-only app`.** Google Maps declares three Android Auto capabilities: `projection` (Google-signed callers only), `notification` and `template` (the Car App Library navigation surface this project uses). A real head unit validates `projection` first, rejects a re-signed app, and then falls back to the notification surface, so the launcher entry opened \"No new messages during this drive\" instead of the map. The patch leaves only `template` and strips the Google-only `CATEGORY_PROJECTION` intent filters.\n- **Install route.** Android Auto's \"Unknown sources\" developer setting does not cover Car App Library apps, and `adb install -i com.android.vending` does not help. Install the finished, signed single APK with [KingInstaller](https://github.com/fcaronte/KingInstaller) **Classic** (Root and Shizuku both off). See the README for the full steps and for how to check the two installer fields.\n\n## Verified\n\nGalaxy S25 (Android 16) + Pernis MS700CL over wireless Android Auto 18, and the headunit emulator over USB. Other phones and head units are not covered.\n\nStill only for Google Maps `26.44.06.1006895251`. See [README](https://github.com/shuili1013/Maps-AA-AnyMode-Morphe#readme) / [中文](https://github.com/shuili1013/Maps-AA-AnyMode-Morphe/blob/main/README.zh-TW.md), and [handoff-ms700cl.md](https://github.com/shuili1013/Maps-AA-AnyMode-Morphe/blob/main/handoff-ms700cl.md) for the debugging record.",
+  "release_tag": "v1.0.3",
+  "release_date": "2026-11-14T03:29:16Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/99980772?v=4&s=128",

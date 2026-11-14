@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-13T09:00:37.810Z",
-  "version": "1.76.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/0336fd0ca24ec5b3f2322914f96afaa7fdc5d4cb/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.76.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [0336fd0ca24e](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/0336fd0ca24ec5b3f2322914f96afaa7fdc5d4cb). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.76.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.75.0...v1.76.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* **Gboard:** copy the recognised text instead of its object ([b7385eb](https://gitlab.com/johninnld/nl-morphe-patches/commit/b7385eb108b8b2cbc27888a91c9fe3ca9b7c7f12))\n* **Gboard:** load the OCR engine from a read-only library file ([46a5ba2](https://gitlab.com/johninnld/nl-morphe-patches/commit/46a5ba262fe542a0c1ffa1f6d41434a07de17eb4))\n* **Gboard:** stop asking Play Services about the OCR engine ([2f156e1](https://gitlab.com/johninnld/nl-morphe-patches/commit/2f156e12040466ff38170eb198695a550f11424f))\n\n### ✨ New Features\n\n* **Gboard:** recognise text from an image you pick ([a4a721a](https://gitlab.com/johninnld/nl-morphe-patches/commit/a4a721a5a1778d9119293f709706fd2053dacbee))\n",
+  "created_at": "2026-11-14T04:07:47.578Z",
+  "version": "1.85.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/6525923c6e6c0ba701a158efeab7844613fffbdf/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.85.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [6525923c6e6c](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/6525923c6e6c0ba701a158efeab7844613fffbdf). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.85.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.84.0...v1.85.0) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* **Magic Earth:** admit custom Android Auto hosts and native car controls ([b88f338](https://gitlab.com/johninnld/nl-morphe-patches/commit/b88f33834d77282663811301fdf854b4db638a30))\n\n### ✨ New Features\n\n* **Magic Earth:** add experimental local feature and privacy controls ([c53de0c](https://gitlab.com/johninnld/nl-morphe-patches/commit/c53de0c004c28be44b849c4e0bfe264615d4a599))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -1013,6 +1013,58 @@
       "developer": "NOS"
     },
     {
+      "app_name": "Magic Earth Navigation & Maps",
+      "package": "com.generalmagic.magicearth",
+      "patches": [
+        {
+          "name": "Allow custom Android Auto hosts",
+          "description": "Removes Magic Earth's service binding permission so compatible custom HUD hosts can reach its existing allow-all host validator. Keeps navigation discovery and caller-UID validation.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.1.26.38.B4684D03.6207A61BA"
+          ]
+        },
+        {
+          "name": "Disable GEM telemetry dispatch",
+          "description": "ARM64 only: prevents the traced GEM storage and usage telemetry jobs from being queued. Keeps SDK initialization intact. Local statistics storage may remain; runtime validation pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.1.26.38.B4684D03.6207A61BA"
+          ]
+        },
+        {
+          "name": "Disable Google telemetry transport",
+          "description": "Drops new Google DataTransport events and completes queued CCT uploads locally. Does not disable GEM engine telemetry. Runtime validation pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.1.26.38.B4684D03.6207A61BA"
+          ]
+        },
+        {
+          "name": "Enable local feature controls",
+          "description": "ARM64 only: skips local premium prompts for recording, map downloads and map styles, preserves traffic/elevation selections, and hides four premium promotion widgets. Online services still require server authorization. Runtime validation pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.1.26.38.B4684D03.6207A61BA"
+          ]
+        },
+        {
+          "name": "Enable TV launcher",
+          "description": "Lists Magic Earth in Android TV launchers and makes touch input optional. Remote navigation and rendering depend on the device.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.1.26.38.B4684D03.6207A61BA"
+          ]
+        }
+      ],
+      "developer": "Magic Lane International BV"
+    },
+    {
       "app_name": "Google Maps",
       "package": "com.google.android.apps.maps",
       "patches": [
@@ -1802,6 +1854,63 @@
       "developer": "com.lucky_apps"
     },
     {
+      "app_name": "Reolink",
+      "package": "com.mcu.reolink",
+      "patches": [
+        {
+          "name": "Change package name",
+          "description": "Installs Reolink under its own package name, alongside the Reolink from the Play Store. On by default, because a patched copy cannot update the Play Store Reolink.",
+          "use": true,
+          "options": [
+            {
+              "key": "packageName",
+              "description": "The package name to install under. Must be a valid Android package name that differs from com.mcu.reolink."
+            }
+          ],
+          "compatible_versions": [
+            "4.64.3.20261023"
+          ]
+        },
+        {
+          "name": "Custom branding",
+          "description": "Changes Reolink's app name and launcher icon. Defaults to \"Reolink AA\" with the Reolink AA icon; Reolink's original icon is also available.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher, on the car screen and in app information. Leave empty to keep Reolink."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": [
+            "4.64.3.20261023"
+          ]
+        },
+        {
+          "name": "Custom layout for Android Auto",
+          "description": "On a car screen, shows Reolink's phone layout across the whole width: the overview and the camera page with its controls, Playback and Quick reply. Full screen still shows the video alone, and Back returns from it and then to the overview, without rotating. Applies on every screen other than the phone's own, whichever car host shows it. Nothing changes on the phone.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.64.3.20261023"
+          ]
+        },
+        {
+          "name": "Parked app for Android Auto",
+          "description": "Declares Reolink a parked video app, so Android Auto and car hosts like DriveDeck list it on the car screen by themselves. Android Auto still needs Unknown sources in its developer settings for a patched app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.64.3.20261023"
+          ]
+        }
+      ],
+      "developer": "Reolink Innovation Limited"
+    },
+    {
       "app_name": "Eindhovens Dagblad – Nieuws",
       "package": "com.mecom.ed.nl",
       "patches": [
@@ -1924,7 +2033,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.5.1784911033"
+            "4.5.1784911134"
           ]
         },
         {
@@ -1933,7 +2042,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.5.1784911033"
+            "4.5.1784911134"
           ]
         },
         {
@@ -2181,6 +2290,22 @@
         }
       ],
       "developer": "Talpa Network B.V."
+    },
+    {
+      "app_name": "Tuya: Smart Life, Smart Living",
+      "package": "com.tuya.smart",
+      "patches": [
+        {
+          "name": "Allow any Android Auto host",
+          "description": "Lets any Android Auto compatible host connect to Tuya Smart Life's car screens, including DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE, whatever its package name or signing key. Google's Android Auto keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.12.6"
+          ]
+        }
+      ],
+      "developer": "Tuya Smart Inc."
     },
     {
       "app_name": "DS Nieuws",
@@ -3102,6 +3227,137 @@
       "developer": "Deezer Music"
     },
     {
+      "app_name": "Gridcraft",
+      "package": "io.github.artcraftandroid.gridcraft",
+      "patches": [
+        {
+          "name": "Custom branding",
+          "description": "Renames GridCraft to Microsoft Excel and gives it the Microsoft Excel launcher icon. Choose another name or GridCraft's original icon.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep GridCraft."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "io.github"
+    },
+    {
+      "app_name": "Lightcraft",
+      "package": "io.github.artcraftandroid.lightcraft",
+      "patches": [
+        {
+          "name": "Custom branding",
+          "description": "Renames LightCraft to Adobe Lightroom and gives it the Adobe Lightroom launcher icon. Choose another name or LightCraft's original icon.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep LightCraft."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "io.github"
+    },
+    {
+      "app_name": "PdfCraft",
+      "package": "io.github.artcraftandroid.pdfcraft",
+      "patches": [
+        {
+          "name": "Custom branding",
+          "description": "Renames PdfCraft to Adobe Acrobat and gives it the Adobe Acrobat launcher icon. Choose another name, the classic Acrobat icon or PdfCraft's original icon.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep PdfCraft."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "io.github"
+    },
+    {
+      "app_name": "Wordcraft",
+      "package": "io.github.artcraftandroid.wordcraft",
+      "patches": [
+        {
+          "name": "Custom branding",
+          "description": "Renames WordCraft to Microsoft Word and gives it the Microsoft Word launcher icon. Choose another name or WordCraft's original icon.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep WordCraft."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "io.github"
+    },
+    {
+      "app_name": "Titanium Browser",
+      "package": "io.github.jqssun.helium",
+      "patches": [
+        {
+          "name": "Custom branding",
+          "description": "Renames Titanium Browser to Chrome and gives it the Chrome launcher icon. Choose another name or Titanium's original icon.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep Titanium Browser."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "jqssun"
+    },
+    {
+      "app_name": "Home Assistant",
+      "package": "io.homeassistant.companion.android",
+      "patches": [
+        {
+          "name": "Allow any Android Auto host",
+          "description": "Lets any Android Auto compatible host connect to Home Assistant's car screens, including DriveDeck, Gearslip, MyCar, Flywheel, BetterAuto, AndroidAuto and AARE, whatever its package name or signing key. Google's Android Auto keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.10.1-full"
+          ]
+        }
+      ],
+      "developer": "Open Home Foundation (OHF)"
+    },
+    {
       "app_name": "De Tijd",
       "package": "mobi.inthepocket.mediafin.detijd",
       "patches": [
@@ -3675,7 +3931,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.117.0"
+            "1.118.0"
           ]
         },
         {
@@ -3931,6 +4187,29 @@
       "developer": "nl.weerplaza"
     },
     {
+      "app_name": "Fennec F-Droid",
+      "package": "org.mozilla.fennec_fdroid",
+      "patches": [
+        {
+          "name": "Custom branding",
+          "description": "Renames Fennec to Firefox and gives it the Firefox launcher icon. Choose another name or Fennec's original icon.",
+          "use": true,
+          "options": [
+            {
+              "key": "customName",
+              "description": "Name shown in the launcher and Android app information. Leave empty to keep Fennec."
+            },
+            {
+              "key": "appIcon",
+              "description": "Launcher icon applied when patching."
+            }
+          ],
+          "compatible_versions": []
+        }
+      ],
+      "developer": "org.mozilla"
+    },
+    {
       "app_name": "Buienalarm:Weather & Rainradar",
       "package": "org.yoki.android.buienalarm",
       "patches": [
@@ -4000,7 +4279,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "341017e765d0161172967e8b4a950e4e4487ea7bf3e30159776958e6fe7bc10f",
+  "fingerprint": "1d216357c5947c1fa1f7bc110a2c6bf86bc3e2ca264c6321963e01dc3b984cdd",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",
