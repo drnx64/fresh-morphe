@@ -2,9 +2,9 @@
   "bundle": "jordanwoodson",
   "channel": "latest",
   "repo_url": "https://github.com/jordanwoodson/lurk-morphe-patches",
-  "created_at": "2026-11-05T15:14:02",
-  "version": "1.16.1",
-  "description": "## [1.16.1](https://github.com/jordanwoodson/lurk-morphe-patches/compare/v1.16.0...v1.16.1) (2026-11-05)\n\n### Rumble\n\n#### 🐛 Bug Fixes\n\n* target Rumble 3.21.0 again, which Morphe Manager can download\n\n### Twitch\n\n#### 🐛 Bug Fixes\n\n* target Twitch 31.8.0 again, which Morphe Manager can download",
+  "created_at": "2026-11-15T22:09:29",
+  "version": "1.17.0",
+  "description": "## [1.17.0](https://github.com/jordanwoodson/lurk-morphe-patches/compare/v1.16.1...v1.17.0) (2026-11-15)\n\n### Kick\n\n#### ✨ New Features\n\n* add **Player gestures**\n* add **Refresh stream**\n* add **Third-party badges** with 7TV badges\n\n#### 🐛 Bug Fixes\n\n* **Third-party emotes:** load the channel's emotes, not only global ones\n\n### Rumble\n\n#### ✨ New Features\n\n* add **Anonymous chat**\n* add **Show video stats**\n\n### Twitch\n\n#### ✨ New Features\n\n* add **Block update prompts**\n* add **Don't save searches**\n* add Favorite emotes to the emote picker\n* add **Show exact counts**\n* hide offline channels and recent streams on the React Native Home\n* highlight chosen users and roles in **Chat keywords**\n* suggest emotes while typing, without ':' first\n\n#### 🐛 Bug Fixes\n\n* keep **third-party emotes** loaded instead of downloading them again\n* open on Following in the **tablet layout** too\n* Sleep timer now pauses streams played with **Force ExoPlayer**\n\n### Shared\n\n#### 🐛 Bug Fixes\n\n* open Lurk settings in installs whose manifest lacks its activity",
   "apps": [
     {
       "app_name": "KICK: Live Streaming",
@@ -278,6 +278,24 @@
           ]
         },
         {
+          "name": "Player gestures",
+          "description": "In landscape, swipe up or down on the left of the video to change the brightness, on the right to change the volume. The middle of the video keeps Kick's own swipes (out of fullscreen), and Kick's taps and pinch to zoom stay. Starts off. Turn it on in Lurk settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.34.0"
+          ]
+        },
+        {
+          "name": "Refresh stream",
+          "description": "Long-press the video to reload a stuck stream from the address Kick gave the player; a video picks up where it was. On by default. Turn it off in Lurk settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.34.0"
+          ]
+        },
+        {
           "name": "Remove tracking permissions",
           "description": "Removes advertising ID, ad attribution and Google Play install-referrer permissions. Other identifiers and analytics require separate controls.",
           "use": true,
@@ -341,6 +359,15 @@
           ]
         },
         {
+          "name": "Third-party badges",
+          "description": "Adds a switch that shows the 7TV badge each chatter chose next to their name in chat. Off until turned on in Lurk settings. It keeps a connection to 7TV's event service (events.7tv.io) while a channel's chat is open, which tells 7TV the channel (its owner's Kick user ID), as the 7TV emotes switch does, and nothing about you or the chatters you see; 7TV sends the badges of that channel's chatters and their images come from cdn.7tv.app. FrankerFaceZ, Chatterino and pronouns.alejo.io only know Twitch accounts, so Kick has no switches for them.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "40.34.0"
+          ]
+        },
+        {
           "name": "Third-party emotes",
           "description": "Adds optional 7TV emotes to chat, the native picker and autocomplete, with zero-width layers and live set updates. Sends the channel owner's Kick user ID to 7tv.io, asks again every 5 minutes while the chat is open, keeps a websocket to events.7tv.io open for the channel's emote sets and loads images from cdn.7tv.app, so 7TV can see which channels you watch and for how long. Starts off. Turn it on in Lurk settings > Chat. Like every patch that changes Kick's JavaScript, it turns off Kick's over-the-air JavaScript updates, so Kick's code fixes arrive only when you patch a newer version.",
           "use": true,
@@ -359,6 +386,15 @@
         {
           "name": "AMOLED black",
           "description": "Turns the dark grey of Rumble's raised surfaces (the bottom bar, search fields, cards, chips and tags) pure black for OLED screens, optionally near-black so their edges still show. Rumble's dark theme already draws pages, sheets and dialogs black; dividers and buttons keep their grey. Applies after a restart. Starts off. Turn it on in Lurk settings > Interface.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
+          "name": "Anonymous chat",
+          "description": "Adds a switch that opens a live stream's chat as a guest, the way Rumble opens it when you're signed out, while the rest of the app stays signed in: the chat connection is made without your session cookie, so Rumble's chat server doesn't list you among the chat's users. Sending chat messages and Rants is disabled while it's on, moderator tools are missing from the chat, and messages that mention you may not be highlighted. Rumble can still tell that you are watching: the video page's other requests, such as the video's details and the chat's emote list, are still made as you. Applies to chats opened afterwards. Starts off. Turn it on in Lurk settings > Chat.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -736,6 +772,15 @@
           ]
         },
         {
+          "name": "Show video stats",
+          "description": "Shows a small panel in the corner of the player with what Rumble's video player reports, refreshed every second: bitrate and the network estimate, buffer, dropped frames, resolution, frame rate and codecs, and for live streams that carry wall-clock times the delay behind the broadcast. The numbers come from the player on your phone; nothing is sent anywhere, and the panel never takes a tap. Starts off. Turn it on in Lurk settings > Playback.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.21.0"
+          ]
+        },
+        {
           "name": "Sleep timer",
           "description": "Pauses playback a chosen time after it last started or resumed, including background play and picture-in-picture. Starts off. Choose a time in Lurk settings > Playback.",
           "use": true,
@@ -842,6 +887,15 @@
           ]
         },
         {
+          "name": "Block update prompts",
+          "description": "Stops Twitch from asking for or requiring an app update through its remote forced-updates setting. A patched Twitch can't be updated from Google Play, so update by patching a newer version. On by default. Turn it off in Lurk settings > Interface.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.8.0"
+          ]
+        },
+        {
           "name": "Change app name",
           "description": "Changes the name shown under Twitch's launcher icon and in Android's settings.",
           "use": false,
@@ -866,7 +920,7 @@
         },
         {
           "name": "Chat keywords",
-          "description": "Highlights chat messages that mention you or contain your highlight words with a tinted background, optionally with a vibration, and hides messages with blocked words or from blocked users. Mentions are on by default; the word and user lists start empty and are set in Lurk settings. Native and React Native live chat and history, plus native VOD chat replay.",
+          "description": "Highlights chat messages that mention you, contain your highlight words or come from users or roles you pick with a tinted background, optionally with a vibration, and hides messages with blocked words or from blocked users. Mentions are on by default; the word and user lists start empty and are set in Lurk settings. Native and React Native live chat and history, plus native VOD chat replay.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -983,6 +1037,15 @@
           ]
         },
         {
+          "name": "Don't save searches",
+          "description": "Stops Twitch from keeping your searches on the phone and hides the ones it kept, so they no longer show under the search box. Suggestions still come from Twitch's server as you type. On by default. Turn it off in Lurk settings > Privacy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.8.0"
+          ]
+        },
+        {
           "name": "Emote and badge info",
           "description": "Adds a switch that shows a small sheet when you tap an emote or a badge in native chat, chat history or VOD chat replay: the image larger, its name, where it comes from (Twitch, 7TV, BetterTTV, FrankerFaceZ, Chatterino; channel or global; who made it, when the service's list says) and a Copy name button. Signed in, Twitch emotes keep Twitch's own emote card; usernames and long presses keep what Twitch does. Native chat only; React Native chat is unchanged. Starts off. Turn it on in Lurk settings > Chat.",
           "use": true,
@@ -1056,7 +1119,7 @@
         },
         {
           "name": "Hide Home sections",
-          "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following.",
+          "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following and the recent streams shelf of the Live tab.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -1204,6 +1267,15 @@
           ]
         },
         {
+          "name": "Show exact counts",
+          "description": "Shows viewer and follower counts in full, such as 24,213 viewers instead of 24.2K, wherever Twitch's own screens write them. The signed-in Home feed, which is React Native, keeps its short counts. Starts off. Turn it on in Lurk settings > Interface.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.8.0"
+          ]
+        },
+        {
           "name": "Show video stats",
           "description": "Adds the video stats button Twitch shows only to its staff to the native player: latency to the broadcaster, bitrate, buffer, dropped frames, codecs and server, and for live streams the stream's uptime, from the stream age Twitch's playlist already carries. Everything shown is local to the player.",
           "use": false,
@@ -1241,7 +1313,7 @@
         },
         {
           "name": "Third-party emotes",
-          "description": "Adds switches that show 7TV, BetterTTV and FrankerFaceZ emotes in chat, Twitch's chat history and VOD chat replay. When on, each sends the ID of the channel you watch to that service (7tv.io, api.betterttv.net, api.frankerfacez.com) for its emote lists and loads the emote images from its CDN. \"Emotes in the picker\" also lists them in the emote picker, one section per service, and in autocomplete after ':', from the same lists; that part was checked with Twitch's own picker and autocomplete code on Android's runtime, not in the app, which needs an account to open the picker. Starts off. Turn it on in Lurk settings > Chat.",
+          "description": "Adds switches that show 7TV, BetterTTV and FrankerFaceZ emotes in chat, Twitch's chat history and VOD chat replay. When on, each sends the ID of the channel you watch to that service (7tv.io, api.betterttv.net, api.frankerfacez.com) for its emote lists and loads the emote images from its CDN. \"Emotes in the picker\" also lists them in the emote picker, one section per service, and in autocomplete after ':', from the same lists; that part was checked with Twitch's own picker and autocomplete code on Android's runtime, not in the app, which needs an account to open the picker. \"Autocomplete without ':'\" suggests emotes (Twitch's and these) for a plain word of three letters or more, checked the same way. \"Favorite emotes\" adds a Favorites section to the picker: long-press an emote to add it, long-press a favorite to remove it; kept on the phone, checked the same way. Starts off. Turn it on in Lurk settings > Chat.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1280,10 +1352,10 @@
     }
   ],
   "patches_name": "Lurk",
-  "fingerprint": "e11a6d650531209eacb9a1eddb68668a0c08a8ef7f6d1ffbfd9e1aafa624de6c",
-  "release_notes": "## [1.16.1](https://github.com/jordanwoodson/lurk-morphe-patches/compare/v1.16.0...v1.16.1) (2026-11-05)\n\n### Rumble\n\n#### 🐛 Bug Fixes\n\n* target Rumble 3.21.0 again, which Morphe Manager can download ([8e9dd47](https://github.com/jordanwoodson/lurk-morphe-patches/commit/8e9dd4739a222898f3105332114228b8450a55a6))\n\n### Twitch\n\n#### 🐛 Bug Fixes\n\n* target Twitch 31.8.0 again, which Morphe Manager can download ([8eb02fc](https://github.com/jordanwoodson/lurk-morphe-patches/commit/8eb02fc0584a4c2fb6d794f2352370e526325db5))",
-  "release_tag": "v1.16.1",
-  "release_date": "2026-11-05T15:16:07Z",
+  "fingerprint": "4ffcf37aafb53c3cb8f221289dae22e678467e3e4e21f9d5ff74b23ffca0261d",
+  "release_notes": "## [1.17.0](https://github.com/jordanwoodson/lurk-morphe-patches/compare/v1.16.1...v1.17.0) (2026-11-15)\n\n### Kick\n\n#### ✨ New Features\n\n* add **Player gestures** ([90a5836](https://github.com/jordanwoodson/lurk-morphe-patches/commit/90a583655b548b1c483a91b6dd2bc475001a8c20))\n* add **Refresh stream** ([b796b0a](https://github.com/jordanwoodson/lurk-morphe-patches/commit/b796b0ac68bad616dcfbce7941f3a3881bac0cc2))\n* add **Third-party badges** with 7TV badges ([b65bbbe](https://github.com/jordanwoodson/lurk-morphe-patches/commit/b65bbbe20ddad05c204cf023324161c704d3f683))\n\n#### 🐛 Bug Fixes\n\n* **Third-party emotes:** load the channel's emotes, not only global ones ([17fe3ee](https://github.com/jordanwoodson/lurk-morphe-patches/commit/17fe3ee86fd0e520b70bc63d6cc4ef1b4f66ea9f))\n\n### Rumble\n\n#### ✨ New Features\n\n* add **Anonymous chat** ([cc9791d](https://github.com/jordanwoodson/lurk-morphe-patches/commit/cc9791d38b532e710644633200b845cda52daf47))\n* add **Show video stats** ([d9cb53b](https://github.com/jordanwoodson/lurk-morphe-patches/commit/d9cb53bd00ae6827b633f2685a11b9646b13ac79))\n\n### Twitch\n\n#### ✨ New Features\n\n* add **Block update prompts** ([889d008](https://github.com/jordanwoodson/lurk-morphe-patches/commit/889d0084e3e7aeef797fbc8e4cbaa7058a1d877c))\n* add **Don't save searches** ([4c6884d](https://github.com/jordanwoodson/lurk-morphe-patches/commit/4c6884d402a11d3fd8d5c5dea9bee5397e0e245d))\n* add Favorite emotes to the emote picker ([c997c49](https://github.com/jordanwoodson/lurk-morphe-patches/commit/c997c4967e22fe132ee43e8eb4bf32fd083db5e5))\n* add **Show exact counts** ([46fa390](https://github.com/jordanwoodson/lurk-morphe-patches/commit/46fa3903a82565d625b5e50ec43fa0546e230649))\n* hide offline channels and recent streams on the React Native Home ([7603000](https://github.com/jordanwoodson/lurk-morphe-patches/commit/7603000ee4e808ee9321ebc323a8f1dc18347898))\n* highlight chosen users and roles in **Chat keywords** ([d26ff83](https://github.com/jordanwoodson/lurk-morphe-patches/commit/d26ff8315a889b78b8cbf99ad127c4175472c58f))\n* suggest emotes while typing, without ':' first ([696ca6d](https://github.com/jordanwoodson/lurk-morphe-patches/commit/696ca6dbc505f4500ca4aea86775f5f8af4ece01))\n\n#### 🐛 Bug Fixes\n\n* keep **third-party emotes** loaded instead of downloading them again ([386e6c9](https://github.com/jordanwoodson/lurk-morphe-patches/commit/386e6c98e85c1fdfb0367276b7afa73362df3831))\n* open on Following in the **tablet layout** too ([3d8ef51](https://github.com/jordanwoodson/lurk-morphe-patches/commit/3d8ef511efc0b6afc016b8356b0784f0a3e22a7e))\n* Sleep timer now pauses streams played with **Force ExoPlayer** ([33c7e33](https://github.com/jordanwoodson/lurk-morphe-patches/commit/33c7e33ce08c1c3e0a329de7ab45b7e30c831a82))\n\n### Shared\n\n#### 🐛 Bug Fixes\n\n* open Lurk settings in installs whose manifest lacks its activity ([65e8571](https://github.com/jordanwoodson/lurk-morphe-patches/commit/65e857116366d02f480213da381b0663e9af8a4d))",
+  "release_tag": "v1.17.0",
+  "release_date": "2026-11-15T22:11:19Z",
   "isPreRelease": false,
   "stars": 16,
   "avatarUrl": "https://avatars.githubusercontent.com/u/64621053?v=4",
