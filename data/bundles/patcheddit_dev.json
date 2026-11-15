@@ -2,9 +2,9 @@
   "bundle": "patcheddit",
   "channel": "dev",
   "repo_url": "https://github.com/wchill/patcheddit",
-  "created_at": "2026-11-13T16:17:44",
-  "version": "2.1.1",
-  "description": "## [2.1.1](https://github.com/wchill/patcheddit/compare/v2.1.0...v2.1.1) (2026-11-13)\n\n\n### Bug Fixes\n\n* Crash in Boost settings menu ([4457af9](https://github.com/wchill/patcheddit/commit/4457af93dcfb13c8a78cb2d8500524596f523f8b))",
+  "created_at": "2026-11-15T05:52:54",
+  "version": "2.2.0",
+  "description": "# [2.2.0](https://github.com/wchill/patcheddit/compare/v2.1.1...v2.2.0) (2026-11-15)\n\n\n### Bug Fixes\n\n* **relay:** Relay Pro crashing on startup ([1c94b7e](https://github.com/wchill/patcheddit/commit/1c94b7ec72073e9a439c3f4cd86f8c675943aeff))\n* **rif:** Imgur albums now properly load in the built-in viewer and thumbnails work ([f219ebe](https://github.com/wchill/patcheddit/commit/f219ebe17b7485e3c3d8bde3d758d53556031666))\n* **rif:** Redgifs native playback ([0ef22e8](https://github.com/wchill/patcheddit/commit/0ef22e8ac7a1001a5b5009e4ae2fee0020e9ea5c))\n\n\n### Features\n\n* **boost:** Boost 1.14.4 support ([5538c39](https://github.com/wchill/patcheddit/commit/5538c39d2b32b92bf6dfb44430d6c3e03ac52dcb))",
   "apps": [
     {
       "app_name": "Reddit",
@@ -29,6 +29,15 @@
           ]
         },
         {
+          "name": "Fix Redgifs API",
+          "description": "Restores native Redgifs playback and handles unavailable videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
           "name": "Fix loading more comments",
           "description": "Fixes 403 error when loading child comments.",
           "use": true,
@@ -88,7 +97,7 @@
         },
         {
           "name": "Use public imgur API",
-          "description": "Fix imgur albums not loading.",
+          "description": "Fixes Imgur album and gallery loading, thumbnails, and links with titles.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -112,6 +121,15 @@
           ]
         },
         {
+          "name": "Fix Redgifs API",
+          "description": "Restores native Redgifs playback and handles unavailable videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
           "name": "Fix loading more comments",
           "description": "Fixes 403 error when loading child comments.",
           "use": true,
@@ -171,7 +189,7 @@
         },
         {
           "name": "Use public imgur API",
-          "description": "Fix imgur albums not loading.",
+          "description": "Fixes Imgur album and gallery loading, thumbnails, and links with titles.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -314,214 +332,6 @@
           "compatible_versions": [
             "v23.06.30-13:39"
           ]
-        }
-      ],
-      "developer": "com.laurencedawson"
-    },
-    {
-      "app_name": "Sync for Reddit Dev",
-      "package": "com.laurencedawson.reddit_sync.dev",
-      "patches": [
-        {
-          "name": "Disable Sync for Lemmy bottom sheet",
-          "description": "Disables the bottom sheet at the startup that asks you to signup to \"Sync for Lemmy\".",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix /s/ links",
-          "description": "Opens Reddit share links (/s/) by resolving them to the post they point to.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Reddit API lookups",
-          "description": "Fixes blocked post, comment, and community info requests.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Redgifs API",
-          "description": "Fetches a fresh Redgifs API token so Redgifs videos load.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix loading more comments",
-          "description": "Fixes 403 error when loading child comments.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix post thumbnails",
-          "description": "Fixes loading post thumbnails by correcting their URLs.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix video downloads",
-          "description": "Fixes a bug in Sync's MPD parser resulting in only the audio-track being saved.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Log exceptions",
-          "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Modify login WebView",
-          "description": "Adjusts the Reddit login page to prevent sign-in problems.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Spoof client",
-          "description": "Restores functionality of the app by using custom client ID.",
-          "use": true,
-          "options": [
-            {
-              "key": "client-id",
-              "description": "The Reddit OAuth client ID. Leave empty to use the RedReader 1.27 default. Custom values must contain exactly 22 letters, digits, underscores or hyphens."
-            },
-            {
-              "key": "redirect-uri",
-              "description": "The Reddit OAuth redirect URI. Refer to Patcheddit documentation for more information on what to put here. Default value is RedReader 1.27's redirect URI."
-            },
-            {
-              "key": "user-agent",
-              "description": "The app's user agent. Refer to Patcheddit documentation for more information on what to put here. Default value is RedReader 1.27's user agent."
-            }
-          ],
-          "compatible_versions": []
-        },
-        {
-          "name": "Sync Morphe settings",
-          "description": "Adds a Morphe settings menu for included patches, with exception and fatal crash log viewers.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Use /user/ endpoint",
-          "description": "Replaces the deprecated endpoint for viewing user profiles /u with /user, that used to fix a bug.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        }
-      ],
-      "developer": "com.laurencedawson"
-    },
-    {
-      "app_name": "Sync for Reddit Pro",
-      "package": "com.laurencedawson.reddit_sync.pro",
-      "patches": [
-        {
-          "name": "Disable Sync for Lemmy bottom sheet",
-          "description": "Disables the bottom sheet at the startup that asks you to signup to \"Sync for Lemmy\".",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix /s/ links",
-          "description": "Opens Reddit share links (/s/) by resolving them to the post they point to.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Reddit API lookups",
-          "description": "Fixes blocked post, comment, and community info requests.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix Redgifs API",
-          "description": "Fetches a fresh Redgifs API token so Redgifs videos load.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix loading more comments",
-          "description": "Fixes 403 error when loading child comments.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix post thumbnails",
-          "description": "Fixes loading post thumbnails by correcting their URLs.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Fix video downloads",
-          "description": "Fixes a bug in Sync's MPD parser resulting in only the audio-track being saved.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Log exceptions",
-          "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Modify login WebView",
-          "description": "Adjusts the Reddit login page to prevent sign-in problems.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Spoof client",
-          "description": "Restores functionality of the app by using custom client ID.",
-          "use": true,
-          "options": [
-            {
-              "key": "client-id",
-              "description": "The Reddit OAuth client ID. Leave empty to use the RedReader 1.27 default. Custom values must contain exactly 22 letters, digits, underscores or hyphens."
-            },
-            {
-              "key": "redirect-uri",
-              "description": "The Reddit OAuth redirect URI. Refer to Patcheddit documentation for more information on what to put here. Default value is RedReader 1.27's redirect URI."
-            },
-            {
-              "key": "user-agent",
-              "description": "The app's user agent. Refer to Patcheddit documentation for more information on what to put here. Default value is RedReader 1.27's user agent."
-            }
-          ],
-          "compatible_versions": []
-        },
-        {
-          "name": "Sync Morphe settings",
-          "description": "Adds a Morphe settings menu for included patches, with exception and fatal crash log viewers.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
-        },
-        {
-          "name": "Use /user/ endpoint",
-          "description": "Replaces the deprecated endpoint for viewing user profiles /u with /user, that used to fix a bug.",
-          "use": true,
-          "options": [],
-          "compatible_versions": []
         }
       ],
       "developer": "com.laurencedawson"
@@ -702,7 +512,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -711,7 +521,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -720,7 +530,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -729,7 +539,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -738,7 +548,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -747,7 +557,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -756,7 +566,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -765,7 +575,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -774,7 +584,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -783,7 +593,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -792,7 +602,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -801,7 +611,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -810,7 +620,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -819,7 +629,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -828,16 +638,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
-          ]
-        },
-        {
-          "name": "Fix Boost image widget click target",
-          "description": "Makes the image widget open the post it shows instead of an older one.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -846,7 +647,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -855,7 +656,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -864,7 +665,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -873,7 +674,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -882,7 +683,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -891,7 +692,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -900,7 +701,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -909,7 +710,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -918,7 +719,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -927,7 +728,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -936,7 +737,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -945,7 +746,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -954,7 +755,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -963,7 +764,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -972,7 +773,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -994,7 +795,7 @@
             }
           ],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1003,7 +804,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1012,7 +813,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1021,7 +822,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1030,7 +831,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1039,7 +840,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1048,7 +849,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1057,7 +858,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         },
         {
@@ -1066,7 +867,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.14.3"
+            "1.14.4"
           ]
         }
       ],
@@ -1605,10 +1406,10 @@
     }
   ],
   "patches_name": "Patcheddit",
-  "fingerprint": "4b2e157b19d13b1528d972f502078e9fa69b23ccc27b14a42ba6d46f3efabb2e",
-  "release_notes": "# [2.1.0](https://github.com/wchill/patcheddit/compare/v2.0.3...v2.1.0) (2026-11-07)\n\n\n### Bug Fixes\n\n* **fix-generic-signature-rewrite:** rewrite classes whose only OkHttp references are in generic signatures ([c933ec6](https://github.com/wchill/patcheddit/commit/c933ec694feebc57a349eba40394051fcdb8f888))\n* **relay-inapp-slinks:** hook the post and comment view's own link handler ([0e9665d](https://github.com/wchill/patcheddit/commit/0e9665d25f2297e707cd9efad7085bc71a0b5a01))\n* **relay-inapp-slinks:** open /s/ bypass fallback in Relay's real WebView ([02341ba](https://github.com/wchill/patcheddit/commit/02341ba8c8fe8e64d26e11a9d4a0dffe5d379c9a))\n* Remove redundant patches for Boost 1.14.2 ([8444cff](https://github.com/wchill/patcheddit/commit/8444cff4dd768aa0e36aa605d99c908caa2cceaf))\n\n\n### Features\n\n* Add Morphe settings menu to all supported apps ([16a7e4c](https://github.com/wchill/patcheddit/commit/16a7e4c6b5e808578cbcd4694e85fea1b9cfd1a8))\n* Add patch settings toggles for every app in Morphe settings ([a0b8243](https://github.com/wchill/patcheddit/commit/a0b82432653dde38050c7277f99d7bf6e9f47074))\n* Boost 1.14.2 support ([fdc340f](https://github.com/wchill/patcheddit/commit/fdc340f21748d5372f665067c5db54a24f324cb5))\n* **relay-inapp-slinks:** hook Relay's in-app link handler for /s/ links ([9c36290](https://github.com/wchill/patcheddit/commit/9c36290987cbc94732466c6954139c697421d342))\n* Update Boost support to 1.14.3 ([20797d6](https://github.com/wchill/patcheddit/commit/20797d6c66f0830e5781d8d5009693719ee61d54))\n\n\n\n",
-  "release_tag": "v2.1.0",
-  "release_date": "2026-11-07T15:12:43Z",
+  "fingerprint": "a733c4a04f725655045f20dea0b13a78e28fe478349737ac6cb4ef3f11e9e62a",
+  "release_notes": "# [2.2.0](https://github.com/wchill/patcheddit/compare/v2.1.1...v2.2.0) (2026-11-15)\n\n\n### Bug Fixes\n\n* **relay:** Relay Pro crashing on startup ([1c94b7e](https://github.com/wchill/patcheddit/commit/1c94b7ec72073e9a439c3f4cd86f8c675943aeff))\n* **rif:** Imgur albums now properly load in the built-in viewer and thumbnails work ([f219ebe](https://github.com/wchill/patcheddit/commit/f219ebe17b7485e3c3d8bde3d758d53556031666))\n* **rif:** Redgifs native playback ([0ef22e8](https://github.com/wchill/patcheddit/commit/0ef22e8ac7a1001a5b5009e4ae2fee0020e9ea5c))\n\n\n### Features\n\n* **boost:** Boost 1.14.4 support ([5538c39](https://github.com/wchill/patcheddit/commit/5538c39d2b32b92bf6dfb44430d6c3e03ac52dcb))\n\n\n\n",
+  "release_tag": "v2.2.0",
+  "release_date": "2026-11-15T05:53:34Z",
   "isPreRelease": false,
   "stars": 814,
   "avatarUrl": "https://avatars.githubusercontent.com/u/3746651?v=4",

@@ -2,9 +2,9 @@
   "bundle": "callmebeyonder",
   "channel": "latest",
   "repo_url": "https://github.com/callMeBeyonder/morphe-patches",
-  "created_at": "2026-11-13T06:30:47",
-  "version": "1.17.0",
-  "description": "## [1.17.0](https://github.com/callMeBeyonder/morphe-patches/compare/v1.16.0...v1.17.0) (2026-11-13)\n\n### ✨ New Features\n\n* **pushups100:** add premium unlock patch for 0-100 Pushups 5.3.3 ([6c2c24b](https://github.com/callMeBeyonder/morphe-patches/commit/6c2c24b5cb1067ec8248b2c8f58aa58e68cf599f))",
+  "created_at": "2026-11-15T15:33:29",
+  "version": "1.18.0",
+  "description": "## [1.18.0](https://github.com/callMeBeyonder/morphe-patches/compare/v1.17.0...v1.18.0) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **build:** migrate patches to morphe-patcher 2.1.0 ([537fd3a](https://github.com/callMeBeyonder/morphe-patches/commit/537fd3a7158f3293d726bd0c513a060dbe7e3c71))\n\n### ✨ New Features\n\n* **alphaprogression:** add Unlock Pro patch with PairIP depairip bypass ([adcd136](https://github.com/callMeBeyonder/morphe-patches/commit/adcd136672d0b060bcf38b652083348254004b11))\n* **movieboxtv:** restore adaptive quality and add seek step setting ([2009b53](https://github.com/callMeBeyonder/morphe-patches/commit/2009b532a11cf93bf897c381178767fae4e40bf4))",
   "apps": [
     {
       "app_name": "Jump Rope Training | Crossrope",
@@ -21,6 +21,31 @@
         }
       ],
       "developer": "Crossrope LLC"
+    },
+    {
+      "app_name": "Alpha Progression Gym Tracker",
+      "package": "com.alphaprogression.alphaprogression",
+      "patches": [
+        {
+          "name": "Bypass PairIP checks",
+          "description": "Disables PairIP's native VM, signature check and Play licence verdicts so a re-signed build does not open the Play Store listing or crash, and restores the VM-relocated string literals captured from the genuine build. Experimental: three VM-virtualized receiver/background methods fall back to default return values.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.7.1"
+          ]
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks all Pro features by forcing the web app's own client-side subscription gate (`proVersion.isActive` and the `pro-version` body class) to active. RevenueCat, Play Billing and the account's real server-side entitlement are left untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.7.1"
+          ]
+        }
+      ],
+      "developer": "com.alphaprogression"
     },
     {
       "app_name": "Boostcamp: Workout Programs",
@@ -101,6 +126,63 @@
         }
       ],
       "developer": "Zen Labs Fitness"
+    },
+    {
+      "app_name": "MovieBox TV",
+      "package": "com.community.mbox.tv",
+      "patches": [
+        {
+          "name": "Custom seek step",
+          "description": "Lets the seek distance of the player's left/right keys be set inside the app. Applies to the D-pad and to the media rewind/fast-forward keys, and adds \"Seek 30s/1m/5m/10m/30m\" choices to the SPEED tab of the player settings panel.",
+          "use": true,
+          "options": [
+            {
+              "key": "seekStepSeconds",
+              "description": "Used until a step is chosen in the player settings panel. Default 300 (5 minutes), allowed 1-3600."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.3.1113.03"
+          ]
+        },
+        {
+          "name": "Disable forced update",
+          "description": "Hides the blocking update dialog and the update prompt.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2.3.1113.03"
+          ]
+        },
+        {
+          "name": "Prefer highest resolution",
+          "description": "Starts playback at the best available resolution instead of the built-in 480p default. An explicit choice in the settings panel still takes precedence.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2.3.1113.03"
+          ]
+        },
+        {
+          "name": "Serve requested resolution",
+          "description": "Uses the signed DASH streams of the mobile play-info endpoint, so 480p/720p/1080p/4K actually select a real video track instead of reloading the same low-res MP4. Falls back to the TV streams when the mobile ladder is unavailable or lower.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2.3.1113.03"
+          ]
+        },
+        {
+          "name": "Unlock VIP",
+          "description": "Reports the account as VIP, clears the per-title VIP locks and removes the visitor region block.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.2.3.1113.03"
+          ]
+        }
+      ],
+      "developer": "com.community"
     },
     {
       "app_name": "Sportsnet (Android TV)",
@@ -297,29 +379,13 @@
         }
       ],
       "developer": "StrongLifts"
-    },
-    {
-      "app_name": "0-100 Pushups Trainer",
-      "package": "com.zenlabs.challenge.pushups",
-      "patches": [
-        {
-          "name": "Unlock Premium",
-          "description": "Reports an active Zen Unlimited Pass: unlocks the Fitness Plans, the Zen music player and the Settings Unsubscribe entry, and removes the home banner ad and promo item. Billing is untouched.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.3.3"
-          ]
-        }
-      ],
-      "developer": "Zen Labs Fitness"
     }
   ],
   "patches_name": "Beyonder Morphe Patches",
-  "fingerprint": "85c03794c9ba270014b9e82d55d3ccc66cc496c83566ce15e474a3343deee6a6",
-  "release_notes": "## [1.17.0](https://github.com/callMeBeyonder/morphe-patches/compare/v1.16.0...v1.17.0) (2026-11-13)\n\n### ✨ New Features\n\n* **pushups100:** add premium unlock patch for 0-100 Pushups 5.3.3 ([6c2c24b](https://github.com/callMeBeyonder/morphe-patches/commit/6c2c24b5cb1067ec8248b2c8f58aa58e68cf599f))\n",
-  "release_tag": "v1.17.0",
-  "release_date": "2026-11-13T06:31:43Z",
+  "fingerprint": "528c9bd7eead2ff825034cb649b9895bacbd6008f290bc4b3b1534b8baa52a78",
+  "release_notes": "## [1.18.0](https://github.com/callMeBeyonder/morphe-patches/compare/v1.17.0...v1.18.0) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **build:** migrate patches to morphe-patcher 2.1.0 ([537fd3a](https://github.com/callMeBeyonder/morphe-patches/commit/537fd3a7158f3293d726bd0c513a060dbe7e3c71))\n\n### ✨ New Features\n\n* **alphaprogression:** add Unlock Pro patch with PairIP depairip bypass ([adcd136](https://github.com/callMeBeyonder/morphe-patches/commit/adcd136672d0b060bcf38b652083348254004b11))\n* **movieboxtv:** restore adaptive quality and add seek step setting ([2009b53](https://github.com/callMeBeyonder/morphe-patches/commit/2009b532a11cf93bf897c381178767fae4e40bf4))\n",
+  "release_tag": "v1.18.0",
+  "release_date": "2026-11-15T15:34:39Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/56964754?v=4",

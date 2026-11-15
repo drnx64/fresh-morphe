@@ -2,9 +2,9 @@
   "bundle": "braydog2010",
   "channel": "dev",
   "repo_url": "https://github.com/BrayDog2010/morphe-patches",
-  "created_at": "2026-11-03T19:51:10",
-  "version": "1.0.0-dev.14",
-  "description": "## [1.0.0-dev.14](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2026-11-03)\n\n### ✨ New Features\n\n* **spotify:** add ad request blocking ([204c009](https://github.com/BrayDog2010/morphe-patches/commit/204c009ae126ed851f09f508311478afb780a5f0))\n* **spotify:** add custom lyrics providers ([3e79d49](https://github.com/BrayDog2010/morphe-patches/commit/3e79d498f38d8049447e84ba09b6e0a4e10c60df))\n\n### 🐛 Bug Fixes\n\n* **spotify:** fix widgets, sharing links and Facebook login on 9.1.94 ([da2bd5e](https://github.com/BrayDog2010/morphe-patches/commit/da2bd5e79dcb6263db6efa9ec94afea13ac6bbab))\n* **Spotify:** fixed spoof device integrity ([9754fc4](https://github.com/BrayDog2010/morphe-patches/commit/9754fc4295abd400c681901a49600324a1695e42))\n\n### 🚀 Updated App Support\n\n* **spotify:** added experimental support for 9.1.94.1929 ([900db33](https://github.com/BrayDog2010/morphe-patches/commit/900db339b015c19fc808f8286871154686a50988))",
+  "created_at": "2026-11-15T07:02:45",
+  "version": "1.0.0-dev.17",
+  "description": "## [1.0.0-dev.17](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.16...v1.0.0-dev.17) (2026-11-15)\n\n### ✨ New Features\n\n* **diagnostics:** add bounded GC policy trial and complete error reports ([0422f2a](https://github.com/BrayDog2010/morphe-patches/commit/0422f2a2da7c52b6de14ab3911cafa8333e12366))\n* **diagnostics:** add bounded issue 215 control comparisons ([b26c7df](https://github.com/BrayDog2010/morphe-patches/commit/b26c7df20ea179a86d701c2d17f4fa5e3bf43c02))\n* **Diagnostics:** add opt-in soft-reference compatibility trial ([55366ed](https://github.com/BrayDog2010/morphe-patches/commit/55366edf6160e39d7cac96af16a723f57edf0f95))\n* **Diagnostics:** record the minutes before a recovery-trial freeze ([ef15b24](https://github.com/BrayDog2010/morphe-patches/commit/ef15b2467c64addea80bfe8139282c834affac21))\n\n### 🐛 Bug Fixes\n\n* **comments:** cancel stale text animations when rows are rebound ([3b01171](https://github.com/BrayDog2010/morphe-patches/commit/3b011710e4ba4c3f392bc259962d0305b5ca467a))\n* **Diagnostics:** recognise native ANR recovery traces ([305fc64](https://github.com/BrayDog2010/morphe-patches/commit/305fc64527777baa3ff7a46f498c2bcef215eee4))",
   "apps": [
     {
       "app_name": "Venabox Hub - Ani Planet",
@@ -34,15 +34,6 @@
       "app_name": "Spotify: Music and Podcasts",
       "package": "com.spotify.music",
       "patches": [
-        {
-          "name": "Block ad requests",
-          "description": "Blocks Spotify's ad, ad-logic, upsell and marketing message requests, and requests to ad and tracking hosts.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.1.94.1929"
-          ]
-        },
         {
           "name": "Custom Lyrics Providers",
           "description": "Replaces the lyrics Spotify returns with synced lyrics from LRCLIB, falling back to Musixmatch when LRCLIB has none.",
@@ -463,7 +454,20 @@
           "name": "Diagnostic tools",
           "description": "Adds logs and reports you can save or share when something goes wrong, so a problem is easier to report and fix. Starts off. Turn it on in the patch settings > Diagnostics.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "recoveryTrial",
+              "description": "Requested trials on Android 11 or later only: captures failures from up to three process starts in 30 minutes. Reopen after a freeze to save a report in Downloads/Morphe. Re-patching starts a fresh trial. No uploads or other settings changes. Leave off for normal use."
+            },
+            {
+              "key": "softReferenceTrial",
+              "description": "Requested TikTok 47.4.3 global trial only. Disables one cache optimization and enables the automatic recovery report trial. May change cache performance. Leave off for normal use."
+            },
+            {
+              "key": "controlArm",
+              "description": "Requested 47.4.3 global trials only. Records bounded GC-tuning observations and automatic reports. The label does not select patches: use the supplied selection. GC policy mode suppresses three tuning mechanisms. Leave off normally."
+            }
+          ],
           "compatible_versions": [
             "47.6.3",
             "47.6.2",
@@ -1673,10 +1677,10 @@
     }
   ],
   "patches_name": "BrayDog2010 Patches",
-  "fingerprint": "0073d35fbe76ff6ba4cea448fd5a7e65364492fee75b406f3ebcd2ca85c97814",
-  "release_notes": "## [1.0.0-dev.14](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2026-11-03)\n\n### ✨ New Features\n\n* **spotify:** add ad request blocking ([204c009](https://github.com/BrayDog2010/morphe-patches/commit/204c009ae126ed851f09f508311478afb780a5f0))\n* **spotify:** add custom lyrics providers ([3e79d49](https://github.com/BrayDog2010/morphe-patches/commit/3e79d498f38d8049447e84ba09b6e0a4e10c60df))\n\n### 🐛 Bug Fixes\n\n* **spotify:** fix widgets, sharing links and Facebook login on 9.1.94 ([da2bd5e](https://github.com/BrayDog2010/morphe-patches/commit/da2bd5e79dcb6263db6efa9ec94afea13ac6bbab))\n* **Spotify:** fixed spoof device integrity ([9754fc4](https://github.com/BrayDog2010/morphe-patches/commit/9754fc4295abd400c681901a49600324a1695e42))\n\n### 🚀 Updated App Support\n\n* **spotify:** added experimental support for 9.1.94.1929 ([900db33](https://github.com/BrayDog2010/morphe-patches/commit/900db339b015c19fc808f8286871154686a50988))\n",
-  "release_tag": "v1.0.0-dev.14",
-  "release_date": "2026-11-03T19:53:54Z",
+  "fingerprint": "e548a314abc4e94dcdad4b6efbb784fe3b7447b812062e46371031e6edcc9794",
+  "release_notes": "## [1.0.0-dev.17](https://github.com/BrayDog2010/morphe-patches/compare/v1.0.0-dev.16...v1.0.0-dev.17) (2026-11-15)\n\n### ✨ New Features\n\n* **diagnostics:** add bounded GC policy trial and complete error reports ([0422f2a](https://github.com/BrayDog2010/morphe-patches/commit/0422f2a2da7c52b6de14ab3911cafa8333e12366))\n* **diagnostics:** add bounded issue 215 control comparisons ([b26c7df](https://github.com/BrayDog2010/morphe-patches/commit/b26c7df20ea179a86d701c2d17f4fa5e3bf43c02))\n* **Diagnostics:** add opt-in soft-reference compatibility trial ([55366ed](https://github.com/BrayDog2010/morphe-patches/commit/55366edf6160e39d7cac96af16a723f57edf0f95))\n* **Diagnostics:** record the minutes before a recovery-trial freeze ([ef15b24](https://github.com/BrayDog2010/morphe-patches/commit/ef15b2467c64addea80bfe8139282c834affac21))\n\n### 🐛 Bug Fixes\n\n* **comments:** cancel stale text animations when rows are rebound ([3b01171](https://github.com/BrayDog2010/morphe-patches/commit/3b011710e4ba4c3f392bc259962d0305b5ca467a))\n* **Diagnostics:** recognise native ANR recovery traces ([305fc64](https://github.com/BrayDog2010/morphe-patches/commit/305fc64527777baa3ff7a46f498c2bcef215eee4))\n",
+  "release_tag": "v1.0.0-dev.17",
+  "release_date": "2026-11-15T07:04:32Z",
   "isPreRelease": true,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/113742627?v=4",

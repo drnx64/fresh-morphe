@@ -2,9 +2,9 @@
   "bundle": "andrewliang25",
   "channel": "dev",
   "repo_url": "https://github.com/andrewliang25/morphe-patches",
-  "created_at": "2026-11-07T14:25:11",
-  "version": "3.11.0",
-  "description": "## [3.11.0](https://github.com/andrewliang25/morphe-patches/compare/v3.10.0...v3.11.0) (2026-11-07)\n\n### ✨ New Features\n\n* **Facebook - AMOLED black theme:** add a switch and turn it on by default ([ea1cae9](https://github.com/andrewliang25/morphe-patches/commit/ea1cae9fe8e1af0ec63485c511001f36140032f3))\n* **Facebook:** turn on three Stories and Reels patches by default ([17040df](https://github.com/andrewliang25/morphe-patches/commit/17040dfceff3eb4815a31e67533bce13bb7a9e8b))\n* **LINE - Restore biometric login:** turn it on by default ([9065851](https://github.com/andrewliang25/morphe-patches/commit/90658514fd5f20f536cc4471f1ce7bc8ee7213a2))",
+  "created_at": "2026-11-15T15:50:03",
+  "version": "3.12.0",
+  "description": "## [3.12.0](https://github.com/andrewliang25/morphe-patches/compare/v3.11.0...v3.12.0) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **LINE:** list the call recording patches for 26.16.0 only ([#238](https://github.com/andrewliang25/morphe-patches/issues/238)) ([9d3ea0f](https://github.com/andrewliang25/morphe-patches/commit/9d3ea0f2cf46ea03321d1216dd7fc5cb26cee0cf))\n\n### ✨ New Features\n\n* **LINE - Enable themes on sub devices:** use themes and the Black theme on a sub device ([#232](https://github.com/andrewliang25/morphe-patches/issues/232)) ([c77279a](https://github.com/andrewliang25/morphe-patches/commit/c77279aca3ba378bc68fc8303d4227faf1f38b39)), closes [#221](https://github.com/andrewliang25/morphe-patches/issues/221)\n* **LINE - Hide Agent i buttons:** hide Agent i in Wallet, Settings and the + menu, and add a switch ([#229](https://github.com/andrewliang25/morphe-patches/issues/229)) ([496c8d2](https://github.com/andrewliang25/morphe-patches/commit/496c8d26a6c310cc24120236ec698cf592924c14))\n* **LINE - Hide LINE AI image editing:** hide the AI Edit buttons ([#227](https://github.com/andrewliang25/morphe-patches/issues/227)) ([8ddac22](https://github.com/andrewliang25/morphe-patches/commit/8ddac22932b91daed19028b4b6e3d686e465e391))\n* **LINE - Remove recording time limit:** record calls until they end ([#237](https://github.com/andrewliang25/morphe-patches/issues/237)) ([f9046a3](https://github.com/andrewliang25/morphe-patches/commit/f9046a37ba630d27a4519e71d11c1f3adb383f23))\n* **LINE - Restore Google login via MicroG-RE:** send Google sign-in to MicroG-RE ([#228](https://github.com/andrewliang25/morphe-patches/issues/228)) ([c678898](https://github.com/andrewliang25/morphe-patches/commit/c6788985a48f6633cd963890bcbc9a90ad3116a5))\n* **LINE - Save recordings to device:** save call recordings to the phone instead of Keep Memo ([#236](https://github.com/andrewliang25/morphe-patches/issues/236)) ([977a46b](https://github.com/andrewliang25/morphe-patches/commit/977a46b1d5750f62fc254dbd62f81e3f2183f65d))\n* **LINE:** add call recording with auto-record and silent-record switches ([#235](https://github.com/andrewliang25/morphe-patches/issues/235)) ([4f8b46c](https://github.com/andrewliang25/morphe-patches/commit/4f8b46c9b551dfc3f4004154804529eaffdabdfe))",
   "apps": [
     {
       "app_name": "Facebook",
@@ -230,6 +230,42 @@
           ]
         },
         {
+          "name": "[Call] Auto-record calls",
+          "description": "Starts recording a 1-to-1 LINE call as soon as it connects. LINE saves the recording. Recording a call without the other person's consent is illegal in some places. You are responsible for following the law where you are.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0"
+          ]
+        },
+        {
+          "name": "[Call] Record calls without notifying",
+          "description": "Records a 1-to-1 LINE call without telling the other party: no on-screen banner and no spoken recording announcement. Recording a call without the other person's consent is illegal in some places. You are responsible for following the law where you are.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0"
+          ]
+        },
+        {
+          "name": "[Call] Remove recording time limit",
+          "description": "Records a call until it ends. LINE stops voice recordings after 60 minutes and video recordings after 20 or 50 minutes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0"
+          ]
+        },
+        {
+          "name": "[Call] Save recordings to device",
+          "description": "Saves each call recording to the Movies/LINE folder on your phone instead of sharing it to Keep Memo, which refuses files over 1 GB.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.16.0"
+          ]
+        },
+        {
           "name": "[Chat] Hide AI Friends button",
           "description": "Removes the AI Friends button from the Chats tab header. The Album button shows in its place.",
           "use": true,
@@ -340,6 +376,17 @@
           ]
         },
         {
+          "name": "[Fix] Restore Google login via MicroG-RE",
+          "description": "Makes \"Continue with Google\" work on a re-signed build, through MicroG-RE. Root Mount does not need it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.14.0",
+            "26.15.1",
+            "26.16.0"
+          ]
+        },
+        {
           "name": "[Fix] Restore biometric login",
           "description": "Biometric login can be linked again on a re-signed build. A Root Mount install does not need this patch.",
           "use": true,
@@ -417,8 +464,30 @@
           ]
         },
         {
+          "name": "[General] Enable themes on sub devices",
+          "description": "Lets a sub device (a tablet or second phone logged in to the same account) use themes and the Black theme in dark mode. Hides the Theme Shop button there, because LINE does not open the shop on a sub device.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.14.0",
+            "26.15.1",
+            "26.16.0"
+          ]
+        },
+        {
           "name": "[General] Hide Agent i buttons",
-          "description": "Removes the Agent i button from the Home header and from the search bar, and hides Agent i in chats permanently.",
+          "description": "Removes Agent i from the Home header, the search bar, the Wallet tab header and Settings, and hides Agent i in chats permanently, with its \"Show Agent i in chat\" switch in the + menu.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.14.0",
+            "26.15.1",
+            "26.16.0"
+          ]
+        },
+        {
+          "name": "[General] Hide LINE AI image editing",
+          "description": "Removes the LINE AI image editing buttons: \"AI Edit\" in the message long-press menu, the button next to an image message, and the button in the chat, album, Note and profile photo viewers. The normal photo editor stays.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -564,11 +633,11 @@
     }
   ],
   "patches_name": "Andrew's Patches",
-  "fingerprint": "fab1193419454981ef757bbd9a69148733ac8824a3a7c45132a9dd19a4309fd9",
-  "release_notes": "## [3.11.0-dev.1](https://github.com/andrewliang25/morphe-patches/compare/v3.10.0...v3.11.0-dev.1) (2026-11-04)\n\n### ✨ New Features\n\n* **Facebook - AMOLED black theme:** add a switch and turn it on by default ([ea1cae9](https://github.com/andrewliang25/morphe-patches/commit/ea1cae9fe8e1af0ec63485c511001f36140032f3))\n* **Facebook:** turn on three Stories and Reels patches by default ([17040df](https://github.com/andrewliang25/morphe-patches/commit/17040dfceff3eb4815a31e67533bce13bb7a9e8b))\n* **LINE - Restore biometric login:** turn it on by default ([9065851](https://github.com/andrewliang25/morphe-patches/commit/90658514fd5f20f536cc4471f1ce7bc8ee7213a2))\n",
-  "release_tag": "v3.11.0-dev.1",
-  "release_date": "2026-11-04T03:06:22Z",
-  "isPreRelease": true,
+  "fingerprint": "623178b5a08718124707eb5ce75095f8ee71ae243e0ff6dd95d3309d25a9a2c8",
+  "release_notes": "## [3.12.0](https://github.com/andrewliang25/morphe-patches/compare/v3.11.0...v3.12.0) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **LINE:** list the call recording patches for 26.16.0 only ([#238](https://github.com/andrewliang25/morphe-patches/issues/238)) ([9d3ea0f](https://github.com/andrewliang25/morphe-patches/commit/9d3ea0f2cf46ea03321d1216dd7fc5cb26cee0cf))\n\n### ✨ New Features\n\n* **LINE - Enable themes on sub devices:** use themes and the Black theme on a sub device ([#232](https://github.com/andrewliang25/morphe-patches/issues/232)) ([c77279a](https://github.com/andrewliang25/morphe-patches/commit/c77279aca3ba378bc68fc8303d4227faf1f38b39)), closes [#221](https://github.com/andrewliang25/morphe-patches/issues/221)\n* **LINE - Hide Agent i buttons:** hide Agent i in Wallet, Settings and the + menu, and add a switch ([#229](https://github.com/andrewliang25/morphe-patches/issues/229)) ([496c8d2](https://github.com/andrewliang25/morphe-patches/commit/496c8d26a6c310cc24120236ec698cf592924c14))\n* **LINE - Hide LINE AI image editing:** hide the AI Edit buttons ([#227](https://github.com/andrewliang25/morphe-patches/issues/227)) ([8ddac22](https://github.com/andrewliang25/morphe-patches/commit/8ddac22932b91daed19028b4b6e3d686e465e391))\n* **LINE - Remove recording time limit:** record calls until they end ([#237](https://github.com/andrewliang25/morphe-patches/issues/237)) ([f9046a3](https://github.com/andrewliang25/morphe-patches/commit/f9046a37ba630d27a4519e71d11c1f3adb383f23))\n* **LINE - Restore Google login via MicroG-RE:** send Google sign-in to MicroG-RE ([#228](https://github.com/andrewliang25/morphe-patches/issues/228)) ([c678898](https://github.com/andrewliang25/morphe-patches/commit/c6788985a48f6633cd963890bcbc9a90ad3116a5))\n* **LINE - Save recordings to device:** save call recordings to the phone instead of Keep Memo ([#236](https://github.com/andrewliang25/morphe-patches/issues/236)) ([977a46b](https://github.com/andrewliang25/morphe-patches/commit/977a46b1d5750f62fc254dbd62f81e3f2183f65d))\n* **LINE:** add call recording with auto-record and silent-record switches ([#235](https://github.com/andrewliang25/morphe-patches/issues/235)) ([4f8b46c](https://github.com/andrewliang25/morphe-patches/commit/4f8b46c9b551dfc3f4004154804529eaffdabdfe))\n",
+  "release_tag": "v3.12.0",
+  "release_date": "2026-11-15T15:50:54Z",
+  "isPreRelease": false,
   "stars": 136,
   "avatarUrl": "https://avatars.githubusercontent.com/u/47963624?v=4",
   "repoDescription": "Andrew's Patches",

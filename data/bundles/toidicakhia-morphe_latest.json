@@ -2,9 +2,9 @@
   "bundle": "toidicakhia-morphe",
   "channel": "latest",
   "repo_url": "https://github.com/toidicakhia/morphe-app-patches",
-  "created_at": "2026-11-13T11:08:10",
-  "version": "1.7.0",
-  "description": "## [1.7.0](https://github.com/toidicakhia/morphe-app-patches/compare/v1.6.0...v1.7.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* correct app icon colors and show app icons in README ([da698b3](https://github.com/toidicakhia/morphe-app-patches/commit/da698b30c6204ad53cdd68559258d25f6f564f29))\n\n### ✨ New Features\n\n* **devolutions:** add patches for Remote Desktop Manager 2026.3.1.5 ([128121c](https://github.com/toidicakhia/morphe-app-patches/commit/128121c1ae46415be8075b44b3236275d9085845))\n* **vtvgo:** add patches for VTVGo 12.11.05 ([8f49fe0](https://github.com/toidicakhia/morphe-app-patches/commit/8f49fe0a8e618e021892ee47e94661b43130c3a6))",
+  "created_at": "2026-11-15T04:18:44",
+  "version": "1.7.1",
+  "description": "## [1.7.1](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.0...v1.7.1) (2026-11-15)\n\n### 🚀 Updated App Support\n\n* **vtvgo:** update patches for VTVGo 12.11.13 ([5d60f23](https://github.com/toidicakhia/morphe-app-patches/commit/5d60f23ce6e991d2b67b6218214fa5f029db0c4a))",
   "apps": [
     {
       "app_name": "HTTP Sniffer",
@@ -96,9 +96,27 @@
           ]
         },
         {
+          "name": "Faster Startup",
+          "description": "Skips the Firebase Analytics connector, Crashlytics session tracking and the emoji-compat initializer that run on every launch. Crash reporting, push notifications and background jobs keep working; analytics and app-quality session data are not collected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.3.1.5"
+          ]
+        },
+        {
           "name": "Remove Ad ID Permissions",
           "description": "Removes the advertising ID, Privacy Sandbox ad-services and Play install-referrer permissions.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.3.1.5"
+          ]
+        },
+        {
+          "name": "Skip Age Verification",
+          "description": "Answers the Google Play age-signals request locally instead of waiting for the Play Store. The managed startup code blocks on that answer for up to two minutes, and the call never completes on sideloaded builds or devices without Play Services. Also skips the follow-up age-range query. Not selected by default: it disables the regional age gate.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "2026.3.1.5"
@@ -158,6 +176,22 @@
       "developer": "EZVIZ Inc."
     },
     {
+      "app_name": "Locket Widget",
+      "package": "com.locket.locket",
+      "patches": [
+        {
+          "name": "Unlock Locket Gold",
+          "description": "Makes the app treat the signed-in account as a Locket Gold subscriber, enabling the Gold-only feature gates and replacing the paywall with subscription management. Client-side only: features validated by Locket's servers still need a real subscription.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.247.1"
+          ]
+        }
+      ],
+      "developer": "com.locket"
+    },
+    {
       "app_name": "NetMonster",
       "package": "cz.mroczis.netmonster",
       "patches": [
@@ -183,7 +217,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.11.05"
+            "12.11.13"
           ]
         },
         {
@@ -192,7 +226,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.11.05"
+            "12.11.13"
           ]
         },
         {
@@ -201,7 +235,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.11.05"
+            "12.11.13"
           ]
         },
         {
@@ -210,7 +244,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.11.05"
+            "12.11.13"
           ]
         },
         {
@@ -219,7 +253,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "12.11.05"
+            "12.11.13"
           ]
         },
         {
@@ -228,7 +262,16 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "12.11.05"
+            "12.11.13"
+          ]
+        },
+        {
+          "name": "Video quality control",
+          "description": "Adds an on-screen settings menu for the player's video quality. Auto follows the app's own selection; the other presets override the player's quality caps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.11.13"
           ]
         }
       ],
@@ -236,10 +279,10 @@
     }
   ],
   "patches_name": "App Patches",
-  "fingerprint": "80c436319a8e644ce51b3f0a20b6ce221b4b7058ea61aa4e8daeb77080749347",
-  "release_notes": "## [1.7.0](https://github.com/toidicakhia/morphe-app-patches/compare/v1.6.0...v1.7.0) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* correct app icon colors and show app icons in README ([da698b3](https://github.com/toidicakhia/morphe-app-patches/commit/da698b30c6204ad53cdd68559258d25f6f564f29))\n\n### ✨ New Features\n\n* **devolutions:** add patches for Remote Desktop Manager 2026.3.1.5 ([128121c](https://github.com/toidicakhia/morphe-app-patches/commit/128121c1ae46415be8075b44b3236275d9085845))\n* **vtvgo:** add patches for VTVGo 12.11.05 ([8f49fe0](https://github.com/toidicakhia/morphe-app-patches/commit/8f49fe0a8e618e021892ee47e94661b43130c3a6))\n",
-  "release_tag": "v1.7.0",
-  "release_date": "2026-11-13T11:09:01Z",
+  "fingerprint": "9fe4de48c9ae187e5ae7a78e1839946de78f9c45560c54cd434c4a36dd5e86fa",
+  "release_notes": "## [1.7.1](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.0...v1.7.1) (2026-11-15)\n\n### 🚀 Updated App Support\n\n* **vtvgo:** update patches for VTVGo 12.11.13 ([5d60f23](https://github.com/toidicakhia/morphe-app-patches/commit/5d60f23ce6e991d2b67b6218214fa5f029db0c4a))\n",
+  "release_tag": "v1.7.1",
+  "release_date": "2026-11-15T04:19:24Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/108525966?v=4&s=128",
