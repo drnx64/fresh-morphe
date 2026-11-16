@@ -2,9 +2,9 @@
   "bundle": "ajstrick81-androidtv",
   "channel": "dev",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-11-13T00:25:37",
-  "version": "1.54.0",
-  "description": "# [1.54.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.53.0...v1.54.0) (2026-11-13)\n\n\n### Features\n\n* **paramount:** add experimental 17.3.0 target ([e56d694](https://github.com/ajstrick81/morphe-androidtv-patches/commit/e56d69473ffa98147bd5abd36a2a93da64d8cca4))",
+  "created_at": "2026-11-16T19:59:52",
+  "version": "1.55.0",
+  "description": "# [1.55.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.54.0...v1.55.0) (2026-11-16)\n\n\n### Features\n\n* **youtubetv:** YouTube for Android TV - skip ads and MicroG support ([965478a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/965478a21f4d792b433e6e0e696161edb8ab98d4))",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -237,6 +237,53 @@
         }
       ],
       "developer": "com.future"
+    },
+    {
+      "app_name": "YouTube for Android TV",
+      "package": "com.google.android.youtube.tv",
+      "patches": [
+        {
+          "name": "Client context hook",
+          "description": "Spoofs the OS name to Android Automotive to suppress video ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.31.300",
+            "7.05.301"
+          ]
+        },
+        {
+          "name": "Clone YouTube (Android TV)",
+          "description": "Installs the patched YouTube Android TV as a separate app alongside the stock one, instead of replacing it. Enable this when YouTube is a preinstalled system app that can't be uninstalled — most Android TV boxes ship it in /product, and a patched build cannot be installed over it (signature mismatch). The clone gets its own package (suffix .morphe) and its own settings. Leave OFF if the original was uninstalled first, or if the app is not a system app. Makes no changes when \"GmsCore support\" is applied, because that patch already renames the app. Opt-in.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.31.300",
+            "7.05.301"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Signs in to Google through MicroG-RE (GmsCore) instead of Google Play services. Points every Play services package name, permission, intent action and content provider at app.revanced.android.gms, telling MicroG-RE to present the stock package name and signing certificate. Required for resigned builds: Google Play services rejects them with \"PackageVerificationRslt: not allowed\". MicroG-RE must be installed; without it the app cannot sign in.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.31.300",
+            "7.05.301"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ad schedule (adPlacements, adSlots, playerAds, adBreakHeartbeatParams) from every InnerTube response before the YouTube leanback web app (youtube.com/tv) reads it, and removes sponsored tiles (adSlotRenderer and the promoted* renderers) from feeds. Also keeps the existing Android Automotive OS-name spoof that suppresses video ads client-side.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.31.300",
+            "7.05.301"
+          ]
+        }
+      ],
+      "developer": "Google LLC"
     },
     {
       "app_name": "Netflix",
@@ -646,10 +693,10 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "2f1d8d866714f0152dc1330593fda77974ed34ad357c797887573d1087c38c42",
-  "release_notes": "# [1.53.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.52.1...v1.53.0) (2026-11-11)\n\n\n### Features\n\n* **netflix:** add opt-in legacy engine for TVs that crash at launch ([#317](https://github.com/ajstrick81/morphe-androidtv-patches/issues/317)) ([2bdc276](https://github.com/ajstrick81/morphe-androidtv-patches/commit/2bdc276f0fd63a5548a45e68b21abb70a3b282c3)), closes [#241](https://github.com/ajstrick81/morphe-androidtv-patches/issues/241)\n\n\n\n",
-  "release_tag": "v1.53.0",
-  "release_date": "2026-11-11T16:04:59Z",
+  "fingerprint": "7c0d94c8390cd41656887ced324a3e25c795ff70cd8020964cadd68e7baf6b5f",
+  "release_notes": "# [1.55.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.54.0...v1.55.0) (2026-11-16)\n\n\n### Features\n\n* **youtubetv:** YouTube for Android TV - skip ads and MicroG support ([965478a](https://github.com/ajstrick81/morphe-androidtv-patches/commit/965478a21f4d792b433e6e0e696161edb8ab98d4))\n\n\n\n",
+  "release_tag": "v1.55.0",
+  "release_date": "2026-11-16T20:00:07Z",
   "isPreRelease": false,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",

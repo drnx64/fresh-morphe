@@ -2,10 +2,44 @@
   "bundle": "mwbra130",
   "channel": "latest",
   "repo_url": "https://github.com/mwbra130/Retro-Bowl-College",
-  "created_at": "2026-11-15T23:02:06",
-  "version": "1.77.6",
-  "description": "## [1.77.6](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.77.5...v1.77.6) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **strava:** compact centered pill, see-through glass ([588ca21](https://github.com/mwbra130/Retro-Bowl-College/commit/588ca21f5f0614854c2e8dced035c91f4ddf38ef))",
+  "created_at": "2026-11-16T20:30:49",
+  "version": "1.79.11",
+  "description": "## [1.79.11](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.79.10...v1.79.11) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([b7fa96b](https://github.com/mwbra130/Retro-Bowl-College/commit/b7fa96b2638bd1e5cb55466146685a5bec9c5507))\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([e719ea0](https://github.com/mwbra130/Retro-Bowl-College/commit/e719ea0d9a3dcff0b5e2bafb5551d71809fe70da))\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([0ef8c58](https://github.com/mwbra130/Retro-Bowl-College/commit/0ef8c58eaa343460cc7d2d587f26b8d92c359db1))\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([418fc59](https://github.com/mwbra130/Retro-Bowl-College/commit/418fc59f7337d1a5082e2657df872b2c42c1da77))",
   "apps": [
+    {
+      "app_name": "ContentCam: Dual Camera Video",
+      "package": "app.contentcam.android",
+      "patches": [
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends unlicensed installs to a Play Store block page. Disables that check, its verdict handler and both block-page launchers so the patched app can open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.0"
+          ]
+        },
+        {
+          "name": "Enable Premium",
+          "description": "Turns on Premium permanently (Front/Back, Photos, 4K, 60fps, manual controls, teleprompter, timelapse, unlimited projects, trim in review), as if the one-time Lifetime purchase were bought.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.0"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Disables the unused Google datatransport upload services in the manifest. ContentCam ships no analytics or crash-reporting SDKs; this removes the one piece of inert upload plumbing it carries. All features are unaffected. ContentCam 2.8.0 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.8.0"
+          ]
+        }
+      ],
+      "developer": "JimmyYip"
+    },
     {
       "app_name": "Hermit — Lite Apps Browser",
       "package": "com.chimbori.hermitcrab",
@@ -21,6 +55,40 @@
         }
       ],
       "developer": "Chimbori"
+    },
+    {
+      "app_name": "Drapes - Wallpapers",
+      "package": "com.codeswitch.drapes",
+      "patches": [
+        {
+          "name": "Bypass PairIP license check",
+          "description": "Lets the patched app run: stubs out PairIP's license check, which otherwise blocks re-signed builds with a license dialog. Drapes 3.9.3 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.9.3"
+          ]
+        },
+        {
+          "name": "Enable Pro",
+          "description": "Enables Drapes Pro: no advertisements, image effects (blur, grayscale, dimming), auto wallpapers, and favorites sync. Requires 'Bypass PairIP license check'. Drapes 3.9.3 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.9.3"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Disables Firebase Analytics and Crashlytics collection, stops the AppMeasurement upload services, and removes the advertising ID permissions. Sign-in, favorites sync and all other features are unaffected. Drapes 3.9.3 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.9.3"
+          ]
+        }
+      ],
+      "developer": "CodeSwitch"
     },
     {
       "app_name": "DroidCam Webcam & OBS Camera",
@@ -139,6 +207,22 @@
         }
       ],
       "developer": "DiskWala"
+    },
+    {
+      "app_name": "VPN Gate - Software Ethernet",
+      "package": "com.giamping.sevpn",
+      "patches": [
+        {
+          "name": "Enable premium",
+          "description": "Enables premium: removes all ads and unlocks unlimited VPN session time (free sessions are capped at 30 to 60 minutes). VPN Gate 20261111 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20261111"
+          ]
+        }
+      ],
+      "developer": "MASTERVNC"
     },
     {
       "app_name": "Google Messages",
@@ -550,6 +634,49 @@
       "developer": "VKL Apps"
     },
     {
+      "app_name": "Timemark: Photo Proof for Work",
+      "package": "com.oceangalaxy.camera.new",
+      "patches": [
+        {
+          "name": "Enable Business",
+          "description": "Turns on the app's Business plan state locally (everything in Enable Plus, plus the business-plan flag the team-space and paywall gates read). Team storage, team billing, admin control and other server-side business features cannot be created by a local patch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v10.0.316"
+          ]
+        },
+        {
+          "name": "Enable Plus",
+          "description": "Turns on the app's Plus premium state: edit and remove watermarks, ultra quality, custom file names, unlimited annotations and saves, exports and the other personal Plus features, as if the Plus plan were bought.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v10.0.316"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Stops the app reporting usage to SensorsData: both analytics event funnels (the SensorAnalyzeUtil sinks and the framework logger's LogService sinks) are cut, so no clicks, watermark edits, purchase steps or location-page events leave the device. Camera, backup, weather and all other features are unaffected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v10.0.316"
+          ]
+        },
+        {
+          "name": "Spoof watermark location",
+          "description": "Stamps photos with a location you pick on an OpenStreetMap pin-drop map (Timemark settings → Timemark patches) instead of your real GPS location. Off or unpicked means real GPS; change it any time without re-patching.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v10.0.316"
+          ]
+        }
+      ],
+      "developer": "OG Co."
+    },
+    {
       "app_name": "Vehico - Vehicle management",
       "package": "com.optimageeks.vehico_app",
       "patches": [
@@ -866,6 +993,56 @@
       "developer": "Vicky Bonick"
     },
     {
+      "app_name": "Call Recorder - SKVALEX",
+      "package": "org.skvalex.cr",
+      "patches": [
+        {
+          "name": "Enable Lifetime",
+          "description": "Pins the license state to the permanent verified state (the $49.99 Lifetime tier) at its single writer, so the app always runs as a lifetime license. Experimental: the license verdict is computed in the app's native library, so whether every feature honors the Java-side state can only be settled on a device. Call Recorder 3.6.9 only — 3.7.x wraps its native code in an anti-tamper payload that cannot run re-signed. Get the exact 3.6.9 APK from the developer's own release archive: https://github.com/skvalex/callrecorder/releases/tag/3.6.9",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.6.9"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Disables the Bugsnag crash-reporting startup provider so no crash, ANR or session reports are sent. Call Recorder ships no other telemetry SDK. Recording and all other features are unaffected. Call Recorder 3.6.9 only.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.6.9"
+          ]
+        }
+      ],
+      "developer": "SKVALEX Mobile"
+    },
+    {
+      "app_name": "App Finder",
+      "package": "scadica.aq",
+      "patches": [
+        {
+          "name": "Enable Professional",
+          "description": "Turns on the app's Professional plan state (all Advance and Ultimate features, CSV export of up to 20,000 results) as if the lifetime Professional plan were bought.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.5.1"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Stops the app reporting usage to the developer's backend: the persistent install ID is never attached to searches, the settings-change log built into every search query is emptied, and the unused Google datatransport upload services are disabled. Search and all other features are unaffected.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.5.1"
+          ]
+        }
+      ],
+      "developer": "Skyica LLC"
+    },
+    {
       "app_name": "Smart MP3 Tag Editor",
       "package": "tageditor.automatictageditor.audiotagging.audioedit.mp3edit",
       "patches": [
@@ -897,10 +1074,10 @@
     }
   ],
   "patches_name": "Zdrgon's Morphe Patches",
-  "fingerprint": "57ccd93272f7b43a13ba234a9570ebb172a79c0dc9240a41054054291d3409ae",
-  "release_notes": "## [1.77.6](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.77.5...v1.77.6) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **strava:** compact centered pill, see-through glass ([588ca21](https://github.com/mwbra130/Retro-Bowl-College/commit/588ca21f5f0614854c2e8dced035c91f4ddf38ef))\n",
-  "release_tag": "v1.77.6",
-  "release_date": "2026-11-15T23:02:59Z",
+  "fingerprint": "34b54de1986a98fbbfac40ecc440a493eb2b1b0ef05118f92f82903d0b041633",
+  "release_notes": "## [1.79.11](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.79.10...v1.79.11) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([b7fa96b](https://github.com/mwbra130/Retro-Bowl-College/commit/b7fa96b2638bd1e5cb55466146685a5bec9c5507))\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([e719ea0](https://github.com/mwbra130/Retro-Bowl-College/commit/e719ea0d9a3dcff0b5e2bafb5551d71809fe70da))\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([0ef8c58](https://github.com/mwbra130/Retro-Bowl-College/commit/0ef8c58eaa343460cc7d2d587f26b8d92c359db1))\n* **callrecorder:** retarget patches to 3.6.9; 3.7.8 native payload cannot run re-signed ([418fc59](https://github.com/mwbra130/Retro-Bowl-College/commit/418fc59f7337d1a5082e2657df872b2c42c1da77))\n",
+  "release_tag": "v1.79.11",
+  "release_date": "2026-11-16T20:31:49Z",
   "isPreRelease": false,
   "stars": 8,
   "avatarUrl": "https://avatars.githubusercontent.com/u/226181625?v=4&s=128",

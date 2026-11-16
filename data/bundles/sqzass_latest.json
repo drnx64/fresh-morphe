@@ -2,10 +2,31 @@
   "bundle": "sqzass",
   "channel": "latest",
   "repo_url": "https://github.com/sqzass/patches",
-  "created_at": "2026-11-16T03:16:41",
-  "version": "1.21.0",
-  "description": "## [1.21.0](https://github.com/sqzass/lustx-patches/compare/v1.20.0...v1.21.0) (2026-11-16)\n\n### ✨ New Features\n\n* **all:** add a disable ads patch ([cfb6b23](https://github.com/sqzass/lustx-patches/commit/cfb6b2396d3cdf70b63312b487ed19429bcaeec6))\n* **all:** add a remove telemetry patch ([8798d00](https://github.com/sqzass/lustx-patches/commit/8798d00e5d53fd01706063e5a3b01be90779a1be))\n* **all:** add force refresh rate patch ([c3c7245](https://github.com/sqzass/lustx-patches/commit/c3c72451c1ca85b617cc8cc6232cce9d002fa093))\n* **all:** add show toast on launch patch ([22cddc2](https://github.com/sqzass/lustx-patches/commit/22cddc242b26a9e84fe8be47848b10ec935b9c0a))",
+  "created_at": "2026-11-16T20:54:38",
+  "version": "1.22.0",
+  "description": "## [1.22.0](https://github.com/sqzass/lustx-patches/compare/v1.21.0...v1.22.0) (2026-11-16)\n\n### ✨ New Features\n\n* **decompile.py:** add more aliases for keeping input apks after processing ([2dc0b87](https://github.com/sqzass/lustx-patches/commit/2dc0b87c4344b93a8ab0df802fcb8461a6de8cac))\n* **Postparty:** add `Remove clip bumper` patch. ([989c056](https://github.com/sqzass/lustx-patches/commit/989c056b0fce5d0b5f7b50b09a30903122b78a1a))\n\n### 🐛 Bug Fixes\n\n* **Postparty:** lint issues ([af25dbc](https://github.com/sqzass/lustx-patches/commit/af25dbc693ddfda107cb75037fdaede1e0e72ef7))\n* **Postparty:** should build now ([6a369c1](https://github.com/sqzass/lustx-patches/commit/6a369c1e3196d8b53f9f9b016d2aab2543f2d746))",
   "apps": [
+    {
+      "app_name": "Postparty",
+      "package": "com.lifeonair.postparty",
+      "patches": [
+        {
+          "name": "Remove clip bumper",
+          "description": "Removes the ~5s Postparty logo bumper appended to exported clips. The bumper is concatenated client-side by FFmpegKit, gated on the enableClipBumper client-config flag. This forces every read of that flag to false, so the bumper is never downloaded or stitched on any export path.",
+          "use": true,
+          "options": [
+            {
+              "key": "forceClientTranscoding",
+              "description": "Also forces enableClientTranscoding true. Only needed if the bumper persists after patching, which would mean the server transcodes and adds it. Leave off unless required: forcing it on an unsupported device can break export."
+            }
+          ],
+          "compatible_versions": [
+            "1.7.0"
+          ]
+        }
+      ],
+      "developer": "Life on Air"
+    },
     {
       "app_name": "Pawxy - Fast VPN & Web Browser",
       "package": "com.pawxy.browser",
@@ -75,10 +96,10 @@
     }
   ],
   "patches_name": "Lustx Patches",
-  "fingerprint": "0300408be67553ddc8aff909524746499b61a7fbcb887b3c8df6ff087fceea2a",
-  "release_notes": "## [1.20.0](https://github.com/sqzass/lustx-patches/compare/v1.19.1...v1.20.0) (2026-11-16)\n\n### ✨ New Features\n\n* **Pawxy:** adds a force-enable `Sniffer` patch (sniffer allows for downloading media easily). ([b54b3ca](https://github.com/sqzass/lustx-patches/commit/b54b3ca48f0ea690eeded46d3aabde818af95586))\n",
-  "release_tag": "v1.20.0",
-  "release_date": "2026-11-16T01:24:05Z",
+  "fingerprint": "3662e4e04a2b4b8b6038e10a4132f8fbd58cea3643fcc231bb931dd35460ef5f",
+  "release_notes": "## [1.22.0](https://github.com/sqzass/lustx-patches/compare/v1.21.0...v1.22.0) (2026-11-16)\n\n### ✨ New Features\n\n* **decompile.py:** add more aliases for keeping input apks after processing ([2dc0b87](https://github.com/sqzass/lustx-patches/commit/2dc0b87c4344b93a8ab0df802fcb8461a6de8cac))\n* **Postparty:** add `Remove clip bumper` patch. ([989c056](https://github.com/sqzass/lustx-patches/commit/989c056b0fce5d0b5f7b50b09a30903122b78a1a))\n\n### 🐛 Bug Fixes\n\n* **Postparty:** lint issues ([af25dbc](https://github.com/sqzass/lustx-patches/commit/af25dbc693ddfda107cb75037fdaede1e0e72ef7))\n* **Postparty:** should build now ([6a369c1](https://github.com/sqzass/lustx-patches/commit/6a369c1e3196d8b53f9f9b016d2aab2543f2d746))\n",
+  "release_tag": "v1.22.0",
+  "release_date": "2026-11-16T20:55:13Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/320068387?v=4&s=128",
