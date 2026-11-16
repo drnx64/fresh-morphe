@@ -2,10 +2,44 @@
   "bundle": "dan1eltheman1el",
   "channel": "stable",
   "repo_url": "https://github.com/Dan1elTheMan1el/Morphe-Patches",
-  "created_at": "2026-11-09T05:47:28",
-  "version": "1.6.1",
-  "description": "## [1.6.1](https://github.com/Dan1elTheMan1el/Morphe-Patches/compare/v1.6.0...v1.6.1) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **YouTube:** Return media title when tweak turned off ([c61f802](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/c61f8021666addecc515f89688b42663e4e9e9ef))",
+  "created_at": "2026-11-16T01:28:37",
+  "version": "1.7.0",
+  "description": "## [1.7.0](https://github.com/Dan1elTheMan1el/Morphe-Patches/compare/v1.6.1...v1.7.0) (2026-11-16)\n\n### ✨ New Features\n\n* **Campfire:** Initial patch release: theming, post filtering, direct links, live chat updates ([48acbdb](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/48acbdbed0a8972ef92079b415fb16e3f2531aa0))\n* **Instagram:** Apple emojis everywhere ([aac7123](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/aac7123927da01c975c068e39b501a10c5a2b50f))\n* **Poke Genie:** Enable premium flags ([6efc4cd](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/6efc4cdadde010798cd9cd175644a184c0f0c8d6))\n* **Poke Genie:** Remove banner ads patch ([d5ec5e0](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/d5ec5e01e4eedf36145053aefa31b129cb36f52c))",
   "apps": [
+    {
+      "app_name": "Poke Genie -Remote Raid IV PvP",
+      "package": "com.cjin.pokegenie.standard",
+      "patches": [
+        {
+          "name": "Strip PairIP",
+          "description": "Neutralizes PairIP's startup program (integrity check + Play-Store paywall) and restores its obfuscation tables, while leaving the native VM intact so virtualized methods still run. Also nukes the Java license/signature checks. Required by every other Poke Genie patch -- keep it enabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.19.3"
+          ]
+        },
+        {
+          "name": "Unlock All IAPs",
+          "description": "Forces premium flags and server getters to true/max by short-circuiting their methods.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.19.3"
+          ]
+        },
+        {
+          "name": "microG-RE support (Google sign-in)",
+          "description": "Routes Google Play Services to MicroG-RE (app.revanced.android.gms) and pins Poke Genie's legacy sign-in path so Google sign-in works on the re-signed app. Install MicroG-RE, add your account there. Minimal: no push/FCM.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.19.3"
+          ]
+        }
+      ],
+      "developer": "Poke Genie"
+    },
     {
       "app_name": "DeFit",
       "package": "com.fitness.debugger",
@@ -104,6 +138,23 @@
       "developer": "Google LLC"
     },
     {
+      "app_name": "Instagram",
+      "package": "com.instagram.android",
+      "patches": [
+        {
+          "name": "Apple emojis everywhere",
+          "description": "Replaces Instagram's emoji with Apple-style emoji. The emoji font is downloaded once, after asking, the first time the app is opened.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "452.1.0.53.64",
+            "447.0.0.55.81"
+          ]
+        }
+      ],
+      "developer": "Instagram"
+    },
+    {
       "app_name": "Level Counter",
       "package": "com.izorg.munchkin",
       "patches": [
@@ -118,6 +169,58 @@
         }
       ],
       "developer": "izorg"
+    },
+    {
+      "app_name": "Scopely Explore Campfire",
+      "package": "com.nianticlabs.campfire",
+      "patches": [
+        {
+          "name": "Live chat reconnect",
+          "description": "Keeps chats updating live: reconnects the real-time message connection when it drops (e.g. after the app was in the background) and restores the chat's subscriptions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.1"
+          ]
+        },
+        {
+          "name": "Map post age filter",
+          "description": "Adds a filter button on the map to only show posts from the past 24 hours, 12 hours, hour or 10 minutes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.1"
+          ]
+        },
+        {
+          "name": "Material You Theme",
+          "description": "Uses Android 12+ wallpaper-derived Material You colors throughout Campfire, with a dark theme that follows the system. Keeps success/warning/danger and game-brand colors.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.1"
+          ]
+        },
+        {
+          "name": "Open game links directly",
+          "description": "Opens Pokémon GO (and other game) links straight in the game instead of going through the AppsFlyer OneLink redirect page.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.1"
+          ]
+        },
+        {
+          "name": "microG-RE support (Google sign-in)",
+          "description": "Routes Google Play Services to MicroG-RE (app.revanced.android.gms) so Google sign-in and push notifications work on the re-signed app. Install MicroG-RE, add your account there and enable Cloud Messaging.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.42.1"
+          ]
+        }
+      ],
+      "developer": "Scopely Explore, Inc."
     },
     {
       "app_name": "Custom Keyboard Designer",
@@ -230,10 +333,10 @@
     }
   ],
   "patches_name": "DanielTheManiel's Morphe Patches",
-  "fingerprint": "922c210cd8c1be433acfaf45518fe21b80d3e85f28cfe98b5ff0b0bd9497a033",
-  "release_notes": "## [1.6.1](https://github.com/Dan1elTheMan1el/Morphe-Patches/compare/v1.6.0...v1.6.1) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* **YouTube:** Return media title when tweak turned off ([c61f802](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/c61f8021666addecc515f89688b42663e4e9e9ef))\n",
-  "release_tag": "v1.6.1",
-  "release_date": "2026-11-09T05:48:16Z",
+  "fingerprint": "4b55c073868c37bb8f40e52d478aecdbfe590f4a64fc9bb3427418a3126eaf3a",
+  "release_notes": "## [1.7.0](https://github.com/Dan1elTheMan1el/Morphe-Patches/compare/v1.6.1...v1.7.0) (2026-11-16)\n\n### ✨ New Features\n\n* **Campfire:** Initial patch release: theming, post filtering, direct links, live chat updates ([48acbdb](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/48acbdbed0a8972ef92079b415fb16e3f2531aa0))\n* **Instagram:** Apple emojis everywhere ([aac7123](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/aac7123927da01c975c068e39b501a10c5a2b50f))\n* **Poke Genie:** Enable premium flags ([6efc4cd](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/6efc4cdadde010798cd9cd175644a184c0f0c8d6))\n* **Poke Genie:** Remove banner ads patch ([d5ec5e0](https://github.com/Dan1elTheMan1el/Morphe-Patches/commit/d5ec5e01e4eedf36145053aefa31b129cb36f52c))\n",
+  "release_tag": "v1.7.0",
+  "release_date": "2026-11-16T01:29:20Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/179581632?v=4",

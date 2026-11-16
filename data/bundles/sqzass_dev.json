@@ -2,14 +2,49 @@
   "bundle": "sqzass",
   "channel": "dev",
   "repo_url": "https://github.com/sqzass/patches",
-  "created_at": "2026-11-15T22:37:03",
-  "version": "1.18.1",
-  "description": "## [1.18.1](https://github.com/sqzass/lustx-patches/compare/v1.18.0...v1.18.1) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **Pawxy:** added back missing brace i deleted on accident ([ed58e4b](https://github.com/sqzass/lustx-patches/commit/ed58e4b0be1d137753b2c756ac424ae38e4f5029))\n* **Pawxy:** fix premium patch so it doesn't cause clicks to no-op ( menus can now be used </3 ) ([50b612f](https://github.com/sqzass/lustx-patches/commit/50b612f53dbf0e3475a5ba38d9343e36ea4c8a7d))\n* **SpoofDeviceIdentityPatch.kt:** remove `tags`, `type`, `user`, and `host` from spoof. this helps with the `Spoof Root Environment` patch without actually compromising anything. ([47c969c](https://github.com/sqzass/lustx-patches/commit/47c969c2453a36a4763bad907b7bc99c451c9471))",
+  "created_at": "2026-11-16T01:23:28",
+  "version": "1.20.0",
+  "description": "## [1.20.0](https://github.com/sqzass/lustx-patches/compare/v1.19.1...v1.20.0) (2026-11-16)\n\n### ✨ New Features\n\n* **Pawxy:** adds a force-enable `Sniffer` patch (sniffer allows for downloading media easily). ([b54b3ca](https://github.com/sqzass/lustx-patches/commit/b54b3ca48f0ea690eeded46d3aabde818af95586))",
   "apps": [
     {
       "app_name": "Pawxy - Fast VPN & Web Browser",
       "package": "com.pawxy.browser",
       "patches": [
+        {
+          "name": "Enable media sniffer",
+          "description": "Restores Pawxy's hidden video/media sniffer to the default tool menu. The toolbar builder excludes Tool$Action.SNIFFER from the default list; this patch removes that exclusion so the sniffer appears like any other tool.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.15.1"
+          ]
+        },
+        {
+          "name": "Rate-us popup",
+          "description": "Either removes the rate-us popup entirely, or rewrites its text. Rewrite mode changes the dialog title/body/buttons. Remove mode kills the trigger so the popup never appears.",
+          "use": true,
+          "options": [
+            {
+              "key": "removePopup",
+              "description": "Prevents the rate-us dialog from ever appearing. Off = rewrite mode (change text instead of removing)."
+            },
+            {
+              "key": "customTitle",
+              "description": "Replaces rate_app_title and rate_head. Only used if remove is off."
+            },
+            {
+              "key": "customBody",
+              "description": "Replaces rate_request and rate_app_propose. Only used if remove is off."
+            },
+            {
+              "key": "customConfirm",
+              "description": "Replaces rate_rate_now. Only used if remove is off."
+            }
+          ],
+          "compatible_versions": [
+            "1.15.1"
+          ]
+        },
         {
           "name": "Unlock premium",
           "description": "Unlocks Pawxy premium features (VPN servers, removes paywall and upsell badges).",
@@ -40,10 +75,10 @@
     }
   ],
   "patches_name": "Lustx Patches",
-  "fingerprint": "a84f70a3318c71b171edcf549a36ada903aa82428e91787b54f4f275779eeb51",
-  "release_notes": "## [1.18.1](https://github.com/sqzass/lustx-patches/compare/v1.18.0...v1.18.1) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* **Pawxy:** added back missing brace i deleted on accident ([ed58e4b](https://github.com/sqzass/lustx-patches/commit/ed58e4b0be1d137753b2c756ac424ae38e4f5029))\n* **Pawxy:** fix premium patch so it doesn't cause clicks to no-op ( menus can now be used </3 ) ([50b612f](https://github.com/sqzass/lustx-patches/commit/50b612f53dbf0e3475a5ba38d9343e36ea4c8a7d))\n* **SpoofDeviceIdentityPatch.kt:** remove `tags`, `type`, `user`, and `host` from spoof. this helps with the `Spoof Root Environment` patch without actually compromising anything. ([47c969c](https://github.com/sqzass/lustx-patches/commit/47c969c2453a36a4763bad907b7bc99c451c9471))\n",
-  "release_tag": "v1.18.1",
-  "release_date": "2026-11-15T22:37:36Z",
+  "fingerprint": "5ba12da9e94d00542d665c73831c008bd49bb4cd3349ed2e2c302f1601b99428",
+  "release_notes": "## [1.20.0](https://github.com/sqzass/lustx-patches/compare/v1.19.1...v1.20.0) (2026-11-16)\n\n### ✨ New Features\n\n* **Pawxy:** adds a force-enable `Sniffer` patch (sniffer allows for downloading media easily). ([b54b3ca](https://github.com/sqzass/lustx-patches/commit/b54b3ca48f0ea690eeded46d3aabde818af95586))\n",
+  "release_tag": "v1.20.0",
+  "release_date": "2026-11-16T01:24:05Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/320068387?v=4&s=128",

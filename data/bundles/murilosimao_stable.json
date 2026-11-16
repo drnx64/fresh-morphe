@@ -1,0 +1,50 @@
+{
+  "bundle": "murilosimao",
+  "channel": "stable",
+  "repo_url": "https://github.com/murilosimao/swiftkey-patch",
+  "created_at": "2026-11-09T03:10:32",
+  "version": "0.1.1",
+  "description": "Experimental SwiftKey 9.13.19.3 patches. Fixes native Reorder items to open the editor that can reduce the number of toolbar shortcuts. Physical-device validation pending.",
+  "apps": [
+    {
+      "app_name": "Microsoft SwiftKey AI Keyboard",
+      "package": "com.touchtype.swiftkey",
+      "patches": [
+        {
+          "name": "Customise toolbar",
+          "description": "Adds a local toolbar editor to SwiftKey settings. Choose and reorder shortcuts; the native Reorder items button opens it too. Choose fewer or more shortcuts; native layout distributes visible icons and More options remains available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.13.19.3"
+          ]
+        },
+        {
+          "name": "Disable cloud sign-in prompt",
+          "description": "Keeps the optional Microsoft cloud sign-in onboarding from replacing SwiftKey's launcher, so local keyboard setup and settings remain usable without an account. This does not sign in or unlock cloud sync and other account-backed features.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.13.19.3"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Stops SwiftKey's first-party telemetry records and uploads, Adjust attribution, Crashlytics, Firebase Sessions, legacy Google Analytics, and app exception reporting. Push messaging and the multipurpose job service stay enabled.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.13.19.3"
+          ]
+        }
+      ],
+      "developer": "SwiftKey"
+    }
+  ],
+  "patches_name": "murilosimao",
+  "fingerprint": "ac46f0ee1b3a57a33ec69375b4a183797f49649bc322100c9948906a4c0e0938",
+  "release_notes": "Correção experimental para **SwiftKey 9.13.19.3**.\n\nO botão **Mais opções → Reordenar itens** ainda abria o editor original com seis posições na 0.1.0. Agora ele abre **Atalhos da barra**, onde é possível desmarcar itens e salvar uma quantidade menor. O acesso por **Configurações → Personalizar toolbar** permanece disponível.\n\nExemplo: deixe somente Área de transferência e GIF marcados e salve. A barra terá esses dois atalhos e Mais opções; o patch não completa as seis posições com outros itens.\n\n**Como atualizar:** atualize a fonte no Morphe ou importe o novo `.mpp`, reaplique os três patches ao APK/APKM original 9.13.19.3 e instale o resultado pelo mesmo Morphe usado anteriormente. Depois abra Reordenar itens, desmarque os atalhos e salve.\n\nValidação: 14 testes, incluindo o clique do acesso original e a redução de seis atalhos para dois; aplicação ao APKM original com fingerprints validados; confirmação da nova chamada no DEX emitido; assinatura e alinhamento do APK conferidos. O resultado ainda precisa ser confirmado no aparelho real.\n\nO APK do SwiftKey e as chaves de assinatura não são distribuídos. Esta release contém o bundle `.mpp`, o catálogo e os metadados da fonte.\n",
+  "release_tag": "v0.1.1",
+  "release_date": "2026-11-09T03:15:08Z",
+  "isPreRelease": true
+}
