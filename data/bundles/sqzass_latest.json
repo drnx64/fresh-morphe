@@ -2,9 +2,9 @@
   "bundle": "sqzass",
   "channel": "latest",
   "repo_url": "https://github.com/sqzass/patches",
-  "created_at": "2026-11-16T20:54:38",
-  "version": "1.22.0",
-  "description": "## [1.22.0](https://github.com/sqzass/lustx-patches/compare/v1.21.0...v1.22.0) (2026-11-16)\n\n### ✨ New Features\n\n* **decompile.py:** add more aliases for keeping input apks after processing ([2dc0b87](https://github.com/sqzass/lustx-patches/commit/2dc0b87c4344b93a8ab0df802fcb8461a6de8cac))\n* **Postparty:** add `Remove clip bumper` patch. ([989c056](https://github.com/sqzass/lustx-patches/commit/989c056b0fce5d0b5f7b50b09a30903122b78a1a))\n\n### 🐛 Bug Fixes\n\n* **Postparty:** lint issues ([af25dbc](https://github.com/sqzass/lustx-patches/commit/af25dbc693ddfda107cb75037fdaede1e0e72ef7))\n* **Postparty:** should build now ([6a369c1](https://github.com/sqzass/lustx-patches/commit/6a369c1e3196d8b53f9f9b016d2aab2543f2d746))",
+  "created_at": "2026-11-16T21:36:13",
+  "version": "1.22.1",
+  "description": "## [1.22.1](https://github.com/sqzass/lustx-patches/compare/v1.22.0...v1.22.1) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* **Postparty:** fix fingerprint for the ending ([8593b01](https://github.com/sqzass/lustx-patches/commit/8593b017e432093a8bcc44841c8b8bdcdae2d882))",
   "apps": [
     {
       "app_name": "Postparty",
@@ -12,14 +12,9 @@
       "patches": [
         {
           "name": "Remove clip bumper",
-          "description": "Removes the ~5s Postparty logo bumper appended to exported clips. The bumper is concatenated client-side by FFmpegKit, gated on the enableClipBumper client-config flag. This forces every read of that flag to false, so the bumper is never downloaded or stitched on any export path.",
+          "description": "Removes the ~5s Postparty logo bumper from exported clips. The bumper is concatenated client-side by FFmpegKit; this nulls the bumper path parameter in the export command builder so the trim/scale/concat block is never emitted, regardless of whether a bumper file is already cached.",
           "use": true,
-          "options": [
-            {
-              "key": "forceClientTranscoding",
-              "description": "Also forces enableClientTranscoding true. Only needed if the bumper persists after patching, which would mean the server transcodes and adds it. Leave off unless required: forcing it on an unsupported device can break export."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
             "1.7.0"
           ]
@@ -96,10 +91,10 @@
     }
   ],
   "patches_name": "Lustx Patches",
-  "fingerprint": "3662e4e04a2b4b8b6038e10a4132f8fbd58cea3643fcc231bb931dd35460ef5f",
-  "release_notes": "## [1.22.0](https://github.com/sqzass/lustx-patches/compare/v1.21.0...v1.22.0) (2026-11-16)\n\n### ✨ New Features\n\n* **decompile.py:** add more aliases for keeping input apks after processing ([2dc0b87](https://github.com/sqzass/lustx-patches/commit/2dc0b87c4344b93a8ab0df802fcb8461a6de8cac))\n* **Postparty:** add `Remove clip bumper` patch. ([989c056](https://github.com/sqzass/lustx-patches/commit/989c056b0fce5d0b5f7b50b09a30903122b78a1a))\n\n### 🐛 Bug Fixes\n\n* **Postparty:** lint issues ([af25dbc](https://github.com/sqzass/lustx-patches/commit/af25dbc693ddfda107cb75037fdaede1e0e72ef7))\n* **Postparty:** should build now ([6a369c1](https://github.com/sqzass/lustx-patches/commit/6a369c1e3196d8b53f9f9b016d2aab2543f2d746))\n",
-  "release_tag": "v1.22.0",
-  "release_date": "2026-11-16T20:55:13Z",
+  "fingerprint": "4793568cd3ef63c773bb353ad150721c4986d0a6b162d1ddf9874356d831b546",
+  "release_notes": "## [1.22.1](https://github.com/sqzass/lustx-patches/compare/v1.22.0...v1.22.1) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* **Postparty:** fix fingerprint for the ending ([8593b01](https://github.com/sqzass/lustx-patches/commit/8593b017e432093a8bcc44841c8b8bdcdae2d882))\n",
+  "release_tag": "v1.22.1",
+  "release_date": "2026-11-16T21:36:51Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/320068387?v=4&s=128",
