@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-16T00:56:28.286Z",
-  "version": "1.90.6-nexus.5",
-  "description": "**Experimental test bundle.** Version `1.90.6-nexus.5`, built with `:patches:buildAndroid`.\n\nNew: **`Experimental: declare the overlay permission for the launcher's popups`**\n\nThe long-press popup (New folder / Browse widgets / Wallpaper & style / Home settings) is added as\nwindow type 2038 (`TYPE_APPLICATION_OVERLAY`). A system install may do that through\n`SYSTEM_APPLICATION_OVERLAY`; a sideloaded copy may not, so the popup died with\n\n```\nBadTokenException: Unable to add window -- permission denied for window type 2038\n```\n\nwhich left the home screen with **no widgets and no settings at all**. The patch declares\n`android.permission.SYSTEM_ALERT_WINDOW`; the addon's *Grant permissions* now also runs\n`appops set <launcher> SYSTEM_ALERT_WINDOW allow`, which turns the popup back on.\n\nVerified on Android 17 / API 37 with this build installed as home:\n\n```\nlong-press → New folder · Browse widgets · Wallpaper & style · Home settings\nBrowse widgets → widget picker opens (Featured / Browse, previews)\n```\n\nRequires **LauncherKit 0.2.1** (adds that appop and a checklist line for it).\n\nAlso included: the search-session holder is optional (patched builds where the obfuscated class is\nmissing no longer abort) and the overlay-entry-point lookup no longer depends on `Fingerprint`.\n\nContents: 387 patches, 11 for `com.google.android.apps.nexuslauncher` (17/907).\n\nFile: `patches-1.90.6-nexus.5.mpp`, sha256\n`6bd628d5189844e1a3ddaddea0a36cb1f2e330354c9cde0492c13bc5f2e66114`\n",
+  "created_at": "2026-11-17T14:32:56.902Z",
+  "version": "1.92.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/6559e264b429bb95ece5df910bb714ca5a289cee/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.92.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [6559e264b429](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/6559e264b429bb95ece5df910bb714ca5a289cee). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.92.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.91.0...v1.92.0) (2026-11-17)\n\n### ✨ New Features\n\n* **Orpheon:** support 1.0.0 and warn that the non-beta release removed all Spotify functionality ([148035d](https://gitlab.com/johninnld/nl-morphe-patches/commit/148035de22eeaa484a2ea3007a72ec9f6fce3694))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -54,7 +54,7 @@
     },
     {
       "app_name": "Orpheon",
-      "package": "app.orpheon.beta",
+      "package": "app.orpheon",
       "patches": [
         {
           "name": "Allow any Android Auto host",
@@ -74,7 +74,7 @@
             }
           ],
           "compatible_versions": [
-            "1.0.0-beta.1"
+            "1.0.0"
           ]
         },
         {
@@ -901,7 +901,7 @@
           ]
         }
       ],
-      "developer": "com.aspiro"
+      "developer": "TIDAL"
     },
     {
       "app_name": "bol",
@@ -1403,112 +1403,6 @@
           "options": [],
           "compatible_versions": [
             "26.44.06.1006895251"
-          ]
-        }
-      ],
-      "developer": "com.google"
-    },
-    {
-      "app_name": "Nexuslauncher",
-      "package": "com.google.android.apps.nexuslauncher",
-      "patches": [
-        {
-          "name": "Experimental: allow at-a-glance smartspace updates",
-          "description": "Declares android.permission.ACCESS_SMARTSPACE so the smartspace service accepts updates from a sideloaded launcher. The permission is signature|privileged with the development flag, so it can be granted to an ordinary app with `pm grant`; without the declaration the request is always refused and the at-a-glance row stays empty even when Pixel Weather is installed. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: allow search sessions through the shell bridge",
-          "description": "Declares the Shizuku/Shevery client provider (rikka.shizuku.ShizukuProvider with authority <applicationId>.shizuku) so the launcher can receive the shell binder and create search sections with the MANAGE_SEARCH_UI permission it cannot hold itself. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: create search sessions through the privileged bridge",
-          "description": "Redirects SearchUiManager.createSearchSession to SearchUiBridge, which rebuilds the session around a Shevery/Shizuku-wrapped search_ui binder so the call runs as shell uid 2000 (the only principal holding MANAGE_SEARCH_UI). Without a running bridge the call degrades to no search instead of a SecurityException. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: declare the overlay permission for the launcher's popups",
-          "description": "Adds android.permission.SYSTEM_ALERT_WINDOW to the launcher manifest. Without it the long-press popup cannot be added (BadTokenException, window type 2038) and the home screen has no widgets, no wallpaper entry and no home settings. The addon grants the matching appop in its Grant permissions step. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: disable privileged-only overlay and prediction features",
-          "description": "The input-monitor overlay needs MONITOR_INPUT and the app-prediction session needs PACKAGE_USAGE_STATS, both of which only a privileged install can hold. Each call throws SecurityException from a worker thread, which terminates the launcher process. Skipping them keeps the home screen, app list and launching working; only the task overlay and the predicted-apps row are unavailable. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: draw the app drawer in the launcher window",
-          "description": "Restores the element mask used by the first 17-907 release so the all-apps panel is shown inside the launcher activity instead of the taskbar-owned all-apps surface, which an sideloaded launcher cannot obtain. Without it a swipe reaches the All Apps state but nothing is drawn. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: keep the app list when prediction is denied",
-          "description": "Moves the hotseat prediction registration off the model-loader thread and makes a denied prediction session harmless. The session needs PACKAGE_USAGE_STATS, which a sideloaded app cannot hold; left inline it kills launcher-loader and the All Apps list stays empty. Prediction still registers wherever the permission is held. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: resolve hidden framework members through a reflective shim",
-          "description": "The launcher is a privileged system app on Pixel and links against 680 framework members that a sideloaded copy is denied or that do not exist off Pixel. Every reference is rewritten to HiddenShim in the nexuslauncher extension. Without it the process dies on the first denied link, before any UI is created. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: resolve Pixel desktop-mode flags through the extension",
-          "description": "Rewrites every read of a DesktopExperienceFlags/DesktopModeFlags flag into a call on FrameworkShim.desktopFlag(name), which resolves the flag reflectively and returns false when the image does not define it. Without this the launcher dies with NoSuchFieldError on AOSP-based images. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: runtime compatibility for a sideloaded launcher",
-          "description": "Three defects that only appear when the launcher runs as an ordinary app instead of a privileged system app: a cold boot reads credential-encrypted preferences before user 0 is unlocked (the process is killed), the wallpaper scale is read through a framework resource id that only exists on Pixel, and the per-display component gate rejects every display because the taskbar-owned display surface never reports one. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
-          ]
-        },
-        {
-          "name": "Experimental: skip the Pixel-only process initialiser",
-          "description": "QuickstepProcessInitializer.init reads ThreadedRenderer.EGL_CONTEXT_PRIORITY_HIGH_IMG and calls setContextPriority, ProtoLog.init, SurfaceControl.setDebugUsageAfterRelease and ViewRootImpl.setDebugWrongThreadInit. Those are Pixel/OEM framework additions absent from AOSP images and affect only performance and debug output, so the initialiser is skipped (the hidden-API exemption is installed instead). Without this the launcher dies with NoSuchFieldError before any UI exists. Requires the pixel-launcher-dhizuku addon (gitlab.com/johninnld/pixel-launcher-dhizuku) to be installed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17"
           ]
         }
       ],
@@ -2090,6 +1984,15 @@
           "name": "Custom layout for Android Auto",
           "description": "On a car screen, shows Reolink's phone layout across the whole width: the overview and the camera page with its controls, Playback and Quick reply. Full screen still shows the video alone, and Back returns from it and then to the overview, without rotating. Applies on every screen other than the phone's own, whichever car host shows it. Nothing changes on the phone.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.64.3.20261023"
+          ]
+        },
+        {
+          "name": "Doorbell calls through Android Auto",
+          "description": "Experimental. Presents doorbell rings as native Telecom audio calls for Android Auto's Answer, Reject, Hang up and mute controls. Keeps the visitor connection inside Reolink without opening a video screen. Needs microphone permission; real car audio acceptance is pending.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "4.64.3.20261023"
@@ -4528,7 +4431,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "d83aa0b436245125bb536f7f64f58af1b3795d11434ea618b2ec8a7b1e24a27e",
+  "fingerprint": "9fc9104f9fbd5215dad0525e7df18df3b18e40a9babbfdf3c3ce75c2419e85bf",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",

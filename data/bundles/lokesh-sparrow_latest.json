@@ -2,9 +2,9 @@
   "bundle": "lokesh-sparrow",
   "channel": "latest",
   "repo_url": "https://github.com/lokesh-sparrow/loki-patches",
-  "created_at": "2026-11-16T09:46:10",
-  "version": "3.1.1",
-  "description": "## 3.1.1 (2026-11-16)\n\n### Fixes\n- Loki Patches menu: keeps its scroll position when you go back, in LinkedIn, Splitwise, Truecaller and Doc Scanner.\n\n**36 patches for 4 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
+  "created_at": "2026-11-17T17:07:40",
+  "version": "3.2.1",
+  "description": "## 3.2.1 (2026-11-17)\n\n### Fixes\n- The bundle icon is the Loki L again.\n\n**38 patches for 5 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
   "apps": [
     {
       "app_name": "Document Scanner - PDF Creator",
@@ -310,6 +310,36 @@
       "developer": "LinkedIn"
     },
     {
+      "app_name": "VideoPlayer (Wear OS)",
+      "package": "com.mxtech.videoplayer.pro",
+      "patches": [
+        {
+          "name": "All codecs",
+          "description": "Replaces MX Player's stripped decoder with the custom codec 1.87.0, so AC3, E-AC3, DTS, DTS-HD, TrueHD and MLP audio play. The codec is downloaded while patching from USBhost's public MX_FFmpeg release and checked against its SHA-256, then written into the app: nothing to set up afterwards.",
+          "use": true,
+          "options": [
+            {
+              "key": "codecFilePath",
+              "description": "Optional. Leave empty and the codec is downloaded while patching from USBhost's MX_FFmpeg release and checked against its SHA-256. Pick mx_aio.zip or a libffmpeg.mx.so only to patch offline or to use a different pack."
+            }
+          ],
+          "compatible_versions": [
+            "1.93.4"
+          ]
+        },
+        {
+          "name": "Skip license check",
+          "description": "MX Player Pro asks Google Play to confirm the purchase and locks itself when the answer is missing, which is always the case for a patched copy. The check is skipped and the app counts as licensed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.93.4"
+          ]
+        }
+      ],
+      "developer": "com.mxtech"
+    },
+    {
       "app_name": "Splitwise",
       "package": "com.splitwise.splitwisemobile",
       "patches": [
@@ -388,10 +418,10 @@
     }
   ],
   "patches_name": "Loki Patches",
-  "fingerprint": "fe2f853016f6f392c09a4233a23c6f21f49f75f7ad92d04d8a60037e8682719e",
-  "release_notes": "### Fixes\n- **Doc Scanner:** GmsCore support (Doc Scanner): the description says text recognition (OCR), not receipt OCR, and that it needs Play services.\n- **Truecaller:** Enable premium features (Truecaller): the description says the after-call screen has a switch in Loki Patches › Calls.\n\n**36 patches for 4 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).\n",
-  "release_tag": "v3.0.1",
-  "release_date": "2026-11-14T19:09:33Z",
+  "fingerprint": "f631feb5366c5f6c404d6f6866c12bf9c066bb157809bb37cd0a63754b060a84",
+  "release_notes": "## 3.2.1 (2026-11-17)\n\n### Fixes\n- The bundle icon is the Loki L again.\n\n**38 patches for 5 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
+  "release_tag": "v3.2.1",
+  "release_date": "2026-11-17T17:08:00Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/144280457?v=4&s=128",

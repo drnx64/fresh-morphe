@@ -2,9 +2,9 @@
   "bundle": "rikodev",
   "channel": "stable",
   "repo_url": "https://github.com/RikoDEV/morphed-pl",
-  "created_at": "2026-11-14T11:25:48",
-  "version": "1.7.2",
-  "description": "## [1.7.2](https://github.com/RikoDEV/morphed-pl/compare/v1.7.1...v1.7.2) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* add Lidl Plus 17.14.6 support ([1683bb1](https://github.com/RikoDEV/morphed-pl/commit/1683bb1489f53b6828e0c088d4c725ad7638a4f1))\n* add universal MicroG-RE maps support patch ([7fccc2f](https://github.com/RikoDEV/morphed-pl/commit/7fccc2feb5df0ba2ce65e25df22ec1762a94f5f7))",
+  "created_at": "2026-11-17T21:19:56",
+  "version": "1.7.3",
+  "description": "## [1.7.3](https://github.com/RikoDEV/morphed-pl/compare/v1.7.2...v1.7.3) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* Meteo ICM patches, fixes [#23](https://github.com/RikoDEV/morphed-pl/issues/23) ([765926c](https://github.com/RikoDEV/morphed-pl/commit/765926c1778675defb59da2caa7debb3133874af))",
   "apps": [
     {
       "app_name": "Lidl Plus",
@@ -252,6 +252,49 @@
       "developer": "InPost Paczkomaty"
     },
     {
+      "app_name": "Meteo ICM — weather forecast",
+      "package": "pl.janpogocki.icm.pogoda",
+      "patches": [
+        {
+          "name": "Block telemetry",
+          "description": "Turns off Firebase Analytics, Crashlytics, Performance, In-App Messaging and Sessions, removes the advertising ID permissions and the Google datatransport upload backend. Push notifications (FCM), RevenueCat and the weather API keep working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.2.8"
+          ]
+        },
+        {
+          "name": "Bypass license check",
+          "description": "Removes the Google Play license check that shows \"Get this app from Google Play\" and closes the app when it was not installed from the Play Store.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.2.8"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Removes the banner ads (WP ads / Google Ad Manager) and the interstitial ads, and stops the ad SDK from starting at launch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.2.8"
+          ]
+        },
+        {
+          "name": "Unlock premium",
+          "description": "Injects an active premium entitlement into the RevenueCat response so the app reports premium tier without a subscription. Weather model UM 120h and ad-free mode become available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.2.8"
+          ]
+        }
+      ],
+      "developer": "Meteo sp. z o.o."
+    },
+    {
       "app_name": "Yanosik antiradar & navigation",
       "package": "pl.neptis.yanosik.mobi.android",
       "patches": [
@@ -402,10 +445,10 @@
     }
   ],
   "patches_name": "Morphed PL",
-  "fingerprint": "c9806e53b5bed5b4897b2c0dc89488445e29b6232c57891dc61ab8501131ce7e",
-  "release_notes": "## [1.7.2](https://github.com/RikoDEV/morphed-pl/compare/v1.7.1...v1.7.2) (2026-11-14)\n\n### 🐛 Bug Fixes\n\n* add Lidl Plus 17.14.6 support ([1683bb1](https://github.com/RikoDEV/morphed-pl/commit/1683bb1489f53b6828e0c088d4c725ad7638a4f1))\n* add universal MicroG-RE maps support patch ([7fccc2f](https://github.com/RikoDEV/morphed-pl/commit/7fccc2feb5df0ba2ce65e25df22ec1762a94f5f7))\n",
-  "release_tag": "v1.7.2",
-  "release_date": "2026-11-14T11:26:21Z",
+  "fingerprint": "f3ab84ccb317ce73629d12c3c57e5ee3a797404723b8bf901ee77a72693961f7",
+  "release_notes": "## [1.7.3](https://github.com/RikoDEV/morphed-pl/compare/v1.7.2...v1.7.3) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* Meteo ICM patches, fixes [#23](https://github.com/RikoDEV/morphed-pl/issues/23) ([765926c](https://github.com/RikoDEV/morphed-pl/commit/765926c1778675defb59da2caa7debb3133874af))\n",
+  "release_tag": "v1.7.3",
+  "release_date": "2026-11-17T21:20:32Z",
   "isPreRelease": false,
   "stars": 7,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18230443?v=4",

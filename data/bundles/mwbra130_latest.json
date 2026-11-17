@@ -2,44 +2,10 @@
   "bundle": "mwbra130",
   "channel": "latest",
   "repo_url": "https://github.com/mwbra130/Retro-Bowl-College",
-  "created_at": "2026-11-17T03:57:55",
-  "version": "1.79.22",
-  "description": "## [1.79.22](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.79.21...v1.79.22) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* correct OLX dex descriptors (root-level classes, no defpackage prefix) so fingerprints match ([3de3e9f](https://github.com/mwbra130/Retro-Bowl-College/commit/3de3e9f697c3c7da4498eda5fa5569b3f793ffec))\n* correct OLX dex descriptors (root-level classes, no defpackage prefix) so fingerprints match ([b549923](https://github.com/mwbra130/Retro-Bowl-College/commit/b549923ae26410ebec9e02772373d9a1b14fcb0e))\n* correct OLX dex descriptors (root-level classes, no defpackage prefix) so fingerprints match ([dee1379](https://github.com/mwbra130/Retro-Bowl-College/commit/dee1379ad112137dc6e8ed09ac2d3cc263356701))\n* fix OLX fingerprints (drop strings criterion) and Plain listings smali (if-nez null checks, external keep label) ([95c8a44](https://github.com/mwbra130/Retro-Bowl-College/commit/95c8a448c5963d2943ffc100b97158fb978e7662))\n* fix OLX fingerprints (drop strings criterion) and Plain listings smali (if-nez null checks, external keep label) ([9741382](https://github.com/mwbra130/Retro-Bowl-College/commit/9741382ce6b2db46042b8dc744d7ff8f0bb136e0))\n* **moises:** add Enable Pro, Bypass PairIP signature check and Remove telemetry patches for Moises 2.141.0 ([4fc8eea](https://github.com/mwbra130/Retro-Bowl-College/commit/4fc8eea46037820b83f8827ab4b7d29bb20b01b2))",
+  "created_at": "2026-11-17T21:31:53",
+  "version": "0.0.1",
+  "description": "## [0.0.1](https://github.com/mwbra130/Retro-Bowl-College/releases/tag/v0.0.1) (2026-11-17)\n\nFirst release of the restructured bundle: 27 apps, 46 patches. Testing-stage patch sets (BusinessX, Call Recorder, DiskWala, FORScan Lite, Google Messages, Moises, Notes, OLX Pakistan, Pika Spot, RainViewer, Strava, Vehico, Web Video Caster, X-plore, Yin Yang Launcher, YouTube Music) moved to the Morphe_Patch_Tests staging repo until they pass on-device testing.",
   "apps": [
-    {
-      "app_name": "Moises: The Musician's AI App",
-      "package": "ai.moises",
-      "patches": [
-        {
-          "name": "Bypass PairIP signature check",
-          "description": "Required for re-signed builds: PairIP verifies the app's signing certificate at startup and kills tampered builds. Disables that Java-layer check (its pass state is returning normally). The native PairIP VM layer is untouched.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.141.0"
-          ]
-        },
-        {
-          "name": "Enable Pro",
-          "description": "Turns on the app's Pro plan state (plan-gated features, Hi-Fi and drum-part pickers, advanced creative control, credit checks) as if the Pro plan were active. Note: stem separation itself runs on Moises' servers, which meter the account separately.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.141.0"
-          ]
-        },
-        {
-          "name": "Remove telemetry",
-          "description": "Stops the app reporting usage: the Singular attribution SDK never initializes and its events are refused, and Firebase Analytics/Crashlytics collection is turned off in the manifest. Separation jobs, account, purchases and push are unaffected.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.141.0"
-          ]
-        }
-      ],
-      "developer": "Moises Systems"
-    },
     {
       "app_name": "ContentCam: Dual Camera Video",
       "package": "app.contentcam.android",
@@ -73,31 +39,6 @@
         }
       ],
       "developer": "JimmyYip"
-    },
-    {
-      "app_name": "FORScan Lite",
-      "package": "com.astech.forscanlite",
-      "patches": [
-        {
-          "name": "Enable license",
-          "description": "Opens the full app without an activation code. FORScan Lite checks your license once at startup against its server; this patch pins that startup check to its licensed outcome, so the activation dialog never appears and no activation request is sent. FORScan Lite 1.5.31 only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.5.31"
-          ]
-        },
-        {
-          "name": "Remove telemetry",
-          "description": "Stops the app from phoning home. FORScan Lite has no analytics or ad SDKs; the only non-essential traffic is a launch-time version check to forscan.org, which this patch disables. Diagnostics and all other features are unaffected. FORScan Lite 1.5.31 only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.5.31"
-          ]
-        }
-      ],
-      "developer": "com.astech"
     },
     {
       "app_name": "Hermit — Lite Apps Browser",
@@ -175,99 +116,6 @@
       "developer": "Dev47Apps"
     },
     {
-      "app_name": "DiskWala",
-      "package": "com.diskwalaapp",
-      "patches": [
-        {
-          "name": "Bypass PairIP application checks",
-          "description": "Required for re-signed builds: PairIP's Application class runs the signature and license checks at startup. This rewrites that one method so it only registers the app context and never calls either check, instead of relying on the checks themselves being stubbed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Bypass PairIP license check",
-          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends non-Play installs to a Play Store block page. Disables that check, its verdict handler, both block-page launchers, the delayed shutdown, and the block activity itself so the patched app can open.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Change installer source",
-          "description": "Spoofs the installer source so the app appears to be installed from Google Play everywhere it is read. Pre-selected companion for the DiskWala patch set — keep it on.",
-          "use": true,
-          "options": [
-            {
-              "key": "packageInstallerName",
-              "description": ""
-            }
-          ],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Disable PairIP license activity",
-          "description": "Required for re-signed builds: removes PairIP's LicenseActivity from the manifest entirely, so the Play Store block page and license error dialog can never be shown, whatever tries to open them.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Disable ads",
-          "description": "Stubs AppLovin, AdMob, InMobi and other ad SDKs at the bytecode level to prevent ads from loading without breaking the app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Disable forced update",
-          "description": "Bypasses PairIP license check ('Download from Play Store'), Play Integrity, and signature verification to allow modified and sideloaded app usage.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Enable Premium",
-          "description": "Turns on Premium (no ads, real file names, HD downloads, faster streaming) as if subscribed. Keep the pre-selected PairIP bypass patches on — a re-signed build cannot pass PairIP's startup license check without them.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Patch native libraries",
-          "description": "Neutralizes PairIP traps in native .so libraries and patches Hermes bundle. Also applies the standalone-install manifest fixes (real Application class, original component factory, native library extraction) and removes the stock baseline profiles.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        },
-        {
-          "name": "Unlock premium",
-          "description": "Makes RevenueCat entitlements appear active so ads-free and premium features are unlocked.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "27.3"
-          ]
-        }
-      ],
-      "developer": "DiskWala"
-    },
-    {
       "app_name": "VPN Gate - Software Ethernet",
       "package": "com.giamping.sevpn",
       "patches": [
@@ -282,101 +130,6 @@
         }
       ],
       "developer": "MASTERVNC"
-    },
-    {
-      "app_name": "Google Messages",
-      "package": "com.google.android.apps.messaging",
-      "patches": [
-        {
-          "name": "OLED black mode",
-          "description": "Turns the dark theme true black (#000000) for OLED screens: backgrounds and surfaces go pure black, raised containers (cards, bubbles, sheets) become near-black steps so they stay visible. Dark theme only — light mode is untouched. Needs the stock APK of the target version (messages.android_20261020_00_RC01.phone_dynamic, the universal APK — not a BUNDLE — from APKMirror: https://www.apkmirror.com/apk/google-inc/messenger-google-inc/); Morphe Manager also suggests that exact version when you don't have the file. A few settings screens on Android 12+ take surfaces from the system palette and stay dark grey.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "messages.android_20261020_00_RC01.phone_dynamic"
-          ]
-        }
-      ],
-      "developer": "Google LLC"
-    },
-    {
-      "app_name": "YouTube Music",
-      "package": "com.google.android.apps.youtube.music",
-      "patches": [
-        {
-          "name": "Disable QUIC protocol",
-          "description": "Disables the QUIC (HTTP/3) network protocol in the Wear OS app's Cronet stack, forcing TCP-based HTTP/2 connections.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "Disable audio ducking",
-          "description": "Keeps the volume unchanged when another app plays a short sound, such as a notification, instead of ducking the music.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "Disable network telemetry",
-          "description": "Turns off the Cronet networking library's telemetry in the Wear OS app (its manifest switch ships set to true). Does not affect playback, downloads, or sign-in.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "Enable downloads",
-          "description": "Unlocks the offline save gate (offlineability) for videos and playlists the app delivers, so attempted downloads save instead of refusing or showing a Premium dialog. Does not change what the server sends a free account.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "GmsCore support",
-          "description": "Routes the app's Google services calls to MicroG (app.revanced.android.gms) instead of real Google Play services, so a re-signed build can sign in. Requires MicroG-RE with a signed-in account on the watch, and the stock app uninstalled first (the package name is not changed). Experimental: verified against 9.45.41-WEAR_RELEASE by dex scan, not yet tested on a watch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "Remove background playback restrictions",
-          "description": "Removes restrictions on background playback in the Wear OS app. Experimental: fingerprint verified against 9.45.41-WEAR_RELEASE, not yet tested on a watch.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "Skip silence",
-          "description": "Automatically skips silent pauses in audio playback.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        },
-        {
-          "name": "Spoof app version",
-          "description": "Tricks the app into thinking you are running an older version (8.23.51).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.45.41-WEAR_RELEASE"
-          ]
-        }
-      ],
-      "developer": "Google LLC"
     },
     {
       "app_name": "Echo Equalizer: Bass Booster",
@@ -407,74 +160,6 @@
         }
       ],
       "developer": "HapiBits"
-    },
-    {
-      "app_name": "Notes - iOS Style Notepad",
-      "package": "com.inotesapp.inotes",
-      "patches": [
-        {
-          "name": "Remove ads",
-          "description": "Stops interstitial ad breaks and native ads in the notes list from loading (Google Mobile Ads). Rewarded ads that unlock features when watched are left working. Does not unlock premium.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.2.2"
-          ]
-        }
-      ],
-      "developer": "Baday Production"
-    },
-    {
-      "app_name": "Web Video Cast | Browser to TV",
-      "package": "com.instantbits.cast.webvideo",
-      "patches": [
-        {
-          "name": "Bypass PairIP application checks",
-          "description": "Required for re-signed builds: PairIP's Application class runs the signature and license checks at startup. This rewrites that one method so it only registers the app context and never calls either check, instead of relying on the checks themselves being stubbed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.1.0"
-          ]
-        },
-        {
-          "name": "Bypass PairIP license check",
-          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends non-Play installs to a Play Store block page. Disables that check, its verdict handler, both block-page launchers, the delayed shutdown, and the block activity itself so the patched app can open.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.1.0"
-          ]
-        },
-        {
-          "name": "Bypass PairIP signature check",
-          "description": "Required for re-signed builds: PairIP checks the APK signature at startup and crashes the app on launch when it is not the developer's. Disables that one check so the patched app can start.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.1.0"
-          ]
-        },
-        {
-          "name": "Disable PairIP license activity",
-          "description": "Required for re-signed builds: removes PairIP's LicenseActivity from the manifest entirely, so the Play Store block page and license error dialog can never be shown, whatever tries to open them.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.1.0"
-          ]
-        },
-        {
-          "name": "Unlock premium",
-          "description": "Unlocks Web Video Caster Premium (ad removal, ad block, bookmarks, queue and the other premium features). No real purchase is made.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.1.0"
-          ]
-        }
-      ],
-      "developer": "InstantBits Inc"
     },
     {
       "app_name": "Notification light for Samsung",
@@ -535,31 +220,6 @@
       "developer": "SYBO Games"
     },
     {
-      "app_name": "X-plore File Manager",
-      "package": "com.lonelycatgames.xplore",
-      "patches": [
-        {
-          "name": "Bypass PairIP signature check",
-          "description": "Required for re-signed builds: PairIP verifies the app's signing certificate at startup and kills the app if it isn't the Play signature. This disables that one check so the patched app can open.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.52.02"
-          ]
-        },
-        {
-          "name": "Enable Premium",
-          "description": "Unlocks all premium features and removes ads by enabling the app's top donation tier state (the Dinner tier) — no purchase is made.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.52.02"
-          ]
-        }
-      ],
-      "developer": "com.lonelycatgames"
-    },
-    {
       "app_name": "Lossless Video Cutter",
       "package": "com.losslessvideocutter",
       "patches": [
@@ -588,45 +248,6 @@
         }
       ],
       "developer": "immovable force"
-    },
-    {
-      "app_name": "RainViewer: Live Weather Radar",
-      "package": "com.lucky_apps.rainviewer",
-      "patches": [
-        {
-          "name": "Bypass integrity check",
-          "description": "Stops the Play Integrity (Raindrop) verdict from blocking the app. If the app already shows App Blocked, reinstall it fresh after patching.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "8.4.1"
-          ]
-        },
-        {
-          "name": "Change installer source",
-          "description": "Spoofs the installer source so the app appears to be installed from an app store.",
-          "use": false,
-          "options": [
-            {
-              "key": "packageInstallerName",
-              "description": ""
-            }
-          ],
-          "compatible_versions": [
-            "8.4.1"
-          ]
-        },
-        {
-          "name": "Enable Premium",
-          "description": "Unlocks RainViewer Pro. Use with Change installer source.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "8.4.1"
-          ]
-        }
-      ],
-      "developer": "com.lucky_apps"
     },
     {
       "app_name": "Poweramp Music Player",
@@ -736,90 +357,6 @@
       "developer": "OG Co."
     },
     {
-      "app_name": "OLX Pakistan - Online Shopping",
-      "package": "com.olx.pk",
-      "patches": [
-        {
-          "name": "Plain listings only",
-          "description": "Removes featured, boosted and paid-promo listings and all agency, dealer and store listings from home, search and category feeds, leaving only plain listings from individual sellers. OLX Pakistan 18.13.1 only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "18.13.1"
-          ]
-        },
-        {
-          "name": "Remove ads",
-          "description": "Removes the Google Ads banner, featured-agency cards and promo widgets that are interleaved into home, search and category feeds. OLX Pakistan 18.13.1 only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "18.13.1"
-          ]
-        },
-        {
-          "name": "Remove telemetry",
-          "description": "Turns off Firebase Analytics, Crashlytics and Performance reporting and ad-id collection, disables the Firebase report-upload plumbing, and disables MoEngage in-app campaigns and push-open tracking. Search, chat, sign-in and notifications are unaffected. OLX Pakistan 18.13.1 only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "18.13.1"
-          ]
-        }
-      ],
-      "developer": "com.olx"
-    },
-    {
-      "app_name": "Vehico - Vehicle management",
-      "package": "com.optimageeks.vehico_app",
-      "patches": [
-        {
-          "name": "Remove ads",
-          "description": "Stops banner and interstitial ads from loading (Google Mobile Ads).",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.2.31"
-          ]
-        }
-      ],
-      "developer": "OptimaGeeks LLC"
-    },
-    {
-      "app_name": "Pika! Spot - Dynamic animation",
-      "package": "com.pika.dynamicisland",
-      "patches": [
-        {
-          "name": "Bypass PairIP license check",
-          "description": "Required for re-signed builds: PairIP asks Google Play to license the app at startup and sends unlicensed installs to a Play Store block page. Disables that check, its verdict handler and both block-page launchers so the patched app can open.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.4.5"
-          ]
-        },
-        {
-          "name": "Enable Lifetime VIP",
-          "description": "Turns on the lifetime Life Member (SVIP) state: no ads and every animated theme applies for free, with no expiry — the VIP screen reads Level: SVIP and Status: life member. Needs the stock Pika! Spot 1.4.5 XAPK.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.4.5"
-          ]
-        },
-        {
-          "name": "Spoof app signature",
-          "description": "Fixes the 'Can not connect to server' stop at 30% on launch: the app's first server login carries a token derived from the APK signing certificate, and a re-signed build computes it from the wrong certificate, so the server rejects the login. Recomputes the token with the stock signing certificate. Needs the stock Pika! Spot 1.4.5 XAPK.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.4.5"
-          ]
-        }
-      ],
-      "developer": "Pika! Studio"
-    },
-    {
       "app_name": "Happy Color®: Color by Number",
       "package": "com.pixel.art.coloring.color.number",
       "patches": [
@@ -879,36 +416,6 @@
       "developer": "Bearbit Studios B.V."
     },
     {
-      "app_name": "Daily Sales Profit & Inventory",
-      "package": "com.shrey_businessx.android",
-      "patches": [
-        {
-          "name": "Change installer source",
-          "description": "Spoofs the installer source so the app appears to be installed from Google Play. Required for BusinessX: its PairIP local installer check is live, so a re-signed build fails the license check without it — keep it on.",
-          "use": true,
-          "options": [
-            {
-              "key": "packageInstallerName",
-              "description": ""
-            }
-          ],
-          "compatible_versions": [
-            "6.5.2"
-          ]
-        },
-        {
-          "name": "Enable Premium",
-          "description": "Grants Premium's on-device features: inventory & sales export (PDF/Excel/CSV), full sales history and trends, shop sharing, no ads, and Google Drive backup. BusinessX Cloud backup/sync are authorized on the developer's server and may still require a real subscription.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.5.2"
-          ]
-        }
-      ],
-      "developer": "Shrey Jain"
-    },
-    {
       "app_name": "Luminar: Photo Editor&Enhancer",
       "package": "com.skylum.luminar",
       "patches": [
@@ -941,23 +448,6 @@
         }
       ],
       "developer": "Skylum Software"
-    },
-    {
-      "app_name": "Strava: Run, Bike, Walk",
-      "package": "com.strava",
-      "patches": [
-        {
-          "name": "Liquid Glass navigation",
-          "description": "Turns Strava's bottom bar into a floating Liquid Glass pill: detached from the screen edges, live blurred backdrop with a translucent tint, content scrolling underneath it, like the current YouTube and Proton VPN bars. Tweak it under Extra Settings at the top of Strava's Settings screen (on/off, floating vs docked, blur, tint opacity). Uses Strava's classic bottom bar to make the effect possible.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "486.9",
-            "486.11"
-          ]
-        }
-      ],
-      "developer": "com.strava"
     },
     {
       "app_name": "Cifra Club Tuner",
@@ -1022,36 +512,6 @@
         }
       ],
       "developer": "Swift Apps."
-    },
-    {
-      "app_name": "Yin Yang Minimalist Launcher",
-      "package": "com.yinyang.launcher",
-      "patches": [
-        {
-          "name": "Change installer source",
-          "description": "Spoofs the installer source so the app appears to be installed from Google Play. Required for Yin Yang Launcher: its PairIP local installer check is live, so a re-signed build fails the license check without it — keep it on.",
-          "use": true,
-          "options": [
-            {
-              "key": "packageInstallerName",
-              "description": ""
-            }
-          ],
-          "compatible_versions": [
-            "5.13.1"
-          ]
-        },
-        {
-          "name": "Enable Premium",
-          "description": "Unlocks Yin Yang Pro for free, as if the Lifetime purchase were bought: all clocks, fonts, live wallpapers and icons. Also enable the Change installer source patch (pre-selected) — it is required for the patched app to pass the license check.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.13.1"
-          ]
-        }
-      ],
-      "developer": "QuietMind Creations"
     },
     {
       "app_name": "Crossy Road",
@@ -1120,31 +580,6 @@
       "developer": "Vicky Bonick"
     },
     {
-      "app_name": "Call Recorder - SKVALEX",
-      "package": "org.skvalex.cr",
-      "patches": [
-        {
-          "name": "Enable Lifetime",
-          "description": "Pins the license state to the permanent verified state (the $49.99 Lifetime tier) at its single writer, so the app always runs as a lifetime license. Experimental: the license verdict is computed in the app's native library, so whether every feature honors the Java-side state can only be settled on a device. Call Recorder 3.6.9 only — 3.7.x wraps its native code in an anti-tamper payload that cannot run re-signed. Get the exact 3.6.9 APK from the developer's own release archive: https://github.com/skvalex/callrecorder/releases/tag/3.6.9",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.6.9"
-          ]
-        },
-        {
-          "name": "Remove telemetry",
-          "description": "Disables the Bugsnag crash-reporting startup provider so no crash, ANR or session reports are sent. Call Recorder ships no other telemetry SDK. Recording and all other features are unaffected. Call Recorder 3.6.9 only.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.6.9"
-          ]
-        }
-      ],
-      "developer": "SKVALEX Mobile"
-    },
-    {
       "app_name": "App Finder",
       "package": "scadica.aq",
       "patches": [
@@ -1201,10 +636,10 @@
     }
   ],
   "patches_name": "Zdrgon's Morphe Patches",
-  "fingerprint": "9ebe01f88dd27235a72f484fe4c23dedb3bb627c63a9117a4d6909a0c6c35031",
-  "release_notes": "## [1.79.22](https://github.com/mwbra130/Retro-Bowl-College/compare/v1.79.21...v1.79.22) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* correct OLX dex descriptors (root-level classes, no defpackage prefix) so fingerprints match ([3de3e9f](https://github.com/mwbra130/Retro-Bowl-College/commit/3de3e9f697c3c7da4498eda5fa5569b3f793ffec))\n* correct OLX dex descriptors (root-level classes, no defpackage prefix) so fingerprints match ([b549923](https://github.com/mwbra130/Retro-Bowl-College/commit/b549923ae26410ebec9e02772373d9a1b14fcb0e))\n* correct OLX dex descriptors (root-level classes, no defpackage prefix) so fingerprints match ([dee1379](https://github.com/mwbra130/Retro-Bowl-College/commit/dee1379ad112137dc6e8ed09ac2d3cc263356701))\n* fix OLX fingerprints (drop strings criterion) and Plain listings smali (if-nez null checks, external keep label) ([95c8a44](https://github.com/mwbra130/Retro-Bowl-College/commit/95c8a448c5963d2943ffc100b97158fb978e7662))\n* fix OLX fingerprints (drop strings criterion) and Plain listings smali (if-nez null checks, external keep label) ([9741382](https://github.com/mwbra130/Retro-Bowl-College/commit/9741382ce6b2db46042b8dc744d7ff8f0bb136e0))\n* **moises:** add Enable Pro, Bypass PairIP signature check and Remove telemetry patches for Moises 2.141.0 ([4fc8eea](https://github.com/mwbra130/Retro-Bowl-College/commit/4fc8eea46037820b83f8827ab4b7d29bb20b01b2))\n",
-  "release_tag": "v1.79.22",
-  "release_date": "2026-11-17T03:58:48Z",
+  "fingerprint": "7dac878b866baf39a8878373c751e50fc912be0ceccd694b8381b5a80cecd21b",
+  "release_notes": "Release v0.0.1",
+  "release_tag": "v0.0.1",
+  "release_date": "2026-11-17T21:32:53Z",
   "isPreRelease": false,
   "stars": 8,
   "avatarUrl": "https://avatars.githubusercontent.com/u/226181625?v=4&s=128",
