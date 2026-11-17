@@ -2,16 +2,41 @@
   "bundle": "semicoloncolonel",
   "channel": "dev",
   "repo_url": "https://github.com/semicoloncolonel/tv-morphe-patches",
-  "created_at": "2026-11-17T03:33:59Z",
-  "version": "1.1.0-dev.49",
-  "description": "# [1.0.21](https://github.com/semicoloncolonel/mobile-morphe-patches/releases/tag/v1.0.21) (2026-11-16)\n\nThe stable Android TV patches from mobile-morphe-patches v1.0.21, as their own source. They are the same patches and app versions as that release.\n\nHulu (Android TV) is not in this release, because its patches are still in testing. The pre-release channel has them.\n\nBuilt from [mobile-morphe-patches v1.0.21](https://github.com/semicoloncolonel/mobile-morphe-patches/releases/tag/v1.0.21).",
+  "created_at": "2026-11-17T04:28:08Z",
+  "version": "1.1.0-dev.52",
+  "description": "# 1.1.0\n\n## The Android TV source from 1.2.0\n\nFrom 1.2.0, this is the only source for the Android TV patches. The phone source, mobile-morphe-patches, includes them for the last time in its 1.1.0 release.\n\n## New apps\n\n- **ESPN** 6.13.2: Skip ads (experimental), Hide rating prompt, Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **Fox One** 1.20.0: Disable Pairip license check, Skip ads (experimental), Hide rating prompt, Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **Hulu** C59F39CFP3.10.33 (experimental): Skip ads, which removes the ads Hulu stitches into on-demand shows, and Block analytics and tracking (off by default).\n- **MGM+** 241.0.2026241001: Skip lion intro, Hide rating prompt, Disable MGM+ AI, Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **MLB** 26.21.0.76: Skip ads, Translate ad break screen (experimental), Hide rating prompt, Hide betting odds, Mask live ad breaks (experimental), Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **NBA** 1.1.0.20261026155843: Skip ads (experimental), Reject tracking consent, Hide rating prompt, Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **NFL** 18.27.0: Skip ads (experimental), Reject tracking consent, Hide rating prompt, Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **PBS** 5.27.0 and **Peacock** 7.10.200: Skip ads (experimental), Hide rating prompt, Block analytics and tracking, Hide device identifiers, Disable auto-updates.\n- **Prime Video** 6.24.13: Skip ads (experimental), Force highest quality (experimental, off by default).\n- **YouTube TV** (the official app, 4.01.03): Skip ads (experimental). This app needs Android 12 or later.\n\nOptional patches are off by default: Block analytics and tracking, Hide device identifiers, Disable auto-updates, Disable MGM+ AI, Hide betting odds, and Mask live ad breaks.\n\n## Changes\n\n- **YouTube for Android TV**: Skip injected ads is now **YT TV+ (ad-free YouTube TV)**, a clearer name for the patch that turns it into a standalone, ad-free YouTube TV app. It now refuses an input without its native libraries, which made the patched app close on launch.\n- **Apple TV** and **NewsNation**: the patches no longer end in \"(Android TV)\", since every app in this source is an Android TV app. Morphe Manager treats a renamed patch as new, so check your selections for these apps.\n- **Pluto TV**: adds Translate ad break screen (experimental), which shows the \"We'll be right back!\" screen in your device's language.\n- **Hide device identifiers** now holds Spoof carrier, Report Wi-Fi connection, and Hide VPN connection as options, so each app lists one privacy entry. If you used any of the old patches, turn on the matching option in Hide device identifiers.\n- **Block analytics and tracking** now also blocks the domains of the malware that compromised Optimizely website scripts on 16 November 2026.\n- **Experimental versions**: every app version that is public on Google Play is a standard target. Hulu and the official YouTube TV app 4.01.03 stay experimental.\n\n## Version support\n\nNewly supported versions, with the previous versions kept:\n\n- JustWatch 26.44.5\n- NewsNation 4.71\n- Pluto TV 17.4.0\n- Starz 6.12.1 and 6.11.0",
   "apps": [
+    {
+      "app_name": "Prime Video",
+      "package": "com.amazon.amazonvideo.livingroom",
+      "patches": [
+        {
+          "name": "Force highest quality",
+          "description": "Reports every video quality as fully supported, so the app streams the highest available. Experimental: can stutter or fail on a device that cannot decode the top quality.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.24.13+v16.0.1.93-allAbis"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads in Android TV titles. Ads in live channels still play.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.24.13+v16.0.1.93-allAbis"
+          ]
+        }
+      ],
+      "developer": "com.amazon"
+    },
     {
       "app_name": "Apple TV: Shows, Movies & More",
       "package": "com.apple.atve.androidtv.appletv",
       "patches": [
         {
-          "name": "Auto-skip (Android TV)",
+          "name": "Auto-skip",
           "description": "Presses Skip for you on the parts you choose: Apple's promos for other titles, recaps, and intros.",
           "use": true,
           "options": [
@@ -34,8 +59,8 @@
           ]
         },
         {
-          "name": "Block analytics & tracking (Android TV)",
-          "description": "Reduces Apple's usage metrics and stops playback reports in the Android TV app. The app also stops downloading updates to its screens between app updates.",
+          "name": "Block analytics & tracking",
+          "description": "Reduces Apple's usage metrics and stops playback reports. The app also stops downloading updates to its screens between app updates.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -44,8 +69,8 @@
           ]
         },
         {
-          "name": "Hide rating prompt (Android TV)",
-          "description": "Stops the review prompt from Google Play in the Android TV app.",
+          "name": "Hide rating prompt",
+          "description": "Stops the review prompt from Google Play.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -54,7 +79,7 @@
           ]
         },
         {
-          "name": "Show release times (Android TV)",
+          "name": "Show release times",
           "description": "Shows the day and time in your time zone when an upcoming episode or title is released.",
           "use": true,
           "options": [
@@ -72,6 +97,106 @@
       "developer": "Apple"
     },
     {
+      "app_name": "MLB",
+      "package": "com.bamnetworks.mobile.android.gameday.atbat",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics and audience-measurement services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Hide betting odds",
+          "description": "Removes the betting-odds banner from the scores screen.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Mask live ad breaks",
+          "description": "Covers live gambling-ad breaks with a notice.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads before on-demand videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        },
+        {
+          "name": "Translate ad break screen",
+          "description": "Experimental. Shows the \"We'll be right back!\" screen in your device's language when it is Arabic, Chinese, French, German, Greek, Italian, Korean, Portuguese, Russian, Spanish, Tagalog, or Vietnamese. Other languages show English. The translations come from a translation service. Please submit corrections or rewrites through GitHub issues.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.21.0.76"
+          ]
+        }
+      ],
+      "developer": "com.bamnetworks"
+    },
+    {
       "app_name": "STARZ",
       "package": "com.bydeluxe.d3.android.program.starz",
       "patches": [
@@ -81,7 +206,9 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "6.12.0"
+            "6.12.0",
+            "6.12.1",
+            "6.11.0"
           ]
         },
         {
@@ -90,25 +217,41 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "6.12.0"
-          ]
-        },
-        {
-          "name": "Hide VPN connection",
-          "description": "Hides an active VPN from the app's checks on the phone.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "6.12.0"
+            "6.12.0",
+            "6.12.1",
+            "6.11.0"
           ]
         },
         {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
-            "6.12.0"
+            "6.12.0",
+            "6.12.1",
+            "6.11.0"
           ]
         },
         {
@@ -117,25 +260,9 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.12.0"
-          ]
-        },
-        {
-          "name": "Remove social sign-in",
-          "description": "Removes the Sign in with Google and Sign in with Apple options.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.12.0"
-          ]
-        },
-        {
-          "name": "Report Wi-Fi connection",
-          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "6.12.0"
+            "6.12.0",
+            "6.12.1",
+            "6.11.0"
           ]
         },
         {
@@ -144,21 +271,9 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "6.12.0"
-          ]
-        },
-        {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
-          "use": false,
-          "options": [
-            {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
-            }
-          ],
-          "compatible_versions": [
-            "6.12.0"
+            "6.12.0",
+            "6.12.1",
+            "6.11.0"
           ]
         }
       ],
@@ -187,19 +302,31 @@
           ]
         },
         {
-          "name": "Hide VPN connection",
-          "description": "Hides an active VPN from the app's checks on the phone.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "26.20.0+rc3-2026.11.02"
-          ]
-        },
-        {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
             "26.20.0+rc3-2026.11.02"
           ]
@@ -208,15 +335,6 @@
           "name": "Hide rating prompt",
           "description": "Stops Google Play's rate-this-app sheet.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.20.0+rc3-2026.11.02"
-          ]
-        },
-        {
-          "name": "Report Wi-Fi connection",
-          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "26.20.0+rc3-2026.11.02"
@@ -239,31 +357,254 @@
           "compatible_versions": [
             "26.20.0+rc3-2026.11.02"
           ]
+        }
+      ],
+      "developer": "Disney"
+    },
+    {
+      "app_name": "MGM+",
+      "package": "com.epix.epix.now",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "241.0.2026241001"
+          ]
         },
         {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
+          "name": "Disable MGM+ AI",
+          "description": "Turns off the MGM+ AI chat assistant, its prompts, and the AI-picks rows.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "241.0.2026241001"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "241.0.2026241001"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
           "options": [
             {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
             }
           ],
           "compatible_versions": [
-            "26.20.0+rc3-2026.11.02"
+            "241.0.2026241001"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "241.0.2026241001"
+          ]
+        },
+        {
+          "name": "Skip lion intro",
+          "description": "Opens the app after the MGM+ logo, without the lion intro video.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "241.0.2026241001"
+          ]
+        }
+      ],
+      "developer": "MGMPlus Entertainment LLC"
+    },
+    {
+      "app_name": "ESPN",
+      "package": "com.espn.score_center",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.13.2"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.13.2"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "6.13.2"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.13.2"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes pre-roll, mid-roll, and pause ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.13.2"
           ]
         }
       ],
       "developer": "Disney"
     },
     {
+      "app_name": "FOX One: Live News, Sports, TV",
+      "package": "com.fox.foxone",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.20.0"
+          ]
+        },
+        {
+          "name": "Disable Pairip license check",
+          "description": "Lets the patched app start by skipping Google's Pairip license check.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.20.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.20.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "1.20.0"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.20.0"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads in on-demand videos and the limits on skipping live TV breaks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.20.0"
+          ]
+        }
+      ],
+      "developer": "Fox Digital Services, LLC"
+    },
+    {
       "app_name": "YouTube for Android TV",
       "package": "com.google.android.youtube.tv",
       "patches": [
         {
-          "name": "Skip injected ads",
-          "description": "Turns YouTube for Android TV into the standalone ad-free YouTube TV app \"YT TV+\" (see this app's description), and removes the ads YouTube injects into YouTube TV on-demand videos and DVR recordings, plus ad and analytics tracking. It does not patch regular YouTube. Live broadcast commercials are part of the broadcast and still play. Sign in with an activation code at tv.youtube.com/start.",
+          "name": "YT TV+ (ad-free YouTube TV)",
+          "description": "Makes this app into YT TV+, an ad-free YouTube TV app that installs beside your other apps. It loads the YouTube TV live guide, library, and DVR, and removes the ads YouTube adds to on-demand videos and recordings, along with ad and analytics tracking. It does not give you regular YouTube. Commercials that are part of a live broadcast still play. Sign in with the code at tv.youtube.com/start.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -272,6 +613,129 @@
         }
       ],
       "developer": "Google LLC"
+    },
+    {
+      "app_name": "YouTube TV: Live TV & more",
+      "package": "com.google.android.youtube.tvunplugged",
+      "patches": [
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads YouTube adds to on-demand videos and recordings in the official YouTube TV app, along with ad and analytics tracking. Experimental and not yet tested on a device. It needs version 4.01.03, for Android TV devices on Android 12 or later. Commercials that are part of a live broadcast still play.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.01.03"
+          ]
+        }
+      ],
+      "developer": "Google LLC"
+    },
+    {
+      "app_name": "NFL",
+      "package": "com.gotv.nflgamecenter.us.lite",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "18.27.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "18.27.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "18.27.0"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.27.0"
+          ]
+        },
+        {
+          "name": "Reject tracking consent",
+          "description": "Answers the app's tracking consent prompt with Reject All, so the prompt does not appear and the optional trackers stay off.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.27.0"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Stops the video ads before and during clips and highlights.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.27.0"
+          ]
+        }
+      ],
+      "developer": "NFL Enterprises LLC"
+    },
+    {
+      "app_name": "Hulu for Android TV",
+      "package": "com.hulu.livingroomplus",
+      "patches": [
+        {
+          "name": "Block analytics & tracking (experimental)",
+          "description": "Blocks the app's analytics and tracking requests (Hulu telemetry, Conviva, and Adobe) through an in-process native hook, with no root. Functional traffic is untouched.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "C59F39CFP3.10.33"
+          ]
+        },
+        {
+          "name": "Skip ads (experimental)",
+          "description": "Removes the ads Hulu stitches into its on-demand videos, through an in-process native hook, with no root. It removed the ad breaks from an on-demand episode in testing, but it has not been tested widely and may not remove every ad. It only removes explicit ad periods, so it does not affect ad-free content. Live broadcast commercials are part of the broadcast and still play. Sign in with the activation code at hulu.com/activate.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "C59F39CFP3.10.33"
+          ]
+        }
+      ],
+      "developer": "Disney"
     },
     {
       "app_name": "JustWatch - Streaming Guide",
@@ -283,7 +747,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -292,7 +757,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -301,7 +767,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -319,16 +786,39 @@
             }
           ],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -337,7 +827,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -346,7 +837,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -355,7 +847,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -364,21 +857,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
-          ]
-        },
-        {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
-          "use": false,
-          "options": [
-            {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
-            }
-          ],
-          "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         },
         {
@@ -387,11 +867,94 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.43.8"
+            "26.43.8",
+            "26.44.5"
           ]
         }
       ],
       "developer": "JustWatch GmbH"
+    },
+    {
+      "app_name": "NBA: Live Games & Scores",
+      "package": "com.nbaimd.gametime.nba2011",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0.20261026155843"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0.20261026155843"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "1.1.0.20261026155843"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0.20261026155843"
+          ]
+        },
+        {
+          "name": "Reject tracking consent",
+          "description": "Answers the app's tracking consent prompt with Reject All, so the prompt does not appear and the optional trackers stay off.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0.20261026155843"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads the app plays before and during videos. Ads that are part of a live broadcast still play.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.0.20261026155843"
+          ]
+        }
+      ],
+      "developer": "NBA Properties, Inc."
     },
     {
       "app_name": "NewsNation",
@@ -403,7 +966,8 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.94"
+            "4.94",
+            "4.71"
           ]
         },
         {
@@ -412,16 +976,114 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.94"
+            "4.94",
+            "4.71"
           ]
         },
         {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "4.94",
+            "4.71"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops the \"rate this app\" dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.94",
+            "4.71"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the video ads before clips.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.94",
+            "4.71"
+          ]
+        }
+      ],
+      "developer": "Nexstar Inc."
+    },
+    {
+      "app_name": "PBS: TV Shows & Documentaries",
+      "package": "com.pbs.video",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.94"
+            "5.27.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.27.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "5.27.0"
           ]
         },
         {
@@ -430,29 +1092,93 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.94"
+            "5.27.0"
           ]
         },
         {
-          "name": "Hide rating prompt (Android TV)",
-          "description": "Stops the \"rate this app\" dialog in the Android TV app.",
+          "name": "Skip ads",
+          "description": "Stops the sponsor messages before and during videos.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.94"
-          ]
-        },
-        {
-          "name": "Skip ads (Android TV)",
-          "description": "Removes the video ads before clips in the Android TV app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.94"
+            "5.27.0"
           ]
         }
       ],
-      "developer": "Nexstar Inc."
+      "developer": "PBS"
+    },
+    {
+      "app_name": "Peacock TV: Stream TV & Movies",
+      "package": "com.peacocktv.peacockandroid",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.200"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.10.200"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
+          "compatible_versions": [
+            "7.10.200"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.200"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Turns off the ads inserted into Peacock streams.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.10.200"
+          ]
+        }
+      ],
+      "developer": "Peacock TV LLC"
     },
     {
       "app_name": "Plex: Find Movies & TV Shows",
@@ -520,19 +1246,31 @@
           ]
         },
         {
-          "name": "Hide VPN connection",
-          "description": "Hides an active VPN from the app's checks on the phone.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "10.44.5001"
-          ]
-        },
-        {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
             "10.44.5001"
           ]
@@ -583,33 +1321,10 @@
           ]
         },
         {
-          "name": "Report Wi-Fi connection",
-          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "10.44.5001"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Removes the ads in videos, including ad breaks and image pause ads.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "10.44.5001"
-          ]
-        },
-        {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
-          "use": false,
-          "options": [
-            {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
-            }
-          ],
           "compatible_versions": [
             "10.44.5001"
           ]
@@ -640,19 +1355,31 @@
           ]
         },
         {
-          "name": "Hide VPN connection",
-          "description": "Hides an active VPN from the app's checks on the phone.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "22.0.0.36"
-          ]
-        },
-        {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
             "22.0.0.36"
           ]
@@ -667,33 +1394,10 @@
           ]
         },
         {
-          "name": "Report Wi-Fi connection",
-          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "22.0.0.36"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Blocks HBO Max's ad servers, so videos play without ads.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "22.0.0.36"
-          ]
-        },
-        {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
-          "use": false,
-          "options": [
-            {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
-            }
-          ],
           "compatible_versions": [
             "22.0.0.36"
           ]
@@ -738,19 +1442,31 @@
           ]
         },
         {
-          "name": "Hide VPN connection",
-          "description": "Hides an active VPN from the app's checks on the phone.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "22.0.0.36"
-          ]
-        },
-        {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
             "22.0.0.36"
           ]
@@ -765,33 +1481,10 @@
           ]
         },
         {
-          "name": "Report Wi-Fi connection",
-          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "22.0.0.36"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Blocks HBO Max's ad servers, so videos play without ads.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "22.0.0.36"
-          ]
-        },
-        {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
-          "use": false,
-          "options": [
-            {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
-            }
-          ],
           "compatible_versions": [
             "22.0.0.36"
           ]
@@ -828,6 +1521,7 @@
             }
           ],
           "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
@@ -837,24 +1531,38 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "17.3.0"
-          ]
-        },
-        {
-          "name": "Hide VPN connection",
-          "description": "Hides an active VPN from the app's checks on the phone.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
         {
           "name": "Hide device identifiers",
-          "description": "Gives the app a random Android ID and a zeroed advertising ID.",
+          "description": "Hides details about your device from the app. Choose which ones in the patch options.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the device. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Smart-home setup in the app can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops the app's scans for Bluetooth devices and beacons, and hides paired devices from it. Smart-home setup in the app stops working. Remotes and controllers keep working."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background."
+            }
+          ],
           "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
@@ -864,6 +1572,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
@@ -873,15 +1582,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "17.3.0"
-          ]
-        },
-        {
-          "name": "Report Wi-Fi connection",
-          "description": "Makes the app see a Wi-Fi connection when the phone is on mobile data.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
@@ -891,6 +1592,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
@@ -900,20 +1602,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         },
         {
-          "name": "Spoof carrier",
-          "description": "Hides your mobile carrier from the app, or reports a carrier name you choose.",
-          "use": false,
-          "options": [
-            {
-              "key": "carrierName",
-              "description": "The carrier name the app sees. Pick one from the list or type any name. Blank hides the carrier."
-            }
-          ],
+          "name": "Translate ad break screen",
+          "description": "Experimental. Shows the \"We'll be right back!\" screen in your device's language when it is Arabic, Chinese, French, German, Greek, Italian, Korean, Portuguese, Russian, Spanish, Tagalog, or Vietnamese. Other languages show English. The translations come from a translation service. Please submit corrections or rewrites through GitHub issues.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
+            "17.4.0",
             "17.3.0"
           ]
         }
@@ -922,9 +1621,16 @@
     }
   ],
   "patches_name": "semicoloncolonel",
-  "fingerprint": "c2aea62232ca51a626f3289753c58194762e1e4dede96813292c04098d5514f1",
-  "release_notes": "# [1.1.0-dev.49](https://github.com/semicoloncolonel/mobile-morphe-patches/releases/tag/v1.1.0-dev.49) (2026-11-17)\n\n### Bug Fixes\n\n* Mark Hulu (Android TV) experimental and support JustWatch (Android TV) 26.44.5 ([6f5fb57](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/6f5fb571dda6fbe6bcb85df4b97228b851ff48e4))\n\nBuilt from [mobile-morphe-patches v1.1.0-dev.49](https://github.com/semicoloncolonel/mobile-morphe-patches/releases/tag/v1.1.0-dev.49).",
-  "release_tag": "v1.1.0-dev.49",
-  "release_date": "2026-11-17T03:33:59Z",
-  "isPreRelease": true
+  "fingerprint": "b7b16f00b5154220a376b9762060256fead40fa67fd68b8163f4d4bca255bf29",
+  "release_notes": "# [1.1.0-dev.52](https://github.com/semicoloncolonel/mobile-morphe-patches/releases/tag/v1.1.0-dev.52) (2026-11-17)\n\n### Features\n\n* Label the Android TV builds in the combined bundle as moving in 1.2.0 ([f624592](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/f6245923214f4764c1925f06aa5cb94dd5602797))\n\nBuilt from [mobile-morphe-patches v1.1.0-dev.52](https://github.com/semicoloncolonel/mobile-morphe-patches/releases/tag/v1.1.0-dev.52).",
+  "release_tag": "v1.1.0-dev.52",
+  "release_date": "2026-11-17T04:28:08Z",
+  "isPreRelease": true,
+  "stars": 2,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",
+  "repoDescription": "Patches for Android TV streaming apps",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }

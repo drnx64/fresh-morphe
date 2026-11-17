@@ -2,9 +2,9 @@
   "bundle": "jibon-k",
   "channel": "latest",
   "repo_url": "https://github.com/jibon-k/notes-morphe-patches",
-  "created_at": "2026-11-01T08:21:56",
-  "version": "1.0.1",
-  "description": "## [1.0.1](https://github.com/jibon-k/notes-morphe-patches/compare/v1.0.0...v1.0.1) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* target Samsung Notes 4.4.48.15 only ([6f319fb](https://github.com/jibon-k/notes-morphe-patches/commit/6f319fb06ec502faa2c66866e6e488b576e7cbf8))",
+  "created_at": "2026-11-17T09:35:07",
+  "version": "1.2.0",
+  "description": "## [1.2.0](https://github.com/jibon-k/notes-morphe-patches/compare/v1.1.0...v1.2.0) (2026-11-17)\n\n### ✨ New Features\n\n* rename backup to local backup and sync ([6610480](https://github.com/jibon-k/notes-morphe-patches/commit/661048033b1f37f38e3a599841d9b6c939bc9c86))\n* samsung cloud sync through web sign-in ([a5eb27d](https://github.com/jibon-k/notes-morphe-patches/commit/a5eb27d5dac390eadaf7de9bf5c0cf533e44f308))",
   "apps": [
     {
       "app_name": "Samsung Notes",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Backup to folder",
-          "description": "Adds a Backup row to the bottom of the side menu: backs up changed notes as .sdocx files to a folder you choose (any folder, including SD card or a synced folder).",
+          "description": "Adds a Local backup row to the bottom of the side menu: backs up changed notes as .sdocx files to a folder you choose (any folder, including SD card or a synced folder).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -43,7 +43,7 @@
         },
         {
           "name": "Crash fixes",
-          "description": "Reports no iris scanner, and finds the pen settings layouts and colour palettes after a package rename (otherwise the colour picker crashes).",
+          "description": "Reports no iris scanner, makes Share (PDF, image, Word...) open the app chooser, and finds the pen settings layouts, colour palettes and share provider after a package rename.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -61,8 +61,8 @@
         },
         {
           "name": "Folder sync",
-          "description": "Experimental. Syncs notes with other devices through a shared folder (for example one kept in sync by Syncthing): \"Sync now\" in the Backup menu, and automatically each time the app opens.",
-          "use": false,
+          "description": "Experimental. Syncs notes with other devices through a shared folder (for example one kept in sync by Syncthing): \"Sync now\" in the Local backup menu, and automatically each time the app opens.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "4.4.48.15"
@@ -70,8 +70,8 @@
         },
         {
           "name": "Hide Samsung account features",
-          "description": "Hides Samsung Cloud sync, sign-in prompts, sharing, Galaxy AI and note locking. They need a Samsung-signed app; this matters mostly on Samsung phones, where the account exists.",
-          "use": true,
+          "description": "Hides Samsung Cloud sync, sign-in, sharing, Galaxy AI and note locking.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "4.4.48.15"
@@ -118,6 +118,15 @@
           ]
         },
         {
+          "name": "Samsung account sign-in",
+          "description": "Signs in to your Samsung account on Samsung's web page to sync with Samsung Cloud. Needs the Samsung Account app to be absent.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.4.48.15"
+          ]
+        },
+        {
           "name": "Samsung framework compatibility",
           "description": "Adds stand-ins for One UI framework classes and redirects calls to One UI-only methods and fields, so the app runs on non-Samsung Android.",
           "use": true,
@@ -137,7 +146,16 @@
         },
         {
           "name": "Turn off Samsung cloud components",
-          "description": "Turns off the Samsung account, cloud sync, push and co-editing services and receivers. They can't work in a patched app and would only run in the background.",
+          "description": "Turns off the Samsung account, cloud sync, push and co-editing services. Samsung Cloud sync stops working.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.4.48.15"
+          ]
+        },
+        {
+          "name": "Turn off telemetry",
+          "description": "Turns off Samsung Analytics, crash reports, usage surveys and marketing uploads, the Play review prompt, Google Meet sharing and Google Sign-In, and starts Firebase only if Samsung sync uses it.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -149,10 +167,10 @@
     }
   ],
   "patches_name": "Jibon's Notes patches",
-  "fingerprint": "2e54849bcf7fd3dd0a0bf00a22839752e5c0a05550ea5e0bef7765d90a0c5c74",
-  "release_notes": "## 1.0.0 (2026-10-30)\n\n### 🐛 Bug Fixes\n\n* say when the backup or sync folder is gone ([e170c24](https://github.com/jibon-k/notes-morphe-patches/commit/e170c242da6d657c9d285e6bdd321729bdcbeeaa))\n\n### ✨ New Features\n\n* back up and sync notes through a folder ([187fb6d](https://github.com/jibon-k/notes-morphe-patches/commit/187fb6db2d19847f1e4f4035d4ce51917d0603e3))\n* credit link under the Backup row ([d71e72b](https://github.com/jibon-k/notes-morphe-patches/commit/d71e72bb027688794d7ef2717106d00b2d8969f4))\n* hide Samsung account and cloud features ([1c99e89](https://github.com/jibon-k/notes-morphe-patches/commit/1c99e89339666a9e4dac4b2134522eff32020d8f))\n* own app name, logo and accent colour ([efd17db](https://github.com/jibon-k/notes-morphe-patches/commit/efd17db457d04251c274b34cf1d97087b1ff39f8))\n* pen button actions with learned buttons ([6c507f8](https://github.com/jibon-k/notes-morphe-patches/commit/6c507f809950a3cde5807d061fef0279dc1c9b93))\n* pen support and finger drawing ([e1ee711](https://github.com/jibon-k/notes-morphe-patches/commit/e1ee71162e31b7a5a95e565ff8b757a5f2d7d79d))\n* run Samsung Notes without One UI ([d7f033f](https://github.com/jibon-k/notes-morphe-patches/commit/d7f033fa93f58381bc1c599bfc7437245ba589ec))\n",
-  "release_tag": "v1.0.0",
-  "release_date": "2026-10-30T05:44:51Z",
+  "fingerprint": "57b243c12066a93d520a1df0f584e4bf3da5a4e29f852470627228a73f4e87d8",
+  "release_notes": "## [1.2.0](https://github.com/jibon-k/notes-morphe-patches/compare/v1.1.0...v1.2.0) (2026-11-17)\n\n### ✨ New Features\n\n* rename backup to local backup and sync ([6610480](https://github.com/jibon-k/notes-morphe-patches/commit/661048033b1f37f38e3a599841d9b6c939bc9c86))\n* samsung cloud sync through web sign-in ([a5eb27d](https://github.com/jibon-k/notes-morphe-patches/commit/a5eb27d5dac390eadaf7de9bf5c0cf533e44f308))\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-11-17T09:35:51Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/47941812?v=4&s=128",

@@ -2,9 +2,9 @@
   "bundle": "toidicakhia-morphe",
   "channel": "latest",
   "repo_url": "https://github.com/toidicakhia/morphe-app-patches",
-  "created_at": "2026-11-15T04:18:44",
-  "version": "1.7.1",
-  "description": "## [1.7.1](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.0...v1.7.1) (2026-11-15)\n\n### 🚀 Updated App Support\n\n* **vtvgo:** update patches for VTVGo 12.11.13 ([5d60f23](https://github.com/toidicakhia/morphe-app-patches/commit/5d60f23ce6e991d2b67b6218214fa5f029db0c4a))",
+  "created_at": "2026-11-17T10:49:39",
+  "version": "1.7.2",
+  "description": "## [1.7.2](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.1...v1.7.2) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* remove Remote Desktop Manager and TeraBox patches ([ca27fff](https://github.com/toidicakhia/morphe-app-patches/commit/ca27fff))\n\n### ✨ New Features\n\n* **vtvgo:** sync the settings button with the exact control bar state ([5c63afd](https://github.com/toidicakhia/morphe-app-patches/commit/5c63afd))\n* **vtvgo:** track player layout changes for the settings button ([fe13840](https://github.com/toidicakhia/morphe-app-patches/commit/fe13840))\n* **vtvgo:** sync quality menu with player state ([757a3e3](https://github.com/toidicakhia/morphe-app-patches/commit/757a3e3))\n* **vtvgo:** add video quality settings button ([bc16a72](https://github.com/toidicakhia/morphe-app-patches/commit/bc16a72))\n* **devolutions:** add Skip Age Verification patch ([7de5f63](https://github.com/toidicakhia/morphe-app-patches/commit/7de5f63))\n* **locket:** add Unlock Locket Gold patch ([72fc89e](https://github.com/toidicakhia/morphe-app-patches/commit/72fc89e))\n* **vtvgo:** add Unlock Video Quality patch ([abaf1c1](https://github.com/toidicakhia/morphe-app-patches/commit/abaf1c1))\n* **devolutions:** add Faster Startup patch for Remote Desktop Manager ([cc4dec4](https://github.com/toidicakhia/morphe-app-patches/commit/cc4dec4))",
   "apps": [
     {
       "app_name": "HTTP Sniffer",
@@ -74,74 +74,6 @@
       "developer": "Cloudflare, Inc."
     },
     {
-      "app_name": "Remote Desktop Manager",
-      "package": "com.devolutions.remotedesktopmanager",
-      "patches": [
-        {
-          "name": "Disable Analytics / Telemetry",
-          "description": "Disables Firebase Analytics, Crashlytics and Performance, including advertising-ID and app-set-ID collection. The Devolutions product telemetry is sent by the .NET code inside the AOT assemblies, use the app's \"Disable sending analytics\" option to turn it off.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.3.1.5"
-          ]
-        },
-        {
-          "name": "Disable SSL Pinning",
-          "description": "Bypasses the certificate validation of the .NET/Mono TLS stack so a debugging proxy can read the app's HTTPS traffic. Certificate pinning implemented in managed code lives in the ahead-of-time compiled .NET assemblies and is not affected. Not selected by default.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "2026.3.1.5"
-          ]
-        },
-        {
-          "name": "Faster Startup",
-          "description": "Skips the Firebase Analytics connector, Crashlytics session tracking and the emoji-compat initializer that run on every launch. Crash reporting, push notifications and background jobs keep working; analytics and app-quality session data are not collected.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.3.1.5"
-          ]
-        },
-        {
-          "name": "Remove Ad ID Permissions",
-          "description": "Removes the advertising ID, Privacy Sandbox ad-services and Play install-referrer permissions.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.3.1.5"
-          ]
-        },
-        {
-          "name": "Skip Age Verification",
-          "description": "Answers the Google Play age-signals request locally instead of waiting for the Play Store. The managed startup code blocks on that answer for up to two minutes, and the call never completes on sideloaded builds or devices without Play Services. Also skips the follow-up age-range query. Not selected by default: it disables the regional age gate.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "2026.3.1.5"
-          ]
-        }
-      ],
-      "developer": "Devolutions"
-    },
-    {
-      "app_name": "TeraBox: 1TB Cloud & AI Space",
-      "package": "com.dubox.drive",
-      "patches": [
-        {
-          "name": "Hide ads",
-          "description": "Blocks feed, banner, interstitial, app-open and video player ads on every page except Benefits, where rewarded ads stay available.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.27.5"
-          ]
-        }
-      ],
-      "developer": "Flextech Inc."
-    },
-    {
       "app_name": "EZVIZ",
       "package": "com.ezviz",
       "patches": [
@@ -192,6 +124,31 @@
       "developer": "com.locket"
     },
     {
+      "app_name": "WeDJ",
+      "package": "com.pioneerdj.wedj",
+      "patches": [
+        {
+          "name": "Disable Analytics / Telemetry",
+          "description": "Stops WeDJ's Mobylog tracking client from uploading playback, device-connection and startup app-check events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.4.5"
+          ]
+        },
+        {
+          "name": "Unlock Unlimited Playback",
+          "description": "Makes WeDJ treat the \"Unlock Unlimited Playback\" in-app purchase as owned. The free-version limit that stops playback after loading a few tracks is removed and the purchase entry disappears from the track browser. Use WeDJ 1.1.1.3 on Android 9-12 and 1.1.4.5 on Android 13+. Client-side only: the Play Store transaction itself is not simulated.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.1.4.5"
+          ]
+        }
+      ],
+      "developer": "com.pioneerdj"
+    },
+    {
       "app_name": "NetMonster",
       "package": "cz.mroczis.netmonster",
       "patches": [
@@ -205,7 +162,7 @@
           ]
         }
       ],
-      "developer": "cz.mroczis"
+      "developer": "Michal Mroček"
     },
     {
       "app_name": "VTV Go - TV Mọi nơi, Mọi lúc",
@@ -279,10 +236,10 @@
     }
   ],
   "patches_name": "App Patches",
-  "fingerprint": "9fe4de48c9ae187e5ae7a78e1839946de78f9c45560c54cd434c4a36dd5e86fa",
-  "release_notes": "## [1.7.1](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.0...v1.7.1) (2026-11-15)\n\n### 🚀 Updated App Support\n\n* **vtvgo:** update patches for VTVGo 12.11.13 ([5d60f23](https://github.com/toidicakhia/morphe-app-patches/commit/5d60f23ce6e991d2b67b6218214fa5f029db0c4a))\n",
-  "release_tag": "v1.7.1",
-  "release_date": "2026-11-15T04:19:24Z",
+  "fingerprint": "715604f00b2a0f61dc894a41f5ddc9b1e67cf6b1a17fe3c6eaab60421b09bff1",
+  "release_notes": "## [1.7.2](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.1...v1.7.2) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* remove Remote Desktop Manager and TeraBox patches ([ca27fff](https://github.com/toidicakhia/morphe-app-patches/commit/ca27fff))\n\n### ✨ New Features\n\n* **vtvgo:** sync the settings button with the exact control bar state ([5c63afd](https://github.com/toidicakhia/morphe-app-patches/commit/5c63afd))\n* **vtvgo:** track player layout changes for the settings button ([fe13840](https://github.com/toidicakhia/morphe-app-patches/commit/fe13840))\n* **vtvgo:** sync quality menu with player state ([757a3e3](https://github.com/toidicakhia/morphe-app-patches/commit/757a3e3))\n* **vtvgo:** add video quality settings button ([bc16a72](https://github.com/toidicakhia/morphe-app-patches/commit/bc16a72))\n* **devolutions:** add Skip Age Verification patch ([7de5f63](https://github.com/toidicakhia/morphe-app-patches/commit/7de5f63))\n* **locket:** add Unlock Locket Gold patch ([72fc89e](https://github.com/toidicakhia/morphe-app-patches/commit/72fc89e))\n* **vtvgo:** add Unlock Video Quality patch ([abaf1c1](https://github.com/toidicakhia/morphe-app-patches/commit/abaf1c1))\n* **devolutions:** add Faster Startup patch for Remote Desktop Manager ([cc4dec4](https://github.com/toidicakhia/morphe-app-patches/commit/cc4dec4))\n",
+  "release_tag": "v1.7.2",
+  "release_date": "2026-11-17T10:50:19Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/108525966?v=4&s=128",

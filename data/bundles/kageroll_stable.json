@@ -2,44 +2,86 @@
   "bundle": "kageroll",
   "channel": "stable",
   "repo_url": "https://github.com/Ikuradachi/Kageroll",
-  "created_at": "2026-11-13T03:30:57",
-  "version": "1.4.0",
-  "description": "## [1.4.0](https://github.com/Ikuradachi/Kageroll/compare/v1.3.0...v1.4.0) (2026-11-13)\n\n### ✨ New Features\n\n* add performance bloat and background service patches ([536107c](https://github.com/Ikuradachi/Kageroll/commit/536107c63d54d2e3e8911a9aac9eb24e911eba10))\n\n### 🐛 Bug Fixes\n\n* support for v3.129.1, broken disabletelemetry and suppressbloatworkers patch ([ee83706](https://github.com/Ikuradachi/Kageroll/commit/ee837064624fc827ac1d012ae6f696b2247035a5))",
+  "created_at": "2026-11-17T09:54:35",
+  "version": "1.5.0",
+  "description": "## [1.5.0](https://github.com/Ikuradachi/Kageroll/compare/v1.4.0...v1.5.0) (2026-11-17)\n\n### ⚠ BREAKING CHANGES\n\n* drop supported version 3.127.0 and 3.128.0\n\n### ✨ New Features\n\n* add Crunchyroll 1080p download quality patch ([462a94a](https://github.com/Ikuradachi/Kageroll/commit/462a94a15f960fd7c3f29f94070f8ec124881ab7))\n* add Crunchyroll auto-skip segments patch ([f939ba0](https://github.com/Ikuradachi/Kageroll/commit/f939ba0835b0acc3e5e414137ebb85c6fc5864b9))\n* add Crunchyroll manual video quality patch ([4eb26c5](https://github.com/Ikuradachi/Kageroll/commit/4eb26c531379a5530c3a6dafce6afd460b2acfd7))\n* drop supported version 3.127.0 and 3.128.0 ([51ff491](https://github.com/Ikuradachi/Kageroll/commit/51ff49197dbf3c27958e9fd2390bb1a9d7542d8f))\n\n### 🐛 Bug Fixes\n\n* group patches by category ([b0d6f85](https://github.com/Ikuradachi/Kageroll/commit/b0d6f857f98d5cad65c5db2ded636990c2918d4b))\n* harden background services and telemetry patches ([615b0b4](https://github.com/Ikuradachi/Kageroll/commit/615b0b4303e24357e9f4cae54f04bb770319616f))",
   "apps": [
     {
       "app_name": "Crunchyroll: Anime Streaming",
       "package": "com.crunchyroll.crunchyroid",
       "patches": [
         {
+          "name": "1080p download quality",
+          "description": "Upgrades the High offline download quality tier to 1080p and selects the single best matching video track.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.129.1"
+          ]
+        },
+        {
           "name": "Allow screenshots",
           "description": "Removes FLAG_SECURE from membership card and Compose dialogs to permit screenshots and disables Android 14+ screen capture detection in the Arc reader.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
+            "3.129.1"
+          ]
+        },
+        {
+          "name": "Auto-skip segments",
+          "description": "Automatically skips intros, recaps, credits, previews, or promos in the video player.",
+          "use": true,
+          "options": [
+            {
+              "key": "skipIntro",
+              "description": "Automatically skip opening/intro segments."
+            },
+            {
+              "key": "skipRecap",
+              "description": "Automatically skip episode recap segments."
+            },
+            {
+              "key": "skipCredits",
+              "description": "Automatically skip ending credits (preserves post-credits scenes when present)."
+            },
+            {
+              "key": "skipPreview",
+              "description": "Automatically skip next-episode preview segments."
+            },
+            {
+              "key": "skipPromo",
+              "description": "Automatically skip promotional segments."
+            }
+          ],
+          "compatible_versions": [
             "3.129.1"
           ]
         },
         {
           "name": "Disable background services",
-          "description": "Disables background broadcast receivers, schedulers, widget polling, Firebase session service binding, and DataTransport JobScheduler tasks to eliminate background wakeups and idle battery drain.",
+          "description": "Disables background broadcast receivers, schedulers, widget polling, Firebase sessions initialization and service binding, and DataTransport JobScheduler tasks to eliminate background wakeups and idle battery drain.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
             "3.129.1"
           ]
         },
         {
           "name": "Disable telemetry",
-          "description": "Blocks Segment and Mux events, disables periodic telemetry loops and flush timers (Mux 1000ms playback poll, Segment 30s flush, Braze push flush alarms, Datadog upload thread), disables Firebase Analytics after consent updates, denies automatic Crashlytics uploads and selects disabled Datadog setup.",
+          "description": "Blocks Segment initialization, Mux events, advertising ID lookup, Firebase Analytics pre-init, Crashlytics NDK native loading, Braze session and push flush alarms, and Datadog uploads; disables Firebase Analytics after consent updates, denies automatic Crashlytics uploads, and selects disabled Datadog setup.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
+            "3.129.1"
+          ]
+        },
+        {
+          "name": "Manual video quality",
+          "description": "Replaces the preset quality tiers with manual per-resolution selection and Auto.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
             "3.129.1"
           ]
         },
@@ -49,8 +91,6 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
             "3.129.1"
           ]
         },
@@ -60,8 +100,6 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
             "3.129.1"
           ]
         },
@@ -92,8 +130,6 @@
             }
           ],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
             "3.129.1"
           ]
         },
@@ -103,8 +139,6 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.127.0",
-            "3.128.0",
             "3.129.1"
           ]
         }
@@ -113,10 +147,10 @@
     }
   ],
   "patches_name": "Kageroll",
-  "fingerprint": "c7a5149cc7d5c15b65ad1256f981677228702c8dc2e6eaf529dad7059716c5de",
-  "release_notes": "## [1.4.0](https://github.com/Ikuradachi/Kageroll/compare/v1.3.0...v1.4.0) (2026-11-13)\n\n### ✨ New Features\n\n* add performance bloat and background service patches ([536107c](https://github.com/Ikuradachi/Kageroll/commit/536107c63d54d2e3e8911a9aac9eb24e911eba10))\n\n### 🐛 Bug Fixes\n\n* support for v3.129.1, broken disabletelemetry and suppressbloatworkers patch ([ee83706](https://github.com/Ikuradachi/Kageroll/commit/ee837064624fc827ac1d012ae6f696b2247035a5))\n",
-  "release_tag": "v1.4.0",
-  "release_date": "2026-11-13T03:31:35Z",
+  "fingerprint": "26f5be3c0c78eec199a8bd563f19d15eed2db2ad4489913880b0fe338e203b62",
+  "release_notes": "## [1.5.0](https://github.com/Ikuradachi/Kageroll/compare/v1.4.0...v1.5.0) (2026-11-17)\n\n### ⚠ BREAKING CHANGES\n\n* drop supported version 3.127.0 and 3.128.0\n\n### ✨ New Features\n\n* add Crunchyroll 1080p download quality patch ([462a94a](https://github.com/Ikuradachi/Kageroll/commit/462a94a15f960fd7c3f29f94070f8ec124881ab7))\n* add Crunchyroll auto-skip segments patch ([f939ba0](https://github.com/Ikuradachi/Kageroll/commit/f939ba0835b0acc3e5e414137ebb85c6fc5864b9))\n* add Crunchyroll manual video quality patch ([4eb26c5](https://github.com/Ikuradachi/Kageroll/commit/4eb26c531379a5530c3a6dafce6afd460b2acfd7))\n* drop supported version 3.127.0 and 3.128.0 ([51ff491](https://github.com/Ikuradachi/Kageroll/commit/51ff49197dbf3c27958e9fd2390bb1a9d7542d8f))\n\n### 🐛 Bug Fixes\n\n* group patches by category ([b0d6f85](https://github.com/Ikuradachi/Kageroll/commit/b0d6f857f98d5cad65c5db2ded636990c2918d4b))\n* harden background services and telemetry patches ([615b0b4](https://github.com/Ikuradachi/Kageroll/commit/615b0b4303e24357e9f4cae54f04bb770319616f))\n",
+  "release_tag": "v1.5.0",
+  "release_date": "2026-11-17T09:55:18Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/93316768?v=4&s=128",
