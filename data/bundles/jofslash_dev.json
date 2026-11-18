@@ -2,14 +2,114 @@
   "bundle": "jofslash",
   "channel": "dev",
   "repo_url": "https://github.com/JoFSlash/quora-patches",
-  "created_at": "2026-11-17T20:25:35",
-  "version": "1.1.0",
-  "description": "## [1.1.0](https://github.com/JoFSlash/quora-patches/compare/v1.0.1...v1.1.0) (2026-11-17)\n\n### ✨ New Features\n\n* Add \"Block web trackers\", \"Disable update prompts\", \"Disable rating prompts\" and \"Open links in browser\" patches ([67e7009](https://github.com/JoFSlash/quora-patches/commit/67e7009fcf560a60176092020e10aa461ba7cced))\n* Add \"Hide AI answers\", \"Hide suggested questions\", \"Hide Quora+ promotions\", \"Hide downvote button\" and \"Enable text selection\" patches ([2d71246](https://github.com/JoFSlash/quora-patches/commit/2d712464a449d1a0f0f3b1540694522615507b87))\n* Add \"Hide Quora+ answers\", \"Hide related questions\", \"Hide Spaces suggestions\" and \"Disable video autoplay\" patches ([f9a3bf2](https://github.com/JoFSlash/quora-patches/commit/f9a3bf2c14476c4d5f97f856a07a07fd4e2b907d))",
+  "created_at": "2026-11-17T23:36:20",
+  "version": "1.3.1",
+  "description": "## [1.3.1](https://github.com/JoFSlash/quora-patches/compare/v1.3.0...v1.3.1) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* Data saver shows tap targets only for answer and feed images ([e95f4e9](https://github.com/JoFSlash/quora-patches/commit/e95f4e9525b796b027306c10d6a4a96b5eca41da))\n* Stop \"Clean shared links\" from crashing the app on start ([5809add](https://github.com/JoFSlash/quora-patches/commit/5809addd6641bb495015a6eeb3c9f058ddad49da))",
   "apps": [
     {
       "app_name": "Quora: the knowledge platform",
       "package": "com.quora.android",
       "patches": [
+        {
+          "name": "AMOLED dark mode",
+          "description": "Uses a pure black background when Quora's dark theme is on.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Answer font",
+          "description": "Sets answers in a serif or a sans-serif font of your phone.",
+          "use": false,
+          "options": [
+            {
+              "key": "answerFont",
+              "description": "The kind of font answers are set in."
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block Branch tracking",
+          "description": "Turns on Branch's \"disable tracking\" mode and turns off its debug mode. Branch tracks where installs come from. Quora's quora.app.link links may open with less detail.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block advertising ID",
+          "description": "Stops the app from sending your advertising ID and Android ID to Quora.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block app telemetry",
+          "description": "Stops the app from sending usage logs to Quora, such as reading time, tab presses, experiments, app speed and errors.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block authors and Spaces",
+          "description": "Hides answers and posts by the people and Spaces you pick.",
+          "use": false,
+          "options": [
+            {
+              "key": "authors",
+              "description": "Names as Quora shows them, separated by commas. Example: Jane Doe, Cats of Quora"
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block clipboard reading",
+          "description": "Stops Quora's pages from reading what you copied. Pasting with the keyboard still works.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block promotional notifications",
+          "description": "Drops digest and promotional push notifications. Replies, comments and other notifications about you still arrive.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Block tracking logs",
+          "description": "Stops Quora's pages from passing performance and sign-up tracking events to the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
         {
           "name": "Block web trackers",
           "description": "Blocks requests from Quora pages to third-party analytics and tracking services.",
@@ -21,8 +121,58 @@
           ]
         },
         {
+          "name": "Clean shared links",
+          "description": "Removes tracking parameters from Quora links you copy or share.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Comfortable reading",
+          "description": "More space between the lines and paragraphs of answers.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Data saver",
+          "description": "Images load only when you tap them.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Disable WebView debugging",
+          "description": "Stops the app from letting a connected computer inspect its pages, which would show your account's cookies.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Disable analytics",
-          "description": "Turns off Firebase Analytics, Crashlytics, Firebase Performance and Facebook app events, and stops the advertising ID from being collected.",
+          "description": "Turns off Firebase Analytics, Crashlytics, Firebase Performance and Facebook app events, and their advertising ID collection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Disable notification prompt",
+          "description": "Stops the app from asking for permission to show notifications. You can still turn notifications on in Android's settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -41,9 +191,68 @@
           ]
         },
         {
+          "name": "Disable sign-in prompts",
+          "description": "Stops Google's \"Save password?\" and automatic Google sign-in prompts. You can still sign in with the buttons on the login page.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Disable swipe gestures",
+          "description": "Turns off pulling down to refresh and swiping sideways between feeds, so a page doesn't reload or change while you read.",
+          "use": false,
+          "options": [
+            {
+              "key": "disablePullToRefresh",
+              "description": ""
+            },
+            {
+              "key": "disableSwipeBetweenFeeds",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Disable tab prefetching",
+          "description": "Saves data by loading the other tabs only when you open them.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Disable tracking jobs",
+          "description": "Stops the background jobs that tell Quora every hour whether your phone is charging and every day whether notifications are on.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Disable update prompts",
           "description": "Stops the app from showing the Google Play update screen.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Disable vibration",
+          "description": "Stops the app from vibrating when you tap buttons such as upvote.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "3.2.42",
@@ -71,8 +280,53 @@
           ]
         },
         {
+          "name": "Expand answers",
+          "description": "Opens shortened answers in full, so you don't have to tap \"(more)\".",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Filter keywords",
+          "description": "Hides answers, posts and questions that mention words you pick.",
+          "use": false,
+          "options": [
+            {
+              "key": "keywords",
+              "description": "Words or phrases, separated by commas. Matching ignores case. Example: crypto, horoscope, Elon Musk"
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Hide AI answers",
           "description": "Hides answers written by Poe bots.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide Ask button",
+          "description": "Hides the button for asking a question in the top bar and on pages.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide Poe",
+          "description": "Hides links and buttons that open Poe or Quora's AI assistant.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -111,8 +365,38 @@
           ]
         },
         {
+          "name": "Hide badges",
+          "description": "Hides the red dots and counts on the bottom bar tabs.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide counts",
+          "description": "Hides upvote, view and share counts on answers and posts.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Hide downvote button",
           "description": "Hides the downvote button on answers and posts.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide people suggestions",
+          "description": "Hides \"People you may know\" and other people to follow in the feed.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -141,9 +425,56 @@
           ]
         },
         {
+          "name": "Hide tabs",
+          "description": "Removes the tabs you pick from the bottom bar. Home always stays.",
+          "use": false,
+          "options": [
+            {
+              "key": "hideFollowingTab",
+              "description": ""
+            },
+            {
+              "key": "hideAnswerTab",
+              "description": ""
+            },
+            {
+              "key": "hideSpacesTab",
+              "description": ""
+            },
+            {
+              "key": "hideNotificationsTab",
+              "description": ""
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Keep screen on",
+          "description": "Keeps the screen from turning off while a page is open.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Open links in browser",
           "description": "Opens links to other websites in your default browser instead of an in-app browser tab.",
           "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Patch settings",
+          "description": "Long-press the Home tab to switch the page patches on and off and edit the filters, without patching again.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "3.2.42",
@@ -159,16 +490,66 @@
             "3.2.42",
             "3.2.30"
           ]
+        },
+        {
+          "name": "Save images",
+          "description": "Long-press an image you opened full screen to save it to Pictures/Quora.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Spoof installer",
+          "description": "Reports Google Play as the app installer, so Quora does not treat the patched app as installed from an unknown source.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Start tab",
+          "description": "Opens the app on the tab you pick instead of Home.",
+          "use": false,
+          "options": [
+            {
+              "key": "startTab",
+              "description": "The tab the app opens on. If that tab is hidden, the app opens on Home."
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Text size",
+          "description": "Makes the text on every page larger or smaller.",
+          "use": false,
+          "options": [
+            {
+              "key": "textSize",
+              "description": "Text size in percent of the default size."
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
         }
       ],
       "developer": "Quora, Inc."
     }
   ],
   "patches_name": "JoFSlash Patches",
-  "fingerprint": "d87d4565b3081f7e1d62f941ba7a055ded2c74b5e8502bf478d2ce4cec38f22f",
-  "release_notes": "## [1.1.0](https://github.com/JoFSlash/quora-patches/compare/v1.0.1...v1.1.0) (2026-11-17)\n\n### ✨ New Features\n\n* Add \"Block web trackers\", \"Disable update prompts\", \"Disable rating prompts\" and \"Open links in browser\" patches ([67e7009](https://github.com/JoFSlash/quora-patches/commit/67e7009fcf560a60176092020e10aa461ba7cced))\n* Add \"Hide AI answers\", \"Hide suggested questions\", \"Hide Quora+ promotions\", \"Hide downvote button\" and \"Enable text selection\" patches ([2d71246](https://github.com/JoFSlash/quora-patches/commit/2d712464a449d1a0f0f3b1540694522615507b87))\n* Add \"Hide Quora+ answers\", \"Hide related questions\", \"Hide Spaces suggestions\" and \"Disable video autoplay\" patches ([f9a3bf2](https://github.com/JoFSlash/quora-patches/commit/f9a3bf2c14476c4d5f97f856a07a07fd4e2b907d))\n",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-11-17T20:26:24Z",
+  "fingerprint": "a03aabb57e2f2ace26a2875d8ba68643adb41ebb31541ade3dbec14fee48b9e2",
+  "release_notes": "## [1.3.1](https://github.com/JoFSlash/quora-patches/compare/v1.3.0...v1.3.1) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* Data saver shows tap targets only for answer and feed images ([e95f4e9](https://github.com/JoFSlash/quora-patches/commit/e95f4e9525b796b027306c10d6a4a96b5eca41da))\n* Stop \"Clean shared links\" from crashing the app on start ([5809add](https://github.com/JoFSlash/quora-patches/commit/5809addd6641bb495015a6eeb3c9f058ddad49da))\n",
+  "release_tag": "v1.3.1",
+  "release_date": "2026-11-17T23:37:02Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/293396698?v=4&s=128",

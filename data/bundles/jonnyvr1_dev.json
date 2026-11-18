@@ -2,9 +2,9 @@
   "bundle": "jonnyvr1",
   "channel": "dev",
   "repo_url": "https://github.com/JonnyVR1/morph-patches",
-  "created_at": "2026-11-11T03:45:00",
+  "created_at": "2026-11-17T22:30:00",
   "version": "0.0.1-dev2",
-  "description": "## Updated App Support\n\n- Updated to Tantan 7.5.4 (versionCode 2754010)\n- All 13 patches verified compatible with new version\n- Added versionCode support for Morph Manager compatibility check",
+  "description": "## Tantan 7.5.4 — telemetry kill + nag cleanup wave\n\n- FoxStatistics core/uploaders, GAID, OneID createid+storage, GA4 collection, FB auto-events disabled (DEX-verified)\n- Ad-click URL device-id substitution neutered (qm60.F); AdMob init + UMP consent form killed\n- Carousel/official-advert/incentive-ad dialogs repaired (were silent no-ops)\n- Notification-permission, post-swipe marketing, home operation-activity, profile-completeness nags suppressed\n- Chat-history search + per-contact chat backgrounds/nicknames unlocked\n- Discovery online/popular theme blur regression fixed; roaming location cap removed; ProfileLike quota display\n- Me-tab promotion badge + incomplete-profile dot suppressed; push_largepic AB override reverted\n- Premium Unlock made 7.5.4-compatible (safe matchAllOrNull, inner-class-hijack-proof resolver anchors)\n- All 13 patches apply to 7.5.4 (2754010); new/changed targets DEX-verified on 7.5.4",
   "apps": [
     {
       "app_name": "tantan - Global Dating App",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "AB Test Override",
-          "description": "Overrides A/B test values to enable beneficial features: instant match, quick message, batch icebreak, chat optimization, letter features, me tab revamp, push enhancements, verified chat, tiered membership, platinum membership, surprise box, anti-harass customization",
+          "description": "Overrides A/B test values to enable beneficial features: instant match, quick message, batch icebreak, chat optimization, letter features, me tab revamp, verified chat, tiered membership, platinum membership, surprise box, anti-harass customization",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -21,7 +21,7 @@
         },
         {
           "name": "Ad Removal",
-          "description": "Removes all ad displays: navigation bar banner, native feed ads, live streaming banner ads, live video feed ads, live square ads, conversation Google ads, marriage guide card, four-select-one card, daily selection card, visitor list ads, likers ads, meet likers ads, meet visitor ads, splash screen ads, profile photo carousel ads, incentive video ads, fake splash view, video ad player, official advert, ad reward dialogs, live streaming ad user, treasure prize ads",
+          "description": "Removes all ad displays: navigation bar banner, native feed ads, live streaming banner ads, live video feed ads, live square ads, conversation Google ads, marriage guide card, four-select-one card, daily selection card, visitor list ads, likers ads, meet likers ads, meet visitor ads, splash screen ads, profile photo carousel ads, incentive video ads, fake splash view, video ad player, official advert, ad reward dialogs, live streaming ad user, treasure prize ads, Town Tales overlay, chat request promotional entries",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -39,8 +39,17 @@
         },
         {
           "name": "Dialog Cleanup",
-          "description": "Removes annoying promotional dialogs: 5-star rating, appstore rating, version upgrade, offline popup, notification permission, phone auth prompts, purchase pages, purchase confirm, overheat popup, phone verify",
+          "description": "Removes annoying promotional dialogs: 5-star rating, appstore rating, version upgrade, offline popup, notification permission, phone auth prompts, purchase pages, purchase confirm, overheat popup, phone verify, fake recall-match bait popup, UX experience questionnaire",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.5.4"
+          ]
+        },
+        {
+          "name": "Experimental Unlock",
+          "description": "Opt-in, server-dependent unlocks: voice-to-text transcription flag, buzz call +time (prolong) count, AI chat companion gate, and fake-GPS default-coordinate blacklist bypass. Client gates only — the server may refuse (quota/region); each has a graceful failure path. Enable only after device-testing",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "7.5.4"
@@ -65,8 +74,17 @@
           ]
         },
         {
+          "name": "Location Enhancement",
+          "description": "Improves location handling for roaming/fake-GPS: lowers the location-upload distance gate from 500m to 1m, removes the GPS re-fetch throttle so moves apply on the next deck reload, and zeroes the mock-location flag in the momosec payload",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.5.4"
+          ]
+        },
+        {
           "name": "Messaging Enhancement",
-          "description": "Removes message limits, unlimited pin chat, voice/video calls, quick chat, typing indicator, free gifts, letter, greeting, ice breaker, read receipts, AI translation, message recall, group chat, live chat, message filter, chat partner config, ODiamond visitor config, prologue config, love buzz data, secret crush limit, boost limit, message tab revision, collapsible conversation, chat helper AI, call duration, conversation refresh interval, heartbeat match, message integration, assistant message clear, love buzz prolong count, ice break dialog config, continues op conv config",
+          "description": "Removes message limits, unlimited pin chat, voice/video calls, quick chat, typing indicator, free gifts, letter, greeting, ice breaker, read receipts, AI translation, message recall, group chat, live chat, message filter, chat partner config, ODiamond visitor config, prologue config, love buzz data, secret crush limit, boost limit, message tab revision, collapsible conversation, chat helper AI, call duration, conversation refresh interval, heartbeat match, message integration, assistant message clear, love buzz prolong count, ice break dialog config, continues op conv config, unlimited recall window, telepathy reply minimums",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -93,7 +111,16 @@
         },
         {
           "name": "Privacy Enhancement",
-          "description": "Advanced privacy protections: root/emulator detection bypass, ShuMeng SDK blocking, Facebook SDK emulator detection bypass, APK signature verification bypass, package enumeration prevention, VPN/proxy detection bypass, overlay detection bypass",
+          "description": "Advanced privacy protections: root/emulator detection bypass, ShuMeng SDK blocking, Facebook SDK emulator detection bypass, APK signature verification bypass, package enumeration prevention, VPN/proxy detection bypass, overlay detection bypass, screenshot-warning nag suppression, telepathy private-photo screenshot enable",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.5.4"
+          ]
+        },
+        {
+          "name": "Push Notification Filter",
+          "description": "Suppresses marketing and promo push notifications (growth, picks, coupons, membership nags, visit bait) while keeping messages, calls, matches, moments and friend requests. Filtered by PushMessage.intent at the single notification-posting choke point",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -102,7 +129,7 @@
         },
         {
           "name": "Remote Config Override",
-          "description": "Overrides remote configuration values: removes quick chat limits, disables text buzz auto-delete",
+          "description": "Overrides remote configuration values: removes quick chat limits, disables text buzz auto-delete, suppresses scheduled promo popups and see/visitor red-dot nags, enables multi-gender / looking-for-everyone selector",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -132,7 +159,7 @@
     }
   ],
   "patches_name": "Morph Patches",
-  "fingerprint": "ffb25138cb6c04df393d380ac30a8a6d56926684051fdca42dca4d525701fe34",
+  "fingerprint": "48c0c0733f45c030dc3b1da3f534abbbbb86001fe0392a097073b8c5675b1aa1",
   "release_notes": "## Updated App Support\n\n- Updated to Tantan 7.5.4 (versionCode 2754010)\n- All 13 patches verified compatible with new version\n- Added versionCode support for Morph Manager compatibility check",
   "release_tag": "v0.0.1-dev2",
   "release_date": "2026-11-11T04:09:08Z",
