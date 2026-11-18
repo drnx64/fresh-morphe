@@ -2,9 +2,9 @@
   "bundle": "lavinhoque33",
   "channel": "latest",
   "repo_url": "https://github.com/lavinhoque33/revanced-patches",
-  "created_at": "2026-11-18T02:27:34",
-  "version": "1.39.0",
-  "description": "<!-- Modified by lavinhoque33, 2026-11-18. -->\n## YouTube Music\n\n- **Restart prompts:** Use the modern capsule dialog for settings changes and the first-run prompt. Refs #61.\n- **Hide Get Music Premium:** Add a restart-required setting for the account-menu footer, enabled by default.\n  Turn it off to restore stock visibility, including on Music 9.45.51. Refs #62.\n\n## YouTube\n\n- **Download wording:** Rename Shorts' **Show external downloader menu** to **Show download menu**, covering\n  both built-in and external downloaders. Clarify the backend setting and the player-overlay download button.\n  Refs #60.\n\n## Both apps\n\n- **Settings:** Prevent duplicate restart prompts while a dialog or delayed restart is already pending.\n  Refs #61.\n",
+  "created_at": "2026-11-18T17:47:22",
+  "version": "1.41.0",
+  "description": "<!-- Modified by lavinhoque33, 2026-11-18. -->\n## YouTube\n\n- **Glass miniplayer:** Minimal and Minimal 2 can match the Glass navigation bar, including its opacity. Turn the effect off under **RVX Settings → Player → Miniplayer → Glass miniplayer**. The switch appears when a supported Minimal style and the Glass navigation bar are active. Adapted from [Ramik4’s Morphe implementation](https://github.com/MorpheApp/morphe-patches/pull/4801). (#63)\n- **Minimize animation:** Removed the late resize in the rebuilt Minimal miniplayers without slowing the slide. (#64)\n- **Change start page:** Renamed **Library** to **You** without changing its destination or restoring the old navigation tab. Removed Explore, Trending, Podcasts, and Hype from the picker. Shopping remains. (#54)\n- **Snack bar:** Set corner radius, separate light and dark fills, and border color and width under **RVX Settings → General → Snack bar**. The same radius can optionally apply to the playlist bottom bar. Previously patched custom colors need to be entered again. (#65)\n\n## YouTube Music\n\n- **Overlay filters:** **Hide overlay filter** and **Hide player overlay filter** are separate switches under **RVX Settings → Player**. Both default off; the double-tap setting is unchanged. (#65)\n\nRepatch with **RVX Patches v1.41.0** in Morphe Manager to get these changes. The new appearance settings can then be changed in the apps without repatching.\n",
   "apps": [
     {
       "app_name": "YouTube Music",
@@ -461,8 +461,8 @@
         },
         {
           "name": "Hide overlay filter",
-          "description": "Removes, at compile time, the dark overlay that appears when player flyout menus are open.",
-          "use": false,
+          "description": "Adds an option to hide the dark overlay behind player flyout menus.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "9.40.51",
@@ -475,8 +475,8 @@
         },
         {
           "name": "Hide player overlay filter",
-          "description": "Removes, at compile time, the dark overlay that appears when single-tapping in the player.",
-          "use": false,
+          "description": "Adds an option to hide the dark overlay behind the player controls.",
+          "use": true,
           "options": [],
           "compatible_versions": [
             "9.40.51",
@@ -2164,28 +2164,7 @@
           "name": "Snack bar components",
           "description": "Adds options to hide or change components related to the snack bar.",
           "use": true,
-          "options": [
-            {
-              "key": "cornerRadius",
-              "description": "Specify a corner radius for the snack bar."
-            },
-            {
-              "key": "applyCornerRadiusToPlaylistBottomBar",
-              "description": "Whether to apply the same corner radius to the bottom bar of the playlist as the snack bar."
-            },
-            {
-              "key": "darkThemeBackgroundColor",
-              "description": "Specify a background color for the snack bar. You can specify hex color (#AARRGGBB) or color resource reference."
-            },
-            {
-              "key": "lightThemeBackgroundColor",
-              "description": "Specify a background color for the snack bar. You can specify hex color (#AARRGGBB) or color resource reference."
-            },
-            {
-              "key": "strokeColor",
-              "description": "Specify a stroke color for the snack bar. You can specify hex color."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
             "21.39.525",
             "21.45.90",
@@ -2422,10 +2401,10 @@
     }
   ],
   "patches_name": "RVX Patches",
-  "fingerprint": "6976cf8c81b853e8eceffa27bbb57dc6766449d17720142172db02f5caf87693",
-  "release_notes": "<!-- Modified by lavinhoque33, 2026-11-18. -->\n## YouTube Music\n\n- **Restart prompts:** Use the modern capsule dialog for settings changes and the first-run prompt. Refs #61.\n- **Hide Get Music Premium:** Add a restart-required setting for the account-menu footer, enabled by default.\n  Turn it off to restore stock visibility, including on Music 9.45.51. Refs #62.\n\n## YouTube\n\n- **Download wording:** Rename Shorts' **Show external downloader menu** to **Show download menu**, covering\n  both built-in and external downloaders. Clarify the backend setting and the player-overlay download button.\n  Refs #60.\n\n## Both apps\n\n- **Settings:** Prevent duplicate restart prompts while a dialog or delayed restart is already pending.\n  Refs #61.\n",
-  "release_tag": "v1.39.0",
-  "release_date": "2026-11-18T02:43:19Z",
+  "fingerprint": "c080496c9145558b179126fc748ab4f67c078afcc6432e90b3d98ba6f8a634be",
+  "release_notes": "<!-- Modified by lavinhoque33, 2026-11-18. -->\n## YouTube\n\n- **Glass miniplayer:** Minimal and Minimal 2 can match the Glass navigation bar, including its opacity. Turn the effect off under **RVX Settings → Player → Miniplayer → Glass miniplayer**. The switch appears when a supported Minimal style and the Glass navigation bar are active. Adapted from [Ramik4’s Morphe implementation](https://github.com/MorpheApp/morphe-patches/pull/4801). (#63)\n- **Minimize animation:** Removed the late resize in the rebuilt Minimal miniplayers without slowing the slide. (#64)\n- **Change start page:** Renamed **Library** to **You** without changing its destination or restoring the old navigation tab. Removed Explore, Trending, Podcasts, and Hype from the picker. Shopping remains. (#54)\n- **Snack bar:** Set corner radius, separate light and dark fills, and border color and width under **RVX Settings → General → Snack bar**. The same radius can optionally apply to the playlist bottom bar. Previously patched custom colors need to be entered again. (#65)\n\n## YouTube Music\n\n- **Overlay filters:** **Hide overlay filter** and **Hide player overlay filter** are separate switches under **RVX Settings → Player**. Both default off; the double-tap setting is unchanged. (#65)\n\nRepatch with **RVX Patches v1.41.0** in Morphe Manager to get these changes. The new appearance settings can then be changed in the apps without repatching.\n",
+  "release_tag": "v1.41.0",
+  "release_date": "2026-11-18T17:49:24Z",
   "isPreRelease": false,
   "stars": 15,
   "avatarUrl": "https://avatars.githubusercontent.com/u/14330893?v=4&s=128",

@@ -2,9 +2,9 @@
   "bundle": "jofslash",
   "channel": "latest",
   "repo_url": "https://github.com/JoFSlash/quora-patches",
-  "created_at": "2026-11-17T23:36:20",
-  "version": "1.3.1",
-  "description": "## [1.3.1](https://github.com/JoFSlash/quora-patches/compare/v1.3.0...v1.3.1) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* Data saver shows tap targets only for answer and feed images ([e95f4e9](https://github.com/JoFSlash/quora-patches/commit/e95f4e9525b796b027306c10d6a4a96b5eca41da))\n* Stop \"Clean shared links\" from crashing the app on start ([5809add](https://github.com/JoFSlash/quora-patches/commit/5809addd6641bb495015a6eeb3c9f058ddad49da))",
+  "created_at": "2026-11-18T12:52:48",
+  "version": "1.7.1",
+  "description": "## [1.7.1](https://github.com/JoFSlash/quora-patches/compare/v1.7.0...v1.7.1) (2026-11-18)\n\n### Documentation\n\n* Badges, supported versions up top, direct APKMirror links, FAQ ([08fdfff](https://github.com/JoFSlash/quora-patches/commit/08fdfff80eec35d25b0a029401f835ad65c921c4))\n* Fold the patch list by category and fix a broken paragraph ([4d4728d](https://github.com/JoFSlash/quora-patches/commit/4d4728d93a711c84e8d11d44325d6bdf2c00d65f))\n* **Needs release:** Point the changelog links at the current commits ([57ed9fc](https://github.com/JoFSlash/quora-patches/commit/57ed9fc66dae3e0c1ab797e1ce3807cb903e42d0))\n* Say where to get Quora, how to update, and that you sign in again ([9d4c589](https://github.com/JoFSlash/quora-patches/commit/9d4c5894649e556b74cc86047f3a54f7ecbd28a9))",
   "apps": [
     {
       "app_name": "Quora: the knowledge platform",
@@ -141,10 +141,25 @@
           ]
         },
         {
-          "name": "Data saver",
-          "description": "Images load only when you tap them.",
+          "name": "Copy answer text",
+          "description": "Adds a Copy button next to Share under answers and posts. It copies their text without formatting.",
           "use": false,
           "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Data saver",
+          "description": "Images load only when you tap them. By default only on mobile data; on Wi-Fi they load as usual.",
+          "use": false,
+          "options": [
+            {
+              "key": "loadOnWifi",
+              "description": "Images load as usual on Wi-Fi and wait for a tap only on mobile data or a hotspot. Can also be switched in Patch settings."
+            }
+          ],
           "compatible_versions": [
             "3.2.42",
             "3.2.30"
@@ -172,7 +187,7 @@
         },
         {
           "name": "Disable notification prompt",
-          "description": "Stops the app from asking for permission to show notifications. You can still turn notifications on in Android's settings.",
+          "description": "Stops the app from asking to show notifications, both its own prompt and Android's. You can still turn notifications on in Android's settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -241,7 +256,7 @@
         },
         {
           "name": "Disable update prompts",
-          "description": "Stops the app from showing the Google Play update screen.",
+          "description": "Stops the app from showing the Google Play update screen and the feed's update card.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -281,7 +296,7 @@
         },
         {
           "name": "Expand answers",
-          "description": "Opens shortened answers in full, so you don't have to tap \"(more)\".",
+          "description": "Opens shortened answers on question pages, and shows the whole answer preview in the feed.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -325,6 +340,16 @@
           ]
         },
         {
+          "name": "Hide Follow buttons",
+          "description": "Hides the small \"Follow\" next to author and Space names. Profiles and Space pages keep theirs.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Hide Poe",
           "description": "Hides links and buttons that open Poe or Quora's AI assistant.",
           "use": false,
@@ -355,6 +380,16 @@
           ]
         },
         {
+          "name": "Hide Spaces posts",
+          "description": "Hides posts from Spaces in the feed, so it shows answers to questions only.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Hide Spaces suggestions",
           "description": "Hides the Spaces you might like suggestions in the feed.",
           "use": false,
@@ -375,8 +410,28 @@
           ]
         },
         {
+          "name": "Hide comment previews",
+          "description": "Hides the \"123 comments from … and more\" row under answers. Comments still open from the comment button.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Hide counts",
           "description": "Hides upvote, view and share counts on answers and posts.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide credentials",
+          "description": "Hides the line under authors' names, such as \"Lives in Vienna\", and \"Upvoted by\" lines. The date stays.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -389,6 +444,21 @@
           "description": "Hides the downvote button on answers and posts.",
           "use": false,
           "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide old answers",
+          "description": "Hides answers and posts older than the number of years you pick, in the feed and on question pages.",
+          "use": false,
+          "options": [
+            {
+              "key": "maxAge",
+              "description": "Answers and posts at least this many years old are hidden."
+            }
+          ],
           "compatible_versions": [
             "3.2.42",
             "3.2.30"
@@ -415,8 +485,33 @@
           ]
         },
         {
+          "name": "Hide seen items",
+          "description": "Dims or hides feed items you already opened when the feed shows them again. The list of opened items stays on your phone.",
+          "use": false,
+          "options": [
+            {
+              "key": "seenMode",
+              "description": "Whether items you already opened are dimmed or hidden."
+            }
+          ],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Hide suggested questions",
           "description": "Hides the questions for you to answer in the feed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
+          "name": "Hide surveys",
+          "description": "Hides Quora's surveys in the feed, such as \"How satisfied are you with your home feed?\".",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -452,6 +547,16 @@
           ]
         },
         {
+          "name": "Keep place on return",
+          "description": "Keeps open answers and your place in the feed when you come back to the app, instead of closing them and reloading the feed.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.2.42",
+            "3.2.30"
+          ]
+        },
+        {
           "name": "Keep screen on",
           "description": "Keeps the screen from turning off while a page is open.",
           "use": false,
@@ -473,7 +578,7 @@
         },
         {
           "name": "Patch settings",
-          "description": "Long-press the Home tab to switch the page patches on and off and edit the filters, without patching again.",
+          "description": "Long-press the Home tab, or open Settings > Morphe > Quora patches, to switch the page patches on and off and edit the filters, without patching again. It also tells you when Quora changes its pages so that some patches stop working.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -546,10 +651,10 @@
     }
   ],
   "patches_name": "JoFSlash Patches",
-  "fingerprint": "d053898313124432ef5ae76a4a2b5041d37b7ae890e70f33e64c62b28eeed64f",
-  "release_notes": "## [1.3.1](https://github.com/JoFSlash/quora-patches/compare/v1.3.0...v1.3.1) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* Data saver shows tap targets only for answer and feed images ([e95f4e9](https://github.com/JoFSlash/quora-patches/commit/e95f4e9525b796b027306c10d6a4a96b5eca41da))\n* Stop \"Clean shared links\" from crashing the app on start ([5809add](https://github.com/JoFSlash/quora-patches/commit/5809addd6641bb495015a6eeb3c9f058ddad49da))\n",
-  "release_tag": "v1.3.1",
-  "release_date": "2026-11-17T23:37:02Z",
+  "fingerprint": "686240fa56157affb834d2dd03488579a264e4ec154a4d463a09328400b3e52a",
+  "release_notes": "## [1.7.1](https://github.com/JoFSlash/quora-patches/compare/v1.7.0...v1.7.1) (2026-11-18)\n\n### Documentation\n\n* Badges, supported versions up top, direct APKMirror links, FAQ ([08fdfff](https://github.com/JoFSlash/quora-patches/commit/08fdfff80eec35d25b0a029401f835ad65c921c4))\n* Fold the patch list by category and fix a broken paragraph ([4d4728d](https://github.com/JoFSlash/quora-patches/commit/4d4728d93a711c84e8d11d44325d6bdf2c00d65f))\n* **Needs release:** Point the changelog links at the current commits ([57ed9fc](https://github.com/JoFSlash/quora-patches/commit/57ed9fc66dae3e0c1ab797e1ce3807cb903e42d0))\n* Say where to get Quora, how to update, and that you sign in again ([9d4c589](https://github.com/JoFSlash/quora-patches/commit/9d4c5894649e556b74cc86047f3a54f7ecbd28a9))\n",
+  "release_tag": "v1.7.1",
+  "release_date": "2026-11-18T12:53:34Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/293396698?v=4&s=128",

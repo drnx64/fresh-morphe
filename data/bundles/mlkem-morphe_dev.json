@@ -2,10 +2,46 @@
   "bundle": "mlkem-morphe",
   "channel": "dev",
   "repo_url": "https://github.com/Mlkem/Morphe",
-  "created_at": "2026-11-17T23:16:40Z",
-  "version": "1.0.0-dev.35",
-  "description": "## [1.0.0-dev.35](https://github.com/Mlkem/Morphe/compare/v1.0.0-dev.34...v1.0.0-dev.35) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* **ci:** allow new patches and app targets without blocking beta releases ([56da66c](https://github.com/Mlkem/Morphe/commit/56da66cbeec369e5397928f4f61dbf97052e28da))\n* **ci:** recognize Music League native-library patch in bundle verification ([260ef1e](https://github.com/Mlkem/Morphe/commit/260ef1ec8042cdca5d598d1bc4e8c19378f0f893))\n* **music-league:** extract merged native libraries for 1.4.11 startup recovery ([48d77ad](https://github.com/Mlkem/Morphe/commit/48d77adb47e3eb5e68d3f749c1babcde330fa230))\n* **music-league:** flag 1.4.11 compatibility as experimental ([d5a106f](https://github.com/Mlkem/Morphe/commit/d5a106f0fdbf0b4ca7c5c486e562dec01a7035a4))\n* **music-league:** make DisableAdRemoteConfigPatch.kt opt-in for crash isolation ([a3c5b9e](https://github.com/Mlkem/Morphe/commit/a3c5b9e7e8f11634a887c17e3a8fdba51ab72e56))\n* **music-league:** make DisableAdSdkManifestPatch.kt opt-in for crash isolation ([085f03b](https://github.com/Mlkem/Morphe/commit/085f03bfdeb3cdd727b0790a3ec76ec197e2e3b4))\n* **music-league:** make DisableExpoUpdatesPatch.kt opt-in for crash isolation ([14390fc](https://github.com/Mlkem/Morphe/commit/14390fceec495cfda3e5a34d238532f79d118a59))\n* **music-league:** make NeutralizeAdUnitIdsPatch.kt opt-in for crash isolation ([83b5c6d](https://github.com/Mlkem/Morphe/commit/83b5c6d4b039f8711a0e8a15b9077c34f1f741da))\n* **music-league:** make NeutralizePremiumPromptsPatch.kt opt-in for crash isolation ([787b4c6](https://github.com/Mlkem/Morphe/commit/787b4c6d677176b9d3a93f7efc59d631f5eb3ad8))\n* **music-league:** make PinLocalExpoConfigPatch.kt opt-in for crash isolation ([8267fbf](https://github.com/Mlkem/Morphe/commit/8267fbf20e30d52f1ea000dc3c1723e066f847ff))\n* **music-league:** target split XAPK input instead of standalone APK ([32f518e](https://github.com/Mlkem/Morphe/commit/32f518edf113b02d94572051779f99ce58987f6d))\n* **release:** honor optional Morphe bundle signing configuration ([2a5b353](https://github.com/Mlkem/Morphe/commit/2a5b35305a3fa5aa4f3157201b712bba973392a5))\n* **release:** isolate publishing from app-specific regressions and report missing signing key ([67839c9](https://github.com/Mlkem/Morphe/commit/67839c91507b26e636936f075f96e9a178717441))\n* **release:** keep upstream APK network audits in CI, not beta publish gate ([19c0543](https://github.com/Mlkem/Morphe/commit/19c05438fdff3e6f6ffb0339a41025e274117e4e))\n* **release:** retry transient GitHub Packages plugin resolution failures ([0b5ed55](https://github.com/Mlkem/Morphe/commit/0b5ed55f8ca673d71c73b51d11ef6f185d0c9f5f))\n",
+  "created_at": "2026-11-18T18:08:43",
+  "version": "1.0.0-dev.37",
+  "description": "## [1.0.0-dev.37](https://github.com/Mlkem/Morphe/compare/v1.0.0-dev.36...v1.0.0-dev.37) (2026-11-18)\n\n### 🐛 Bug Fixes\n\n* **Open with:** support version 1.4 (20) with validated bytecode hooks ([36b3586](https://github.com/Mlkem/Morphe/commit/36b358604f038a02587b11f2e3ffe666235a5687))",
   "apps": [
+    {
+      "app_name": "Morphe Manager",
+      "package": "app.morphe.manager",
+      "patches": [
+        {
+          "name": "APKMirror search for collection apps",
+          "description": "Changes Morphe Manager's download links for this collection's supported apps. Walmart Canada 26.31, Anker eufy 6.1.20_31181/6.1.30_32823 and Gmail 2026.10.26.1012468012.Release open verified APKMirror APKM pages; other versions/apps, including Gboard and Songsterr, use a package-and-version Google search restricted to APKMirror, without nodpi. Niagara Launcher and Manager itself open their official GitHub releases. Apps outside the collection keep Manager's resolver. Does not download files automatically.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2.6.0",
+            "2.4.0-dev.1",
+            "2.4.0-dev.2",
+            "2.4.0-dev.3",
+            "2.4.0-dev.4"
+          ]
+        }
+      ],
+      "developer": "app.morphe"
+    },
+    {
+      "app_name": "Niagara Launcher ‧ Home Screen",
+      "package": "bitpit.launcher",
+      "patches": [
+        {
+          "name": "Automatic app folders",
+          "description": "Automatically sorts newly installed apps into native Niagara folders in Favorites, then hides their separate app-list icons after saving. Ten local categories with live switches in Settings > Productivity > Auto folders. Includes sort-existing and restore controls. Unknown apps go to Other Apps. Preserves pinned favorites, manually hidden apps and other profiles. Niagara 1.16.37 only; phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.16.37"
+          ]
+        }
+      ],
+      "developer": "Mellowdrop Studio"
+    },
     {
       "app_name": "Walmart: Grocery & Shopping",
       "package": "ca.walmart.ecommerceapp",
@@ -16,6 +52,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -25,15 +62,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
         {
           "name": "Default Lists Tab — Canada",
-          "description": "Open Lists when entering My Items. Walmart Canada 26.31.",
+          "description": "Open Lists when entering My Items. Walmart Canada 26.31 and 26.41.2.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -43,6 +82,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -52,15 +92,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
         {
           "name": "Patch Tools — Canada",
-          "description": "Replace Sparky's bottom tab with Patch tools: live ad/recording controls, searchable price trends, watchlists and targets, CSV/JSON export and restore, scanner, shopping calculators and diagnostics.",
+          "description": "Replace Sparky with a card-based tools menu: stock checker, barcode scanner, price history, shopping calculators, settings and backups. Includes Back navigation and dark-mode support.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -70,6 +112,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -79,6 +122,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -88,6 +132,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -97,6 +142,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -106,6 +152,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -115,6 +162,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
@@ -124,20 +172,54 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         },
         {
           "name": "Stock Availability — Canada",
-          "description": "Show Walmart's supplied availability and message below list item names. Unknown stays unknown; purchase limits are never treated as inventory counts.",
+          "description": "Show list availability. On 26.41.2, read product-detail quantities into Patch tools → Stock checker with separate pickup, delivery and shipping labels. Missing numbers stay unknown; no watchlist or order-limit guesses.",
           "use": true,
           "options": [],
           "compatible_versions": [
+            "26.41.2",
             "26.31"
           ]
         }
       ],
       "developer": "ca.walmart"
+    },
+    {
+      "app_name": "Gmail",
+      "package": "com.google.android.gm",
+      "patches": [
+        {
+          "name": "Gmail account visibility",
+          "description": "Adds Account visibility to Gmail settings and a long press on the account avatar. Hide or show individual switcher accounts, with Show all recovery. Keeps the current account visible. Does not hide mail, All inboxes, notifications or Android accounts. Creates a separate GmsCore copy; phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.10.26.1012468012.Release"
+          ]
+        }
+      ],
+      "developer": "Google LLC"
+    },
+    {
+      "app_name": "Gboard - the Google Keyboard",
+      "package": "com.google.android.inputmethod.latin",
+      "patches": [
+        {
+          "name": "Disable Gboard floating and one-handed modes",
+          "description": "Suppresses long-press popups containing one-handed mode, including holding Enter, and prevents automatic, toolbar and restored floating or one-handed keyboard activation. Select alongside your usual Gboard patches on the original Gboard APK. Preserves normal and split modes. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "18.5.4.993608717-release-arm64-v8a"
+          ]
+        }
+      ],
+      "developer": "Google LLC"
     },
     {
       "app_name": "Music League",
@@ -146,64 +228,81 @@
         {
           "name": "Disable Expo updates and backup restore",
           "description": "Forces the app to use the bundled local Hermes asset instead of cached Expo OTA updates or restored app data.",
-          "use": true,
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "1.4.9"
+            "1.4.9",
+            "1.4.11"
           ]
         },
         {
           "name": "Disable ad SDK manifest components",
           "description": "Disables bundled ad mediation components and removes ad identifier/ad services permissions.",
-          "use": true,
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "1.4.9"
+            "1.4.9",
+            "1.4.11"
           ]
         },
         {
           "name": "Disable ad and promo remote config",
           "description": "Blackholes ad/paywall/reward feature-flag keys and remote promo payload keys so the app cannot enable ad or upsell surfaces from remote config.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.4.9"
-          ]
-        },
-        {
-          "name": "Hermes hide ad promo surfaces",
-          "description": "Experimental Hermes bytecode edit: makes ad-card components return null. May prevent startup; opt in only for testing.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.4.9"
+            "1.4.9",
+            "1.4.11"
+          ]
+        },
+        {
+          "name": "Extract native libraries for merged XAPK",
+          "description": "Fixes the 1.4.11 missing-components startup path by requiring Android to extract bundled native libraries to disk. Does not bypass integrity or premium checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.4.9",
+            "1.4.11"
           ]
         },
         {
           "name": "Neutralize bundled ad unit IDs and premium banners",
           "description": "Replaces bundled ad unit IDs and premium/reward banner copy in the Hermes bundle with same-length non-serving/blank values while leaving the AdMob app ID intact.",
-          "use": true,
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "1.4.9"
+            "1.4.9",
+            "1.4.11"
           ]
         },
         {
           "name": "Neutralize premium and reward-ad prompts",
           "description": "Force-removes the remaining premium/reward banner strings from the bundled Hermes asset.",
-          "use": true,
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "1.4.9"
+            "1.4.9",
+            "1.4.11"
           ]
         },
         {
           "name": "Pin local Expo config",
           "description": "Neutralizes Expo OTA update configuration in the bundled Expo config so the APK prefers local bundled assets.",
-          "use": true,
+          "use": false,
           "options": [],
           "compatible_versions": [
-            "1.4.9"
+            "1.4.9",
+            "1.4.11"
+          ]
+        },
+        {
+          "name": "Remove Music League ad card container",
+          "description": "Experimental 1.4.11 fix for the empty home-screen ad card. Returns null from AdsCard to remove its container and spacing; opt in after backing up app data.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.4.9",
+            "1.4.11"
           ]
         }
       ],
@@ -214,16 +313,124 @@
       "package": "com.neave.zoomearth",
       "patches": [
         {
+          "name": "100 Zoom Earth favourites",
+          "description": "Raises the visible and add-location limits from 3 free / 30 Pro to 100 saved places. Keeps existing saved data and works independently of Pro. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.3.3"
+          ]
+        },
+        {
+          "name": "Allow Zoom Earth patched installation",
+          "description": "Experimental original-APK startup attempt; dev.10 still showed Get this app from Play on the phone. Do not select for the working LiteAPKs APK. Disables two local checks, preserves native VM assets and does not grant paid server access.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.3.3"
+          ]
+        },
+        {
+          "name": "Enable Zoom Earth Pro features",
+          "description": "Enables local Pro controls, hides Pro upsells and permits up to ten daily forecast rows when data is supplied. Paid radar/model data still uses the real account entitlement; this does not create a subscription. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.3.3"
+          ]
+        },
+        {
+          "name": "Quiet Zoom Earth prompts",
+          "description": "Disables automatic subscription popups and review requests. Manual subscription actions, permission prompts and weather/outage notices remain available. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.3.3"
+          ]
+        },
+        {
           "name": "Remove LiteAPKS nag",
-          "description": "Removes the injected LiteAPKS / 9MOD promotional popup from Zoom Earth.",
-          "use": true,
+          "description": "Legacy Zoom Earth 6.1 LiteAPKS/9MOD popup cleanup. Both original fingerprints must match; unverified on a phone.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "6.1"
           ]
+        },
+        {
+          "name": "Remove Zoom Earth LiteAPKs promotions",
+          "description": "Removes the two injected promotional startup calls from the supplied working LiteAPKs 6.3.3 APK. Preserves its restored startup methods and DEX layout. Use this APK as input; do not select the original-only startup patch. Phone retest required.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.3.3"
+          ]
+        },
+        {
+          "name": "Remove Zoom Earth ads",
+          "description": "Stops the bundled banner controller from initializing or showing ads, and collapses the ad footer. Works independently of Pro. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.3.3"
+          ]
         }
       ],
       "developer": "Neave Interactive"
+    },
+    {
+      "app_name": "Anker eufy",
+      "package": "com.oceanwing.battery.cam",
+      "patches": [
+        {
+          "name": "Auto-confirm Eufy mobile-data streaming",
+          "description": "Accepts only the exact Mobile Data Consuming streaming prompt. Checks Don't show again when exposed as a standard checkbox; other prompts, Wi-Fi and camera transport are unchanged. A brief prompt flash is possible. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.1.20_31181",
+            "6.1.30_32823"
+          ]
+        },
+        {
+          "name": "Hide Eufy Discover, Smart and Shop",
+          "description": "Hides Discover, Smart and Shop in the main bottom navigation, retaining original tab indices. Restored hidden tabs return to Home. Other Smart controls, cameras, events and Profile are preserved. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.1.20_31181",
+            "6.1.30_32823"
+          ]
+        },
+        {
+          "name": "Hide Eufy promotions",
+          "description": "Collapses the identified camera-home marketing and AI offer banners and promotional inbox cards, and closes the identified shopping and solar-panel offer popups. No network blocking or notification filtering; remote/React Native offers may remain. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.1.20_31181",
+            "6.1.30_32823"
+          ]
+        }
+      ],
+      "developer": "Anker"
+    },
+    {
+      "app_name": "Open with: link & file chooser",
+      "package": "com.openwith.app",
+      "patches": [
+        {
+          "name": "Enable Pro file-type handling",
+          "description": "Open with 1.2.1 (11) and 1.4 (20) local test: enables the shared Pro flag used by file-type settings and routing, and removes the two Play installation licence startup calls for a re-signed build. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.2.1",
+            "1.4"
+          ]
+        }
+      ],
+      "developer": "Pleiades7Apps"
     },
     {
       "app_name": "PushPress Members",
@@ -231,15 +438,83 @@
       "patches": [
         {
           "name": "Workouts: force CrossFit class",
-          "description": "On the Workouts page, automatically selects CrossFit class from the Class type dropdown.",
+          "description": "On Workouts, defaults the visible category dropdown to CrossFit Class on each visit.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "3.42.0"
+            "3.42.0",
+            "3.44.0",
+            "3.45.0"
           ]
         }
       ],
       "developer": "PushPress, Inc."
+    },
+    {
+      "app_name": "GPS Emulator",
+      "package": "com.rosteam.gpsemulator",
+      "patches": [
+        {
+          "name": "Enable GPS Emulator Pro",
+          "description": "GPS Emulator 3.36 (336): enables the app's shared Pro setting and 1,000 favourites at startup, and prevents billing callbacks from resetting Pro settings. Built against the original APKMirror APKM. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.36"
+          ]
+        }
+      ],
+      "developer": "Digitools UY"
+    },
+    {
+      "app_name": "Songsterr Guitar Tabs & Chords",
+      "package": "com.songsterr",
+      "patches": [
+        {
+          "name": "Enable Songsterr premium features",
+          "description": "Songsterr 7.1.6 (2012282388): selects the highest local access tier for player controls, premium UI and ad gating. Does not grant a server subscription, AI quota or unavailable content. Requires the verified original split bundle; phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "7.1.6"
+          ]
+        }
+      ],
+      "developer": "Songsterr"
+    },
+    {
+      "app_name": "TAGTHAi: Thailand Travel App",
+      "package": "com.thaidigitalplatform.tagthai",
+      "patches": [
+        {
+          "name": "Allow TAGTHAi accessibility apps",
+          "description": "Normalizes the local accessibility result after AppGuard completes its check. Intended for accessibility services installed from any source. Other sideloaded-app restrictions and server Play Integrity checks are not bypassed. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.25.1"
+          ]
+        },
+        {
+          "name": "Allow TAGTHAi screenshots",
+          "description": "Clears FLAG_SECURE at TAGTHAi's three identified window-control sites. Allows screenshots and may expose previews in Recents. Screen-recording detection and protected third-party screens are not changed. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.25.1"
+          ]
+        },
+        {
+          "name": "Select TAGTHAi text",
+          "description": "Adds a movable Select text button and a native copy/select panel for visible Flutter accessibility text. Requests semantics only after tapping Select text; no system accessibility service is needed. Does not add inline selection or OCR. Phone testing pending.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.25.1"
+          ]
+        }
+      ],
+      "developer": "THAI DIGITAL PLATFORM SOCIAL ENTERPRISE CO., LTD"
     },
     {
       "app_name": "Wongnai: Restaurants & Reviews",
@@ -247,8 +522,8 @@
       "patches": [
         {
           "name": "Disable Wongnai Google ads",
-          "description": "Stops the identified Google banner, native and interstitial ad loaders in Wongnai 12.11.0, and uses its existing photo-ad fallback.",
-          "use": true,
+          "description": "Stops the identified Google banner, native and interstitial ad loaders in Wongnai 12.11.0, and uses its existing photo-ad fallback. Phone testing pending.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "12.11.0"
@@ -259,10 +534,10 @@
     }
   ],
   "patches_name": "mlkemac patches",
-  "fingerprint": "e0ec1d977e8c631f4ffd65256e428b70cb829b28295358f7c9945b13dcc71589",
-  "release_notes": "## [1.0.0-dev.3](https://github.com/Mlkem/Morphe/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2026-11-01)\n\n### 🐛 Bug Fixes\n\n* publish mlkemac patches name and icon ([bdfde1b](https://github.com/Mlkem/Morphe/commit/bdfde1bb4738c685750c0d95c9f181fedbd4f93a))\n",
-  "release_tag": "v1.0.0-dev.3",
-  "release_date": "2026-11-01T02:28:55Z",
+  "fingerprint": "29e88ddc881ecf5fa75132693b2b5308cbd933f42bf1a6755c67cc06c1d6aa6a",
+  "release_notes": "## [1.0.0-dev.37](https://github.com/Mlkem/Morphe/compare/v1.0.0-dev.36...v1.0.0-dev.37) (2026-11-18)\n\n### 🐛 Bug Fixes\n\n* **Open with:** support version 1.4 (20) with validated bytecode hooks ([36b3586](https://github.com/Mlkem/Morphe/commit/36b358604f038a02587b11f2e3ffe666235a5687))\n",
+  "release_tag": "v1.0.0-dev.37",
+  "release_date": "2026-11-18T18:09:18Z",
   "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/31717098?v=4&s=128",

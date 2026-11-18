@@ -2,14 +2,21 @@
   "bundle": "quangmach",
   "channel": "stable",
   "repo_url": "https://github.com/quangmach/waze-minimize-search-bar",
-  "created_at": "2026-11-16T02:15:53Z",
-  "version": "1.1.0",
-  "description": "Tap the map to toggle the search bar; automatically hide after 10 seconds",
+  "created_at": "2026-11-18T14:29:50Z",
+  "version": "1.3.4",
+  "description": "QM Patches for Waze",
   "apps": [
     {
       "app_name": "Waze Mod",
       "package": "com.chisadin.wazemod",
       "patches": [
+        {
+          "name": "Move & Resize Speedometer",
+          "description": "Long-press and drag the speedometer; pinch to resize it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": []
+        },
         {
           "name": "Waze Minimize Search Bar",
           "description": "Tap the map to hide or reveal the search bar; hide it after 10 seconds of inactivity.",
@@ -21,13 +28,37 @@
         }
       ],
       "developer": "com.chisadin"
+    },
+    {
+      "app_name": "Waze Navigation & Live Traffic",
+      "package": "com.waze",
+      "patches": [
+        {
+          "name": "Move & Resize Speedometer",
+          "description": "Long-press and drag the speedometer; pinch to resize it.",
+          "use": false,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Waze Minimize Search Bar",
+          "description": "Tap the map to hide or reveal the search bar; hide it after 10 seconds of inactivity.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.5.0",
+            "5.27.5.0"
+          ]
+        }
+      ],
+      "developer": "Waze"
     }
   ],
   "patches_name": "Waze Minimize Search Bar",
-  "fingerprint": "72941638e1be6c15ac05b2f91b7e40d892373ad388fc22c047175248b3aa0e7b",
-  "release_notes": "Restores the original search-bar height. Tap the map to hide the sheet completely; tap again to show it. The sheet is set to hide after 10 seconds without touch interaction.\n\nTested by compiling and applying the bundle to Waze Mod 5.24.5.0. Device behavior has not yet been verified; please test tapping, dragging, typing, and the timer.\n",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-11-16T02:15:53Z",
+  "fingerprint": "83711b5946b510a7176d17c74a0b2847527b47638995bcb655374e3689187fbe",
+  "release_notes": "Captures speedometer gestures before they reach the map and attempts to keep a moved speedometer fixed while Waze animates the recenter button. Experimental; device verification is in progress.",
+  "release_tag": "v1.3.4",
+  "release_date": "2026-11-18T14:29:50Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/13189063?v=4&s=128",

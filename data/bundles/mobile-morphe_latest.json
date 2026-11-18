@@ -186,20 +186,15 @@
           ]
         },
         {
-          "name": "Mask live ad breaks",
-          "description": "Covers live ad breaks with a \"We'll be right back!\" screen and mutes them.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "8.100.0",
-            "8.98.2"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Removes the ads in on-demand videos, the feeds, and articles.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "maskLiveAds",
+              "description": "Covers live ad breaks with a \"We'll be right back!\" screen and mutes them."
+            }
+          ],
           "compatible_versions": [
             "8.100.0",
             "8.98.2"
@@ -217,40 +212,6 @@
         }
       ],
       "developer": "Disney"
-    },
-    {
-      "app_name": "Prime Video",
-      "package": "com.amazon.amazonvideo.livingroom",
-      "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.24.13+v16.0.1.93-allAbis"
-          ]
-        },
-        {
-          "name": "Force highest quality",
-          "description": "Reports every video quality as fully supported, so the app streams the highest available. Experimental: can stutter or fail on a device that cannot decode the top quality.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "6.24.13+v16.0.1.93-allAbis"
-          ]
-        },
-        {
-          "name": "Skip ads",
-          "description": "Removes the ads in Android TV titles. Ads in live channels still play.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.24.13+v16.0.1.93-allAbis"
-          ]
-        }
-      ],
-      "developer": "Amazon Mobile LLC"
     },
     {
       "app_name": "Prime Video",
@@ -379,7 +340,7 @@
         },
         {
           "name": "Skip ads",
-          "description": "Plays every title with an empty ad plan, so no ad break is scheduled.",
+          "description": "Removes ad breaks, including the ads Amazon builds into the video stream.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -591,16 +552,6 @@
       "package": "com.apple.atve.androidtv.appletv",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17.0.3",
-            "17.0.2"
-          ]
-        },
-        {
           "name": "Auto-skip",
           "description": "Skips the parts you choose: Apple's promos for other titles, recaps, and intros.",
           "use": true,
@@ -623,45 +574,12 @@
           ]
         },
         {
-          "name": "Auto-skip (Android TV)",
-          "description": "Presses Skip for you on the parts you choose: Apple's promos for other titles, recaps, and intros.",
-          "use": true,
-          "options": [
-            {
-              "key": "skipPromos",
-              "description": "Skips Apple's promos for other titles that play before a show or movie."
-            },
-            {
-              "key": "skipRecaps",
-              "description": "Skips the recap of earlier episodes."
-            },
-            {
-              "key": "skipIntros",
-              "description": "Skips a show's opening titles."
-            }
-          ],
-          "compatible_versions": [
-            "17.0.3",
-            "17.0.2"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops Apple's usage metrics, such as the pages you view and what you play.",
           "use": false,
           "options": [],
           "compatible_versions": [
             "3.0.0"
-          ]
-        },
-        {
-          "name": "Block analytics & tracking (Android TV)",
-          "description": "Reduces Apple's usage metrics and stops playback reports in the Android TV app. The app also stops downloading updates to its screens between app updates.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "17.0.3",
-            "17.0.2"
           ]
         },
         {
@@ -751,22 +669,17 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops the \"Enjoying Apple TV?\" review prompt.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the \"Enjoying Apple TV?\" review prompt."
+            }
+          ],
           "compatible_versions": [
             "3.0.0"
-          ]
-        },
-        {
-          "name": "Hide rating prompt (Android TV)",
-          "description": "Stops the review prompt from Google Play in the Android TV app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17.0.3",
-            "17.0.2"
           ]
         },
         {
@@ -781,21 +694,6 @@
           ],
           "compatible_versions": [
             "3.0.0"
-          ]
-        },
-        {
-          "name": "Show release times (Android TV)",
-          "description": "Shows the day and time in your time zone when an upcoming episode or title is released.",
-          "use": true,
-          "options": [
-            {
-              "key": "timeFormat",
-              "description": "Shows times in 12-hour or 24-hour format."
-            }
-          ],
-          "compatible_versions": [
-            "17.0.3",
-            "17.0.2"
           ]
         },
         {
@@ -816,9 +714,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "sessionRecording",
+              "description": "Stops Quantum Metric, which records what you do in the app."
+            }
+          ],
           "compatible_versions": [
             "2026.10.2",
             "2026.11.1",
@@ -828,17 +735,6 @@
         {
           "name": "Block background network reports",
           "description": "Stops Ookla's background reports of your signal, network, and location.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.10.2",
-            "2026.11.1",
-            "2026.10.1"
-          ]
-        },
-        {
-          "name": "Block session recording",
-          "description": "Stops Quantum Metric, which records what you do in the app.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1000,10 +896,15 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops the \"rate this app\" prompt after checkout.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the \"rate this app\" prompt after checkout."
+            }
+          ],
           "compatible_versions": [
             "2.2.67.1"
           ]
@@ -1034,23 +935,12 @@
       "package": "com.bamnetworks.mobile.android.gameday.atbat",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics and audience-measurement services.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
+            "26.21.0.49"
           ]
         },
         {
@@ -1059,8 +949,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
+            "26.21.0.49"
           ]
         },
         {
@@ -1088,15 +977,6 @@
           "options": [],
           "compatible_versions": [
             "26.21.0.49"
-          ]
-        },
-        {
-          "name": "Hide betting odds (Android TV)",
-          "description": "Removes the betting-odds banner from the scores screen.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "26.21.0.76"
           ]
         },
         {
@@ -1142,47 +1022,39 @@
             }
           ],
           "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
-          ]
-        },
-        {
-          "name": "Hide surveys and rating prompt",
-          "description": "Stops the Qualtrics surveys and the Play Store rating pop-up.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
             "26.21.0.49"
           ]
         },
         {
-          "name": "Mask live ad breaks",
-          "description": "Covers live gambling-ad breaks with a notice.",
-          "use": false,
-          "options": [],
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "surveys",
+              "description": "Stops the Qualtrics surveys and the Play Store rating pop-up."
+            }
+          ],
           "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
+            "26.21.0.49"
           ]
         },
         {
           "name": "Skip ads",
           "description": "Removes the ads before on-demand videos.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "maskLiveAds",
+              "description": "Covers live gambling-ad breaks with a notice. Experimental."
+            }
+          ],
           "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
+            "26.21.0.49"
           ]
         },
         {
@@ -1191,12 +1063,11 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.21.0.49",
-            "26.21.0.76"
+            "26.21.0.49"
           ]
         }
       ],
-      "developer": "com.bamnetworks"
+      "developer": "MLB Advanced Media, L.P."
     },
     {
       "app_name": "Best Buy: Shop tech deals",
@@ -1296,17 +1167,6 @@
       "app_name": "STARZ",
       "package": "com.bydeluxe.d3.android.program.starz",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.12.0",
-            "6.12.1",
-            "6.11.0"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -1529,19 +1389,19 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes the sign-up sheet, the welcome walkthrough, the notification and Instant Offers prompts, the location notice, marketing messages, and the card that asks you to rate the app.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "9.22.10"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "popUps",
+              "description": "Removes the sign-up sheet, the welcome walkthrough, the notification and Instant Offers prompts, the location notice, marketing messages, and the card that asks you to rate the app."
+            }
+          ],
           "compatible_versions": [
             "9.22.10"
           ]
@@ -1741,10 +1601,15 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops the Google Play rating prompt.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the Google Play rating prompt."
+            }
+          ],
           "compatible_versions": [
             "8.8.2"
           ]
@@ -1767,9 +1632,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Keeps the app opted out of the sale and sharing of your data."
+            }
+          ],
           "compatible_versions": [
             "26.21.0",
             "26.23.0"
@@ -1844,16 +1718,6 @@
         {
           "name": "Hide rating prompt",
           "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.21.0",
-            "26.23.0"
-          ]
-        },
-        {
-          "name": "Opt out of data sale & sharing",
-          "description": "Keeps the app opted out of the sale and sharing of your data.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2101,20 +1965,19 @@
           ]
         },
         {
-          "name": "Hide promo banners",
-          "description": "Removes the DailyWire+ \"Now Streaming\" promo card and the docked banner that promote the app's own streaming content.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.5.22",
-            "3.5.21"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "promoBanners",
+              "description": "Removes the DailyWire+ \"Now Streaming\" promo card and the docked banner that promote the app's own streaming content."
+            }
+          ],
           "compatible_versions": [
             "3.5.22",
             "3.5.21"
@@ -2225,20 +2088,19 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes the rating card and the first-launch walkthrough.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "10.7.2",
-            "10.7.1"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "popUps",
+              "description": "Removes the rating card and the first-launch walkthrough."
+            }
+          ],
           "compatible_versions": [
             "10.7.2",
             "10.7.1"
@@ -2265,7 +2127,12 @@
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "behavioralTracking",
+              "description": "Stops the app from reporting the deals you view and click, which feeds personalized ranking and your viewed-deal history. Does not delete history already saved."
+            }
+          ],
           "compatible_versions": [
             "1.65.0",
             "1.64.0"
@@ -2359,30 +2226,19 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes the review requests, the daily spin-the-wheel pop-up, and the survey after opening a deal.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.65.0",
-            "1.64.0"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.65.0",
-            "1.64.0"
-          ]
-        },
-        {
-          "name": "Stop behavioral tracking",
-          "description": "Stops the app from reporting the deals you view and click, which feeds personalized ranking and your viewed-deal history. Does not delete history already saved.",
-          "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "popUps",
+              "description": "Removes the review requests, the daily spin-the-wheel pop-up, and the survey after opening a deal."
+            }
+          ],
           "compatible_versions": [
             "1.65.0",
             "1.64.0"
@@ -2405,16 +2261,6 @@
       "app_name": "Disney+",
       "package": "com.disney.disneyplus",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.20.0+rc3-2026.11.02",
-            "26.20.0+rc2-2026.10.28"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -2760,23 +2606,12 @@
       "package": "com.epix.epix.now",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
+            "240.0.2026240000"
           ]
         },
         {
@@ -2785,8 +2620,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
+            "240.0.2026240000"
           ]
         },
         {
@@ -2795,8 +2629,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
+            "240.0.2026240000"
           ]
         },
         {
@@ -2842,8 +2675,7 @@
             }
           ],
           "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
+            "240.0.2026240000"
           ]
         },
         {
@@ -2852,8 +2684,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
+            "240.0.2026240000"
           ]
         },
         {
@@ -2869,7 +2700,12 @@
           "name": "Skip ads",
           "description": "Gives every title an empty ad plan, so no ad break is scheduled.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "prerollPromo",
+              "description": "Skips the MGM+ promo that plays before a title. Experimental."
+            }
+          ],
           "compatible_versions": [
             "240.0.2026240000"
           ]
@@ -2877,16 +2713,6 @@
         {
           "name": "Skip lion intro",
           "description": "Opens the app after the MGM+ logo, without the lion intro video.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "240.0.2026240000",
-            "241.0.2026241001"
-          ]
-        },
-        {
-          "name": "Skip pre-roll promo",
-          "description": "Skips the MGM+ promo that plays before a title.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2901,23 +2727,13 @@
       "package": "com.espn.score_center",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.13.2"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
             "8.29.0",
-            "8.27.0",
-            "6.13.2"
+            "8.27.0"
           ]
         },
         {
@@ -2927,8 +2743,7 @@
           "options": [],
           "compatible_versions": [
             "8.29.0",
-            "8.27.0",
-            "6.13.2"
+            "8.27.0"
           ]
         },
         {
@@ -2985,8 +2800,7 @@
           ],
           "compatible_versions": [
             "8.29.0",
-            "8.27.0",
-            "6.13.2"
+            "8.27.0"
           ]
         },
         {
@@ -2996,8 +2810,7 @@
           "options": [],
           "compatible_versions": [
             "8.29.0",
-            "8.27.0",
-            "6.13.2"
+            "8.27.0"
           ]
         },
         {
@@ -3008,15 +2821,6 @@
           "compatible_versions": [
             "8.29.0",
             "8.27.0"
-          ]
-        },
-        {
-          "name": "Skip ads (Android TV)",
-          "description": "Removes pre-roll, mid-roll, and pause ads in the Android TV app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "6.13.2"
           ]
         }
       ],
@@ -3111,25 +2915,13 @@
       "package": "com.fox.foxone",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.25.1",
-            "1.24.0",
-            "1.20.0"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
             "1.25.1",
-            "1.24.0",
-            "1.20.0"
+            "1.24.0"
           ]
         },
         {
@@ -3139,8 +2931,7 @@
           "options": [],
           "compatible_versions": [
             "1.25.1",
-            "1.24.0",
-            "1.20.0"
+            "1.24.0"
           ]
         },
         {
@@ -3150,8 +2941,7 @@
           "options": [],
           "compatible_versions": [
             "1.25.1",
-            "1.24.0",
-            "1.20.0"
+            "1.24.0"
           ]
         },
         {
@@ -3198,8 +2988,7 @@
           ],
           "compatible_versions": [
             "1.25.1",
-            "1.24.0",
-            "1.20.0"
+            "1.24.0"
           ]
         },
         {
@@ -3209,8 +2998,7 @@
           "options": [],
           "compatible_versions": [
             "1.25.1",
-            "1.24.0",
-            "1.20.0"
+            "1.24.0"
           ]
         },
         {
@@ -3220,8 +3008,7 @@
           "options": [],
           "compatible_versions": [
             "1.25.1",
-            "1.24.0",
-            "1.20.0"
+            "1.24.0"
           ]
         }
       ],
@@ -3233,9 +3020,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Starts the app opted out of the sale and sharing of your data."
+            }
+          ],
           "compatible_versions": [
             "7.22.0"
           ]
@@ -3314,15 +3110,6 @@
           ]
         },
         {
-          "name": "Opt out of data sale & sharing",
-          "description": "Starts the app opted out of the sale and sharing of your data.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.22.0"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Removes the ads in videos, articles, and live blogs, and the splash ad.",
           "use": true,
@@ -3340,9 +3127,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Starts the app opted out of the sale and sharing of your data."
+            }
+          ],
           "compatible_versions": [
             "5.50.0",
             "5.49.2"
@@ -3428,16 +3224,6 @@
         {
           "name": "Hide rating prompt",
           "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.50.0",
-            "5.49.2"
-          ]
-        },
-        {
-          "name": "Opt out of data sale & sharing",
-          "description": "Starts the app opted out of the sale and sharing of your data.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -3602,61 +3388,9 @@
       "developer": "Google LLC"
     },
     {
-      "app_name": "YouTube for Android TV",
-      "package": "com.google.android.youtube.tv",
-      "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.32.300"
-          ]
-        },
-        {
-          "name": "YT TV+ (ad-free YouTube TV)",
-          "description": "Makes this app into YT TV+, an ad-free YouTube TV app that installs beside your other apps. It loads the YouTube TV live guide, library, and DVR, and removes the ads YouTube adds to on-demand videos and recordings, along with ad and analytics tracking. It does not give you regular YouTube. Commercials that are part of a live broadcast still play. Sign in with the code at tv.youtube.com/start.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.32.300"
-          ]
-        }
-      ],
-      "developer": "Google LLC"
-    },
-    {
-      "app_name": "YouTube TV: Live TV & more",
-      "package": "com.google.android.youtube.tvunplugged",
-      "patches": [
-        {
-          "name": "Skip ads",
-          "description": "Removes the ads YouTube adds to on-demand videos and recordings in the official YouTube TV app, along with ad and analytics tracking. Experimental and not yet tested on a device. It needs version 4.01.03, for Android TV devices on Android 12 or later. Commercials that are part of a live broadcast still play.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.01.03"
-          ]
-        }
-      ],
-      "developer": "Google LLC"
-    },
-    {
       "app_name": "NFL",
       "package": "com.gotv.nflgamecenter.us.lite",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "61.0.19",
-            "61.0.18",
-            "18.27.0"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -3664,8 +3398,7 @@
           "options": [],
           "compatible_versions": [
             "61.0.19",
-            "61.0.18",
-            "18.27.0"
+            "61.0.18"
           ]
         },
         {
@@ -3675,8 +3408,7 @@
           "options": [],
           "compatible_versions": [
             "61.0.19",
-            "61.0.18",
-            "18.27.0"
+            "61.0.18"
           ]
         },
         {
@@ -3723,8 +3455,7 @@
           ],
           "compatible_versions": [
             "61.0.19",
-            "61.0.18",
-            "18.27.0"
+            "61.0.18"
           ]
         },
         {
@@ -3734,17 +3465,7 @@
           "options": [],
           "compatible_versions": [
             "61.0.19",
-            "61.0.18",
-            "18.27.0"
-          ]
-        },
-        {
-          "name": "Reject tracking consent",
-          "description": "Answers the app's tracking consent prompt with Reject All, so the prompt does not appear and the optional trackers stay off.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "18.27.0"
+            "61.0.18"
           ]
         },
         {
@@ -3754,46 +3475,11 @@
           "options": [],
           "compatible_versions": [
             "61.0.19",
-            "61.0.18",
-            "18.27.0"
+            "61.0.18"
           ]
         }
       ],
       "developer": "NFL Enterprises LLC"
-    },
-    {
-      "app_name": "Hulu for Android TV",
-      "package": "com.hulu.livingroomplus",
-      "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "C59F39CFP3.10.33"
-          ]
-        },
-        {
-          "name": "Block analytics & tracking (experimental)",
-          "description": "Blocks the app's analytics and tracking requests (Hulu telemetry, Conviva, and Adobe) through an in-process native hook, with no root. Functional traffic is untouched.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "C59F39CFP3.10.33"
-          ]
-        },
-        {
-          "name": "Skip ads (experimental)",
-          "description": "Removes the ads Hulu stitches into its on-demand videos, through an in-process native hook, with no root. It removed the ad breaks from an on-demand episode in testing, but it has not been tested widely and may not remove every ad. It only removes explicit ad periods, so it does not affect ad-free content. Live broadcast commercials are part of the broadcast and still play. Sign in with the activation code at hulu.com/activate.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "C59F39CFP3.10.33"
-          ]
-        }
-      ],
-      "developer": "Disney"
     },
     {
       "app_name": "Hulu: Stream TV shows & movies",
@@ -3889,19 +3575,6 @@
       "package": "com.justwatch.justwatch",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.45.1",
-            "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
-          ]
-        },
-        {
           "name": "Block ads",
           "description": "Removes the banner, native, full-screen, and video ads.",
           "use": true,
@@ -3909,9 +3582,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -3922,9 +3593,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -3935,9 +3604,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -3957,9 +3624,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -4007,9 +3672,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -4020,9 +3683,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -4033,9 +3694,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -4046,9 +3705,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -4059,9 +3716,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         },
         {
@@ -4072,9 +3727,7 @@
           "compatible_versions": [
             "26.45.1",
             "26.44.2",
-            "26.43.10",
-            "26.43.8",
-            "26.44.5"
+            "26.43.10"
           ]
         }
       ],
@@ -4094,10 +3747,15 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops the app's rating dialog and the Google Play rating prompt.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the app's rating dialog and the Google Play rating prompt."
+            }
+          ],
           "compatible_versions": [
             "6.32.0"
           ]
@@ -4122,7 +3780,12 @@
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics and install attribution services.",
           "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "behavioralTracking",
+              "description": "Stops the app from recording the deals you open, and drops the personalized recommendations built from them. Does not delete history already saved."
+            }
+          ],
           "compatible_versions": [
             "3.1.6"
           ]
@@ -4210,15 +3873,6 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes the app tour, the sign-up-for-points pop-ups, the notification prompt, the surveys, the rating card, and the tips on deal pages.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.1.6"
-          ]
-        },
-        {
           "name": "Hide promo code countdown",
           "description": "Removes the \"New users only\" label and the days-and-hours countdown from the promo codes on the home screen and the promo code page.",
           "use": true,
@@ -4228,10 +3882,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "popUps",
+              "description": "Removes the app tour, the sign-up-for-points pop-ups, the notification prompt, the surveys, the rating card, and the tips on deal pages."
+            }
+          ],
           "compatible_versions": [
             "3.1.6"
           ]
@@ -4267,15 +3930,6 @@
           "name": "Show promo codes",
           "description": "Shows the whole promo code on deal pages instead of hiding it under the Copy code button.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.1.6"
-          ]
-        },
-        {
-          "name": "Stop behavioral tracking",
-          "description": "Stops the app from recording the deals you open, and drops the personalized recommendations built from them. Does not delete history already saved.",
-          "use": false,
           "options": [],
           "compatible_versions": [
             "3.1.6"
@@ -4516,18 +4170,120 @@
       "developer": "Christian Krueger"
     },
     {
+      "app_name": "Movies Anywhere",
+      "package": "com.moviesanywhere.goo",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Force highest quality",
+          "description": "Plays the highest quality your device and plan allow, instead of lowering it to match the measured connection speed. Turn it off if videos buffer.",
+          "use": false,
+          "options": [
+            {
+              "key": "highestBitrate",
+              "description": "Keeps each title at its highest bitrate, whatever the measured connection speed."
+            },
+            {
+              "key": "fullHd",
+              "description": "Plays the 1080p edition on a phone with Widevine L1, instead of HD."
+            },
+            {
+              "key": "uhd",
+              "description": "Plays the 4K edition, in HDR10 or Dolby Vision when the screen supports it. Needs Full HD on phones."
+            }
+          ],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your phone from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "carrier",
+              "description": "Hides your mobile carrier, or reports the name set in Carrier name. Carrier deals, such as League Pass with a phone plan, stop working."
+            },
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees when Carrier is on. Pick one from the list or type any name. Blank hides the carrier."
+            },
+            {
+              "key": "reportWifi",
+              "description": "Shows mobile data as Wi-Fi, so Wi-Fi-only downloads and mobile quality limits do not apply. This can use a lot of data."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the phone. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Store detection, smart-home setup, and checkout fraud checks can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops scans for Bluetooth devices and beacons, and hides paired devices. In-store maps, kiosk check-in, smart-home setup, and accessory pairing stop working."
+            },
+            {
+              "key": "cellTowers",
+              "description": "Hides the cell towers your phone sees, which can place you within a few blocks."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background. Store-arrival features and pickup check-in can stop working. RetailMeNot has its own patch for this."
+            }
+          ],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the Google Play rating prompt."
+            },
+            {
+              "key": "marketingPopUps",
+              "description": "Hides the app's promotional pop-ups. The retailer re-link prompt still shows."
+            }
+          ],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        }
+      ],
+      "developer": "Movies Anywhere"
+    },
+    {
       "app_name": "NBA: Live Games & Scores",
       "package": "com.nbaimd.gametime.nba2011",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.1.0.20261026155843"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -4535,8 +4291,7 @@
           "options": [],
           "compatible_versions": [
             "1.3.0",
-            "1.2.0",
-            "1.1.0.20261026155843"
+            "1.2.0"
           ]
         },
         {
@@ -4556,8 +4311,7 @@
           "options": [],
           "compatible_versions": [
             "1.3.0",
-            "1.2.0",
-            "1.1.0.20261026155843"
+            "1.2.0"
           ]
         },
         {
@@ -4604,8 +4358,7 @@
           ],
           "compatible_versions": [
             "1.3.0",
-            "1.2.0",
-            "1.1.0.20261026155843"
+            "1.2.0"
           ]
         },
         {
@@ -4625,17 +4378,7 @@
           "options": [],
           "compatible_versions": [
             "1.3.0",
-            "1.2.0",
-            "1.1.0.20261026155843"
-          ]
-        },
-        {
-          "name": "Reject tracking consent",
-          "description": "Answers the app's tracking consent prompt with Reject All, so the prompt does not appear and the optional trackers stay off.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.1.0.20261026155843"
+            "1.2.0"
           ]
         },
         {
@@ -4647,15 +4390,6 @@
             "1.3.0",
             "1.2.0"
           ]
-        },
-        {
-          "name": "Skip ads (Android TV)",
-          "description": "Removes the ads the app plays before and during videos in the Android TV app. Ads that are part of a live broadcast still play.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.1.0.20261026155843"
-          ]
         }
       ],
       "developer": "NBA Properties, Inc."
@@ -4666,9 +4400,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Starts the app opted out of the sale and sharing of your data."
+            }
+          ],
           "compatible_versions": [
             "14.6.0"
           ]
@@ -4736,15 +4479,6 @@
           "compatible_versions": [
             "14.6.0"
           ]
-        },
-        {
-          "name": "Opt out of data sale & sharing",
-          "description": "Starts the app opted out of the sale and sharing of your data.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "14.6.0"
-          ]
         }
       ],
       "developer": "Versant Media, LLC"
@@ -4753,6 +4487,25 @@
       "app_name": "Netflix",
       "package": "com.netflix.mediaclient",
       "patches": [
+        {
+          "name": "Auto-skip (experimental)",
+          "description": "Automatically presses Skip Intro and Skip Recap for you, so a binge does not stop to wait. Each can be turned off on its own. Experimental: the hook is in place and correct, but the skip has not yet been confirmed on a device, because Netflix's protected player hides its own screen from automated checks.",
+          "use": false,
+          "options": [
+            {
+              "key": "skipIntros",
+              "description": "Automatically presses Skip Intro."
+            },
+            {
+              "key": "skipRecaps",
+              "description": "Automatically presses Skip Recap."
+            }
+          ],
+          "compatible_versions": [
+            "9.92.0 build 9 74772",
+            "9.93.0 build 8 74808"
+          ]
+        },
         {
           "name": "Browse hidden categories",
           "description": "Adds a searchable list of Netflix's hidden genre categories (the netflix.com/browse/genre codes) and opens any of them inside the app, plus an optional \"Surprise me\" that opens a random one. Choose the entry points: a \"Hidden Categories\" launcher icon, a categories shortcut, and/or a Surprise me shortcut on the Netflix icon.",
@@ -4853,8 +4606,28 @@
           ]
         },
         {
+          "name": "Keep playing in the background (experimental)",
+          "description": "Keeps Netflix playing when you leave the app or turn off the screen, so you can keep listening in the background. Experimental and not yet confirmed on a device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.92.0 build 9 74772",
+            "9.93.0 build 8 74808"
+          ]
+        },
+        {
           "name": "Keep screen brightness",
           "description": "Stops Netflix from taking over your screen brightness during playback, so the phone keeps the brightness you set.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.92.0 build 9 74772",
+            "9.93.0 build 8 74808"
+          ]
+        },
+        {
+          "name": "Picture-in-Picture always on",
+          "description": "Keeps picture-in-picture available even when Netflix turns it off for your device, so a video can shrink to a floating window when you leave the app.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -4889,24 +4662,12 @@
       "package": "com.nexstar.newsnation",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.94",
-            "4.71"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the apps' analytics, attribution, and audience-measurement services.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "510.3.0",
-            "4.94",
-            "4.71"
+            "510.3.0"
           ]
         },
         {
@@ -4915,9 +4676,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "510.3.0",
-            "4.94",
-            "4.71"
+            "510.3.0"
           ]
         },
         {
@@ -4963,9 +4722,7 @@
             }
           ],
           "compatible_versions": [
-            "510.3.0",
-            "4.94",
-            "4.71"
+            "510.3.0"
           ]
         },
         {
@@ -4975,26 +4732,6 @@
           "options": [],
           "compatible_versions": [
             "510.3.0"
-          ]
-        },
-        {
-          "name": "Hide rating prompt (Android TV)",
-          "description": "Stops the \"rate this app\" dialog in the Android TV app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.94",
-            "4.71"
-          ]
-        },
-        {
-          "name": "Skip ads (Android TV)",
-          "description": "Removes the video ads before clips in the Android TV app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.94",
-            "4.71"
           ]
         },
         {
@@ -5300,10 +5037,15 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Removes the \"How are we doing?\" pop-up and the Play Store rating request.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Removes the \"How are we doing?\" pop-up and the Play Store rating request."
+            }
+          ],
           "compatible_versions": [
             "26.46.0",
             "26.46.1",
@@ -5347,15 +5089,6 @@
       "app_name": "PBS: TV Shows & Documentaries",
       "package": "com.pbs.video",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.27.0"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -5446,25 +5179,13 @@
       "package": "com.peacocktv.peacockandroid",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.11.11",
-            "7.10.30",
-            "7.10.200"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
             "7.11.11",
-            "7.10.30",
-            "7.10.200"
+            "7.10.30"
           ]
         },
         {
@@ -5474,8 +5195,7 @@
           "options": [],
           "compatible_versions": [
             "7.11.11",
-            "7.10.30",
-            "7.10.200"
+            "7.10.30"
           ]
         },
         {
@@ -5532,8 +5252,7 @@
           ],
           "compatible_versions": [
             "7.11.11",
-            "7.10.30",
-            "7.10.200"
+            "7.10.30"
           ]
         },
         {
@@ -5543,8 +5262,7 @@
           "options": [],
           "compatible_versions": [
             "7.11.11",
-            "7.10.30",
-            "7.10.200"
+            "7.10.30"
           ]
         },
         {
@@ -5554,8 +5272,7 @@
           "options": [],
           "compatible_versions": [
             "7.11.11",
-            "7.10.30",
-            "7.10.200"
+            "7.10.30"
           ]
         }
       ],
@@ -5565,15 +5282,6 @@
       "app_name": "Plex: Find Movies & TV Shows",
       "package": "com.plexapp.android",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2026.22.0"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -5713,6 +5421,25 @@
           "description": "Stops the app from reacting when you take a screenshot.",
           "use": true,
           "options": [],
+          "compatible_versions": [
+            "3.13.1",
+            "3.12.0"
+          ]
+        },
+        {
+          "name": "GmsCore support",
+          "description": "Signs in with Google through GmsCore instead of Google Play services.",
+          "use": false,
+          "options": [
+            {
+              "key": "cloneApp",
+              "description": "Installs the patched app beside the stock app. When off, the patched app keeps Substack's package name, and the stock app has to be uninstalled first."
+            },
+            {
+              "key": "packageName",
+              "description": "Package name to install the patched app under when Clone app is on."
+            }
+          ],
           "compatible_versions": [
             "3.13.1",
             "3.12.0"
@@ -6067,19 +5794,19 @@
           ]
         },
         {
-          "name": "Hide promotions",
-          "description": "Removes the Subscribe buttons and offers, the Subscription row in Settings, the Breakingviews promo banners, marketing pop-ups, and the newsletter sign-ups and notification prompts in articles and feeds.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.51.0"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "promotions",
+              "description": "Removes the Subscribe buttons and offers, the Subscription row in Settings, the Breakingviews promo banners, marketing pop-ups, and the newsletter sign-ups and notification prompts in articles and feeds."
+            }
+          ],
           "compatible_versions": [
             "7.51.0"
           ]
@@ -6220,29 +5947,22 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "12.4.0",
-            "12.3.1"
-          ]
-        },
-        {
-          "name": "Block location tracking",
-          "description": "Stops Radar, which sends your location to its servers every 30 seconds.",
+          "description": "Blocks the tracking you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.4.0",
-            "12.3.1"
-          ]
-        },
-        {
-          "name": "Block session recording",
-          "description": "Stops Quantum Metric, which records what you do in T-Life.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "locationTracking",
+              "description": "Stops Radar, which sends your location to its servers every 30 seconds."
+            },
+            {
+              "key": "sessionRecording",
+              "description": "Stops Quantum Metric, which records what you do in T-Life."
+            }
+          ],
           "compatible_versions": [
             "12.4.0",
             "12.3.1"
@@ -6334,9 +6054,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Starts the app opted out of the sale and sharing of your data."
+            }
+          ],
           "compatible_versions": [
             "5.20"
           ]
@@ -6406,28 +6135,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.20"
-          ]
-        },
-        {
-          "name": "Hide surveys",
-          "description": "Stops the Qualtrics surveys and the rating prompt they can lead to.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.20"
-          ]
-        },
-        {
-          "name": "Opt out of data sale & sharing",
-          "description": "Starts the app opted out of the sale and sharing of your data.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "surveys",
+              "description": "Stops the Qualtrics surveys and the rating prompt they can lead to."
+            }
+          ],
           "compatible_versions": [
             "5.20"
           ]
@@ -6624,25 +6344,13 @@
       "package": "com.tubitv",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "10.44.3",
-            "10.44.1",
-            "10.44.5001"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6652,8 +6360,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6700,8 +6407,7 @@
           ],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6711,8 +6417,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6722,8 +6427,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6733,8 +6437,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6744,8 +6447,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6755,8 +6457,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         },
         {
@@ -6766,8 +6467,7 @@
           "options": [],
           "compatible_versions": [
             "10.44.3",
-            "10.44.1",
-            "10.44.5001"
+            "10.44.1"
           ]
         }
       ],
@@ -6835,10 +6535,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "surveys",
+              "description": "Stops Medallia survey invitations and the \"rate the app\" dialog on the home screen."
+            }
+          ],
           "compatible_versions": [
             "118.1",
             "118.0"
@@ -6847,16 +6556,6 @@
         {
           "name": "Hide sponsored products",
           "description": "Turns off the sponsored product carousels, ad banners, and partner offers after checkout.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "118.1",
-            "118.0"
-          ]
-        },
-        {
-          "name": "Hide surveys and rating prompt",
-          "description": "Stops Medallia survey invitations and the \"rate the app\" dialog on the home screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -6936,10 +6635,15 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops the Play Store rating request.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the Play Store rating request."
+            }
+          ],
           "compatible_versions": [
             "8.15.0"
           ]
@@ -7052,19 +6756,18 @@
         },
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "3.0.6",
-            "3.0.5"
-          ]
-        },
-        {
-          "name": "Block session recording",
-          "description": "Stops Quantum Metric, which records what you do in the app.",
+          "description": "Blocks the tracking you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "sessionRecording",
+              "description": "Stops Quantum Metric, which records what you do in the app."
+            }
+          ],
           "compatible_versions": [
             "3.0.6",
             "3.0.5"
@@ -7146,19 +6849,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "22.3.5",
-            "22.2.5"
-          ]
-        },
-        {
-          "name": "Block session recording",
-          "description": "Stops Quantum Metric, which records what you do in the app.",
+          "description": "Blocks the tracking you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "sessionRecording",
+              "description": "Stops Quantum Metric, which records what you do in the app."
+            }
+          ],
           "compatible_versions": [
             "22.3.5",
             "22.2.5"
@@ -7346,22 +7048,19 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes surveys, review and feedback requests, tooltips, nudges, and the holiday splash.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "26.42.2",
-            "26.42.1",
-            "26.42",
-            "26.38"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "popUps",
+              "description": "Removes surveys, review and feedback requests, tooltips, nudges, and the holiday splash."
+            }
+          ],
           "compatible_versions": [
             "26.42.2",
             "26.42.1",
@@ -7474,18 +7173,6 @@
           ]
         },
         {
-          "name": "Hide marketing pop-ups",
-          "description": "Stops in-app marketing pop-ups and the subscribe banner on the home page, but not the paywall.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.19.0 (3221)",
-            "7.18.4",
-            "7.18.3",
-            "7.18.1"
-          ]
-        },
-        {
           "name": "Hide paywall sheet",
           "description": "Prevents the Washington Post paywall bottom sheet from being shown.",
           "use": true,
@@ -7495,10 +7182,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "marketingPopUps",
+              "description": "Stops in-app marketing pop-ups and the subscribe banner on the home page, but not the paywall."
+            }
+          ],
           "compatible_versions": [
             "7.19.0 (3221)",
             "7.18.4",
@@ -7529,6 +7225,15 @@
             "7.18.3",
             "7.18.1"
           ]
+        },
+        {
+          "name": "Skip age check errors",
+          "description": "Opens the app without the \"Error on Google Services\" dialog when Google Play cannot check your age, such as on a phone without the Play Store. An age result from Google Play still applies.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.19.0 (3221)"
+          ]
         }
       ],
       "developer": "The Washington Post"
@@ -7538,24 +7243,12 @@
       "package": "com.wbd.hbomax",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36",
-            "7.14.0.530"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
             "22.0.0.321",
-            "22.0.0.36",
             "7.14.0.530"
           ]
         },
@@ -7566,7 +7259,6 @@
           "options": [],
           "compatible_versions": [
             "22.0.0.321",
-            "22.0.0.36",
             "7.14.0.530"
           ]
         },
@@ -7629,7 +7321,6 @@
           ],
           "compatible_versions": [
             "22.0.0.321",
-            "22.0.0.36",
             "7.14.0.530"
           ]
         },
@@ -7640,7 +7331,6 @@
           "options": [],
           "compatible_versions": [
             "22.0.0.321",
-            "22.0.0.36",
             "7.14.0.530"
           ]
         },
@@ -7661,7 +7351,6 @@
           "options": [],
           "compatible_versions": [
             "22.0.0.321",
-            "22.0.0.36",
             "7.14.0.530"
           ]
         },
@@ -7677,7 +7366,6 @@
           ],
           "compatible_versions": [
             "22.0.0.321",
-            "22.0.0.36",
             "7.14.0.530"
           ]
         }
@@ -7689,23 +7377,12 @@
       "package": "com.wbd.stream",
       "patches": [
         {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
-          ]
-        },
-        {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
+            "22.0.0.321"
           ]
         },
         {
@@ -7714,8 +7391,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
+            "22.0.0.321"
           ]
         },
         {
@@ -7775,8 +7451,7 @@
             }
           ],
           "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
+            "22.0.0.321"
           ]
         },
         {
@@ -7785,8 +7460,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
+            "22.0.0.321"
           ]
         },
         {
@@ -7804,8 +7478,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
+            "22.0.0.321"
           ]
         },
         {
@@ -7819,8 +7492,7 @@
             }
           ],
           "compatible_versions": [
-            "22.0.0.321",
-            "22.0.0.36"
+            "22.0.0.321"
           ]
         }
       ],
@@ -7928,20 +7600,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "10.1.0",
-            "10.0.6"
-          ]
-        },
-        {
-          "name": "Hide surveys",
-          "description": "Removes the in-app survey card.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "surveys",
+              "description": "Removes the in-app survey card."
+            }
+          ],
           "compatible_versions": [
             "10.1.0",
             "10.0.6"
@@ -8269,19 +7940,15 @@
           ]
         },
         {
-          "name": "Mask live ad breaks",
-          "description": "Covers and mutes the ad breaks on live channels until the show returns.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.6.21"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Removes the pre-roll and mid-roll ads in on-demand videos.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "maskLiveAds",
+              "description": "Covers and mutes the ad breaks on live channels until the show returns. Experimental."
+            }
+          ],
           "compatible_versions": [
             "4.6.21"
           ]
@@ -8348,10 +8015,15 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes the rating and feedback requests, announcements, tours, coach marks, and tooltips. Privacy and consent screens still show.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "popUps",
+              "description": "Removes the rating and feedback requests, announcements, tours, coach marks, and tooltips. Privacy and consent screens still show."
+            }
+          ],
           "compatible_versions": [
             "26.22.2"
           ]
@@ -8444,10 +8116,15 @@
           ]
         },
         {
-          "name": "Hide pop-ups",
-          "description": "Removes the rating request, the notification prompts, and the feature tooltips.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "popUps",
+              "description": "Removes the rating request, the notification prompts, and the feature tooltips."
+            }
+          ],
           "compatible_versions": [
             "100.1.1"
           ]
@@ -8509,9 +8186,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, ad measurement, and marketing services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, ad measurement, and marketing services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Starts the app opted out of the sale and sharing of your data."
+            }
+          ],
           "compatible_versions": [
             "15.0.1"
           ]
@@ -8572,28 +8258,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "15.0.1"
-          ]
-        },
-        {
-          "name": "Hide surveys and rating prompt",
-          "description": "Stops the Iterate surveys and the prompt to rate the app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "15.0.1"
-          ]
-        },
-        {
-          "name": "Opt out of data sale & sharing",
-          "description": "Starts the app opted out of the sale and sharing of your data.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "surveys",
+              "description": "Stops the Iterate surveys and the prompt to rate the app."
+            }
+          ],
           "compatible_versions": [
             "15.0.1"
           ]
@@ -9427,19 +9104,19 @@
           ]
         },
         {
-          "name": "Hide promo banners",
-          "description": "Removes C-SPAN's program promo banners above the player and on the Watch tab.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "1.25.0"
-          ]
-        },
-        {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
-          "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "promoBanners",
+              "description": "Removes C-SPAN's program promo banners above the player and on the Watch tab."
+            }
+          ],
           "compatible_versions": [
             "1.25.0"
           ]
@@ -9462,9 +9139,18 @@
       "patches": [
         {
           "name": "Block analytics & tracking",
-          "description": "Stops the app's analytics, attribution, and audience-measurement services.",
-          "use": false,
-          "options": [],
+          "description": "Blocks the tracking you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "analytics",
+              "description": "Stops the app's analytics, attribution, and audience-measurement services."
+            },
+            {
+              "key": "dataSale",
+              "description": "Rejects all optional cookies on the NPR web pages inside the app and hides the cookie banner."
+            }
+          ],
           "compatible_versions": [
             "7.10.0",
             "7.11.0"
@@ -9568,16 +9254,6 @@
           ]
         },
         {
-          "name": "Opt out of data sale & sharing",
-          "description": "Rejects all optional cookies on the NPR web pages inside the app and hides the cookie banner.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "7.10.0",
-            "7.11.0"
-          ]
-        },
-        {
           "name": "Route traffic through a proxy",
           "description": "Sends the app's network traffic through a proxy you choose, such as Orbot or a VPN service's SOCKS5 server.",
           "use": false,
@@ -9609,16 +9285,6 @@
       "app_name": "PlutoTV: Stream Free Movies/TV",
       "package": "tv.pluto.android",
       "patches": [
-        {
-          "name": "Android TV source notice",
-          "description": "On Android TV, shows a one-time message that future Android TV patches come from the tv-morphe-patches source. It does nothing on a phone.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17.4.0",
-            "17.3.0"
-          ]
-        },
         {
           "name": "Block analytics & tracking",
           "description": "Stops the app's analytics, ad measurement, and marketing services.",
@@ -9702,20 +9368,15 @@
           ]
         },
         {
-          "name": "Mask live ad breaks",
-          "description": "Covers live ad breaks with a \"We'll be right back!\" screen and mutes them.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "17.4.0",
-            "17.3.0"
-          ]
-        },
-        {
           "name": "Skip ads",
           "description": "Removes the ads, ad markers, and pause ads from on-demand videos.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "maskLiveAds",
+              "description": "Covers live ad breaks with a \"We'll be right back!\" screen and mutes them."
+            }
+          ],
           "compatible_versions": [
             "17.4.0",
             "17.3.0"
@@ -9816,16 +9477,6 @@
           ]
         },
         {
-          "name": "Hide marketing pop-ups",
-          "description": "Stops in-app marketing pop-ups, but not the paywall.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "15.12.0.42675",
-            "15.13.0.44249"
-          ]
-        },
-        {
           "name": "Hide prediction markets",
           "description": "Removes Polymarket odds from story cards.",
           "use": true,
@@ -9836,10 +9487,19 @@
           ]
         },
         {
-          "name": "Hide rating prompt",
-          "description": "Stops Google Play's rate-this-app sheet.",
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops Google Play's rate-this-app sheet."
+            },
+            {
+              "key": "marketingPopUps",
+              "description": "Stops in-app marketing pop-ups, but not the paywall."
+            }
+          ],
           "compatible_versions": [
             "15.12.0.42675",
             "15.13.0.44249"
@@ -9870,10 +9530,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "204aea69501153f84f9241594e865f9f23d0c5ecb2aa65de3467931c57d52782",
-  "release_notes": "# [1.2.0-dev.6](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.5...v1.2.0-dev.6) (2026-11-18)\n\n\n### Features\n\n* **washingtonpost:** Skip the age check error dialog when Google Play cannot check ([b751374](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/b751374db8adb71337c5b50272b1ae3edc347fc5))\n",
-  "release_tag": "v1.2.0-dev.6",
-  "release_date": "2026-11-18T04:25:44Z",
+  "fingerprint": "f5ae34d0b1e333a12a9270a4e42e16029d9b5b25ea5d0c55ea9b555e5c35981c",
+  "release_notes": "# [1.2.0-dev.9](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.8...v1.2.0-dev.9) (2026-11-18)\n\n\n### Bug Fixes\n\n* testing NFL 61.0.21 ([7fd328c](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/7fd328c3c7af7f7b6dff2d7615c82df38707abff))\n",
+  "release_tag": "v1.2.0-dev.9",
+  "release_date": "2026-11-18T10:38:42Z",
   "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",

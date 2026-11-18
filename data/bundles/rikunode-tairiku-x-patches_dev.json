@@ -4,12 +4,22 @@
   "repo_url": "https://github.com/rikunode/x-feed-cleanup-patches",
   "created_at": "2026-11-03T17:46:54Z",
   "version": "1.12.1-x.4-beta.6",
-  "description": "## X Patch 1.12.2-x.2 — unified six-patch source\n\nAll six patches can be selected together for X 12.31.0-prod.01 and 12.32.0-prod.01: Fix external post links; Hide Find more; Hide Who to follow; Hide sports scores (experimental); Hide search relevance prompt (experimental); Copy media URL (image/video/GIF and video download action). Existing five beta features are retained. New media URL actions have passed compilation/tests but not actual Android device verification. Image long-press and media viewer overflow entry points remain unsupported.",
+  "description": "## X Patch 1.12.2-x.3 — image long-press URL copy\n\nAll six patches can be selected together for X 12.31.0-prod.01 and 12.32.0-prod.01: Fix external post links; Hide Find more; Hide Who to follow; Hide sports scores (experimental); Hide search relevance prompt (experimental); Copy media URL (image/video/GIF and video download action). Existing filters are retained. Image long-press adds a Copy media URL row without replacing native actions. The direct video/GIF MP4 URL is available from the post options action. The obsolete video downloader hook was removed because it does not match X 12.31.0. The bundle passed patch application against a real X 12.31.0 APK; on-device UI remains unverified, and video long-press is not implemented.",
   "apps": [
     {
       "app_name": "X",
       "package": "com.twitter.android",
       "patches": [
+        {
+          "name": "Copy media URL",
+          "description": "Copies photo URLs from image long-press and image/video/GIF URLs from post options.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.31.0-prod.01",
+            "12.32.0-prod.01"
+          ]
+        },
         {
           "name": "Fix external post links",
           "description": "Opens external X post URLs directly in post detail without using the For You tab.",
@@ -41,8 +51,8 @@
           ]
         },
         {
-          "name": "Copy media URL",
-          "description": "Copy direct image/video/GIF URLs from post options or from the video player's download action.",
+          "name": "Hide search relevance prompt",
+          "description": "Hides only the Is this post relevant to your search? Yes/No prompt in X Search results.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -59,23 +69,13 @@
             "12.31.0-prod.01",
             "12.32.0-prod.01"
           ]
-        },
-        {
-          "name": "Hide search relevance prompt",
-          "description": "Hides the Is this post relevant to your search? Yes/No survey in X Search results.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "12.31.0-prod.01",
-            "12.32.0-prod.01"
-          ]
         }
       ],
-      "developer": "com.twitter"
+      "developer": "X Corp."
     }
   ],
   "patches_name": "X Patch",
-  "fingerprint": "86810a701efae57a73cb852cdfbb443e8a5ad84dfc7d282f57a18e15b5b319a5",
+  "fingerprint": "875240b8ed58b275fa1ca491dda2a0ab1b1f8fa768db395dd21538bc8edcf9d5",
   "release_notes": "Experimental five-patch Morphe bundle. Adds Hide search relevance prompt to hide the Search results yes/no survey. Preserves four previous patches. Static X 12.31/12.32 APK model evidence and CI tests pass; user device testing is pending. Existing Morphe source with prerelease toggle reads dev/patches-bundle.json. Stable main remains unchanged.",
   "release_tag": "v1.12.1-x.4-beta.6",
   "release_date": "2026-11-03T17:46:54Z",

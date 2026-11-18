@@ -2,9 +2,9 @@
   "bundle": "ginarena-patch",
   "channel": "latest",
   "repo_url": "https://github.com/sagarkhansau19-svg/GinArena-patch",
-  "created_at": "2026-11-17T02:35:36",
-  "version": "2.12.0",
-  "description": "## [2.12.0](https://github.com/ginDoki19/GinArena-patch/compare/v2.11.1...v2.12.0) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* **playfy:** stop leaving the splash spinner up on Android 13+ ([92382d6](https://github.com/ginDoki19/GinArena-patch/commit/92382d6409f905787f63bc4b724dd9e83395ea14))\n* **readme:** verify every anchor against GitHub's own renderer ([8665d37](https://github.com/ginDoki19/GinArena-patch/commit/8665d3786f3101f29b817cd45e3bbbc3bccbdc73))\n\n### ✨ New Features\n\n* **cricfy:** support 7.5 and drop 7.4 ([29d781b](https://github.com/ginDoki19/GinArena-patch/commit/29d781b8d4f7696772c2a1509f865b7aeee1b809))\n* **cricfy:** suppress the CashRaven consent prompt ([79c5ad1](https://github.com/ginDoki19/GinArena-patch/commit/79c5ad1a71545d304440be978978beb18b4e6e5d))\n* **daylio:** support 1.72.0 with promo, tracking and MicroG patches ([a4b8c8f](https://github.com/ginDoki19/GinArena-patch/commit/a4b8c8f80612568ab815a03faa08f1a3a98082d9))",
+  "created_at": "2026-11-18T08:56:21",
+  "version": "2.12.1",
+  "description": "## [2.12.1](https://github.com/ginDoki19/GinArena-patch/compare/v2.12.0...v2.12.1) (2026-11-18)\n\n### 🐛 Bug Fixes\n\n* **wps,cricfy:** support WPS 26.11.1 only, harden MicroG patching, fix the CricFy strip ([da8e130](https://github.com/ginDoki19/GinArena-patch/commit/da8e1307d94cc36a090613e4b24c969de5b50ce6)), closes [#56](https://github.com/ginDoki19/GinArena-patch/issues/56)",
   "apps": [
     {
       "app_name": "WPS Office-PDF, Word, Sheet",
@@ -37,7 +37,7 @@
             }
           ],
           "compatible_versions": [
-            "26.11.0"
+            "26.11.1"
           ]
         },
         {
@@ -71,7 +71,7 @@
             },
             {
               "key": "bypassAsyncPrivilegeChecks",
-              "description": "Removes the \"Upgrade to WPS Membership\" banner shown above the tool pages. It can invent usage counters, so it stays off until you want it."
+              "description": "Removes the storage and export-limit upsell banner shown above the tool pages. It overrides a single banner processor and answers its callback with \"do not show\", which is a path the stock code already uses. It does NOT touch the privilege/coroutine path. Verified working on device: banner gone, no hang."
             },
             {
               "key": "denyAiPrivileges",
@@ -87,7 +87,7 @@
             }
           ],
           "compatible_versions": [
-            "26.11.0"
+            "26.11.1"
           ]
         }
       ],
@@ -213,7 +213,7 @@
             },
             {
               "key": "stripNativeBloat",
-              "description": "Deletes unused proxy/ad libraries to save about 7.7 MB. Not needed for ad removal."
+              "description": "Deletes Unity ad framework libraries nothing can reach, to save about 2 MB. Safe to leave off; not needed for ad removal."
             }
           ],
           "compatible_versions": [
@@ -632,10 +632,10 @@
     }
   ],
   "patches_name": "GinArena Patch",
-  "fingerprint": "4364f94ec1040922586f6d1aee88e0c7ed2d2ca15d7059ea40f73b4ce1b8150f",
-  "release_notes": "## [2.12.0](https://github.com/ginDoki19/GinArena-patch/compare/v2.11.1...v2.12.0) (2026-11-17)\r\n\r\n# GinArena Patch 2.12.0\r\n\r\nReleased 17 November 2026. This is the newest stable release. The one before it was 2.11.1.\r\n\r\n## Summary\r\n\r\n- CricFy TV now supports version 7.5 only. 7.4 is no longer supported.\r\n- The bandwidth sharing popup on CricFy is gone.\r\n- Daylio now supports version 1.72.0 only, with three new patches.\r\n- Playfy TV no longer hangs on the splash screen on Android 13 and newer.\r\n- No patches were removed.\r\n\r\nDownload: `patches-2.12.0.mpp`, 1,138,715 bytes\r\n`sha256 d7ff8df97bb15ec32c8793aab55c9f352842d195512c62356c2f8779d5674a93`\r\n\r\nPatch count went from 33 to 36.\r\n\r\n## CricFy TV\r\n\r\nVersion 7.5 only. The patches no longer work on 7.4, so update the app first if you are still on it.\r\n\r\nThe bandwidth sharing popup is gone. On a fresh install, CricFy asked for permission to share\r\nbandwidth every time it opened, including the first time. The setting it checks is never actually\r\nsaved, so it always asked again. Every other part of that service is already switched off, so the\r\nbox was asking about something the patched app cannot do.\r\n\r\nThe patch now closes that branch. You never see the box. Nothing is stored or faked, the app simply\r\nnever gets to ask. This was confirmed on a real device.\r\n\r\nEverything else is unchanged: no ads, no sponsor countdowns, no startup Telegram popup, no player\r\napp logo. The optional extras are still there and still off by default.\r\n\r\n## Daylio\r\n\r\nVersion 1.72.0 only. 1.71.1 is no longer supported.\r\n\r\nThree new patches:\r\n\r\n- **Remove promos and partner ads.** Hides the BetterHelp banner and the cards promoting the\r\n  developer's other apps.\r\n- **Remove tracking and marketing.** Turns off analytics and crash reporting, removes advertising ID\r\n  and install referrer access, and can also remove discount notifications. That last one is off by\r\n  default.\r\n- **Google Drive backup via MicroG RE.** Makes Drive backup sign in work on a re-signed Daylio. This\r\n  needs MicroG RE installed with a Google account added. Your journal is untouched.\r\n\r\nThe premium patch is the same as before. It unlocks local premium state only and is not a purchase,\r\nso anything that needs Daylio's servers still behaves like a free account.\r\n\r\n## Playfy TV\r\n\r\nOne fix. On Android 13 and newer the app could stay on its splash screen forever. The patch that\r\nskips the notification permission prompt used to jump past a step the app depends on, and nothing\r\nelse sets that step. It now goes to the place the app itself uses when permission is already\r\ngranted. No other Playfy patch changed.\r\n\r\n## Everything else\r\n\r\nNo changes for 1DM, CricZ, CrexiFy, PlayZ, MX Player, SK Tech, APK Decompiler, WPS Office or\r\nAdGuard. Same patches, same versions.\r\n\r\nThe only other fix was internal and affects our documentation, not the patches.\r\n\r\n## Honest limits\r\n\r\n- The CricFy consent fix was confirmed on a real device. The four CricFy patches were carried over\r\n  unchanged from the dev builds and were not re-tested on a TV for this release.\r\n- The three Daylio patches are new in this release and have not been tested on a device. Backup is\r\n  worth checking carefully, because a re-signed app can affect Google sign in.\r\n- The Playfy fix only concerns Android 13 and newer. Older versions were never affected.\r\n\r\n## If something goes wrong\r\n\r\nTell us the app, the version you patched, which patch you ticked, and what happened instead. A\r\nscreenshot or short recording helps more than a description.\r\n\r\nIf an install is refused, uninstall the old copy first. Patched apps are signed with a different key\r\nthan the original, so Android will not install one over the other.\r\n",
-  "release_tag": "v2.12.0",
-  "release_date": "2026-11-17T02:36:21Z",
+  "fingerprint": "7c2c10d6c9c2da06077fa1b1a00c5ed7fa18b01fa39f20b67d61d7e44703d367",
+  "release_notes": "# v2.12.1\r\n\r\nReleased 18 November 2026. Download `patches-2.12.1.mpp` below.\r\n\r\nThis release targets **WPS Office 26.11.1 only** and fixes CRICFy TV 7.5 not opening after patching.\r\n\r\n---\r\n\r\n## WPS Office\r\n\r\n**Now supports 26.11.1 (build 1651). Support for 26.11.0 (build 1650) is removed.** The 26.11.0\r\ntargets no longer match anything, so patch against 26.11.1 from now on.\r\n\r\n**The upgrade banner is gone by default.** The \"Upgrade to WPS Membership\" bar above the tool\r\npages is now hidden without you having to turn anything on. The option is still there if you want\r\nthe banner back.\r\n\r\n**MicroG patching no longer crashes.** Some methods in this version hold code that the patcher\r\ncould not read, and reading it aborted the whole patch run. The patcher now builds the replacement\r\ndirectly and never touches the old body, so those methods cannot stop the run any more.\r\n\r\n**Patching twice is now safe.** If you patch an APK that is already patched, it skips and says\r\nthere is nothing left to do. Before, it failed with a misleading \"dex layout changed\" error.\r\n\r\n**MicroG sign-in is still off by default.** Turning it on sends Google Play services calls to\r\nMicroG RE, which breaks sign-in on a device that has real Play Services installed. Turn it on only\r\nif you use MicroG.\r\n\r\n---\r\n\r\n## CRICFy TV 7.5\r\n\r\n**Fixed: the app no longer dies on launch after patching (issue #56).** The cleanup option used to\r\ndelete two runtime libraries that CRICFy loads at startup. Without them the app crashed before its\r\nfirst screen. Both libraries are now kept.\r\n\r\n**The cleanup option removes about 2 MB, not 7.7 MB.** The old number came from a version that\r\ndeleted more, and that version was what broke the app. The option is renamed \"Strip unused ad\r\nnative libraries\" so the name says what it does. It is still off by default and you do not need it\r\nfor ad removal.\r\n\r\n---\r\n\r\n## Upgrade notes\r\n\r\n- Patch against stock WPS Office 26.11.1. The expected file hash is in the README.\r\n- If you use a saved options file, it keeps working. Option keys did not change.\r\n- CRICFy 7.4 is no longer supported. That changed in v2.12.0, not here.\r\n\r\n## Checksums\r\n\r\n| File | Size | SHA-256 |\r\n|---|---|---|\r\n| `patches-2.12.1.mpp` | 1,135,687 B | `66adc881443926f6f57ae1788f7c61185205bb5eaae540c8bbd9d4a06ec24334` |\r\n\r\n36 patches in total. Patches for other apps are unchanged in this release.\r\n\r\n",
+  "release_tag": "v2.12.1",
+  "release_date": "2026-11-18T08:57:06Z",
   "isPreRelease": false,
   "stars": 12,
   "avatarUrl": "https://avatars.githubusercontent.com/u/249589406?v=4&s=128",

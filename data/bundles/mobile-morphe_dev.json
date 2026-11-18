@@ -340,7 +340,7 @@
         },
         {
           "name": "Skip ads",
-          "description": "Plays every title with an empty ad plan, so no ad break is scheduled.",
+          "description": "Removes ad breaks, including the ads Amazon builds into the video stream.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1067,7 +1067,7 @@
           ]
         }
       ],
-      "developer": "com.bamnetworks"
+      "developer": "MLB Advanced Media, L.P."
     },
     {
       "app_name": "Best Buy: Shop tech deals",
@@ -4170,6 +4170,117 @@
       "developer": "Christian Krueger"
     },
     {
+      "app_name": "Movies Anywhere",
+      "package": "com.moviesanywhere.goo",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Force highest quality",
+          "description": "Plays the highest quality your device and plan allow, instead of lowering it to match the measured connection speed. Turn it off if videos buffer.",
+          "use": false,
+          "options": [
+            {
+              "key": "highestBitrate",
+              "description": "Keeps each title at its highest bitrate, whatever the measured connection speed."
+            },
+            {
+              "key": "fullHd",
+              "description": "Plays the 1080p edition on a phone with Widevine L1, instead of HD."
+            },
+            {
+              "key": "uhd",
+              "description": "Plays the 4K edition, in HDR10 or Dolby Vision when the screen supports it. Needs Full HD on phones."
+            }
+          ],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your phone from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "carrier",
+              "description": "Hides your mobile carrier, or reports the name set in Carrier name. Carrier deals, such as League Pass with a phone plan, stop working."
+            },
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees when Carrier is on. Pick one from the list or type any name. Blank hides the carrier."
+            },
+            {
+              "key": "reportWifi",
+              "description": "Shows mobile data as Wi-Fi, so Wi-Fi-only downloads and mobile quality limits do not apply. This can use a lot of data."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the phone. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Store detection, smart-home setup, and checkout fraud checks can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops scans for Bluetooth devices and beacons, and hides paired devices. In-store maps, kiosk check-in, smart-home setup, and accessory pairing stop working."
+            },
+            {
+              "key": "cellTowers",
+              "description": "Hides the cell towers your phone sees, which can place you within a few blocks."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background. Store-arrival features and pickup check-in can stop working. RetailMeNot has its own patch for this."
+            }
+          ],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        },
+        {
+          "name": "Hide prompts and pop-ups",
+          "description": "Hides the prompts and pop-ups you choose in the patch options.",
+          "use": true,
+          "options": [
+            {
+              "key": "rating",
+              "description": "Stops the Google Play rating prompt."
+            },
+            {
+              "key": "marketingPopUps",
+              "description": "Hides the app's promotional pop-ups. The retailer re-link prompt still shows."
+            }
+          ],
+          "compatible_versions": [
+            "1.54.0"
+          ]
+        }
+      ],
+      "developer": "Movies Anywhere"
+    },
+    {
       "app_name": "NBA: Live Games & Scores",
       "package": "com.nbaimd.gametime.nba2011",
       "patches": [
@@ -4377,6 +4488,25 @@
       "package": "com.netflix.mediaclient",
       "patches": [
         {
+          "name": "Auto-skip (experimental)",
+          "description": "Automatically presses Skip Intro and Skip Recap for you, so a binge does not stop to wait. Each can be turned off on its own. Experimental: the hook is in place and correct, but the skip has not yet been confirmed on a device, because Netflix's protected player hides its own screen from automated checks.",
+          "use": false,
+          "options": [
+            {
+              "key": "skipIntros",
+              "description": "Automatically presses Skip Intro."
+            },
+            {
+              "key": "skipRecaps",
+              "description": "Automatically presses Skip Recap."
+            }
+          ],
+          "compatible_versions": [
+            "9.92.0 build 9 74772",
+            "9.93.0 build 8 74808"
+          ]
+        },
+        {
           "name": "Browse hidden categories",
           "description": "Adds a searchable list of Netflix's hidden genre categories (the netflix.com/browse/genre codes) and opens any of them inside the app, plus an optional \"Surprise me\" that opens a random one. Choose the entry points: a \"Hidden Categories\" launcher icon, a categories shortcut, and/or a Surprise me shortcut on the Netflix icon.",
           "use": false,
@@ -4476,8 +4606,28 @@
           ]
         },
         {
+          "name": "Keep playing in the background (experimental)",
+          "description": "Keeps Netflix playing when you leave the app or turn off the screen, so you can keep listening in the background. Experimental and not yet confirmed on a device.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.92.0 build 9 74772",
+            "9.93.0 build 8 74808"
+          ]
+        },
+        {
           "name": "Keep screen brightness",
           "description": "Stops Netflix from taking over your screen brightness during playback, so the phone keeps the brightness you set.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.92.0 build 9 74772",
+            "9.93.0 build 8 74808"
+          ]
+        },
+        {
+          "name": "Picture-in-Picture always on",
+          "description": "Keeps picture-in-picture available even when Netflix turns it off for your device, so a video can shrink to a floating window when you leave the app.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -7075,6 +7225,15 @@
             "7.18.3",
             "7.18.1"
           ]
+        },
+        {
+          "name": "Skip age check errors",
+          "description": "Opens the app without the \"Error on Google Services\" dialog when Google Play cannot check your age, such as on a phone without the Play Store. An age result from Google Play still applies.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.19.0 (3221)"
+          ]
         }
       ],
       "developer": "The Washington Post"
@@ -9371,10 +9530,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "6ba4c97b45fe8a6a48ab2cdce08de52a354ca49db19d60df3c409c8e39b74968",
-  "release_notes": "# [1.2.0-dev.6](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.5...v1.2.0-dev.6) (2026-11-18)\n\n\n### Features\n\n* **washingtonpost:** Skip the age check error dialog when Google Play cannot check ([b751374](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/b751374db8adb71337c5b50272b1ae3edc347fc5))\n",
-  "release_tag": "v1.2.0-dev.6",
-  "release_date": "2026-11-18T04:25:44Z",
+  "fingerprint": "33142456b170f58c8381c98dfaafad306ed48e0acd17ede06ecbe1de93284c80",
+  "release_notes": "# [1.2.0-dev.9](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.8...v1.2.0-dev.9) (2026-11-18)\n\n\n### Bug Fixes\n\n* testing NFL 61.0.21 ([7fd328c](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/7fd328c3c7af7f7b6dff2d7615c82df38707abff))\n",
+  "release_tag": "v1.2.0-dev.9",
+  "release_date": "2026-11-18T10:38:42Z",
   "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",
