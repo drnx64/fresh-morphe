@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/rikunode/x-feed-cleanup-patches",
   "created_at": "2026-11-03T17:46:54Z",
   "version": "1.12.1-x.4-beta.6",
-  "description": "## X Patch 1.12.2-x.3 — image long-press URL copy\n\nAll six patches can be selected together for X 12.31.0-prod.01 and 12.32.0-prod.01: Fix external post links; Hide Find more; Hide Who to follow; Hide sports scores (experimental); Hide search relevance prompt (experimental); Copy media URL (image/video/GIF and video download action). Existing filters are retained. Image long-press adds a Copy media URL row without replacing native actions. The direct video/GIF MP4 URL is available from the post options action. The obsolete video downloader hook was removed because it does not match X 12.31.0. The bundle passed patch application against a real X 12.31.0 APK; on-device UI remains unverified, and video long-press is not implemented.",
+  "description": "## X Patch 1.12.2-x.8 — unify image and video long-press link icons\n\nAll six patches can be selected together for X 12.31.0-prod.01 and 12.32.0-prod.01: Fix external post links; Hide Find more; Hide Who to follow; Hide sports scores (experimental); Hide search relevance prompt (experimental); Copy media URL (image/video/GIF from post options and direct image/video/GIF URL from media long-press). Existing filters are retained. The native image/video long-press action sheet gets a separate Copy media URL row without replacing built-in actions. Direct video/GIF URLs prefer the highest-bitrate MP4. The obsolete video downloader hook was removed because it does not match X 12.31.0. The presenter handler lookup was hardened for the Ahmed 1.24.2 coexistence case observed failing in x.3. Version x.7 fixes the normal loop-exit branch skipping the row insertion by transforming the finished immutable media sheet instead of injecting immediately before its conversion. The original rows and selection handler remain intact. Version x.8 only changes the added image long-press row to reuse X 12.31's native video copy-link chain icon (com.x.icons.a.h5); the video row, URL handlers, other five features and Ahmed coexistence remain unchanged. The x.7 image/video long-press rows were observed on-device, and the new icon appearance requires verification after installation.",
   "apps": [
     {
       "app_name": "X",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Copy media URL",
-          "description": "Copies photo URLs from image long-press and image/video/GIF URLs from post options.",
+          "description": "Copies direct image/video/GIF URLs from long-press or post options.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -75,11 +75,11 @@
     }
   ],
   "patches_name": "X Patch",
-  "fingerprint": "875240b8ed58b275fa1ca491dda2a0ab1b1f8fa768db395dd21538bc8edcf9d5",
-  "release_notes": "Experimental five-patch Morphe bundle. Adds Hide search relevance prompt to hide the Search results yes/no survey. Preserves four previous patches. Static X 12.31/12.32 APK model evidence and CI tests pass; user device testing is pending. Existing Morphe source with prerelease toggle reads dev/patches-bundle.json. Stable main remains unchanged.",
-  "release_tag": "v1.12.1-x.4-beta.6",
-  "release_date": "2026-11-03T17:46:54Z",
-  "isPreRelease": true,
+  "fingerprint": "863a04e1c56645bc36d818a00634240fa3fed58ff5e9b0e5cec38d9678674e77",
+  "release_notes": "X Patch unifies all six opt-in features for X 12.31/12.32, including sports scores, search relevance prompts and media URL copy. On-device behavior of newer features remains unverified.",
+  "release_tag": "v1.12.2-x.8",
+  "release_date": "2026-11-19T03:13:48Z",
+  "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
   "repoDescription": "Private Morphe patches for X",
