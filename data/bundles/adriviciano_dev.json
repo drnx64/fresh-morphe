@@ -1,0 +1,59 @@
+{
+  "bundle": "adriviciano",
+  "channel": "dev",
+  "repo_url": "https://github.com/adriviciano/morphe-patch-lunar-edge",
+  "created_at": "2026-11-18T13:27:19Z",
+  "version": "0.2.0-beta.4",
+  "description": "Parches para Lunar Edge 4.0.2: reparación del motor local, eliminación de anuncios del reproductor y Google Cast con puente HLS/CORS. Cuatro parches activos por defecto. Reproducción confirmada en Android TV.",
+  "apps": [
+    {
+      "app_name": "Lunar Edge",
+      "package": "com.lunaredge.browser",
+      "patches": [
+        {
+          "name": "Enable Google Cast",
+          "description": "Añade Google Cast con puente CORS para HLS local y controles. Exige la corrección del motor y conserva DLNA. Reproducción confirmada en Android TV.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.0.2"
+          ]
+        },
+        {
+          "name": "Fix local video engine",
+          "description": "Permite arrancar el motor local de vídeo después de firmar la APK con Morphe. Corrige el falso error de red o servidor en Lunar Edge 4.0.2 (ARM64/ARMv7).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.0.2"
+          ]
+        },
+        {
+          "name": "Remove player display ads",
+          "description": "Evita cargar los intersticiales y anuncios nativos superpuestos del reproductor de Lunar Edge 4.0.2.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.0.2"
+          ]
+        },
+        {
+          "name": "Remove player video ads",
+          "description": "Omite los anuncios de vídeo del reproductor y continúa por su ruta local de reproducción. Compatible con Lunar Edge 4.0.2.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.0.2"
+          ]
+        }
+      ],
+      "developer": "B.APP4YOU"
+    }
+  ],
+  "patches_name": "adriviciano",
+  "fingerprint": "64b002caec1f588d235e27743ec442ae73db45348923a8023f4a43f20073fb3e",
+  "release_notes": "**Google Cast · beta 4 — puente CORS para HLS local** en Lunar Edge **4.0.2**.\r\n\r\nEl informe de la beta 3 confirmó que el motor entrega HLS sin CORS y que la TV devuelve LOAD_FAILED. Google requiere CORS para streaming adaptativo. Esta beta sirve el HLS local mediante un puente dentro del móvil que añade CORS y reescribe las referencias de listas, segmentos, claves e inicializaciones. Conserva las peticiones de rango y añade contadores de solicitudes de la TV al diagnóstico, sin exponer URL ni tokens.\r\n\r\nDescarga **lunar-edge-cast-complete-0.2.0-beta.4.mpp**, añádelo como fuente local y parte del APK/XAPK original con los cuatro parches seleccionados. Mantén la app abierta durante la prueba. Si falla, copia el informe desde **Diagnóstico de carga**.\r\n\r\nLa reparación obligatoria del motor se conserva. Las pruebas del puente con un origen HLS controlado pasan; sigue pendiente confirmar la fuente real en la TV. La estable sigue siendo **0.1.2**. Instrucciones completas en CAST_PREVIEW.md.\r\n",
+  "release_tag": "v0.2.0-beta.4",
+  "release_date": "2026-11-18T13:27:19Z",
+  "isPreRelease": true
+}

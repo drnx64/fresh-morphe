@@ -2,9 +2,9 @@
   "bundle": "fuku856-smartlife",
   "channel": "stable",
   "repo_url": "https://github.com/Fuku856/smartlife-patches",
-  "created_at": "2026-11-19T02:38:00",
-  "version": "1.2.0",
-  "description": "## [1.2.0](https://github.com/Fuku856/smartlife-patches/compare/v1.1.0...v1.2.0) (2026-11-19)\n\n### ✨ New Features\n\n* SmartLife 7.12.6 に対応し、Smart App タブとシーンのお勧めを非表示にするパッチを追加 ([#9](https://github.com/Fuku856/smartlife-patches/issues/9)) ([fef6628](https://github.com/Fuku856/smartlife-patches/commit/fef6628ba349cc71702af49db079a97f877a27dc))",
+  "created_at": "2026-11-19T04:29:11",
+  "version": "1.2.1",
+  "description": "## [1.2.1](https://github.com/Fuku856/smartlife-patches/compare/v1.2.0...v1.2.1) (2026-11-19)\n\n### 🐛 Bug Fixes\n\n* remove ads and ad-related traffic ([#10](https://github.com/Fuku856/smartlife-patches/issues/10)) ([ef31c59](https://github.com/Fuku856/smartlife-patches/commit/ef31c5977a8483b812283df94d41403de1a29312)), closes [#11](https://github.com/Fuku856/smartlife-patches/issues/11)",
   "apps": [
     {
       "app_name": "SmartLife: Smart Living",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Disable telemetry",
-          "description": "Disables Firebase Analytics/Crashlytics and automatic page tracking. Works by turning off the app's own analytics feature flags.",
+          "description": "Disables Firebase Analytics/Crashlytics and automatic page tracking, and stops the app's analytics, log-upload and attribution subsystems from starting.",
           "use": true,
           "options": [
             {
@@ -22,6 +22,10 @@
             {
               "key": "disablePageTracking",
               "description": "Turns off automatic page/event tracking."
+            },
+            {
+              "key": "stopTrackingSubsystems",
+              "description": "Removes the analytics, log-upload, API event, page tracking and AppsFlyer attribution startup pipelines so they never start."
             }
           ],
           "compatible_versions": [
@@ -51,9 +55,22 @@
         },
         {
           "name": "Hide ads",
-          "description": "Disables in-app ads: AdMob/PID banners and the Tuya marketing ad service. Works by turning off the app's own advertising feature flags.",
+          "description": "Disables in-app ads (including the AdMob native ad on the home screen), promotional banners, ad push, and ad-related attribution. Stops the corresponding advertising subsystems and removes Home/Profile ad entries.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "removeAdPipelines",
+              "description": "Removes the ad, ad-push and attribution startup pipelines so they never start."
+            },
+            {
+              "key": "removeAdEntries",
+              "description": "Removes the marketing, PID banner and shopping mall cards from Home and the advertising, welfare banner and mall rows from Profile."
+            },
+            {
+              "key": "removeAdServices",
+              "description": "Also unregisters the ad, marketing booth, ad push and AppsFlyer services. A screen that still looks one of them up may crash, so this is off by default."
+            }
+          ],
           "compatible_versions": [
             "7.12.6",
             "7.12.0"
@@ -104,10 +121,10 @@
     }
   ],
   "patches_name": "SmartLife Patches",
-  "fingerprint": "f1103295b8e0b53769c53ebd529166c42079052435501bb55b4741b2ec7b2157",
-  "release_notes": "## [1.2.0](https://github.com/Fuku856/smartlife-patches/compare/v1.1.0...v1.2.0) (2026-11-19)\n\n### ✨ New Features\n\n* SmartLife 7.12.6 に対応し、Smart App タブとシーンのお勧めを非表示にするパッチを追加 ([#9](https://github.com/Fuku856/smartlife-patches/issues/9)) ([fef6628](https://github.com/Fuku856/smartlife-patches/commit/fef6628ba349cc71702af49db079a97f877a27dc))\n",
-  "release_tag": "v1.2.0",
-  "release_date": "2026-11-19T02:38:40Z",
+  "fingerprint": "44750740e1633fd835c2294ca63aebff7cedc67c5fc1fd94593fec504246343c",
+  "release_notes": "## [1.2.1](https://github.com/Fuku856/smartlife-patches/compare/v1.2.0...v1.2.1) (2026-11-19)\n\n### 🐛 Bug Fixes\n\n* remove ads and ad-related traffic ([#10](https://github.com/Fuku856/smartlife-patches/issues/10)) ([ef31c59](https://github.com/Fuku856/smartlife-patches/commit/ef31c5977a8483b812283df94d41403de1a29312)), closes [#11](https://github.com/Fuku856/smartlife-patches/issues/11)\n\n\n### 📝 Details\n\n**Hide ads**\n* Hide the AdMob native ad (with the \"i\" badge and an install button) shown above Favorites on the home screen. It does not read the app's ad flags and is not listed in the home layout config, so earlier versions of this patch could not remove it.\n* Stop AdMob ad slots on the home and profile screens.\n* Stop the AdMob startup and login subsystems added in SmartLife 7.12.6.\n* Remove the marketing card, PID banner and shopping mall from Home, and the advertising, welfare banner and mall rows from Profile.\n* Also stop the AppsFlyer attribution pipeline.\n* New options: `Stop ad subsystems`, `Remove Home/Profile ad entries`, and `Remove ad services (experimental)` (off by default). The experimental option now matches the service names the app actually uses.\n\n**Disable telemetry**\n* Stop the analytics, log-upload, API event, page-tracking, notification-permission stats and AppsFlyer attribution subsystems from starting.\n* New option: `Stop tracking subsystems`.\n\n**General**\n* App config files are now edited structurally instead of by text replacement. A config file that is missing or cannot be read is skipped with a warning instead of failing the whole patch.\n\nPatches apply to SmartLife 7.12.0 and 7.12.6.\n",
+  "release_tag": "v1.2.1",
+  "release_date": "2026-11-19T04:29:58Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/174919143?v=4&s=128",
