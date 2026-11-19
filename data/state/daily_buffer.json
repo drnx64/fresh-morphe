@@ -1,7 +1,7 @@
 {
   "date": "2026-11-19",
-  "lastChecked": "2026-11-19T13:18:41Z",
-  "scan_counter": 2,
+  "lastChecked": "2026-11-19T21:49:53Z",
+  "scan_counter": 3,
   "affected_bundles": {
     "ajstrick81-androidtv:dev": {
       "bundle": "ajstrick81-androidtv",
@@ -646,9 +646,14 @@
         {
           "app_name": "Twitch: Live Streaming",
           "package": "tv.twitch.android.app",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Keep Drops banner",
+                "description": "Keeps Twitch's \"Twitch Drops\" banner above chat in the native player for as long as you watch a channel with Drops, the way the React Native player keeps its Drops card, instead of removing it after a minute. Expand it for the campaign and its end date, then View Details for each Drop and how to earn it, or Dismiss to remove it. Twitch shows Drops only to a signed-in account. Starts on; turn it off in Lurk settings > Chat."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -658,11 +663,141 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Auto-claim Drops",
+                "description": "Adds a switch that claims a Drop for your account as soon as Twitch's drops notification in a channel shows it as claimable, by pressing that notification's Claim button for you: the same claim request and the same \"claim\" analytics event a tap sends (Disable analytics blocks the event). Each drop is claimed once per app start. Needs a signed-in account and the notification, which shows while you watch a channel with Drops; drops earned elsewhere stay in your inventory. Time-based Drops progress from the watch-time event Disable analytics blocks, so while this is on that one event still goes; every other analytics event stays blocked. Checked against Twitch's code on Android's runtime, not yet with a real account. Starts off. Turn it on in Lurk settings > Chat.",
+                "previous_description": "Adds a switch that claims a Drop for your account as soon as Twitch's drops notification in a channel shows it as claimable, by pressing that notification's Claim button for you: the same claim request and the same \"claim\" analytics event a tap sends (Disable analytics blocks the event). Each drop is claimed once per app start. Needs a signed-in account and the notification, which shows while you watch a channel with Drops; drops earned elsewhere stay in your inventory. Checked against Twitch's code on Android's runtime, not yet with a real account. Starts off. Turn it on in Lurk settings > Chat.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Auto-claim channel points",
+                "description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Needs a signed-in account. Twitch only offers points and the chest for watch time it is told about, so while Disable analytics is on, this also lets its minute-watched event through; every other analytics event stays blocked. The claim leaves out the chat mode a tap sends, which Twitch only adds to its analytics event. Starts off. Turn it on in Lurk settings > Chat.",
+                "previous_description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Needs a signed-in account. Checked against Twitch's code and with a stand-in for the claim service, not yet with a real account. The claim leaves out the chat mode a tap sends, which Twitch only adds to its analytics event. Starts off. Turn it on in Lurk settings > Chat.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Disable analytics",
+                "description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating; with Auto-claim channel points or Auto-claim Drops on, the minute-watched event that earns channel points and progresses Drops still goes. Restart Twitch after changing this setting. Playback requests still run.",
+                "previous_description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Clips",
+                "description": "Hides the Clips discovery tab and clip shelves such as \"Clips for you\" on Home, and the Clips tab on native channel profiles. Shared clip links still open.",
+                "previous_description": "Hides the Clips discovery tab on Home and the Clips tab on native channel profiles. Shared clip links still open.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Home sections",
+                "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following, the recent streams shelf of the Live tab and the Live tab itself.",
+                "previous_description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following and the recent streams shelf of the Live tab.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide chat highlights",
+                "description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations and the extension icons above chat can be hidden too. Other chat messages are unchanged.",
+                "previous_description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations can be hidden too. Other chat messages are unchanged.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide player buttons",
+                "description": "Hides the player's Clip, Cast and Share buttons and the pop-up after a landscape chat mode change, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged.",
+                "previous_description": "Hides the player's Clip, Cast and Share buttons, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon. Lurk settings > Interface > App icon switches back to Twitch's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Navigation bar position",
+                "description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons, and switches that hide its Create, Browse and Activity buttons. Twitch's own layout stays until another choice is made in Lurk settings.",
+                "previous_description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons. Twitch's own layout stays until another choice is made in Lurk settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Playlist proxy",
+                "description": "Sends live stream playlist requests to a proxy server you set in this patch's options or later in Lurk settings, for example one that returns playlists without stitched ads. The proxy sees which channel you watch and when. With {channel}, only the lowercase channel name is forwarded; the original signed query is omitted. Without {channel}, the proxy gets the full request, including your signed playback token, which identifies your account. The token is in the request's address (its query, or with {url} the whole Twitch URL), so the proxy's access logs can keep it. The proxy decides what the player plays and can add segments of its own: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the request travels unencrypted; a URL typed in Lurk settings must be https:// or use that host. Does nothing while no proxy URL is set; with one set in the options, the patch's switch starts on (Lurk settings > Playback). Videos and clips are not proxied. Avoid stitched ads leaves proxied streams alone: the proxy decides what their playlists hold.",
+                "previous_description": "Sends live stream playlist requests to a proxy server you set in this patch's options, for example one that returns playlists without stitched ads. The proxy sees which channel you watch and when. With {channel}, only the lowercase channel name is forwarded; the original signed query is omitted. Without {channel}, the proxy gets the full request, including your signed playback token, which identifies your account. The token is in the request's address (its query, or with {url} the whole Twitch URL), so the proxy's access logs can keep it. The proxy decides what the player plays and can add segments of its own: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the request travels unencrypted. Does nothing while the proxy URL is empty; once it's set, the patch's switch starts on (Lurk settings > Playback). Videos and clips are not proxied. Avoid stitched ads leaves proxied streams alone: the proxy decides what their playlists hold.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
+          ]
+        },
+        {
+          "app_name": "KICK: Live Streaming",
+          "package": "com.kick.mobile",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Chat search",
+                "description": "Adds a search button to the top right of chat. Type a word or a username and only the messages from or containing it stay shown, new ones included, until the box is cleared or closed. It searches the messages the chat still holds, not older ones. Kick's chat page draws chat, so a change to that page can stop it. Starts off. Turn it on in Lurk settings > Chat."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon. Lurk settings > Interface > App icon switches back to Kick's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Rumble: Stream & Watch Videos",
+          "package": "com.rumble.battles",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+. Lurk settings > Interface > App icon switches back to Rumble's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
           ]
         }
       ],
@@ -672,7 +807,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.17.1",
-      "new_version": "1.17.2",
+      "new_version": "1.19.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -684,9 +819,14 @@
         {
           "app_name": "Twitch: Live Streaming",
           "package": "tv.twitch.android.app",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Keep Drops banner",
+                "description": "Keeps Twitch's \"Twitch Drops\" banner above chat in the native player for as long as you watch a channel with Drops, the way the React Native player keeps its Drops card, instead of removing it after a minute. Expand it for the campaign and its end date, then View Details for each Drop and how to earn it, or Dismiss to remove it. Twitch shows Drops only to a signed-in account. Starts on; turn it off in Lurk settings > Chat."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -696,11 +836,141 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Auto-claim Drops",
+                "description": "Adds a switch that claims a Drop for your account as soon as Twitch's drops notification in a channel shows it as claimable, by pressing that notification's Claim button for you: the same claim request and the same \"claim\" analytics event a tap sends (Disable analytics blocks the event). Each drop is claimed once per app start. Needs a signed-in account and the notification, which shows while you watch a channel with Drops; drops earned elsewhere stay in your inventory. Time-based Drops progress from the watch-time event Disable analytics blocks, so while this is on that one event still goes; every other analytics event stays blocked. Checked against Twitch's code on Android's runtime, not yet with a real account. Starts off. Turn it on in Lurk settings > Chat.",
+                "previous_description": "Adds a switch that claims a Drop for your account as soon as Twitch's drops notification in a channel shows it as claimable, by pressing that notification's Claim button for you: the same claim request and the same \"claim\" analytics event a tap sends (Disable analytics blocks the event). Each drop is claimed once per app start. Needs a signed-in account and the notification, which shows while you watch a channel with Drops; drops earned elsewhere stay in your inventory. Checked against Twitch's code on Android's runtime, not yet with a real account. Starts off. Turn it on in Lurk settings > Chat.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Auto-claim channel points",
+                "description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Needs a signed-in account. Twitch only offers points and the chest for watch time it is told about, so while Disable analytics is on, this also lets its minute-watched event through; every other analytics event stays blocked. The claim leaves out the chat mode a tap sends, which Twitch only adds to its analytics event. Starts off. Turn it on in Lurk settings > Chat.",
+                "previous_description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Needs a signed-in account. Checked against Twitch's code and with a stand-in for the claim service, not yet with a real account. The claim leaves out the chat mode a tap sends, which Twitch only adds to its analytics event. Starts off. Turn it on in Lurk settings > Chat.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Disable analytics",
+                "description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating; with Auto-claim channel points or Auto-claim Drops on, the minute-watched event that earns channel points and progresses Drops still goes. Restart Twitch after changing this setting. Playback requests still run.",
+                "previous_description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Clips",
+                "description": "Hides the Clips discovery tab and clip shelves such as \"Clips for you\" on Home, and the Clips tab on native channel profiles. Shared clip links still open.",
+                "previous_description": "Hides the Clips discovery tab on Home and the Clips tab on native channel profiles. Shared clip links still open.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Home sections",
+                "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following, the recent streams shelf of the Live tab and the Live tab itself.",
+                "previous_description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following and the recent streams shelf of the Live tab.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide chat highlights",
+                "description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations and the extension icons above chat can be hidden too. Other chat messages are unchanged.",
+                "previous_description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations can be hidden too. Other chat messages are unchanged.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide player buttons",
+                "description": "Hides the player's Clip, Cast and Share buttons and the pop-up after a landscape chat mode change, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged.",
+                "previous_description": "Hides the player's Clip, Cast and Share buttons, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon. Lurk settings > Interface > App icon switches back to Twitch's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Navigation bar position",
+                "description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons, and switches that hide its Create, Browse and Activity buttons. Twitch's own layout stays until another choice is made in Lurk settings.",
+                "previous_description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons. Twitch's own layout stays until another choice is made in Lurk settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Playlist proxy",
+                "description": "Sends live stream playlist requests to a proxy server you set in this patch's options or later in Lurk settings, for example one that returns playlists without stitched ads. The proxy sees which channel you watch and when. With {channel}, only the lowercase channel name is forwarded; the original signed query is omitted. Without {channel}, the proxy gets the full request, including your signed playback token, which identifies your account. The token is in the request's address (its query, or with {url} the whole Twitch URL), so the proxy's access logs can keep it. The proxy decides what the player plays and can add segments of its own: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the request travels unencrypted; a URL typed in Lurk settings must be https:// or use that host. Does nothing while no proxy URL is set; with one set in the options, the patch's switch starts on (Lurk settings > Playback). Videos and clips are not proxied. Avoid stitched ads leaves proxied streams alone: the proxy decides what their playlists hold.",
+                "previous_description": "Sends live stream playlist requests to a proxy server you set in this patch's options, for example one that returns playlists without stitched ads. The proxy sees which channel you watch and when. With {channel}, only the lowercase channel name is forwarded; the original signed query is omitted. Without {channel}, the proxy gets the full request, including your signed playback token, which identifies your account. The token is in the request's address (its query, or with {url} the whole Twitch URL), so the proxy's access logs can keep it. The proxy decides what the player plays and can add segments of its own: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the request travels unencrypted. Does nothing while the proxy URL is empty; once it's set, the patch's switch starts on (Lurk settings > Playback). Videos and clips are not proxied. Avoid stitched ads leaves proxied streams alone: the proxy decides what their playlists hold.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
+          ]
+        },
+        {
+          "app_name": "KICK: Live Streaming",
+          "package": "com.kick.mobile",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Chat search",
+                "description": "Adds a search button to the top right of chat. Type a word or a username and only the messages from or containing it stay shown, new ones included, until the box is cleared or closed. It searches the messages the chat still holds, not older ones. Kick's chat page draws chat, so a change to that page can stop it. Starts off. Turn it on in Lurk settings > Chat."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon. Lurk settings > Interface > App icon switches back to Kick's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Rumble: Stream & Watch Videos",
+          "package": "com.rumble.battles",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+. Lurk settings > Interface > App icon switches back to Rumble's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
           ]
         }
       ],
@@ -710,7 +980,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.17.1",
-      "new_version": "1.17.2",
+      "new_version": "1.19.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -722,9 +992,14 @@
         {
           "app_name": "Twitch: Live Streaming",
           "package": "tv.twitch.android.app",
-          "badge_type": "UPDATED APP",
+          "badge_type": "MAJOR UPDATE",
           "patch_diff": {
-            "patches_added": [],
+            "patches_added": [
+              {
+                "name": "Keep Drops banner",
+                "description": "Keeps Twitch's \"Twitch Drops\" banner above chat in the native player for as long as you watch a channel with Drops, the way the React Native player keeps its Drops card, instead of removing it after a minute. Expand it for the campaign and its end date, then View Details for each Drop and how to earn it, or Dismiss to remove it. Twitch shows Drops only to a signed-in account. Starts on; turn it off in Lurk settings > Chat."
+              }
+            ],
             "patches_removed": [],
             "patches_modified": [
               {
@@ -734,11 +1009,141 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Auto-claim Drops",
+                "description": "Adds a switch that claims a Drop for your account as soon as Twitch's drops notification in a channel shows it as claimable, by pressing that notification's Claim button for you: the same claim request and the same \"claim\" analytics event a tap sends (Disable analytics blocks the event). Each drop is claimed once per app start. Needs a signed-in account and the notification, which shows while you watch a channel with Drops; drops earned elsewhere stay in your inventory. Time-based Drops progress from the watch-time event Disable analytics blocks, so while this is on that one event still goes; every other analytics event stays blocked. Checked against Twitch's code on Android's runtime, not yet with a real account. Starts off. Turn it on in Lurk settings > Chat.",
+                "previous_description": "Adds a switch that claims a Drop for your account as soon as Twitch's drops notification in a channel shows it as claimable, by pressing that notification's Claim button for you: the same claim request and the same \"claim\" analytics event a tap sends (Disable analytics blocks the event). Each drop is claimed once per app start. Needs a signed-in account and the notification, which shows while you watch a channel with Drops; drops earned elsewhere stay in your inventory. Checked against Twitch's code on Android's runtime, not yet with a real account. Starts off. Turn it on in Lurk settings > Chat.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Auto-claim channel points",
+                "description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Needs a signed-in account. Twitch only offers points and the chest for watch time it is told about, so while Disable analytics is on, this also lets its minute-watched event through; every other analytics event stays blocked. The claim leaves out the chat mode a tap sends, which Twitch only adds to its analytics event. Starts off. Turn it on in Lurk settings > Chat.",
+                "previous_description": "Adds a switch that claims the channel points bonus for your account as soon as its chest appears in a channel's chat, with the same request as tapping the chest. Each bonus is claimed once. Needs a signed-in account. Checked against Twitch's code and with a stand-in for the claim service, not yet with a real account. The claim leaves out the chat mode a tap sends, which Twitch only adds to its analytics event. Starts off. Turn it on in Lurk settings > Chat.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Disable analytics",
+                "description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating; with Auto-claim channel points or Auto-claim Drops on, the minute-watched event that earns channel points and progresses Drops still goes. Restart Twitch after changing this setting. Playback requests still run.",
+                "previous_description": "Stops Twitch's native and React Native Spade event uploads, denies local analytics SDK consent, enables Branch's limited tracking mode, blocks Crashlytics uploads, Nielsen audience pings and Sprig surveys, and prevents Sentry initialization. Watch progress, viewing statistics and rewards may stop updating. Restart Twitch after changing this setting. Playback requests still run.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Clips",
+                "description": "Hides the Clips discovery tab and clip shelves such as \"Clips for you\" on Home, and the Clips tab on native channel profiles. Shared clip links still open.",
+                "previous_description": "Hides the Clips discovery tab on Home and the Clips tab on native channel profiles. Shared clip links still open.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide Home sections",
+                "description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following, the recent streams shelf of the Live tab and the Live tab itself.",
+                "previous_description": "Hides Stories on Home and, each with its own switch, the Continue watching, offline channels and recommended channels sections of Following and the recent streams shelf of the Live tab.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide chat highlights",
+                "description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations and the extension icons above chat can be hidden too. Other chat messages are unchanged.",
+                "previous_description": "Hides the Hype Train, Bits and gift leaderboards, other viewers' sub and gift messages and gift banners, pinned cheers and watch-streak pop-ups, each with its own switch. Celebrations can be hidden too. Other chat messages are unchanged.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide player buttons",
+                "description": "Hides the player's Clip, Cast and Share buttons and the pop-up after a landscape chat mode change, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged.",
+                "previous_description": "Hides the player's Clip, Cast and Share buttons, each with its own switch. Cast stays visible by default. Other ways to clip and share, such as the channel page, are unchanged.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon. Lurk settings > Interface > App icon switches back to Twitch's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Twitch's launcher icon with Lurk artwork, including Android's themed icon.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Navigation bar position",
+                "description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons, and switches that hide its Create, Browse and Activity buttons. Twitch's own layout stays until another choice is made in Lurk settings.",
+                "previous_description": "Adds a choice that moves Twitch's bottom navigation bar to the top of the screen and/or hides its labels, leaving only the icons. Twitch's own layout stays until another choice is made in Lurk settings.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Playlist proxy",
+                "description": "Sends live stream playlist requests to a proxy server you set in this patch's options or later in Lurk settings, for example one that returns playlists without stitched ads. The proxy sees which channel you watch and when. With {channel}, only the lowercase channel name is forwarded; the original signed query is omitted. Without {channel}, the proxy gets the full request, including your signed playback token, which identifies your account. The token is in the request's address (its query, or with {url} the whole Twitch URL), so the proxy's access logs can keep it. The proxy decides what the player plays and can add segments of its own: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the request travels unencrypted; a URL typed in Lurk settings must be https:// or use that host. Does nothing while no proxy URL is set; with one set in the options, the patch's switch starts on (Lurk settings > Playback). Videos and clips are not proxied. Avoid stitched ads leaves proxied streams alone: the proxy decides what their playlists hold.",
+                "previous_description": "Sends live stream playlist requests to a proxy server you set in this patch's options, for example one that returns playlists without stitched ads. The proxy sees which channel you watch and when. With {channel}, only the lowercase channel name is forwarded; the original signed query is omitted. Without {channel}, the proxy gets the full request, including your signed playback token, which identifies your account. The token is in the request's address (its query, or with {url} the whole Twitch URL), so the proxy's access logs can keep it. The proxy decides what the player plays and can add segments of its own: only use a proxy you trust. An http:// proxy gets an exception from Twitch's HTTPS-only rule for its host alone, and the request travels unencrypted. Does nothing while the proxy URL is empty; once it's set, the patch's switch starts on (Lurk settings > Playback). Videos and clips are not proxied. Avoid stitched ads leaves proxied streams alone: the proxy decides what their playlists hold.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
+          ]
+        },
+        {
+          "app_name": "KICK: Live Streaming",
+          "package": "com.kick.mobile",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Chat search",
+                "description": "Adds a search button to the top right of chat. Type a word or a username and only the messages from or containing it stay shown, new ones included, until the box is cleared or closed. It searches the messages the chat still holds, not older ones. Kick's chat page draws chat, so a change to that page can stop it. Starts off. Turn it on in Lurk settings > Chat."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon. Lurk settings > Interface > App icon switches back to Kick's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Kick's launcher icon with Lurk artwork, including Android's themed icon.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Rumble: Stream & Watch Videos",
+          "package": "com.rumble.battles",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Lurk icon",
+                "description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+. Lurk settings > Interface > App icon switches back to Rumble's own icon without patching again (not on a root mount install).",
+                "previous_description": "Replaces Rumble's launcher icon with the Lurk icon, including the themed icon on Android 13+.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
           ]
         }
       ],
@@ -748,7 +1153,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.17.1",
-      "new_version": "1.17.2",
+      "new_version": "1.19.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -766,6 +1171,22 @@
               {
                 "name": "Hide New message button and suggestions",
                 "description": "Takes the New message button off the top of your messages, and the Suggested people off the New message screen. Search still works. Both start off. Turn them on in HushGram settings > Messages."
+              },
+              {
+                "name": "Expand captions",
+                "description": "Shows the whole caption on posts in your feed, or as many lines as you pick, before \"more\", and on a switch of its own the whole caption on reels. Stories stay as they are. Starts off. Turn them on in HushGram settings > Feed and Reels."
+              },
+              {
+                "name": "Hide Followers and Following on profiles",
+                "description": "Takes the Followers and Following buttons, or just their numbers, off the top of profiles. Starts off. Turn it on in HushGram settings > Profiles."
+              },
+              {
+                "name": "Hide the line under names",
+                "description": "Takes the song, the place and the other labels off the line under the name on posts in your feed and on reels. Sponsored and Paid partnership stay. Starts off. Turn it on in HushGram settings > Feed and Reels."
+              },
+              {
+                "name": "Let the screen sleep when a reel stops",
+                "description": "Instagram keeps the screen on while Reels is open, even with a reel paused. With this on, a paused reel lets your phone's screen timeout run, and a playing one keeps the screen on. Starts off. Turn it on in HushGram settings > Reels."
               }
             ],
             "patches_removed": [],
@@ -833,12 +1254,37 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Ask for VP9 instead of AV1",
+                "description": "Tells Instagram your phone has no AV1 decoder, which takes a restart. A post or reel that still comes as AV1 is saved as VP9 from Instagram's website when it offers one. Stories can still be AV1, and Convert to keep the full size turns those into H.264. Starts off. Turn it on in HushGram settings > Downloads.",
+                "previous_description": "Tells Instagram your phone has no AV1 decoder. Instagram doesn't always listen, so videos can still come as AV1. If they do, Convert to keep the full size gives you H.264. Takes a restart. Starts off. Turn it on in HushGram settings > Downloads.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide suggested accounts in Reels",
+                "description": "Leaves out the cards of accounts to follow that Instagram puts between reels, and on switches of their own its Catch up with friends pages of stories and its Threads cards. Every reel still plays. Starts off. Turn them on in HushGram settings > Reels.",
+                "previous_description": "Leaves out the cards of accounts to follow that Instagram puts between reels, and on a second switch its Catch up with friends pages of stories. Every reel still plays. Starts off. Turn them on in HushGram settings > Reels.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Stop swipe to create",
+                "description": "Stops a sideways swipe on Home from opening the camera, or from opening Messages. The + and Messages buttons still work. It can also open Messages when you swipe left on Home, like Instagram used to. All start off. Turn them on in HushGram settings > Feed.",
+                "previous_description": "Stops a sideways swipe on Home from opening the camera. The + button still opens it. It can also open Messages when you swipe left on Home, like Instagram used to. Both start off. Turn them on in HushGram settings > Feed.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
@@ -864,6 +1310,22 @@
               {
                 "name": "Hide New message button and suggestions",
                 "description": "Takes the New message button off the top of your messages, and the Suggested people off the New message screen. Search still works. Both start off. Turn them on in HushGram settings > Messages."
+              },
+              {
+                "name": "Expand captions",
+                "description": "Shows the whole caption on posts in your feed, or as many lines as you pick, before \"more\", and on a switch of its own the whole caption on reels. Stories stay as they are. Starts off. Turn them on in HushGram settings > Feed and Reels."
+              },
+              {
+                "name": "Hide Followers and Following on profiles",
+                "description": "Takes the Followers and Following buttons, or just their numbers, off the top of profiles. Starts off. Turn it on in HushGram settings > Profiles."
+              },
+              {
+                "name": "Hide the line under names",
+                "description": "Takes the song, the place and the other labels off the line under the name on posts in your feed and on reels. Sponsored and Paid partnership stay. Starts off. Turn it on in HushGram settings > Feed and Reels."
+              },
+              {
+                "name": "Let the screen sleep when a reel stops",
+                "description": "Instagram keeps the screen on while Reels is open, even with a reel paused. With this on, a paused reel lets your phone's screen timeout run, and a playing one keeps the screen on. Starts off. Turn it on in HushGram settings > Reels."
               }
             ],
             "patches_removed": [],
@@ -931,12 +1393,37 @@
                 "changes": [
                   "description updated"
                 ]
+              },
+              {
+                "name": "Ask for VP9 instead of AV1",
+                "description": "Tells Instagram your phone has no AV1 decoder, which takes a restart. A post or reel that still comes as AV1 is saved as VP9 from Instagram's website when it offers one. Stories can still be AV1, and Convert to keep the full size turns those into H.264. Starts off. Turn it on in HushGram settings > Downloads.",
+                "previous_description": "Tells Instagram your phone has no AV1 decoder. Instagram doesn't always listen, so videos can still come as AV1. If they do, Convert to keep the full size gives you H.264. Takes a restart. Starts off. Turn it on in HushGram settings > Downloads.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Hide suggested accounts in Reels",
+                "description": "Leaves out the cards of accounts to follow that Instagram puts between reels, and on switches of their own its Catch up with friends pages of stories and its Threads cards. Every reel still plays. Starts off. Turn them on in HushGram settings > Reels.",
+                "previous_description": "Leaves out the cards of accounts to follow that Instagram puts between reels, and on a second switch its Catch up with friends pages of stories. Every reel still plays. Starts off. Turn them on in HushGram settings > Reels.",
+                "changes": [
+                  "description updated"
+                ]
+              },
+              {
+                "name": "Stop swipe to create",
+                "description": "Stops a sideways swipe on Home from opening the camera, or from opening Messages. The + and Messages buttons still work. It can also open Messages when you swipe left on Home, like Instagram used to. All start off. Turn them on in HushGram settings > Feed.",
+                "previous_description": "Stops a sideways swipe on Home from opening the camera. The + button still opens it. It can also open Messages when you swipe left on Home, like Instagram used to. Both start off. Turn them on in HushGram settings > Feed.",
+                "changes": [
+                  "description updated"
+                ]
               }
             ]
           },
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
@@ -4702,7 +5189,8 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         }
       ],
@@ -4711,7 +5199,7 @@
       "extra_badges": [],
       "previous_version": "1.12.1-x.4-beta.6",
       "new_version": "1.12.1-x.4-beta.6",
-      "avatarUrl": "",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
       "bundleImageUrl": ""
     },
     "rikunode-tairiku-x-patches:stable": {
@@ -4738,7 +5226,8 @@
             ]
           },
           "scan_numbers": [
-            1
+            1,
+            3
           ]
         }
       ],
@@ -4749,7 +5238,7 @@
       ],
       "previous_version": "1.12.2-x.3",
       "new_version": "1.12.2-x.8",
-      "avatarUrl": "",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
       "bundleImageUrl": ""
     },
     "hushpinterest:stable": {
@@ -4881,7 +5370,8 @@
           "badge_type": "NEW APP",
           "scan_numbers": [
             1,
-            2
+            2,
+            3
           ]
         }
       ],
@@ -4952,7 +5442,8 @@
             "patches_modified": []
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -4979,7 +5470,8 @@
             "patches_modified": []
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -5228,10 +5720,21 @@
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "Wide screen feed grid",
+                "description": "Shows the home feed and other feeds as a grid of videos on a monitor, such as with Samsung DeX or a USB-C dock, instead of one giant video at a time. The tablet layout is used while the app is on a monitor, and the phone layout on the screen of the phone.",
+                "previous_description": "Shows the home feed and other feeds as a grid on screens that are wider than the grid layouts of YouTube, such as an external monitor, instead of one giant video at a time.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -5241,7 +5744,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.5.2",
-      "new_version": "1.6.0",
+      "new_version": "1.7.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5262,10 +5765,21 @@
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "Wide screen feed grid",
+                "description": "Shows the home feed and other feeds as a grid of videos on a monitor, such as with Samsung DeX or a USB-C dock, instead of one giant video at a time. The tablet layout is used while the app is on a monitor, and the phone layout on the screen of the phone.",
+                "previous_description": "Shows the home feed and other feeds as a grid on screens that are wider than the grid layouts of YouTube, such as an external monitor, instead of one giant video at a time.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -5275,7 +5789,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.5.2",
-      "new_version": "1.6.0",
+      "new_version": "1.7.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -5296,10 +5810,21 @@
               }
             ],
             "patches_removed": [],
-            "patches_modified": []
+            "patches_modified": [
+              {
+                "name": "Wide screen feed grid",
+                "description": "Shows the home feed and other feeds as a grid of videos on a monitor, such as with Samsung DeX or a USB-C dock, instead of one giant video at a time. The tablet layout is used while the app is on a monitor, and the phone layout on the screen of the phone.",
+                "previous_description": "Shows the home feed and other feeds as a grid on screens that are wider than the grid layouts of YouTube, such as an external monitor, instead of one giant video at a time.",
+                "changes": [
+                  "description updated",
+                  "options: +1 option"
+                ]
+              }
+            ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -5309,7 +5834,7 @@
         "VERSION BUMP"
       ],
       "previous_version": "1.5.2",
-      "new_version": "1.6.0",
+      "new_version": "1.7.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -10906,15 +11431,80 @@
           "package": "deezer.android.app",
           "badge_type": "NEW APP",
           "scan_numbers": [
-            2
-          ]
+            2,
+            3
+          ],
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Block ads",
+                "description": "Hides banner and native ads and skips visual pre-rolls and audio ad breaks.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Choose tracks on demand",
+                "description": "Select tracks in albums, playlists, artist pages, profiles, and Deezer recommendations. Play albums in order and shuffle playlists from their header.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable offline downloads",
+                "description": "Unlocks the OFFLINE entitlement and download actions in menus (subject to server-side stream availability).",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Enable player navigation",
+                "description": "Enables unlimited track skips, previous and next controls, and seeking within a track.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Premium offers",
+                "description": "Hides offer pop-ups, the Premium tab and upgrade buttons, and locked audio quality options.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Manage the playback queue",
+                "description": "Opens the queue and adds Add to queue and Play Next to supported menus.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Open lyrics from the player",
+                "description": "Opens Deezer's lyrics view instead of the Premium prompt when a lyrics button is tapped.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Search and sort playlists",
+                "description": "Adds the native search shortcut to playlist headers and Sort to playlist menus.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          }
         }
       ],
       "repo_url": "https://github.com/AudioPatchLab/deezer-morphe-patches",
       "patches_name": "AudioPatchLab",
-      "extra_badges": [],
-      "previous_version": "",
-      "new_version": "1.1.4",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.1.4",
+      "new_version": "1.2.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     },
@@ -11587,7 +12177,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -11596,7 +12187,7 @@
       "extra_badges": [],
       "previous_version": "1.12.1-x.4-beta.6",
       "new_version": "1.12.1-x.4-beta.6",
-      "avatarUrl": "",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
       "bundleImageUrl": ""
     },
     "rikunode-x-feed-cleanup-patches:stable": {
@@ -11631,7 +12222,8 @@
             ]
           },
           "scan_numbers": [
-            2
+            2,
+            3
           ]
         }
       ],
@@ -11642,7 +12234,7 @@
       ],
       "previous_version": "1.12.2-x.2",
       "new_version": "1.12.2-x.8",
-      "avatarUrl": "",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
       "bundleImageUrl": ""
     },
     "ahmedyarub:dev": {
@@ -13346,6 +13938,1305 @@
       "extra_badges": [],
       "previous_version": "",
       "new_version": "1.0.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "dutchpharaoh:dev": {
+      "bundle": "dutchpharaoh",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Alerts bar in Android Auto",
+                "description": "Shows a vertical bar on the right of the Android Auto map with the reports on your route in the next 10 km: speed cameras, police, accidents, jams, hazards and closures. In a section control zone it also shows your average speed, the speed limit and the distance left.",
+                "previous_description": "Shows a vertical bar on the right of the Android Auto map with the reports on your route in the next 10 km: speed cameras, police, accidents, jams, hazards and closures.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/DutchPharaoh/De-Waze-Patches",
+      "patches_name": "De-Waze Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.0",
+      "new_version": "1.3.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "dutchpharaoh:stable": {
+      "bundle": "dutchpharaoh",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Alerts bar in Android Auto",
+                "description": "Shows a vertical bar on the right of the Android Auto map with the reports on your route in the next 10 km: speed cameras, police, accidents, jams, hazards and closures. In a section control zone it also shows your average speed, the speed limit and the distance left.",
+                "previous_description": "Shows a vertical bar on the right of the Android Auto map with the reports on your route in the next 10 km: speed cameras, police, accidents, jams, hazards and closures.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/DutchPharaoh/De-Waze-Patches",
+      "patches_name": "De-Waze Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.0",
+      "new_version": "1.3.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mighty-michs:stable": {
+      "bundle": "mighty-michs",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Video Editor & Maker - InShot",
+          "package": "com.camerasideas.instashot",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Fix video engine on re-sign",
+                "description": "Stops libisvideoengine.so from terminating the process after the APK is re-signed. Supports arm64-v8a / armeabi-v7a; patterns cover 2.214.x and newer builds that still issue kill(pid, 9).",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Unlock Premium",
+                "description": "Enables InShot Pro entitlements offline: export without watermark, no interstitial ads, and access to paid effects, transitions, stickers and HD. Built-in AI features that validate the store signature in native code may still refuse a re-signed package.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "ReelShort - Stream Drama & TV",
+          "package": "com.newleaf.app.android.victor",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium Features",
+                "description": "Forces local VIP membership and unlocks episode lock / paywall flags so locked chapters do not freeze the player. Does not forge server purchases.",
+                "previous_description": "Forces local VIP membership (status, type, expire far in the future) and unlocks ad/paywall episode flags. Does not forge server purchases.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "DramaBox - Stream Drama Shorts",
+          "package": "com.storymatrix.drama",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium",
+                "description": "Forces DramaBox VIP checks and unlocks section/chapter lock flags so premium episodes do not freeze. Server-side DRM may still apply.",
+                "previous_description": "Forces DramaBox VIP checks (UserInfo, LoginResult, SubInfo) so premium UI and local gates unlock. Server-locked episodes may still apply.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "WhatsApp Messenger",
+          "package": "com.whatsapp",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Enable local backup (gates)",
+                "description": "Soft-bypasses client gates that block local chat backup when Google Drive / Play Services appear missing. Prefer offline Databases folder."
+              },
+              {
+                "name": "Enable local backup (manifest)",
+                "description": "Sets android:allowBackup=true so the package can participate in device backup agents (Seedvault / adb). Does not implement Drive."
+              },
+              {
+                "name": "MicroG compatibility",
+                "description": "Treats Google Play Services checks as successful so WhatsApp works better with microG. Does not replace microG itself."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "App icon",
+                "description": "Choose a classic / premium launcher icon, or pick a PNG from your phone.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Keep deleted messages",
+                "description": "Show messages that were deleted for everyone. Client-side only; already-wiped history cannot be restored.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Mods settings entry",
+                "description": "Reserves a MightyMich row in Settings. Full dialog wiring needs the settings-list fingerprint for this WhatsApp build.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Mods settings resources",
+                "description": "Adds English strings for the MightyMich section in WhatsApp Settings.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Read receipts",
+                "description": "If enabled, you won't send read receipts (blue ticks).",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Remove Meta AI",
+                "description": "Hides Meta AI on the chats home screen (FAB / pill), related hub entry points, and common feature gates. Does not delete existing Meta AI chats.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Typing indicator",
+                "description": "If enabled, others won't see when you are typing.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Usage data",
+                "description": "Limit diagnostic and analytics data WhatsApp sends.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "View once media",
+                "description": "Allow reopening and saving view once photos and videos.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "CCleaner – Phone Cleaner",
+          "package": "com.piriform.ccleaner",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
+      "patches_name": "MightyMich's Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.16.0",
+      "new_version": "1.17.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mighty-michs:latest": {
+      "bundle": "mighty-michs",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Video Editor & Maker - InShot",
+          "package": "com.camerasideas.instashot",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Fix video engine on re-sign",
+                "description": "Stops libisvideoengine.so from terminating the process after the APK is re-signed. Supports arm64-v8a / armeabi-v7a; patterns cover 2.214.x and newer builds that still issue kill(pid, 9).",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Unlock Premium",
+                "description": "Enables InShot Pro entitlements offline: export without watermark, no interstitial ads, and access to paid effects, transitions, stickers and HD. Built-in AI features that validate the store signature in native code may still refuse a re-signed package.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "ReelShort - Stream Drama & TV",
+          "package": "com.newleaf.app.android.victor",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium Features",
+                "description": "Forces local VIP membership and unlocks episode lock / paywall flags so locked chapters do not freeze the player. Does not forge server purchases.",
+                "previous_description": "Forces local VIP membership (status, type, expire far in the future) and unlocks ad/paywall episode flags. Does not forge server purchases.",
+                "changes": [
+                  "description updated",
+                  "versions: +1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "DramaBox - Stream Drama Shorts",
+          "package": "com.storymatrix.drama",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock Premium",
+                "description": "Forces DramaBox VIP checks and unlocks section/chapter lock flags so premium episodes do not freeze. Server-side DRM may still apply.",
+                "previous_description": "Forces DramaBox VIP checks (UserInfo, LoginResult, SubInfo) so premium UI and local gates unlock. Server-locked episodes may still apply.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "WhatsApp Messenger",
+          "package": "com.whatsapp",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Enable local backup (gates)",
+                "description": "Soft-bypasses client gates that block local chat backup when Google Drive / Play Services appear missing. Prefer offline Databases folder."
+              },
+              {
+                "name": "Enable local backup (manifest)",
+                "description": "Sets android:allowBackup=true so the package can participate in device backup agents (Seedvault / adb). Does not implement Drive."
+              },
+              {
+                "name": "MicroG compatibility",
+                "description": "Treats Google Play Services checks as successful so WhatsApp works better with microG. Does not replace microG itself."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "App icon",
+                "description": "Choose a classic / premium launcher icon, or pick a PNG from your phone.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Keep deleted messages",
+                "description": "Show messages that were deleted for everyone. Client-side only; already-wiped history cannot be restored.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Mods settings entry",
+                "description": "Reserves a MightyMich row in Settings. Full dialog wiring needs the settings-list fingerprint for this WhatsApp build.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Mods settings resources",
+                "description": "Adds English strings for the MightyMich section in WhatsApp Settings.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Read receipts",
+                "description": "If enabled, you won't send read receipts (blue ticks).",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Remove Meta AI",
+                "description": "Hides Meta AI on the chats home screen (FAB / pill), related hub entry points, and common feature gates. Does not delete existing Meta AI chats.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Typing indicator",
+                "description": "If enabled, others won't see when you are typing.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "Usage data",
+                "description": "Limit diagnostic and analytics data WhatsApp sends.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              },
+              {
+                "name": "View once media",
+                "description": "Allow reopening and saving view once photos and videos.",
+                "changes": [
+                  "versions: +3 versions"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "CCleaner – Phone Cleaner",
+          "package": "com.piriform.ccleaner",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/mich111discord/MightyMichs-Patches",
+      "patches_name": "MightyMich's Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.16.0",
+      "new_version": "1.17.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "southstar21dev:dev": {
+      "bundle": "southstar21dev",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Spotify: Music and Podcasts",
+          "package": "com.spotify.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/southstar21dev/southstar21-patches",
+      "patches_name": "southstar21's Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.1",
+      "new_version": "1.3.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "southstar21dev:stable": {
+      "bundle": "southstar21dev",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Spotify: Music and Podcasts",
+          "package": "com.spotify.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/southstar21dev/southstar21-patches",
+      "patches_name": "southstar21's Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.1",
+      "new_version": "1.3.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "southstar21dev:latest": {
+      "bundle": "southstar21dev",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Spotify: Music and Podcasts",
+          "package": "com.spotify.music",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/southstar21dev/southstar21-patches",
+      "patches_name": "southstar21's Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.2.1",
+      "new_version": "1.3.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "longthree1:stable": {
+      "bundle": "longthree1",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "SoundCloud: The Music You Love",
+          "package": "com.soundcloud.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Enable SoundCloud Go",
+                "description": "Enables client-side Go+ UI flags and standard-quality (SQ) offline track/playlist caching. High-quality audio streaming (HQ / 256kbps AAC) and high-quality downloads do NOT work because stream quality entitlements are enforced server-side."
+              },
+              {
+                "name": "Hide Message icon",
+                "description": "Hides SoundCloud's direct message / inbox icon on user profile headers and the top toolbar."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Enable SoundCloud Go+ (experimental)",
+                "description": "Enables client-side Go+ UI flags and standard-quality (SQ) offline track/playlist caching. High-quality audio streaming (HQ / 256kbps AAC) and high-quality downloads do NOT work because stream quality entitlements are enforced server-side."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "AMOLED dark theme",
+                "description": "Changes dark theme surfaces, the bottom navigation bar, and the mini-player footer to true black (#000000) for AMOLED screens while preserving SoundCloud orange accents.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable analytics",
+                "description": "Stops SoundCloud's TrackingHandler from storing and dispatching analytics events. Other tracking SDKs and online services remain active.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable consent popup",
+                "description": "Uses SoundCloud's no-op consent controller to skip the OneTrust popup. Does not grant consent or disable tracking; select Disable analytics separately.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Cast icon",
+                "description": "Hides SoundCloud's Cast button in both the toolbar menu and standalone media route views.",
+                "changes": [
+                  "disabled",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Home in Android Auto",
+                "description": "Fills the car Home tab with regular cover tiles from the phone's Home, using the app's existing account. Tracks, mixes and artists play; playlists and albums open. Publishes the real playback queue for Up next, with queue item selection. Falls back to SoundCloud's original car Home if the phone Home cannot load.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Remove ads and upsells",
+                "description": "Stops SoundCloud from requesting audio/display ads and hides Go upsell prompts. Does not change the account's plan, features or entitlements.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Vietnamese language",
+                "description": "Adds Vietnamese UI resources and known server-provided interface labels, preserves content titles, and enables Tiếng Việt in app locale selection.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/longthree1/morphe-patches",
+      "patches_name": "SoundCloud Combined Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "longthree1:latest": {
+      "bundle": "longthree1",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "SoundCloud: The Music You Love",
+          "package": "com.soundcloud.android",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Enable SoundCloud Go",
+                "description": "Enables client-side Go+ UI flags and standard-quality (SQ) offline track/playlist caching. High-quality audio streaming (HQ / 256kbps AAC) and high-quality downloads do NOT work because stream quality entitlements are enforced server-side."
+              },
+              {
+                "name": "Hide Message icon",
+                "description": "Hides SoundCloud's direct message / inbox icon on user profile headers and the top toolbar."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Enable SoundCloud Go+ (experimental)",
+                "description": "Enables client-side Go+ UI flags and standard-quality (SQ) offline track/playlist caching. High-quality audio streaming (HQ / 256kbps AAC) and high-quality downloads do NOT work because stream quality entitlements are enforced server-side."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "AMOLED dark theme",
+                "description": "Changes dark theme surfaces, the bottom navigation bar, and the mini-player footer to true black (#000000) for AMOLED screens while preserving SoundCloud orange accents.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable analytics",
+                "description": "Stops SoundCloud's TrackingHandler from storing and dispatching analytics events. Other tracking SDKs and online services remain active.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Disable consent popup",
+                "description": "Uses SoundCloud's no-op consent controller to skip the OneTrust popup. Does not grant consent or disable tracking; select Disable analytics separately.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Hide Cast icon",
+                "description": "Hides SoundCloud's Cast button in both the toolbar menu and standalone media route views.",
+                "changes": [
+                  "disabled",
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Home in Android Auto",
+                "description": "Fills the car Home tab with regular cover tiles from the phone's Home, using the app's existing account. Tracks, mixes and artists play; playlists and albums open. Publishes the real playback queue for Up next, with queue item selection. Falls back to SoundCloud's original car Home if the phone Home cannot load.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Remove ads and upsells",
+                "description": "Stops SoundCloud from requesting audio/display ads and hides Go upsell prompts. Does not change the account's plan, features or entitlements.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              },
+              {
+                "name": "Vietnamese language",
+                "description": "Adds Vietnamese UI resources and known server-provided interface labels, preserves content titles, and enables Tiếng Việt in app locale selection.",
+                "changes": [
+                  "versions: +1 version, -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/longthree1/morphe-patches",
+      "patches_name": "SoundCloud Combined Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0",
+      "new_version": "1.1.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "ramik4:stable": {
+      "bundle": "ramik4",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube Music",
+          "package": "com.google.android.apps.youtube.music",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Disable swipe to change track",
+                "description": "Adds options to disable changing the track by swiping left or right on the player or the miniplayer."
+              },
+              {
+                "name": "Queue likes filter",
+                "description": "Adds an option to remove songs with few likes from auto-generated mixes and radio, using the like counts of Return YouTube Dislike. Playlists and albums are left unchanged."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Hide buttons",
+                "description": "Adds options to hide the cast, history, notification, search, voice search, sound search, and Library New buttons."
+              }
+            ],
+            "patches_modified": [
+              {
+                "name": "Navigation bar",
+                "description": "Adds options to hide and change the bottom navigation bar (such as the Samples button) and the upper navigation toolbar.",
+                "previous_description": "Adds options to hide navigation bar, labels and buttons, and to show the navigation bar and miniplayer as glass.",
+                "changes": [
+                  "description updated"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Android Auto parked app mode",
+                "description": "Declares YouTube a parked video app, so Android Auto (early access only) and DriveDeck (available now) list it on the car screen by themselves. Android Auto still needs Unknown sources in its developer settings for a patched app."
+              },
+              {
+                "name": "Open post images in fullscreen",
+                "description": "Adds an option to open the images of posts in fullscreen with one tap, instead of the posts feed."
+              },
+              {
+                "name": "Ungroup notifications",
+                "description": "Adds an option to show every video of the notifications that YouTube groups by channel as its own notification."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Reddit",
+          "package": "com.reddit.frontpage",
+          "badge_type": "MAJOR UPDATE",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Feed auto-scroll",
+                "description": "Adds an option to slowly scroll the feed on screen automatically."
+              },
+              {
+                "name": "Flair filters",
+                "description": "Adds an option to hide feed posts with a flair of a community."
+              },
+              {
+                "name": "Hide interactive posts",
+                "description": "Adds an option to hide game and other interactive app posts from the home feed and other recommended feeds."
+              },
+              {
+                "name": "Keyword filters",
+                "description": "Adds an option to hide feed posts with a title or text that matches a regular expression."
+              },
+              {
+                "name": "Open system share sheet",
+                "description": "Adds an option to always open the system share sheet instead of the in-app share sheet. This patch works with Reddit 2026.24.0 and newer."
+              },
+              {
+                "name": "Post side panel",
+                "description": "Adds an option to open posts in a panel next to the feed on wide tablet screens."
+              },
+              {
+                "name": "Share post content",
+                "description": "Adds an option to share the image, video or text of a post instead of its link when using app shortcuts or \"Share via…\" in the share sheet."
+              },
+              {
+                "name": "Tablet grid feed",
+                "description": "Adds an option to show feeds as a grid with 2 or 3 columns on tablets."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Ramik4/rlx-patches",
+      "patches_name": "RLX Patches",
+      "extra_badges": [],
+      "previous_version": "2.3.7",
+      "new_version": "2.3.7",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mlkem-morphe:dev": {
+      "bundle": "mlkem-morphe",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Niagara Launcher ‧ Home Screen",
+          "package": "bitpit.launcher",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Enable Niagara Pro",
+                "description": "Enables local Pro features in Niagara Launcher 1.16.37. Works independently of Automatic app folders. Online services still require their normal account authorization. Phone testing pending."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Amazon Shopping",
+          "package": "com.amazon.mshop.android.shopping",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Mlkem/Morphe",
+      "patches_name": "mlkemac patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0-dev.37",
+      "new_version": "1.0.0-dev.41",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "mlkem-morphe:latest": {
+      "bundle": "mlkem-morphe",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Niagara Launcher ‧ Home Screen",
+          "package": "bitpit.launcher",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Enable Niagara Pro",
+                "description": "Enables local Pro features in Niagara Launcher 1.16.37. Works independently of Automatic app folders. Online services still require their normal account authorization. Phone testing pending."
+              }
+            ],
+            "patches_removed": [],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Amazon Shopping",
+          "package": "com.amazon.mshop.android.shopping",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Mlkem/Morphe",
+      "patches_name": "mlkemac patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.0.0-dev.37",
+      "new_version": "1.0.0-dev.41",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "kinoosaki:dev": {
+      "bundle": "kinoosaki",
+      "channel": "dev",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Tasker",
+          "package": "net.dinglisch.android.taskerm",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/kinoosaki/Kinos-Patches",
+      "patches_name": "Kino's Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "4.0.1-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "kinoosaki:stable": {
+      "bundle": "kinoosaki",
+      "channel": "stable",
+      "badge_type": "NEW BUNDLE",
+      "apps": [
+        {
+          "app_name": "Tasker",
+          "package": "net.dinglisch.android.taskerm",
+          "badge_type": "NEW APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/kinoosaki/Kinos-Patches",
+      "patches_name": "Kino's Patches",
+      "extra_badges": [],
+      "previous_version": "",
+      "new_version": "4.0.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "dowjames:dev": {
+      "bundle": "dowjames",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Ovulation Tracker App - Premom",
+          "package": "premom.eh.com.ehpremomapp",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Unlock premium",
+                "description": "Unlocks all premium membership features in the app.",
+                "changes": [
+                  "versions: -1 version"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Think Dirty",
+          "package": "com.thinkdirty.thinkdirtyapp",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Pool Math by TFP",
+          "package": "com.troublefreepool.poolmath",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            3
+          ]
+        },
+        {
+          "app_name": "Yuka - Food & Cosmetic Scanner",
+          "package": "io.yuka.android",
+          "badge_type": "REMOVED APP",
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/dowjames/morphe-patches",
+      "patches_name": "dowjames Morphe Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.8.2",
+      "new_version": "1.0.1-dev.1",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "forsigh:dev": {
+      "bundle": "forsigh",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Any audio app as a Waze audio partner",
+                "description": "Adds a music app of your choice to Waze's audio player, even though it does not ship Waze's SDK. It only needs a media browser service, like Android Auto. Default: BitChord."
+              },
+              {
+                "name": "YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music and stock YouTube Music play through Waze's audio player."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Morphe YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music play through Waze."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Forsigh/waze-patches",
+      "patches_name": "Forsigh Waze Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "0.30.61",
+      "new_version": "0.30.64",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "forsigh:stable": {
+      "bundle": "forsigh",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Any audio app as a Waze audio partner",
+                "description": "Adds a music app of your choice to Waze's audio player, even though it does not ship Waze's SDK. It only needs a media browser service, like Android Auto. Default: BitChord."
+              },
+              {
+                "name": "YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music and stock YouTube Music play through Waze's audio player."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Morphe YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music play through Waze."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Forsigh/waze-patches",
+      "patches_name": "Forsigh Waze Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "0.30.61",
+      "new_version": "0.30.64",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "forsigh:latest": {
+      "bundle": "forsigh",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "Waze Navigation & Live Traffic",
+          "package": "com.waze",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [
+              {
+                "name": "Any audio app as a Waze audio partner",
+                "description": "Adds a music app of your choice to Waze's audio player, even though it does not ship Waze's SDK. It only needs a media browser service, like Android Auto. Default: BitChord."
+              },
+              {
+                "name": "YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music and stock YouTube Music play through Waze's audio player."
+              }
+            ],
+            "patches_removed": [
+              {
+                "name": "Morphe YouTube Music as a Waze audio partner",
+                "description": "Lets Morphe YouTube Music play through Waze."
+              }
+            ],
+            "patches_modified": []
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/Forsigh/waze-patches",
+      "patches_name": "Forsigh Waze Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "0.30.61",
+      "new_version": "0.30.64",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "lavinhoque33:dev": {
+      "bundle": "lavinhoque33",
+      "channel": "dev",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Hide Shorts dimming",
+                "description": "Adds an in-app setting to hide the dimming effect at the top and bottom of Shorts videos.",
+                "previous_description": "Removes, at compile time, the dimming effect at the top and bottom of Shorts videos.",
+                "changes": [
+                  "description updated",
+                  "enabled"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/lavinhoque33/revanced-patches",
+      "patches_name": "RVX Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.41.0",
+      "new_version": "1.42.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "lavinhoque33:stable": {
+      "bundle": "lavinhoque33",
+      "channel": "stable",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Hide Shorts dimming",
+                "description": "Adds an in-app setting to hide the dimming effect at the top and bottom of Shorts videos.",
+                "previous_description": "Removes, at compile time, the dimming effect at the top and bottom of Shorts videos.",
+                "changes": [
+                  "description updated",
+                  "enabled"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/lavinhoque33/revanced-patches",
+      "patches_name": "RVX Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.41.0",
+      "new_version": "1.42.0",
+      "avatarUrl": "",
+      "bundleImageUrl": ""
+    },
+    "lavinhoque33:latest": {
+      "bundle": "lavinhoque33",
+      "channel": "latest",
+      "badge_type": "UPDATED",
+      "apps": [
+        {
+          "app_name": "YouTube",
+          "package": "com.google.android.youtube",
+          "badge_type": "UPDATED APP",
+          "patch_diff": {
+            "patches_added": [],
+            "patches_removed": [],
+            "patches_modified": [
+              {
+                "name": "Hide Shorts dimming",
+                "description": "Adds an in-app setting to hide the dimming effect at the top and bottom of Shorts videos.",
+                "previous_description": "Removes, at compile time, the dimming effect at the top and bottom of Shorts videos.",
+                "changes": [
+                  "description updated",
+                  "enabled"
+                ]
+              }
+            ]
+          },
+          "scan_numbers": [
+            3
+          ]
+        }
+      ],
+      "repo_url": "https://github.com/lavinhoque33/revanced-patches",
+      "patches_name": "RVX Patches",
+      "extra_badges": [
+        "VERSION BUMP"
+      ],
+      "previous_version": "1.41.0",
+      "new_version": "1.42.0",
       "avatarUrl": "",
       "bundleImageUrl": ""
     }

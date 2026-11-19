@@ -2,8 +2,8 @@
   "bundle": "forsigh",
   "channel": "dev",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-11-17T17:12:59",
-  "version": "0.30.61",
+  "created_at": "2026-11-19T15:03:13",
+  "version": "0.30.64",
   "description": "Morphe patches for Waze: themes, map colours, alerts, speedometer, Android Auto, launcher icon and app name.",
   "apps": [
     {
@@ -99,6 +99,33 @@
             {
               "key": "targetRefreshRate",
               "description": "Refresh rate ceiling. 120 suits most phones; lower it if the phone gets hot."
+            }
+          ],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0",
+            "5.26.5.0",
+            "5.26.90.901",
+            "5.27.0.1",
+            "5.27.4.900",
+            "5.27.90.900"
+          ]
+        },
+        {
+          "name": "Any audio app as a Waze audio partner",
+          "description": "Adds a music app of your choice to Waze's audio player, even though it does not ship Waze's SDK. It only needs a media browser service, like Android Auto. Default: BitChord.",
+          "use": false,
+          "options": [
+            {
+              "key": "audioApp",
+              "description": "Package of the app Waze should offer. It must expose a media browser service, the same one Android Auto uses (BitChord, myspoti and other media clients do)."
+            },
+            {
+              "key": "audioAppName",
+              "description": "Name Waze shows for that app."
             }
           ],
           "compatible_versions": [
@@ -493,24 +520,6 @@
           ]
         },
         {
-          "name": "Morphe YouTube Music as a Waze audio partner",
-          "description": "Lets Morphe YouTube Music play through Waze.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.24.90.901",
-            "5.25.0.1",
-            "5.25.4.900",
-            "5.25.90.900",
-            "5.26.0.0",
-            "5.26.5.0",
-            "5.26.90.901",
-            "5.27.0.1",
-            "5.27.4.900",
-            "5.27.90.900"
-          ]
-        },
-        {
           "name": "New alert icons",
           "description": "Uses Waze's newer alert icons.",
           "use": false,
@@ -815,16 +824,34 @@
             "5.27.4.900",
             "5.27.90.900"
           ]
+        },
+        {
+          "name": "YouTube Music as a Waze audio partner",
+          "description": "Lets Morphe YouTube Music and stock YouTube Music play through Waze's audio player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.24.90.901",
+            "5.25.0.1",
+            "5.25.4.900",
+            "5.25.90.900",
+            "5.26.0.0",
+            "5.26.5.0",
+            "5.26.90.901",
+            "5.27.0.1",
+            "5.27.4.900",
+            "5.27.90.900"
+          ]
         }
       ],
       "developer": "Waze"
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "d9186349a19567c034e9f454e374cd0ed1a2b879dc3796205a101ce098b0ad2b",
-  "release_notes": "Experimental build. Turn on prerelease for this source in Morphe to get it.\n\n* Audio partners (YouTube Music, Morphe YouTube Music) stopped connecting on the dev builds. This build is the 0.30.61 source exactly: BitChord entry and the Android Auto heads-up row are both out.\n\nIf partners are still dead after this, the code is not the cause - the next thing to test is Waze's own data.",
-  "release_tag": "v0.30.63-dev.3",
-  "release_date": "2026-11-17T22:21:14Z",
+  "fingerprint": "fddaac14c27cb323c2a1171ea8064f440150b182e9660559048b61e9042876be",
+  "release_notes": "Experimental build.\n\n* **Picture-in-picture** no longer crashes Waze on 5.26.90.901 and later. The injected `onResume` invoked a hardcoded `com.waze.bv` as its super; Waze re-obfuscated that class (`bq` on 5.27.9x, `br` on 5.27.4.900), so ART rejected the activity at class load. The superclass is now read from the class being patched. Closes #22.\n\n36/36 on 5.27.90.900 and 5.27.4.900, no broken branches, no out-of-frame registers.",
+  "release_tag": "v0.30.63-dev.11",
+  "release_date": "2026-11-19T15:02:20Z",
   "isPreRelease": true,
   "stars": 11,
   "avatarUrl": "https://avatars.githubusercontent.com/u/35919784?v=4",
