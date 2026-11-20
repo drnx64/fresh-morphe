@@ -2,14 +2,32 @@
   "bundle": "rikunode-hatena-bookmark-hide-pr-patches",
   "channel": "stable",
   "repo_url": "https://github.com/rikunode/hatena-bookmark-hide-pr-patches",
-  "created_at": "2026-11-20T03:08:57Z",
-  "version": "0.3.0",
-  "description": "v0.3.0: Adds optional weekly bookmark ranking announcement suppression (hideWeeklyRanking default true), NOT YET real-device verified. Existing 5.80 PR removal was user-confirmed on Android 2026-10-17; side-by-side clone is retained. Only Hatena 5.80/versionCode 58000 supported. Historical 2024 third-party APK risks remain.",
+  "created_at": "2026-11-20T07:49:46Z",
+  "version": "0.4.2",
+  "description": "v0.4.2 fixes a DEX register-type mismatch in article WebView onPageFinished: CSS injection now happens immediately after the WebViewClient superclass callback while p1 still holds the WebView, before the original method overwrites p1 with SimpleUriIdlingResource. Existing ad-block host rules, seed integration and other three patches unchanged. Hatena Bookmark 5.80/versionCode 58000 only.",
   "apps": [
     {
       "app_name": "Hatena Bookmark: Save, share",
       "package": "com.hatena.android.bookmark",
       "patches": [
+        {
+          "name": "Block ads in in-app article browser",
+          "description": "Block list-based ad subrequests and hide safe ad containers in the article WebView.",
+          "use": true,
+          "options": [
+            {
+              "key": "blockInAppBrowserAds",
+              "description": "Block ad hosts and insert minimal ad-hiding CSS in article pages."
+            },
+            {
+              "key": "updateAdBlockLists",
+              "description": "Update the local snapshot from the repository at most once per 24 hours."
+            }
+          ],
+          "compatible_versions": [
+            "5.80"
+          ]
+        },
         {
           "name": "Clone Hatena Bookmark for safe side-by-side testing",
           "description": "Use a separate package name and provider authorities. Keeps the original installed app untouched; Play license checks may still prevent launch.",
@@ -47,10 +65,10 @@
     }
   ],
   "patches_name": "Hatena Bookmark native ad filter",
-  "fingerprint": "078bed72b4ef6c6d9af74dbc29b1fc858891f17eeb19a0752208f0df5376c593",
-  "release_notes": "# v0.3.0 (EXPERIMENTAL) — hide weekly bookmark ranking announcement\r\n\r\n## New patch\r\n\r\n**Hide weekly bookmark ranking announcement** is a Morphe bytecode patch for Hatena Bookmark **5.80 / versionCode 58000 only**. It hooks `TopFragment.showAnnouncement(Announcement)` and skips display only when the announcement text contains `ブクマ数ランキング`. Null text and all other announcements continue through the original display logic.\r\n\r\nThe `hideWeeklyRanking` boolean option defaults to **true**. Setting it to false leaves `showAnnouncement` unchanged. The patch includes strict DEX-layout guards (seven registers, 128 code units and an initial `Announcement.getId()` call) and rejects an unexpected layout.\r\n\r\n## Included patches\r\n\r\n1. Hide native PR entries from article feeds (unchanged).\r\n2. Clone Hatena Bookmark for safe side-by-side testing (unchanged).\r\n3. Hide weekly bookmark ranking announcement (new, default on).\r\n\r\n## Verification status\r\n\r\nExisting v0.2.1 PR filtering has prior user-confirmed real-device ad removal, as documented in the repository README. The new **ranking announcement patch has NOT been verified on a real device**. Static build, generated DEX, and metadata validation do not establish real-device behavior. Confirm that the weekly ranking announcement is hidden and unrelated announcements still appear before claiming runtime success.\r\n\r\nThe release distributes a Morphe `.mpp` patch bundle, not an APK. **Hatena 5.84 is not supported**; the older 5.84 patch attempt failed Pairip license verification. The historic third-party 5.80 APK carries security and compatibility risks. Do not disable Play Protect or remove a working original installation.\r\n",
-  "release_tag": "v0.3.0",
-  "release_date": "2026-11-20T03:08:57Z",
+  "fingerprint": "e9211d20de9c02a869fb65ddfef354afd8f6272a2da733709a21acf344559332",
+  "release_notes": "# v0.4.2 — Fix article WebView crash caused by wrong register type\n\n**Fixed:** Morphe patch v0.4.1 injected `AdBlockHelper.injectCss(WebView, boolean)` directly before `onPageFinished`'s return. But the original method had overwritten its `p1` register (physical `v8`) with a `SimpleUriIdlingResource` before that point. Passing it as a WebView violates DEX verifier types and is consistent with the owner-reported freeze/crash when opening articles.\n\n**Minimal fix:** move the two injected code instructions to immediately after the existing `invoke-super WebViewClient.onPageFinished(WebView, String)`, before the first overwrite of `p1/v8`. A new guard checks that the fifth original instruction is the expected superclass call. The original method register count remains 10; the added `shouldInterceptRequest` method and Java helper behavior are unchanged. Neither existing PR filtering, cloning nor ranking suppression was modified.\n\n**Verified:** v0.4.1 APK DEX: `004d: move-result-object v8` from `getWebViewIdlingResource`, `0052: invoke-static {v8,v0}, AdBlockHelper.injectCss(WebView;Z)`. The changed APK should place the call after `000c: invoke-super {v7,v8,v9}` and before original `000f: iget-object v8`. The caller's original local variables and exception handling are otherwise preserved.\n\nHatena Bookmark **5.80 / versionCode 58000 only**. **Emulator validation (Android API 36):** v0.4.1 and v0.4.2 both installed and launched to MainActivity; v0.4.2 emitted no VerifyError/FATAL EXCEPTION in the startup logcat capture. However the emulator's article feed did not load (UI displayed a load error), and WebViewActivity is not exported, so actual article-opening reproduction and fix confirmation **could not be completed**. This release is backed by concrete before/after DEX instructions and a successful four-patch APK build, not an end-to-end article test.\n\nThe existing [v0.4.1 release notes](RELEASE_NOTES_v0.4.1.md) describe the unchanged filter converter and seed-merging behavior.\n",
+  "release_tag": "v0.4.2",
+  "release_date": "2026-11-20T07:49:46Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
