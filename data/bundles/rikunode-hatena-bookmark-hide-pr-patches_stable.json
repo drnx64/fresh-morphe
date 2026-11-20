@@ -2,9 +2,9 @@
   "bundle": "rikunode-hatena-bookmark-hide-pr-patches",
   "channel": "stable",
   "repo_url": "https://github.com/rikunode/hatena-bookmark-hide-pr-patches",
-  "created_at": "2026-10-14T02:44:33",
-  "version": "0.2.1",
-  "description": "Morphe patches for Hatena Bookmark 5.80 / versionCode 58000 (v0.2.1). Hide native PR/ad entries in the article hot-feed, including cases with no mute words or when signed out. User confirmed successful ad removal on an Android device on 2026-10-17. Includes optional side-by-side clone. APK rebuilding, signing, and compiled DEX were validated; other feeds, login and bookmarking were not separately verified. Source APK is a historical 2024 third-party download and carries security risks.",
+  "created_at": "2026-11-20T03:08:57Z",
+  "version": "0.3.0",
+  "description": "v0.3.0: Adds optional weekly bookmark ranking announcement suppression (hideWeeklyRanking default true), NOT YET real-device verified. Existing 5.80 PR removal was user-confirmed on Android 2026-10-17; side-by-side clone is retained. Only Hatena 5.80/versionCode 58000 supported. Historical 2024 third-party APK risks remain.",
   "apps": [
     {
       "app_name": "Hatena Bookmark: Save, share",
@@ -27,17 +27,31 @@
           "compatible_versions": [
             "5.80"
           ]
+        },
+        {
+          "name": "Hide weekly bookmark ranking announcement",
+          "description": "Hide only weekly bookmark ranking announcements while preserving other announcements.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideWeeklyRanking",
+              "description": "Hide weekly bookmark ranking announcements."
+            }
+          ],
+          "compatible_versions": [
+            "5.80"
+          ]
         }
       ],
       "developer": "Hatena Co., Ltd."
     }
   ],
   "patches_name": "Hatena Bookmark native ad filter",
-  "fingerprint": "3059d97f410780f479659e2f11aa98b0f2240cd968922e68a4517e90a946751e",
-  "release_notes": "# v0.2.1 (EXPERIMENTAL) — fix PR ad leakage in no-mute hot feeds\r\n\r\n**User-confirmed issue in v0.2.0:** Android 5.80 clone loaded a live `総合` article list containing a sponsored entry with an `広告` badge. The two patches installed and the app launched, but native ads were NOT hidden.\r\n\r\n## Root cause and fix\r\n\r\nHatena 5.80's `BookmarkEntryItemCompactViewModel` reads `BookmarkEntry.isPrEntry()` to display the native PR label. v0.2.0 modified only `MuteHelperKt.filteredWithMuteWords()` to reject PR entries. However, both `GetCategoryHotEntryList.execute()` and `CategoryHotEntryPagingSource.getHotEntries()` skip the whole mute-filter call when the account is logged out or the mute word count is zero. The original PR row thus survived.\r\n\r\nv0.2.1 keeps the existing PR rejection and additionally instruments `CategoryHotEntryPagingSource.withDate(List<BookmarkEntry>, ZonedDateTime)`, used by the paged hot feed regardless of account/mute status. Before date-item conversion, it invokes the original `filterByMuteWords(rawEntries, emptyList(), null)` so the patch's PR guard runs unconditionally. For normal entries the original filter accepts all items when no mute words were provided. Existing account mute rules are applied earlier when configured.\r\n\r\nCompatibility remains **Hatena Bookmark v5.80 / versionCode 58000 only**. Two patches: PR filtering + side-by-side clone, both enabled by default. **5.84 is not compatible**; former v0.1.1 for 5.84 failed due Pairip Play license.\r\n\r\n## Verified\r\n\r\n- Original user-supplied historical 5.80 APK SHA-256 `f5de27b6d0948d5716ef7dd24c0910c37e370c07db3888ff8aaa38a70afbd94b` unchanged.\r\n- Morphe v0.2.1 applied both patches to the exact APK; applied 2, failed 0, patching/rebuild/signing PASS.\r\n- Output clone package `com.hatena.android.bookmark.morphe`, Android v2 signature CN=Morphe verified, no change to source `classes2.dex`.\r\n- Actual output `classes3.dex` disassembled with Android SDK dexdump: `withDate()` first calls `CollectionsKt.emptyList()` and the patched `MuteHelperKt.filterByMuteWords`, then runs original date-list conversion. The PR check in `filteredWithMuteWords()` returns `false` for PR items.\r\n- Five specific local tests verify APK identity, full Morphe report, untouched second DEX, modified executable DEX, and source guard.\r\n\r\n## NOT verified\r\n\r\n**Actual v0.2.1 on-device ad disappearance, login, and all other tabs have NOT been tested.** This release fixes the concrete logic bypass found in 5.80's hot feed; it is not a guarantee of universal ad blocking. Users should refresh the `総合` tab after an in-place update and share a screenshot.\r\n\r\n**Security warning:** input v5.80 is an older 2024 third-party-sourced APK. APK signature and cross-site SHA256 comparisons cannot prove malware-free status. The GitHub release distributes only Morphe `.mpp` source/patch binaries, NOT the APK. Keep the working official v5.84 installed; do not disable Play Protect, and do not uninstall any app to troubleshoot before reviewing data backup and signatures.\r\n",
-  "release_tag": "v0.2.1",
-  "release_date": "2026-10-13T17:49:33Z",
-  "isPreRelease": true,
+  "fingerprint": "078bed72b4ef6c6d9af74dbc29b1fc858891f17eeb19a0752208f0df5376c593",
+  "release_notes": "# v0.3.0 (EXPERIMENTAL) — hide weekly bookmark ranking announcement\r\n\r\n## New patch\r\n\r\n**Hide weekly bookmark ranking announcement** is a Morphe bytecode patch for Hatena Bookmark **5.80 / versionCode 58000 only**. It hooks `TopFragment.showAnnouncement(Announcement)` and skips display only when the announcement text contains `ブクマ数ランキング`. Null text and all other announcements continue through the original display logic.\r\n\r\nThe `hideWeeklyRanking` boolean option defaults to **true**. Setting it to false leaves `showAnnouncement` unchanged. The patch includes strict DEX-layout guards (seven registers, 128 code units and an initial `Announcement.getId()` call) and rejects an unexpected layout.\r\n\r\n## Included patches\r\n\r\n1. Hide native PR entries from article feeds (unchanged).\r\n2. Clone Hatena Bookmark for safe side-by-side testing (unchanged).\r\n3. Hide weekly bookmark ranking announcement (new, default on).\r\n\r\n## Verification status\r\n\r\nExisting v0.2.1 PR filtering has prior user-confirmed real-device ad removal, as documented in the repository README. The new **ranking announcement patch has NOT been verified on a real device**. Static build, generated DEX, and metadata validation do not establish real-device behavior. Confirm that the weekly ranking announcement is hidden and unrelated announcements still appear before claiming runtime success.\r\n\r\nThe release distributes a Morphe `.mpp` patch bundle, not an APK. **Hatena 5.84 is not supported**; the older 5.84 patch attempt failed Pairip license verification. The historic third-party 5.80 APK carries security and compatibility risks. Do not disable Play Protect or remove a working original installation.\r\n",
+  "release_tag": "v0.3.0",
+  "release_date": "2026-11-20T03:08:57Z",
+  "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
   "repoDescription": "Morphe patches for Hatena Bookmark 5.84: native PR entry filtering and optional side-by-side test clone",
