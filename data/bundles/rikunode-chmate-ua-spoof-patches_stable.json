@@ -1,0 +1,32 @@
+{
+  "bundle": "rikunode-chmate-ua-spoof-patches",
+  "channel": "stable",
+  "repo_url": "https://github.com/rikunode/chmate-ua-spoof-patches",
+  "created_at": "2026-11-20T19:01:02Z",
+  "version": "0.1.0",
+  "description": "v0.1.0: optional full User-Agent spoofing add-on for ChMate 0.8.10.226 dev, used together with Haiagaru 1.46.0. Default OFF.",
+  "apps": [
+    {
+      "app_name": "ChMate",
+      "package": "jp.co.airfront.android.a2chmate",
+      "patches": [
+        {
+          "name": "ChMate UA Spoof",
+          "description": "Optional full User-Agent spoofing for ChMate 0.8.10.226 dev (default OFF, own settings screen \"UA Spoof\"). Applies after Haiagaru's viewing UA and keeps Haiagaru's eddibb reading-auth UA.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.8.10.226 dev"
+          ]
+        }
+      ],
+      "developer": "jp.co.airfront"
+    }
+  ],
+  "patches_name": "ChMate UA Spoof",
+  "fingerprint": "1e49c3ab3c226c08c6db4a72df5f5c7437e05fd567d7999b7ff8aa52a7c95715",
+  "release_notes": "# ChMate UA Spoof v0.1.0\n\nFirst release. Add-on Morphe patch for **ChMate 0.8.10.226 dev only**, to be applied together with the official **Haiagaru 1.46.0** bundle. 0.8.10.191 dev: planned. 0.8.10.242 dev: unsupported.\n\n## Features\n- ON/OFF (default **OFF**); OFF behaves exactly like Haiagaru alone.\n- Free UA text entry (printable ASCII, 1–1024 chars), unlimited edits, \"restore to original\" (OFF + clear + restore `http.agent`).\n- Presets: Dalvik Android 14/15/16, browser (device WebView default UA), legacy `Dalvik/2.1.0 (Linux; U; Android 4.0.3; HT-01 Build/XYZ0.123456.789)`.\n- ON: `System.setProperty(\"http.agent\", UA)` at startup; full User-Agent replacement for native okhttp (`o.zzdA`) and `java.net` requests (GET/HEAD, POST posting/auth, images); native WebView `setUserAgentString` (Cloudflare challenge dialog, in-app browser) aligned. Cookies untouched.\n- Haiagaru bbs.eddibb.cc ReadingAuth paired UA is never replaced for authenticated reads.\n- Hooks are inserted in `finalize`, i.e. always after Haiagaru's hooks, regardless of patch order.\n- Settings: separate launcher entry **\"UA Spoof\"**; own preferences file `chmate_ua_spoof`.\n\n## Verification\n- Verified: Morphe Desktop 1.19.1 applied Haiagaru 1.46.0 + this MPP to stock 226 (SHA-256 `7290a076…4dd9c4`) with no errors; static hook order/count check of the patched APK; 33 JVM tests incl. local UA echo GET/POST; Android 16 emulator: launch + settings OK, native dat GET / SETTING.TXT GET / bbs.cgi POST to a local echo server carried exactly the chosen UA when ON and were identical to Haiagaru alone when OFF.\n- Not verified: physical devices, Morphe Manager (Android), real Cloudflare / eddibb ReadingAuth flows, in-app browser and image requests at runtime.\n\n## Warnings\n- Do not change the UA during a Cloudflare challenge.\n- Keep the UA fixed while growing donguri.\n- Changing the UA cannot lift IP bans.\n\nUnofficial; not affiliated with ChMate or Haiagaru.\n",
+  "release_tag": "v0.1.0",
+  "release_date": "2026-11-20T19:01:02Z",
+  "isPreRelease": false
+}

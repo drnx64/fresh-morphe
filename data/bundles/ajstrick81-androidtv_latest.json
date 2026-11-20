@@ -2,9 +2,9 @@
   "bundle": "ajstrick81-androidtv",
   "channel": "latest",
   "repo_url": "https://github.com/ajstrick81/morphe-androidtv-patches",
-  "created_at": "2026-11-19T23:31:41",
-  "version": "1.57.0",
-  "description": "# [1.57.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.56.0...v1.57.0) (2026-11-19)\n\n\n### Features\n\n* **mediaset:** support Mediaset Infinity 8.1.20 and mark it stable ([#217](https://github.com/ajstrick81/morphe-androidtv-patches/issues/217)) ([91ba4c0](https://github.com/ajstrick81/morphe-androidtv-patches/commit/91ba4c016ec2906c08d9b74e98e041521953beb8))",
+  "created_at": "2026-11-20T19:12:29",
+  "version": "1.60.0",
+  "description": "# [1.60.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.59.0...v1.60.0) (2026-11-20)\n\n\n### Features\n\n* **discoveryplus:** add opt-in Store Country Override for the Italian free tier ([a516c53](https://github.com/ajstrick81/morphe-androidtv-patches/commit/a516c5351295727be4369523b073946c37b74692))",
   "apps": [
     {
       "app_name": "Prime Video",
@@ -110,6 +110,54 @@
         }
       ],
       "developer": "CBS Interactive, Inc."
+    },
+    {
+      "app_name": "discovery+ | Stream TV Shows",
+      "package": "com.discovery.dplay",
+      "patches": [
+        {
+          "name": "discovery+ - Disable Ads",
+          "description": "Suppresses nonlinear (overlay / pause) ad requests and live-stream preroll ad timeline entries.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "22.1.0.71"
+          ]
+        },
+        {
+          "name": "discovery+ - Prefer Ad-Free Stream",
+          "description": "Plays the FALLBACK stream instead of the ad-stitched PRIMARY stream when the title advertises one (same mechanism as HBO Max's ad-free stream). Does nothing for titles without a FALLBACK stream.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "22.1.0.71"
+          ]
+        },
+        {
+          "name": "discovery+ - Skip Ad Breaks",
+          "description": "Marks every server-stitched ad break as already watched, so the player jumps over mid-rolls and lets you seek past ad breaks. The first ad of a pre-roll may still play briefly.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "22.1.0.71"
+          ]
+        },
+        {
+          "name": "discovery+ - Store Country Override",
+          "description": "Reports a fixed Google Play store country to discovery+ (default IT). With an Italian IP address this brings back the free 'Naviga gratis' (browse for free) tier, which otherwise depends on your Play account's country. Off by default: it also changes the subscription offers shown in the app.",
+          "use": false,
+          "options": [
+            {
+              "key": "country",
+              "description": "Two-letter country code to report as the Google Play store country."
+            }
+          ],
+          "compatible_versions": [
+            "22.1.0.71"
+          ]
+        }
+      ],
+      "developer": "Discovery Digital"
     },
     {
       "app_name": "Disney+",
@@ -569,6 +617,22 @@
       "developer": "XUMO LLC"
     },
     {
+      "app_name": "Joyn | deine Streaming App",
+      "package": "de.prosiebensat1digital.seventv",
+      "patches": [
+        {
+          "name": "Skip ads",
+          "description": "Removes ads before and during videos in the Joyn Android TV app. It turns off the app's own \"ads enabled\" flag, so the player is built without Joyn's Ad SDK. Joyn is geo-restricted, so playback still needs Germany, Austria or Switzerland.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.5.2-ATV-605282491"
+          ]
+        }
+      ],
+      "developer": "SevenOne Entertainment Group GmbH"
+    },
+    {
       "app_name": "Mediaset Infinity Italia TV",
       "package": "it.mediaset.infinitytv",
       "patches": [
@@ -710,10 +774,10 @@
     }
   ],
   "patches_name": "ajstrick81 Patches",
-  "fingerprint": "432df1517301f054126a7176c1759a715e46daaa69b68c3780d2dcf3c1653609",
-  "release_notes": "# [1.57.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.56.0...v1.57.0) (2026-11-19)\n\n\n### Features\n\n* **mediaset:** support Mediaset Infinity 8.1.20 and mark it stable ([#217](https://github.com/ajstrick81/morphe-androidtv-patches/issues/217)) ([91ba4c0](https://github.com/ajstrick81/morphe-androidtv-patches/commit/91ba4c016ec2906c08d9b74e98e041521953beb8))\n\n\n\n",
-  "release_tag": "v1.57.0",
-  "release_date": "2026-11-19T23:31:57Z",
+  "fingerprint": "c954c323e17424e5c9b5a2ad91553e39a99e55b4c6f93afa4278b1e6a5b5ee9f",
+  "release_notes": "# [1.60.0](https://github.com/ajstrick81/morphe-androidtv-patches/compare/v1.59.0...v1.60.0) (2026-11-20)\n\n\n### Features\n\n* **discoveryplus:** add opt-in Store Country Override for the Italian free tier ([a516c53](https://github.com/ajstrick81/morphe-androidtv-patches/commit/a516c5351295727be4369523b073946c37b74692))\n\n\n\n",
+  "release_tag": "v1.60.0",
+  "release_date": "2026-11-20T19:12:46Z",
   "isPreRelease": false,
   "stars": 261,
   "avatarUrl": "https://avatars.githubusercontent.com/u/229211337?v=4",
