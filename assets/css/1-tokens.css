@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════════════════════════
+   Fresh Morphe — design tokens
+   Plum-black base · tiger-orange signal · condensed display
+   Dark by default; light is opt-in via html[data-theme="light"]
+   (set by the FOUC guard and the header toggle). Link order
+   defines the cascade; this file must load first.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Self-hosted faces ──
+   Bebas Neue for headings (single 400 weight, condensed caps) and variable
+   Inter for body. Google's own files, fetched once so the page makes no
+   third-party request. font-display:swap keeps text visible immediately. */
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/bebas-neue-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/bebas-neue-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020-20A0,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020-20A0,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ── Design Tokens ────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  --bg-void: #1b1420;
+  --bg-surface: #221926;
+  --bg-surface-inner: rgba(243, 236, 225, 0.035);
+  --bg-header: rgba(27, 20, 32, 0.88);
+  --bg-nav: rgba(27, 20, 32, 0.94);
+
+  --surface-tint: rgba(243, 236, 225, 0.06);
+  --surface-tint-strong: rgba(243, 236, 225, 0.1);
+
+  --border-hairline: rgba(243, 236, 225, 0.1);
+  --border-hairline-strong: rgba(243, 236, 225, 0.2);
+
+  --text-primary: #f3ece1;
+  --text-secondary: #d8cfe0;
+  --text-muted: #a99cb2;
+
+  --accent: #fc6a03;
+  --accent-strong: #ff8a2e;
+  --accent-ink: #1b1420;
+  --accent-dim: rgba(252, 106, 3, 0.16);
+  --accent-soft: rgba(252, 106, 3, 0.1);
+  --gradient-primary: linear-gradient(135deg, #fc6a03 0%, #ff9a4d 100%);
+
+  --state-stable: #8ec99a;
+  --state-stable-dim: rgba(142, 201, 154, 0.14);
+  --state-dev: #e0a13f;
+  --state-dev-dim: rgba(224, 161, 63, 0.15);
+  --state-critical: #e2566b;
+  --state-critical-dim: rgba(226, 86, 107, 0.14);
+  --state-plum: #b493cf;
+  --state-plum-dim: rgba(180, 147, 207, 0.16);
+  --state-info: #7fa6d8;
+  --state-info-dim: rgba(127, 166, 216, 0.16);
+
+  --font-display: "Bebas Neue", "Arial Narrow", Oswald, sans-serif;
+  --font-body:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --font-stack: var(--font-body);
+  --mono-stack:
+    ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  --font-mono: var(--mono-stack);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --transition-speed: 0.18s;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --radius-lg: 20px;
+  --nav-height: 56px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-void: #fbf7f4;
+  --bg-surface: #ffffff;
+  --bg-surface-inner: rgba(27, 20, 32, 0.04);
+  --bg-header: rgba(251, 247, 244, 0.9);
+  --bg-nav: rgba(251, 247, 244, 0.96);
+
+  --surface-tint: rgba(27, 20, 32, 0.05);
+  --surface-tint-strong: rgba(27, 20, 32, 0.09);
+
+  --border-hairline: rgba(27, 20, 32, 0.1);
+  --border-hairline-strong: rgba(27, 20, 32, 0.22);
+
+  --text-primary: #1b1420;
+  --text-secondary: #3f3448;
+  --text-muted: #6f6379;
+
+  --accent: #b8430b;
+  --accent-strong: #9c3807;
+  --accent-ink: #fffaf6;
+  --accent-dim: rgba(184, 67, 11, 0.12);
+  --accent-soft: rgba(184, 67, 11, 0.08);
+  --gradient-primary: linear-gradient(135deg, #b8430b 0%, #e05a14 100%);
+
+  --state-stable: #3f7a4d;
+  --state-stable-dim: rgba(63, 122, 77, 0.12);
+  --state-dev: #8a5c12;
+  --state-dev-dim: rgba(138, 92, 18, 0.12);
+  --state-critical: #b33a4d;
+  --state-critical-dim: rgba(179, 58, 77, 0.1);
+  --state-plum: #7b57a0;
+  --state-plum-dim: rgba(123, 87, 160, 0.12);
+  --state-info: #2f6ba8;
+  --state-info-dim: rgba(47, 107, 168, 0.12);
+}
