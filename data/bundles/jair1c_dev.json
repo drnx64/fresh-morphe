@@ -2,9 +2,9 @@
   "bundle": "jair1c",
   "channel": "dev",
   "repo_url": "https://github.com/jair1c/farotv-patches",
-  "created_at": "2026-11-15T18:59:16",
-  "version": "1.6.0",
-  "description": "## [1.6.0](https://github.com/jair1c/farotv-patches/compare/v1.5.1...v1.6.0) (2026-11-15)\n\n### ✨ New Features\n\n* traducir FaroTV al idioma de YouTube con catálogos español e inglés ([860ce74](https://github.com/jair1c/farotv-patches/commit/860ce74bdc9d3e079f334feec01f72f14aa84fff))",
+  "created_at": "2026-11-21T11:32:27",
+  "version": "1.7.0",
+  "description": "## [1.7.0](https://github.com/jair1c/farotv-patches/compare/v1.6.0...v1.7.0) (2026-11-21)\n\n### ✨ New Features\n\n* **diagnostics:** medir recursos, tareas largas y coste de parches ([9398549](https://github.com/jair1c/farotv-patches/commit/93985495268e081591deaed91626d16b8ae86c81))\n* **i18n:** incorporar árabe y dirección RTL para pruebas ([9bed63f](https://github.com/jair1c/farotv-patches/commit/9bed63fdb3c99de7bb8e317f2708dd66c5d5e41f)), closes [#16](https://github.com/jair1c/farotv-patches/issues/16)\n\n### 🔧 Improvements\n\n* **icons:** evitar hojas e ilustraciones duplicadas al reinyectar ([b608a8c](https://github.com/jair1c/farotv-patches/commit/b608a8c3a7590c71e5e516328eca758e18cdddac))\n* **player:** evitar reescrituras de estilos sin cambios ([610ddc6](https://github.com/jair1c/farotv-patches/commit/610ddc68ed480e4555f26fb2cf0ae2257bb794c0))\n* reducir recorridos y desplazamientos del filtro Premium ([baeba04](https://github.com/jair1c/farotv-patches/commit/baeba04dacefd8693a1e5700da3c34025e99d05d))\n* repartir el recorrido de estilos en tareas pequeñas ([9bf64d4](https://github.com/jair1c/farotv-patches/commit/9bf64d4fa4badc2babc555dd9d11cd6c76ff5826))\n* reutilizar ajustes y segmentos de SponsorBlock sin solicitudes repetidas ([a04030c](https://github.com/jair1c/farotv-patches/commit/a04030c44ba08c42ae23a539b6b3e854838c6f30))\n* **runtime:** agrupar consultas y limitar la caché de votos ([2102f82](https://github.com/jair1c/farotv-patches/commit/2102f826571063e999652dc266ad0b75e6a8166a))\n* unificar los recorridos de anuncios Premium y Shorts ([79e73f1](https://github.com/jair1c/farotv-patches/commit/79e73f1829dddf7a8fb24576a370690a1be352b2))\n\n### 🐛 Bug Fixes\n\n* **diagnostics:** activar el registro con un retorno booleano ([9379d4b](https://github.com/jair1c/farotv-patches/commit/9379d4b9026308aa881b468661ced2b7c435dcd4))\n* **tv:** devolver las teclas de volumen al control de Android ([aafcccf](https://github.com/jair1c/farotv-patches/commit/aafcccf4fb9647b594e1b8c5786c22fa02fa0293)), closes [#17](https://github.com/jair1c/farotv-patches/issues/17)",
   "apps": [
     {
       "app_name": "YouTube for Android TV",
@@ -46,9 +46,29 @@
           ]
         },
         {
+          "name": "Fix volume keys",
+          "description": "Lets Android handle short presses and held volume keys instead of sending them to the web input method.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.32.300",
+            "8.02.300"
+          ]
+        },
+        {
           "name": "GmsCore support",
           "description": "Redirects the app's Google Play Services calls to GmsCore (MicroG-RE). Requires MicroG-RE to be installed. Without it, YouTube for Android TV crashes because Google Play Services rejects DroidGuard for the new package name.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "7.32.300",
+            "8.02.300"
+          ]
+        },
+        {
+          "name": "Performance diagnostics",
+          "description": "Logs aggregate script timings, resource durations and supported long tasks for troubleshooting. Disabled by default; does not log video URLs or response contents.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "7.32.300",
@@ -97,11 +117,11 @@
     }
   ],
   "patches_name": "FaroTV Patches",
-  "fingerprint": "20837599b5384441ba7a6e3e4bbac537009740eb2988c74eb8efea44c4c3eff3",
-  "release_notes": "## FaroTV Parches 1.6.0-dev.1\n\nPrimera versión de prueba con español e inglés para todos los textos propios de FaroTV: ajustes y descripciones, sección FaroTV Parches/Patches, tarjetas informativas, diálogo de reinicio, aviso de SponsorBlock, accesibilidad del contador de votos y diálogos nativos de MicroG.\n\nLos 77 textos de cada idioma se mantienen en catálogos JSON compartidos por el código web y el nativo. Se sigue el idioma seleccionado en YouTube TV; los idiomas o textos no disponibles usan inglés. Para añadir un idioma se incorpora su catálogo, sin editar cada función. No utiliza servicios de traducción externos ni requiere conexión para traducir.\n\n### Verificación\n\n- Seis pruebas automatizadas aprobadas y compilación correcta en GitHub.\n- Parcheo validado del APK original YouTube TV 8.02.300, variante con Spoof device.\n- LX352: ajustes y descripciones en español e inglés, diálogo Restart required con Restart/Later y tarjeta About en inglés. Se confirmó el regreso a español, conservando cuenta y ajustes.\n- El TV quedó con Android en español de Perú y YouTube en Español (Latinoamérica).\n\nLos diálogos nativos de MicroG compilan con ambos catálogos, pero su flujo completo de instalación no se forzó desinstalando MicroG. Las traducciones del aviso de SponsorBlock y los votos tienen pruebas automatizadas; no se repitieron las consultas reales en ambos idiomas en esta sesión. Los problemas pendientes de cierre por MicroG e instalación desde Morphe Manager no se consideran resueltos.\n\n[Guía para añadir idiomas](https://github.com/jair1c/farotv-patches/blob/dev/docs/TRADUCCIONES.md) · [Informe de pruebas](https://github.com/jair1c/farotv-patches/blob/dev/docs/PRUEBAS_1.6.0-dev.1.md)\n\nVersión de prueba; la estable sigue siendo 1.5.1. Se distribuyen parches `.mpp`, no APK de YouTube.\n",
-  "release_tag": "v1.6.0-dev.1",
-  "release_date": "2026-11-15T16:37:39Z",
-  "isPreRelease": true,
+  "fingerprint": "732d0251c3591a13c0a1f839bf59add5f794e996cfb581fb8212bf7532fce99d",
+  "release_notes": "## [1.7.0](https://github.com/jair1c/farotv-patches/compare/v1.6.0...v1.7.0) (2026-11-21)\n\n### ✨ New Features\n\n* **diagnostics:** medir recursos, tareas largas y coste de parches ([9398549](https://github.com/jair1c/farotv-patches/commit/93985495268e081591deaed91626d16b8ae86c81))\n* **i18n:** incorporar árabe y dirección RTL para pruebas ([9bed63f](https://github.com/jair1c/farotv-patches/commit/9bed63fdb3c99de7bb8e317f2708dd66c5d5e41f)), closes [#16](https://github.com/jair1c/farotv-patches/issues/16)\n\n### 🔧 Improvements\n\n* **icons:** evitar hojas e ilustraciones duplicadas al reinyectar ([b608a8c](https://github.com/jair1c/farotv-patches/commit/b608a8c3a7590c71e5e516328eca758e18cdddac))\n* **player:** evitar reescrituras de estilos sin cambios ([610ddc6](https://github.com/jair1c/farotv-patches/commit/610ddc68ed480e4555f26fb2cf0ae2257bb794c0))\n* reducir recorridos y desplazamientos del filtro Premium ([baeba04](https://github.com/jair1c/farotv-patches/commit/baeba04dacefd8693a1e5700da3c34025e99d05d))\n* repartir el recorrido de estilos en tareas pequeñas ([9bf64d4](https://github.com/jair1c/farotv-patches/commit/9bf64d4fa4badc2babc555dd9d11cd6c76ff5826))\n* reutilizar ajustes y segmentos de SponsorBlock sin solicitudes repetidas ([a04030c](https://github.com/jair1c/farotv-patches/commit/a04030c44ba08c42ae23a539b6b3e854838c6f30))\n* **runtime:** agrupar consultas y limitar la caché de votos ([2102f82](https://github.com/jair1c/farotv-patches/commit/2102f826571063e999652dc266ad0b75e6a8166a))\n* unificar los recorridos de anuncios Premium y Shorts ([79e73f1](https://github.com/jair1c/farotv-patches/commit/79e73f1829dddf7a8fb24576a370690a1be352b2))\n\n### 🐛 Bug Fixes\n\n* **diagnostics:** activar el registro con un retorno booleano ([9379d4b](https://github.com/jair1c/farotv-patches/commit/9379d4b9026308aa881b468661ced2b7c435dcd4))\n* **tv:** devolver las teclas de volumen al control de Android ([aafcccf](https://github.com/jair1c/farotv-patches/commit/aafcccf4fb9647b594e1b8c5786c22fa02fa0293)), closes [#17](https://github.com/jair1c/farotv-patches/issues/17)\n",
+  "release_tag": "v1.7.0",
+  "release_date": "2026-11-21T11:33:08Z",
+  "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/197553077?v=4&s=128",
   "repoDescription": "FaroTV: unofficial patches for YouTube on Android TV, compatible with Morphe (MicroG-RE, ad blocking, settings inside the app, player customization)",

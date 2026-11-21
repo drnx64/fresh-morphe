@@ -2,9 +2,9 @@
   "bundle": "ser1-1y",
   "channel": "dev",
   "repo_url": "https://github.com/Ser1-1y/nyandex",
-  "created_at": "2026-11-21T05:19:49Z",
-  "version": "1.5.4",
-  "description": "## [1.5.4](https://github.com/Ser1-1y/nyandex/compare/v1.5.3...v1.5.4) (2026-11-21)",
+  "created_at": "2026-11-21T13:09:25Z",
+  "version": "1.6.0",
+  "description": "## [1.6.0](https://github.com/Ser1-1y/nyandex/compare/v1.5.6...v1.6.0) (2026-11-21)\n\n### ✨ New Features\n\n* add haptic feedback patch and widen the bottom bar tab touch area ([07b3ed0](https://github.com/Ser1-1y/nyandex/commit/07b3ed0671fab27f3c042718088205205e71fc4f))",
   "apps": [
     {
       "app_name": "Yandex Music, Books & Podcasts",
@@ -12,7 +12,7 @@
       "patches": [
         {
           "name": "Блокировать аналитику Плюса",
-          "description": "Перенаправляет на localhost хосты событий и привлечения Плюса, а также устаревшие триггеры динамических страниц. API музыки и платежей не затрагиваются.",
+          "description": "Перенаправляет на localhost хосты событий и привлечения Плюса, а также устаревшие триггеры динамических страниц.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -32,7 +32,7 @@
         },
         {
           "name": "Отдельный аккаунт Passport",
-          "description": "Даёт переподписанному приложению собственный тип аккаунта Passport, чтобы Android разрешил создать в нём аккаунт Яндекса, а оригинальные приложения Яндекса сохранили общий.",
+          "description": "Требуется для работы. Создаёт собственный тип аккаунта Passport, не мешая работе других приложений Яндекс.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -42,7 +42,7 @@
         },
         {
           "name": "Отключить Play Billing",
-          "description": "Отключает вызовы Play Billing и Play Core. Покупки становятся недоступны, и ни один платёжный запрос не доходит до Google Play.",
+          "description": "Отключает вызовы Play Billing и Play Core. Делает покупки недоступными.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -72,7 +72,7 @@
         },
         {
           "name": "Подменить подпись приложения",
-          "description": "Приложение видит свою оригинальную подпись Яндекса, поэтому вход через Яндекс ID и другие проверки подписи работают после переподписи APK в Morphe. Нужен для входа.",
+          "description": "Нужен для входа. Приложение видит свою оригинальную подпись Яндекса, поэтому вход через Яндекс ID и другие проверки подписи работают после переподписи APK в Morphe.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -82,7 +82,7 @@
         },
         {
           "name": "Разблокировать Яндекс Плюс",
-          "description": "Принудительно задаёт hasPlus, hasMusicSubscription, serviceAvailable и isChild в DTO музыкальной сессии и профиля Passport. Сервер по-прежнему видит настоящий аккаунт.",
+          "description": "Разблокирует клиентский код, включающий подписку Plus.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -92,7 +92,17 @@
         },
         {
           "name": "Скрыть вкладки нижней панели",
-          "description": "Добавляет на страницу настроек Nyandex переключатели для скрытия вкладок нижней панели (Моя волна, Главная, Подкасты, Концерты, Детям, Коллекция). Применяется после перезапуска.",
+          "description": "Добавляет настройки скрытия нижних панелей в параметры Nyandex.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.1 #171gpr",
+            "2026.11.2 #172.1gpr"
+          ]
+        },
+        {
+          "name": "Тактильный отклик",
+          "description": "Добавляет настройки виброотклика при нажатии клавиш в параметры Nyandex.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -102,7 +112,7 @@
         },
         {
           "name": "Тексты песен из LRCLIB",
-          "description": "Тексты песен загружаются только из LRCLIB (lrclib.net), API текстов Яндекса не используется. Текст можно открыть у любого трека; текст следующего трека и скачанных треков загружается заранее и сохраняется для офлайна. Если LRCLIB недоступен, появляется уведомление.",
+          "description": "Получает тексты песен из LRCLIB. API текстов Яндекса не используется.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -112,7 +122,7 @@
         },
         {
           "name": "Тема Monet",
-          "description": "Окрашивает карточки, акценты, основную кнопку, кнопку воспроизведения в плеере и кнопки «Моей волны» в цвета обоев Android 12+ (Material You); фон страниц остаётся чёрным. Настройка «Светлая / Тёмная / Системная» продолжает работать. На старых версиях Android цвета остаются стандартными.",
+          "description": "(Android 12+) Окрашивает большУю часть элементов интерфейсов в цвета Material You, генерируемые из Ваших обоев.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -145,9 +155,16 @@
     }
   ],
   "patches_name": "Nyandex",
-  "fingerprint": "751bd57d2a493c094df27e430f44725c8cb7f1f75cb1a0f613971a7a4fc7d9a0",
-  "release_notes": "## [1.5.4](https://github.com/Ser1-1y/nyandex/compare/v1.5.3...v1.5.4) (2026-11-21)\n",
-  "release_tag": "v1.5.4",
-  "release_date": "2026-11-21T05:19:49Z",
-  "isPreRelease": false
+  "fingerprint": "73445a690543aec3c08ddd5c3f09b76e3b0bb862a321b0efcae75d7fdc9cfb54",
+  "release_notes": "## [1.6.0](https://github.com/Ser1-1y/nyandex/compare/v1.5.6...v1.6.0) (2026-11-21)\n\n### ✨ New Features\n\n* add haptic feedback patch and widen the bottom bar tab touch area ([07b3ed0](https://github.com/Ser1-1y/nyandex/commit/07b3ed0671fab27f3c042718088205205e71fc4f))\n",
+  "release_tag": "v1.6.0",
+  "release_date": "2026-11-21T13:09:25Z",
+  "isPreRelease": false,
+  "stars": 0,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/160628372?v=4&s=128",
+  "repoDescription": "Yandex Music patches for Morphe: LRCLIB lyrics, Monet theme, hideable tabs, privacy fixes",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": ""
 }
