@@ -2,9 +2,9 @@
   "bundle": "lokesh-sparrow",
   "channel": "latest",
   "repo_url": "https://github.com/lokesh-sparrow/loki-patches",
-  "created_at": "2026-11-18T16:43:06",
-  "version": "3.3.0",
-  "description": "## 3.3.0 (2026-11-18)\n\n### New Features\n- **Doc Scanner:** Hide ads (Doc Scanner) is its own patch, so ads stay gone with or without premium.\n- **LinkedIn:** A switch hides the More tab, on by default, instead of a page that often shows \"Something went wrong\".\n- **MX Player Pro:** GmsCore support (MX Player Pro) signs in to Google Drive through MicroG-RE.\n- **Truecaller:** Anonymous profile viewing and anonymous search, with switches in Loki Patches › Privacy.\n- **Truecaller:** Premium reads as the Gold plan, and the after-call screen is skipped for missed calls too.\n- **Truecaller:** Hide ads (Truecaller) is its own patch and removes the ads in call history and the rest of the app, with or without premium.\n\n### Fixes\n- **Doc Scanner:** GmsCore support also brings notifications through MicroG-RE, registered with Doc Scanner's original certificate.\n- **Doc Scanner:** On a version the bundle does not list, only the drawer row is skipped instead of every patch failing.\n- **Doc Scanner:** Enable premium features is now named Enable premium features (Doc Scanner).\n- **LinkedIn:** GmsCore support is now named GmsCore support (LinkedIn), like the other apps; if you use it, tick it again once.\n- **Splitwise:** GmsCore support also brings notifications through MicroG-RE, registered with Splitwise's original certificate.\n- **Truecaller:** Premium no longer switches on Remove ads and trackers; tick it yourself for analytics and advertising-ID removal.\n- The Loki Patches entry in the app drawer shows the Loki L.\n\n### Updated App Support\n- **Doc Scanner:** Doc Scanner 6.9.14 is supported, next to 6.9.9.\n- **LinkedIn:** LinkedIn 4.1.1272 is supported, next to 4.1.1270.\n- **Truecaller:** Truecaller 26.44.6 is supported, next to 26.43.5.\n\n**41 patches for 5 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
+  "created_at": "2026-11-20T21:56:36",
+  "version": "3.4.0",
+  "description": "## 3.4.0 (2026-11-20)\n\n### New Features\n- **Google Photos:** Google Photos joins the bundle - unlimited original-quality backup as a Pixel XL, only real camera photos count as Camera, MicroG-RE sign-in, installs next to the stock app.\n\n### Fixes\n- Diagnostic reports always start with a line saying the patches loaded, so a report is never empty.\n\n**45 patches for 6 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
   "apps": [
     {
       "app_name": "Document Scanner - PDF Creator",
@@ -62,6 +62,49 @@
         }
       ],
       "developer": "LUFICK TECHNOLOGY PRIVATE LIMITED"
+    },
+    {
+      "app_name": "Google Photos",
+      "package": "com.google.android.apps.photos",
+      "patches": [
+        {
+          "name": "GmsCore support (Google Photos)",
+          "description": "Routes Google sign-in and Firebase push through MicroG-RE (GmsCore) instead of Google Play services, and signs the push registration with Google Photos' original certificate, so the account backs up from a re-signed build. MicroG-RE has to be installed and signed in to the same Google account.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.1.0.1023737660"
+          ]
+        },
+        {
+          "name": "Install next to the original (Google Photos)",
+          "description": "Installs the patched Google Photos as a separate app (package name + \".loki\"), so the Photos that came with the phone does not have to be removed. Needs \"GmsCore support (Google Photos)\" to sign in. Turn backup off in the original Photos so the two do not both upload.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.1.0.1023737660"
+          ]
+        },
+        {
+          "name": "Only real camera photos count as Camera",
+          "description": "Google Photos treats everything under DCIM as Camera, so screenshots and other apps' DCIM folders are always backed up with it. Only DCIM/Camera counts; the rest become normal device folders you choose in Photos' own Backup settings. A switch in Loki Patches restores Photos' rule.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.1.0.1023737660"
+          ]
+        },
+        {
+          "name": "Unlimited backup (Pixel XL)",
+          "description": "One switch for the whole Pixel XL entitlement: Photos believes it may back up unlimited original-quality photos, and every upload reports this phone as a Pixel XL so Google marks it free. New photos then read \"doesn't take up space in your account storage\". Google lists the phone as a Pixel XL under your account's devices; creations Google renders on its servers still use your quota.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.1.0.1023737660"
+          ]
+        }
+      ],
+      "developer": "Google LLC"
     },
     {
       "app_name": "LinkedIn: Community & Network",
@@ -430,10 +473,10 @@
     }
   ],
   "patches_name": "Loki Patches",
-  "fingerprint": "bfb171c1b8ae208943f5523abcf0a99b4357b7cad9fb2f6420694d85892e3efd",
-  "release_notes": "## 3.3.0 (2026-11-18)\n\n### New Features\n- **Doc Scanner:** Hide ads (Doc Scanner) is its own patch, so ads stay gone with or without premium.\n- **LinkedIn:** A switch hides the More tab, on by default, instead of a page that often shows \"Something went wrong\".\n- **MX Player Pro:** GmsCore support (MX Player Pro) signs in to Google Drive through MicroG-RE.\n- **Truecaller:** Anonymous profile viewing and anonymous search, with switches in Loki Patches › Privacy.\n- **Truecaller:** Premium reads as the Gold plan, and the after-call screen is skipped for missed calls too.\n- **Truecaller:** Hide ads (Truecaller) is its own patch and removes the ads in call history and the rest of the app, with or without premium.\n\n### Fixes\n- **Doc Scanner:** GmsCore support also brings notifications through MicroG-RE, registered with Doc Scanner's original certificate.\n- **Doc Scanner:** On a version the bundle does not list, only the drawer row is skipped instead of every patch failing.\n- **Doc Scanner:** Enable premium features is now named Enable premium features (Doc Scanner).\n- **LinkedIn:** GmsCore support is now named GmsCore support (LinkedIn), like the other apps; if you use it, tick it again once.\n- **Splitwise:** GmsCore support also brings notifications through MicroG-RE, registered with Splitwise's original certificate.\n- **Truecaller:** Premium no longer switches on Remove ads and trackers; tick it yourself for analytics and advertising-ID removal.\n- The Loki Patches entry in the app drawer shows the Loki L.\n\n### Updated App Support\n- **Doc Scanner:** Doc Scanner 6.9.14 is supported, next to 6.9.9.\n- **LinkedIn:** LinkedIn 4.1.1272 is supported, next to 4.1.1270.\n- **Truecaller:** Truecaller 26.44.6 is supported, next to 26.43.5.\n\n**41 patches for 5 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
-  "release_tag": "v3.3.0",
-  "release_date": "2026-11-18T16:43:25Z",
+  "fingerprint": "dd4f4fcfec25abf1a926688f7953ff2731940b5deb1abb2213559b434bf292bf",
+  "release_notes": "## 3.4.0 (2026-11-20)\r\n\r\n### New Features\r\n- **Google Photos:** Google Photos joins the bundle - unlimited original-quality backup as a Pixel XL, only real camera photos count as Camera, MicroG-RE sign-in, installs next to the stock app.\r\n\r\n### Fixes\r\n- Diagnostic reports always start with a line saying the patches loaded, so a report is never empty.\r\n\r\n**45 patches for 6 apps.** Full list in the [README](https://github.com/lokesh-sparrow/loki-patches#apps).",
+  "release_tag": "v3.4.0",
+  "release_date": "2026-11-20T22:09:20Z",
   "isPreRelease": false,
   "stars": 3,
   "avatarUrl": "https://avatars.githubusercontent.com/u/144280457?v=4&s=128",
