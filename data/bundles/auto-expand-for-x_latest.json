@@ -2,36 +2,37 @@
   "bundle": "auto-expand-for-x",
   "channel": "latest",
   "repo_url": "https://github.com/h19e8p/auto-expand-for-x",
-  "created_at": "2026-10-09T10:40:04Z",
-  "version": "1.1.0",
-  "description": "X（旧 Twitter）の Android アプリで、タイムラインに出る「ポストをさらに表示」の中身を自動で読み込み、ボタンを隠す Morphe 用のパッチです。\r\n\r\n1.0.0 からの主な変更点：\r\n\r\n- 裏の読み込みと自動タップを組み合わせて動くようにしました。裏で読み込めなかったボタン（読み込みの上限に達した後のもの、裏の読み込みが働かない画面のもの、裏で読み込んでも何も入らなかったもの）は、画面に来た時に自動でタップします\r\n- ポストの詳細（返信の画面）でも、返信の続きを裏で読み込むようにしました\r\n- 読み込み終わったボタンを端末に記録し、X を起動し直した後も、読み込み直さずに隠すようにしました\r\n- オプション「裏での取得を使わず、自動タップだけにする」を「画面に出る前に裏で読み込む」（既定オン）に置き換え、並びを「裏で読み込む → 隠す → トースト → 診断ログ」に変えました。自動タップだけにしていた場合は、新しいオプションをオフにしてください\r\n- 自動タップで読み込みが始まらなかった時は、もう一度タップするようにしました。それでも始まらなければ、ボタンを表示したままにします\r\n- 要求の上限を、裏の読み込みと自動タップを合わせて1分に10回にまとめました\r\n- 診断ログを読みやすくしました（日付の見出し、記録の種類、画面の名前、パッチの版）。ログは英語で書きます\r\n- 「隠す」をオフにしている時に、裏で読み込み中のボタンに読み込み中の表示を出すための処理を加えました\r\n- 読み込み終わったボタンを5分ごとに読み込み直していた問題と、タイムラインの先頭に新しいポストが入った時などに、裏の読み込みの結果を取り違えることがあった問題を直しました\r\n\r\n対応バージョンは X（`com.twitter.android`）`12.19.1-release.0` です。使い方と注意点は README を見てください。",
+  "created_at": "2026-11-21T08:01:38",
+  "version": "2.0.0",
+  "description": "## 2.0.0\n\n「Auto Expand for X」は、パッチ集「h19e8p Patches」になりました。X（`com.twitter.android`）`12.19.1-release.0` 向けで、[piko](https://github.com/crimera/piko) と一緒に当てて使います。\n\n**入っているパッチ**\n\n- **Auto expand hidden posts**：「ポストをさらに表示」の中身を裏で読み込み、ボタンを隠します（これまでの「Auto Expand for X」の機能です）\n- **Feature flag tools**：画面の部品や、画面を開いた時に X が読んだものから、関係しそうなフラグを探し、piko のフラグの一覧に追加します（追加には piko の「Hook feature flag」が要ります）\n- **Undo and redo in the composer**：投稿画面に「元に戻す」「やり直す」のボタンを足します\n\n**1.1.0 からの主な変更点**\n\n- バンドルの名前を「Auto Expand for X」から「h19e8p Patches」に、パッチの名前を「Auto expand hidden posts (standalone)」から「Auto expand hidden posts」に変えました\n- Morphe Manager のパッチオプションを無くしました。設定は、パッチを当てた後に X の「設定とプライバシー」→「h19e8p Patches」で、いつでも変えられます\n- 設定画面に「すべてのストレージを削除」と、アプリと h19e8p Patches のバージョン、適用されたパッチの一覧を加えました\n- 「Feature flag tools」と「Undo and redo in the composer」を加えました\n\n**1.1.0 から移る時の注意**\n\n- Morphe Manager から、古い「Auto Expand for X」のソースを削除してください。古いパッチと一緒に選ぶと、パッチの適用に失敗します\n- 1.1.0 のパッチオプションの値は引き継がれません。初期値から変えていた項目（「隠す」・トースト・診断ログなど）は、設定画面で設定し直してください\n- 読み込み終わったボタンの記録と、診断ログの置き場所はそのまま引き継ぎます\n\n使い方と注意点は README を見てください。",
   "apps": [
     {
       "app_name": "X",
       "package": "com.twitter.android",
       "patches": [
         {
-          "name": "Auto expand hidden posts (standalone)",
+          "name": "Auto expand hidden posts",
           "description": "Loads the posts behind \"Show more posts\" in the background before the button appears, and hides it. Any button not loaded in the background is tapped automatically when it comes on screen.",
           "use": true,
-          "options": [
-            {
-              "key": "backgroundFetch",
-              "description": "Loads the posts behind the button in the background when a timeline opens. When off, posts are loaded only by tapping the button automatically when it comes on screen."
-            },
-            {
-              "key": "hideGaps",
-              "description": "Hides the button once loading of its posts has started, and buttons recorded as already loaded. The record is kept inside X at /data/data/com.twitter.android/shared_prefs/autoexpand.xml and, whether or not this is on, is also used to avoid loading the same button again. When off, posts are loaded the same way and the button stays."
-            },
-            {
-              "key": "showToasts",
-              "description": "Shows a short message when posts are loaded in the background, when the button is hidden, or when an automatic tap loads posts."
-            },
-            {
-              "key": "logToFile",
-              "description": "Adds what is done with each gap to Download/AutoExpand/AutoExpand-Log.txt, in English. Once X is installed again, it writes to a numbered file such as AutoExpand-Log-2.txt."
-            }
-          ],
+          "options": [],
+          "compatible_versions": [
+            "12.19.1-release.0"
+          ]
+        },
+        {
+          "name": "Feature flag tools",
+          "description": "Adds \"Find from an element\" and \"Record flag reads\" to the h19e8p Patches settings. Found flags can be added to piko's flag list, several at once with a long press (needs piko's \"Hook feature flag\").",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.19.1-release.0"
+          ]
+        },
+        {
+          "name": "Undo and redo in the composer",
+          "description": "Adds Undo and Redo to the button row of the composer. Each post in a thread has its own history, and text typed in a row is undone at once.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "12.19.1-release.0"
           ]
@@ -41,10 +42,10 @@
     }
   ],
   "patches_name": "Auto Expand for X",
-  "fingerprint": "37e390344e6e81cc1cd02dcaa46fb453c45594caff4a3d1f317660193d02aba8",
-  "release_notes": "X（旧 Twitter）の Android アプリで、タイムラインに出る「ポストをさらに表示」の中身を自動で読み込み、ボタンを隠す Morphe 用のパッチです。\r\n\r\n1.0.0 からの主な変更点：\r\n\r\n- 裏の読み込みと自動タップを組み合わせて動くようにしました。裏で読み込めなかったボタン（読み込みの上限に達した後のもの、裏の読み込みが働かない画面のもの、裏で読み込んでも何も入らなかったもの）は、画面に来た時に自動でタップします\r\n- ポストの詳細（返信の画面）でも、返信の続きを裏で読み込むようにしました\r\n- 読み込み終わったボタンを端末に記録し、X を起動し直した後も、読み込み直さずに隠すようにしました\r\n- オプション「裏での取得を使わず、自動タップだけにする」を「画面に出る前に裏で読み込む」（既定オン）に置き換え、並びを「裏で読み込む → 隠す → トースト → 診断ログ」に変えました。自動タップだけにしていた場合は、新しいオプションをオフにしてください\r\n- 自動タップで読み込みが始まらなかった時は、もう一度タップするようにしました。それでも始まらなければ、ボタンを表示したままにします\r\n- 要求の上限を、裏の読み込みと自動タップを合わせて1分に10回にまとめました\r\n- 診断ログを読みやすくしました（日付の見出し、記録の種類、画面の名前、パッチの版）。ログは英語で書きます\r\n- 「隠す」をオフにしている時に、裏で読み込み中のボタンに読み込み中の表示を出すための処理を加えました\r\n- 読み込み終わったボタンを5分ごとに読み込み直していた問題と、タイムラインの先頭に新しいポストが入った時などに、裏の読み込みの結果を取り違えることがあった問題を直しました\r\n\r\n対応バージョンは X（`com.twitter.android`）`12.19.1-release.0` です。使い方と注意点は README を見てください。",
-  "release_tag": "v1.1.0",
-  "release_date": "2026-10-09T10:44:04Z",
+  "fingerprint": "f3b507399672fcbb45668c46b7d82547dad8d35b078396a69fbc4dda8c69bf7a",
+  "release_notes": "「Auto Expand for X」は、パッチ集「h19e8p Patches」になりました。X（`com.twitter.android`）`12.19.1-release.0` 向けで、[piko](https://github.com/crimera/piko) と一緒に当てて使います。\r\n\r\n**入っているパッチ**\r\n\r\n- **Auto expand hidden posts**：「ポストをさらに表示」の中身を裏で読み込み、ボタンを隠します（これまでの「Auto Expand for X」の機能です）\r\n- **Feature flag tools**：画面の部品や、画面を開いた時に X が読んだものから、関係しそうなフラグを探し、piko のフラグの一覧に追加します（追加には piko の「Hook feature flag」が要ります）\r\n- **Undo and redo in the composer**：投稿画面に「元に戻す」「やり直す」のボタンを足します\r\n\r\n**1.1.0 からの主な変更点**\r\n\r\n- バンドルの名前を「Auto Expand for X」から「h19e8p Patches」に、パッチの名前を「Auto expand hidden posts (standalone)」から「Auto expand hidden posts」に変えました\r\n- Morphe Manager のパッチオプションを無くしました。設定は、パッチを当てた後に X の「設定とプライバシー」→「h19e8p Patches」で、いつでも変えられます\r\n- 設定画面に「すべてのストレージを削除」と、アプリと h19e8p Patches のバージョン、適用されたパッチの一覧を加えました\r\n- 「Feature flag tools」と「Undo and redo in the composer」を加えました\r\n\r\n**1.1.0 から移る時の注意**\r\n\r\n- Morphe Manager から、古い「Auto Expand for X」のソースを削除してください。古いパッチと一緒に選ぶと、パッチの適用に失敗します\r\n- 1.1.0 のパッチオプションの値は引き継がれません。初期値から変えていた項目（「隠す」・トースト・診断ログなど）は、設定画面で設定し直してください\r\n- 読み込み終わったボタンの記録と、診断ログの置き場所はそのまま引き継ぎます\r\n\r\n使い方と注意点は README を見てください。",
+  "release_tag": "v2.0.0",
+  "release_date": "2026-11-21T08:01:38Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/308736879?v=4&s=128",

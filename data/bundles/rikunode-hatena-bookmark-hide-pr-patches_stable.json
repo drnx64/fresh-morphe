@@ -1,10 +1,10 @@
 {
   "bundle": "rikunode-hatena-bookmark-hide-pr-patches",
   "channel": "stable",
-  "repo_url": "https://github.com/rikunode/hatena-bookmark-hide-pr-patches",
-  "created_at": "2026-11-20T07:49:46Z",
-  "version": "0.4.2",
-  "description": "v0.4.2 fixes a DEX register-type mismatch in article WebView onPageFinished: CSS injection now happens immediately after the WebViewClient superclass callback while p1 still holds the WebView, before the original method overwrites p1 with SimpleUriIdlingResource. Existing ad-block host rules, seed integration and other three patches unchanged. Hatena Bookmark 5.80/versionCode 58000 only.",
+  "repo_url": "https://github.com/rikunode/hoshiori",
+  "created_at": "2026-11-21T08:36:28Z",
+  "version": "0.4.5",
+  "description": "v0.4.5 renames this patch source to rikunode/hoshiori and updates the bundled ad-filter snapshot URL. All five patch behaviors and their defaults are unchanged. Hatena Bookmark 5.80/versionCode 58000 only.",
   "apps": [
     {
       "app_name": "Hatena Bookmark: Save, share",
@@ -59,22 +59,29 @@
           "compatible_versions": [
             "5.80"
           ]
+        },
+        {
+          "name": "Preserve article WebView cookies and storage",
+          "description": "Optionally retain website preferences after closing articles and restarting the app; affects all article sites.",
+          "use": true,
+          "options": [
+            {
+              "key": "preserveArticleWebStorage",
+              "description": "Keep cookies and website storage across article closes and app restarts. All article websites may retain login and tracking data."
+            }
+          ],
+          "compatible_versions": [
+            "5.80"
+          ]
         }
       ],
       "developer": "Hatena Co., Ltd."
     }
   ],
   "patches_name": "Hatena Bookmark native ad filter",
-  "fingerprint": "e9211d20de9c02a869fb65ddfef354afd8f6272a2da733709a21acf344559332",
-  "release_notes": "# v0.4.2 — Fix article WebView crash caused by wrong register type\n\n**Fixed:** Morphe patch v0.4.1 injected `AdBlockHelper.injectCss(WebView, boolean)` directly before `onPageFinished`'s return. But the original method had overwritten its `p1` register (physical `v8`) with a `SimpleUriIdlingResource` before that point. Passing it as a WebView violates DEX verifier types and is consistent with the owner-reported freeze/crash when opening articles.\n\n**Minimal fix:** move the two injected code instructions to immediately after the existing `invoke-super WebViewClient.onPageFinished(WebView, String)`, before the first overwrite of `p1/v8`. A new guard checks that the fifth original instruction is the expected superclass call. The original method register count remains 10; the added `shouldInterceptRequest` method and Java helper behavior are unchanged. Neither existing PR filtering, cloning nor ranking suppression was modified.\n\n**Verified:** v0.4.1 APK DEX: `004d: move-result-object v8` from `getWebViewIdlingResource`, `0052: invoke-static {v8,v0}, AdBlockHelper.injectCss(WebView;Z)`. The changed APK should place the call after `000c: invoke-super {v7,v8,v9}` and before original `000f: iget-object v8`. The caller's original local variables and exception handling are otherwise preserved.\n\nHatena Bookmark **5.80 / versionCode 58000 only**. **Emulator validation (Android API 36):** v0.4.1 and v0.4.2 both installed and launched to MainActivity; v0.4.2 emitted no VerifyError/FATAL EXCEPTION in the startup logcat capture. However the emulator's article feed did not load (UI displayed a load error), and WebViewActivity is not exported, so actual article-opening reproduction and fix confirmation **could not be completed**. This release is backed by concrete before/after DEX instructions and a successful four-patch APK build, not an end-to-end article test.\n\nThe existing [v0.4.1 release notes](RELEASE_NOTES_v0.4.1.md) describe the unchanged filter converter and seed-merging behavior.\n",
-  "release_tag": "v0.4.2",
-  "release_date": "2026-11-20T07:49:46Z",
-  "isPreRelease": false,
-  "stars": 0,
-  "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
-  "repoDescription": "Morphe patches for Hatena Bookmark 5.84: native PR entry filtering and optional side-by-side test clone",
-  "isArchived": false,
-  "isFork": false,
-  "forkParent": "",
-  "bundleImageUrl": ""
+  "fingerprint": "47598b59abe03e5f5651c9f7957b83bf91131fa3a75127e46ebd4e0d159a6441",
+  "release_notes": "# v0.4.5 ? Hoshiori repository migration\n\nRepository renamed from `rikunode/hatena-bookmark-hide-pr-patches` to `rikunode/hoshiori`.\n\n- Updated the Morphe Manager source URL, installation links, documentation and project metadata.\n- The embedded ad-block snapshot endpoint now points to `https://raw.githubusercontent.com/rikunode/hoshiori/filter-data/filters.json.gz`.\n- No changes to any patch logic, DEX guards, options, supported versions or filter-list format. All five patches still target Hatena Bookmark **5.80 (58000)** only.\n- The previous repository address may redirect; users should add/update the **new source** to avoid depending on legacy links.\n- The `preserveArticleWebStorage` option remains **ON by default**; other sites' cookies and login data can persist.\n\nThe update is required for new Android bundles to embed the new snapshot endpoint.\n",
+  "release_tag": "v0.4.5",
+  "release_date": "2026-11-21T08:36:28Z",
+  "isPreRelease": false
 }

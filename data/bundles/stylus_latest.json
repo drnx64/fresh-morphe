@@ -2,9 +2,9 @@
   "bundle": "stylus",
   "channel": "latest",
   "repo_url": "https://github.com/ch3thanhs/stylus",
-  "created_at": "2026-11-07T11:02:48",
-  "version": "1.11.0",
-  "description": "## [1.11.0](https://github.com/ch3thanhs/stylus/compare/v1.10.0...v1.11.0) (2026-11-07)\n\n### ✨ New Features\n\n* **github:** support variable font weights and font feature settings ([f56bd19](https://github.com/ch3thanhs/stylus/commit/f56bd19c6c515bf384a1f3ade951ab97b9f3d290))",
+  "created_at": "2026-11-21T04:11:39",
+  "version": "1.12.0",
+  "description": "## [1.12.0](https://github.com/ch3thanhs/stylus/compare/v1.11.0...v1.12.0) (2026-11-21)\n\n### ✨ New Features\n\n* **ChatGPT:** add custom UI and monospace font patches ([a20e3c3](https://github.com/ch3thanhs/stylus/commit/a20e3c30f6b9d7327d237894e4a0628a63bf0632))\n\n### 🐛 Bug Fixes\n\n* **bitwarden:** adapt font patches to Bitwarden's switch to Inter ([181766b](https://github.com/ch3thanhs/stylus/commit/181766b13c320b858b8f1c948b54607ce922d2a9))\n* **Where is my Train:** update font patch fingerprints ([b01cb31](https://github.com/ch3thanhs/stylus/commit/b01cb3190f1aad602a29473da2081f91433700cc))\n\n### 🚀 Updated App Support\n\n* **Bitwarden:** Update app support to 2026.11.1 ([7121aff](https://github.com/ch3thanhs/stylus/commit/7121aff1139b7642c9606cbdf466f143f75ea7f7))\n* **GitHub:** Update app support to 1.284.0 ([0525415](https://github.com/ch3thanhs/stylus/commit/0525415dd1f92eaab07fb55f0db531e2b33e5abd))\n* **Where is my Train:** Update app support to 7.1.5.1012928357 ([570f98b](https://github.com/ch3thanhs/stylus/commit/570f98ba49bf37b5d59dadbb37b1b8a3cc185b19))",
   "apps": [
     {
       "app_name": "GitHub",
@@ -25,7 +25,7 @@
             }
           ],
           "compatible_versions": [
-            "1.283.0"
+            "1.284.0"
           ]
         },
         {
@@ -39,7 +39,7 @@
             }
           ],
           "compatible_versions": [
-            "1.283.0"
+            "1.284.0"
           ]
         },
         {
@@ -48,7 +48,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.283.0"
+            "1.284.0"
           ]
         },
         {
@@ -57,11 +57,50 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.283.0"
+            "1.284.0"
           ]
         }
       ],
       "developer": "GitHub"
+    },
+    {
+      "app_name": "ChatGPT",
+      "package": "com.openai.chatgpt",
+      "patches": [
+        {
+          "name": "Custom font",
+          "description": "Replaces ChatGPT's UI fonts with your own font.",
+          "use": false,
+          "options": [
+            {
+              "key": "customFontFile",
+              "description": "The file path to your font. Tap the file picker and select it. The font must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
+            },
+            {
+              "key": "fontFeatureSettings",
+              "description": "Optional OpenType features for the custom font. For example, enter 'ss01' 1 to use Inter's open-style digits. You can also paste a CSS declaration such as font-feature-settings: \"ss01\" 1;. Android ignores features that the selected font does not support."
+            }
+          ],
+          "compatible_versions": [
+            "1.2026.321"
+          ]
+        },
+        {
+          "name": "Custom monospace font",
+          "description": "Replaces ChatGPT's monospace fonts with your own monospace font.",
+          "use": false,
+          "options": [
+            {
+              "key": "customMonospaceFontFile",
+              "description": "The file path to your monospace font. Tap the file picker and select it. The font must be in TTF or OTF format."
+            }
+          ],
+          "compatible_versions": [
+            "1.2026.321"
+          ]
+        }
+      ],
+      "developer": "OpenAI"
     },
     {
       "app_name": "Where is my Train",
@@ -82,7 +121,7 @@
             }
           ],
           "compatible_versions": [
-            "7.1.5.974952539"
+            "7.1.5.1012928357"
           ]
         },
         {
@@ -91,7 +130,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "7.1.5.974952539"
+            "7.1.5.1012928357"
           ]
         }
       ],
@@ -103,12 +142,12 @@
       "patches": [
         {
           "name": "Custom font",
-          "description": "Replaces the bundled DM Sans UI fonts with your own font.",
+          "description": "Replaces the bundled Inter UI font with your own font.",
           "use": false,
           "options": [
             {
               "key": "customFontFile",
-              "description": "The file path to your font. Tap the file picker and select it. The font must be in TTF or OTF format. A variable font is recommended so heading and body text keep their different weights."
+              "description": "The file path to your font. Tap the file picker and select it. The font must be in TTF or OTF format. Use a variable font with a weight axis to keep the different UI weights. A static font uses its single weight throughout the UI."
             },
             {
               "key": "fontFeatureSettings",
@@ -116,7 +155,7 @@
             }
           ],
           "compatible_versions": [
-            "2026.10.1"
+            "2026.11.1"
           ]
         },
         {
@@ -130,7 +169,7 @@
             }
           ],
           "compatible_versions": [
-            "2026.10.1"
+            "2026.11.1"
           ]
         },
         {
@@ -139,7 +178,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2026.10.1"
+            "2026.11.1"
           ]
         }
       ],
@@ -147,10 +186,10 @@
     }
   ],
   "patches_name": "Stylus",
-  "fingerprint": "407693084224753b90bab294438b12e43d08f00cba76577296c18d8b79a1eaed",
-  "release_notes": "## [1.11.0](https://github.com/ch3thanhs/stylus/compare/v1.10.0...v1.11.0) (2026-11-07)\n\n### ✨ New Features\n\n* **github:** support variable font weights and font feature settings ([f56bd19](https://github.com/ch3thanhs/stylus/commit/f56bd19c6c515bf384a1f3ade951ab97b9f3d290))\n",
-  "release_tag": "v1.11.0",
-  "release_date": "2026-11-07T11:03:28Z",
+  "fingerprint": "8fe06607509d24e89cbf82a4d5ff2ebfd38d2d860406e2b16f66241b16d22e78",
+  "release_notes": "## [1.12.0](https://github.com/ch3thanhs/stylus/compare/v1.11.0...v1.12.0) (2026-11-21)\n\n### ✨ New Features\n\n* **ChatGPT:** add custom UI and monospace font patches ([a20e3c3](https://github.com/ch3thanhs/stylus/commit/a20e3c30f6b9d7327d237894e4a0628a63bf0632))\n\n### 🐛 Bug Fixes\n\n* **bitwarden:** adapt font patches to Bitwarden's switch to Inter ([181766b](https://github.com/ch3thanhs/stylus/commit/181766b13c320b858b8f1c948b54607ce922d2a9))\n* **Where is my Train:** update font patch fingerprints ([b01cb31](https://github.com/ch3thanhs/stylus/commit/b01cb3190f1aad602a29473da2081f91433700cc))\n\n### 🚀 Updated App Support\n\n* **Bitwarden:** Update app support to 2026.11.1 ([7121aff](https://github.com/ch3thanhs/stylus/commit/7121aff1139b7642c9606cbdf466f143f75ea7f7))\n* **GitHub:** Update app support to 1.284.0 ([0525415](https://github.com/ch3thanhs/stylus/commit/0525415dd1f92eaab07fb55f0db531e2b33e5abd))\n* **Where is my Train:** Update app support to 7.1.5.1012928357 ([570f98b](https://github.com/ch3thanhs/stylus/commit/570f98ba49bf37b5d59dadbb37b1b8a3cc185b19))\n",
+  "release_tag": "v1.12.0",
+  "release_date": "2026-11-21T04:12:27Z",
   "isPreRelease": false,
   "stars": 27,
   "avatarUrl": "https://avatars.githubusercontent.com/u/76928501?v=4",
