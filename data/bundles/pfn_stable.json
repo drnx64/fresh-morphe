@@ -2,50 +2,20 @@
   "bundle": "pfn",
   "channel": "stable",
   "repo_url": "https://github.com/pfn/android-discord-patches",
-  "created_at": "2026-11-22T01:42:28Z",
-  "version": "1.27.0",
-  "description": "### 🐛 Bug Fixes\n\n* **Discord:** Fixed launch crash on Discord 354.12 by shipping a kotlin runtime shim, so Conduit extensions no longer reference the kotlin.jvm.internal classes newer Discord obfuscates away\n",
+  "created_at": "2026-11-22T04:33:19Z",
+  "version": "1.28.0",
+  "description": "### 🐛 Bug Fixes\n\n* **Discord:** Fixed blocked and ignored messages still rendering on 354.12 by reimplementing Hide blocked or ignored messages as a Hermes bytecode patch - blocked and ignored message groups no longer render at all (no content, no collapsed indicator)\n* **Discord:** Fixed every Conduit JS feature silently failing on 354.12 by removing the Conduit runtime patches (Conduit settings, Conduit button on profile bar, the Conduit hide-blocked flag) - the bridgeless React runtime never registers modules through `global.__d`\n* **Discord:** Fixed the Hermes patches being silently revertible by Discord's downloaded OTA bundles: the loader pin moved into Pin app to built-in bundle, which now works without the Conduit runtime\n",
   "apps": [
     {
       "app_name": "Discord - Talk, Play, Hang Out",
       "package": "com.discord",
       "patches": [
         {
-          "name": "Conduit button on profile bar",
-          "description": "A shortcut to Conduit settings, next to the notifications bell.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "351.11 - Stable",
-            "354.12 - Stable"
-          ]
-        },
-        {
-          "name": "Conduit settings",
-          "description": "Adds Conduit to Discord's settings, where you turn each feature on or off, in your language. Needed by every feature.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "351.11 - Stable",
-            "354.12 - Stable"
-          ]
-        },
-        {
           "name": "Hide blocked or ignored message rows",
           "description": "Hides messages from blocked and ignored users entirely - no content, no divider.",
           "use": true,
           "options": [],
           "compatible_versions": []
-        },
-        {
-          "name": "Hide blocked or ignored messages",
-          "description": "Removes the \"blocked messages\" and \"ignored messages\" rows from chat, and can hide replies to them too. From Rain.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "351.11 - Stable",
-            "354.12 - Stable"
-          ]
         },
         {
           "name": "Hide gift button",
@@ -73,10 +43,10 @@
     }
   ],
   "patches_name": "pfn",
-  "fingerprint": "9daa3805462e47ab23a6eef256c3dd798da48897959aa5fae996f9ca7c9a9a0a",
-  "release_notes": "## [1.27.0](https://github.com/pfn/android-discord-patches/compare/v1.26.0...v1.27.0) (2026-11-21)\n\n### 🐛 Bug Fixes\n\n* **Discord:** Fixed launch crash on Discord 354.12 by shipping a kotlin runtime shim, so Conduit extensions no longer reference the kotlin.jvm.internal classes newer Discord obfuscates away\n",
-  "release_tag": "v1.27.0",
-  "release_date": "2026-11-22T01:42:28Z",
+  "fingerprint": "4318446bcb2c4f3a000dc26590af915675a6fb0242c7cc6feb8a5781d722e87b",
+  "release_notes": "## [1.28.0](https://github.com/pfn/android-discord-patches/compare/v1.27.0...v1.28.0) (2026-11-22)\n\n### 🐛 Bug Fixes\n\n* **Discord:** Fixed blocked and ignored messages still rendering on 354.12 by reimplementing Hide blocked or ignored messages as a Hermes bytecode patch - blocked and ignored message groups no longer render at all (no content, no collapsed indicator)\n* **Discord:** Fixed every Conduit JS feature silently failing on 354.12 by removing the Conduit runtime patches (Conduit settings, Conduit button on profile bar, the Conduit hide-blocked flag) - the bridgeless React runtime never registers modules through `global.__d`\n* **Discord:** Fixed the Hermes patches being silently revertible by Discord's downloaded OTA bundles: the loader pin moved into Pin app to built-in bundle, which now works without the Conduit runtime\n",
+  "release_tag": "v1.28.0",
+  "release_date": "2026-11-22T04:33:19Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/512197?v=4&s=128",

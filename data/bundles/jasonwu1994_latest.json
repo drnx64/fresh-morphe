@@ -2,9 +2,9 @@
   "bundle": "jasonwu1994",
   "channel": "latest",
   "repo_url": "https://github.com/jasonwu1994/Gboard-patches",
-  "created_at": "2026-11-12T23:35:35",
-  "version": "4.3.0",
-  "description": "### ✨ New Features\n\n* **Gboard:** add an FAQ section to the Frosted Glass page, with links for when the effect isn't working and for flickering on Pixel phones.\n* **Gboard:** change the defaults of two settings: English Up-Flick Uppercase is now off and the Access Points menu style is now on. Settings you have already saved are kept.\n\n### 🐛 Bug Fixes\n\n* **Gboard:** fix the keyboard closing by itself with Frosted Glass enabled (\"Software rendering doesn't support drawRenderNode\"). If blur fails to draw, the keyboard now falls back to its theme.\n* **Gboard:** make \"Extend to navigation bar\" work on Android 15 and below. The navigation bar follows the keyboard's transparency, without blur.\n* **Gboard:** make \"Extend to navigation bar\" work with narrower docked keyboards, such as one-handed mode.\n\n### ✨ 新功能\n\n* **Gboard:** 在「磨砂玻璃」頁面新增 FAQ 區塊，提供「為什麼磨砂玻璃沒有效果？」和「為什麼 Pixel 手機輸入文字時會閃爍？」的說明連結。\n* **Gboard:** 調整兩項設定的預設值：「英文鍵盤上滑大小寫」改為關閉，「Access Points 選單樣式」改為開啟。已儲存的設定不受影響。\n\n### 🐛 修復\n\n* **Gboard:** 修復啟用磨砂玻璃後鍵盤自行關閉的問題（`Software rendering doesn't support drawRenderNode`）。模糊效果繪製失敗時，鍵盤會改回使用主題背景。\n* **Gboard:** 修復「延伸到導覽列」在 Android 15 以下沒有效果的問題。導覽列會跟隨鍵盤的透明度，但沒有模糊效果。\n* **Gboard:** 修復「延伸到導覽列」在單手模式等較窄的固定式鍵盤上沒有效果的問題。",
+  "created_at": "2026-11-22T01:31:52",
+  "version": "4.4.0",
+  "description": "### ✨ New Features\n\n* **Gboard:** switch icon sizing in the G logo patch from dp to percentages. Your icons can now get biiiiiig!\n* **Gboard:** add support for custom package names in Package Rename.\n* **Gboard:** add the Shift + Backspace Forward Delete patch. Hold Shift and press Backspace to delete the character after the cursor, like the Delete key on a computer keyboard.\n* **Gboard:** add a **Rambler Auto Stop** option (Off, 3 seconds, 5 seconds, or custom 1–59 seconds) to **Advanced Voice Typing** to automatically stop Rambler voice typing and keep the text after the chosen period of silence.\n* **Gboard:** add a **Shortcut position** option (**First** or **Last**) to **Long-Press Editing Shortcuts** to choose where the editing shortcut appears in a key's long-press popup.\n\n### 🐛 Bug Fixes\n\n* **Gboard:** fix **Key transparency** in **Frosted Glass** not applying to the circular background behind the microphone or other shortcut in the top-right toolbar slot, while keeping the icon clear and preserving transparent idle states.\n* **Gboard:** keep standard voice typing in Traditional Chinese (zh-TW) on Gboard's built-in S3 recognizer with **Advanced Voice Typing**, and allow S3 voice typing in airplane mode when a usable network (such as Wi-Fi) is connected.\n\n### ✨ 新功能\n\n* **Gboard:** G logo patch：圖示大小從 dp 改為百分比調整，現在你的圖示可以變得超級大！\n* **Gboard:** Package Rename 新增自訂套件名稱功能。\n* **Gboard:** 新增「Shift + Backspace Forward Delete」Patch。按住 Shift 再按退格鍵，就能刪除游標右邊的字，就像電腦鍵盤上的 Delete 鍵。\n* **Gboard:** 在「進階語音輸入」新增「Rambler 自動停止」選項（關閉、3 秒、5 秒或自訂 1–59 秒），停止說話達設定時間後自動結束 Rambler 語音輸入並保留文字。\n* **Gboard:** 在「長按編輯快捷鍵」新增「快捷鍵位置」選項（第一個／最後一個），可自訂快捷鍵在長按選單中的位置。\n\n### 🐛 修復\n\n* **Gboard:** 修復「磨砂玻璃」的「按鍵透明度」未套用到工具列最右側麥克風或其他快捷按鈕圓底的問題，同時保持前景圖示清晰並保留自訂主題的待機透明狀態。\n* **Gboard:** 搭配「進階語音輸入」時，讓繁體中文（zh-TW）標準語音輸入維持使用 Gboard 內建 S3 辨識器，並修復飛航模式下已連上可用網路（如 Wi-Fi）時 S3 語音輸入被拒絕的問題。",
   "apps": [
     {
       "app_name": "Gboard - the Google Keyboard",
@@ -291,12 +291,16 @@
         },
         {
           "name": "Package Rename",
-          "description": "將套件名稱改成 dev.jason.com.google.android.inputmethod.latin，並可自訂 App 名稱，以便共存安裝\nRename the package to dev.jason.com.google.android.inputmethod.latin and allow a custom app name so it can be installed alongside the official Gboard.",
+          "description": "將套件名稱改成可自訂的值(預設 dev.jason.com...latin)，並可自訂 App 名稱，以便共存安裝\nRename the package to a configurable name (default dev.jason.com...latin) and allow a custom app name so it can be installed alongside the official Gboard.",
           "use": true,
           "options": [
             {
               "key": "app_display_name",
               "description": ""
+            },
+            {
+              "key": "package_name",
+              "description": "必須是有效的 Android 套件名稱。選官方套件名稱 com.google.android.inputmethod.latin 時只改 App 名稱、不改套件名稱，無法與官方 Gboard 共存安裝；其他工具改過的套件名稱不受支援。\nMust be a valid Android package name. Choosing the official package com.google.android.inputmethod.latin changes only the app name and keeps the package, so it cannot be installed alongside the official Gboard. Packages renamed by other tools are not supported."
             }
           ],
           "compatible_versions": [
@@ -324,6 +328,15 @@
         {
           "name": "Settings Homepage Override",
           "description": "允許切換新版或舊版 Gboard 設定頁面\nAllow switching between the new and legacy Gboard settings pages.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.5.4.993608717-release-arm64-v8a"
+          ]
+        },
+        {
+          "name": "Shift + Backspace Forward Delete",
+          "description": "按住 Shift 再按退格鍵，會刪除游標右邊的字，作用等同電腦鍵盤的 Delete 鍵。\nHold Shift and press Backspace to delete the character after the cursor, like the Delete key on a computer keyboard.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -425,10 +438,10 @@
     }
   ],
   "patches_name": "Gboard Patches",
-  "fingerprint": "0314b7bf7c48ad83830e1308da1ba1753d090c45b163bc8ed9b1268b5af81691",
-  "release_notes": "### ✨ New Features\n\n* **Gboard:** add an option to automatically select all text before copying or cutting when nothing is selected, available through the toolbar, long-press shortcuts, and globe-key drag gestures.\n* **Gboard:** update morphe-patcher to **v2.1.0**.\n* **Gboard:** add a search button to the Patches settings page to quickly find settings.\n* **Gboard:** extend the G Logo on Spacebar patch with custom image support, a full-color Google G icon, and adjustable icon sizes.\n\n### 🐛 Bug Fixes\n\n* **Gboard:** fix paste shortcuts from the toolbar, long-press actions, and globe-key drag gestures in terminal input fields such as Termux.\n\n### ✨ 新功能\n\n* **Gboard:** 新增「未選取文字時自動全選」選項，支援透過工具列、長按及地球鍵拖曳快捷操作，全選並複製或剪下文字。\n* **Gboard:** 將 morphe-patcher 更新至 **v2.1.0**。\n* **Gboard:** 在 Patches 設定頁面新增搜尋按鈕，方便快速尋找設定項目。\n* **Gboard:** 「G Logo on Spacebar」Patch 新增自訂圖片與「Google G（全彩）」圖示，並支援自訂圖示大小。\n\n### 🐛 修復\n\n* **Gboard:** 修復工具列、長按及地球鍵拖曳快捷貼上在 Termux 等終端機輸入介面中無法正常運作的問題。\n",
-  "release_tag": "v4.2.0",
-  "release_date": "2026-11-04T01:56:14Z",
+  "fingerprint": "3391056cd97663b956c11e1fa298951f32f3f13d3a55f47afeccc4164a8e2cff",
+  "release_notes": "### ✨ New Features\n\n* **Gboard:** switch icon sizing in the G logo patch from dp to percentages. Your icons can now get biiiiiig!\n* **Gboard:** add support for custom package names in Package Rename.\n* **Gboard:** add the Shift + Backspace Forward Delete patch. Hold Shift and press Backspace to delete the character after the cursor, like the Delete key on a computer keyboard.\n* **Gboard:** add a **Rambler Auto Stop** option (Off, 3 seconds, 5 seconds, or custom 1–59 seconds) to **Advanced Voice Typing** to automatically stop Rambler voice typing and keep the text after the chosen period of silence.\n* **Gboard:** add a **Shortcut position** option (**First** or **Last**) to **Long-Press Editing Shortcuts** to choose where the editing shortcut appears in a key's long-press popup.\n\n### 🐛 Bug Fixes\n\n* **Gboard:** fix **Key transparency** in **Frosted Glass** not applying to the circular background behind the microphone or other shortcut in the top-right toolbar slot, while keeping the icon clear and preserving transparent idle states.\n* **Gboard:** keep standard voice typing in Traditional Chinese (zh-TW) on Gboard's built-in S3 recognizer with **Advanced Voice Typing**, and allow S3 voice typing in airplane mode when a usable network (such as Wi-Fi) is connected.\n\n### ✨ 新功能\n\n* **Gboard:** G logo patch：圖示大小從 dp 改為百分比調整，現在你的圖示可以變得超級大！\n* **Gboard:** Package Rename 新增自訂套件名稱功能。\n* **Gboard:** 新增「Shift + Backspace Forward Delete」Patch。按住 Shift 再按退格鍵，就能刪除游標右邊的字，就像電腦鍵盤上的 Delete 鍵。\n* **Gboard:** 在「進階語音輸入」新增「Rambler 自動停止」選項（關閉、3 秒、5 秒或自訂 1–59 秒），停止說話達設定時間後自動結束 Rambler 語音輸入並保留文字。\n* **Gboard:** 在「長按編輯快捷鍵」新增「快捷鍵位置」選項（第一個／最後一個），可自訂快捷鍵在長按選單中的位置。\n\n### 🐛 修復\n\n* **Gboard:** 修復「磨砂玻璃」的「按鍵透明度」未套用到工具列最右側麥克風或其他快捷按鈕圓底的問題，同時保持前景圖示清晰並保留自訂主題的待機透明狀態。\n* **Gboard:** 搭配「進階語音輸入」時，讓繁體中文（zh-TW）標準語音輸入維持使用 Gboard 內建 S3 辨識器，並修復飛航模式下已連上可用網路（如 Wi-Fi）時 S3 語音輸入被拒絕的問題。\n",
+  "release_tag": "v4.4.0",
+  "release_date": "2026-11-22T06:17:01Z",
   "isPreRelease": false,
   "stars": 910,
   "avatarUrl": "https://avatars.githubusercontent.com/u/21318815?v=4",

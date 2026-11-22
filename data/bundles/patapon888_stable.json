@@ -2,9 +2,9 @@
   "bundle": "patapon888",
   "channel": "stable",
   "repo_url": "https://github.com/patapon888/morphe-patches",
-  "created_at": "2026-11-20T16:42:06Z",
-  "version": "1.5.0",
-  "description": "## [1.5.0](https://github.com/patapon888/morphe-patches/releases/tag/v1.5.0) (2026-11-20)\n\n### Daydream\n* The app catalog (store.json and its icons) now comes from this repository\n* New XR category in discovery, with Wolvic",
+  "created_at": "2026-11-22T09:48:29",
+  "version": "1.6.0",
+  "description": "## [1.6.0](https://github.com/patapon888/morphe-patches/releases/tag/v1.6.0) (2026-11-21)\n\n### Fruit Ninja Classic\n* New: Remove Halfbrick+ check, Offline mode, Skip startup video, Remove rating prompts, Disable debug logging, Disable tracking, Loop events\n* The game starts and plays without network access, also on a first start with no saved data\n* The save stays on the device: Offline mode stops the online account service, which replaced the save with an empty account's, and removes the Play Games sign-in pop-up\n* Fixed: the game froze after game over when the save had no starfruit yet\n* Disable tracking removes the network access and turns off analytics and crash reports, with no effect on frame rate\n* Offline mode hides the weekly leaderboards (main menu button and results panel), which are empty offline\n* Loop events: once the event calendar bundled with the app is over, it starts again, and each event starts with fresh points and rewards\n\n### Daydream\n* The Daydream Everywhere patches are now named DuskDream",
   "apps": [
     {
       "app_name": "Bejeweled Classic",
@@ -131,7 +131,7 @@
       "package": "com.google.android.apps.youtube.vr",
       "patches": [
         {
-          "name": "Daydream Everywhere (YouTube VR)",
+          "name": "DuskDream (YouTube VR)",
           "description": "Runs YouTube VR edge to edge with its background, signed in through MicroG RE.",
           "use": true,
           "options": [],
@@ -147,7 +147,7 @@
       "package": "com.google.android.vr.home",
       "patches": [
         {
-          "name": "Daydream Everywhere (Daydream)",
+          "name": "DuskDream (Daydream)",
           "description": "Runs Daydream on any arm64 phone without root.",
           "use": true,
           "options": [],
@@ -163,7 +163,7 @@
       "package": "com.google.android.vr.inputmethod",
       "patches": [
         {
-          "name": "Daydream Everywhere (Keyboard)",
+          "name": "DuskDream (Keyboard)",
           "description": "Lets the Daydream keyboard run re-signed, and adds Swiss layouts.",
           "use": true,
           "options": [],
@@ -179,7 +179,7 @@
       "package": "com.google.vr.vrcore",
       "patches": [
         {
-          "name": "Daydream Everywhere (VR Services)",
+          "name": "DuskDream (VR Services)",
           "description": "Runs Google VR Services on any arm64 phone without root.",
           "use": true,
           "options": [],
@@ -189,6 +189,76 @@
         }
       ],
       "developer": "com.google"
+    },
+    {
+      "app_name": "Fruit Ninja Classic",
+      "package": "com.halfbrick.fruitninja",
+      "patches": [
+        {
+          "name": "Disable debug logging",
+          "description": "Stops the game writing its debug log, which saves CPU time, mostly when offline. Only the arm64-v8a library is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        },
+        {
+          "name": "Disable tracking",
+          "description": "Removes the game's network access and turns off analytics and crash reports. Nothing the game needs is online once Offline mode is applied.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        },
+        {
+          "name": "Loop events",
+          "description": "Events keep coming offline: once the event calendar the app came with is over, it starts again from the first event, and each event starts with its points and rewards reset. Only the arm64-v8a library is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        },
+        {
+          "name": "Offline mode",
+          "description": "Lets the game start and play without network access, also on a first start: no privacy, sign-in, Play Games or cloud save pop-ups, and the profile, inbox and leaderboard buttons are hidden. The save stays on the device: the game no longer connects to its online account service. Only the arm64-v8a library is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        },
+        {
+          "name": "Remove Halfbrick+ check",
+          "description": "Removes the Halfbrick+ subscription pop-up that blocks the game, so it can be played offline. Only the arm64-v8a library is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        },
+        {
+          "name": "Remove rating prompts",
+          "description": "Removes the \"rate this app\" and review pop-ups. Only the arm64-v8a library is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        },
+        {
+          "name": "Skip startup video",
+          "description": "Removes the Halfbrick+ video at startup. Only the arm64-v8a library is kept.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.39.3"
+          ]
+        }
+      ],
+      "developer": "Halfbrick Studios"
     },
     {
       "app_name": "Nova Launcher: Home Screen",
@@ -217,10 +287,10 @@
     }
   ],
   "patches_name": "patapon888",
-  "fingerprint": "90a797a86c1acf55369c44da8c554a448bfbe5b658dabcaad32fe438d0b77bfc",
-  "release_notes": "## [1.5.0](https://github.com/patapon888/morphe-patches/releases/tag/v1.5.0) (2026-11-20)\n\n### Daydream\n* The app catalog (store.json and its icons) now comes from this repository\n* New XR category in discovery, with Wolvic",
-  "release_tag": "v1.5.0",
-  "release_date": "2026-11-20T16:42:06Z",
+  "fingerprint": "32387a0f85cd0c15f97ed4b9366fff673024a76dfbf8fcb1be4c78c148531b37",
+  "release_notes": "### Fruit Ninja Classic\n* New: Remove Halfbrick+ check, Offline mode, Skip startup video, Remove rating prompts, Disable debug logging, Disable tracking, Loop events\n* The game starts and plays without network access, also on a first start with no saved data\n* The save stays on the device: Offline mode stops the online account service, which replaced the save with an empty account's, and removes the Play Games sign-in pop-up\n* Fixed: the game froze after game over when the save had no starfruit yet\n* Disable tracking removes the network access and turns off analytics and crash reports, with no effect on frame rate\n* Offline mode hides the weekly leaderboards (main menu button and results panel), which are empty offline\n* Loop events: once the event calendar bundled with the app is over, it starts again, and each event starts with fresh points and rewards\n\n### Daydream\n* The Daydream Everywhere patches are now named DuskDream\n",
+  "release_tag": "v1.6.0",
+  "release_date": "2026-11-22T09:56:17Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/99602498?v=4&s=128",
