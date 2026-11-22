@@ -2,14 +2,32 @@
   "bundle": "patcheddit",
   "channel": "latest",
   "repo_url": "https://github.com/wchill/patcheddit",
-  "created_at": "2026-11-17T17:26:42",
-  "version": "2.4.0",
-  "description": "# [2.4.0](https://github.com/wchill/patcheddit/compare/v2.3.0...v2.4.0) (2026-11-17)\n\n\n### Bug Fixes\n\n* **boost:** Add backwards compatibility Spoof client patch for users not using RedReader client ID ([3566b1f](https://github.com/wchill/patcheddit/commit/3566b1fb0ddf4b8926ca0edf43baf09ddc4eb92f))\n* **sync:** Crash in Sync free when opening Settings menu due to empty drawable ([6f9d17e](https://github.com/wchill/patcheddit/commit/6f9d17ed9d02a66a9935fd04eca6e2b32beb9651))\n\n\n### Features\n\n* Add About Patcheddit menu ([61284eb](https://github.com/wchill/patcheddit/commit/61284eb091a669219f70cd96fab798ddf444da4f))\n* **boost:** Add ability to manually fetch comments/posts from Arctic Shift and warn when loading failed ([cc20250](https://github.com/wchill/patcheddit/commit/cc20250bfbd4dd8b08ea5fe72c4751717d774e37))\n* **boost:** Make Arctic Shift URL configurable for development purposes ([342ced9](https://github.com/wchill/patcheddit/commit/342ced923dc33d2a97d9482c7850c4dff4dc0871))",
+  "created_at": "2026-11-22T00:29:13",
+  "version": "2.5.0",
+  "description": "# [2.5.0](https://github.com/wchill/patcheddit/compare/v2.4.0...v2.5.0) (2026-11-22)\n\n\n### Bug Fixes\n\n* **boost:** Make status bar opaque in subreddit search results ([4315ee9](https://github.com/wchill/patcheddit/commit/4315ee98c2d272327a42b0c50c72d86305bd6f91))\n* **boost:** navigation bar no longer covered by system gesture bar ([71d8b17](https://github.com/wchill/patcheddit/commit/71d8b17297e4b884cf44b45d51c19aaef1c75314))\n* **boost:** Update Google reverse image search URL ([ebe3b3b](https://github.com/wchill/patcheddit/commit/ebe3b3bf0b15edf7db213c4830d357fb8f18b07e))\n* explain signed-in Reddit feed blocks in RIF ([71c1b34](https://github.com/wchill/patcheddit/commit/71c1b34adc3a0ee278a9a9344e84546429cd2712))\n* preserve Markdown repair compatibility with Android 6 ([1ca00f7](https://github.com/wchill/patcheddit/commit/1ca00f7a43bbc718aa7b2a2ae15b20b5eb17cbcb))\n* **relay:** Handle more filetypes in native image viewer ([9cf3f41](https://github.com/wchill/patcheddit/commit/9cf3f41887144419de1a5f38a20991d9af4898c8))\n* repair relative markdown links on all Reddit clients ([073cd3d](https://github.com/wchill/patcheddit/commit/073cd3dc2f37b28651c3af3764cb7c163069c7a7))\n* restore comment video streams in RIF, Boost, and Joey ([abe4047](https://github.com/wchill/patcheddit/commit/abe40475ea8e0eb5671d2030eb9bb00071fa2f95))\n* restore RIF browsing history during settings import ([dbfa4f5](https://github.com/wchill/patcheddit/commit/dbfa4f55cf709807732ce1a6ddcf3bb7fd0678a8))\n* **rif:** block ads and fix crash on Platinum version ([76e649a](https://github.com/wchill/patcheddit/commit/76e649a4a478247644c3e927fe2c5cd4ad30f08f))\n* **sync:** Crash when tapping toolbar buttons ([ef79a18](https://github.com/wchill/patcheddit/commit/ef79a188c49acbd3ebce3db3df7968d168247e6a))\n\n\n### Features\n\n* add account-aware profile posting to RIF ([c3bd09c](https://github.com/wchill/patcheddit/commit/c3bd09cb4a5b6bb41efde02014665d6e4a2461e5))\n* Add permanent NSFW filtering option ([febb0c7](https://github.com/wchill/patcheddit/commit/febb0c78435c39748290660c1c3db7fcf7122960))\n* Allow deleting of saved exception/crash reports ([cc90196](https://github.com/wchill/patcheddit/commit/cc901967075806ef4df6aeba895a1873fc3bfc11))\n* **boost:** Add ability to backup/restore full viewing history ([49e28c1](https://github.com/wchill/patcheddit/commit/49e28c12e1f850fc8f6626d09b13a788e62e24c9))\n* **boost:** Load all inline media ([b983b21](https://github.com/wchill/patcheddit/commit/b983b21a190d730066faacae213e392c9643e40f))\n* **boost:** Remember collapsed comments ([98ed133](https://github.com/wchill/patcheddit/commit/98ed133d382ce176c6d16056423c951fc3b9b195))\n* **relay:** Add inline media ([855249d](https://github.com/wchill/patcheddit/commit/855249da8eb09eef82f5d23dfc6d87ef34d3a1a5))\n* **rif:** Add inline media support ([220dd17](https://github.com/wchill/patcheddit/commit/220dd17f63d0cba2ab98b357a50673abeec06535))\n* Use new embedded YouTube player for RIF and Sync ([6f0982a](https://github.com/wchill/patcheddit/commit/6f0982a974257e8270840604714cea2048e96071))",
   "apps": [
     {
       "app_name": "Reddit",
       "package": "com.andrewshu.android.reddit",
       "patches": [
+        {
+          "name": "Block ads",
+          "description": "Prevents native ad slots and feed, banner, and image-album ad loading.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Explain Reddit blocks",
+          "description": "Explains recognized signed-in feed blocks without changing requests or other API errors.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
         {
           "name": "Fake reddit premium",
           "description": "Allows using pro features without ads.",
@@ -29,6 +47,33 @@
           ]
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix comment video links",
+          "description": "Restores native playback of Reddit videos embedded in comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix embedded YouTube playback",
+          "description": "Updates the in-app YouTube player without changing your external link settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -38,8 +83,44 @@
           ]
         },
         {
+          "name": "Fix history import",
+          "description": "Adds missing visits from backups without replacing existing browsing history.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Inline media",
+          "description": "Shows images, albums, animated images, and videos in comments and text posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Post to profile",
+          "description": "Adds account-aware profile destinations to Submit and the own-profile menu.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -116,8 +197,44 @@
       "package": "com.andrewshu.android.redditdonation",
       "patches": [
         {
+          "name": "Explain Reddit blocks",
+          "description": "Explains recognized signed-in feed blocks without changing requests or other API errors.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
           "name": "Fix Redgifs API",
           "description": "Restores native Redgifs playback and handles unavailable videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix comment video links",
+          "description": "Restores native playback of Reddit videos embedded in comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix embedded YouTube playback",
+          "description": "Updates the in-app YouTube player without changing your external link settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -134,8 +251,44 @@
           ]
         },
         {
+          "name": "Fix history import",
+          "description": "Adds missing visits from backups without replacing existing browsing history.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Inline media",
+          "description": "Shows images, albums, animated images, and videos in comments and text posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Post to profile",
+          "description": "Adds account-aware profile destinations to Submit and the own-profile menu.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -239,6 +392,33 @@
           ]
         },
         {
+          "name": "Fix Sync toolbar menu crashes",
+          "description": "Prevents Sort and More options from crashing on feeds and comment threads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix embedded YouTube playback",
+          "description": "Plays YouTube links inside the app without relying on the retired Android YouTube player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -278,6 +458,15 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "v23.06.30-13:39"
@@ -362,6 +551,33 @@
           ]
         },
         {
+          "name": "Fix Sync toolbar menu crashes",
+          "description": "Prevents Sort and More options from crashing on feeds and comment threads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix embedded YouTube playback",
+          "description": "Plays YouTube links inside the app without relying on the retired Android YouTube player.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -401,6 +617,15 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "v23.06.30-13:39"
@@ -485,6 +710,15 @@
           ]
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.4"
+          ]
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -497,6 +731,15 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.4"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "6.1.4"
@@ -572,6 +815,15 @@
           ]
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.4"
+          ]
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -584,6 +836,15 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.1.4"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "6.1.4"
@@ -759,7 +1020,7 @@
         },
         {
           "name": "Fix Boost navigation bar overlap",
-          "description": "Keeps Boost's bottom controls and drawer clear of the system navigation bar on Android 15 and newer.",
+          "description": "Keeps Boost's bottom controls and drawer clear of the system navigation bar and prevents content from showing through the status bar in subreddits on Android 15 and newer.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -776,8 +1037,44 @@
           ]
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
+          "name": "Fix comment video links",
+          "description": "Restores native playback of Reddit videos embedded in comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
+          "name": "Fix image search",
+          "description": "Updates image search engines in the link menu, including Google Lens.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
+          "name": "Full Boost backup",
+          "description": "Adds full backups of local settings, accounts, drafts, and history to Boost's Backup screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -794,9 +1091,27 @@
           ]
         },
         {
+          "name": "Load all inline media",
+          "description": "Displays every linked image or GIF immediately after its link in comments and text posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "1.14.4"
@@ -847,6 +1162,15 @@
               "description": "The app's user agent. Refer to Patcheddit documentation for more information on what to put here. Default value is RedReader 1.27's user agent."
             }
           ],
+          "compatible_versions": [
+            "1.14.4"
+          ]
+        },
+        {
+          "name": "Remember collapsed comments",
+          "description": "Keeps collapsed replies closed when you reopen their parent comment.",
+          "use": true,
+          "options": [],
           "compatible_versions": [
             "1.14.4"
           ]
@@ -1007,8 +1331,26 @@
       "package": "free.reddit.news",
       "patches": [
         {
+          "name": "Fix Reddit media link handling",
+          "description": "Opens Reddit-hosted images, GIFs, and videos in Relay's native media viewer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
           "name": "Fix Redgifs API",
           "description": "Fetches a fresh Redgifs API token so Redgifs videos load.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1025,9 +1367,27 @@
           ]
         },
         {
+          "name": "Inline media",
+          "description": "Shows linked images and GIFs in Relay comments and text posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "10.2.40"
@@ -1122,6 +1482,13 @@
       "package": "ml.docilealligator.infinityforreddit.patreon",
       "patches": [
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -1139,6 +1506,13 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -1190,6 +1564,13 @@
       "package": "ml.docilealligator.infinityforreddit.plus",
       "patches": [
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -1207,6 +1588,13 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -1258,6 +1646,13 @@
       "package": "ml.docilealligator.infinityforreddit.plus2",
       "patches": [
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -1275,6 +1670,13 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -1340,6 +1742,20 @@
           "compatible_versions": []
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix comment video links",
+          "description": "Restores native playback of Reddit videos embedded in comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -1364,6 +1780,13 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -1422,6 +1845,20 @@
           "compatible_versions": []
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix comment video links",
+          "description": "Restores native playback of Reddit videos embedded in comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -1446,6 +1883,13 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -1504,6 +1948,20 @@
           "compatible_versions": []
         },
         {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Fix comment video links",
+          "description": "Restores native playback of Reddit videos embedded in comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
           "name": "Fix escaped URLs",
           "description": "Fixes URLs broken by backslash-escaped punctuation in Reddit posts and comments.",
           "use": true,
@@ -1528,6 +1986,13 @@
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": []
         },
@@ -1579,8 +2044,26 @@
       "package": "reddit.news",
       "patches": [
         {
+          "name": "Fix Reddit media link handling",
+          "description": "Opens Reddit-hosted images, GIFs, and videos in Relay's native media viewer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
           "name": "Fix Redgifs API",
           "description": "Fetches a fresh Redgifs API token so Redgifs videos load.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
+          "name": "Fix broken markdown links",
+          "description": "Repairs malformed user and subreddit links while preserving code and ordinary links.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1597,9 +2080,27 @@
           ]
         },
         {
+          "name": "Inline media",
+          "description": "Shows linked images and GIFs in Relay comments and text posts.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
           "name": "Log exceptions",
           "description": "Logs reported errors and fatal crashes, viewable in Morphe settings.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.2.40"
+          ]
+        },
+        {
+          "name": "Permanently disable NSFW",
+          "description": "Adds a one-way NSFW lock to Patcheddit settings. Does not activate it automatically.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "10.2.40"
@@ -1663,10 +2164,10 @@
     }
   ],
   "patches_name": "Patcheddit",
-  "fingerprint": "949cfe39657e9bdcbc63b22729471d17a5c7de77f17bc67ed62d48f0c91f06f1",
-  "release_notes": "# [2.4.0](https://github.com/wchill/patcheddit/compare/v2.3.0...v2.4.0) (2026-11-17)\n\n\n### Bug Fixes\n\n* **boost:** Add backwards compatibility Spoof client patch for users not using RedReader client ID ([3566b1f](https://github.com/wchill/patcheddit/commit/3566b1fb0ddf4b8926ca0edf43baf09ddc4eb92f))\n* **sync:** Crash in Sync free when opening Settings menu due to empty drawable ([6f9d17e](https://github.com/wchill/patcheddit/commit/6f9d17ed9d02a66a9935fd04eca6e2b32beb9651))\n\n\n### Features\n\n* Add About Patcheddit menu ([61284eb](https://github.com/wchill/patcheddit/commit/61284eb091a669219f70cd96fab798ddf444da4f))\n* **boost:** Add ability to manually fetch comments/posts from Arctic Shift and warn when loading failed ([cc20250](https://github.com/wchill/patcheddit/commit/cc20250bfbd4dd8b08ea5fe72c4751717d774e37))\n* **boost:** Make Arctic Shift URL configurable for development purposes ([342ced9](https://github.com/wchill/patcheddit/commit/342ced923dc33d2a97d9482c7850c4dff4dc0871))\n\n\n\n",
-  "release_tag": "v2.4.0",
-  "release_date": "2026-11-17T17:27:12Z",
+  "fingerprint": "fb441a2a5dc21d2a87e7bff3b19a4887d53d10baee1bc0d518bf438206ac5466",
+  "release_notes": "# [2.5.0](https://github.com/wchill/patcheddit/compare/v2.4.0...v2.5.0) (2026-11-22)\n\n\n### Bug Fixes\n\n* **boost:** Make status bar opaque in subreddit search results ([4315ee9](https://github.com/wchill/patcheddit/commit/4315ee98c2d272327a42b0c50c72d86305bd6f91))\n* **boost:** navigation bar no longer covered by system gesture bar ([71d8b17](https://github.com/wchill/patcheddit/commit/71d8b17297e4b884cf44b45d51c19aaef1c75314))\n* **boost:** Update Google reverse image search URL ([ebe3b3b](https://github.com/wchill/patcheddit/commit/ebe3b3bf0b15edf7db213c4830d357fb8f18b07e))\n* explain signed-in Reddit feed blocks in RIF ([71c1b34](https://github.com/wchill/patcheddit/commit/71c1b34adc3a0ee278a9a9344e84546429cd2712))\n* preserve Markdown repair compatibility with Android 6 ([1ca00f7](https://github.com/wchill/patcheddit/commit/1ca00f7a43bbc718aa7b2a2ae15b20b5eb17cbcb))\n* **relay:** Handle more filetypes in native image viewer ([9cf3f41](https://github.com/wchill/patcheddit/commit/9cf3f41887144419de1a5f38a20991d9af4898c8))\n* repair relative markdown links on all Reddit clients ([073cd3d](https://github.com/wchill/patcheddit/commit/073cd3dc2f37b28651c3af3764cb7c163069c7a7))\n* restore comment video streams in RIF, Boost, and Joey ([abe4047](https://github.com/wchill/patcheddit/commit/abe40475ea8e0eb5671d2030eb9bb00071fa2f95))\n* restore RIF browsing history during settings import ([dbfa4f5](https://github.com/wchill/patcheddit/commit/dbfa4f55cf709807732ce1a6ddcf3bb7fd0678a8))\n* **rif:** block ads and fix crash on Platinum version ([76e649a](https://github.com/wchill/patcheddit/commit/76e649a4a478247644c3e927fe2c5cd4ad30f08f))\n* **sync:** Crash when tapping toolbar buttons ([ef79a18](https://github.com/wchill/patcheddit/commit/ef79a188c49acbd3ebce3db3df7968d168247e6a))\n\n\n### Features\n\n* add account-aware profile posting to RIF ([c3bd09c](https://github.com/wchill/patcheddit/commit/c3bd09cb4a5b6bb41efde02014665d6e4a2461e5))\n* Add permanent NSFW filtering option ([febb0c7](https://github.com/wchill/patcheddit/commit/febb0c78435c39748290660c1c3db7fcf7122960))\n* Allow deleting of saved exception/crash reports ([cc90196](https://github.com/wchill/patcheddit/commit/cc901967075806ef4df6aeba895a1873fc3bfc11))\n* **boost:** Add ability to backup/restore full viewing history ([49e28c1](https://github.com/wchill/patcheddit/commit/49e28c12e1f850fc8f6626d09b13a788e62e24c9))\n* **boost:** Load all inline media ([b983b21](https://github.com/wchill/patcheddit/commit/b983b21a190d730066faacae213e392c9643e40f))\n* **boost:** Remember collapsed comments ([98ed133](https://github.com/wchill/patcheddit/commit/98ed133d382ce176c6d16056423c951fc3b9b195))\n* **relay:** Add inline media ([855249d](https://github.com/wchill/patcheddit/commit/855249da8eb09eef82f5d23dfc6d87ef34d3a1a5))\n* **rif:** Add inline media support ([220dd17](https://github.com/wchill/patcheddit/commit/220dd17f63d0cba2ab98b357a50673abeec06535))\n* Use new embedded YouTube player for RIF and Sync ([6f0982a](https://github.com/wchill/patcheddit/commit/6f0982a974257e8270840604714cea2048e96071))\n\n\n\n",
+  "release_tag": "v2.5.0",
+  "release_date": "2026-11-22T00:29:43Z",
   "isPreRelease": false,
   "stars": 814,
   "avatarUrl": "https://avatars.githubusercontent.com/u/3746651?v=4",

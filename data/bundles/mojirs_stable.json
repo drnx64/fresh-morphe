@@ -2,17 +2,17 @@
   "bundle": "mojirs",
   "channel": "stable",
   "repo_url": "https://github.com/MojiRS/morphe-rif-patches",
-  "created_at": "2026-11-20T20:07:47",
-  "version": "1.9.1",
-  "description": "Works with Patcheddit 2.4.0 and 2.5.0. Patcheddit 2.5.0 adds its own versions of five of these patches; with it, ours step aside so patching no longer fails:\n\n- **Explain Reddit blocks**\n- **Post to profile**\n- **Fix history import**\n- **Fix broken markdown links**\n- **Fix comment video links**\n\nWith Patcheddit 2.4.0, nothing changes from 1.9.0.",
+  "created_at": "2026-11-22T02:39:04",
+  "version": "1.10.0",
+  "description": "**Requires Patcheddit 2.5.0.** Patcheddit 2.5.0 has its own versions of several of these patches, so they are dropped here and the two bundles patch together again.\n\n### New\n- **Fix random subreddit**: Random and r/randnsfw open random subreddits again, sourced from redditrand.com.\n- **Explain processing videos**: says \"Video still processing. Try again in a minute.\" instead of an error while Reddit is still processing a video.\n- **Inline comment images** now shows tables in comments and text posts inline. With Patcheddit's Inline media, it shows tables only and leaves images and videos to Patcheddit.\n\n### Removed (now in Patcheddit)\nExplain Reddit blocks, Post to profile, Fix history import, Fix broken markdown links, Fix comment video links, Fix YouTube videos and YouTube player controls.\n\n### Changes\n- The settings screen now sits below Patcheddit's.\n\n### Fixes\n- Retrying a failed post no longer uploads its media a second time.",
   "apps": [
     {
       "app_name": "Reddit",
       "package": "com.andrewshu.android.reddit",
       "patches": [
         {
-          "name": "Explain Reddit blocks",
-          "description": "Shows \"Reddit is temporarily blocking requests\" instead of \"Error: forbidden\" when Reddit blocks a feed.",
+          "name": "Explain processing videos",
+          "description": "Says when a Reddit video is still processing instead of showing an error.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -20,35 +20,8 @@
           ]
         },
         {
-          "name": "Fix YouTube videos",
-          "description": "Fixes the built-in YouTube player.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Fix broken markdown links",
-          "description": "Shows links like [name](u/name) as links instead of raw text.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Fix comment video links",
-          "description": "Makes videos posted in comments play in rif's video player instead of failing to load.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Fix history import",
-          "description": "Makes \"Import settings\" restore the history from backups made with \"Export settings and history\".",
+          "name": "Fix random subreddit",
+          "description": "Makes Random and r/randnsfw open random subreddits again, sourced from redditrand.com.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -75,7 +48,7 @@
         },
         {
           "name": "Inline comment images",
-          "description": "Shows images, GIFs and videos linked in comments and text posts inline.",
+          "description": "Shows tables in comments and text posts inline. Patcheddit covers other types of inline media.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -85,15 +58,6 @@
         {
           "name": "Keep reply box above keyboard",
           "description": "Keeps the reply box unobscured above the keyboard.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Post to profile",
-          "description": "Adds ways to post to your profile: a My Profile button on the submit page and Submit in your profile's menu.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -112,15 +76,6 @@
         {
           "name": "Repair broken gallery images",
           "description": "Shows the images of galleries that fail to load because Reddit marks some of their images as failed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "YouTube player controls",
-          "description": "Double-tap to seek, hold for 2x speed, and speed and captions controls in the YouTube player.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -135,8 +90,8 @@
       "package": "com.andrewshu.android.redditdonation",
       "patches": [
         {
-          "name": "Explain Reddit blocks",
-          "description": "Shows \"Reddit is temporarily blocking requests\" instead of \"Error: forbidden\" when Reddit blocks a feed.",
+          "name": "Explain processing videos",
+          "description": "Says when a Reddit video is still processing instead of showing an error.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -144,35 +99,8 @@
           ]
         },
         {
-          "name": "Fix YouTube videos",
-          "description": "Fixes the built-in YouTube player.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Fix broken markdown links",
-          "description": "Shows links like [name](u/name) as links instead of raw text.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Fix comment video links",
-          "description": "Makes videos posted in comments play in rif's video player instead of failing to load.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Fix history import",
-          "description": "Makes \"Import settings\" restore the history from backups made with \"Export settings and history\".",
+          "name": "Fix random subreddit",
+          "description": "Makes Random and r/randnsfw open random subreddits again, sourced from redditrand.com.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -199,7 +127,7 @@
         },
         {
           "name": "Inline comment images",
-          "description": "Shows images, GIFs and videos linked in comments and text posts inline.",
+          "description": "Shows tables in comments and text posts inline. Patcheddit covers other types of inline media.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -209,15 +137,6 @@
         {
           "name": "Keep reply box above keyboard",
           "description": "Keeps the reply box unobscured above the keyboard.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
-        },
-        {
-          "name": "Post to profile",
-          "description": "Adds ways to post to your profile: a My Profile button on the submit page and Submit in your profile's menu.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -241,25 +160,16 @@
           "compatible_versions": [
             "5.6.22"
           ]
-        },
-        {
-          "name": "YouTube player controls",
-          "description": "Double-tap to seek, hold for 2x speed, and speed and captions controls in the YouTube player.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.6.22"
-          ]
         }
       ],
       "developer": "com.andrewshu"
     }
   ],
   "patches_name": "rif patches",
-  "fingerprint": "64e7ffd1858303e0263acb44e47f452e49162ffa77a2e9a1a4808649f39930e5",
-  "release_notes": "First release of the rif patches for Morphe: a port of [revanced-rif-patches](https://github.com/MojiRS/revanced-rif-patches) 1.9.0. It has 13 of the 15 patches: Disable ads and Fix imgur albums are left out because Patcheddit covers them.\n\n### Patches\n- **Inline comment images**\n- **Fix comment video links**\n- **Fix YouTube videos**\n- **YouTube player controls**\n- **Fix share links**\n- **Repair broken gallery images**\n- **Keep reply box above keyboard**\n- **Fix broken markdown links**\n- **Hide blocked mod comments**\n- **Reddit image hosting**\n- **Fix history import** (thanks to @Arnaumes)\n- **Post to profile**\n- **Explain Reddit blocks**\n\nSettings are under **Settings → rif patches**. Requires rif is fun **5.6.22** (free or Golden Platinum), patched together with [Patcheddit](https://github.com/wchill/patcheddit). Bundles are signed; Morphe Manager checks the signature on updates.\n",
-  "release_tag": "v1.9.0",
-  "release_date": "2026-11-18T00:23:41Z",
+  "fingerprint": "b60437d6fd5c2d659f51bab8313ace9e4a96b05d30f2b0b3e986f2b37a58dd59",
+  "release_notes": "**Requires Patcheddit 2.5.0.** Patcheddit 2.5.0 has its own versions of several of these patches, so they are dropped here and the two bundles patch together again.\n\n### New\n- **Fix random subreddit**: Random and r/randnsfw open random subreddits again, sourced from redditrand.com.\n- **Explain processing videos**: says \"Video still processing. Try again in a minute.\" instead of an error while Reddit is still processing a video.\n- **Inline comment images** now shows tables in comments and text posts inline. With Patcheddit's Inline media, it shows tables only and leaves images and videos to Patcheddit.\n\n### Removed (now in Patcheddit)\nExplain Reddit blocks, Post to profile, Fix history import, Fix broken markdown links, Fix comment video links, Fix YouTube videos and YouTube player controls.\n\n### Changes\n- The settings screen now sits below Patcheddit's.\n\n### Fixes\n- Retrying a failed post no longer uploads its media a second time.\n",
+  "release_tag": "v1.10.0",
+  "release_date": "2026-11-22T02:39:11Z",
   "isPreRelease": false,
   "stars": 2,
   "avatarUrl": "https://avatars.githubusercontent.com/u/12838251?v=4&s=128",
