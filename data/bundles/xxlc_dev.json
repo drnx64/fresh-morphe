@@ -2,9 +2,9 @@
   "bundle": "xxlc",
   "channel": "dev",
   "repo_url": "https://github.com/XXLC/grok-morphe-patches",
-  "created_at": "2026-11-02T18:38:54",
-  "version": "1.0.1",
-  "description": "## [1.0.1](https://github.com/XXLC/grok-morphe-patches/compare/v1.0.0...v1.0.1) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* resolve internal smali labels in download-all patches ([2e959c6](https://github.com/XXLC/grok-morphe-patches/commit/2e959c6b3eac6b0de9d0910462eed15f465c8e11))",
+  "created_at": "2026-11-22T17:23:34",
+  "version": "1.2.0",
+  "description": "## [1.2.0](https://github.com/XXLC/grok-morphe-patches/compare/v1.1.0...v1.2.0) (2026-11-22)\n\n### ✨ New Features\n\n* add Team/Org lock patch, fix icons and moderated Copy prompt, English descriptions ([118f2b0](https://github.com/XXLC/grok-morphe-patches/commit/118f2b0bdc4897e0111f00691dc669b1c7b33864))\n* support Grok 1.2.59 and add Show Imagine tab patch ([9fcb04f](https://github.com/XXLC/grok-morphe-patches/commit/9fcb04fe13c8b29708540c62ef8ecfd490e45a80))",
   "apps": [
     {
       "app_name": "Grok",
@@ -12,29 +12,179 @@
       "patches": [
         {
           "name": "Bypass license check",
-          "description": "Bỏ qua kiểm tra giấy phép Pairip khi khởi động Grok.",
+          "description": "Skip the Pairip license check when Grok starts.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.2.53-release.00"
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Copy prompt",
+          "description": "Add a post menu item with the copy icon that copies the current media prompt. It appears only for finished, non-moderated media (so the Retry action stays visible for failed or moderated generations) and only when the prompt is not empty. The 1.2.59 model has no seed, so seeds are not copied. Not tested on a device.",
+          "use": true,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Disable telemetry",
+          "description": "Block internal analytics events, Mixpanel and Hightouch payloads, and force Crashlytics collection off. Does not guarantee that every tracking connection is blocked.",
+          "use": true,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
           ]
         },
         {
           "name": "Download all (library)",
-          "description": "Thêm nút tải tất cả media của các bài Imagine đã chọn, giữ nguyên nút Download.",
+          "description": "Add a button that downloads all media of the selected Imagine posts, keeping the original Download button.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
           "compatible_versions": [
-            "1.2.53-release.00"
+            "1.2.59-release.00"
           ]
         },
         {
           "name": "Download all (post)",
-          "description": "Thêm mục tải tất cả media của bài Imagine đang xem, giữ nguyên mục Download.",
+          "description": "Add a menu item that downloads all media of the Imagine post being viewed, keeping the original Download item.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
           "compatible_versions": [
-            "1.2.53-release.00"
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Download best video quality",
+          "description": "Select the highest-quality video URL the app already received, keeping captions and music overlays and falling back to the original URL when needed. Images have a single URL and are unchanged. Not tested on a device.",
+          "use": true,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Download file names",
+          "description": "Name downloaded images and videos Grok_yyyyMMdd_HHmmss with milliseconds and a sequence number to avoid collisions within a process. Keeps file extensions and the existing deduplication. Not tested on a device.",
+          "use": true,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Download folders",
+          "description": "Save every download to Download/Grok/Pictures (images), Download/Grok/Videos (videos) or Download/Grok (other files) through MediaStore Downloads (or Download/Grok/... before Android 10). Not tested on a device.",
+          "use": true,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Hide upgrade prompts",
+          "description": "Hide the Imagine limit banner and the upgrade card in Settings, keeping usage data and subscription management. Compose changes are not tested on a device.",
+          "use": false,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Ignore Team/Org Imagine lock",
+          "description": "Make the app treat Imagine as allowed even when a Team/Org setting disables it, so the Imagine tab and entry points stay available. Only the app UI is changed: the server may still refuse Imagine requests, and the setting overridden is one an organization admin chose. Use only on accounts you control. Off by default; not tested on a device.",
+          "use": false,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Keep screen on",
+          "description": "Keep the screen on for as long as Grok is in the foreground, including while reading chat. The flag is cleared when the activity pauses. Uses more battery, so it is off by default; not tested on a device.",
+          "use": false,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Show Imagine tab",
+          "description": "Always show the Imagine tab on the home screen, even when the home layout v2 flag hides it for new accounts or accounts that have not used Imagine recently. Does not change the Team/Org Imagine lock. Not tested on a device.",
+          "use": true,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
+          ]
+        },
+        {
+          "name": "Skip delete confirmation",
+          "description": "Delete Imagine images and videos, and bulk-delete library items, as soon as deletion is chosen, without the confirmation dialog (deleting a whole conversation still asks). Data is deleted permanently on the server with no undo. Off by default; not tested on a device.",
+          "use": false,
+          "options": [
+            {
+              "key": "enabled",
+              "description": "Applied by default when the patch is selected; turn off to skip its changes while keeping it selected."
+            }
+          ],
+          "compatible_versions": [
+            "1.2.59-release.00"
           ]
         }
       ],
@@ -42,10 +192,10 @@
     }
   ],
   "patches_name": "XXLC Grok Patches",
-  "fingerprint": "f20f7baa0ad31eb320d818c97c51d38129752f42f066a82dd3977250e913a890",
-  "release_notes": "## [1.0.1](https://github.com/XXLC/grok-morphe-patches/compare/v1.0.0...v1.0.1) (2026-11-02)\n\n### 🐛 Bug Fixes\n\n* resolve internal smali labels in download-all patches ([2e959c6](https://github.com/XXLC/grok-morphe-patches/commit/2e959c6b3eac6b0de9d0910462eed15f465c8e11))\n",
-  "release_tag": "v1.0.1",
-  "release_date": "2026-11-02T18:39:35Z",
+  "fingerprint": "07a77791ae838f441e2c0384fd2df336d9fbdc672a65906c0883ed962ca2c002",
+  "release_notes": "## [1.2.0](https://github.com/XXLC/grok-morphe-patches/compare/v1.1.0...v1.2.0) (2026-11-22)\n\n### ✨ New Features\n\n* add Team/Org lock patch, fix icons and moderated Copy prompt, English descriptions ([118f2b0](https://github.com/XXLC/grok-morphe-patches/commit/118f2b0bdc4897e0111f00691dc669b1c7b33864))\n* support Grok 1.2.59 and add Show Imagine tab patch ([9fcb04f](https://github.com/XXLC/grok-morphe-patches/commit/9fcb04fe13c8b29708540c62ef8ecfd490e45a80))\n",
+  "release_tag": "v1.2.0",
+  "release_date": "2026-11-22T17:24:17Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/97143415?v=4&s=128",

@@ -2,10 +2,274 @@
   "bundle": "rimixyz",
   "channel": "dev",
   "repo_url": "https://github.com/rimixyz/morphe-patches",
-  "created_at": "2026-11-16T23:52:41Z",
-  "version": "1.3.4",
-  "description": "## [1.3.4](https://github.com/rimixyz/morphe-patches/compare/v1.3.3...v1.3.4) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* correct extension class reference in premium patch smali ([7d356b1](https://github.com/rimixyz/morphe-patches/commit/7d356b11b10acdb3344fb5cb94a2e4f82899cdd8))",
+  "created_at": "2026-11-22T14:28:42",
+  "version": "1.6.4",
+  "description": "## [1.6.4](https://github.com/rimixyz/morphe-patches/compare/v1.6.3...v1.6.4) (2026-11-22)\n\n### 🐛 Bug Fixes\n\n* restore main menu screen after cancelling Retro season dialog in New Star Soccer ([808eff9](https://github.com/rimixyz/morphe-patches/commit/808eff969bc4769a13b315ca1f21459505a6f2e0))",
   "apps": [
+    {
+      "app_name": "Wrestling Revolution",
+      "package": "air.wrcareer",
+      "patches": [
+        {
+          "name": "Disable Yodo1 analytics",
+          "description": "Stops the ThinkingData behavioural tracker bundled with Yodo1 MAS (endpoint c1.yodo1.com), including automatic app/screen/click/crash events.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.150.64"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Suppresses Yodo1 MAS banners, interstitials, rewarded videos and app-open ads, including the preloads done at SDK init. Rewarded flows still grant their in-game reward.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.150.64"
+          ]
+        },
+        {
+          "name": "Unlock Pro",
+          "description": "Grants the Pro license locally by injecting a synthetic purchase into the Distriqt billing events. Unlocks the editor and the full career content.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2.150.64"
+          ]
+        }
+      ],
+      "developer": "air.wrcareer"
+    },
+    {
+      "app_name": "New Star™ Soccer",
+      "package": "com.newstargames.newstarsoccer",
+      "patches": [
+        {
+          "name": "Convert IAP items to Star Bux",
+          "description": "Converts real-money boots, Super NRG drinks, and Pro/Expert agents and trainers into Star Bux purchases in both modern and classic UI, and replaces the dead Buy Bux redirect with an in-game insufficient-funds banner.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable Firebase Analytics",
+          "description": "Disables Firebase Analytics collection through the SDK's official manifest flag, while keeping push notifications and the consent UI.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable Flurry analytics session",
+          "description": "Prevents the game from starting a Flurry analytics session without removing SDK classes or changing the consent flow.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable Flurry startup measurement",
+          "description": "Stops the Flurry provider from capturing startup time and memory usage while keeping the component declared.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable Google Play Games",
+          "description": "Disables broken Google Play Games auto-sign-in on re-signed APKs and hides the dead Play Games button on the Career screen (modern and classic UI).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable remote config and cloud overrides",
+          "description": "Freezes the in-game Cloud/DLC/Cohort override system so remote updates and cached DLC files can never overwrite local patched assets or TweakValues, and speeds up startup.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable retention notifications",
+          "description": "Prevents the game from scheduling local \"come back and play\" reminder notifications whenever it goes to the background.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Enhanced replays and MP4/GIF export",
+          "description": "Adds a Replay Studio button during goal replays to customize playback speed, loop, slow-mo overlays, all-chance replays, and export clean HUD-free MP4 videos or animated GIFs.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Fix text input backspace",
+          "description": "Fixes backspace when typing names in the game by using the in-game keyboard, which has a working delete button.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Hide Games we like button",
+          "description": "Hides the promotional \"Games we like\" button on the Options screen in both modern and classic UI.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Remove in-game promo interstitial",
+          "description": "Suppresses the game's built-in promo interstitial on all three entry paths while preserving navigation and return to play.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Remove network interstitial ads",
+          "description": "Blocks loading and display of non-rewarded interstitials from AdMob and DT Exchange/Fyber while preserving rewarded videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Restrict advertising ID",
+          "description": "Removes GAID and AdServices Ad ID permissions to reduce ad tracking, while keeping Attribution and Topics.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Retro season selector",
+          "description": "Prompts to choose a historical club database (2011–2026) bundled in the APK whenever you start a new career. Existing careers are unaffected.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Save backup and restore",
+          "description": "Adds a Backup button to the Career screen (modern and classic UI) to export and restore your full save via the system file picker, with automatic rollback protection.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Unlock Pro features",
+          "description": "Unlocks the Pro license, ad removal, pitches/weather and special balls by setting the local license flags the game checks.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        }
+      ],
+      "developer": "New Star Publishing Ltd."
+    },
+    {
+      "app_name": "Meds & Pill Reminder MyTherapy",
+      "package": "eu.smartpatient.mytherapy",
+      "patches": [
+        {
+          "name": "Disable AppsFlyer attribution in MyTherapy",
+          "description": "Neutralizes the app's explicit AppsFlyer start while keeping its existing opt-out and consent paths intact.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Disable Firebase Analytics in MyTherapy",
+          "description": "Disables Firebase Analytics collection through the SDK's official manifest flag, keeping push, remote config and the consent UI.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Disable PairIP license check in MyTherapy",
+          "description": "Neutralizes the PairIP license check so the re-signed APK can start, without removing its components.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Disable Sentry diagnostics in MyTherapy",
+          "description": "Prevents Sentry initialization at the app's single entry point, without removing its providers or native libraries.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Disable common ads in MyTherapy",
+          "description": "Stops non-rewarded banner and native ad requests at the load entry points, preserving UMP, interstitial and rewarded flows.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Require explicit analytics consent in MyTherapy",
+          "description": "Treats an unregistered analytics consent as opt-out, while preserving recorded acceptance and refusal.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Restrict advertising ID in MyTherapy",
+          "description": "Removes GAID and AdServices Ad ID permissions to reduce ad tracking, keeping attribution, topics and consent untouched.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        },
+        {
+          "name": "Unlock Plus benefits in MyTherapy",
+          "description": "Grants the local Plus state the app reads for ad-free access, extra calendar days and the PDF entry point.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.16.2"
+          ]
+        }
+      ],
+      "developer": "MyTherapy"
+    },
     {
       "app_name": "17TRACK Package Tracker",
       "package": "yqtrack.app",
@@ -42,11 +306,11 @@
     }
   ],
   "patches_name": "rimixyz Morphe Patches",
-  "fingerprint": "d7763ae35955b8566e459b59b80f9fe4e3529132df781008f45887a6107efc3b",
-  "release_notes": "## [1.6.3](https://github.com/rimixyz/morphe-patches/compare/v1.6.2...v1.6.3) (2026-11-22)\n\n### 🐛 Bug Fixes\n\n* prevent boot resell config crash in Convert IAP items to Star Bux ([afe3c5e](https://github.com/rimixyz/morphe-patches/commit/afe3c5eecf7f0a2c261cee9e12bcdc7bdad0ae6c))\n",
-  "release_tag": "v1.6.3",
-  "release_date": "2026-11-22T02:48:05Z",
-  "isPreRelease": false,
+  "fingerprint": "5a2fc287a3c7806b0021d1fcf33d96303549dfb5a9f16c7e0856212cf5305d45",
+  "release_notes": "## [1.6.5-dev.4](https://github.com/rimixyz/morphe-patches/compare/v1.6.5-dev.3...v1.6.5-dev.4) (2026-11-22)\n\n### 🔧 Improvements\n\n* unify New Star Soccer ad and privacy patches and enable Retro season selector by default ([aed3b22](https://github.com/rimixyz/morphe-patches/commit/aed3b22f64aad21c208d847fdbc355afcd837959))\n",
+  "release_tag": "v1.6.5-dev.4",
+  "release_date": "2026-11-22T15:45:04Z",
+  "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/130519170?v=4&s=128",
   "repoDescription": "All-in-one personal Morphe patches — Made in Brazil. 100% AI-crafted, tested before release.",
