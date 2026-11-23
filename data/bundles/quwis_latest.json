@@ -2,9 +2,9 @@
   "bundle": "quwis",
   "channel": "latest",
   "repo_url": "https://github.com/quwi26/Quwis-Patches",
-  "created_at": "2026-11-22T17:32:00",
-  "version": "1.13.3",
-  "description": "Quwi's Chess Patches 1.13.3: the Quwi's Patches row and the Lichess screens ask for a restart instead of closing the app when a mounted patch is not loaded yet.",
+  "created_at": "2026-11-22T23:38:54",
+  "version": "1.14.0",
+  "description": "Quwi's Chess Patches 1.14.0: Quwi's Patches and the Lichess login open on a root mount too, in a dialog where the app's own activity is not declared.",
   "apps": [
     {
       "app_name": "Chess - Play and Learn Online",
@@ -32,7 +32,7 @@
         },
         {
           "name": "App logs",
-          "description": "Keeps the app's recent logs on this phone and shows them in Quwi's Patches, so a bug report can include what happened before the app restarted.",
+          "description": "Keeps the app's recent logs on this phone and shows them in Quwi's Patches, so a bug report can include what happened before the app restarted. The log screen does not work with root mounting.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -82,7 +82,7 @@
         },
         {
           "name": "Clone Chess.com",
-          "description": "Renames the app package so it installs next to the real Chess.com app instead of over it. The default package is com.chess.quwi; the last part can be changed in the patch options. Leave it off to keep updating your current install.",
+          "description": "Renames the app package so it installs next to the real Chess.com app instead of over it. The default package is com.chess.quwi; the last part can be changed in the patch options. Leave it off to keep updating your current install. This patch does not work with root mounting.",
           "use": false,
           "options": [
             {
@@ -117,7 +117,7 @@
         },
         {
           "name": "Discord Rich Presence",
-          "description": "Shows what you are doing on chess.com in Discord, from this phone alone: a game, a review or a puzzle, and how long you have been on. The account is connected once in Discord's own browser page, so no password and no computer are involved. Discord shows the activity under this bundle's Discord application name and keeps the status picked in the settings while the phone is connected. Runs by default and can be switched off in Quwi's Patches.",
+          "description": "Shows what you are doing on chess.com in Discord, from this phone alone: a game, a review or a puzzle, and how long you have been on. The account is connected once in Discord's own browser page, so no password and no computer are involved. Discord shows the activity under this bundle's Discord application name and keeps the status picked in the settings while the phone is connected. Runs by default and can be switched off in Quwi's Patches. Connecting a Discord account does not work with root mounting.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -147,7 +147,7 @@
         },
         {
           "name": "Global Crash Handler",
-          "description": "Catches uncaught exceptions and displays a custom crash screen with details to report issues.",
+          "description": "Catches uncaught exceptions and displays a custom crash screen with details to report issues. The crash screen does not work with root mounting; Android shows its own dialog instead.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -217,7 +217,7 @@
         },
         {
           "name": "Quwi's Patches settings",
-          "description": "Adds the Quwi's Patches row at the top of the More tab, where the other patches of this bundle are switched on and off. Patches you did not select do not show up there.",
+          "description": "Adds the Quwi's Patches row at the top of the More tab, where the other patches of this bundle are switched on and off. Patches you did not select do not show up there. On a root mount the screen opens in a dialog.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -256,7 +256,7 @@
         },
         {
           "name": "Unlimited Game Review",
-          "description": "Game Review asks who reviews the game: chess.com, Lichess's servers (online, with your Lichess account) or, with the Stockfish analysis patch, Stockfish on your phone (offline, no daily limit). The phone and Lichess judge moves the Lichess way (?! inaccuracies, ? mistakes, ?? blunders, accuracy and centipawn loss) in chess.com's own review screen, and the phone marks the moves Lichess leaves unmarked Best, Excellent or Good, as chess.com does. Finished games only; a live game on screen is never analysed. Two more patches in this bundle add Stockfish on your computer and Great (!) and Brilliant (!!) marks. Select Unlimited Game Review from this bundle only: a second one from another source cannot be applied to the same app.",
+          "description": "Game Review asks who reviews the game: chess.com, Lichess's servers (online, with your Lichess account) or, with the Stockfish analysis patch, Stockfish on your phone (offline, no daily limit). The phone and Lichess judge moves the Lichess way (?! inaccuracies, ? mistakes, ?? blunders, accuracy and centipawn loss) in chess.com's own review screen, and the phone marks the moves Lichess leaves unmarked Best, Excellent or Good, as chess.com does. Finished games only; a live game on screen is never analysed. Two more patches in this bundle add Stockfish on your computer and Great (!) and Brilliant (!!) marks. Select Unlimited Game Review from this bundle only: a second one from another source cannot be applied to the same app. Lichess's review in the app's own browser does not work with root mounting.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -299,10 +299,10 @@
     }
   ],
   "patches_name": "Quwi's Chess Patches",
-  "fingerprint": "867bc91a395dac17f5672383ce4acd671833186d5311443ae8f6a0cc07eae867",
-  "release_notes": "**Stockfish analysis** - a phone whose Android is 32-bit now gets Stockfish's 32-bit ARM engine, so the local analysis boards and a Game Review on the phone start instead of saying \"Stockfish could not start on this phone\". The engine matches the phone's own ABI when patching on the phone; a new \"32-bit engine\" option covers patching on a computer for such a phone.\n\nThe bundle targets chess.com 4.10.28 and 4.10.27.",
-  "release_tag": "v1.13.2",
-  "release_date": "2026-11-22T09:53:18Z",
+  "fingerprint": "22614cd96e963e7f448668c73bc0dd345c8077d35cb38f68b8003510dbfbecff",
+  "release_notes": "**Quwi's Patches settings** - Quwi's Patches and the Lichess login now open on a root mount too. Android keeps the stock app's manifest there, so the activity this bundle adds is never declared and the settings row used to close chess.com. The screens are a plain view tree now: the activity hosts them on a normally installed patched app, and a dialog hosts them where the activity cannot start. Pages open their own windows again, and Back goes a page back instead of closing. The app log, crash, Discord login and Lichess's review in the app's own browser are separate screens and still need a normal install, which the patch descriptions now say.\n\nThe bundle targets chess.com 4.10.28 and 4.10.27.",
+  "release_tag": "v1.14.0",
+  "release_date": "2026-11-22T20:39:19Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/285001961?v=4&s=128",
