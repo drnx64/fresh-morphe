@@ -1,21 +1,21 @@
 /**
- * Popular apps — the short list pinned above the alphabetical directory.
+ * App prominence ranks — what leads the Apps directory.
  *
- * The Apps page is a registry: 1,600+ packages ordered by name, so the apps
- * most people actually patch were scattered through the page. This is a
- * curated, tiered list, not a popularity score.
+ * The directory is a registry: 1,800+ packages, A–Z once the ranked head has
+ * had its turn. These lists decide that head. (The pinned "Popular" row was
+ * removed from the UI — the browse order itself now carries the curation.)
  *
  * Three ranks, in order:
  *   0. apps shipped by Morphe Official (the `morphe` bundle) — the patches this
  *      site exists to track, so they lead. Membership is read from the bundle
- *      itself, which means a new official app joins the row with no edit here.
+ *      itself, which means a new official app joins the head with no edit here.
  *   1. social apps, ordered by worldwide reach — WhatsApp, Instagram, TikTok…
  *      including the regional giants (LINE, KakaoTalk, VK, imo) because "most
  *      patched" is a global question, not a US one.
- *   2. the remaining household names.
+ *   2. the remaining household names, in two tiers.
  *
  * Matching is by exact package id. A package that is not in a bundle simply
- * does not render, so stale entries here are harmless.
+ * never ranks, so stale entries here are harmless.
  */
 
 /** The official bundle: repo `morpheapp/morphe-patches`, shown as `Morphe Patches`. */
@@ -144,14 +144,6 @@ export function popularTier(packageName) {
 }
 
 /**
- * Whether a package belongs in the Featured row.
- * @param {string} packageName
- */
-export function isPopular(packageName) {
-  return popularTier(packageName) !== null
-}
-
-/**
  * Whether an app is shipped by Morphe Official.
  * @param {{ bundles?: Array<{ bundleName?: string }> }} app
  * @returns {boolean}
@@ -161,12 +153,18 @@ export function isMorpheOfficial(app) {
 }
 
 /**
- * Sort key for one app; `null` means "not featured material".
+ * Browse rank for one app: lower leads the directory. `null` means "plain
+ * registry entry" — it sorts into the A–Z tail after the ranked head.
+ *
+ * Official apps first, then social apps by worldwide reach, then the
+ * household-name tiers. The directory applies this to the browse order only
+ * (search results keep their own order) and pairs it with an icon filter, so
+ * the ranked head always shows its artwork.
  *
  * @param {{ package: string, bundles?: Array<{bundleName?: string}> }} app
  * @returns {number|null}
  */
-function featuredRank(app) {
+export function appRank(app) {
   if (isMorpheOfficial(app)) return 0
   const social = SOCIAL_RANK.get(String(app.package || '').toLowerCase())
   if (social !== undefined) return 1 + social / 1000
@@ -174,29 +172,3 @@ function featuredRank(app) {
   if (tier === null) return null
   return 2 + tier
 }
-
-/**
- * Featured apps, in display order: official first, then social by reach, then
- * the rest of the famous list — each group alphabetically.
- *
- * Icon-less apps are skipped: the whole point of the row is instant
- * recognition, and a letter tile for YouTube is worse than not showing it.
- *
- * @param {Array<{ package: string, name: string, iconUrl?: string, bundles?: Array<{bundleName?: string}> }>} appIndex
- * @param {number} [limit]
- * @returns {Array<object>}
- */
-export function featuredApps(appIndex, limit = 12) {
-  const picked = []
-  for (const app of appIndex || []) {
-    const rank = featuredRank(app)
-    if (rank === null) continue
-    if (!app.iconUrl) continue
-    picked.push({ app, rank })
-  }
-  picked.sort((a, b) => a.rank - b.rank || a.app.name.localeCompare(b.app.name))
-  return picked.slice(0, limit).map((entry) => entry.app)
-}
-
-/** Total size of the curated list, for tests and dev logs. */
-export const POPULAR_COUNT = POPULAR_TIER.size + SOCIAL_RANK.size

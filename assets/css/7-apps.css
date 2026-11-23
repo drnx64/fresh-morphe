@@ -24,6 +24,17 @@
 .apps-search-input:focus {
   border-color: var(--text-muted);
 }
+/* "Showing 48 of N cards" under the search bar: the browse list is a curated
+   doorway, so the cap is stated rather than silently truncating. Sits above
+   the grid, muted, and never competes with a result. */
+.apps-dir-note {
+  margin: -0.4rem 0 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.apps-dir-note[hidden] {
+  display: none;
+}
 .search-no-results {
   text-align: center;
   padding: 2rem 1rem;
@@ -56,54 +67,15 @@
 .search-suggestion-link:hover {
   color: var(--text-primary);
 }
-/* ── Popular row ──────────────────────────────────────── */
-.apps-featured {
-  margin: 0 0 1.25rem;
-  padding: 0.85rem 0.9rem 0.9rem;
-  border: 1px solid var(--border-hairline);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(120% 140% at 0% 0%, var(--accent-soft), transparent 55%),
-    var(--bg-surface);
-}
-.apps-featured-head {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.7rem;
-}
-.apps-featured-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  margin: 0;
-}
-.apps-featured-sub {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-.apps-featured-row {
-  display: flex;
-  gap: 0.6rem;
-  overflow-x: auto;
-  padding-bottom: 0.15rem;
-  scroll-snap-type: x proximity;
-  scrollbar-width: thin;
-}
-.apps-featured-row > .app-card {
-  flex: 0 0 220px;
-  scroll-snap-align: start;
-}
-.apps-featured-row .app-card-bundle-count {
-  display: none;
-}
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  /* A stack is taller than a card (it reserves room for the peeking edges), and
-     stretching its neighbours to match would leave them with dead space. */
+  /* Every cell is exactly one card tall (a stack keeps its peeking edges in
+     the row gap above), so cards and rows line up with no ragged bottoms. */
   align-items: start;
-  gap: 0.75rem;
+  column-gap: 0.75rem;
+  /* Room for a collapsed stack's peeking edges — up to 21px above the cell */
+  row-gap: 1.6rem;
 }
 .app-card {
   background: var(--bg-surface);
@@ -113,6 +85,11 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  /* One height for every card in the registry, directory or bundle page: the
+     text lines ellipsize instead of stretching the box, and shorter cards
+     center their content instead of leaving a gap at the bottom. */
+  height: var(--app-card-h);
+  justify-content: center;
   gap: 0.618rem;
   transition:
     border-color var(--transition-speed),
@@ -141,6 +118,9 @@
 .app-card-name {
   font-size: 0.88rem;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .app-card-pkg {
   font-size: 0.68rem;
@@ -180,19 +160,24 @@
 /* ── App families (publisher stacks) ──────────────────── */
 /* A family is a deck of its own app cards. Collapsed they all sit on one spot
    in the grid cell: the front card is the family's first app, and each card
-   behind it steps up, shrinks and tilts a hair so only its top edge shows.
+   behind it steps up, shrinks and tilts a hair so only its top edge shows —
+   the edges rising into the row gap above the cell, because every cell is
+   exactly one card tall.
 
-   Opening lifts the deck out of the grid entirely: a fixed, height-capped box
-   centered in the room below the header, over a dim scrim. Cards fan
+   Opening fans the deck out in place: an absolute band anchored on the card's
+   own grid cell — cards only, no panel, no backdrop — painting over the
+   neighbours without reflowing the grid. Cards fan
    symmetrically around the focused one — up before it, down after it — with
    piecewise spacing (full steps near, compressed slivers far) so the whole
    family fits a band that never scrolls. The JS writes `--y`/`--o`/`--s`/
    `--z`; CSS owns the transitions. */
 .app-stack {
-  --layers: 3;
-  --card-h: 68px;
-  /* The fan band: tall enough to breathe, never taller than the room the
-     scrim leaves below the sticky header (the caption rides above it). */
+  /* Derived from the one registry card height, so a stack cell and a solo
+     card cell are interchangeable in the grid. */
+  --card-h: var(--app-card-h);
+  /* The fan band: tall enough to breathe, never taller than the room below
+     the sticky header. Only a fallback — the JS recomputes this per stack
+     from the cell's viewport position and writes it inline. */
   --fan-h: min(56vh, calc(100vh - var(--nav-height) - 100px), 540px);
   position: relative;
   /* Own stacking context: the collapsed hit area must sit above the cards but
@@ -201,17 +186,19 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  /* Constant open or shut: the overlay is out of flow, so the cell has to keep
-     the pile's height or the row would jump closed the moment it opens. */
-  height: calc(var(--card-h) + var(--layers) * 7px);
-  /* Headroom for the peeking edges of the cards behind the front one */
-  padding-top: calc(var(--layers) * 7px);
+  /* Constant open or shut — and the same height as a solo card, so a stack
+     never makes its row taller: the overlay is out of flow, so the cell has
+     to keep the pile's height or the row would jump when it opens. */
+  height: var(--card-h);
 }
 /* The open pile has to paint over its neighbours, but stay under the header */
 .app-stack.is-open {
   z-index: 30;
 }
-/* Caption + pile travel together: in flow when collapsed, floating when open */
+/* The open fan paints only its own cards over the grid — no blur, no dim:
+   the page stays sharp and scrollable behind the pile. */
+/* Caption + pile travel together: in flow when collapsed, anchored on the
+   cell when open (the JS writes `top` so the band lands on the card) */
 .app-stack-overlay {
   display: flex;
   flex-direction: column;
@@ -219,25 +206,23 @@
   transition: opacity 0.18s ease;
 }
 .app-stack.is-open .app-stack-overlay {
-  position: fixed;
-  /* Centered in the room below the sticky header, not the raw viewport */
-  top: calc(50% + var(--nav-height) / 2);
-  left: 50%;
-  translate: -50% -50%;
+  /* In place, over the neighbours: absolute (out of flow, so the grid never
+     reflows) and pinned to the cell's own width. Cards only — no panel and
+     no backdrop treatment behind them; the grid shows through untouched. */
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
   z-index: 30;
-  width: min(384px, calc(100vw - 24px));
   max-height: calc(100vh - var(--nav-height) - 32px);
-  padding: 0.65rem 0.65rem 0.45rem;
   overflow: hidden;
-  /* Same containment as the scrim: panning the fan never scrolls the page
-     behind it, pinch-zoom still works. */
-  touch-action: pinch-zoom;
-  border: 1px solid var(--border-hairline-strong);
-  border-radius: var(--radius);
-  background: var(--bg-void);
-  box-shadow:
-    0 20px 48px rgba(0, 0, 0, 0.45),
-    0 2px 8px rgba(0, 0, 0, 0.3);
+  /* No touch-action lock: the page pans normally and the fan rides along
+     with its card (an observer collapses it once the card scrolls away). */
+  /* The band has no surface, so it must not act like one: clicks and taps
+     pass straight through the empty areas to the grid underneath. Only the
+     cards below opt back in — and a click that lands on the cell's own box
+     (not a card) is the re-click that collapses the fan. */
+  pointer-events: none;
 }
 /* Fade-in only while genuinely opening: `is-closing` drops the animation so
    the opacity transition owns the fade-out instead. */
@@ -247,7 +232,7 @@
 @keyframes app-stack-fan-in {
   from {
     opacity: 0;
-    translate: -50% calc(-50% + 8px);
+    translate: 0 8px;
   }
 }
 /* The fan fades out in place; the class swap after the fade settles the pile
@@ -255,9 +240,10 @@
 .app-stack.is-closing .app-stack-overlay {
   opacity: 0;
 }
-/* The pile: one card tall while collapsed. Absolute children do not stretch
-   it, so the height is declared — and it snaps open on the same frame the JS
-   measures it (an animating height would make the band a moving target). */
+/* The pile: one card tall while collapsed, exactly the JS-computed band when
+   open (the JS writes `--fan-h`). Absolute children do not stretch it, so the
+   height is declared — and it snaps open on the same frame the JS measures,
+   so the band is never a moving target. */
 .app-stack-pile {
   position: relative;
   height: var(--card-h);
@@ -294,8 +280,11 @@
     box-shadow var(--transition-speed);
 }
 /* Open: the fan. Δ=0 locks the focused card to the band's vertical center;
-   cards before it ride up, cards after it down — symmetric around the middle. */
+   cards before it ride up, cards after it down — symmetric around the middle.
+   The overlay is pointer-events:none while open (no panel, no hit area of its
+   own), so the cards opt back in — they are the band's only surface. */
 .app-stack.is-open .app-stack-note {
+  pointer-events: auto;
   z-index: var(--z, 100);
   transform: translate3d(0, var(--y, 0px), 0) scale(var(--s, 1));
   opacity: var(--o, 1);
@@ -340,11 +329,6 @@
   background:
     linear-gradient(135deg, var(--accent-soft), transparent 62%),
     var(--bg-surface);
-}
-.app-stack-note .app-card-name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 /* "+12" on the front card: how many more cards are under it */
 .app-stack-chip {
@@ -398,22 +382,6 @@
 .app-stack.is-closing .app-stack-expander {
   display: block;
 }
-/* Dim scrim behind an open fan: separates the deck from the grid and turns
-   "click anywhere else" into a collapse. Fades out with the fan. */
-.app-stack-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 25;
-  background: rgba(0, 0, 0, 0.55);
-  /* Touch panning over the scrim must not scroll the grid behind it;
-     pinch-zoom stays allowed. */
-  touch-action: pinch-zoom;
-  transition: opacity 0.18s ease;
-}
-.app-stack-backdrop.is-out {
-  opacity: 0;
-}
-
 /* Family identity + collapse control, revealed above the unstacked cards. */
 .app-stack-caption-wrap {
   display: grid;
@@ -423,9 +391,10 @@
     grid-template-rows 0.3s var(--ease),
     opacity 0.2s ease;
 }
+/* The open fan is cards only: the caption (family label + collapse control)
+   stays out of the way — Escape, an outside tap or a re-tap collapse it. */
 .app-stack.is-open .app-stack-caption-wrap {
-  grid-template-rows: 1fr;
-  opacity: 1;
+  display: none;
 }
 .app-stack-caption {
   min-height: 0;
@@ -451,11 +420,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-/* A namespace is a package prefix, so it stays monospace like `.app-card-pkg` */
-.app-stack.is-namespace .app-stack-caption-label {
-  font-family: var(--mono-stack);
-  font-size: 0.76rem;
 }
 .app-stack-eyebrow {
   font-size: 0.6rem;
@@ -496,8 +460,7 @@
   .app-card-main,
   .app-stack-caption-wrap,
   .app-stack-chevron,
-  .app-stack-caption,
-  .app-stack-backdrop {
+  .app-stack-caption {
     transition: none;
   }
   .app-stack.is-open:not(.is-closing) .app-stack-overlay {
