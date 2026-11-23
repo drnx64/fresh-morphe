@@ -2,14 +2,28 @@
   "bundle": "lavinhoque33",
   "channel": "dev",
   "repo_url": "https://github.com/lavinhoque33/revanced-patches",
-  "created_at": "2026-11-22T19:55:30",
-  "version": "1.47.0",
-  "description": "<!-- Modified by lavinhoque33, 2026-11-22. -->\n## YouTube\n\n- Dark portrait playback now keeps the buffered-but-unplayed portion of the seekbar visible after the controls fade. No setting is needed. This applies to on-demand video, not live streams ([#71](https://github.com/lavinhoque33/revanced-patches/issues/71)).\n- In **RVX Settings → Player → Player buttons**, adjust the background opacity of Play/Pause/Replay and Previous/Next separately from the timestamp and other player buttons. Both sliders inherit your old value; neither changes the icons or the player scrim ([#72](https://github.com/lavinhoque33/revanced-patches/issues/72)).\n- With the **Chip** border preset, the playlist bottom bar now honors **Invert snack bar theme** without changing the bar’s fill ([#65](https://github.com/lavinhoque33/revanced-patches/issues/65)).\n\n## YouTube and YouTube Music\n\n- Long RVX setting titles wrap instead of being cut off beside switches ([#65](https://github.com/lavinhoque33/revanced-patches/issues/65)).\n\n## Manager\n\nIf Manager shows upstream v4.3.0 release notes, use the [stable source URL](https://raw.githubusercontent.com/lavinhoque33/revanced-patches/rvx-latest/patches-bundle.json) under **Sources → + → Remote**. When patching experimental YouTube 21.45.90, choose the plain `21.45.90` APK, not `21.45.90-EXTENDED` ([#66](https://github.com/lavinhoque33/revanced-patches/issues/66)). Update the patch source, then repatch your app.\n\n**Verification:** 15 focused tests passed. All four supported YouTube versions patched without force or missing extension references. On the Moto, the gray buffered segment advanced with controls hidden. Both opacity settings persisted after restart; both directions were render-tested on the host, and transparent transport with opaque overlays was also observed on the phone.\n",
+  "created_at": "2026-11-23T06:02:20",
+  "version": "1.48.0",
+  "description": "<!-- Modified by lavinhoque33, 2026-11-23. -->\n## YouTube Music\n\n- **Playback source inspector:** Touch and hold the three-dot Menu in expanded Now Playing to see which audio and video streams Music is reading. A normal tap still opens the stock menu. The inspector distinguishes a downloaded song from the audio and video tracks of a saved video, and shows the selected format numbers (itags). **Unconfirmed** means the reader could not verify the source; it does not mean network playback. This applies to RVX stream downloads, not exported device files.\n- **Stream downloads:** With client spoofing enabled, Music now keeps the local stream when playing a usable RVX download. Tracks without a usable copy retain normal online playback.\n- **Add to queue in tap order:** On Music 9.15.51, 9.40.51 and 9.45.51, enable **RVX → Player → Add to queue in tap order** to play manual additions before the original Up next list resumes. Duplicates are kept, **Play next** still jumps the line, and shuffled, Cast and Jam queues keep their stock behavior.\n\nVerified on a Moto Edge Plus 2023: Music 9.40.51 reported saved audio and video separately while online, and cleared the cached labels on an uncached control. Queue ordering and duplicate additions were verified on Music 9.45.51.\n\nRefresh the RVX patch source in Manager, then repatch YouTube Music and install the resulting app.\n",
   "apps": [
     {
       "app_name": "YouTube Music",
       "package": "com.google.android.apps.youtube.music",
       "patches": [
+        {
+          "name": "Add to queue in tap order",
+          "description": "Adds an opt-in setting to play songs added from the native song menu in tap order, before the rest of a local, unshuffled queue. Leaves Play next unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.40.51",
+            "9.45.51",
+            "9.15.51",
+            "8.30.54",
+            "8.28.54",
+            "8.12.54"
+          ]
+        },
         {
           "name": "Android Auto",
           "description": "Bypasses certificate checks and restores YouTube Music Home recommendations, Library collections (including playlists), search and podcasts in Android Auto. Needs YouTube Music 9.15 or newer.",
@@ -2429,10 +2443,10 @@
     }
   ],
   "patches_name": "RVX Patches",
-  "fingerprint": "49bc267a374bc00d4feb2fec8c922586f62b82b6edac64bbae87f7cf5d30af15",
-  "release_notes": "<!-- Modified by lavinhoque33, 2026-11-20. -->\n## YouTube\n\n- Open Quality beside Playback speed, choose a fixed resolution, or return to Auto. The timestamp still shows the resolution being played. Resize the center Play/Pause/Replay button and its touch target together.\n- Hide feed view counts and upload age independently. Remove Shorts from the Quick Actions widget without removing the app-icon shortcut. Hide toolbar Messages without hiding Notifications, or hide the 2× Shorts tutorial without disabling the gesture, on versions that have it.\n- Choose an opaque Android navigation bar separately for light and dark themes. Optionally disable swipe-up precise seeking without losing normal scrubbing.\n- Dislike counts no longer block the watch page or feed while loading. SponsorBlock reuses segment lists for five minutes without reusing skip or undo state. The player avoids redundant seek-preview and label layout work, and component filters skip unnecessary encoding.\n- Audio downloads that also save a thumbnail fetch the original artwork only once.\n\n## YouTube Music\n\n- Hide the native Search tab while retaining toolbar Search. On supported 9.x versions, hide **Don’t recommend artist** without hiding other artist actions.\n- Hidden stock settings stay hidden when the app language changes. Both apps now avoid reapplying unchanged launcher icons and names at startup.\n\n**Verification:** 71 focused tests passed. All four supported YouTube and six supported Music versions patched without force; forced Music 6.20.51 also passed. On the Moto, selecting 720p60 and then Auto restored adaptive mode without changing either saved network default. Messages, Shorts education, the artist row and watch-page vote labels were not served in the live fixtures. In both app themes the tested navigation strip looked identical with the opacity setting on or off; no visible difference was established.\n",
-  "release_tag": "v1.46.0",
-  "release_date": "2026-11-21T04:23:47Z",
+  "fingerprint": "07d174e8e3fb6bdba18dc10397668e3c1d361be06f280ef1baafc3dfb749582f",
+  "release_notes": "## YouTube Music\n\n- **Playback source inspector:** Touch and hold the three-dot Menu in expanded Now Playing to see which audio and video streams Music is reading. A normal tap still opens the stock menu. The inspector distinguishes a downloaded song from the audio and video tracks of a saved video, and shows the selected format numbers (itags). **Unconfirmed** means the reader could not verify the source; it does not mean network playback. This applies to RVX stream downloads, not exported device files.\n- **Stream downloads:** With client spoofing enabled, Music now keeps the local stream when playing a usable RVX download. Tracks without a usable copy retain normal online playback.\n- **Add to queue in tap order:** On Music 9.15.51, 9.40.51 and 9.45.51, enable **RVX → Player → Add to queue in tap order** to play manual additions before the original Up next list resumes. Duplicates are kept, **Play next** still jumps the line, and shuffled, Cast and Jam queues keep their stock behavior.\n\nVerified on a Moto Edge Plus 2023: Music 9.40.51 reported saved audio and video separately while online, and cleared the cached labels on an uncached control. Queue ordering and duplicate additions were verified on Music 9.45.51.\n\nRefresh the RVX patch source in Manager, then repatch YouTube Music and install the resulting app.\n",
+  "release_tag": "v1.48.0",
+  "release_date": "2026-11-23T06:02:20Z",
   "isPreRelease": false,
   "stars": 15,
   "avatarUrl": "https://avatars.githubusercontent.com/u/14330893?v=4&s=128",

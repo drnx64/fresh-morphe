@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/gomjirak0803/line-notification-patches",
   "created_at": "2026-11-20T07:56:33Z",
   "version": "0.1.9-dev",
-  "description": "Experimental LINE 26.16.0 notification patches; tested on Samsung S10e Android 12.",
+  "description": "## What's New in 0.1.13-dev\n\n- **Typed attachment labels in `More Chat Info`**: Distinguishes non-text messages via `chat_history.attachement_type` across all 7 locales (`[Photo]`, `[Video]`, `[Sticker]`, `[Voice message]`, `[File]`, `[Location]`, `[Contact]`, `[Call]`, `[Gift]`, `[Music]`, with `[Attachment]` fallback).\n- **7-locale i18n (`0.1.12-dev`+)**: All 49 UI and notification strings follow LINE/system language across English (default), Korean, Japanese, Traditional Chinese, Simplified Chinese, Thai, and Indonesian. Canonical patch names stay in English.\n- **Expanded notification avatars (`0.1.11-dev`+)**: Shows sender profile photos in expanded `More Chat Info` notifications using original icons (1:1) and LINE's local Glide cache only (group chats, zero network requests).\n\n### Included Patches (LINE `26.16.0` / `261600106`, Patcher `2.3.0`)\n- `Not Too Much Silent`: Local silent mode (chat menu, chat-list long-press, notification shade) + complete hide.\n- `More Chat Info`: Android `MessagingStyle` conversation preview (up to 25 unread) + total unread count + typed attachment labels + local-cache sender avatars.\n- `No reply`: Hides smart-reply chips while keeping manual inline reply.\n- `Mark as read`: Marks whole regular chat read via LINE's native chat-list updater.\n- `Restore push registration` *(optional, default off)*: Overrides only `X-Android-Cert` on Firebase Installations requests.\n\n### Verification & Notes\n- Verified with 130 `NotificationPolicy` assertions, 20 Python tests, 1,187 static APK contracts (ARM64 & Universal), compiled `resources.arsc` checks (49 keys × 7 locales), and physical Galaxy S10e Android 12 live tests.\n- Original/patched LINE APKs, APKMs, and signing keys are never distributed. Provide your own official LINE `26.16.0` APKM in Expert mode.\n- Licensed under GPL-3.0 with `NOTICE`, `THIRD_PARTY_NOTICES.md`, source archive, and `SHA256SUMS.txt`.",
   "apps": [
     {
       "app_name": "LINE: Calls & Messages",
@@ -21,7 +21,7 @@
         },
         {
           "name": "More Chat Info",
-          "description": "Shows unread messages with Android's conversation template and the native total unread count. Enable in LINE settings.",
+          "description": "Shows up to 25 unread messages in conversation style with total unread count, sender profile avatars (local cache only), and typed attachment labels ([Photo], [Video], [Sticker], etc.). Enable in LINE settings.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -39,7 +39,7 @@
         },
         {
           "name": "Not Too Much Silent",
-          "description": "Shows muted regular chats silently; adds a completely-hidden chat menu option. Delivery still depends on LINE receiving the message.",
+          "description": "Turns chat-menu, chat-list, and notification mute into local silent mode; adds a completely-hidden chat menu option. Delivery still depends on LINE receiving the message.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -48,7 +48,7 @@
         },
         {
           "name": "Notification settings",
-          "description": "Adds notification patch settings to LINE. All switches start disabled.",
+          "description": "Adds localized notification patch settings to LINE (7 locales: EN, KO, JA, ZH-TW, ZH-CN, TH, ID). All switches start disabled.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -69,10 +69,10 @@
     }
   ],
   "patches_name": "LINE notification patches",
-  "fingerprint": "fc92213500841be259bf3b9d16e3d23d1ae9ae36a3ffe4b26dc2b6773d6973b9",
-  "release_notes": "LINE 26.16.0 (261600106)용 독립 실험 패치입니다. Morphe Patcher 2.3.0이 필요합니다.\r\n\r\n- 조용히 받기·완전 숨김, 대화형 알림과 전체 미확인 수, 추천 답장 제거, 방 전체 읽음을 제공합니다.\r\n- 0.1.8은 최근 25개 선택 오류와 개별 알림 숫자 지연을 수정합니다.\r\n- S10e Android 12에서 26개 수신·최근 2~26번·읽음 후 새 1개를 확인했습니다. 다른 환경과 예외 시험은 docs/DEVICE_TESTS.md를 확인하세요.\r\n- Restore push registration은 Firebase 등록의 인증서 식별값을 변경하는 별도 선택 패치입니다.\r\n- 원본·패치된 전체 LINE APK와 서명키는 배포하지 않습니다. 원본 APKM은 사용자가 준비합니다.\r\n- GPL-3.0 및 NOTICE 추가 조건을 적용하며 대응 소스·빌드 방법·타사 출처를 함께 제공합니다.\r\n- 배포자 서명은 아직 없습니다. SHA256SUMS는 파일 비교용입니다.\r\n\r\nSources → + → Remote에서 https://github.com/gomjirak0803/line-notification-patches 를 추가하세요.\r\nPre-release patches와 Experimental app versions를 켜고 원본 LINE 26.16.0 APKM에 적용하세요.\r\n",
-  "release_tag": "v0.1.8-dev",
-  "release_date": "2026-11-17T13:52:49Z",
+  "fingerprint": "563f6c91ef7308cdfb1791d16947d014902994882f41d7289b367f08cbec7a6b",
+  "release_notes": "## What's New in 0.1.13-dev\n\n- **Typed attachment labels in `More Chat Info`**: Distinguishes non-text messages via `chat_history.attachement_type` across all 7 locales (`[Photo]`, `[Video]`, `[Sticker]`, `[Voice message]`, `[File]`, `[Location]`, `[Contact]`, `[Call]`, `[Gift]`, `[Music]`, with `[Attachment]` fallback).\n- **7-locale i18n (`0.1.12-dev`+)**: All 49 UI and notification strings follow LINE/system language across English (default), Korean, Japanese, Traditional Chinese, Simplified Chinese, Thai, and Indonesian. Canonical patch names stay in English.\n- **Expanded notification avatars (`0.1.11-dev`+)**: Shows sender profile photos in expanded `More Chat Info` notifications using original icons (1:1) and LINE's local Glide cache only (group chats, zero network requests).\n\n### Included Patches (LINE `26.16.0` / `261600106`, Patcher `2.3.0`)\n- `Not Too Much Silent`: Local silent mode (chat menu, chat-list long-press, notification shade) + complete hide.\n- `More Chat Info`: Android `MessagingStyle` conversation preview (up to 25 unread) + total unread count + typed attachment labels + local-cache sender avatars.\n- `No reply`: Hides smart-reply chips while keeping manual inline reply.\n- `Mark as read`: Marks whole regular chat read via LINE's native chat-list updater.\n- `Restore push registration` *(optional, default off)*: Overrides only `X-Android-Cert` on Firebase Installations requests.\n\n### Verification & Notes\n- Verified with 130 `NotificationPolicy` assertions, 20 Python tests, 1,187 static APK contracts (ARM64 & Universal), compiled `resources.arsc` checks (49 keys × 7 locales), and physical Galaxy S10e Android 12 live tests.\n- Original/patched LINE APKs, APKMs, and signing keys are never distributed. Provide your own official LINE `26.16.0` APKM in Expert mode.\n- Licensed under GPL-3.0 with `NOTICE`, `THIRD_PARTY_NOTICES.md`, source archive, and `SHA256SUMS.txt`.\n",
+  "release_tag": "v0.1.13-dev",
+  "release_date": "2026-11-23T06:47:40Z",
   "isPreRelease": true,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/343383914?v=4&s=128",

@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-22T16:23:09.826Z",
-  "version": "1.99.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/3f2237aa48e560618e822a17dec34392a24dad2a/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.99.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [3f2237aa48e5](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/3f2237aa48e560618e822a17dec34392a24dad2a). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.99.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.98.0...v1.99.0) (2026-11-22)\n\n### ✨ New Features\n\n* **Gboard:** add Rambler retry and hide unavailable settings ([b9dfd80](https://gitlab.com/johninnld/nl-morphe-patches/commit/b9dfd808331e964a461845929af20e6e141d3014))\n* **Gboard:** enable the full patch set and default Parakeet branding ([fd1d32e](https://gitlab.com/johninnld/nl-morphe-patches/commit/fd1d32e0f12c19e94b2b946d864d9bb846e9ccc3))\n",
+  "created_at": "2026-11-23T04:33:28.678Z",
+  "version": "1.101.0",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/54bc0b1984d5dcd9cce5834ae448286aa8049d2f/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.101.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [54bc0b1984d5](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/54bc0b1984d5dcd9cce5834ae448286aa8049d2f). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.101.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.100.0...v1.101.0) (2026-11-23)\n\n### ✨ New Features\n\n* **Eclipse Music:** add a templated Android Auto app and a richer media browser ([91ae785](https://gitlab.com/johninnld/nl-morphe-patches/commit/91ae785017e540b98bbb399e8875d81cabd2b7d2))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -1015,6 +1015,65 @@
         }
       ],
       "developer": "Rollerbank"
+    },
+    {
+      "app_name": "Upflix: Streaming Guide",
+      "package": "com.douglas.upflix",
+      "patches": [
+        {
+          "name": "Disable ads and tracking",
+          "description": "Removes all seven ad placements and the ad SDK bootstrap, the Google UMP consent flow, Firebase Analytics/Crashlytics collection, the advertising ID, Facebook SDK auto-init and third-party IP geolocation. The encrypted Titanium bundle is rewritten and re-encrypted with the app's own key, and the stable device identifier becomes a random per-install UUID.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.12.10"
+          ]
+        },
+        {
+          "name": "Disable Crashlytics reporter",
+          "description": "Stops Titanium's Crashlytics exception reporter. Required together with the ad/tracking patch: the reporter calls FirebaseCrashlytics after that component is removed, which otherwise crashes the app on any JavaScript exception.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.12.10"
+          ]
+        },
+        {
+          "name": "Disable Play license check",
+          "description": "Required for a patched (re-signed) Upflix: skips the Google Play (PairIP) license check that would otherwise close the app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.12.10"
+          ]
+        }
+      ],
+      "developer": "Upflix Inc."
+    },
+    {
+      "app_name": "Eclipse",
+      "package": "com.eclipse.android",
+      "patches": [
+        {
+          "name": "Android Auto browse upgrade",
+          "description": "Experimental: not yet confirmed on a classic media browser. Gives Eclipse Music's existing media browser (what hosts without templates show) the same layout as the templated app: Home in the phone's order (Umbra DJ, mixes, linked playlists, Your Shows; no See all), Discover, Library and Radio, a non-destructive Up Next, lists (Eclipse's own included) that never exceed the host's page size, and a tree that refreshes when the queue changes. Eclipse's own ids, playback resumption and queue stay as they are. Works on its own or with the templated app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.6.75"
+          ]
+        },
+        {
+          "name": "Android Auto templated media app",
+          "description": "Adds a Car App Library media app to Eclipse Music: a single root page with Home laid out like the phone's (Umbra DJ, Made For You, mixes, linked playlists, Your Shows, Radio; no See all), Discover and Library, collections, search through the provider selected on the phone with All, Tracks, Albums, Artists and Playlists filters, an editable Up Next and the host's now-playing template. Confirmed on API 9 hosts (DriveDeck); API 8 hosts are shown the same pages without API 9 components and are not yet confirmed. Every host is allowed; Eclipse's own player, queue and session stay authoritative, and the car screens refresh when the app's queue changes.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "0.6.75"
+          ]
+        }
+      ],
+      "developer": "com.eclipse"
     },
     {
       "app_name": "Teletekst",
@@ -4623,7 +4682,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "eff00f59a29beb1962b1ec92d3782c4cd57d00cec16f4175d62ee1835f5f9841",
+  "fingerprint": "7952107c2904ddb27d7b66dfaa2054cd56ba453ccd74ab3d7230d2c9a85f7466",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",
