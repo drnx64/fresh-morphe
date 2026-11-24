@@ -2,9 +2,9 @@
   "bundle": "lamphung-phuc",
   "channel": "stable",
   "repo_url": "https://github.com/lamphung-phuc/nmax-patches",
-  "created_at": "2026-11-23T01:05:00",
+  "created_at": "2026-11-22T18:02:16Z",
   "version": "1.7.0",
-  "description": "Waze NMAX and Google Maps NMAX can end their trip for NmaxConnect (End that trip on its still-navigating notice). Google Maps NMAX carries MicroG-RE inside when NmaxConnect's in-app patcher builds it; builds made outside NmaxConnect get no MicroG.",
+  "description": "- **End a trip from NmaxConnect.** Waze NMAX and Google Maps NMAX each take a new `stopNavigation()` call (Waze NMAX dash API 4, Google Maps NMAX dash API 5). NmaxConnect uses it for **End that trip** on its \"still navigating\" notice, when Auto has given the dash to the other app.\n  - Waze NMAX ends its trip the way Waze's own navbar does (`stopNavigationNTV`).\n  - Google Maps NMAX presses the **Exit navigation** button of its own navigation notification, so it does not depend on Maps' internal code or the phone's language.\n- Update both apps from NmaxConnect's Settings → Map. An older Waze NMAX or Google Maps NMAX refuses the call.\n\nTested on Waze `5.27.0.1` and Maps `26.45.00` (arm64) on an Android phone: both apps ended their trip from the notice.\n\n`patches-1.7.0.mpp` SHA-256: `42b289aee1cd85502e7fdb7c95801ea0129f2f4e7738ed4480a431ab712a6380`\n",
   "apps": [
     {
       "app_name": "Google Maps",
@@ -32,15 +32,15 @@
           "compatible_versions": []
         },
         {
-          "name": "NMAX icon",
-          "description": "Uses the NmaxConnect launcher icon and splash logo.",
+          "name": "Navigation speech and TTS startup",
+          "description": "Prefers synthesized navigation speech, keeping the existing audio fallback, and starts Google TTS when Maps opens.",
           "use": true,
           "options": [],
           "compatible_versions": []
         },
         {
-          "name": "Navigation speech and TTS startup",
-          "description": "Prefers synthesized navigation speech, keeping the existing audio fallback, and starts Google TTS when Maps opens.",
+          "name": "NMAX icon",
+          "description": "Uses the NmaxConnect launcher icon and splash logo.",
           "use": true,
           "options": [],
           "compatible_versions": []

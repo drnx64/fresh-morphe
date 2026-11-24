@@ -1,0 +1,28 @@
+{
+  "bundle": "httpinjectorpatches",
+  "channel": "stable",
+  "repo_url": "https://github.com/gitmyasm/HttpInjectorPatches",
+  "created_at": "2026-11-21T11:59:45Z",
+  "version": "1.0.3",
+  "description": "HTTP Injector Pro patch bundle v1.0.3 for HTTP Injector 6.5.0 (versionCode 244).\n\nFixes the v1.0.2 crash. This version keeps the known-working modded helper fully intact and changes only ONE instruction: the JNI CallVoidMethod that invokes `Toast.show()`. The toast object is still constructed but never displayed, so there is no visible modder toast and no anti-tamper logic is disturbed.\n\n- Pro unlock: 40-byte runtime patch applied directly to the original libevozi_sentinel.so\n- libDexHelper.so: premium version, needed to load the helper\n- libdexfix.so: identical to the working premium helper except a single NOP at virtual 0x3660 (the show() call)\n- No `Mod By :MafiaSSS` toast, no modder-owned sentinel library\n\nBundle SHA-256: `cdcb9e6f2d3dd23606f06c8a33b15149ed6e84a3d392349e087080e2b016b7a9`\n\nPatch the original `.apks` bundle in Morphe. Server-side account/purchase features still depend on Evozi's servers.\n",
+  "apps": [
+    {
+      "app_name": "HTTP Injector (SSH/V2ray) VPN",
+      "package": "com.evozi.injector",
+      "patches": [
+        {
+          "name": "Unlock Pro",
+          "description": "Unlocks HTTP Injector's locally enforced Pro features without modder toast.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.5.0"
+          ]
+        }
+      ],
+      "developer": "Evozi"
+    }
+  ],
+  "patches_name": "gitmyasm",
+  "fingerprint": "237f382e2460c97648cd5eacf4333c7d1f72283c86d49e42b5a5222856c1baea"
+}

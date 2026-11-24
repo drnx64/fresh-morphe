@@ -2,17 +2,96 @@
   "bundle": "vippium",
   "channel": "latest",
   "repo_url": "https://github.com/vippium/brokenn-patches",
-  "created_at": "2026-11-19T11:19:26",
-  "version": "1.4.1",
-  "description": "## [1.4.1](https://github.com/vippium/brokenn-patches/compare/v1.4.0...v1.4.1) (2026-11-19)\n\n### 🐛 Bug Fixes\n* **shared:** encode zeroed tween duration register by width and match range invokes ([2cce056](https://github.com/vippium/brokenn-patches/commit/2cce056a40285f82578084b55493deb962fcca70))\n* **jiohotstar/remove-topbar-switcher:** compute target-branch index after the 25f insert ([9b5b9ec](https://github.com/vippium/brokenn-patches/commit/9b5b9ec5c390cb91d0fc5378b9f737f7dcd6e218))\n* **shared:** guard nextInstructionIndex against int overflow ([01eb604](https://github.com/vippium/brokenn-patches/commit/01eb6048f43ae74c15eb2e9521e466c0a9f17924))\n* **jiohotstar/remove-topbar-switcher:** snap header expand/collapse to stop tab-switch jump [skip ci] ([d0fc69b](https://github.com/vippium/brokenn-patches/commit/d0fc69b0cf101206af64ef12fdc3ef79710a45ce))",
+  "created_at": "2026-11-23T12:52:21",
+  "version": "1.5.0",
+  "description": "## [1.5.0](https://github.com/vippium/brokenn-patches/compare/v1.4.1...v1.5.0) (2026-11-23)\n\n### ✨ New Features\n* **jiohotstar:** add `Disable notification permission prompt` patch ([5181f38](https://github.com/vippium/brokenn-patches/commit/5181f3880e889a28e92216086706e3332b8beaef))\n* **jiohotstar/hide player buttons:** hide the top bar buttons ([08da74c](https://github.com/vippium/brokenn-patches/commit/08da74c352f0d0fce55ecb1da49cee3d50690e0c))\n* **jiohotstar/feed filter:** add `Feed filter` patch that removes home feed trays by title ([e3fd704](https://github.com/vippium/brokenn-patches/commit/e3fd704dff9e018b861a4d623029ceeee852bd17))\n* **jiohotstar/brokenn settings:** add a hidden settings page with runtime toggles ([e4b25c7](https://github.com/vippium/brokenn-patches/commit/e4b25c794fa595bd04da8b36bc94bff7425a18da))\n\n### 🔧 Improvements\n* **dependencies:** update morphe-gradle-plugin to 2.1.1 ([e2780e8](https://github.com/vippium/brokenn-patches/commit/e2780e86f30c469ed225ba8b668a5511de20506d))\n* **dependencies:** update morphe-patcher to 2.5.0 ([87def26](https://github.com/vippium/brokenn-patches/commit/87def26b574591e75b305b046f36460f6fff46d7))\n\n### ♻️ Refactored\n* **jiohotstar/Remove ChatGPT AI assistant:** refactored to cover remaining entry points ([3281a7c](https://github.com/vippium/brokenn-patches/commit/3281a7c417390e7931dff0e3d27ec5cfda3fbcf3))\n* **jiohotstar/brokenn settings:** move settings access from the Home tab to the My Space tab ([670ad2a](https://github.com/vippium/brokenn-patches/commit/670ad2a02acbcf2a4b0d078f9f1ee9f59e89ab23))\n\n### 🐛 Bug Fixes\n* **jiohotstar/Remove ads:** removed ad markers on the seekbar ([d1437d1](https://github.com/vippium/brokenn-patches/commit/d1437d170afc5b6471a717da8b2e69d37501f011))\n* **jiohotstar:** cancel the pending profile tap when another tab is tapped ([dd6c194](https://github.com/vippium/brokenn-patches/commit/dd6c19438d8f15779e6b5f2164b11629fa24d349))\n* **octogram/unlock premium:** stop showing the premium badge on non-premium users ([4d1518f](https://github.com/vippium/brokenn-patches/commit/4d1518fc6d5e91a2b0304384c4adb9e81e30cb43))\n* **jiohotstar/brokenn settings:** declare vibrate and handle predictive back ([68ee113](https://github.com/vippium/brokenn-patches/commit/68ee113c163e5211c67289e18560bcfe49cb0a38))",
   "apps": [
+    {
+      "app_name": "Picasso: Live TV, Movie & Show",
+      "package": "com.offshore.picasso",
+      "patches": [
+        {
+          "name": "Bypass VPN check",
+          "description": "Skips the network interface check that blocks the app on a VPN or proxy.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.14.5"
+          ]
+        },
+        {
+          "name": "Disable analytics",
+          "description": "Turns off Firebase Analytics collection and Crashlytics reporting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.14.5"
+          ]
+        },
+        {
+          "name": "Disable update prompt",
+          "description": "Skips the launch version check that shows the update dialog.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.14.5"
+          ]
+        },
+        {
+          "name": "Remove ads",
+          "description": "Removes banner, native, interstitial and rewarded ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.14.5"
+          ]
+        },
+        {
+          "name": "Remove unused permissions",
+          "description": "Removes phone state, advertising id, install referrer and badge permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.14.5"
+          ]
+        },
+        {
+          "name": "Skip login",
+          "description": "Treats the app as signed in and never shows the login screen.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "10.14.5"
+          ]
+        }
+      ],
+      "developer": "Streams Hub"
+    },
     {
       "app_name": "JioHotstar",
       "package": "in.startv.hotstar",
       "patches": [
         {
+          "name": "Add Brokenn settings",
+          "description": "Adds a hidden settings page, opened by double-tapping the Profile tab button.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.26.0"
+          ]
+        },
+        {
           "name": "Bypass signature check",
           "description": "Bypasses app signature verification to allow API access.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.26.0"
+          ]
+        },
+        {
+          "name": "Disable notification permission prompt",
+          "description": "Disables the recurring notification permission nag shown every few app launches enabled from My Space.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -47,6 +126,15 @@
           ]
         },
         {
+          "name": "Feed filter",
+          "description": "Removes selected home feed trays by title, configured in Brokenn settings",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.10.26.0"
+          ]
+        },
+        {
           "name": "Force HDR10",
           "description": "Enables HDR10 and HDR10+ playback on compatible devices.",
           "use": true,
@@ -57,68 +145,18 @@
         },
         {
           "name": "Hide player buttons",
-          "description": "Hides selected buttons from the fullscreen player's bottom bar.",
+          "description": "Hides selected buttons from the video player.",
           "use": true,
-          "options": [
-            {
-              "key": "hide_watch_next",
-              "description": "Hides the Watch Next button."
-            },
-            {
-              "key": "hide_episodes",
-              "description": "Hides the Episodes button."
-            },
-            {
-              "key": "hide_shop",
-              "description": "Hides the Shop / Order Food button."
-            },
-            {
-              "key": "hide_speed",
-              "description": "Hides the Speed button."
-            },
-            {
-              "key": "hide_rate",
-              "description": "Hides the Rate button."
-            },
-            {
-              "key": "hide_next_episode",
-              "description": "Hides the Next Episode button."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
             "26.10.26.0"
           ]
         },
         {
           "name": "Hide watch page elements",
-          "description": "Hides watch page tabs (except Episodes) and the floating sponsored pill.",
+          "description": "Hides selected tabs and sponsored elements from the watch page.",
           "use": true,
-          "options": [
-            {
-              "key": "hide_for_you",
-              "description": "Removes the For You tab from the watch-page tab strip."
-            },
-            {
-              "key": "hide_jeeto",
-              "description": "Removes the Jeeto tab from the watch-page tab strip."
-            },
-            {
-              "key": "hide_memes",
-              "description": "Removes the Memes tab from the watch-page tab strip."
-            },
-            {
-              "key": "hide_live_chat",
-              "description": "Removes the Live Chat tab from the watch-page tab strip."
-            },
-            {
-              "key": "hide_brand_tabs",
-              "description": "Removes sponsored brand tabs (Shop, Order Food, etc.) from the watch-page tab strip."
-            },
-            {
-              "key": "hide_sponsored_pills",
-              "description": "Removes the floatingsponsored pill from the watch-page."
-            }
-          ],
+          "options": [],
           "compatible_versions": [
             "26.10.26.0"
           ]
@@ -142,8 +180,8 @@
           ]
         },
         {
-          "name": "Remove ChatGPT Voice Assistant",
-          "description": "Strips out the integrated ChatGPT voice assistant module entirely.",
+          "name": "Remove ChatGPT AI assistant",
+          "description": "Strips out the integrated ChatGPT AI module entirely.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -276,10 +314,10 @@
     }
   ],
   "patches_name": "UserXYZ Patches",
-  "fingerprint": "0d48fc7116ca2ced58ec8541559f531020f41003df0c76e540cfe1afec658a3f",
-  "release_notes": "## [1.4.1](https://github.com/vippium/brokenn-patches/compare/v1.4.0...v1.4.1) (2026-11-19)\n\n### 🐛 Bug Fixes\n* **shared:** encode zeroed tween duration register by width and match range invokes ([2cce056](https://github.com/vippium/brokenn-patches/commit/2cce056a40285f82578084b55493deb962fcca70))\n* **jiohotstar/remove-topbar-switcher:** compute target-branch index after the 25f insert ([9b5b9ec](https://github.com/vippium/brokenn-patches/commit/9b5b9ec5c390cb91d0fc5378b9f737f7dcd6e218))\n* **shared:** guard nextInstructionIndex against int overflow ([01eb604](https://github.com/vippium/brokenn-patches/commit/01eb6048f43ae74c15eb2e9521e466c0a9f17924))\n* **jiohotstar/remove-topbar-switcher:** snap header expand/collapse to stop tab-switch jump [skip ci] ([d0fc69b](https://github.com/vippium/brokenn-patches/commit/d0fc69b0cf101206af64ef12fdc3ef79710a45ce))",
-  "release_tag": "v1.4.1",
-  "release_date": "2026-11-19T11:20:24Z",
+  "fingerprint": "39aefb2ed53f20f03407bf79021c1491b3910c34c379294a91097312fd679b37",
+  "release_notes": "## [1.5.0](https://github.com/vippium/brokenn-patches/compare/v1.4.1...v1.5.0) (2026-11-23)\n\n### ✨ New Features\n* **jiohotstar:** add `Disable notification permission prompt` patch ([5181f38](https://github.com/vippium/brokenn-patches/commit/5181f3880e889a28e92216086706e3332b8beaef))\n* **jiohotstar/hide player buttons:** hide the top bar buttons ([08da74c](https://github.com/vippium/brokenn-patches/commit/08da74c352f0d0fce55ecb1da49cee3d50690e0c))\n* **jiohotstar/feed filter:** add `Feed filter` patch that removes home feed trays by title ([e3fd704](https://github.com/vippium/brokenn-patches/commit/e3fd704dff9e018b861a4d623029ceeee852bd17))\n* **jiohotstar/brokenn settings:** add a hidden settings page with runtime toggles ([e4b25c7](https://github.com/vippium/brokenn-patches/commit/e4b25c794fa595bd04da8b36bc94bff7425a18da))\n\n### 🔧 Improvements\n* **dependencies:** update morphe-gradle-plugin to 2.1.1 ([e2780e8](https://github.com/vippium/brokenn-patches/commit/e2780e86f30c469ed225ba8b668a5511de20506d))\n* **dependencies:** update morphe-patcher to 2.5.0 ([87def26](https://github.com/vippium/brokenn-patches/commit/87def26b574591e75b305b046f36460f6fff46d7))\n\n### ♻️ Refactored\n* **jiohotstar/Remove ChatGPT AI assistant:** refactored to cover remaining entry points ([3281a7c](https://github.com/vippium/brokenn-patches/commit/3281a7c417390e7931dff0e3d27ec5cfda3fbcf3))\n* **jiohotstar/brokenn settings:** move settings access from the Home tab to the My Space tab ([670ad2a](https://github.com/vippium/brokenn-patches/commit/670ad2a02acbcf2a4b0d078f9f1ee9f59e89ab23))\n\n### 🐛 Bug Fixes\n* **jiohotstar/Remove ads:** removed ad markers on the seekbar ([d1437d1](https://github.com/vippium/brokenn-patches/commit/d1437d170afc5b6471a717da8b2e69d37501f011))\n* **jiohotstar:** cancel the pending profile tap when another tab is tapped ([dd6c194](https://github.com/vippium/brokenn-patches/commit/dd6c19438d8f15779e6b5f2164b11629fa24d349))\n* **octogram/unlock premium:** stop showing the premium badge on non-premium users ([4d1518f](https://github.com/vippium/brokenn-patches/commit/4d1518fc6d5e91a2b0304384c4adb9e81e30cb43))\n* **jiohotstar/brokenn settings:** declare vibrate and handle predictive back ([68ee113](https://github.com/vippium/brokenn-patches/commit/68ee113c163e5211c67289e18560bcfe49cb0a38))",
+  "release_tag": "v1.5.0",
+  "release_date": "2026-11-23T12:53:01Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/93650504?v=4&s=128",

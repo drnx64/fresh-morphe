@@ -2,26 +2,17 @@
   "bundle": "rimixyz",
   "channel": "dev",
   "repo_url": "https://github.com/rimixyz/morphe-patches",
-  "created_at": "2026-11-22T14:28:42",
-  "version": "1.6.4",
-  "description": "## [1.6.4](https://github.com/rimixyz/morphe-patches/compare/v1.6.3...v1.6.4) (2026-11-22)\n\n### 🐛 Bug Fixes\n\n* restore main menu screen after cancelling Retro season dialog in New Star Soccer ([808eff9](https://github.com/rimixyz/morphe-patches/commit/808eff969bc4769a13b315ca1f21459505a6f2e0))",
+  "created_at": "2026-11-23T20:22:23",
+  "version": "1.6.6",
+  "description": "## [1.6.6](https://github.com/rimixyz/morphe-patches/compare/v1.6.5...v1.6.6) (2026-11-23)\n\n### 🔧 Improvements\n\n* replace 17TRACK Premium with full ads and tracking blocker, unify Wrestling Revolution patches, bump morphe-patcher to 2.5.0, and polish README ([6bbf8f5](https://github.com/rimixyz/morphe-patches/commit/6bbf8f52151f526678ef7a438382acb8b7b5a5a7))",
   "apps": [
     {
       "app_name": "Wrestling Revolution",
       "package": "air.wrcareer",
       "patches": [
         {
-          "name": "Disable Yodo1 analytics",
-          "description": "Stops the ThinkingData behavioural tracker bundled with Yodo1 MAS (endpoint c1.yodo1.com), including automatic app/screen/click/crash events.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "2.150.64"
-          ]
-        },
-        {
-          "name": "Remove ads",
-          "description": "Suppresses Yodo1 MAS banners, interstitials, rewarded videos and app-open ads, including the preloads done at SDK init. Rewarded flows still grant their in-game reward.",
+          "name": "Remove Yodo1 ads and analytics",
+          "description": "Suppresses Yodo1 MAS banners, interstitials, rewarded videos, app-open ads (including SDK init preloads), and stops the bundled ThinkingData analytics tracker (c1.yodo1.com). Rewarded flows still grant their in-game reward.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -54,35 +45,26 @@
           ]
         },
         {
-          "name": "Disable Firebase Analytics",
-          "description": "Disables Firebase Analytics collection through the SDK's official manifest flag, while keeping push notifications and the consent UI.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
-          "name": "Disable Flurry analytics session",
-          "description": "Prevents the game from starting a Flurry analytics session without removing SDK classes or changing the consent flow.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
-          "name": "Disable Flurry startup measurement",
-          "description": "Stops the Flurry provider from capturing startup time and memory usage while keeping the component declared.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
           "name": "Disable Google Play Games",
           "description": "Disables broken Google Play Games auto-sign-in on re-signed APKs and hides the dead Play Games button on the Career screen (modern and classic UI).",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Blocks AdMob and DT Exchange/Fyber interstitial ads, removes the built-in promo interstitial, and hides the promotional \"Games we like\" button while keeping opt-in rewarded videos.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.34"
+          ]
+        },
+        {
+          "name": "Disable analytics and tracking",
+          "description": "Disables Firebase Analytics, Flurry analytics and startup measurement, and removes Advertising ID permissions.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -126,45 +108,9 @@
           ]
         },
         {
-          "name": "Hide Games we like button",
-          "description": "Hides the promotional \"Games we like\" button on the Options screen in both modern and classic UI.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
-          "name": "Remove in-game promo interstitial",
-          "description": "Suppresses the game's built-in promo interstitial on all three entry paths while preserving navigation and return to play.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
-          "name": "Remove network interstitial ads",
-          "description": "Blocks loading and display of non-rewarded interstitials from AdMob and DT Exchange/Fyber while preserving rewarded videos.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
-          "name": "Restrict advertising ID",
-          "description": "Removes GAID and AdServices Ad ID permissions to reduce ad tracking, while keeping Attribution and Topics.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.34"
-          ]
-        },
-        {
           "name": "Retro season selector",
           "description": "Prompts to choose a historical club database (2011–2026) bundled in the APK whenever you start a new career. Existing careers are unaffected.",
-          "use": false,
+          "use": true,
           "options": [],
           "compatible_versions": [
             "4.34"
@@ -196,25 +142,7 @@
       "package": "eu.smartpatient.mytherapy",
       "patches": [
         {
-          "name": "Disable AppsFlyer attribution in MyTherapy",
-          "description": "Neutralizes the app's explicit AppsFlyer start while keeping its existing opt-out and consent paths intact.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.16.2"
-          ]
-        },
-        {
-          "name": "Disable Firebase Analytics in MyTherapy",
-          "description": "Disables Firebase Analytics collection through the SDK's official manifest flag, keeping push, remote config and the consent UI.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.16.2"
-          ]
-        },
-        {
-          "name": "Disable PairIP license check in MyTherapy",
+          "name": "Disable PairIP license check",
           "description": "Neutralizes the PairIP license check so the re-signed APK can start, without removing its components.",
           "use": true,
           "options": [],
@@ -223,8 +151,8 @@
           ]
         },
         {
-          "name": "Disable Sentry diagnostics in MyTherapy",
-          "description": "Prevents Sentry initialization at the app's single entry point, without removing its providers or native libraries.",
+          "name": "Disable all ads",
+          "description": "Blocks all ad formats (banner, native, interstitial and rewarded), stops Mobile Ads/mediation SDK initialization, and skips UMP ad consent prompts.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -232,8 +160,8 @@
           ]
         },
         {
-          "name": "Disable common ads in MyTherapy",
-          "description": "Stops non-rewarded banner and native ad requests at the load entry points, preserving UMP, interstitial and rewarded flows.",
+          "name": "Disable analytics and tracking",
+          "description": "Disables Firebase Analytics, AppsFlyer attribution, Sentry diagnostics, internal analytics tracking, and removes Advertising ID permissions.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -241,8 +169,8 @@
           ]
         },
         {
-          "name": "Require explicit analytics consent in MyTherapy",
-          "description": "Treats an unregistered analytics consent as opt-out, while preserving recorded acceptance and refusal.",
+          "name": "Local backup and restore",
+          "description": "Adds a Local Backup & Restore item to Settings to export/restore local .zip backups (with automatic rollback) and import official MyTherapy Archive CSV history.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -250,16 +178,7 @@
           ]
         },
         {
-          "name": "Restrict advertising ID in MyTherapy",
-          "description": "Removes GAID and AdServices Ad ID permissions to reduce ad tracking, keeping attribution, topics and consent untouched.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "4.16.2"
-          ]
-        },
-        {
-          "name": "Unlock Plus benefits in MyTherapy",
+          "name": "Unlock Plus benefits",
           "description": "Grants the local Plus state the app reads for ad-free access, extra calendar days and the PDF entry point.",
           "use": true,
           "options": [],
@@ -275,26 +194,17 @@
       "package": "yqtrack.app",
       "patches": [
         {
+          "name": "Disable ads and tracking",
+          "description": "Blocks all AdMob and Flutter Google Mobile Ads formats, hides the 'Deals' tab and campaign promos, disables Firebase Analytics, Crashlytics, and Facebook SDK auto-tracking, and removes Advertising ID permissions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.1.6896.1"
+          ]
+        },
+        {
           "name": "Fix Firebase after re-signing",
           "description": "Restores the original certificate SHA-1 so Firebase Auth (Google login) and push notifications keep working after the APK is re-signed.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.1.6896.1"
-          ]
-        },
-        {
-          "name": "Force Premium membership",
-          "description": "Rewrites the cached user model to Premium level (4020). Unlocks client-side VIP features and hides ads. Requires a fresh install.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.1.6896.1"
-          ]
-        },
-        {
-          "name": "Remove Deals ads",
-          "description": "Hides the 'Deals' tab and campaign ads by forcing the local preference flags to true.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -306,11 +216,11 @@
     }
   ],
   "patches_name": "rimixyz Morphe Patches",
-  "fingerprint": "5a2fc287a3c7806b0021d1fcf33d96303549dfb5a9f16c7e0856212cf5305d45",
-  "release_notes": "## [1.6.5-dev.4](https://github.com/rimixyz/morphe-patches/compare/v1.6.5-dev.3...v1.6.5-dev.4) (2026-11-22)\n\n### 🔧 Improvements\n\n* unify New Star Soccer ad and privacy patches and enable Retro season selector by default ([aed3b22](https://github.com/rimixyz/morphe-patches/commit/aed3b22f64aad21c208d847fdbc355afcd837959))\n",
-  "release_tag": "v1.6.5-dev.4",
-  "release_date": "2026-11-22T15:45:04Z",
-  "isPreRelease": true,
+  "fingerprint": "e90298c587b451415b4cef1e43d4bd5f25cc71869a6a4f60217b12fda3013962",
+  "release_notes": "## [1.6.6](https://github.com/rimixyz/morphe-patches/compare/v1.6.5...v1.6.6) (2026-11-23)\n\n### 🔧 Improvements\n\n* replace 17TRACK Premium with full ads and tracking blocker, unify Wrestling Revolution patches, bump morphe-patcher to 2.5.0, and polish README ([6bbf8f5](https://github.com/rimixyz/morphe-patches/commit/6bbf8f52151f526678ef7a438382acb8b7b5a5a7))\n",
+  "release_tag": "v1.6.6",
+  "release_date": "2026-11-23T20:23:07Z",
+  "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/130519170?v=4&s=128",
   "repoDescription": "All-in-one personal Morphe patches — Made in Brazil. 100% AI-crafted, tested before release.",

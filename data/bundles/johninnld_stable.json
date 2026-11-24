@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "stable",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-23T04:33:28.678Z",
-  "version": "1.101.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/54bc0b1984d5dcd9cce5834ae448286aa8049d2f/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.101.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [54bc0b1984d5](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/54bc0b1984d5dcd9cce5834ae448286aa8049d2f). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.101.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.100.0...v1.101.0) (2026-11-23)\n\n### ✨ New Features\n\n* **Eclipse Music:** add a templated Android Auto app and a richer media browser ([91ae785](https://gitlab.com/johninnld/nl-morphe-patches/commit/91ae785017e540b98bbb399e8875d81cabd2b7d2))\n",
+  "created_at": "2026-11-24T02:53:28.294Z",
+  "version": "1.105.1",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/025ea02f0ce84867a608e1d6c45d45953885266e/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.105.1.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [025ea02f0ce8](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/025ea02f0ce84867a608e1d6c45d45953885266e). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.105.1](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.105.0...v1.105.1) (2026-11-24)\n\n### 🐛 Bug Fixes\n\n* **ABRP:** fix GPS and Android Auto location with Premium enabled ([d845381](https://gitlab.com/johninnld/nl-morphe-patches/commit/d845381e3be550b6269a6c3507e14dcf6f62ecbc))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -956,6 +956,76 @@
       "developer": "bol.com bv"
     },
     {
+      "app_name": "Cronometer: Calorie Counter",
+      "package": "com.cronometer.android.gold",
+      "patches": [
+        {
+          "name": "Disable Adjust tracking",
+          "description": "Stops Adjust SDK initialisation and event tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        },
+        {
+          "name": "Disable ads",
+          "description": "Stops Google Mobile Ads initialisation and Cronometer's banner/interstitial load paths. No ad request is made; the Dart ad slots remain empty.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        },
+        {
+          "name": "Disable ads, tracking and Gold upsells",
+          "description": "Disables selected advertising and telemetry paths, unlocks local Gold controls, and hides Gold promotions, food suggestions, referrals and the persistent first-food tip. Server-backed features still require their native services.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        },
+        {
+          "name": "Disable Amplitude tracking",
+          "description": "Stops the Amplitude Flutter plugin's method channel before it records events or flags.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        },
+        {
+          "name": "Disable Braze tracking",
+          "description": "Stops Braze plugin attachment and automatic content-card, banner, feature-flag and push subscriptions.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        },
+        {
+          "name": "Disable Datadog telemetry",
+          "description": "Stops Datadog SDK initialisation (RUM, logs and native crash reports) while preserving Flutter channel replies.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        },
+        {
+          "name": "Disable Firebase Analytics",
+          "description": "Stops Firebase Analytics event, user-id and user-property writes from the Flutter plugin.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.57.2"
+          ]
+        }
+      ],
+      "developer": "Cronometer Software Inc."
+    },
+    {
       "app_name": "Rollerbank - Scooter & Fatbike",
       "package": "com.dennisk.rollerbank",
       "patches": [
@@ -1151,6 +1221,22 @@
         }
       ],
       "developer": "Magic Lane International BV"
+    },
+    {
+      "app_name": "GameSnacks",
+      "package": "com.google.android.apps.automotive.gamesnacks",
+      "patches": [
+        {
+          "name": "Parked app for Android Auto",
+          "description": "Declares GameSnacks a parked game app and lets it install outside Android Automotive OS, so Android Auto and car hosts like DriveDeck and Gearslip list it on the car screen by themselves. Android Auto still needs Unknown sources in its developer settings for a patched app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.40.827663177"
+          ]
+        }
+      ],
+      "developer": "Google LLC"
     },
     {
       "app_name": "Google Maps",
@@ -1647,6 +1733,16 @@
           ]
         },
         {
+          "name": "Enable Inline Autofill Suggestions",
+          "description": "Enable Gboard's inline autofill receiver for password managers such as Bitwarden. Requires Android 11+ and an enabled autofill service.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.8.0.1022711984-beta-arm64-v8a",
+            "18.8.0.1022711984-beta-armeabi-v7a"
+          ]
+        },
+        {
           "name": "Enable OCR / Scan Text",
           "description": "Enables Gboard's Scan Text camera entry point and runs it with an OCR engine bundled in the patch, so it works without Play Services. Latin text only.",
           "use": true,
@@ -1837,6 +1933,16 @@
           ]
         },
         {
+          "name": "Smart Compose",
+          "description": "Expose Text correction > Smart Compose and enable its client-side suggestions. Language, model and app eligibility still apply.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.8.0.1022711984-beta-arm64-v8a",
+            "18.8.0.1022711984-beta-armeabi-v7a"
+          ]
+        },
+        {
           "name": "Toolbar Editing Buttons",
           "description": "Add Select All, Copy, Cut and Paste to the menu.",
           "use": true,
@@ -1916,6 +2022,31 @@
       "developer": "Google LLC"
     },
     {
+      "app_name": "Draw a Stickman: EPIC 3",
+      "package": "com.hitcents.drawastickmanepic3",
+      "patches": [
+        {
+          "name": "Disable tracking",
+          "description": "Removes advertising and install-referrer permissions, stops advertising startup providers, disables Facebook identifier collection and app-event enqueue/upload, and suppresses the game's native analytics queues.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.13.19873"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Handles Unity Ads initialization locally, returns no-fill/not-ready for ads, and returns no bidding token. Null listeners cannot restart the original SDK path.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "1.13.19873"
+          ]
+        }
+      ],
+      "developer": "Hitcents"
+    },
+    {
       "app_name": "A Better Routeplanner (ABRP)",
       "package": "com.iternio.abrpapp",
       "patches": [
@@ -1930,7 +2061,7 @@
         },
         {
           "name": "Unlock Premium",
-          "description": "Makes the app treat itself as the Android Automotive template build, which unlocks the in-app Premium features without a subscription. That decision does not read the account roles. Anything the ABRP server authorizes per account stays as it is.",
+          "description": "Makes the app treat itself as the Android Automotive template build, which unlocks the in-app Premium features without a subscription. That decision does not read the account roles. Fixes phone GPS and Android Auto location access while Premium is enabled. Anything the ABRP server authorizes per account stays as it is.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -2406,6 +2537,92 @@
         }
       ],
       "developer": "Podimo"
+    },
+    {
+      "app_name": "Angry Birds Friends",
+      "package": "com.rovio.angrybirdsfriends",
+      "patches": [
+        {
+          "name": "Disable tracking",
+          "description": "Stops advertising identifier and app set ID collection, install-referrer attribution, Google measurement and Firebase Analytics, and turns off Facebook's advertiser identifier and event upload. Play Games sign-in and cloud saves keep working; telemetry inside the Unity engine is out of reach from this layer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.9.0"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Blocks Beacon ad loading and showing using its own failure callbacks on the original UI-thread dispatch, skips bidder-token collection, and disables ad SDK initialization and startup providers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.9.0"
+          ]
+        },
+        {
+          "name": "Hide paid shop tab",
+          "description": "Hides the paid Bird Coins tab and opens Power-ups instead. Power-ups and Slingshots remain available.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.9.0"
+          ]
+        },
+        {
+          "name": "Parked app for Android Auto",
+          "description": "Declares Angry Birds Friends a parked game app, so Android Auto and car hosts like DriveDeck and Gearslip list it on the car screen by themselves. Android Auto still needs Unknown sources in its developer settings for a patched app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "14.9.0"
+          ]
+        }
+      ],
+      "developer": "Rovio Entertainment Oy"
+    },
+    {
+      "app_name": "Angry Birds 2",
+      "package": "com.rovio.baba",
+      "patches": [
+        {
+          "name": "Disable tracking",
+          "description": "Stops advertising identifier and app set ID collection, install-referrer attribution, Google measurement, Firebase Analytics, Crashlytics and Sessions upload, turns off Facebook's advertiser identifier and event upload, and empties the Sentry crash-report endpoint. The game's own cloud services keep working; telemetry inside the Unity engine is out of reach from this layer.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.7.3"
+          ]
+        },
+        {
+          "name": "Hide ads",
+          "description": "Blocks Beacon ad loading and showing using its own failure callbacks on the original UI-thread dispatch, skips bidder-token collection, and disables ad SDK initialization and startup providers.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.7.3"
+          ]
+        },
+        {
+          "name": "Hide paid shop tab",
+          "description": "Hides the paid Shop tab and content, Treasure Pass purchase button and paid reward row. Keeps Bonus, Daily Deals, free rewards and quests.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.7.3"
+          ]
+        },
+        {
+          "name": "Parked app for Android Auto",
+          "description": "Declares Angry Birds 2 a parked game app, so Android Auto and car hosts like DriveDeck and Gearslip list it on the car screen by themselves. Android Auto still needs Unknown sources in its developer settings for a patched app.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "26.7.3"
+          ]
+        }
+      ],
+      "developer": "Rovio Entertainment Oy"
     },
     {
       "app_name": "SoundCloud: The Music You Love",
@@ -3418,6 +3635,22 @@
       "developer": "Waze"
     },
     {
+      "app_name": "PlugShare - EV & Tesla Map",
+      "package": "com.xatori.plugshare",
+      "patches": [
+        {
+          "name": "Android Auto",
+          "description": "Ports the Automotive build to Android Auto and compatible templated hosts, including its charging maps, searches, bookmarks and sign-in screens. Accepts compatible hosts without a package or signing-key allow-list and uses their real car-data capabilities.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "AAOS v1.8.2"
+          ]
+        }
+      ],
+      "developer": "com.xatori"
+    },
+    {
       "app_name": "Weeronline: weather & rain",
       "package": "com.xs2theworld.weeronline",
       "patches": [
@@ -3617,7 +3850,7 @@
       "developer": "io.github"
     },
     {
-      "app_name": "Lightcraft",
+      "app_name": "LightCraft",
       "package": "io.github.artcraftandroid.lightcraft",
       "patches": [
         {
@@ -3718,7 +3951,17 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2026.10.1-full"
+            "2026.10.1-full",
+            "2026.11.2-full"
+          ]
+        },
+        {
+          "name": "Android Auto",
+          "description": "Ports the Automotive build to Android Auto and compatible templated hosts. Keeps Home Assistant's native car screens, phone sign-in and real host-provided car data, and retains Automotive behavior on devices that provide it.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.2-full"
           ]
         }
       ],
@@ -4682,7 +4925,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "7952107c2904ddb27d7b66dfaa2054cd56ba453ccd74ab3d7230d2c9a85f7466",
+  "fingerprint": "d1817d235b456f2a903267683c8591e4c0a06b79ba643da7b9abceb52935d6e8",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",

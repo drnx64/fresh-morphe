@@ -2,9 +2,9 @@
   "bundle": "rikunode-hatena-bookmark-hide-pr",
   "channel": "dev",
   "repo_url": "https://github.com/rikunode/hatena-bookmark-hide-pr-patches",
-  "created_at": "2026-11-21T17:34:11",
-  "version": "0.4.5",
-  "description": "v0.4.5 renames this patch source to rikunode/hoshiori and updates the bundled ad-filter snapshot URL. All five patch behaviors and their defaults are unchanged. Hatena Bookmark 5.80/versionCode 58000 only.",
+  "created_at": "2026-11-23T22:26:36",
+  "version": "0.5.0",
+  "description": "v0.5.0 adds the default-ON Open article from bookmark card patch for the bookmark detail screen. The other five patches are unchanged. Hatena Bookmark 5.80/versionCode 58000 only.",
   "apps": [
     {
       "app_name": "Hatena Bookmark: Save, share",
@@ -61,6 +61,20 @@
           ]
         },
         {
+          "name": "Open article from bookmark card",
+          "description": "Tap the article card in bookmark details to open the article in the in-app browser.",
+          "use": true,
+          "options": [
+            {
+              "key": "openArticleFromBookmarkCard",
+              "description": "Tap an article card in bookmark details to open it in the in-app browser."
+            }
+          ],
+          "compatible_versions": [
+            "5.80"
+          ]
+        },
+        {
           "name": "Preserve article WebView cookies and storage",
           "description": "Optionally retain website preferences after closing articles and restarting the app; affects all article sites.",
           "use": true,
@@ -79,10 +93,10 @@
     }
   ],
   "patches_name": "Hatena Bookmark native ad filter",
-  "fingerprint": "45a072ecee5555672973599db8a0cde59fb0f77c67fdde354632d34122efdddd",
-  "release_notes": "# v0.4.5 ? Hoshiori repository migration\n\nRepository renamed from `rikunode/hatena-bookmark-hide-pr-patches` to `rikunode/hoshiori`.\n\n- Updated the Morphe Manager source URL, installation links, documentation and project metadata.\n- The embedded ad-block snapshot endpoint now points to `https://raw.githubusercontent.com/rikunode/hoshiori/filter-data/filters.json.gz`.\n- No changes to any patch logic, DEX guards, options, supported versions or filter-list format. All five patches still target Hatena Bookmark **5.80 (58000)** only.\n- The previous repository address may redirect; users should add/update the **new source** to avoid depending on legacy links.\n- The `preserveArticleWebStorage` option remains **ON by default**; other sites' cookies and login data can persist.\n\nThe update is required for new Android bundles to embed the new snapshot endpoint.\n",
-  "release_tag": "v0.4.5",
-  "release_date": "2026-11-21T08:36:28Z",
+  "fingerprint": "c1e1668bd27667f53e12d5c494daaec221da4fb4a74b2603d0b43aa8fb57b619",
+  "release_notes": "# v0.5.0 — ブックマーク詳細から記事を開く\n\nHatena Bookmark 5.80（versionCode 58000）専用。Hoshioriに6件目のMorpheパッチ「Open article from bookmark card」を追加しました。\n\n- ブックマーク詳細画面の記事カード（タイトル・サムネイル・余白）をタップすると、既存のアプリ内ブラウザで記事を開きます。\n- 「◯◯ users」、ユーザー名・アイコン、フォローボタン、スター領域には既存の操作があり、変更しません。\n- `openArticleFromBookmarkCard` の初期値はONです。OFFにすると元の動作に戻ります。\n- URLが存在しない、またはHTTP(S)以外の場合は何もしません。対象メソッドのDEX構成が異なる場合は安全にパッチ適用を失敗させます。\n- 既存の5パッチ、ほかの画面、対応APKは変更していません。\n\n新機能についてはビルド・APK適用・DEXガード検証を実施します。ログインが必要な画面でのタップ操作がエミュレータで再現できない場合、記事カード／users表示／スターなどの最終動作確認は利用者の実機で行う必要があります。\n",
+  "release_tag": "v0.5.0",
+  "release_date": "2026-11-23T13:33:47Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",

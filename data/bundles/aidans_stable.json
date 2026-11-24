@@ -2,9 +2,9 @@
   "bundle": "aidans",
   "channel": "stable",
   "repo_url": "https://github.com/ihatenodejs/aidans-patches",
-  "created_at": "2026-11-20T21:50:08",
-  "version": "1.9.3",
-  "description": "## [1.9.3](https://github.com/ihatenodejs/aidans-patches/compare/v1.9.2...v1.9.3) (2026-11-20)\n\n### 🐛 Bug Fixes\n\n* **apk-lab:** redact goopdl stderr before truncating ([cb23dd5](https://github.com/ihatenodejs/aidans-patches/commit/cb23dd5bd3dc6c6c0c3f9a90fa81d40961ee342e))\n* **ci:** fall back to status for fizz version code ([d1c14e4](https://github.com/ihatenodejs/aidans-patches/commit/d1c14e424af0ebe8171d37f122b7cea5ff366877))\n* **release:** use merge strategy for stable backmerges ([0bd4915](https://github.com/ihatenodejs/aidans-patches/commit/0bd4915f12af14e6bfc0d620b27bb54ea13804a7))\n\n### 🚀 Updated App Support\n\n* **fizz:** sync dynamic version spoofing seed from Google Play ([197dc41](https://github.com/ihatenodejs/aidans-patches/commit/197dc41c4e6be58f55d13af3969b509d3acce1e0))",
+  "created_at": "2026-11-23T22:15:15",
+  "version": "1.10.0-dev.12",
+  "description": "## [1.10.0-dev.12](https://github.com/ihatenodejs/aidans-patches/compare/v1.10.0-dev.11...v1.10.0-dev.12) (2026-11-23)\n\n### 🐛 Bug Fixes\n\n* **ci:** authenticate release pushes with the ruleset bypass deploy key ([291cf37](https://github.com/ihatenodejs/aidans-patches/commit/291cf37f7d6c5aa17c55d2cbc9c923af16bbaa11))\n* **sezzle:** hide Get Rewards header pill ([0708514](https://github.com/ihatenodejs/aidans-patches/commit/0708514674ffacf5319ff9e59dfcf36b03c9f867))\n* **sezzle:** hide Pay Later Anywhere variants and add shortcut options ([1488561](https://github.com/ihatenodejs/aidans-patches/commit/1488561178fbedf77cbc0ab61c39da4631d8991a))\n* **sezzle:** remove Anywhere and Premium account benefit rows ([e0d12c3](https://github.com/ihatenodejs/aidans-patches/commit/e0d12c3226aef146772e35740a8fa99af5773c93))\n* **sezzle:** restore Home and add clean Home options ([0d66382](https://github.com/ihatenodejs/aidans-patches/commit/0d66382b4e792752391c2262a95b55fe3df23d2b))\n* **sezzle:** restore Home shortcuts and add gift card toggle ([a0f5d73](https://github.com/ihatenodejs/aidans-patches/commit/a0f5d731e3e72285d0f4d50a65bd4050de0d0c92))",
   "apps": [
     {
       "app_name": "Adobe Acrobat Reader: Edit PDF",
@@ -343,7 +343,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.54.0"
+            "1.54.0",
+            "1.72.0"
           ]
         },
         {
@@ -357,7 +358,8 @@
             }
           ],
           "compatible_versions": [
-            "1.54.0"
+            "1.54.0",
+            "1.72.0"
           ]
         },
         {
@@ -371,7 +373,8 @@
             }
           ],
           "compatible_versions": [
-            "1.54.0"
+            "1.54.0",
+            "1.72.0"
           ]
         },
         {
@@ -389,7 +392,8 @@
             }
           ],
           "compatible_versions": [
-            "1.54.0"
+            "1.54.0",
+            "1.72.0"
           ]
         },
         {
@@ -398,7 +402,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.54.0"
+            "1.54.0",
+            "1.72.0"
           ]
         }
       ],
@@ -414,7 +419,8 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.2605.0"
+            "10.2605.0",
+            "10.2606.1"
           ]
         },
         {
@@ -436,7 +442,8 @@
             }
           ],
           "compatible_versions": [
-            "10.2605.0"
+            "10.2605.0",
+            "10.2606.1"
           ]
         },
         {
@@ -466,18 +473,15 @@
             }
           ],
           "compatible_versions": [
-            "10.2605.0"
+            "10.2605.0",
+            "10.2606.1"
           ]
         },
         {
           "name": "Unlock Developer Tools",
-          "description": "Exposes the internal developer and diagnostics screen (Environment Settings) on the Welcome Screen, and allows booting directly with Debug Messages or Demo Mode enabled.",
+          "description": "Exposes the internal developer and diagnostics screen (Environment Settings) with a single Welcome Screen logo tap, and allows booting directly with Debug Messages or Demo Mode enabled.",
           "use": false,
           "options": [
-            {
-              "key": "unlockDeveloperSettings",
-              "description": "Reduces the hidden Welcome Screen logo tap gesture from five taps to a single tap to open the Environment Settings menu."
-            },
             {
               "key": "startWithDebugMessages",
               "description": "Initializes application state with Debug Messages enabled upon startup."
@@ -488,7 +492,8 @@
             }
           ],
           "compatible_versions": [
-            "10.2605.0"
+            "10.2605.0",
+            "10.2606.1"
           ]
         }
       ],
@@ -500,7 +505,7 @@
       "patches": [
         {
           "name": "Remove Tracking",
-          "description": "Neutralizes Google Play Advertising ID tracking, Firebase Analytics, Datadog telemetry, Kochava attribution, New Relic, Luciq, root/emulator checks, and integrity attestation.",
+          "description": "Neutralizes Google Play Advertising ID tracking, Firebase Analytics, Crashlytics, Datadog telemetry, Kochava attribution, New Relic, Segment, Qualtrics, root/emulator checks, and integrity attestation.",
           "use": true,
           "options": [
             {
@@ -532,8 +537,12 @@
               "description": "Blocks Credit Karma New Relic event collection and background upload scheduling."
             },
             {
-              "key": "disableLuciqTelemetry",
-              "description": "Neutralizes Luciq APM session updates, auto screen recording, and diagnostic screenshot collection."
+              "key": "disableSegmentAnalytics",
+              "description": "Blocks Segment event, screen, identity, and lifecycle collection used by the Intuit UXFabric clickstream."
+            },
+            {
+              "key": "disableQualtrics",
+              "description": "Blocks Qualtrics project initialization, intercept evaluation, and view-visit tracking."
             },
             {
               "key": "neutralizeRootDetection",
@@ -545,7 +554,7 @@
             }
           ],
           "compatible_versions": [
-            "26.40"
+            "26.47"
           ]
         }
       ],
@@ -561,7 +570,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.19.22"
+            "26.23.8"
           ]
         },
         {
@@ -570,7 +579,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "26.19.22"
+            "26.23.8"
           ]
         }
       ],
@@ -636,10 +645,6 @@
               "description": "Restores the internal Debug Menu item in Settings (LaunchDarkly overrides, Remote Config overrides, AutoLogger, Style/Component/Tooltip previews, and DebugSharedPrefs toggles)."
             },
             {
-              "key": "enableAchievementDebugTap",
-              "description": "Enables the internal Debug.TEST_AWARD tap handler in AchievementActivity to test confetti and cycle achievement states."
-            },
-            {
               "key": "unlockTrailsMapTypeGate",
               "description": "Unlocks Trails and Wheelchair Trails in MapTypeSelectionFragment when OpenStreetMap Drop-in Replacement is not enabled."
             },
@@ -652,68 +657,36 @@
               "description": "Enables Premium-only controls in HideCacheViewModel and ConversationViewModel GC code validation."
             },
             {
-              "key": "enableCacheDetailsRedesign",
-              "description": "Enables the redesigned Geocache Details layout (cache-details-rework)."
-            },
-            {
-              "key": "showTotalLogCount",
-              "description": "Shows the total log count in geocache activity and details (show-total-log-count)."
-            },
-            {
               "key": "enableShareablesInApp",
-              "description": "Enables in-app Shareables, filter, and FTUE (show-shareables-in-app, mobile-shareables-filter, mobile-shareables-ftue)."
+              "description": "Enables in-app Shareables and the Shareables filter (show-shareables, mobile-shareables-filter)."
             },
             {
               "key": "enableCollaborativeLists",
-              "description": "Enables the collaborative lists feature in Listhub (collaborative-lists)."
+              "description": "Enables the collaborative lists feature in Listhub (collab-list-release)."
             },
             {
               "key": "enableLodestones",
-              "description": "Enables Lodestone features across the app (show-lodestones-mobile)."
+              "description": "Enables Lodestone features across the app (show-lodestones-mobile, show-lodestone-mobile-finders)."
             },
             {
               "key": "enableEditLogDate",
               "description": "Enables editing geocache log dates and date selector (edit-geocache-log, show-log-date-selector)."
             },
             {
-              "key": "enableBetterEventsFilter",
-              "description": "Enables Better Events filter, map, and AR attribute (better-events-filter, better-events-map, show-ar-attribute-in-filter)."
-            },
-            {
-              "key": "enableSelectCacheTypes",
-              "description": "Enables select cache types and filter settings saving (select-cache-types, save-filter-settings)."
-            },
-            {
-              "key": "enableDiagnosticFlags",
-              "description": "Enables diagnostic info, FCM token display, ANR data prompt, API regions, and map timeout."
-            },
-            {
               "key": "forceMapTrayEnabled",
-              "description": "Forces the map tray feature enabled (RemoteConfig.MAP_TRAY)."
+              "description": "Forces the map tray feature enabled (mapTray)."
             },
             {
               "key": "forceHideLastLogCount",
-              "description": "Forces hiding the last log DNF count (RemoteConfig.HIDE_LAST_LOG_DNF)."
+              "description": "Forces hiding the last log DNF count (hideLastLogDNF)."
             },
             {
               "key": "forceShowDowntimeBanner",
-              "description": "Forces the downtime maintenance banner visible (RemoteConfig.SHOW_DOWNTIME_BANNER)."
-            },
-            {
-              "key": "forceDisableMapAutoUpdate",
-              "description": "Disables automatic map updating when panning/zooming (RemoteConfig.MAP_AUTO_UPDATE_DISABLED)."
-            },
-            {
-              "key": "forceSendDiagnosticLogs",
-              "description": "Forces sending diagnostic logs with bug reports (RemoteConfig.SEND_DIAGNOSTIC_INFO_LOGS)."
-            },
-            {
-              "key": "forceLinearCalloutsEnabled",
-              "description": "Forces linear callout views enabled (RemoteConfig.LINEAR_CALLOUTS_ENABLED)."
+              "description": "Forces the downtime maintenance banner visible (showMobileDowntimeBanner)."
             }
           ],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -723,11 +696,11 @@
           "options": [
             {
               "key": "showLocalPremiumWarnings",
-              "description": "Shows an informational warning banner on Premium Member Only caches indicating that complete cache data is restricted by the server for basic accounts."
+              "description": "Shows an informational notice when opening a Premium Member Only cache, indicating that complete cache data is restricted by the server for basic accounts."
             }
           ],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -736,7 +709,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -745,7 +718,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -754,12 +727,12 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
           "name": "Remove Tracking and Analytics",
-          "description": "Neutralizes first-party analytics (AnalyticsRepo), Google Analytics / Firebase (Analytics, Crashlytics, Performance, In-App Messaging), Facebook App Events, Iterable marketing telemetry, Usercentrics consent collection, and zeros the Google Play Advertising ID (AAID).",
+          "description": "Neutralizes first-party analytics (AnalyticsRepo), Google Analytics / Firebase (Analytics, Crashlytics, Performance, In-App Messaging), Facebook App Events dispatch, Iterable marketing telemetry, Usercentrics consent collection, and zeros the Google Play Advertising ID (AAID).",
           "use": true,
           "options": [
             {
@@ -780,7 +753,7 @@
             }
           ],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -789,7 +762,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -811,7 +784,7 @@
             }
           ],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         },
         {
@@ -820,7 +793,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "10.21.0"
+            "10.24.0"
           ]
         }
       ],
@@ -832,16 +805,28 @@
       "patches": [
         {
           "name": "Change App Icon",
-          "description": "Recolors the Canvas launcher icon and optionally replaces its foreground with a custom PNG. The image is an adaptive-icon foreground, so launchers mask it to their icon shape; keep artwork inside the central safe area of a 432x432 PNG.",
+          "description": "Recolors the Canvas launcher icon and optionally replaces its foreground with a custom PNG. The colors also theme the launch splash screen and the signed-out Canvas logo when changed. The image is an adaptive-icon foreground, so launchers mask it to their icon shape; keep artwork inside the central safe area of a 432x432 PNG.",
           "use": false,
           "options": [
             {
               "key": "foregroundColor",
-              "description": "Color of the original launcher foreground vector (#RRGGBB or opaque #AARRGGBB). Also tints the monochrome icon vector."
+              "description": "Color of the original launcher foreground vector (#RRGGBB or opaque #AARRGGBB). Also tints the monochrome icon vector and, when changed from the default, the splash logo, animated loader, and signed-out Canvas logo."
             },
             {
               "key": "backgroundColor",
               "description": "Adaptive icon background color (#RRGGBB or opaque #AARRGGBB)."
+            },
+            {
+              "key": "splashBackgroundColor",
+              "description": "Splash screen background color used when Theme Splash Screen is enabled (#RRGGBB or opaque #AARRGGBB). Independent of the launcher icon background."
+            },
+            {
+              "key": "themeSplashScreen",
+              "description": "Applies the splash background color to the Android 12+ system splash and the legacy splash window, and the foreground color to the splash logo and animated loader, when each differs from its default."
+            },
+            {
+              "key": "themeLandingLogo",
+              "description": "Tints the Canvas mark on the signed-out landing page with the foreground color when it differs from the default."
             },
             {
               "key": "customForeground",
@@ -970,7 +955,7 @@
             }
           ],
           "compatible_versions": [
-            "17.0.0"
+            "17.2.0"
           ]
         },
         {
@@ -984,7 +969,7 @@
             }
           ],
           "compatible_versions": [
-            "17.0.0"
+            "17.2.0"
           ]
         },
         {
@@ -1038,7 +1023,7 @@
             }
           ],
           "compatible_versions": [
-            "17.0.0"
+            "17.2.0"
           ]
         },
         {
@@ -1060,7 +1045,7 @@
             }
           ],
           "compatible_versions": [
-            "17.0.0"
+            "17.2.0"
           ]
         },
         {
@@ -1069,7 +1054,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "17.0.0"
+            "17.2.0"
           ]
         }
       ],
@@ -1081,7 +1066,7 @@
       "patches": [
         {
           "name": "Clean Authentication",
-          "description": "Shows Google sign-in only and removes the unavailable phone sign-in controls.",
+          "description": "Removes the unavailable phone sign-in controls while keeping Google and Apple sign-in.",
           "use": true,
           "options": [
             {
@@ -1090,7 +1075,33 @@
             }
           ],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
+          ]
+        },
+        {
+          "name": "Clean Home",
+          "description": "Removes store/brand carousels and promotional banners from the Home tab, with an optional shortcut-row cleanup.",
+          "use": true,
+          "options": [
+            {
+              "key": "removeShortcuts",
+              "description": "Hides the Your Shortcuts row and its quick-action pills. Disabled by default so the Home tab keeps its shortcuts."
+            },
+            {
+              "key": "removeBrands",
+              "description": "Removes the store header, category store lists, and brand carousels."
+            },
+            {
+              "key": "removePromotions",
+              "description": "Removes the Home deal, cashback, and subscription promotional banners."
+            },
+            {
+              "key": "removeSezzleSpendBanner",
+              "description": "Hides the floating Sezzle Spend balance notification. It represents real spendable balance, so this is opt-in."
+            }
+          ],
+          "compatible_versions": [
+            "5.3.24"
           ]
         },
         {
@@ -1125,10 +1136,22 @@
             {
               "key": "hidePayLaterAnywhere",
               "description": "Hides the Pay Later Anywhere shortcut from the Your Shortcuts carousel."
+            },
+            {
+              "key": "hideSezzlePoints",
+              "description": "Hides the Sezzle Points shortcut from the Your Shortcuts carousel."
+            },
+            {
+              "key": "hideSezzleSpend",
+              "description": "Hides the Sezzle Spend shortcut from the Your Shortcuts carousel."
+            },
+            {
+              "key": "hideSezzleUp",
+              "description": "Hides the Sezzle Up shortcut from the Your Shortcuts carousel."
             }
           ],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1137,7 +1160,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1146,7 +1169,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1155,7 +1178,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1164,7 +1187,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1202,25 +1225,39 @@
             }
           ],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
           "name": "Remove Rewards",
-          "description": "Removes Rewards navigation while keeping Account's Sezzle Points item and routing the Home shortcut to the same page.",
+          "description": "Removes the Rewards bottom navigation tab while keeping Account's Sezzle Points item accessible.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
           "name": "Remove Sezzle Subscriptions",
-          "description": "Removes references to Sezzle Anywhere and Sezzle Premium subscriptions in Account benefits, Wallet, and Orders help.",
+          "description": "Removes references to Sezzle Anywhere and Sezzle Premium subscriptions in Account benefits, the Home gift card carousel, Wallet, and Orders help.",
           "use": false,
+          "options": [
+            {
+              "key": "removeHomeGiftCards",
+              "description": "Hides the Home Most Popular Gift Cards carousel. Gift cards require an active Sezzle Anywhere subscription."
+            }
+          ],
+          "compatible_versions": [
+            "5.3.24"
+          ]
+        },
+        {
+          "name": "Rename Shop to Home",
+          "description": "Renames the Shop bottom navigation tab to Home.",
+          "use": true,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1234,16 +1271,7 @@
             }
           ],
           "compatible_versions": [
-            "5.3.9"
-          ]
-        },
-        {
-          "name": "Replace Shop with Home",
-          "description": "Replaces the Shop bottom navigation tab with Home, a custom screen to replace the overly-commercial Shop screen.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1265,25 +1293,7 @@
             }
           ],
           "compatible_versions": [
-            "5.3.9"
-          ]
-        },
-        {
-          "name": "Suppress Updates and Integrity Checks",
-          "description": "Disables Microsoft CodePush OTA updates and neutralizes Dalvik root and tamper detection SDKs (RootBeer and JailMonkey).",
-          "use": true,
-          "options": [
-            {
-              "key": "disableCodePush",
-              "description": "Prevents Microsoft CodePush from downloading remote JavaScript bundles that override local patches."
-            },
-            {
-              "key": "bypassRootAndTamperDetection",
-              "description": "Bypasses RootBeer and JailMonkey checks in Dalvik bytecode so modified or rooted devices are never flagged."
-            }
-          ],
-          "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1292,7 +1302,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1301,7 +1311,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         },
         {
@@ -1310,7 +1320,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "5.3.9"
+            "5.3.24"
           ]
         }
       ],
@@ -1322,62 +1332,58 @@
       "patches": [
         {
           "name": "AMOLED Theme",
-          "description": "Forces SidelineSwap into a pure-black AMOLED theme with dark system bars, black app surfaces, readable light text and icons, and force dark mode on embedded WebViews.",
+          "description": "Applies a pure-black AMOLED palette to SidelineSwap's Compose theme: black surfaces and container tokens, readable light text and icons, a black launch window, light system-bar icons, and force-dark embedded WebViews.",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "1.52.0"
+            "2.3.2"
           ]
         },
         {
           "name": "Block Tracking and Telemetry",
-          "description": "Neutralizes first-party analytics (SidelineSwap backend), behavioral tracking (Amplitude, Firebase Analytics, Facebook App Events, Iterable), diagnostic telemetry (Firebase Crashlytics, Timber logging tree), payment gateway telemetry (Braintree FPTI), Google Play Install Referrer, and zeros the Google Play Advertising ID (AAID).",
+          "description": "Neutralizes first-party analytics (SidelineSwap backend), behavioral tracking (Amplitude, Firebase Analytics, Iterable), diagnostic telemetry (Firebase Crashlytics), payment gateway telemetry (Braintree FPTI), Google Play Install Referrer, and zeros the Google Play Advertising ID (AAID).",
           "use": true,
           "options": [
             {
               "key": "disableFirstParty",
-              "description": "Neutralizes SidelineSwap's central event dispatcher (AnalyticsLogger), first-party client, and LogRepo HTTP event uploads."
+              "description": "Neutralizes SidelineSwap's first-party HTTP event client. The fan-out multiplexer stays intact so the remaining clients stay independently controllable."
             },
             {
               "key": "disableAmplitude",
-              "description": "Neutralizes the Amplitude client wrapper and core Amplitude SDK event tracking, identification, and initialization across all repositories."
+              "description": "Neutralizes the Amplitude client wrapper's event, identification, and reset entry points."
             },
             {
               "key": "disableFirebase",
-              "description": "Neutralizes FirebaseClient, Google Play Services Measurement event queue, and removes background AppMeasurement services and sessions."
+              "description": "Neutralizes the Google Play Services measurement event entry point and removes background AppMeasurement services and sessions."
             },
             {
               "key": "disableCrashlytics",
-              "description": "Neutralizes the Timber Crashlytics logging tree and Firebase Crashlytics exception, log, and custom key reporting."
-            },
-            {
-              "key": "disableFacebook",
-              "description": "Neutralizes Facebook SDK initialization, auto-event collection, activity lifecycle tracking, and removes FacebookInitProvider."
+              "description": "Neutralizes the Crashlytics user-id wrapper and stops the crash handler from recording exceptions, while the default handler still terminates crashed processes."
             },
             {
               "key": "disableIterable",
-              "description": "Neutralizes Iterable client calls, In-App message tracking, session event uploads, and lifecycle callback registration."
+              "description": "Neutralizes the Iterable client wrapper and SDK identity/FCM registration entry points, and removes Iterable push services and receivers."
             },
             {
               "key": "disableBraintreeTelemetry",
-              "description": "Stubs Braintree FPTI background upload and database workers with immediate success, and neutralizes BraintreeClient analytics dispatchers."
+              "description": "Stubs Braintree FPTI background upload and database workers with immediate success."
             },
             {
               "key": "zeroAdvertisingId",
-              "description": "Spoofs minified and standard Google Play AdvertisingIdClient calls to return an all-zero UUID and forces limit-ad-tracking to true."
+              "description": "Spoofs the Google Play AdvertisingIdClient entry points to return an all-zero UUID and forces limit-ad-tracking to true."
             },
             {
               "key": "disableInstallReferrer",
-              "description": "Neutralizes Google Play Install Referrer querying and client connections across attribution listeners."
+              "description": "Neutralizes the Google Play Services install-referrer reporter."
             }
           ],
           "compatible_versions": [
-            "1.52.0"
+            "2.3.2"
           ]
         },
         {
           "name": "Change Brand Color",
-          "description": "Customizes the primary accent brand color across SidelineSwap buttons, navigation highlights, badges, and accents.",
+          "description": "Customizes the primary brand accent color across SidelineSwap buttons, navigation highlights, badges, and accents.",
           "use": false,
           "options": [
             {
@@ -1386,20 +1392,20 @@
             },
             {
               "key": "primaryDarkColor",
-              "description": "Hex color string for status bars and dark accents (defaults to #1565C0)."
+              "description": "Hex color string for the secondary accent and dark accents (defaults to #1565C0)."
             }
           ],
           "compatible_versions": [
-            "1.52.0"
+            "2.3.2"
           ]
         },
         {
           "name": "Remove Invite Friends",
-          "description": "Removes the Invite Friends option from the Account screen and eliminates the non-functional orange dot notification badge from the Account navigation icon.",
+          "description": "Removes the Invite Friends entry from the Account screen and blocks direct and deep-link navigation to the referral screen.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "1.52.0"
+            "2.3.2"
           ]
         }
       ],
@@ -1415,7 +1421,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2.22.09"
+            "2.23.01"
           ]
         },
         {
@@ -1424,7 +1430,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2.22.09"
+            "2.23.01"
           ]
         },
         {
@@ -1438,7 +1444,7 @@
             }
           ],
           "compatible_versions": [
-            "2.22.09"
+            "2.23.01"
           ]
         },
         {
@@ -1447,7 +1453,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2.22.09"
+            "2.23.01"
           ]
         },
         {
@@ -1456,7 +1462,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2.22.09"
+            "2.23.01"
           ]
         },
         {
@@ -1465,7 +1471,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
-            "2.22.09"
+            "2.23.01"
           ]
         }
       ],
@@ -1473,10 +1479,10 @@
     }
   ],
   "patches_name": "Aidan's Patches",
-  "fingerprint": "36db5ecb5738b77a0ecad491008a68f756ddd7c4f91f4755c0d05b73bab00f37",
-  "release_notes": "## [1.9.3-dev.1](https://github.com/ihatenodejs/aidans-patches/compare/v1.9.2...v1.9.3-dev.1) (2026-11-20)\n\n### 🐛 Bug Fixes\n\n* **apk-lab:** redact goopdl stderr before truncating ([cb23dd5](https://github.com/ihatenodejs/aidans-patches/commit/cb23dd5bd3dc6c6c0c3f9a90fa81d40961ee342e))\n* **ci:** fall back to status for fizz version code ([d1c14e4](https://github.com/ihatenodejs/aidans-patches/commit/d1c14e424af0ebe8171d37f122b7cea5ff366877))\n* **release:** use merge strategy for stable backmerges ([0bd4915](https://github.com/ihatenodejs/aidans-patches/commit/0bd4915f12af14e6bfc0d620b27bb54ea13804a7))\n\n### 🚀 Updated App Support\n\n* **fizz:** sync dynamic version spoofing seed from Google Play ([197dc41](https://github.com/ihatenodejs/aidans-patches/commit/197dc41c4e6be58f55d13af3969b509d3acce1e0))\n",
-  "release_tag": "v1.9.3-dev.1",
-  "release_date": "2026-11-20T18:57:34Z",
+  "fingerprint": "4dde4d8aa3d8f713c6aba0add99159888d37cd23907df4f0fe638f6154227737",
+  "release_notes": "## [1.10.0-dev.8](https://github.com/ihatenodejs/aidans-patches/compare/v1.10.0-dev.7...v1.10.0-dev.8) (2026-11-23)\n\n### 🚀 Updated App Support\n\n* **credit-karma:** support 26.47 ([55e9dfe](https://github.com/ihatenodejs/aidans-patches/commit/55e9dfe4f4b302584998c346335e134687c9d721))\n",
+  "release_tag": "v1.10.0-dev.8",
+  "release_date": "2026-11-23T03:29:31Z",
   "isPreRelease": true,
   "stars": 11,
   "avatarUrl": "https://avatars.githubusercontent.com/u/178358868?v=4",

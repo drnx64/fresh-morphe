@@ -2,31 +2,22 @@
   "bundle": "forsigh",
   "channel": "dev",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-11-23T01:03:10",
-  "version": "0.30.66-dev.6",
-  "description": "Waze 5.28.4.900. Dev build 0.30.66-dev.6 fixes Alert distances (native config writes, trigger window off, all-types camera distance) on top of UI Themes and the AMOLED map palettes. Every row is pinned to 5.28.4.900; older Waze builds use 0.30.64 (5.27.90.900).",
+  "created_at": "2026-11-23T22:35:39",
+  "version": "0.30.66",
+  "description": "Waze 5.28.4.900. Stable build 0.30.66 makes every forced setting reach the store Waze's map, alerts and Android Auto actually read, and repairs eleven rows that applied without changing anything. Every row is pinned to 5.28.4.900.",
   "apps": [
     {
       "app_name": "Waze Navigation & Live Traffic",
       "package": "com.waze",
       "patches": [
         {
-          "name": "AMOLED Dark Mode For UI",
-          "description": "Makes the dark UI pure black.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.28.4.900"
-          ]
-        },
-        {
           "name": "Alert distances",
-          "description": "How early alerts sound, plus a speed-bump switch and per-alert distances.",
-          "use": true,
+          "description": "How early alerts sound, plus a speed-bump switch and per-alert distances. Pick a level; Standard changes nothing.",
+          "use": false,
           "options": [
             {
               "key": "level",
-              "description": "Standard is Waze's own. Moderate and Heavier warn earlier - about 1.5x and 2.5x on average; cameras change more than police."
+              "description": "Moderate warns about 1.5x earlier, Heavier about 2.5x. Standard writes Waze's own numbers back, i.e. changes nothing."
             },
             {
               "key": "bumps",
@@ -67,6 +58,10 @@
             {
               "key": "between",
               "description": "0 = keep the preset, Standard 300 m."
+            },
+            {
+              "key": "cameras",
+              "description": "0 = keep the preset. In most countries Waze uses this one distance for every camera type; set it if camera alerts do not move."
             }
           ],
           "compatible_versions": [
@@ -274,7 +269,7 @@
           "options": [
             {
               "key": "large",
-              "description": "Uses the bigger layout on the cluster. Stock: small."
+              "description": "Forces AAOS_LCV_SUPPORT_ENABLED. It is Waze's large-commercial-vehicle support (dimension bounds in millimetres), not a cluster layout size - off by default."
             }
           ],
           "compatible_versions": [
@@ -345,8 +340,8 @@
           ]
         },
         {
-          "name": "No Android Auto telemetry",
-          "description": "Stops Waze sending Android Auto screen-switch timings to its analytics.",
+          "name": "No usage stats",
+          "description": "Stops Waze building, storing and uploading usage statistics, and turns off its background thread-responsiveness monitors. Driving, reports and alerts are unaffected.",
           "use": false,
           "options": [],
           "compatible_versions": [
@@ -372,6 +367,15 @@
               "description": "Waze's promotional beacon popups. Stock: shown."
             }
           ],
+          "compatible_versions": [
+            "5.28.4.900"
+          ]
+        },
+        {
+          "name": "Remove telemetry",
+          "description": "Stops crash reports, usage analytics and performance data leaving the app. Traffic reporting and alerts keep working.",
+          "use": false,
+          "options": [],
           "compatible_versions": [
             "5.28.4.900"
           ]
@@ -507,6 +511,24 @@
           ]
         },
         {
+          "name": "UI Themes",
+          "description": "Chrome colour themes, picked separately for light and dark mode. Stock leaves each mode untouched.",
+          "use": false,
+          "options": [
+            {
+              "key": "lightTheme",
+              "description": "Applies in light mode: window, sheets, chips, text. Stock leaves light mode as Waze built it."
+            },
+            {
+              "key": "darkTheme",
+              "description": "Applies in light-off mode. Pure Black is the original AMOLED row; Stock leaves dark mode untouched."
+            }
+          ],
+          "compatible_versions": [
+            "5.28.4.900"
+          ]
+        },
+        {
           "name": "Unlock driver moods",
           "description": "Unlocks all moods on the device.",
           "use": true,
@@ -529,10 +551,10 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "9dabe9eaecc750fcfc01b1225037cf822b4394e2f404035dd8d91c0832e04fcd",
-  "release_notes": "Stable, pinned to **Waze 5.28.4.900** (versionCode 1030753).\n\n**One bundle, one Waze version.** Every row now declares exactly the build it was verified against, so the Manager shows `5.28.4.900` instead of a range or \"Any\". Point it at a different Waze build and every row is skipped as incompatible rather than half-applied.\n\nOn Waze 5.27.90.900 use **0.30.64**, which is re-issued with the same rule and pins that build.\n\nVerified: 36/36 rows apply on 5.28.4.900, 466,083 methods, 0 broken branch targets, 0 out-of-frame registers. Applying this bundle to 5.27.90.900 skips all 36 rows as incompatible.",
-  "release_tag": "v0.30.65",
-  "release_date": "2026-11-21T07:34:36Z",
+  "fingerprint": "62079a322be03b2e364b5cbaa73e6c216e1b6ffe1e6c34f3889a965af89cc7a6",
+  "release_notes": "Stable build for Waze **5.28.4.900** (versionCode 1030753). 37 rows.\n\n### The fixes behind the \"it applies but nothing happens\" reports\nWaze's map, alert engine and Android Auto layer read their settings from a **native** config store, not from the Java getters the rows were changing. On this build, 71 of the 80 forced keys never reached it, so the row flipped a settings screen and left the driving behaviour untouched. Every forced key is now written to both stores, strings included, and a check in the build fails if one is missing.\n\n### Rows that were verified dead and rewired\n- **YouTube Music / Any audio app** — the partner entries were appended after the list had been measured, so they never entered it. The length is reloaded before the roster is sized.\n- **Hide recent destinations** — the empty list was written into the wrong register; callers received `null`, not an empty list.\n- **Picture-in-picture** — touches were routed to a hard-coded view id that is a different view on this build; the map is now resolved by name.\n- **Lane guidance** — the consumer requires a third flag (`LANE_GUIDANCE_USER_ENABLED`) that was never set.\n- **Live drive sharing** — the map button also needs `SHARE_DRIVE_BUTTON_BACK_ENTRY_POINT_ENABLED`.\n- **Remove ads** — search results carry their own two gates, now forced.\n- **Cameras & hazards** — crosswalks were only switched on in Settings; the two announcement keys are now set, so a mapped crosswalk warns instead of only drawing.\n- **Car map zoom** — the write hung off an unrelated setter and could be skipped; it goes through the shared guarded helper on every config sync.\n- **Allow high refresh rate** — 90 Hz became 88 and 165 became 160 because the constant truncates the double; such rates are now refused instead of silently changed.\n- **Instrument cluster** — the \"large layout\" option was actually Waze's light-commercial-vehicle mode and was on by default. Off by default, renamed.\n- **Smoother Android Auto map** — dropped a key Waze removed in this version.\n\n### Option values are validated\nPassing a label where a value token belongs (\"Phone only\" instead of \"phone\") used to apply cleanly and change nothing. It now aborts with the accepted values listed.\n\n### Supported builds\nEvery row is pinned to **5.28.4.900**. Waze 5.27.90.900 uses **0.30.64**, which pins that build; a bundle refuses a build it was not verified against rather than half-applying.\n\nVerified on 5.28.4.900: every row alone (37/37), every option variant (18/18), option effects read back from the built APK (16/16), and all rows together with non-default options — 37/37 applied, 0 broken branch targets, frame count identical to stock, 85/85 forced keys reaching the native store.\n",
+  "release_tag": "v0.30.66",
+  "release_date": "2026-11-23T22:35:31Z",
   "isPreRelease": false,
   "stars": 11,
   "avatarUrl": "https://avatars.githubusercontent.com/u/35919784?v=4",

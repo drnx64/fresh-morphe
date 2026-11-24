@@ -2,9 +2,9 @@
   "bundle": "0x11dfe",
   "channel": "latest",
   "repo_url": "https://github.com/0x11DFE/morphe-patches",
-  "created_at": "2026-11-22T10:50:11",
-  "version": "1.13.0",
-  "description": "## [1.13.0](https://github.com/0x11DFE/morphe-patches/compare/v1.12.9...v1.13.0) (2026-11-22)\n\n### New Features\n\n* **scene:** locate the daemon gate by instruction signature ([579bc79](https://github.com/0x11DFE/morphe-patches/commit/579bc7906493e7ddce42cfaee506cb05715dadf6)), closes [#1](https://github.com/0x11DFE/morphe-patches/issues/1)",
+  "created_at": "2026-11-23T22:43:09",
+  "version": "1.18.2",
+  "description": "## [1.18.2](https://github.com/0x11DFE/morphe-patches/compare/v1.18.1...v1.18.2) (2026-11-23)\n\n### Bug Fixes\n\n* **galaxymaxhz:** escape the JSON quotes for the smali assembler ([2da8e84](https://github.com/0x11DFE/morphe-patches/commit/2da8e848121a4e4f1b6a057374537ed0a36914c6))",
   "apps": [
     {
       "app_name": "Waypoint: Outdoor Navigation",
@@ -101,6 +101,33 @@
       "developer": "com.omarea"
     },
     {
+      "app_name": "Galaxy MaxHz",
+      "package": "com.tribalfs.gmh",
+      "patches": [
+        {
+          "name": "Random device ID",
+          "description": "Replaces the fixed salt in the native device fingerprint with a random salt baked in when the patch is applied, so each patched APK reports its own stable device id to the licensing server. Re-patch for a new id. The local license check does not use the salt and keeps working.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0x",
+            "9.2.1x"
+          ]
+        },
+        {
+          "name": "Unlock Premium",
+          "description": "Unlocks premium locally and fully offline. Every signed licence and config request is answered with a valid premium response, the startup APK self-check that would keep the app loading forever is bypassed, and refresh-rate profiles come from the app's own bundled device table. The licence server never validates a re-signed install, so no server connection is needed or attempted.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "9.2.0x",
+            "9.2.1x"
+          ]
+        }
+      ],
+      "developer": "com.tribalfs"
+    },
+    {
       "app_name": "MD PROXY VPN",
       "package": "com.vpnproxymd.mdproxyvpn",
       "patches": [
@@ -136,10 +163,10 @@
     }
   ],
   "patches_name": "0x11DFE Morphe patches",
-  "fingerprint": "f61aea5742bcb016d0e6d364493488eb8334e90200e69e9e19a06c2ec15d9afa",
-  "release_notes": "## [1.12.9](https://github.com/0x11DFE/morphe-patches/compare/v1.12.8...v1.12.9) (2026-11-21)\n\n### Bug Fixes\n\n* **scene:** ignore daemon startup writes when arming the gate poker ([d6e6eb5](https://github.com/0x11DFE/morphe-patches/commit/d6e6eb56e7c276f603f351d2e60adb692304ca2f))\n",
-  "release_tag": "v1.12.9",
-  "release_date": "2026-11-21T20:57:39Z",
+  "fingerprint": "febf82961e9a9cbc497df4e2b7ecc6aab9a18fc6f3877785d3f51a703946c11c",
+  "release_notes": "## [1.18.2](https://github.com/0x11DFE/morphe-patches/compare/v1.18.1...v1.18.2) (2026-11-23)\n\n### Bug Fixes\n\n* **galaxymaxhz:** escape the JSON quotes for the smali assembler ([2da8e84](https://github.com/0x11DFE/morphe-patches/commit/2da8e848121a4e4f1b6a057374537ed0a36914c6))\n",
+  "release_tag": "v1.18.2",
+  "release_date": "2026-11-23T22:43:55Z",
   "isPreRelease": false,
   "stars": 4,
   "avatarUrl": "https://avatars.githubusercontent.com/u/43712252?v=4&s=128",

@@ -2,31 +2,42 @@
   "bundle": "myzong",
   "channel": "stable",
   "repo_url": "https://github.com/FarhanZafarr-9/myzong-patches",
-  "created_at": "2026-11-21T11:30:08",
-  "version": "1.2.23",
-  "description": "MyZong patches for stock 5.19.19.112: theme, shapes, screen and navigation customization.",
+  "created_at": "2026-11-23T20:25:42",
+  "version": "1.3.3",
+  "description": "- Organized settings into 15 patches and six categories.\n- Added Material You colors with charcoal fallback.\n- Added rounded Light/Dark icons and matching static splash.\n- Refined onboarding and Rewards styling.\n- Fixed OTP paste across digit boxes.\n- Added optional personal-details skip after OTP.\n- Fixed neutral Usage values and navigation feedback.\n- Reduced bundle blinking and Home button flashes.\n- Made the loading rings loop smoothly.",
   "apps": [
     {
       "app_name": "My Zong",
       "package": "com.zong.customercare",
       "patches": [
         {
-          "name": "Bundle controls toggle",
-          "description": "Add a button beside Search to hide or restore bundle categories, validity chips and filters. Remembers your choice.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Charcoal dark mode",
-          "description": "Dark grey backgrounds, lighter charcoal cards, pale text and restrained accents. Keeps card geometry unchanged.",
+          "name": "Bottom navigation",
+          "description": "Configure the bottom bar, tab labels and individual tabs.",
           "use": true,
           "options": [
             {
-              "key": "systemMaterialAccent",
-              "description": "Use Android 12+ wallpaper accent for highlighted values and navigation; use muted green on older Android."
+              "key": "hideNavigation",
+              "description": "Display the whole bottom navigation bar. Turning off hides every tab while retaining the individual tab choices below."
+            },
+            {
+              "key": "iconOnly",
+              "description": "Display labels beneath the bottom navigation icons. Turning off keeps icons only; it does not hide any tab."
+            },
+            {
+              "key": "hideMore",
+              "description": "Display More in the bottom navigation bar. The whole-bar setting takes precedence."
+            },
+            {
+              "key": "hideZPlay",
+              "description": "Display Z Play in the bottom navigation bar. Turning off hides that tab without deleting its destination."
+            },
+            {
+              "key": "hideUsage",
+              "description": "Display Usage in the bottom navigation bar. Consider how you will return to Usage before hiding it."
+            },
+            {
+              "key": "hideBundles",
+              "description": "Display Bundles in the bottom bar. When hidden, Header can provide a replacement shortcut on Home."
             }
           ],
           "compatible_versions": [
@@ -34,13 +45,25 @@
           ]
         },
         {
-          "name": "Customize header",
-          "description": "Choose header items to hide.",
+          "name": "Bundles and Usage",
+          "description": "Configure the Bundles controls button and promotional sections.",
           "use": true,
           "options": [
             {
-              "key": "headerItemsToHide",
-              "description": "Available names: Notifications, Menu, Refresh, Search, Greeting. An empty list keeps all items."
+              "key": "bundleControlsToggle",
+              "description": "Add a button beside Bundles search that hides/restores categories, validity chips and Filter by together. Its choice is remembered in the app."
+            },
+            {
+              "key": "hideBundlePromotions",
+              "description": "Display advertising banners around supported bundle browsing/details areas. Offer cards remain available when off."
+            },
+            {
+              "key": "hideUsageBanner",
+              "description": "Display the large promotional banner above the Usage summary. Does not affect allowance cards."
+            },
+            {
+              "key": "hideUsagePromotions",
+              "description": "Display the external-promotion label and advertising container on Usage. Subscription details remain available when off."
             }
           ],
           "compatible_versions": [
@@ -48,10 +71,182 @@
           ]
         },
         {
-          "name": "Customize home shortcuts",
+          "name": "Dialogs and drawer",
+          "description": "Configure the chatbot, WhatsApp notice and grouped drawer links.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideChatbot",
+              "description": "Display the floating chatbot launcher and allow its dialog to open. Turning off hides the overlay and blocks its opening method."
+            },
+            {
+              "key": "hideWhatsAppChannel",
+              "description": "Allow the Zong 5G WhatsApp 'AISA HAI FUTURE' / 'Follow!' notice, including notices triggered after refresh."
+            },
+            {
+              "key": "hideDrawerExtras",
+              "description": "Display Press Release, Find Us, Contact Us, Video Tutorials, FAQs and Feedback as one group. The menu button is controlled under Header."
+            }
+          ],
+          "compatible_versions": [
+            "5.19.19.112"
+          ]
+        },
+        {
+          "name": "Header",
+          "description": "Choose visible header items, titles and replacement shortcuts.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideNotifications",
+              "description": "Display the notification bell in the top header. Turning off hides its launcher, not account notifications."
+            },
+            {
+              "key": "hideMenu",
+              "description": "Display the top-header side-menu button. Drawer link visibility is configured under Dialogs and drawer."
+            },
+            {
+              "key": "hideRefresh",
+              "description": "Display the top-header refresh button. Turning off does not disable pull-to-refresh."
+            },
+            {
+              "key": "hideSearch",
+              "description": "Display header search outside Bundles. Bundles keeps its search button even when this option is off."
+            },
+            {
+              "key": "hideGreeting",
+              "description": "Display the Home greeting. When off, the optional Home title can occupy that space."
+            },
+            {
+              "key": "leftTitles",
+              "description": "Align supported top-header titles to the start edge instead of centering them. Button positions are retained."
+            },
+            {
+              "key": "homeTitle",
+              "description": "Display 'Home' in the Home header only when the greeting is hidden. Does not replace a greeting you kept."
+            },
+            {
+              "key": "bundlesShortcut",
+              "description": "Add a Home header shortcut to Bundles when its bottom tab or the whole bottom bar is hidden."
+            },
+            {
+              "key": "freeMbsShortcut",
+              "description": "Add a gift icon to the Home header that opens daily rewards, even when the Home shortcuts tray is hidden."
+            },
+            {
+              "key": "loanShortcut",
+              "description": "Add a Home header shortcut using the existing take/pay loan action. It remains available when the Home loan button is hidden."
+            }
+          ],
+          "compatible_versions": [
+            "5.19.19.112"
+          ]
+        },
+        {
+          "name": "Home account cards",
+          "description": "Configure allowance labels, SMS, tariff, recharge and loan controls.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideOfferCounts",
+              "description": "Display the 'X offers active' labels below Home data/minutes/SMS. Turning off keeps the values and progress bars."
+            },
+            {
+              "key": "hideSmsCard",
+              "description": "Display SMS beside Home data and minutes. When hidden, the two remaining cards expand. Usage SMS is unaffected."
+            },
+            {
+              "key": "hideTariff",
+              "description": "Display the tariff/package line, such as Economy Package, under the Home balance-expiry date."
+            },
+            {
+              "key": "hideHomeRecharge",
+              "description": "Display the recharge button in the Home balance header. Recharge tabs are configured separately under Recharge."
+            },
+            {
+              "key": "hideLoanButton",
+              "description": "Display the take/pay loan button on the Home account card. The optional Header loan shortcut works separately."
+            }
+          ],
+          "compatible_versions": [
+            "5.19.19.112"
+          ]
+        },
+        {
+          "name": "Home sections",
+          "description": "Choose which Home sections remain visible and adjust section spacing.",
+          "use": true,
+          "options": [
+            {
+              "key": "hideMatch",
+              "description": "Display the sports/match information card on Home. Turn off to remove the whole card."
+            },
+            {
+              "key": "hidePrayers",
+              "description": "Display prayer/Ramadan timings on Home. Turn off to remove that timing card."
+            },
+            {
+              "key": "hideFamily",
+              "description": "Display the complete family-sharing button group and MY5 banner on Home."
+            },
+            {
+              "key": "hideStreaks",
+              "description": "Display the start-your-streak and seven-day streak panels on Home."
+            },
+            {
+              "key": "hidePromotions",
+              "description": "Display Home banners, flash sales, hot offers and the entertainment row beneath the banners."
+            },
+            {
+              "key": "hide5g",
+              "description": "Display the Home 5G map, settings and bundle shortcut group. Other bundle access is unaffected."
+            },
+            {
+              "key": "hideWallet",
+              "description": "Display the Z Wallet section on Home. This does not change your wallet or account."
+            },
+            {
+              "key": "hideSteps",
+              "description": "Display the Home step shortcut and step-counter panel together."
+            },
+            {
+              "key": "hideWeather",
+              "description": "Display the Home location/weather strip and its expand arrow together."
+            },
+            {
+              "key": "hideCityOffers",
+              "description": "Display the regional/city offer search section on Home, independently of other promotions."
+            },
+            {
+              "key": "spaceHomeSections",
+              "description": "Keep at least 24dp above the utility-shortcuts tray and regional/city offers so adjacent sections do not touch."
+            }
+          ],
+          "compatible_versions": [
+            "5.19.19.112"
+          ]
+        },
+        {
+          "name": "Home shortcuts",
           "description": "Keep only the selected home options. Defaults to Rewards and Rs 100 Shop; no other items are kept automatically.",
           "use": true,
           "options": [
+            {
+              "key": "hideShortcutCard",
+              "description": "Display the Home utility-shortcuts tray and its kept entries. Turning off overrides the keep list, but not the three large bundle shortcuts."
+            },
+            {
+              "key": "hideMyob",
+              "description": "Display Make Your Own Bundle in the three-button Home row. The other two shortcuts remain independently configurable."
+            },
+            {
+              "key": "hideBachat",
+              "description": "Display Bachat Bazaar in the three-button Home row. If every button is hidden, the row collapses."
+            },
+            {
+              "key": "hideZong4u",
+              "description": "Display Zong4U in the three-button Home row. Remaining buttons reflow when others are hidden."
+            },
             {
               "key": "shortcutsToKeep",
               "description": "Choose multiple names in this list. Unlisted or future shortcuts stay hidden. Use the displayed shortcut names, including any names added by the server. Examples: Rewards, Free MBs, Daraz Hot Deals, Brief History, Rs 100 Shop, 20% Off, IR, Tax Certificate, Balance Save, Yaari Load, Call Blocks, Book Your Number, Value Added Services, Business Sales Leads. An empty list hides all shortcuts."
@@ -62,352 +257,15 @@
           ]
         },
         {
-          "name": "Hide Bachat Bazaar shortcut",
-          "description": "Individually hide Bachat Bazaar; reflow remaining shortcuts.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide bottom navigation",
-          "description": "Hide the entire bottom navigation bar.",
+          "name": "Launcher icon",
+          "description": "Use a rounded Light or Dark ring for the launcher and static startup logo. Leave unselected to keep the original icon.",
           "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide bottom navigation labels",
-          "description": "Show only icons in bottom navigation.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide bundle browsing promotions",
-          "description": "Hide the advertising banner above the bundle browsing and results section.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Bundles bottom tab",
-          "description": "Hide Bundles from bottom navigation.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide drawer support and promotional links",
-          "description": "Hide Press Release, Find Us, Contact Us, Video Tutorials, FAQs and Feedback in the side menu.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide floating chatbot and dialog",
-          "description": "Hide the launcher and overlay, and block the .112 chatbot opening method.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home 5G shortcuts",
-          "description": "Hide the 5G map/settings/bundles shortcut group.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home active-offer counts",
-          "description": "Hide X offers active below data/minutes/SMS; retain values and progress.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home family sharing",
-          "description": "Hide the complete family-sharing button group and MY5 banner.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Home loan button",
-          "description": "Hide the Home loan button while keeping the header shortcut available.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home match card",
-          "description": "Hide the home-screen sports/match information card.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home prayer card",
-          "description": "Hide the home-screen prayer/Ramadan timing card.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home promotions",
-          "description": "Hide promotional banners, flash sales, hot offers, inline ads and the horizontal entertainment row.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Home recharge button",
-          "description": "Hide only the recharge button in the Home account header.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home regional and city offers",
-          "description": "Hide the regional/city offer search section independently.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home shortcuts card",
-          "description": "Hide the entire Home shortcuts card.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Home SMS card",
-          "description": "Let remaining MB and minutes cards share the row.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home step counter",
-          "description": "Hide the step shortcut and step-counter panel.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home streak cards",
-          "description": "Hide the start-your-streak and seven-day streak sections.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Home tariff line",
-          "description": "Hide the package name below the balance expiry line.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home weather strip",
-          "description": "Hide the location/weather strip and its expand arrow.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide home Z Wallet",
-          "description": "Hide the Z Wallet section.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Make Your Own Bundle shortcut",
-          "description": "Individually hide MYOB; reflow remaining shortcuts.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide More bottom tab",
-          "description": "Hide More without removing its navigation destination.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide online recharge promotions",
-          "description": "Hide banners and inline promotions on Online Recharge when that section is enabled.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Online Recharge section",
-          "description": "Remove Online Recharge from the recharge pager and its tab titles.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Scratch Card section",
-          "description": "Remove Scratch Card from the recharge pager and its tab titles.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Usage bottom tab",
-          "description": "Hide Usage from bottom navigation.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide usage promotions",
-          "description": "Hide the external promotion label and ad container on Usage.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide usage top banner",
-          "description": "Hide the large banner above usage summary.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide WhatsApp channel dialog",
-          "description": "Hide the dialog promoting the Zong 5G WhatsApp channel.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Z Play bottom tab",
-          "description": "Hide Z Play; preserve the remaining bottom navigation items.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hide Zong4U shortcut",
-          "description": "Individually hide Zong4U; reflow remaining shortcuts.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Hold startup until Home settles",
-          "description": "Keep a matching dark brand cover for at least 450ms and until loading/three clean frames settle; maximum 1.8 seconds.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Home header Bundles shortcut",
-          "description": "Show a Bundles icon on Home when its bottom tab or the entire bottom bar is hidden.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Home header Free MBs shortcut",
-          "description": "Open daily rewards from a Home header icon.",
-          "use": false,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Home header loan shortcut",
-          "description": "Use the existing take/pay loan action from a Home header icon.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Left align header titles",
-          "description": "Align header titles to the start edge.",
-          "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "iconVariant",
+              "description": "Light: off-white background and charcoal ring. Dark: charcoal background and off-white ring."
+            }
+          ],
           "compatible_versions": [
             "5.19.19.112"
           ]
@@ -440,19 +298,37 @@
           ]
         },
         {
-          "name": "Show Home header title",
-          "description": "Show Home when the greeting is hidden.",
+          "name": "Material You theme",
+          "description": "Dark Material You colors on Android 12+, with automatic charcoal fallback on older or unsupported devices.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "systemMaterialColors",
+              "description": "Use Android 12+ system colors for surfaces, text, tracks and accents. Turn off to use charcoal. Missing system colors fall back automatically."
+            }
+          ],
           "compatible_versions": [
             "5.19.19.112"
           ]
         },
         {
-          "name": "Skip animated startup intro",
-          "description": "Replace the full-screen GIF with a static logo and call its existing completion route without waiting for animation. Startup/session checks remain in place.",
+          "name": "Recharge",
+          "description": "Choose recharge sections and promotional content.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "hideOnline",
+              "description": "Display Online Recharge and its tab in the recharge pager. The Home recharge button is configured separately."
+            },
+            {
+              "key": "hideScratch",
+              "description": "Display Scratch Card and its tab in the recharge pager. Does not change other recharge methods."
+            },
+            {
+              "key": "hideOnlinePromotions",
+              "description": "Display banners and inline promotions within Online Recharge. Has no visible effect when that section is hidden."
+            }
+          ],
           "compatible_versions": [
             "5.19.19.112"
           ]
@@ -467,19 +343,31 @@
           ]
         },
         {
-          "name": "Space home sections",
-          "description": "Ensure at least 24dp above the options tray and regional/city offers.",
+          "name": "Startup",
+          "description": "Configure the intro, initial Home cover and starting screen.",
           "use": true,
-          "options": [],
-          "compatible_versions": [
-            "5.19.19.112"
-          ]
-        },
-        {
-          "name": "Start on Usage",
-          "description": "Open Usage on a fresh launch after sign-in, retaining Back navigation to Home.",
-          "use": false,
-          "options": [],
+          "options": [
+            {
+              "key": "skipPersonalDetails",
+              "description": "After successful OTP sign-in, continue to Home instead of asking for optional personal details. Profile opened from navigation and wallet identity-verification forms remain available. No personal fields are submitted."
+            },
+            {
+              "key": "otpPaste",
+              "description": "Distribute pasted or keyboard-committed multi-digit codes across the current PIN/OTP row. Full codes replace the row; shorter pastes start at the focused box and clear its remaining digits. Normal typing and native validation stay active."
+            },
+            {
+              "key": "skipIntro",
+              "description": "Replace the animated startup intro with the existing centered static logo. Sign-in and startup/session checks still run."
+            },
+            {
+              "key": "holdStartup",
+              "description": "Keep the centered logo cover until Home loading and three clean frames settle, for roughly 450ms–1.8s. Reduces flashes of hidden sections."
+            },
+            {
+              "key": "startOnUsage",
+              "description": "Open Usage on a fresh launch after sign-in. Restored screens and deep links are respected; Home stays in navigation history."
+            }
+          ],
           "compatible_versions": [
             "5.19.19.112"
           ]
@@ -489,10 +377,10 @@
     }
   ],
   "patches_name": "FarhanZafarr-9",
-  "fingerprint": "2e928c158b552f6cb3f6c22ff859d3ee2dbf09576dec6ed087677e29de615d80",
-  "release_notes": "MyZong patches for stock **5.19.19.112**.\n\n- Renamed the embedded bundle to **MyZong**, replacing Zong Home Cleanup in Morphe's bundle information.\n- Replaced template/local metadata with the project author and repository links.\n- Standardized generated bundle/APK filenames and the Gradle project name.\n\nBuild succeeded. Every bundle payload entry is byte-identical to the tested v1.2.22 release; only META-INF/MANIFEST.MF changed. Patch behavior and selections are unchanged.\n\nRefresh the remote source in Morphe and update to **1.2.23** to receive the corrected bundle metadata. If the source itself still has an old custom label, re-add it using [Add MyZong to Morphe](https://morphe.software/add-source?github=FarhanZafarr-9%2Fmyzong-patches&name=MyZong).\n\nAssets: MyZong-1.2.23.mpp and SHA256SUMS.txt. Source archives are available from this tag; no installable APK was rebuilt.",
-  "release_tag": "v1.2.23",
-  "release_date": "2026-11-21T11:30:21Z",
+  "fingerprint": "1bfa5919882fb2bde7d71e2c66c4fcf99de84262fdd9230f84fcfbe5fb7cd434",
+  "release_notes": "- Organized settings into 15 patches and six categories.\n- Added Material You colors with charcoal fallback.\n- Added rounded Light/Dark icons and matching static splash.\n- Refined onboarding and Rewards styling.\n- Fixed OTP paste across digit boxes.\n- Added optional personal-details skip after OTP.\n- Fixed neutral Usage values and navigation feedback.\n- Reduced bundle blinking and Home button flashes.\n- Made the loading rings loop smoothly.\n",
+  "release_tag": "v1.3.3",
+  "release_date": "2026-11-23T20:28:35Z",
   "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/94292576?v=4&s=128",
