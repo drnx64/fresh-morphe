@@ -45,8 +45,19 @@ export function renderDashboard(container) {
     }
     refillGrid(page)
   })
+  // Wave 2 (repo cache) lands after the grid has already painted: the records
+  // were overlaid in place, so a refill here picks up stars + avatars without
+  // a full page re-render.
+  const unsubAvatars = store.subscribe('repoAvatarMap', () => {
+    if (!page.isConnected) {
+      unsubscribe()
+      return
+    }
+    refillGrid(page)
+  })
   unsubscribe = () => {
     unsubBundles()
     unsubFilters()
+    unsubAvatars()
   }
 }
