@@ -79,20 +79,29 @@
       "patches": [
         {
           "name": "Auto claim Benefits tasks",
-          "description": "Presses the Benefits/task-center controls by CSS selector (watch-ad group, check-in, lucky bag) and shows what it clicked. Skips complete, subscribe, card-exchange and disabled controls, and drops an inert one for a minute. Closes the check-in page when done. Pair it with \"Auto reward ads\".",
+          "description": "Presses the Benefits/Gold-center controls and shows what it clicked: the daily video chain, claimable rewards, the watch-video task and the check-in pill. Share, save, game and purchase tasks are skipped, as are disabled controls. A control that does nothing is retried later, a task that never completes is left after three tries, and the check-in page closes itself when done. Pair it with \"Auto reward ads\".",
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.28.5"
+            "4.29.0"
           ]
         },
         {
           "name": "Auto reward ads",
-          "description": "Closes a rewarded video as soon as the reward is granted, plus the native ad that follows, so completion stays server-valid and the Benefits page gets its callback.",
+          "description": "Closes a rewarded video as soon as the reward is granted, plus the native ad that follows, so completion stays server-valid and the Benefits page gets its callback. Each network is closed through its own close/skip control first, then BACK, then finish; splash ads are closed after their countdown, an ad no task asked for (interstitial, app-open) after a few seconds, and a rewarded ad that never reports a reward after 75s.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "4.28.5"
+            "4.29.0"
+          ]
+        },
+        {
+          "name": "Block ad redirects",
+          "description": "Rewrites the Play Store, market: and intent: URLs inside the ad SDKs and stops the hybrid WebView client from handing a page off to the store or a browser, so an auto-opening or mis-tapped ad cannot leave TeraBox and stall the automation.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "4.29.0"
           ]
         },
         {
@@ -101,7 +110,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.28.5"
+            "4.29.0"
           ]
         },
         {
@@ -110,7 +119,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
-            "4.28.5"
+            "4.29.0"
           ]
         }
       ],
@@ -297,7 +306,7 @@
     }
   ],
   "patches_name": "App Patches",
-  "fingerprint": "2a3a59d61abf18a3744c41df1e4786a54fd46aded9964280b13bca1e818f0a8f",
+  "fingerprint": "657b9cea41f8a0095eba21f1c3b9adcf3c28550833f6bc9dd272408807fa15df",
   "release_notes": "## [1.7.2](https://github.com/toidicakhia/morphe-app-patches/compare/v1.7.1...v1.7.2) (2026-11-17)\n\n### 🐛 Bug Fixes\n\n* remove Remote Desktop Manager and TeraBox patches ([ca27fff](https://github.com/toidicakhia/morphe-app-patches/commit/ca27fff))\n\n### ✨ New Features\n\n* **vtvgo:** sync the settings button with the exact control bar state ([5c63afd](https://github.com/toidicakhia/morphe-app-patches/commit/5c63afd))\n* **vtvgo:** track player layout changes for the settings button ([fe13840](https://github.com/toidicakhia/morphe-app-patches/commit/fe13840))\n* **vtvgo:** sync quality menu with player state ([757a3e3](https://github.com/toidicakhia/morphe-app-patches/commit/757a3e3))\n* **vtvgo:** add video quality settings button ([bc16a72](https://github.com/toidicakhia/morphe-app-patches/commit/bc16a72))\n* **devolutions:** add Skip Age Verification patch ([7de5f63](https://github.com/toidicakhia/morphe-app-patches/commit/7de5f63))\n* **locket:** add Unlock Locket Gold patch ([72fc89e](https://github.com/toidicakhia/morphe-app-patches/commit/72fc89e))\n* **vtvgo:** add Unlock Video Quality patch ([abaf1c1](https://github.com/toidicakhia/morphe-app-patches/commit/abaf1c1))\n* **devolutions:** add Faster Startup patch for Remote Desktop Manager ([cc4dec4](https://github.com/toidicakhia/morphe-app-patches/commit/cc4dec4))\n",
   "release_tag": "v1.7.2",
   "release_date": "2026-11-17T10:50:19Z",

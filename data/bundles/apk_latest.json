@@ -1,0 +1,309 @@
+{
+  "bundle": "apk",
+  "channel": "latest",
+  "repo_url": "https://github.com/edbfi/apk-patches",
+  "created_at": "2026-11-17T02:39:50",
+  "version": "v0.4.0",
+  "description": "These patches now also work with [Morphe](https://morphe.software). Each release carries two bundles: `patches-0.4.0.rvp` for ReVanced Manager and the ReVanced CLI, as before, and the new `patches-0.4.0.mpp` for Morphe Manager and the Morphe CLI. Both have the same patches: 12 for rif is fun `5.6.22` and 15 for Sync for Reddit `v23.06.30-13:39`. From now on the two bundles are built from separate code, so a later release may differ between them; each app's page says what its bundle has.\n\n**ReVanced users:** nothing changes. Keep the patches source you have; ReVanced Manager updates from it as before. One fix:\n\n- **Spoof client** (rif is fun): patching no longer fails when you set the **Redirect URI** option to rif's own `redditisfun://auth`, which people often register for their own Reddit app.\n\n**Morphe users:** in Morphe Manager, open **Sources**, tap **+**, paste `https://github.com/edbfi/apk-patches` and tap **Add**. The source's **Signed by** should read `bb0f 2749 5a09 70ea`. With the Morphe CLI, pass `-p https://github.com/edbfi/apk-patches`. To keep the data of an app you patched with ReVanced Manager, import the key it was signed with in Morphe Manager's Settings → **Signing key** first; otherwise Android makes you uninstall it. The [README](https://github.com/edbfi/apk-patches/blob/v0.4.0/README.md#install) has the details and how to verify each download.\n\nPatches for Morphe, all on by default except **Use /user/ endpoint**, as in the ReVanced bundle: the [rif is fun page](https://github.com/edbfi/apk-patches/blob/v0.4.0/docs/morphe/rifisfun.md) and the [Sync for Reddit page](https://github.com/edbfi/apk-patches/blob/v0.4.0/docs/morphe/syncforreddit.md) list them with their options and known issues.\n\nTested on a device before release: both bundles for both apps, patched with their CLI and with their Manager, installed over the app already there, and each patch checked in the app.\n\n<!-- virustotal-results:start -->\n---\n\n### VirusTotal\n\n| File | SHA-256 | Analysis | Reports |\n| --- | --- | --- | --- |\n| `patches-0.4.0.rvp` | `6a9bff4139f2c11c859516130d2e81a1cad56bd0bb317d8ac73a855def8755c8` | completed 2026-11-17 02:45 UTC: 0 malicious, 0 suspicious, 59 undetected | [analysis](https://www.virustotal.com/gui/file-analysis/ZWYzZTRmZmUyNDBmZDY5YzBkMmVhNDcxZGJkN2UxNGY6MTc5NDg4MzM0OA%3D%3D/detection), [file](https://www.virustotal.com/gui/file/6a9bff4139f2c11c859516130d2e81a1cad56bd0bb317d8ac73a855def8755c8/detection) |\n| `patches-0.4.0.mpp` | `88ef9d349e3ebcee996ac502c3c00b659a1fbffb5f9fa1498e49759157a05c0f` | completed 2026-11-17 02:48 UTC: 0 malicious, 0 suspicious, 64 undetected | [analysis](https://www.virustotal.com/gui/file-analysis/OWU0YTczN2RlYjJkN2Y1M2ZmMWQ0NzlmZTNlMDVkMWY6MTc5NDg4MzUxNg%3D%3D/detection), [file](https://www.virustotal.com/gui/file/88ef9d349e3ebcee996ac502c3c00b659a1fbffb5f9fa1498e49759157a05c0f/detection) |\n\n<!-- virustotal-results:end -->\n",
+  "apps": [
+    {
+      "app_name": "Reddit",
+      "package": "com.andrewshu.android.reddit",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes ads and the ad consent form, and keeps the ad SDKs from starting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Enable golden platinum",
+          "description": "Enables the golden platinum features that work without rif's servers, and makes the ads setting switch only ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix /s/ links",
+          "description": "Opens Reddit share links (/s/) as the post they point to, from the app and from other apps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix galleries",
+          "description": "Fixes Reddit galleries and inline Reddit videos failing to load, including gallery images Reddit marks as failed.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix Imgur",
+          "description": "Fixes Imgur albums and album thumbnails failing to load, and links with a title in them.",
+          "use": true,
+          "options": [
+            {
+              "key": "Imgur client ID",
+              "description": "The Imgur API client ID to load albums with. The default is the app's own."
+            }
+          ],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix load more comments",
+          "description": "Fixes \"load more comments\" not loading further comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix markdown links",
+          "description": "Shows markdown links that Reddit leaves as raw text, such as links to u/name, as links.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix media links",
+          "description": "Opens reddit.com/media links as the Reddit-hosted image they wrap.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix Redgifs",
+          "description": "Fixes Redgifs videos not loading.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Fix YouTube player",
+          "description": "Fixes the built-in YouTube player, which showed a black screen and error code 0.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Keep typed text in view",
+          "description": "Keeps the line being typed in view when writing a long reply.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        },
+        {
+          "name": "Spoof client",
+          "description": "Restores login and browsing by using another app's Reddit OAuth client.",
+          "use": true,
+          "options": [
+            {
+              "key": "OAuth client ID",
+              "description": "The Reddit OAuth client ID of an installed app. The default is RedReader's. Change the redirect URI and User-Agent with it."
+            },
+            {
+              "key": "Redirect URI",
+              "description": "The redirect URI registered for the client ID, without characters that need URL encoding."
+            },
+            {
+              "key": "User-Agent",
+              "description": "The User-Agent sent to Reddit: that of the app the client ID belongs to."
+            }
+          ],
+          "compatible_versions": [
+            "5.6.22"
+          ]
+        }
+      ],
+      "developer": "com.andrewshu"
+    },
+    {
+      "app_name": "Sync for reddit",
+      "package": "com.laurencedawson.reddit_sync",
+      "patches": [
+        {
+          "name": "Disable ads",
+          "description": "Removes ads and the ad consent form, and keeps the ad SDKs from starting.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Disable Sync for Lemmy bottom sheet",
+          "description": "Removes the Sync for Lemmy promotion that shows at every start.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Enable Sync Ultra",
+          "description": "Enables the Sync Ultra features that work without Sync's servers, and loads website previews on the device.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix /s/ links",
+          "description": "Opens Reddit share links (/s/) as the post they point to, from the app and from other apps.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix galleries",
+          "description": "Fixes Reddit galleries failing to open.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix Imgur",
+          "description": "Fixes Imgur albums failing to open, album previews in comments and posts staying blank, and Imgur uploads failing.",
+          "use": true,
+          "options": [
+            {
+              "key": "Imgur client ID",
+              "description": "The Imgur API client ID to load albums and upload images with. The default is RedReader's."
+            }
+          ],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix Other discussions",
+          "description": "Fixes \"Other discussions\" failing to load, by searching Reddit for the link instead.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix post thumbnails",
+          "description": "Fixes post thumbnails not loading.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix Redgifs",
+          "description": "Fixes Redgifs videos not loading, Enhanced autoplay's included.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix Tenor previews",
+          "description": "Fixes previews of Tenor links in comments and posts staying blank.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix video downloads",
+          "description": "Fixes downloaded Reddit videos having only audio.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Fix View more comments",
+          "description": "Fixes \"View more\" not loading further comments.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Hide Gfycat link previews",
+          "description": "Hides the blank previews of Gfycat links in comments and posts. Gfycat shut down in 2023.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Spoof client",
+          "description": "Restores login and browsing by using another app's Reddit OAuth client.",
+          "use": true,
+          "options": [
+            {
+              "key": "OAuth client ID",
+              "description": "The Reddit OAuth client ID of an installed app. The default is RedReader's. Change the redirect URI and User-Agent with it."
+            },
+            {
+              "key": "Redirect URI",
+              "description": "The redirect URI registered for the client ID, without characters that need URL encoding."
+            },
+            {
+              "key": "User-Agent",
+              "description": "The User-Agent sent to Reddit: that of the app the client ID belongs to."
+            }
+          ],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        },
+        {
+          "name": "Use /user/ endpoint",
+          "description": "Requests user profiles from /user/ instead of /u/. Not needed today: Reddit redirects /u/ to /user/, and the app follows the redirect.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "v23.06.30-13:39"
+          ]
+        }
+      ],
+      "developer": "com.laurencedawson"
+    }
+  ],
+  "patches_name": "edbfi",
+  "fingerprint": "2bd0cfade10a732216c5b90774a29a34e2552b7cf0e436ca86a86937818dcbeb",
+  "release_notes": "These patches now also work with [Morphe](https://morphe.software). Each release carries two bundles: `patches-0.4.0.rvp` for ReVanced Manager and the ReVanced CLI, as before, and the new `patches-0.4.0.mpp` for Morphe Manager and the Morphe CLI. Both have the same patches: 12 for rif is fun `5.6.22` and 15 for Sync for Reddit `v23.06.30-13:39`. From now on the two bundles are built from separate code, so a later release may differ between them; each app's page says what its bundle has.\n\n**ReVanced users:** nothing changes. Keep the patches source you have; ReVanced Manager updates from it as before. One fix:\n\n- **Spoof client** (rif is fun): patching no longer fails when you set the **Redirect URI** option to rif's own `redditisfun://auth`, which people often register for their own Reddit app.\n\n**Morphe users:** in Morphe Manager, open **Sources**, tap **+**, paste `https://github.com/edbfi/apk-patches` and tap **Add**. The source's **Signed by** should read `bb0f 2749 5a09 70ea`. With the Morphe CLI, pass `-p https://github.com/edbfi/apk-patches`. To keep the data of an app you patched with ReVanced Manager, import the key it was signed with in Morphe Manager's Settings → **Signing key** first; otherwise Android makes you uninstall it. The [README](https://github.com/edbfi/apk-patches/blob/v0.4.0/README.md#install) has the details and how to verify each download.\n\nPatches for Morphe, all on by default except **Use /user/ endpoint**, as in the ReVanced bundle: the [rif is fun page](https://github.com/edbfi/apk-patches/blob/v0.4.0/docs/morphe/rifisfun.md) and the [Sync for Reddit page](https://github.com/edbfi/apk-patches/blob/v0.4.0/docs/morphe/syncforreddit.md) list them with their options and known issues.\n\nTested on a device before release: both bundles for both apps, patched with their CLI and with their Manager, installed over the app already there, and each patch checked in the app.\n\n<!-- virustotal-results:start -->\n---\n\n### VirusTotal\n\n| File | SHA-256 | Analysis | Reports |\n| --- | --- | --- | --- |\n| `patches-0.4.0.rvp` | `6a9bff4139f2c11c859516130d2e81a1cad56bd0bb317d8ac73a855def8755c8` | completed 2026-11-17 02:45 UTC: 0 malicious, 0 suspicious, 59 undetected | [analysis](https://www.virustotal.com/gui/file-analysis/ZWYzZTRmZmUyNDBmZDY5YzBkMmVhNDcxZGJkN2UxNGY6MTc5NDg4MzM0OA%3D%3D/detection), [file](https://www.virustotal.com/gui/file/6a9bff4139f2c11c859516130d2e81a1cad56bd0bb317d8ac73a855def8755c8/detection) |\n| `patches-0.4.0.mpp` | `88ef9d349e3ebcee996ac502c3c00b659a1fbffb5f9fa1498e49759157a05c0f` | completed 2026-11-17 02:48 UTC: 0 malicious, 0 suspicious, 64 undetected | [analysis](https://www.virustotal.com/gui/file-analysis/OWU0YTczN2RlYjJkN2Y1M2ZmMWQ0NzlmZTNlMDVkMWY6MTc5NDg4MzUxNg%3D%3D/detection), [file](https://www.virustotal.com/gui/file/88ef9d349e3ebcee996ac502c3c00b659a1fbffb5f9fa1498e49759157a05c0f/detection) |\n\n<!-- virustotal-results:end -->\n",
+  "release_tag": "v0.4.0",
+  "release_date": "2026-11-17T02:39:50Z",
+  "isPreRelease": false
+}

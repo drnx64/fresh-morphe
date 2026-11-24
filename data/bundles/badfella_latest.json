@@ -2,9 +2,9 @@
   "bundle": "badfella",
   "channel": "latest",
   "repo_url": "https://github.com/XBadFellaX/BadFella-Patches",
-  "created_at": "2026-11-20T16:27:51",
-  "version": "1.6.0",
-  "description": "- **LinkedIn:** Support 4.1.1275 and 4.1.1276 beta, including the newer divider colors. Reduce repeated feed parsing while scrolling and hide video carousels. Normal feed reload on reopening is now the default; an explicitly enabled Keep feed on reopen setting is retained.\n- **LinkedIn:** Restore Firebase package and certificate headers for regular Google Play services and cloned builds. GmsCore support remains optional and needs microG RE when selected.\n- **LinkedIn:** Add screenshot share-sheet blocking, top-bar controls, navigation-tab ordering and Messaging in the bottom bar. Add elapsed video time and optional automatic advance, separate post-menu copy/download switches, GIF file types, PDF completion notifications, settings backup files and menu scroll restoration.\n- **Remote for Android TV:** Add optional Disable remote page swipes and Increase D-pad hold tolerance for 6.1.0 build 45. Started arrow holds continue through finger movement in both repeat modes, with normal release/cancellation handling. Both options are off by default; hold tolerance also enables swipe lock.\n- **Wanderlog:** Add support for 2.229 (build 2026111701), retaining the earlier supported versions.\n- **Ultimea:** Add Black Mode, Hide Explorer Tab, Accent color, Disable tracking, Remove distractions and Remove popups for 1.4.4 build 495, ARM64 only. The in-app settings entry uses BadFella Patches branding.\n\nRefresh BadFella Patches in Morphe Manager, repatch the original supported app APK/APKM and install using your existing Manager signing key. Select optional patches explicitly. Existing app data and signing keys should be retained.\n\nLinkedIn feed behavior and push delivery can still depend on account, server and device settings. GmsCore support routes Google sign-in and push through microG RE; leave it unselected to use regular Google Play services. Ultimea startup and soundbar reconnection have not been verified on physical hardware.\n\nThanks to the upstream authors lokesh-sparrow, amfakh, heyymichii and hxreborn, and to the contributors and reporters who helped test these changes.\n",
+  "created_at": "2026-11-24T06:35:58",
+  "version": "1.7.0",
+  "description": "## 1.7.0 (2026-11-24)\n\n### 🐛 Bug Fixes\n\n* **ultimateusb:** bypass native integrity check in usbNativeInit 597f336\n* **ultimateusb:** neutralize native tripwire function to retain partition scanning and format payload 07c4acf\n* **ultimateusb:** retain native access after local patching 436e901\n* **ultimateusb:** retain native config pointer and satisfy filesystem canary integrity f223562\n\n### ✨ New Features\n\n* **ultimateusb:** add local Pro patch and development preview f530ffa",
   "apps": [
     {
       "app_name": "Science News Daily",
@@ -632,6 +632,22 @@
       "developer": "Emby Media"
     },
     {
+      "app_name": "Ultimate USB",
+      "package": "com.mixapplications.ultimateusb",
+      "patches": [
+        {
+          "name": "Ultimate USB local Pro",
+          "description": "Enables local Pro checks, skips the cached-purchase validator and permits local bytecode/signing changes in the native integrity state. Retains operation confirmations and USB/filesystem operations. Reviewed on 12.5.0 build 1205000 ARM64; changed bytecode or native drivers require review. Does not create a Google Play purchase.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "12.5.0"
+          ]
+        }
+      ],
+      "developer": "MixApplications"
+    },
+    {
       "app_name": "ChatGPT",
       "package": "com.openai.chatgpt",
       "patches": [
@@ -797,10 +813,10 @@
     }
   ],
   "patches_name": "BadFella Patches",
-  "fingerprint": "0729d7ad1a33234cf1d3f0fe67d561cbc996b14d38e5ce21c4b53c79e644e98e",
-  "release_notes": "## BadFella Patches v1.6.0\r\n\r\n- **LinkedIn:** Support 4.1.1275 and 4.1.1276 beta, including the newer divider colors. Reduce repeated feed parsing while scrolling and hide video carousels. Normal feed reload on reopening is now the default; an explicitly enabled Keep feed on reopen setting is retained.\r\n- **LinkedIn:** Restore Firebase package and certificate headers for regular Google Play services and cloned builds. GmsCore support remains optional and needs microG RE when selected.\r\n- **LinkedIn:** Add screenshot share-sheet blocking, top-bar controls, navigation-tab ordering and Messaging in the bottom bar. Add elapsed video time and optional automatic advance, separate post-menu copy/download switches, GIF file types, PDF completion notifications, settings backup files and menu scroll restoration.\r\n- **Remote for Android TV:** Add optional Disable remote page swipes and Increase D-pad hold tolerance for 6.1.0 build 45. Started arrow holds continue through finger movement in both repeat modes, with normal release/cancellation handling. Both options are off by default; hold tolerance also enables swipe lock.\r\n- **Wanderlog:** Add support for 2.229 (build 2026111701), retaining the earlier supported versions.\r\n- **Ultimea:** Add Black Mode, Hide Explorer Tab, Accent color, Disable tracking, Remove distractions and Remove popups for 1.4.4 build 495, ARM64 only. The in-app settings entry uses BadFella Patches branding.\r\n\r\nRefresh BadFella Patches in Morphe Manager, repatch the original supported app APK/APKM and install using your existing Manager signing key. Select optional patches explicitly. Existing app data and signing keys should be retained.\r\n\r\nLinkedIn feed behavior and push delivery can still depend on account, server and device settings. GmsCore support routes Google sign-in and push through microG RE; leave it unselected to use regular Google Play services. Ultimea startup and soundbar reconnection have not been verified on physical hardware.\r\n\r\nThanks to the upstream authors lokesh-sparrow, amfakh, heyymichii and hxreborn, and to the contributors and reporters who helped test these changes.\r\n",
-  "release_tag": "v1.6.0",
-  "release_date": "2026-11-20T16:28:57Z",
+  "fingerprint": "4c3f690620034906c895f2346db03429375246c3e39c449545d435435e861f21",
+  "release_notes": "## BadFella Patches v1.7.0\n\n### 🐛 Bug Fixes\n\n* **Ultimate USB:** bypass native integrity check in usbNativeInit 597f336\n* **Ultimate USB:** neutralize native tripwire function to retain partition scanning and format payload 07c4acf\n* **Ultimate USB:** retain native access after local patching 436e901\n* **Ultimate USB:** retain native config pointer and satisfy filesystem canary integrity f223562\n\n### ✨ New Features\n\n* **Ultimate USB:** add local Pro patch and development preview f530ffa\n",
+  "release_tag": "v1.7.0",
+  "release_date": "2026-11-24T06:36:50Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/77979578?v=4&s=128",

@@ -105,6 +105,95 @@
       "developer": "air.com"
     },
     {
+      "app_name": "BBC: World News & Stories",
+      "package": "bbc.mobile.news.ww",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops the app's analytics, ad measurement, and marketing services.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.0"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.0"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your phone from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "carrier",
+              "description": "Hides your mobile carrier, or reports the name set in Carrier name. Carrier deals, such as League Pass with a phone plan, stop working."
+            },
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees when Carrier is on. Pick one from the list or type any name. Blank hides the carrier."
+            },
+            {
+              "key": "reportWifi",
+              "description": "Shows mobile data as Wi-Fi, so Wi-Fi-only downloads and mobile quality limits do not apply. This can use a lot of data."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the phone. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Store detection, smart-home setup, and checkout fraud checks can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops scans for Bluetooth devices and beacons, and hides paired devices. In-store maps, kiosk check-in, smart-home setup, and accessory pairing stop working."
+            },
+            {
+              "key": "cellTowers",
+              "description": "Hides the cell towers your phone sees, which can place you within a few blocks."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background. Store-arrival features and pickup check-in can stop working. RetailMeNot has its own patch for this."
+            }
+          ],
+          "compatible_versions": [
+            "2026.11.0"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.0"
+          ]
+        },
+        {
+          "name": "Skip ads",
+          "description": "Removes the ads in the news feeds and in articles, and the sponsored cards.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "2026.11.0"
+          ]
+        }
+      ],
+      "developer": "BBC Studios Distribution Ltd."
+    },
+    {
       "app_name": "ABC News: Live & Breaking",
       "package": "com.abc.abcnews",
       "patches": [
@@ -3165,6 +3254,26 @@
           ]
         },
         {
+          "name": "Hide app promotions",
+          "description": "Removes the \"Download the Fox News app\" links from articles.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.50.0",
+            "5.49.2"
+          ]
+        },
+        {
+          "name": "Hide comments and reactions",
+          "description": "Removes the comments section, the floating comments button, and the emoji reactions from articles.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.50.0",
+            "5.49.2"
+          ]
+        },
+        {
           "name": "Hide device identifiers",
           "description": "Hides details about your phone from the app. Choose which ones in the patch options.",
           "use": false,
@@ -3243,6 +3352,22 @@
         }
       ],
       "developer": "FOX News Network, LLC"
+    },
+    {
+      "app_name": "Moviesbyfawesomeandroidtv",
+      "package": "com.future.moviesbyfawesomeandroidtv",
+      "patches": [
+        {
+          "name": "Skip ads",
+          "description": "Removes the video ads and promo videos before and during movies and shows.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "20.8"
+          ]
+        }
+      ],
+      "developer": "com.future"
     },
     {
       "app_name": "YouTube TV: Live TV & more",
@@ -5783,6 +5908,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         },
@@ -5805,6 +5931,7 @@
             }
           ],
           "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         },
@@ -5814,6 +5941,7 @@
           "use": false,
           "options": [],
           "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         },
@@ -5860,6 +5988,17 @@
             }
           ],
           "compatible_versions": [
+            "8.0.0",
+            "7.51.0"
+          ]
+        },
+        {
+          "name": "Hide paywall overlay",
+          "description": "Forces Sophi wall visibility to never on both PaywallKit bridges so paywall/regwall UI is not shown.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         },
@@ -5874,10 +6013,11 @@
             },
             {
               "key": "promotions",
-              "description": "Removes the Subscribe buttons and offers, the Subscription row in Settings, the Breakingviews promo banners, marketing pop-ups, and the newsletter sign-ups and notification prompts in articles and feeds."
+              "description": "Removes the Subscribe buttons and offers, the Subscription row in Settings, the Breakingviews promo banners, marketing pop-ups, and the newsletter sign-ups and notification prompts in articles and feeds. Hide paywall overlay removes the subscription paywall."
             }
           ],
           "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         },
@@ -5892,6 +6032,7 @@
             }
           ],
           "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         },
@@ -5901,6 +6042,7 @@
           "use": true,
           "options": [],
           "compatible_versions": [
+            "8.0.0",
             "7.51.0"
           ]
         }
@@ -9602,10 +9744,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "81c3bdc31e0e9960f30db83b15466b491647a19a9b435429130aa4024bf96ffd",
-  "release_notes": "# [1.2.0-dev.20](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.19...v1.2.0-dev.20) (2026-11-19)\n\n\n### Bug Fixes\n\n* testing JustWatch 26.46.2, Tubi 10.46.0 ([88b932d](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/88b932ded169dacc99b8f1cb45898474024304c8))\n",
-  "release_tag": "v1.2.0-dev.20",
-  "release_date": "2026-11-19T10:48:08Z",
+  "fingerprint": "831c5c3771b2410389f0dee88f26d71f52bc6cc54ff56c16c245b29a1d0980e9",
+  "release_notes": "# [1.2.0-dev.30](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.29...v1.2.0-dev.30) (2026-11-24)\n\n\n### Bug Fixes\n\n* testing Peacock 7.11.22, Prime Video 3.0.482.2147, Walgreens 119.0 ([a48578f](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/a48578f15f1fc2f93c87235807e58c7a1969ccb4))\n",
+  "release_tag": "v1.2.0-dev.30",
+  "release_date": "2026-11-24T13:03:00Z",
   "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",
