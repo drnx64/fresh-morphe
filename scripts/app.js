@@ -288,6 +288,17 @@ function setupRoutes() {
 // ── Data Loading ──
 let deferredPreloads = null
 
+// Wave 2 (repo cache) can land before the index has been turned into bundle
+// records — only a slow IndexedDB read delays the build that far. The meta is
+// parked here and applied by the boot path when it reaches the overlay step;
+// normally wave 2 arrives later and `bundlesBuilt` is already set.
+let pendingRepoMeta = null
+
+// The built bundle map. Wave 2 overlays star/description metadata onto it in
+// place (never store.set('bundles') — the apps page re-renders on that key
+// and would reset an open fan mid-interaction).
+let bundlesBuilt = null
+
 // Index backing the current bundle map — kept so on-demand detail loads can
 // persist what they warm without threading it through every caller.
 let currentBundleIndex = null
@@ -374,14 +385,23 @@ function offerImageRetry(failedCount, runPass, toast) {
 
 // Background-warm the icon queue first (the apps grid is the landing view and
 // its icons are the ones scrolled into view), then the avatars (bundles page).
-// One progress toast reports both phases, with retry on failures.
-async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMap) {
+// One progress toast reports both phases, with retry on failures. The avatar
+// URLs live in wave 2 (the repo cache), so the icon sweep starts at wave 1's
+// end and the avatar phase waits on the promise inside the pass.
+async function cacheImagesInBackground(iconMap, repoMapsPromise) {
   const iconTotal = Object.values(iconMap).filter((v) => typeof v === 'string' && v.startsWith('http')).length
-  const avatarUrls = [...new Set(
-    [...Object.values(repoAvatarMap), ...Object.values(repoBundleImageMap)]
+  const avatarUrlsOf = (repoMaps) => [...new Set(
+    [...Object.values(repoMaps?.repoAvatarMap || {}), ...Object.values(repoMaps?.repoBundleImageMap || {})]
       .filter((u) => u && typeof u === 'string' && !u.startsWith('data:')),
   )]
-  if (!iconTotal && !avatarUrls.length) return
+  // No icons to sweep: the repo cache decides whether there is any avatar
+  // work at all, so wait for wave 2 before opening the toast. With icons,
+  // open immediately — runPass awaits the promise before the avatar phase.
+  let avatarUrls = []
+  if (!iconTotal) {
+    avatarUrls = avatarUrlsOf(await repoMapsPromise)
+    if (!avatarUrls.length) return
+  }
 
   const toast = showWorkToast('Caching images')
   // Brief, non-nagging notice: the stack closes itself after 1.5s whether or
@@ -408,6 +428,9 @@ async function cacheImagesInBackground(iconMap, repoAvatarMap, repoBundleImageMa
         endJob('icons')
       }
     }
+    // Wave 2 may still be in flight behind the icon sweep; resolve it here
+    // (already resolved in the no-icon path) before the avatar phase.
+    if (!avatarUrls.length) avatarUrls = avatarUrlsOf(await repoMapsPromise)
     if (avatarUrls.length) {
       toast.setTitle('Caching avatars')
       beginJob('avatars', 'Caching avatars', { counts: true })
@@ -491,6 +514,73 @@ function buildBundlesFromIndex(index, cachedState) {
   return bundles
 }
 
+/**
+ * Overlay repo_cache metadata the index may be missing (stars, description,
+ * archived/fork state) onto built bundle records — mutated in place, so no
+ * store notification fires and an open fan on the apps page survives.
+ * @param {Object} bundles - the built bundle map
+ * @param {Map<string, Object>} repoMetaByUrl - normalized repo URL → entry
+ */
+function applyRepoMeta(bundles, repoMetaByUrl) {
+  let overlaid = 0
+  for (const record of Object.values(bundles)) {
+    const meta = repoMetaByUrl.get(normalizeRepoUrl(record.repo_url))
+    if (!meta) continue
+    if (typeof meta.stars === 'number') record.stars = meta.stars
+    if (meta.repoDescription) record.repoDescription = meta.repoDescription
+    if ('isArchived' in meta) record.isArchived = meta.isArchived
+    if ('isFork' in meta) {
+      record.isFork = meta.isFork
+      record.forkParent = meta.forkParent || ''
+    }
+    overlaid++
+  }
+  devLog('repo meta overlay', overlaid, 'records')
+}
+
+/**
+ * Apply wave 2's repo cache: build the avatar maps, overlay the star
+ * metadata onto the records already in the store (or park it for the boot
+ * path when wave 2 beat the build), then publish the maps. The bundle-image
+ * map is merged before the avatar map because merge notifies synchronously —
+ * the dashboard's repoAvatarMap subscription must see both maps at once.
+ * @param {Object} repoCache
+ * @returns {{repoAvatarMap: Object, repoBundleImageMap: Object}|null}
+ */
+function applyRepoCache(repoCache) {
+  const repoAvatarMap = {}
+  const repoBundleImageMap = {}
+  const repoMetaByUrl = new Map()
+  if (repoCache && typeof repoCache === 'object') {
+    for (const [repoUrl, entry] of Object.entries(repoCache)) {
+      if (!entry || typeof entry !== 'object') continue
+      repoMetaByUrl.set(normalizeRepoUrl(repoUrl), entry)
+      if (entry.avatarUrl) {
+        // Same normalization rule as resolveAvatarUrl — the preload keys
+        // must match the URLs the display layer looks up.
+        repoAvatarMap[repoUrl] = withAvatarSize(entry.avatarUrl)
+      }
+      if (entry.bundleImageUrl) {
+        repoBundleImageMap[repoUrl] = entry.bundleImageUrl
+      }
+    }
+  }
+
+  // Overlay first: the store merge below re-renders the dashboard grid, and
+  // those cards must read the stars the overlay just wrote.
+  if (bundlesBuilt) applyRepoMeta(bundlesBuilt, repoMetaByUrl)
+  else pendingRepoMeta = repoMetaByUrl
+  store.merge({ repoBundleImageMap, repoAvatarMap })
+  if (bundlesBuilt && currentBundleIndex) saveBundleState(currentBundleIndex, bundlesBuilt)
+
+  devLog('wave 2 repo cache', {
+    repos: Object.keys(repoCache || {}).length,
+    avatars: Object.keys(repoAvatarMap).length,
+    applied: bundlesBuilt ? 'live' : 'parked',
+  })
+  return { repoAvatarMap, repoBundleImageMap }
+}
+
 async function loadData() {
   const bootTimer = devTime('boot data')
   devLog('boot data start', { api: API_BASE || '(static only)', fallback: FALLBACK_BASE })
@@ -501,10 +591,25 @@ async function loadData() {
     setBootProgress(5, 'Loading site data…')
 
     // The cache read and the first network wave start together, so IndexedDB
-    // latency never sits in front of a request. loadSiteData tries the phone
-    // API first and falls back to the static snapshot if it is unreachable.
+    // latency never sits in front of a request. loadSiteData races the phone
+    // API against the static snapshot per wave: wave 1 is everything the
+    // landing paints from, wave 2 (the repo cache) trails it so the 1.9 MB
+    // index never competes for bandwidth.
     const cachedStatePromise = loadBundleState()
-    const siteDataPromise = loadSiteData()
+    const { wave1, wave2 } = loadSiteData()
+
+    // Wave 2 is applied wherever the app has reached by the time it lands —
+    // attached before awaiting wave 1 so it starts the moment wave 1 settles.
+    // Never rejects: a failed wave 2 leaves avatars empty, nothing more.
+    const repoMapsPromise = wave2.then((w2) => {
+      if (!w2) return null
+      try {
+        return applyRepoCache(w2.repoCache)
+      } catch (err) {
+        console.error('[app] Repo cache apply failed:', err)
+        return null
+      }
+    })
 
     // Instant paint from IndexedDB while the network wave is still in flight
     const cachedState = await cachedStatePromise
@@ -515,7 +620,7 @@ async function loadData() {
 
     let site
     try {
-      site = await siteDataPromise
+      site = await wave1
     } catch (err) {
       if (cachedState) {
         deferredPreloads = null
@@ -530,7 +635,6 @@ async function loadData() {
       stats: statsRes,
       changes: changesRes,
       appCache: cacheRes,
-      repoCache: repoCacheRes,
       index,
     } = site
 
@@ -538,7 +642,6 @@ async function loadData() {
       source: site.source,
       bundles: Object.keys(index || {}).length,
       apps: Object.keys(cacheRes || {}).length,
-      repos: Object.keys(repoCacheRes || {}).length,
       date: coreRes.date || '',
     })
     store.merge({
@@ -576,31 +679,12 @@ async function loadData() {
     // at the real number instead of zero.
     const iconHydration = initIconQueue(iconCache)
 
-    // Repo owner avatars (repo_cache.json → repo_url → avatarUrl)
-    const repoAvatarMap = {}
-    const repoBundleImageMap = {}
-    const repoMetaByUrl = new Map()
-    if (repoCacheRes && typeof repoCacheRes === 'object') {
-      for (const [repoUrl, entry] of Object.entries(repoCacheRes)) {
-        if (!entry || typeof entry !== 'object') continue
-        repoMetaByUrl.set(normalizeRepoUrl(repoUrl), entry)
-        if (entry.avatarUrl) {
-          // Same normalization rule as resolveAvatarUrl — the preload keys
-          // must match the URLs the display layer looks up.
-          repoAvatarMap[repoUrl] = withAvatarSize(entry.avatarUrl)
-        }
-        if (entry.bundleImageUrl) {
-          repoBundleImageMap[repoUrl] = entry.bundleImageUrl
-        }
-      }
-    }
-    store.merge({ repoAvatarMap, repoBundleImageMap })
-
-    // Background-warm icon + avatar caches. Deferred so they never compete
-    // with the boot requests above.
+    // Background-warm icon + avatar caches. Icons start here (end of wave 1);
+    // the avatar phase inside waits for wave 2 to deliver the repo maps.
+    // Deferred so they never compete with the boot requests above.
     deferredPreloads = () => {
       iconHydration
-        .then(() => cacheImagesInBackground(iconCache, repoAvatarMap, repoBundleImageMap))
+        .then(() => cacheImagesInBackground(iconCache, repoMapsPromise))
         .catch((err) => {
           console.error('[app] Image caching failed:', err)
         })
@@ -619,17 +703,12 @@ async function loadData() {
 
     // The index is rebuilt from parsing each run, so it can miss repo metadata
     // (stars, description, archived/fork state) that repo_cache.json still has.
-    // Overlay it here so stars show even before the pipeline rewrites the index.
-    for (const record of Object.values(bundles)) {
-      const meta = repoMetaByUrl.get(normalizeRepoUrl(record.repo_url))
-      if (!meta) continue
-      if (typeof meta.stars === 'number') record.stars = meta.stars
-      if (meta.repoDescription) record.repoDescription = meta.repoDescription
-      if ('isArchived' in meta) record.isArchived = meta.isArchived
-      if ('isFork' in meta) {
-        record.isFork = meta.isFork
-        record.forkParent = meta.forkParent || ''
-      }
+    // Wave 2 normally lands after this point and overlays directly; if it beat
+    // the IndexedDB read, its meta is already parked in pendingRepoMeta.
+    bundlesBuilt = bundles
+    if (pendingRepoMeta) {
+      applyRepoMeta(bundles, pendingRepoMeta)
+      pendingRepoMeta = null
     }
     store.set('bundles', { ...bundles })
 

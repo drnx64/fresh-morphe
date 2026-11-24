@@ -63,7 +63,8 @@ If no changes and no day rollover, pipeline exits silently after step 3. `write_
 - **`docs/` is the build output and is gitignored.** `npm run build` generates it. Never edit manually, never commit it. CI pushes it to the `gh-pages` branch.
 - **`data/raw/` and `data/output/` are gitignored.** Large generated files.
 - **`data/state/` is partially gitignored.** `current_snapshot.json`, `previous_snapshot.json`, `external_repos.json`, `last_tg_msg.json` are gitignored. Caches (`app_cache.json`, `daily_buffer.json`, `last_run.json`, `patches_names_cache.json`, `release_cache.json`) are tracked.
-- **CSS is split into ordered files** (`assets/css/1-tokens.css` … `11-responsive.css`, loaded in numeric order in `index.html`). No CSS modules.
+- **CSS is split into ordered source files** (`assets/css/1-tokens.css` … `11-responsive.css`), linked in numeric order in `index.html` so dev needs no build step. `npm run build` concatenates them into `docs/assets/css/all.css` (sorted by the leading integer — lexicographic would order 1,10,11,2…), rewrites the links in `docs/index.html` to one, and removes the originals from `docs/`. No CSS modules.
+- **Production `index.html` is assembled by the build.** `scripts/build.js` walks the static and dynamic import graph from `scripts/app.js` and injects `<link rel="modulepreload">` hints at the `<!-- modulepreload -->` marker (dev keeps the marker as an inert comment); a missing marker or a CSS link/file count mismatch fails the build.
 - **SVG icons** are inline strings exported from `scripts/utils/svg.js`. No icon font or library.
 - **Python imports** use `sys.path.append` — scripts must run from repo root.
 - **No node_modules.** Zero npm dependencies. `npx serve` used for dev/preview only.

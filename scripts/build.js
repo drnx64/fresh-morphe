@@ -3,7 +3,7 @@
  * Run: node scripts/build.js
  */
 import { cpSync, mkdirSync, existsSync, readdirSync, rmSync, writeFileSync, readFileSync } from 'fs'
-import { join, dirname } from 'path'
+import { join, dirname, relative, sep } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -63,6 +63,91 @@ function copyJsModules(srcDir, destDir) {
 }
 const scriptFileCount = copyJsModules(join(ROOT, 'scripts'), join(DOCS, 'scripts'))
 console.log(`[build] scripts/ (${scriptFileCount} .js files)`)
+
+// 3.5. Production index.html: one stylesheet + modulepreload hints.
+//     Source keeps its 11 ordered CSS files (dev needs no build step); docs
+//     gets a single concatenation — 11 requests become 1 — and a preload hint
+//     for every module scripts/app.js can reach, so the browser fetches the
+//     whole graph at high priority instead of discovering it one import at a
+//     time as execution unwinds.
+const leadingNumber = (name) => {
+  const m = name.match(/^\d+/)
+  return m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER
+}
+
+const cssDir = join(ROOT, 'assets', 'css')
+const cssNames = readdirSync(cssDir)
+  .filter((name) => name.endsWith('.css'))
+  .sort((a, b) => leadingNumber(a) - leadingNumber(b) || a.localeCompare(b))
+
+const cssBundle = cssNames
+  .map((name) => `/* ${name} */\n${readFileSync(join(cssDir, name), 'utf8')}`)
+  .join('\n')
+writeFileSync(join(DOCS, 'assets', 'css', 'all.css'), cssBundle)
+for (const name of cssNames) rmSync(join(DOCS, 'assets', 'css', name))
+console.log(`[build] assets/css/all.css (${cssNames.length} files, ${Math.round(Buffer.byteLength(cssBundle) / 1024)} KB)`)
+
+const docsIndexPath = join(DOCS, 'index.html')
+let docsIndex = readFileSync(docsIndexPath, 'utf8')
+const nl = docsIndex.includes('\r\n') ? '\r\n' : '\n'
+
+// 11 stylesheet links → the single bundle. The count must match the files
+// on disk exactly: a stray or missing link would ship an unstyled section
+// once the originals are removed from docs/.
+const cssTagCount = (docsIndex.match(/<link rel="stylesheet" href="assets\/css\/[^"]+" \/>/g) || []).length
+if (cssTagCount !== cssNames.length) {
+  throw new Error(
+    `[build] index.html links ${cssTagCount} assets/css files but assets/css holds ${cssNames.length}`,
+  )
+}
+let cssLinkPlaced = false
+docsIndex = docsIndex.replace(
+  /(?:[ \t]*<link rel="stylesheet" href="assets\/css\/[^"]+" \/>\r?\n?)+/g,
+  () => {
+    if (cssLinkPlaced) return ''
+    cssLinkPlaced = true
+    return `    <link rel="stylesheet" href="assets/css/all.css" />${nl}`
+  },
+)
+
+// Walk the import graph from scripts/app.js: static, re-export and dynamic
+// edges. Every reachable module (except the entry itself — index.html loads
+// it with a script tag) gets a preload hint. A spec that resolves nowhere is
+// a broken import, and no bundler exists here to catch it, so fail the build.
+const MODULE_IMPORT_RE = /^\s*(?:import|export)\s+(?:[^'"]*?\s+from\s+)?['"](\.[^'"]+)['"]/gm
+const DYNAMIC_IMPORT_RE = /\bimport\(\s*['"](\.[^'"]+)['"]\s*\)/g
+const entryModule = join(ROOT, 'scripts', 'app.js')
+const moduleGraph = new Set()
+const moduleQueue = [entryModule]
+while (moduleQueue.length) {
+  const file = moduleQueue.shift()
+  if (moduleGraph.has(file)) continue
+  moduleGraph.add(file)
+  const src = readFileSync(file, 'utf8')
+  const specs = new Set([
+    ...[...src.matchAll(MODULE_IMPORT_RE)].map((m) => m[1]),
+    ...[...src.matchAll(DYNAMIC_IMPORT_RE)].map((m) => m[1]),
+  ])
+  for (const spec of specs) {
+    const resolved = join(dirname(file), spec)
+    if (!existsSync(resolved)) {
+      throw new Error(`[build] ${relative(ROOT, file).split(sep).join('/')} imports missing file ${spec}`)
+    }
+    if (!moduleGraph.has(resolved)) moduleQueue.push(resolved)
+  }
+}
+const preloadLinks = [...moduleGraph]
+  .filter((file) => file !== entryModule)
+  .map((file) => relative(ROOT, file).split(sep).join('/'))
+if (!docsIndex.includes('<!-- modulepreload -->')) {
+  throw new Error('[build] index.html is missing the <!-- modulepreload --> marker')
+}
+docsIndex = docsIndex.replace(
+  /[ \t]*<!-- modulepreload -->/,
+  preloadLinks.map((href) => `    <link rel="modulepreload" href="${href}" />`).join(nl),
+)
+writeFileSync(docsIndexPath, docsIndex)
+console.log(`[build] index.html (all.css + ${preloadLinks.length} modulepreload hints)`)
 
 // 4. Copy public files (favicon, feed, msg.txt)
 for (const file of ['feed.xml', 'feed-daily.xml']) {

@@ -34,14 +34,24 @@ export async function fetchWithTimeout(url, init = {}, timeoutMs = DEFAULT_TIMEO
  * Fetch and parse JSON.
  * @param {string} url
  * @param {*} [fallback] returned instead of throwing when the fetch fails
- * @param {{ timeoutMs?: number, cache?: RequestCache, headers?: Object }} [opts]
+ * @param {{ timeoutMs?: number, cache?: RequestCache, headers?: Object,
+ *   signal?: AbortSignal }} [opts]
+ *   `signal` lets a caller cancel a request it no longer needs (the API/static
+ *   race aborts the loser); an external abort always rejects — it is not a
+ *   failure, so it never returns `fallback`, and its AbortError reaches the
+ *   caller so the race can tell "cancelled" apart from "the API is down".
  *   `cache: 'no-cache'` forces a conditional revalidation (ETag  304) so the
  *   always-fresh site data stays fresh without `?_t=` cache busting.
  * @returns {Promise<*>}
  */
-export async function fetchJson(url, fallback, { timeoutMs = DEFAULT_TIMEOUT_MS, cache, headers } = {}) {
+export async function fetchJson(url, fallback, { timeoutMs = DEFAULT_TIMEOUT_MS, cache, headers, signal } = {}) {
   const controller = new AbortController()
   const started = performance.now()
+  const onExternalAbort = () => controller.abort()
+  if (signal) {
+    if (signal.aborted) onExternalAbort()
+    else signal.addEventListener('abort', onExternalAbort, { once: true })
+  }
   devLog('fetch start', url, { timeoutMs, cache: cache || 'default' })
   try {
     const timer = setTimeout(() => controller.abort(), timeoutMs)
@@ -59,6 +69,10 @@ export async function fetchJson(url, fallback, { timeoutMs = DEFAULT_TIMEOUT_MS,
       clearTimeout(timer)
     }
   } catch (err) {
+    if (signal?.aborted) {
+      devLog('fetch aborted', url, `${Math.round(performance.now() - started)}ms`)
+      throw signal.reason || new DOMException('Aborted', 'AbortError')
+    }
     if (controller.signal.aborted) {
       devLog('fetch timeout', url, `${Math.round(performance.now() - started)}ms`)
       throw new Error(`Request timed out: ${url}`)
@@ -69,5 +83,7 @@ export async function fetchJson(url, fallback, { timeoutMs = DEFAULT_TIMEOUT_MS,
     }
     devLog('fetch failed', url, err.message, `${Math.round(performance.now() - started)}ms`)
     throw err
+  } finally {
+    signal?.removeEventListener('abort', onExternalAbort)
   }
 }
