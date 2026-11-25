@@ -2,9 +2,9 @@
   "bundle": "futatabi",
   "channel": "stable",
   "repo_url": "https://github.com/rikunode/futatabi",
-  "created_at": "2026-11-23T19:53:04",
-  "version": "0.3.0",
-  "description": "v0.3.0: あいもげPKCEログイン・投稿・画像添付、あにまん読み取り・3段階投稿、拡張ホーム画面を追加。めぶきは未対応。",
+  "created_at": "2026-11-25T18:53:44",
+  "version": "0.4.0-beta.10",
+  "description": "v0.4.0-beta.10: Aimoge in-app WebView authorization; real SPA rendering and synthetic callback verified; owner approval pending.",
   "apps": [
     {
       "app_name": "futatter",
@@ -12,7 +12,16 @@
       "patches": [
         {
           "name": "Block banner ads",
-          "description": "Disable both Google Mobile Ads banner variants without changing rewarded ads.",
+          "description": "Remove the top banner and its reserved space on ARM64 without changing rewarded ads.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.1.1"
+          ]
+        },
+        {
+          "name": "Board login button",
+          "description": "Replace the catalog Ad button with login on Aimoge and Mebuki only (ARM64).",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -42,8 +51,35 @@
           ]
         },
         {
+          "name": "Default dark mode",
+          "description": "Use dark mode when the theme is unset. Preserve saved choices and allow changing the theme in settings.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.1.1"
+          ]
+        },
+        {
           "name": "Local board bridge",
           "description": "Auto-register boards and run the local bridge with protected posting UI for Aimoge and Animanch.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.1.1"
+          ]
+        },
+        {
+          "name": "Restore launcher icon",
+          "description": "Restore missing adaptive launcher foreground densities from the official APK asset.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "3.1.1"
+          ]
+        },
+        {
+          "name": "futatabi branding",
+          "description": "Rename the app to futatabi and use its blue-to-teal launcher icon on black. Optional.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -55,11 +91,11 @@
     }
   ],
   "patches_name": "futatabi",
-  "fingerprint": "dd7ee4cbf0f8ebe7bfde943f8320ba35437db12180993945a852cffa79661ac7",
-  "release_notes": "# futatabi v0.3.0 — 書き込み・ログイン対応\n\n**対象：ふたったー 3.1.1（versionCode 65）のみ。** Morphe向けパッチバンドル（.mpp）を配布します。改変済み第三者APKは配布しません。\n\n## 新機能\n\n- **あいもげ書き込み対応**：公式PKCEアプリ承認によるログイン導線、新規スレ立て・返信、画像添付（presignで取得したURLへのPUT）、投稿ごとの削除キーと投稿履歴の管理。資格情報・削除キーは端末内のアプリ専用領域へ保存し、Flutterの `kakikomiData` には入れません。期限切れ時の再認証には利用者の操作が必要です。\n- **あにまん読み取り＋書き込み対応**：独自の読み取りアダプタと、投稿前チェック `comment.php?preCheck` → 本投稿 `comment.php` → 画像添付 `upload/` の3段階処理に対応。公開HTMLと `main.js` を参考に独自実装しています。\n- **拡張ホーム画面**：ランチャーアイコンから独立して起動できます。板別の投稿画面、返信先スレ選択、ログイン・ログアウト導線、投稿履歴を追加しました。\n- **めぶきは未対応**。次期 **v0.4.0** での対応を予定しています。\n\n既存の **Block banner ads**、**Clone app**、**Local board bridge** は引き続き既定ONです。素のふたったーの通常のふたば板への投稿処理は変更しません。\n\n## 検証の範囲\n\n**ローカルフィクスチャでのエミュレータE2EはPASS済み**です。認証トークン保護、模擬PKCE開始・callback・code交換、あいもげ新規スレ／返信／画像のpresign→PUT、あにまんの投稿3段階、拡張UIからの返信成功表示を確認しました。使用したコード・トークン・画像投稿先はすべてローカルの模擬環境です。\n\n**実サイトでのログイン・投稿・画像アップロード、および所有者の実機での最終確認は未実施です。** リリースは実サイトでの成功を保証しません。検証結果は [E2E実測報告書](https://github.com/rikunode/futatabi/blob/main/docs/write-flow-v03-e2e-observation-20261123.md) に記録しています。\n\n## インストール上の注意\n\n- **ふたったー3.1.1 XAPKの必要なスプリットを単一APKへマージ**し、そのAPKにMorpheでパッチを適用してください。ベースAPK単体には適用しないでください。\n- クローン不要なら適用時に **Clone app** をOFFにできます。クローンの既定パッケージ名は `com.Nanasaki.ftutter.morphe` です。\n- 署名やパッケージ名が異なるAPKへの入れ替え・アンインストールにより、既存データが消える場合があります。必要なデータは事前にバックアップしてください。\n- 添付した `SHA256SUMS` と配布 `.mpp` のSHA-256を照合してください。\n\n本リポジトリはGPL-3.0。Clone appのMorphe公式由来コードに関する著作権表記・ReVanced由来表記・GPL第7条の追加表示は維持しています。\n",
-  "release_tag": "v0.3.0",
-  "release_date": "2026-11-23T10:53:04Z",
-  "isPreRelease": false,
+  "fingerprint": "ef9f3d3eae3046609cb20393bcf154e8dde3591afc832c99ad42e51543c85359",
+  "release_notes": "# futatabi v0.4.0-beta.9 — あにまん本文・あいもげPKCE復旧\n\n正式リリースではありません。確認できたコード欠陥を修正した部分修正版です。端末DNS障害の根本原因とHTTP errorの実機発生リクエストは未確定です。\n\n## あにまん本文\n- 純正Flutterのスレ解析は span.cnw の取得結果がnullの場合、例外経路へ進む（0x720c58でquerySelector、0x720e84でnull分岐）。従来の変換HTMLには日時要素が存在しなかったため、実上流の span.resposted を span.cnw に変換。投稿本文・日時の欠落を検出し、レス番号のrsc、画像のファイル名リンクとdata-resを既存の互換形式に揃えました。\n- PC上で実上流から取得した4スレ（7624666/7674934/7675005/7675004）を変換し、HTTP 200、text/html; charset=Shift_JIS、投稿と日時それぞれ194/30/1/1件を確認。サムネイルとsrc経路はHTTP 200、image/jpeg（12784/16733 bytes）。Androidの画像処理はPCの代替デコーダーで検証。srcは従来どおり変換画像であり、原本配信への仕様変更ではありません。\n- 所有者のNullエラー画面のスレIDは不明。実機での再描画・本文表示は要確認。\n- 電磁気総合スレは実上流検索、レス番号、画像IDの照合であいもげと確認。現在の上流本文はHTTP 200（19投稿）、該当サムネイル/原画像もHTTP 200。実アダプターの本文7119 bytes、thumb 14702 bytes、src 26640 bytesはすべてHTTP 200。純正Kakikomiの投稿用multipart送信にもHTTP errorの表示経路があり、ブリッジは純正投稿ルートを403で拒否する設計。所有者端末のHTTPログがないため、このトーストの原因は断定せず投稿ルートも変更していません。\n\n## あいもげログイン\n- PCでは api.nijiurachan.net / nijiurachan.net のDNS解決成功。公式client-policy/openapi.jsonはHTTP 200。資格情報を使用しない匿名の認可開始リクエストはHTTP 201、発行された公式認可ページはHTTP 200。承認や実ログインは実施していません。\n- ブラウザのローカル /ext/login/ でRequest failedが表示される事象は、コールバックでの公式API POST /app-credentials が失敗した可能性が高い。旧実装は交換前にPKCE状態を消していたため、通信復旧後も再開不能でした。\n- リクエスト本文送信前のUnknownHostExceptionだけ区別して、PKCE状態を期限内維持。通信復旧後のブラウザ再読込を可能にし、処理段階と接続先をエラーに表示。送信済みか不明な障害は状態を消し再送しません。DNS設定・UA・TLS・公式認証の迂回は行っていません。\n- 認可URLは実測した公式HTTPSホストに限定。状態と資格情報の保存成功をチェックし、ブラウザからホームへ戻る際にログイン状態を再取得します。資格情報は従来のアプリ専用SharedPreferencesにのみ保存。\n- PC上の合成通信試験でS256、誤state拒否、本文送信前のDNS障害、復旧後再読込、保存と状態表示、再利用拒否、送信後タイムアウト、非公式認可URL拒否を検証。実認証・実トークン取得は所有者確認待ち。\n- 所有者端末の実際のDNS失敗ホスト/ネットワーク環境は未取得。恒常的DNS障害そのものが直ったとは主張しません。\n\n## ビルドと既存の注意点\n- 全7パッチ同時適用、aapt、出力DEXの修正文字列とAOTハッシュ一致を確認。既存のパッチ一覧・既定値、AdログインボタンのAOTは変更なし。\n- X入口はエミュレータで不安定、HTTPエラー表示は未確認。めぶきのGoogle対象外、ログインは実験用。未ログインのおためしカタログ対応のみで、ログイン後も認証済みスレ本文変換は未実装。新規スレ・画像添付は未対応。\n- あいもげ／あにまんの投稿はローカルフィクスチャ検証済み、実サイト最終検収は未実施。実投稿なし。\n- beta.7の画像・カタログ修正、確定アイコン、既定ダークモード、beta.8の板別ログインボタンの独立した実機検収は引き続き所有者確認待ち。\n",
+  "release_tag": "v0.4.0-beta.9",
+  "release_date": "2026-11-25T09:34:51Z",
+  "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
   "repoDescription": "",

@@ -2,9 +2,9 @@
   "bundle": "quwis",
   "channel": "stable",
   "repo_url": "https://github.com/quwi26/Quwis-Patches",
-  "created_at": "2026-11-23T13:28:01",
-  "version": "1.14.1",
-  "description": "Quwi's Chess Patches 1.14.1: Game Review no longer crashes on a game with an en passant capture, and moves are checked with the app's own converter before the review is shown.",
+  "created_at": "2026-11-24T22:11:18",
+  "version": "1.14.2",
+  "description": "Quwi's Chess Patches 1.14.2: the Stockfish engine now goes into the ABI folder the APK itself uses, so a 32-bit app is not switched to arm64 and chess.com's own native libraries keep working.",
   "apps": [
     {
       "app_name": "Chess - Play and Learn Online",
@@ -236,7 +236,7 @@
             },
             {
               "key": "stockfish32Bit",
-              "description": "Use Stockfish's 32-bit ARM build (armeabi-v7a) instead of the 64-bit one. Needed only when patching on a computer for a phone whose Android is 32-bit: patching on the phone picks the right engine itself."
+              "description": "Use Stockfish's 32-bit ARM build (armeabi-v7a) instead of the 64-bit one. Needed only for an APK that carries no native libraries of its own, or both: otherwise the ABI folders in the APK decide, so that adding the engine can't switch the app to another ABI."
             }
           ],
           "compatible_versions": [
@@ -299,10 +299,10 @@
     }
   ],
   "patches_name": "Quwi's Chess Patches",
-  "fingerprint": "5671215ca52eef1867e2ac0c6202c39edbac7fab4e230cf3a8acd01171c1c7df",
-  "release_notes": "**Quwi's Patches settings** - Quwi's Patches and the Lichess login now open on a root mount too. Android keeps the stock app's manifest there, so the activity this bundle adds is never declared and the settings row used to close chess.com. The screens are a plain view tree now: the activity hosts them on a normally installed patched app, and a dialog hosts them where the activity cannot start. Pages open their own windows again, and Back goes a page back instead of closing. The app log, crash, Discord login and Lichess's review in the app's own browser are separate screens and still need a normal install, which the patch descriptions now say.\n\nThe bundle targets chess.com 4.10.28 and 4.10.27.",
-  "release_tag": "v1.14.0",
-  "release_date": "2026-11-22T20:39:19Z",
+  "fingerprint": "bdec56a8603605bf51446f2a5155d27852c48fc288c0f9e2866fcafd233480d7",
+  "release_notes": "**Stockfish analysis** - the engine now goes into the ABI folder the APK itself uses. A 64-bit engine added to a 32-bit APK used to switch the app to arm64, so chess.com's own native libraries were never extracted: bots, Play Coach and the app's other native parts crashed with \"cee-driver binary not found\". A 32-bit APK now gets the 32-bit engine, an APK the phone cannot run is refused before patching with a message naming the 64-bit one to use, and a base APK without native libraries warns that chess.com keeps them in the ABI split.\n\nThe bundle targets chess.com 4.10.28 and 4.10.27.",
+  "release_tag": "v1.14.2",
+  "release_date": "2026-11-24T19:11:41Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/285001961?v=4&s=128",

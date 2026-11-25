@@ -4,7 +4,7 @@
   "repo_url": "https://github.com/del-razor/youtube-android-auto-patches",
   "created_at": "2026-11-23T16:51:09Z",
   "version": "1.0.0-dev.9",
-  "description": "## [1.0.0-dev.13](https://github.com/del-razor/youtube-android-auto-patches/compare/v1.0.0-dev.12...v1.0.0-dev.13) (2026-11-24)\n\n### 🐛 Bug Fixes\n\n* smooth car drags and swipes, add an on-screen back button ([16c2bd9](https://github.com/del-razor/youtube-android-auto-patches/commit/16c2bd95dd5c704aac604bd839a4151f8b84c1c3))",
+  "description": "## [1.0.0-dev.15](https://github.com/del-razor/youtube-android-auto-patches/compare/v1.0.0-dev.14...v1.0.0-dev.15) (2026-11-25)\n\n### 🐛 Bug Fixes\n\n* restore Google Maps in patched GasBuddy ([#4](https://github.com/del-razor/youtube-android-auto-patches/issues/4)) ([33eab5e](https://github.com/del-razor/youtube-android-auto-patches/commit/33eab5e309745a4beb5a8bf3a9b20c46f7d021eb))",
   "apps": [
     {
       "app_name": "YouTube",
@@ -30,13 +30,38 @@
         }
       ],
       "developer": "Google LLC"
+    },
+    {
+      "app_name": "GasBuddy: Find & Pay for Gas",
+      "package": "gbis.gbandroid",
+      "patches": [
+        {
+          "name": "Android Auto gas stations",
+          "description": "Adds GasBuddy to Android Auto as a car app: a map and list of nearby stations with prices, a fuel grade picker, and a Navigate button that hands the station to Google Maps or Waze. Android Auto only lists it when the patched app is installed with the Play Store as installer, for example with KingInstaller.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "702.10.27044"
+          ]
+        },
+        {
+          "name": "Fix blank Google Maps",
+          "description": "Patching re-signs GasBuddy, and Google Maps then refuses GasBuddy's map key, so the map stays blank. This makes GasBuddy report its original Play Store certificate to the Google code running inside it, so the map loads again.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "702.10.27044"
+          ]
+        }
+      ],
+      "developer": "PDI Software, Inc."
     }
   ],
   "patches_name": "del-razor Patches",
-  "fingerprint": "23ef7a6a20febd5eaa6c43e3a122b5f1f8fa617585ebb66eb14f80afcd189051",
-  "release_notes": "## [1.0.0-dev.9](https://github.com/del-razor/youtube-android-auto-patches/compare/v1.0.0-dev.8...v1.0.0-dev.9) (2026-11-23)\n\n### 🐛 Bug Fixes\n\n* Allow YouTube to open on the car's private display ([e6d0dd8](https://github.com/del-razor/youtube-android-auto-patches/commit/e6d0dd85d7449411e75778ef5612dcd7a92e7187))\n",
-  "release_tag": "v1.0.0-dev.9",
-  "release_date": "2026-11-23T16:51:09Z",
+  "fingerprint": "3ad47b162c9fb01e6989c41d4fd5ae147e36dec7ce71ad9a6c73ea95a72fe35d",
+  "release_notes": "## [1.0.0-dev.15](https://github.com/del-razor/youtube-android-auto-patches/compare/v1.0.0-dev.14...v1.0.0-dev.15) (2026-11-25)\n\n### 🐛 Bug Fixes\n\n* restore Google Maps in patched GasBuddy ([#4](https://github.com/del-razor/youtube-android-auto-patches/issues/4)) ([33eab5e](https://github.com/del-razor/youtube-android-auto-patches/commit/33eab5e309745a4beb5a8bf3a9b20c46f7d021eb))\n",
+  "release_tag": "v1.0.0-dev.15",
+  "release_date": "2026-11-25T00:54:35Z",
   "isPreRelease": true,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/174659782?v=4&s=128",

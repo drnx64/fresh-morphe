@@ -2,9 +2,9 @@
   "bundle": "m1zir",
   "channel": "latest",
   "repo_url": "https://github.com/M1zir/swiftkey-clipboard-patches",
-  "created_at": "2026-11-11T08:52:54",
-  "version": "0.3.1",
-  "description": "Persistent clipboard history and Arabic 123 legacy layout for SwiftKey 9.13.19.3. Experimental; Android device validation pending.",
+  "created_at": "2026-11-24T09:00:12",
+  "version": "0.4.0",
+  "description": "Persistent clipboard history, Mac clipboard sync and Arabic 123 legacy layout for SwiftKey 9.13.19.3. Experimental; Android device validation pending.",
   "apps": [
     {
       "app_name": "Microsoft SwiftKey AI Keyboard",
@@ -47,6 +47,15 @@
           ]
         },
         {
+          "name": "Mac clipboard sync",
+          "description": "Sends text you copy to a paired Mac running SyncClipboard, and puts text copied on the Mac on the phone's clipboard while the keyboard is open. Uses HTTPS with a pinned certificate key over Wi-Fi or Tailscale. Pair once in SwiftKey settings. Skips clips Android marks as sensitive.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "9.13.19.3"
+          ]
+        },
+        {
           "name": "Restore Arabic 123 legacy layout",
           "description": "Restores the Arabic 123 legacy arrangement with و as the third bottom-row letter and no separate ؤ key. Keeps the current layouts and default selection. Select the restored layout in SwiftKey Languages.",
           "use": true,
@@ -60,10 +69,10 @@
     }
   ],
   "patches_name": "M1zir",
-  "fingerprint": "699f587b8415dc92f6e85fd53d7ed9c4c02195dda37fe354fa7fdb0268128f73",
-  "release_notes": "# M1zir’s SwiftKey Clipboard Patches v0.3.1 (experimental)\n\nMaintained by **Abubakr Ahmed (M1zir)**. Targets **Microsoft SwiftKey 9.13.19.3**\n(`com.touchtype.swiftkey`).\n\n## Fixed: the intended Arabic 123 legacy arrangement\n\nSwiftKey contains two different layouts named **Arabic 123 - Legacy**. Version\n0.3.0 exposed the wrong one for the requested arrangement. This release selects\nthe correct native variant:\n\n- **ط** is at the end of the middle letter row.\n- **و** is the third letter on the bottom row.\n- There is **no separate ؤ key**; ؤ remains available by long-pressing و.\n\nEnable **Restore Arabic 123 legacy layout** when patching, then open\n**SwiftKey → Languages → your Arabic language** and select **Arabic 123 - Legacy**.\n**Select it again even if you used the legacy choice in v0.3.0**: the saved\nselection is not automatically migrated. The current layouts and default remain\navailable. Clipboard retention is unchanged.\n\n## Included patches\n\n- Restore Arabic 123 legacy layout\n- Keep clipboard history forever\n- Customise toolbar\n- Disable cloud sign-in prompt\n- Disable telemetry\n\nClipboard retention still removes local one-hour expiration, including images\nsaved to SwiftKey’s clipboard, and fixes sorting for entries weeks apart.\nManual deletion and pinning are preserved. Storage and memory set practical\nlimits; expired clips cannot be recovered and cloud behavior is unchanged.\n\n## Install or update\n\n[Add source to Morphe](https://morphe.software/add-source?github=M1zir/swiftkey-clipboard-patches)\n\nEnable pre-releases for this experimental source if needed, then refresh it.\nAlternatively download `swiftkey-clipboard-patches-0.3.1.mpp` below and import it\nthrough **Sources → Add → Local**. Apply all desired patches in one pass to an\n**original, unpatched SwiftKey 9.13.19.3 APK**, including when updating from v0.3.0.\nFor clipboard retention, enable **Remember copied items** in SwiftKey.\n\nUse the same Morphe signing key as your previous patched installation to permit\nan in-place update. The official Microsoft installation has a different signature;\nAndroid may refuse to install over it. Save important data before any uninstall.\n\n## Validation\n\nApplied the layout patch alone and all five patches together to Microsoft’s\noriginal ARM64 APK using Morphe Desktop 2.1.1 / Patcher 2.3.0. Both APKs rebuilt\nand signed. Each passed 380 layout behavior assertions and 144 structural/resource\nchecks on the emitted DEX and decoded key-map resources. These now verify the\nactual letter rows and distinguish primary keys from long-press alternatives.\nThe new tests also reject the incorrect v0.3.0 output. The combined output passed\n394 clipboard behavior assertions and the upstream toolbar/telemetry verifier.\n\n[GitHub Actions build and JVM tests passed](https://github.com/M1zir/swiftkey-clipboard-patches/actions/runs/42990855057).\n\n**These are bytecode execution-model checks. Android Manager import, actual\nArabic typing/layout previews, clipboard retention and large-history performance\nstill require physical-device testing.** See VALIDATION.md and docs/ARABIC_LAYOUT.md.\n\n## Attribution\n\nIndependent GPL-3.0 fork of murilosimao/swiftkey-patch v0.1.1, preserving credit\nto Murilo and arandomhooman. Not an official Microsoft, Morphe or upstream release.\nNo SwiftKey APKs, original layout assets, decompiled app code or signing keys are\ndistributed.\n",
-  "release_tag": "v0.3.1",
-  "release_date": "2026-11-11T08:56:49Z",
+  "fingerprint": "edd6b3f0c67f7e0d20b1f5ae195055f00ab9192f46e1c3b3ef29a3020895027d",
+  "release_notes": "# M1zir's SwiftKey Clipboard Patches v0.4.0 (experimental)\n\nMaintained by **Abubakr Ahmed (M1zir)**. Targets **Microsoft SwiftKey 9.13.19.3**\n(`com.touchtype.swiftkey`).\n\n## New: Mac clipboard sync\n\nThe optional **Mac clipboard sync** patch connects SwiftKey to\n[SyncClipboard](https://github.com/Jeric-X/SyncClipboard) on a Mac. It is off by default.\n\n- Text you copy on the phone reaches the Mac in about a second. SwiftKey only has\n  to be the default keyboard. No app, overlay, Accessibility service or root is needed.\n- Text you copy on the Mac reaches the phone's clipboard when the keyboard opens,\n  and every 2 seconds while it stays open.\n- It works on the same Wi-Fi or through Tailscale, and switches between them by itself.\n- Clips Android marks as sensitive stay on the phone. Images, files and text over\n  10,240 characters are not synced.\n- HTTPS to the Mac's own certificate, pinned by its public key, plus a random password.\n  The phone keeps the pairing encrypted with an Android Keystore key and out of backups.\n\nSet up the Mac and pair the phone once, as described in the README's\n**Mac clipboard sync** section. The Mac scripts are in `scripts/mac`.\n\n## Included patches\n\n- Mac clipboard sync (off by default)\n- Restore Arabic 123 legacy layout\n- Keep clipboard history forever\n- Customise toolbar\n- Disable cloud sign-in prompt\n- Disable telemetry\n\n## Install or update\n\n[Add source to Morphe](https://morphe.software/add-source?github=M1zir/swiftkey-clipboard-patches)\n\nEnable pre-releases for this experimental source if needed, then refresh it.\nAlternatively download `swiftkey-clipboard-patches-0.4.0.mpp` below and import it\nthrough **Sources → Add → Local**. Apply all desired patches in one pass to an\n**original, unpatched SwiftKey 9.13.19.3 APK**.\n\nUse the same Morphe signing key as your previous patched installation to permit\nan in-place update. The official Microsoft installation has a different signature,\nand Android may refuse to install over it. Save important data before any uninstall.\n\n## Validation\n\nAll six patches applied together to Microsoft's original ARM64 APK with Morphe\nDesktop 2.1.1. The emitted DEX passed the clipboard, Arabic layout and toolbar\nverifiers, and a new check that each keyboard service hook is in place. The sync\nclient ran against a real SyncClipboard 3.3.4 server: it sent and fetched text,\nmoved from an unreachable address to a working one, and refused a wrong key and a\nwrong password.\n\n**The keyboard hooks and the pairing screen still need testing on a phone.**\n\n## Attribution\n\nIndependent GPL-3.0 fork of murilosimao/swiftkey-patch v0.1.1, preserving credit\nto Murilo and arandomhooman. Not an official Microsoft, Morphe, SyncClipboard or\nupstream release. No SwiftKey APKs, original layout assets, decompiled app code or\nsigning keys are distributed.\n",
+  "release_tag": "v0.4.0",
+  "release_date": "2026-11-24T09:24:14Z",
   "isPreRelease": true,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/114473616?v=4&s=128",
