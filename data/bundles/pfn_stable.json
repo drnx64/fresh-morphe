@@ -2,14 +2,21 @@
   "bundle": "pfn",
   "channel": "stable",
   "repo_url": "https://github.com/pfn/android-discord-patches",
-  "created_at": "2026-11-22T04:33:19Z",
-  "version": "1.28.0",
-  "description": "### 🐛 Bug Fixes\n\n* **Discord:** Fixed blocked and ignored messages still rendering on 354.12 by reimplementing Hide blocked or ignored messages as a Hermes bytecode patch - blocked and ignored message groups no longer render at all (no content, no collapsed indicator)\n* **Discord:** Fixed every Conduit JS feature silently failing on 354.12 by removing the Conduit runtime patches (Conduit settings, Conduit button on profile bar, the Conduit hide-blocked flag) - the bridgeless React runtime never registers modules through `global.__d`\n* **Discord:** Fixed the Hermes patches being silently revertible by Discord's downloaded OTA bundles: the loader pin moved into Pin app to built-in bundle, which now works without the Conduit runtime\n",
+  "created_at": "2026-11-25T20:22:20Z",
+  "version": "1.29.0",
+  "description": "### 🐛 Bug Fixes\n\n* **Discord:** Fixed \"Waiting for network...\" latching until force-kill on mobile: armed NetInfo's built-in reachability probe loop (5s retries while unreachable) instead of passively mirroring the OS connectivity flag, so Discord dismisses the disconnected state itself and resumes the gateway and message fetching\n",
   "apps": [
     {
       "app_name": "Discord - Talk, Play, Hang Out",
       "package": "com.discord",
       "patches": [
+        {
+          "name": "Aggressive network recovery",
+          "description": "Discord actively probes the network every few seconds instead of latching an offline state until force-killed (fixes stuck \"Waiting for network...\" on mobile).",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
+        },
         {
           "name": "Hide blocked or ignored message rows",
           "description": "Hides messages from blocked and ignored users entirely - no content, no divider.",
@@ -43,10 +50,10 @@
     }
   ],
   "patches_name": "pfn",
-  "fingerprint": "4318446bcb2c4f3a000dc26590af915675a6fb0242c7cc6feb8a5781d722e87b",
-  "release_notes": "## [1.28.0](https://github.com/pfn/android-discord-patches/compare/v1.27.0...v1.28.0) (2026-11-22)\n\n### 🐛 Bug Fixes\n\n* **Discord:** Fixed blocked and ignored messages still rendering on 354.12 by reimplementing Hide blocked or ignored messages as a Hermes bytecode patch - blocked and ignored message groups no longer render at all (no content, no collapsed indicator)\n* **Discord:** Fixed every Conduit JS feature silently failing on 354.12 by removing the Conduit runtime patches (Conduit settings, Conduit button on profile bar, the Conduit hide-blocked flag) - the bridgeless React runtime never registers modules through `global.__d`\n* **Discord:** Fixed the Hermes patches being silently revertible by Discord's downloaded OTA bundles: the loader pin moved into Pin app to built-in bundle, which now works without the Conduit runtime\n",
-  "release_tag": "v1.28.0",
-  "release_date": "2026-11-22T04:33:19Z",
+  "fingerprint": "bb8b42fe156fb4b6a169f78c4de6a43daa36911eeb6aad7b5c92cd861d7d9024",
+  "release_notes": "## [1.29.0](https://github.com/pfn/android-discord-patches/compare/v1.28.0...v1.29.0) (2026-11-25)\n\n### 🐛 Bug Fixes\n\n* **Discord:** Fixed \"Waiting for network...\" latching until force-kill on mobile: armed NetInfo's built-in reachability probe loop (5s retries while unreachable) instead of passively mirroring the OS connectivity flag, so Discord dismisses the disconnected state itself and resumes the gateway and message fetching\n",
+  "release_tag": "v1.29.0",
+  "release_date": "2026-11-25T20:22:20Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/512197?v=4&s=128",

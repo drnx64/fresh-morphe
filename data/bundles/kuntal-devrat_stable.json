@@ -12,38 +12,29 @@
       "patches": [
         {
           "name": "Disable ads",
-          "description": "Stubs AppLovin, AdMob, InMobi and other ad SDKs at the bytecode level to prevent ads from loading without breaking the app.",
+          "description": "Prevents AppLovin, Google MobileAds, Vungle, IronSource/LevelPlay, Mintegral, BigoAds, BidMachine and Meta Audience Network from initializing, so no ads are requested.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "24.5"
+            "26.9"
           ]
         },
         {
           "name": "Disable forced update",
-          "description": "Bypasses PairIP license check ('Download from Play Store'), Play Integrity, and signature verification to allow modified and sideloaded app usage.",
+          "description": "Bypasses PairIP signature/license checks, prevents the PairIP VM from starting, and reconstructs the native app entry points so DiskWala 26.9 can launch as a sideloaded APK.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "24.5"
-          ]
-        },
-        {
-          "name": "Patch native libraries",
-          "description": "Neutralizes PairIP traps in native .so libraries and patches Hermes bundle.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "24.5"
+            "26.9"
           ]
         },
         {
           "name": "Unlock premium",
-          "description": "Makes RevenueCat entitlements appear active so ads-free and premium features are unlocked.",
+          "description": "Forces DiskWala's native session state to logged-in + premium, unlocking the ads-free experience and premium UI. RevenueCat is also patched as a best-effort fallback.",
           "use": true,
           "options": [],
           "compatible_versions": [
-            "24.5"
+            "26.9"
           ]
         }
       ],
@@ -51,15 +42,15 @@
     }
   ],
   "patches_name": "DiskWala Patches",
-  "fingerprint": "2abd7f71da6bfe4280512f40c17d7af1321093d0e36a7ed24e35ed159346713a",
+  "fingerprint": "1cff49e135362f681bbc926b424640073bd7189ce10f54534533859ccdb6da0f",
   "release_notes": "## [1.0.3](https://github.com/kuntal-devrat/diskwala-patches/compare/v1.0.2...v1.0.3) (2026-09-02)\n\n### 🐛 Bug Fixes\n\n* **morphe:** preserve Hermes bundle replacements ([c8f0b9e](https://github.com/kuntal-devrat/diskwala-patches/commit/c8f0b9e586c403bf8401f8da91f5287a67195312))\n",
   "release_tag": "v1.0.3",
   "release_date": "2026-09-02T14:25:16Z",
   "isPreRelease": false,
   "stars": 4,
-  "avatarUrl": "https://avatars.githubusercontent.com/u/184121074?v=4",
+  "avatarUrl": "https://avatars.githubusercontent.com/u/184121074?v=4&s=128",
   "repoDescription": "Morphe patches for DiskWala - Disable ads & Remove forced update screen (24.5)",
-  "isArchived": true,
+  "isArchived": false,
   "isFork": false,
   "forkParent": "",
   "bundleImageUrl": ""

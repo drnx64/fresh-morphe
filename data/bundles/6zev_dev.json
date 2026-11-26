@@ -2,71 +2,37 @@
   "bundle": "6zev",
   "channel": "dev",
   "repo_url": "https://github.com/6zev/morphe-patches",
-  "created_at": "2026-11-16T12:16:21",
-  "version": "1.7.1",
-  "description": "## [1.7.1](https://github.com/6zev/morphe-patches/compare/v1.7.0...v1.7.1) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* never call the engine's verification routine, leave it intact ([6dcc8c2](https://github.com/6zev/morphe-patches/commit/6dcc8c27f2ec9ebfaf114116226f7fa8cbc1d28f))",
+  "created_at": "2026-11-26T02:52:32",
+  "version": "1.7.2",
+  "description": "## [1.7.2](https://github.com/6zev/morphe-patches/compare/v1.7.1...v1.7.2) (2026-11-26)\n\n### 🐛 Bug Fixes\n\n* **build:** do not query runPatch properties during configuration ([c659ea6](https://github.com/6zev/morphe-patches/commit/c659ea69e086adf02b599d1f22e7f11bfade53cd))",
   "apps": [
     {
       "app_name": "tvQuickActions Pro",
       "package": "dev.vodik7.tvquickactions",
       "patches": [
         {
-          "name": "ADB server log",
-          "description": "Writes the native ADB server's own log to /data/local/tmp/tvqa-server.log and lets its debug messages through. The server is started again every few seconds and nothing of what it says is reachable otherwise: its logger is built at a level that drops every message, and its output is sent to /dev/null. Use this to find out why it ends, not as a fix.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.8.0",
-            "3.7.0"
-          ]
-        },
-        {
-          "name": "Input without the ADB server",
-          "description": "Keeps key, pointer and gamepad input working when the \"ADB speed up\" server is not running. The app only asks whether speed-up is enabled, not whether the server it starts as the shell user on localhost:15000 is up, and it drops the request without falling back when the port is closed - so numpad keys and mouse input do nothing. Each of those requests is now gated on the app's own port probe, and the injection site's ordinary path runs while no server is listening.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.8.0"
-          ]
-        },
-        {
-          "name": "Never stop itself",
-          "description": "Keeps the app from stopping its own package. Stop recent apps, Restart app and Force stop app all end in `am force-stop <package>` run over ADB, and the app is in the recents list it works from, so once an ADB connection is up the app stops itself, restarts, and loops every few seconds. The app only skips the foreground app, and only when the matching preference is enabled, so this covers what the preference does not. Custom ADB command actions are covered too, and such a command is logged under the TVQA-GUARD tag before it is dropped.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.8.0",
-            "3.7.0"
-          ]
-        },
-        {
-          "name": "Unlock native engine",
-          "description": "Patches the native engine libraries so that they run on a re-signed APK. The anti-tamper constructor of libd.so that destroys a global mutex is disabled, and the trap instructions the verification routine plants inside its own code - udf #0 (SIGILL) and stores of the markers 0xdead and 0xdeadbeef (SIGSEGV) - are replaced by no-ops, leaving the routine's work intact. This is what makes Web Widget Overlay and button emulation work. The server-only liba.so self-stop calls are also disabled for ARM32 and ARM64 so ADB speed-up does not terminate the app.",
-          "use": true,
-          "options": [],
-          "compatible_versions": [
-            "3.8.0"
-          ]
-        },
-        {
           "name": "Unlock premium",
-          "description": "Makes the bundled Google LVL policy always report the app as licensed, which unlocks the premium features.",
+          "description": "Reports the app as licensed and stops the native engine from verifying the licence, which unlocks the premium features.",
           "use": true,
           "options": [],
-          "compatible_versions": [
-            "3.8.0",
-            "3.7.0"
-          ]
+          "compatible_versions": []
+        },
+        {
+          "name": "Unlock premium (native)",
+          "description": "Stops the native engine from verifying the licence, which is what the premium actions are gated on once the licence checks out in Java.",
+          "use": true,
+          "options": [],
+          "compatible_versions": []
         }
       ],
       "developer": "tvDev"
     }
   ],
   "patches_name": "tvQuickActions Patches",
-  "fingerprint": "16fcd0ea647dc8366c51937f477a53b26a0bf3b515fb9a1242dfa72966d75641",
-  "release_notes": "## [1.7.1](https://github.com/6zev/morphe-patches/compare/v1.7.0...v1.7.1) (2026-11-16)\n\n### 🐛 Bug Fixes\n\n* never call the engine's verification routine, leave it intact ([6dcc8c2](https://github.com/6zev/morphe-patches/commit/6dcc8c27f2ec9ebfaf114116226f7fa8cbc1d28f))\n",
-  "release_tag": "v1.7.1",
-  "release_date": "2026-11-16T12:17:02Z",
+  "fingerprint": "c6a0af676a34018e8cf51c48777de557cc718e9a05d4f455d303cfc61d913fe3",
+  "release_notes": "## [1.7.2](https://github.com/6zev/morphe-patches/compare/v1.7.1...v1.7.2) (2026-11-26)\n\n### 🐛 Bug Fixes\n\n* **build:** do not query runPatch properties during configuration ([c659ea6](https://github.com/6zev/morphe-patches/commit/c659ea69e086adf02b599d1f22e7f11bfade53cd))\n",
+  "release_tag": "v1.7.2",
+  "release_date": "2026-11-26T02:53:01Z",
   "isPreRelease": false,
   "stars": 0,
   "avatarUrl": "https://avatars.githubusercontent.com/u/264537056?v=4&s=128",
