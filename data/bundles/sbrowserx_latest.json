@@ -2,17 +2,17 @@
   "bundle": "sbrowserx",
   "channel": "latest",
   "repo_url": "https://github.com/vortexnode/SBrowserX",
-  "created_at": "2026-11-26T15:05:00",
-  "version": "1.2.4",
-  "description": "SBrowserX v1.2.4: в байткоде окончательно отключены 4 метода градиентных полос статус-бара и навбара Samsung (enableFade/setFade + API 35 edge-to-edge и блюр-полоса компактной панели), исправлен нативный краш при ручном переключении с тёмной темы на светлую (убран вызов TerraceCommandLine.removeSwitch в рантайме) и добавлена кнопка перезапуска браузера (круговая стрелка) в правый верхний угол всех экранов настроек с подсветкой при любых изменениях.",
+  "created_at": "2026-11-27T00:50:00",
+  "version": "v1.3.4",
+  "description": "SBrowserX v1.3.4 — Start Page Glass, Instant Homepage Switch & Bookmark Favicons:\n• Fixed Start Page wallpaper extending behind the bottom bar (100lvh + root compositor background) so Chromium's frosted-glass blur shines the wallpaper through the bottom toolbar.\n• Fixed switching Homepage away from SBrowserX Start Page: immediately navigates active Start Page tabs to Samsung Quick Access / Google and prevents restored old Start Page tabs from returning after restart.\n• Added automatic background favicon fetching for imported bookmarks (cached per domain, populates native TOUCH_ICON & FAVICON).\n\nRU: Обои стартовой страницы теперь растягиваются на полный экран под нижнюю панель (100lvh), возвращая живое матовое стекло и размытие; переключение домашней страницы обратно на Samsung/Google теперь мгновенно переключает текущую вкладку и не возвращает старую стартовую после перезапуска; добавлена фоновая подгрузка иконок сайтов (favicon) для импортированных закладок.",
   "apps": [
     {
       "app_name": "Samsung Browser",
       "package": "com.sec.android.app.sbrowser",
       "patches": [
         {
-          "name": "AMOLED Black & Bottom Bar Transparency Toggle",
-          "description": "True frosted-glass bottom bar & toolbar translucency with adjustable transparency (15-85%), enhanced Chromium compositor blur, and AMOLED pure black (#000000) dark mode surfaces.",
+          "name": "AMOLED Black & Bottom Bar Transparency",
+          "description": "Adds adjustable toolbar and bottom bar transparency with frosted-glass blur and pure AMOLED black mode for the browser interface.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -21,7 +21,7 @@
         },
         {
           "name": "Auto-close unused tabs: After 1 day",
-          "description": "Adds a native 'After 1 day' (24h) radio option directly inside Samsung's Auto-close unused tabs settings screen.",
+          "description": "Adds an 'After 1 day' option to the Auto-close unused tabs setting.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -30,7 +30,7 @@
         },
         {
           "name": "Block third-party cookies by default",
-          "description": "Blocks third-party cookies by default across all sites on fresh installs, while allowing users to re-enable them in Settings.",
+          "description": "Blocks third-party cookies by default across all websites, with an option to re-enable them in Settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -39,7 +39,7 @@
         },
         {
           "name": "Built-in Google Translate engine",
-          "description": "Unlocks the Translate button in the side popup menu without Galaxy AI/SCS, routes page translation through Google Translate, and adds Chrome-style Translate settings.",
+          "description": "Adds a built-in page translation engine with automatic translation and quick language settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -66,7 +66,7 @@
         },
         {
           "name": "Disable Update Prompts & Badges",
-          "description": "Blocks Galaxy Store and Google Play update checks, update banners, and update badges on the patched browser.",
+          "description": "Hides store update prompts, banners, and update badges.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -75,7 +75,7 @@
         },
         {
           "name": "External downloader support",
-          "description": "Forwards HTTP/HTTPS file downloads AND context-menu image/video/link downloads to external download managers (1DM, ADM, ABDM, FDM, Seal, etc.) via SBrowserX settings.",
+          "description": "Sends file, image, video, and link downloads to your chosen external download manager.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -84,7 +84,7 @@
         },
         {
           "name": "Remove 99-Tab Limit",
-          "description": "Lifts Samsung Internet's 99-tab cap to 9999 tabs (configurable toggle in SBrowserX & Useful Features, enabled by default).",
+          "description": "Removes the 99-tab limit so you can keep thousands of open tabs.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -93,7 +93,7 @@
         },
         {
           "name": "Remove telemetry, promotions & updates",
-          "description": "Disables Samsung Analytics, SILog, SMP marketing push, Promotion Engine, Kindred shopping/coupons, and Galaxy Store update checks while preserving site Web Push notifications.",
+          "description": "Removes built-in analytics, promotional banners, shopping ads, and background update checks while keeping website notifications working.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -110,8 +110,17 @@
           ]
         },
         {
-          "name": "Unified Dark Mode, True AMOLED Websites & Vivid Images",
-          "description": "Syncs website dark mode cleanly with browser Dark/Light mode (system or manual), eliminates Samsung NightDim & 50% dim veil, preserves true site colors/icons, and applies pure AMOLED #000000 backgrounds to darkened websites when AMOLED Black is ON.",
+          "name": "Third-Party Autofill Support",
+          "description": "Enables native Android Autofill (Bitwarden, Gboard inline suggestions), removes Samsung Pass prompts, and unlocks local credit cards without Knox.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "31.0.2.41"
+          ]
+        },
+        {
+          "name": "Unified Dark Mode & True AMOLED Websites",
+          "description": "Synchronizes website dark mode with the browser theme, removes dim overlays, and applies pure AMOLED black backgrounds when enabled.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -120,7 +129,7 @@
         },
         {
           "name": "Unlock Chrome Web Store & Extensions",
-          "description": "Force-enables SIX extensions engine, unlocks extensions WebUI & Chrome Web Store, and prevents SixPkgUpdater from auto-uninstalling sideloaded CRX extensions on restart.",
+          "description": "Enables extension support, unlocks the Chrome Web Store, and allows installing and keeping third-party extensions.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -129,7 +138,7 @@
         },
         {
           "name": "Unlock Compact Layout",
-          "description": "Restores Samsung Internet's native Compact toolbar layout, fixes More-Menu height oscillation and Compact pill scroll/refresh jitter, and replaces the Galaxy AI button with a user-configurable button.",
+          "description": "Unlocks the compact floating toolbar layout, smooths scrolling behavior, and lets you customize the extra toolbar button.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -138,7 +147,7 @@
         },
         {
           "name": "Unlock Debug settings menu",
-          "description": "Always shows Samsung Internet's hidden Debug settings menu inside Settings.",
+          "description": "Reveals the hidden Debug settings menu inside browser Settings.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -150,9 +159,16 @@
     }
   ],
   "patches_name": "SBrowserX",
-  "fingerprint": "e5a9d04a100db9fab73cfe2414df15c917624b952b9b4f376708a44450fcaf80",
-  "release_notes": "**Full Changelog**: https://github.com/vortexnode/SBrowserX/compare/v1.2.3...v1.2.4",
-  "release_tag": "v1.2.4",
-  "release_date": "2026-11-26T12:19:45Z",
-  "isPreRelease": false
+  "fingerprint": "d679a965cf34fb71613bd0fb04e74593d309c353eb0148e4737d67f83a4475af",
+  "release_notes": "**Full Changelog**: https://github.com/vortexnode/SBrowserX/compare/v1.3.3...v1.3.4",
+  "release_tag": "v1.3.4",
+  "release_date": "2026-11-26T21:42:51Z",
+  "isPreRelease": false,
+  "stars": 2,
+  "avatarUrl": "https://avatars.githubusercontent.com/u/270004956?v=4&s=128",
+  "repoDescription": "Supercharged Samsung Internet (Morphe patches) — Chrome Web Store extensions on any Android 11+, AMOLED Black & glass UI, native Bitwarden autofill, Gemini AI summaries, Google Translate, zero telemet",
+  "isArchived": false,
+  "isFork": false,
+  "forkParent": "",
+  "bundleImageUrl": "https://github.com/vortexnode/SBrowserX/raw/HEAD/patches-bundle.png"
 }

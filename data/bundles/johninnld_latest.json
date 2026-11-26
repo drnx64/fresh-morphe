@@ -2,9 +2,9 @@
   "bundle": "johninnld",
   "channel": "latest",
   "repo_url": "https://gitlab.com/johninnld/nl-morphe-patches",
-  "created_at": "2026-11-24T04:22:48.617Z",
-  "version": "1.106.0",
-  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/7622f42a0e4a2f843e3b0f7c4598332bac6ffaaa/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.106.0.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [7622f42a0e4a](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/7622f42a0e4a2f843e3b0f7c4598332bac6ffaaa). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.106.0](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.105.1...v1.106.0) (2026-11-24)\n\n### 🐛 Bug Fixes\n\n* **dynamicSpot:** match the boolean home offer gate ([4aea200](https://gitlab.com/johninnld/nl-morphe-patches/commit/4aea2005c4763c7548eedb70ba9bb109aade8958))\n\n### ✨ New Features\n\n* **dynamicSpot:** unlock local settings and remove promotions ([0ffbac1](https://gitlab.com/johninnld/nl-morphe-patches/commit/0ffbac197ad7ba28ace56aeae9eab06bc6f2a5a7))\n",
+  "created_at": "2026-11-26T18:41:08.600Z",
+  "version": "1.107.1",
+  "description": "<!-- dap-release-branding:v1 -->\n![Dutch App Patches. Dutch apps. Your choices.](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/a4bb508f1ae51c14b7e6167835d0086a0dfb0fe8/docs/site/assets/brand/release-banner.png)\n\n**Release · patch bundle v1.107.1.**\n\n[Source metadata](https://gitlab.com/johninnld/nl-morphe-patches/-/raw/main/patches-bundle.json) · [User guide](https://gitlab.com/johninnld/nl-morphe-patches/-/blob/main/docs/site/en/index.md)\n\nSource: [a4bb508f1ae5](https://gitlab.com/johninnld/nl-morphe-patches/-/commit/a4bb508f1ae51c14b7e6167835d0086a0dfb0fe8). Check each app's target versions in the user guide before patching.\n\n---\n\n## [1.107.1](https://gitlab.com/johninnld/nl-morphe-patches/compare/v1.107.0...v1.107.1) (2026-11-26)\n\n### 🐛 Bug Fixes\n\n* **Gboard:** preserve the spacebar logo on repeated binds ([96e7e03](https://gitlab.com/johninnld/nl-morphe-patches/commit/96e7e03d395f79464c0b8aeffc457bd452f2f537))\n",
   "apps": [
     {
       "app_name": "Stable",
@@ -1640,7 +1640,7 @@
         },
         {
           "name": "AI Writing Tools",
-          "description": "Enables Gboard's Writing tools: rewrite and tone changes on selected text, in every language and keyboard. Proofread/Auto Fix is not ported to 18.8.",
+          "description": "Enables Gboard's Writing tools: rewrite and tone changes on selected text, with an optional shared Gemma provider for Proofread, local writing, completion and grammar.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1662,6 +1662,16 @@
           "name": "Beta features (18.8)",
           "description": "Unlocks five new Gboard 18.8 features that are off by default: plain-text quick-paste chip, floating clipboard chip, invisible floating-keyboard resizing, the Emoji2 provider and the swipe-to-remove confirmation.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.8.0.1022711984-beta-arm64-v8a",
+            "18.8.0.1022711984-beta-armeabi-v7a"
+          ]
+        },
+        {
+          "name": "Block Gboard telemetry",
+          "description": "Stops the identified Clearcut, Play services client metrics and Tenor share-report submissions and disables stock Translate. Local AI Translate, GIF search, downloads and user-initiated feedback remain available.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "18.8.0.1022711984-beta-arm64-v8a",
@@ -1814,7 +1824,7 @@
         },
         {
           "name": "Parakeet voice typing",
-          "description": "Adds Gboard settings → Voice typing → Parakeet voice typing. After downloading NVIDIA Parakeet (Moondream's Parakeet Ultra or the original TDT v3), the microphone key transcribes on the phone and recognises Dutch, English and 23 more languages per sentence without switching. Gives the patched Gboard the Parakeet launcher icon.",
+          "description": "Uses the speech model selected in Local Model Host through Binder while preserving Gboard's native microphone and dictation UI. Choose Parakeet, Nemotron Streaming or Whisper Tiny and download/enable the model in the host. Gboard keeps only its client switch; language support depends on the selected model.",
           "use": true,
           "options": [],
           "compatible_versions": [
@@ -1946,6 +1956,16 @@
           "name": "Toolbar Editing Buttons",
           "description": "Add Select All, Copy, Cut and Paste to the menu.",
           "use": true,
+          "options": [],
+          "compatible_versions": [
+            "18.8.0.1022711984-beta-arm64-v8a",
+            "18.8.0.1022711984-beta-armeabi-v7a"
+          ]
+        },
+        {
+          "name": "Top Toolbar Item Count",
+          "description": "Adds a setting for three to eight items in Gboard's top toolbar.",
+          "use": false,
           "options": [],
           "compatible_versions": [
             "18.8.0.1022711984-beta-arm64-v8a",
@@ -4977,7 +4997,7 @@
     }
   ],
   "patches_name": "Dutch App Patches",
-  "fingerprint": "1f56c8f5a1b80f861165ebcdbee9a6b694ff5586632e5002903e2bceec29ed68",
+  "fingerprint": "d6c4f605c7cc91bbebde650ba6e4b97e6c423b39268e6a99de7a98a2993e234d",
   "stars": 1,
   "avatarUrl": "https://secure.gravatar.com/avatar/bcaf1285367cddecfea65a9bc1ea5374f5499520cca3e0233d0bf891f08557cb?s=128&d=identicon",
   "repoDescription": "",
