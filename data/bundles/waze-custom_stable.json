@@ -1,0 +1,135 @@
+{
+  "bundle": "waze-custom",
+  "channel": "stable",
+  "repo_url": "https://github.com/aaayd/waze-custom-patches",
+  "created_at": "2026-11-12T06:21:35",
+  "version": "1.16.1030750",
+  "description": "Waze 5.27.5.0 (ARM64). Eight independent options: selectable map themes; selectable report icon packs; detailed report icons at normal sizes; local rank badge selector; unlock driver moods; Android Auto setup; adjustable Android Auto police alert distance; speed camera sound below the speed limit. Resolve native constructor candidates by verified report-table geometry so repeated resource names in unrelated icon loaders do not block releases. Retain ambiguity and malformed-table rejection. Recognise the inlined baby-mood eligibility branch and its unique getter, with real-DEX negative and repeat-application tests. Add the Waze 5.26.0.0 regression fixture, cross-platform push/PR tests, and persistent failure diagnostics. Older inlined native icon sizing remains unsupported. Phone and Android Auto runtime testing is still required.",
+  "apps": [
+    {
+      "app_name": "Waze Navigation & Live Traffic",
+      "package": "com.waze",
+      "patches": [
+        {
+          "name": "Android Auto police alert distance",
+          "description": "Add a saved 50 to 10000 metre police/enforcement heads-up distance in Map display. Defaults to 1200 metres. Applies and verifies Waze's three native distance settings, with an original-distance restore option.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Android Auto setup",
+          "description": "Bundle Waze AA Installer and add setup to Map display, with an offer after login. Requires Shizuku for the visibility repair.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Detailed report icons at normal sizes",
+          "description": "Keep specific hazard icons when zooming out, using Waze's original small and tiny sizes. ARM64 only. Use alone or together with Selectable report icon packs from this bundle.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Rank badge selector",
+          "description": "Add a persistent badge appearance selector to the Mood screen: crown, sword, shield, editor, wings, none or automatic. Local display only; account rank and what other users receive are unchanged.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Selectable map themes",
+          "description": "Add a Themes selector below Dark mode with separate original, Google Maps and OLED choices for light and dark mode.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Selectable report icon packs",
+          "description": "Add an Icon pack selector for original or Google Maps report icons. Defaults to Google Maps unless a choice is saved. Works independently of map themes and icon sizing.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Speed camera sound below speed limit",
+          "description": "Enable Waze's speed camera sound below the speed limit. Reapplies after configuration updates. Camera alerts and audible sound must remain enabled in Waze.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        },
+        {
+          "name": "Unlock driver moods",
+          "description": "Unlock the mood picker, including Robot, 8-bit, Dino and beta moods, and expose special/hidden moods present in the local catalogue. Does not grant editor permissions or download unavailable campaigns.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "5.27.5.0",
+            "5.24.5.0",
+            "5.24.0.2",
+            "5.18.5.0",
+            "5.21.0.0",
+            "5.26.0.0"
+          ]
+        }
+      ],
+      "developer": "Waze"
+    }
+  ],
+  "patches_name": "aaayd",
+  "fingerprint": "87676b830cb1efcdd62863bb948f2e933cc8765034caf445252c9397c95805e3",
+  "release_notes": "Waze 5.27.5.0 (1030750), ARM64.\n\nAssets: untouched original .apkm package, signed pre-patched APK,\nand Morphe bundle 1.16.1030750 with eight independent options:\nselectable themes, selectable report icon packs, detailed report icon sizing,\nlocal rank badge selector, driver moods, Android Auto setup, adjustable police alert distance, and speed camera sound below the speed limit.\n\nResolve native constructor candidates by verified report-table geometry so repeated resource names in unrelated icon loaders do not block releases. Retain ambiguity and malformed-table rejection. Recognise the inlined baby-mood eligibility branch and its unique getter, with real-DEX negative and repeat-application tests. Add the Waze 5.26.0.0 regression fixture, cross-platform push/PR tests, and persistent failure diagnostics. Older inlined native icon sizing remains unsupported. Phone and Android Auto runtime testing is still required.\n\nAll eight patches applied; bundle structure, signing, version metadata and\n16 KiB ZIP alignment were checked. Automated builds are not device-runtime tested.\nInspect build-info.json, patch-report.json and SHA256SUMS.txt for the exact inputs.\n\nThe original split package needs a split-package installer or Morphe.\nThe patched APK uses this repository's persistent signing key; an existing\ninstallation signed by another key cannot be updated with it.\n\nOriginal source: https://www.apkmirror.com/apk/waze/waze-gps-maps-traffic-alerts-live-navigation/waze-navigation-live-traffic-5-27-5-0-release/waze-navigation-live-traffic-5-27-5-0-android-apk-download/\nSource commit: 90e04b1887f41b9eb6d208a951a3cc66588360ef\n",
+  "release_tag": "waze-5.27.5.0-1030750-patches-1.16",
+  "release_date": "2026-11-12T06:21:35Z",
+  "isPreRelease": false
+}
