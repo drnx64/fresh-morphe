@@ -2,14 +2,23 @@
   "bundle": "futatabi",
   "channel": "stable",
   "repo_url": "https://github.com/rikunode/futatabi",
-  "created_at": "2026-11-27T12:46:54",
-  "version": "0.4.0-beta.35",
-  "description": "Improve Mebuki images and reader navigation; tailor settings, stats icon and Issues feedback",
+  "created_at": "2026-11-27T22:59:02",
+  "version": "0.4.0",
+  "description": "Futatabi v0.4.0 stable: six boards, native thread navigation, unified images, cache management and brand color",
   "apps": [
     {
       "app_name": "futatter",
       "package": "com.nanasaki.ftutter",
       "patches": [
+        {
+          "name": "Append futatabi version to device info",
+          "description": "Append the applied bundle version to the stock device-info text.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.1.1"
+          ]
+        },
         {
           "name": "Block banner ads",
           "description": "Remove the top banner and its reserved space on ARM64 without changing rewarded ads.",
@@ -69,6 +78,15 @@
           ]
         },
         {
+          "name": "Manage viewing cache",
+          "description": "Diagnose and safely trim known Flutter viewing cache files at cold start (1 GiB soft budget, Android 8+). Never clear settings or upload files.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "3.1.1"
+          ]
+        },
+        {
           "name": "Restore launcher icon",
           "description": "Restore missing adaptive launcher foreground densities from the official APK asset.",
           "use": false,
@@ -91,11 +109,11 @@
     }
   ],
   "patches_name": "futatabi",
-  "fingerprint": "f013e291c7445f18b7f85232af4bf49e2e8e756196eeecccc3a573f6b09e7fc2",
-  "release_notes": "# v0.4.0-beta.35\n\nbeta.34（めぶきの原画像・確認後の専用リーダー遷移、純正バックアップ互換性、追加板の配色）を維持し、ふたたび branding に設定画面の調整を追加する。先行公開済み beta.34 のタグ・配布物は変更しない。\n\n## A5〜A7\n\n- 設定画面の「有料オプション・広告」「ベータテストについて」の2行を非表示にする。対象 ARM64 3.1.1 の設定リスト生成処理のみ変更し、購入行と隣接区切りを除外して後続6要素を詰め、最後のベータ行と区切りを追加せずに既存 ListView を構築する。残りの行の順番・処理は維持する設計。購入・広告の処理自体や他画面は変更しない。\n- 統計情報画面の Image.asset が参照する assets/images/icon.png を、選定済み futatabi-r3-01-black-diagonal.png と同一の512×512 PNGへ置換する。\n- 「ご意見、要望、バグ報告」の既存画面に「不具合・要望はGitHub Issuesへ／再現手順もお願いします」と表示する。既存URL起動処理は固定の https://github.com/rikunode/futatabi/issues を使う。旧Google Forms向けの値連結を実行せず、URLのパラメータや個人情報を付けない。\n- 3件とも既定ONの futatabi branding に含む。OFFの場合は純正設定画面・純正統計アイコン・純正フィードバックのまま。\n- 対象libapp.soの既存8種の厳密SHA-256検証に加え、変更前命令・文字列の一致を要求する。未対応版では適用を拒否する。既存タイトル変更と同じ finalize で行い、既存AOTパッチとのハッシュ順序を維持する。\n\n## 検証と制限\n\n- 実APKへ全7パッチを適用。beta.34 の libapp.so とのバイト差分、変更命令の分岐先、固定URL・案内文字列、統計アイコンが選定済み素材とバイト一致することを確認。\n- A5/A7の実機UI未検証。設定の他項目と区切り、Issuesの実際の起動とパラメータなし、統計アイコン表示は所有者検収待ち。\n- beta.34 の既知の制限は継続（あいもげ・あにまんの自動遷移、旧仮想ID移行は未対応）。実投稿・実ログイン・共有エミュレータ操作なし。\n- めぶきログイン画面のGoogleボタン非表示はこの版に含まない。\n",
-  "release_tag": "v0.4.0-beta.35",
-  "release_date": "2026-11-27T03:46:54Z",
-  "isPreRelease": true,
+  "fingerprint": "716d2cab68f19aff15517a785d3d986721033f08499d8789cd59af7b84d89511",
+  "release_notes": "# ふたたび v0.4.0 — 正式版\r\n\r\nふたったーの操作感を保ちながら、ふたばの3板と外部3板を一つのアプリで利用できる非公式 Morphe パッチセットです。所有者実機確認済みの beta.43 を基準に、機能コードを変更せず正式版として公開します。\r\n\r\n## 対応環境・導入\r\n\r\n- 対象：ふたったー 3.1.1（com.Nanasaki.ftutter、ARM64、versionCode 65）。\r\n- **推奨：[ふたたびをMorpheに追加](https://morphe.software/add-source?github=rikunode/futatabi)**。Morphe公式案内では、リンクからManagerにリポジトリを渡し、確認画面で追加できます。直接開けない場合は Sources → + → Remote に https://github.com/rikunode/futatabi を入力します。URLはHTTP 200を確認済みですが、実端末でのリンク追加からインストールまでの操作は今回未検証です。\r\n- 予備：配布 .mpp を取得し SHA256SUMS と照合したうえで、Managerの Sources → + → Local から追加します。既定では Clone app が有効で純正版と共存できます。改造済みAPKは配布しません。\r\n- 導入手順・各機能の詳細は [README](https://github.com/rikunode/futatabi#導入) を参照してください。署名・パッケージを維持した上書き更新を推奨します。\r\n\r\n## 対応板・投稿\r\n\r\n標準6板：**may → img → jun → めぶきちゃんねる → あいもげ → あにまん**。既存の独自板の位置と設定を保持しつつ、不足する標準板を補完します。\r\n\r\n| 板 | 閲覧・レス・スレ立て |\r\n| --- | --- |\r\n| img / may / jun | 純正経路 |\r\n| あいもげ | 純正画面から閲覧・投稿。公式PKCE認証・承認。スレ立ては画像必須 |\r\n| あにまん | 純正画面から閲覧・投稿。スレ立ては題名・画像・カテゴリ選択が必要 |\r\n| めぶきちゃんねる | 純正画面から閲覧・レス。スレ立ては公式WebViewフォームで本文・タグ・本人確認・送信。成功照合後に作成した純正スレッド画面へ自動遷移 |\r\n\r\nめぶきのログインはアプリ内WebViewでのX／Discord認証に対応し、Google認証は対象外です。あいもげ・あにまんの新規スレ自動遷移は未対応です。結果が不明な場合は更新して確認し、重複投稿を避けてください。自動再送はしません。\r\n\r\n## 主な機能\r\n\r\n- 上部広告バナーと余白の除去（リワード広告は変更しない）。\r\n- ランチャー名 futatabi、独自アイコン、ホームタイトル「ふたたび」、統計情報と端末情報へのパッチ版表示。\r\n- 未設定時のみダークモード。デザインのメインカラーパレット末尾を #1192C9（ARGB 0xFF1192C9、純正の白い双葉マーク付き）へ置換。元の #800000 を選択していた場合は新色として読み替えます。初期色 #2196F3 と残り18色は維持。\r\n- 純正スレ画面内の静止画表示を全6板で長辺280論理px上限に統一。画面幅・既存の小さい設定上限・縦横比を尊重。寸法不明時は正方形の表示枠を使用。拡大用画像とカタログの取得経路は変更しません。\r\n- めぶきのスレ画像は公式原画像を利用（安全なURL・取得サイズ・画素数の制限あり）。\r\n- 閲覧キャッシュ管理（Android 8.0以降）：起動時の古い孤立ファイル回収、確認済み2領域の合計1 GiBを目安にした整理と診断。1 GiBは常時の厳密上限ではありません。安全性を確認できない場合は整理を見送り、再取得が必要になる場合があります。\r\n- 追加板の配色設定、純正設定バックアップとの互換、[GitHub Issues](https://github.com/rikunode/futatabi/issues) へのフィードバック導線。\r\n\r\n## 既知の制限\r\n\r\n- **1a：純正 Flutter 投稿経路は送信先のプロセスを検証しません。** ローカルブリッジの127.0.0.1:18765が競合すると、投稿内容が同一端末上の別プロセスへ渡る可能性があります。このリスクは未修正です。\r\n- 純正設定バックアップの対象は FlutterSharedPreferences.xml。認証情報・別ファイルの投稿履歴・仮想ID対応表は対象外です。機種変更などで古いお気に入り等の仮想IDを移行する機能は未対応です。実機バックアップ／復元は未検証です。\r\n- junの実投稿、肥大した実機データでのキャッシュ効果測定など、すべての組み合わせの実機確認を完了したわけではありません。旧赤色再出現の報告については発生条件が未確定です。\r\n- 対象APKのハッシュ・変更前命令を検証し、想定外の版を拒否します。公式サイト側の仕様変更によって外部板の機能が利用できなくなる可能性があります。\r\n\r\n## 検証・ライセンス\r\n\r\n所有者報告では、追加3板の純正欄からのレス投稿、あにまん・めぶきのスレ立て、めぶきの純正画面自動遷移、画像サイズ統一、葉っぱ付き新色の実機表示を確認済みです。2026-11-27 22:53 JSTの所有者GOを受けた正式リリースです。今回の公開作業では実機操作・実投稿・実ログインを行っていません。\r\n\r\nGPL-3.0。元アプリのAPK、XAPK、デコンパイル済みソース、署名鍵は配布しません。詳細は [ライセンス](https://github.com/rikunode/futatabi/blob/main/LICENSE) と [第三者通知](https://github.com/rikunode/futatabi/blob/main/THIRD_PARTY_NOTICES/NOTICE.md) を参照してください。\r\n",
+  "release_tag": "v0.4.0",
+  "release_date": "2026-11-27T13:59:02Z",
+  "isPreRelease": false,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/312470895?v=4&s=128",
   "repoDescription": "",

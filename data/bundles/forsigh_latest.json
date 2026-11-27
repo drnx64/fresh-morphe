@@ -2,14 +2,23 @@
   "bundle": "forsigh",
   "channel": "latest",
   "repo_url": "https://github.com/Forsigh/waze-patches",
-  "created_at": "2026-11-23T22:35:39",
-  "version": "0.30.66",
-  "description": "Waze 5.28.4.900. Stable build 0.30.66 makes every forced setting reach the store Waze's map, alerts and Android Auto actually read, and repairs eleven rows that applied without changing anything. Every row is pinned to 5.28.4.900.",
+  "created_at": "2026-11-27T07:36:18",
+  "version": "0.30.67",
+  "description": "Waze 5.28.4.900. Stable build adds a switch that keeps your driver mood across a Waze restart and a new row that lets AARE and other non-Google hosts open Waze's car screen. Both are off by default. Every row is pinned to 5.28.4.900.",
   "apps": [
     {
       "app_name": "Waze Navigation & Live Traffic",
       "package": "com.waze",
       "patches": [
+        {
+          "name": "Accept AARE as car host",
+          "description": "Lets AARE and other non-Google hosts show Waze's car screen.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "5.28.4.900"
+          ]
+        },
         {
           "name": "Alert distances",
           "description": "How early alerts sound, plus a speed-bump switch and per-alert distances. Pick a level; Standard changes nothing.",
@@ -532,7 +541,12 @@
           "name": "Unlock driver moods",
           "description": "Unlocks all moods on the device.",
           "use": true,
-          "options": [],
+          "options": [
+            {
+              "key": "keepMood",
+              "description": "Puts the mood you picked back when Waze starts again."
+            }
+          ],
           "compatible_versions": [
             "5.28.4.900"
           ]
@@ -551,10 +565,10 @@
     }
   ],
   "patches_name": "Forsigh Waze Patches",
-  "fingerprint": "662bcec64faedc191b0a63879d3ee852ecc008f4456349ce25ac9fd041f938bd",
-  "release_notes": "Stable build for Waze **5.28.4.900** (versionCode 1030753). 37 rows.\n\n### The fixes behind the \"it applies but nothing happens\" reports\nWaze's map, alert engine and Android Auto layer read their settings from a **native** config store, not from the Java getters the rows were changing. On this build, 71 of the 80 forced keys never reached it, so the row flipped a settings screen and left the driving behaviour untouched. Every forced key is now written to both stores, strings included, and a check in the build fails if one is missing.\n\n### Rows that were verified dead and rewired\n- **YouTube Music / Any audio app** — the partner entries were appended after the list had been measured, so they never entered it. The length is reloaded before the roster is sized.\n- **Hide recent destinations** — the empty list was written into the wrong register; callers received `null`, not an empty list.\n- **Picture-in-picture** — touches were routed to a hard-coded view id that is a different view on this build; the map is now resolved by name.\n- **Lane guidance** — the consumer requires a third flag (`LANE_GUIDANCE_USER_ENABLED`) that was never set.\n- **Live drive sharing** — the map button also needs `SHARE_DRIVE_BUTTON_BACK_ENTRY_POINT_ENABLED`.\n- **Remove ads** — search results carry their own two gates, now forced.\n- **Cameras & hazards** — crosswalks were only switched on in Settings; the two announcement keys are now set, so a mapped crosswalk warns instead of only drawing.\n- **Car map zoom** — the write hung off an unrelated setter and could be skipped; it goes through the shared guarded helper on every config sync.\n- **Allow high refresh rate** — 90 Hz became 88 and 165 became 160 because the constant truncates the double; such rates are now refused instead of silently changed.\n- **Instrument cluster** — the \"large layout\" option was actually Waze's light-commercial-vehicle mode and was on by default. Off by default, renamed.\n- **Smoother Android Auto map** — dropped a key Waze removed in this version.\n\n### Option values are validated\nPassing a label where a value token belongs (\"Phone only\" instead of \"phone\") used to apply cleanly and change nothing. It now aborts with the accepted values listed.\n\n### Supported builds\nEvery row is pinned to **5.28.4.900**. Waze 5.27.90.900 uses **0.30.64**, which pins that build; a bundle refuses a build it was not verified against rather than half-applying.\n\nVerified on 5.28.4.900: every row alone (37/37), every option variant (18/18), option effects read back from the built APK (16/16), and all rows together with non-default options — 37/37 applied, 0 broken branch targets, frame count identical to stock, 85/85 forced keys reaching the native store.\n",
-  "release_tag": "v0.30.66",
-  "release_date": "2026-11-23T22:35:31Z",
+  "fingerprint": "44bdad05e414fea42b6d10fd5e9c41cc493d415a2425e339fd7d5008d80b9ab8",
+  "release_notes": "Stable build for Waze **5.28.4.900**. 38 rows.\n\nTwo additions, both off by default. Nothing changes for an existing setup until you switch them on in the gear page.\n\n**Unlock driver moods — *Keep my mood after a restart***\nWaze re-applies the mood from your account profile every time it starts, so a mood the account does not own (any of the unlocked special moods) is replaced on the next launch. With the switch on, the mood you pick is written into Waze's own config store and put back on every mood refresh. **Status: experimental and not yet confirmed working.** The first tester who ticked the switch still saw the mood revert to default after a restart (issue #25, comment of 26 Nov), so treat this as a first attempt, not a fix.\n\n**Accept AARE as car host** (new row, Android Auto)\nWaze validates the host that connects to its car surface and only accepts Google's projection app. The row turns that validation off, so AARE and other non-Google hosts can open Waze's car screen. It flips one config value that `WazeCarAppService.createHostValidator` already reads — no library code is touched and a normal Android Auto session is unaffected. Because it accepts any host while enabled, it stays off by default.\n\n**Verified before publishing**\n- every one of the 38 rows applies on 5.28.4.900: 38/38, 0 failed\n- 466,087 methods scanned, 0 broken branch targets\n- 86/86 forced config keys reach the native store, not just the Java getter\n- with the defaults (no options), neither new feature is present in the patched app: host validation untouched, no mood helpers\n- with the mood switch on, the two helpers are present and hooked at the picker setter and the mood refresh\n- behavioural proof for the mood switch is missing: one tester reported a reset with the switch enabled\n- bundle re-downloaded after upload and re-applied: 38/38\n\nOlder Waze builds are not covered: 5.27.90.900 stays on **0.30.64**.\n",
+  "release_tag": "v0.30.67",
+  "release_date": "2026-11-27T07:35:57Z",
   "isPreRelease": false,
   "stars": 14,
   "avatarUrl": "https://avatars.githubusercontent.com/u/35919784?v=4&s=128",

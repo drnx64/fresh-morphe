@@ -2,9 +2,9 @@
   "bundle": "mobile-morphe",
   "channel": "stable",
   "repo_url": "https://github.com/semicoloncolonel/mobile-morphe-patches",
-  "created_at": "2026-11-18T01:19:39",
-  "version": "1.1.1",
-  "description": "### Bug fixes\n\n- **MLB**: Skip ads no longer breaks a playlist that starts with an ad. Removing that ad also removed the lines that begin the playlist, so the video could not play. An encryption or map change right before an ad break is now kept as well.",
+  "created_at": "2026-11-27T05:40:38",
+  "version": "1.1.2",
+  "description": "## [1.1.2](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.1.1...v1.1.2) (2026-11-27)\n\n\n### Features\n\n* **ebay:** Add eBay 6.244.0.1 patches ([7ce66f7](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/7ce66f76f539fbb2b92bb10131f1f3d87118c02a))",
   "apps": [
     {
       "app_name": "Downloadertablet",
@@ -2674,6 +2674,95 @@
         }
       ],
       "developer": "AMC Global Media Inc."
+    },
+    {
+      "app_name": "eBay online shopping & selling",
+      "package": "com.ebay.mobile",
+      "patches": [
+        {
+          "name": "Block analytics & tracking",
+          "description": "Stops AppsFlyer, the Meta SDK, and Firebase Analytics.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.244.0.1"
+          ]
+        },
+        {
+          "name": "Disable auto-updates",
+          "description": "Stops the Play Store from replacing the patched app with the official version.",
+          "use": false,
+          "options": [],
+          "compatible_versions": [
+            "6.244.0.1"
+          ]
+        },
+        {
+          "name": "Hide device identifiers",
+          "description": "Hides details about your phone from the app. Choose which ones in the patch options.",
+          "use": false,
+          "options": [
+            {
+              "key": "deviceIds",
+              "description": "Gives the app a random Android ID and a zeroed advertising ID. The DRM ID is left alone, so playback works."
+            },
+            {
+              "key": "carrier",
+              "description": "Hides your mobile carrier, or reports the name set in Carrier name. Carrier deals, such as League Pass with a phone plan, stop working."
+            },
+            {
+              "key": "carrierName",
+              "description": "The carrier name the app sees when Carrier is on. Pick one from the list or type any name. Blank hides the carrier."
+            },
+            {
+              "key": "reportWifi",
+              "description": "Shows mobile data as Wi-Fi, so Wi-Fi-only downloads and mobile quality limits do not apply. This can use a lot of data."
+            },
+            {
+              "key": "hideVpn",
+              "description": "Hides an active VPN from the app's checks on the phone. The app's servers can still detect a VPN from your IP address."
+            },
+            {
+              "key": "wifiNetworks",
+              "description": "Hides nearby Wi-Fi networks and the name of yours. Store detection, smart-home setup, and checkout fraud checks can be affected."
+            },
+            {
+              "key": "bluetooth",
+              "description": "Stops scans for Bluetooth devices and beacons, and hides paired devices. In-store maps, kiosk check-in, smart-home setup, and accessory pairing stop working."
+            },
+            {
+              "key": "cellTowers",
+              "description": "Hides the cell towers your phone sees, which can place you within a few blocks."
+            },
+            {
+              "key": "backgroundLocation",
+              "description": "Removes the app's access to your location while it is closed or in the background. Store-arrival features and pickup check-in can stop working. RetailMeNot has its own patch for this."
+            }
+          ],
+          "compatible_versions": [
+            "6.244.0.1"
+          ]
+        },
+        {
+          "name": "Hide rating prompt",
+          "description": "Stops Google Play's rate-this-app sheet.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.244.0.1"
+          ]
+        },
+        {
+          "name": "Strip affiliate links",
+          "description": "Opens listings at eBay's own page, without eBay Partner Network affiliate tags or click tracking.",
+          "use": true,
+          "options": [],
+          "compatible_versions": [
+            "6.244.0.1"
+          ]
+        }
+      ],
+      "developer": "eBay Mobile"
     },
     {
       "app_name": "Settings Home",
@@ -9870,10 +9959,10 @@
     }
   ],
   "patches_name": "Mobile Morphe Patches",
-  "fingerprint": "ca8a78243ce3e3eff57b1c7a2644662a10fbff7803c53044a4406d146717777c",
-  "release_notes": "# [1.2.0-dev.36](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.35...v1.2.0-dev.36) (2026-11-25)\n\n\n### Features\n\n* route every news app's traffic through a proxy ([e9f9f5b](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/e9f9f5b6e448e86d3cdd7e6c7f48d1b8db06fa52))\n",
-  "release_tag": "v1.2.0-dev.36",
-  "release_date": "2026-11-25T10:15:02Z",
+  "fingerprint": "afff2d536584f817c880ed6f220c698314f9817a868a4c42744c9edcd62bb528",
+  "release_notes": "# [1.2.0-dev.41](https://github.com/semicoloncolonel/mobile-morphe-patches/compare/v1.2.0-dev.40...v1.2.0-dev.41) (2026-11-27)\n\n\n### Features\n\n* **netflix:** add patch to keep the player open while paused ([f5f7bc3](https://github.com/semicoloncolonel/mobile-morphe-patches/commit/f5f7bc3b635f9f5c79e373d442f1f8738d1e9805))\n",
+  "release_tag": "v1.2.0-dev.41",
+  "release_date": "2026-11-27T10:19:18Z",
   "isPreRelease": true,
   "stars": 1,
   "avatarUrl": "https://avatars.githubusercontent.com/u/18729473?v=4&s=128",
